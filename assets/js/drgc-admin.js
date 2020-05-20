@@ -246,7 +246,26 @@ jQuery(document).ready(function ($) {
   }
 });
 /* harmony default export */ var admin_import = (ImportModule);
+// CONCATENATED MODULE: ./assets/js/admin/admin-sync-locales.js
+var SyncLocalesModule = {};
+jQuery(document).ready(function ($) {
+  $('#dr-sync-locales-btn').click(function () {
+    $.ajax({
+      type: 'POST',
+      url: drgc_admin_params.ajax_url,
+      data: {
+        action: 'drgc_sync_locales',
+        nonce: drgc_admin_params.ajax_nonce
+      },
+      success: function success() {
+        window.location.reload();
+      }
+    });
+  });
+});
+/* harmony default export */ var admin_sync_locales = (SyncLocalesModule);
 // CONCATENATED MODULE: ./assets/js/admin/admin.js
+
 
 
 /***/ })

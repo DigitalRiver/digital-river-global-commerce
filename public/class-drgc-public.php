@@ -160,8 +160,9 @@ class DRGC_Public {
 
 		// transfer drgc options from PHP to JS
 		$options = array(
-			'wpLocale'          =>  get_locale(),
-			'drLocale'          =>  get_dr_locale( get_locale() ),
+			'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
+			'drLocale'          =>  drgc_get_current_dr_locale(),
+			'transLocale'       =>  get_locale(),
 			'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
 			'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
 			'homeUrl'           =>  get_home_url(),
@@ -545,6 +546,18 @@ class DRGC_Public {
 	}
 
 	/**
+	 * Insert locale selector at menu.
+	 *
+	 * @since  2.0.0
+	 */
+	public function insert_locale_selector( $content ) {
+		ob_start();
+		include_once 'partials/drgc-locale-selector.php';
+		$append = ob_get_clean();
+		return $content . $append;
+	}
+
+	/**
 	 * Render minicart on header.
 	 *
 	 * @since  1.0.0
@@ -595,14 +608,27 @@ class DRGC_Public {
 	 * @since  1.1.0
 	 */
 	public function redirect_on_page_load() {
-		if ( is_page( 'checkout' ) ) {
-			$customer = DRGC()->shopper->retrieve_shopper();
-			$is_logged_in = $customer && 'Anonymous' !== $customer['id'];
-			$is_guest = 'true' === $_COOKIE['drgc_guest_flag'];
+		if ( ! is_admin() ) {
+			// Load plugin translated text strings
+			$dr_locale = drgc_get_current_dr_locale();
+			$wp_locale = drgc_get_current_wp_locale( $dr_locale );
+			switch_to_locale( $wp_locale );
+			load_plugin_textdomain(
+				'digital-river-global-commerce',
+				false,
+				dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+			);
 
-			if ( ! $is_logged_in && ! $is_guest ) {
-				wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
-				exit;
+			// Redirect to login page when shopper hasn't been authenticated
+			if ( is_page( 'checkout' ) ) {
+				$customer = DRGC()->shopper->retrieve_shopper();
+				$is_logged_in = $customer && 'Anonymous' !== $customer['id'];
+				$is_guest = 'true' === $_COOKIE['drgc_guest_flag'];
+
+				if ( ! $is_logged_in && ! $is_guest ) {
+					wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
+					exit;
+				}
 			}
 		}
 	}

@@ -3499,6 +3499,8 @@ jQuery(document).ready(function ($) {
 });
 /* harmony default export */ var public_checkout = (CheckoutModule);
 // CONCATENATED MODULE: ./assets/js/public/public-common.js
+
+
 var CommonModule = {};
 
 (function (w) {
@@ -3534,6 +3536,23 @@ jQuery(document).ready(function ($) {
     } else if (elem.validity.customError) {
       $(elem).next('.invalid-feedback').text(elem.validationMessage);
     }
+  });
+  $('#dr-locale-selector .dr-current-locale').click(function (e) {
+    e.preventDefault();
+  });
+  $('#dr-locale-selector .dr-other-locales a').click(function (e) {
+    e.preventDefault();
+    var $this = $(e.target);
+    var targetLocale = $this.data('dr-locale');
+    commerce_api.updateShopper({
+      locale: targetLocale
+    }).then(function () {
+      var params = new URLSearchParams(location.search);
+      params.set('locale', targetLocale);
+      window.location.search = params.toString();
+    })["catch"](function (jqXHR) {
+      checkout_utils.apiErrorHandler(jqXHR);
+    });
   });
 });
 /* harmony default export */ var public_common = (CommonModule);

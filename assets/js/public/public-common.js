@@ -1,3 +1,6 @@
+import CheckoutUtils from './checkout-utils';
+import DRCommerceApi from './commerce-api';
+
 const CommonModule = {};
 
 (function(w) {
@@ -32,6 +35,26 @@ jQuery(document).ready(($) => {
     } else if (elem.validity.customError) {
       $(elem).next('.invalid-feedback').text(elem.validationMessage);
     }
+  });
+
+  $('#dr-locale-selector .dr-current-locale').click((e) => {
+    e.preventDefault();
+  });
+
+  $('#dr-locale-selector .dr-other-locales a').click((e) => {
+    e.preventDefault();
+    const $this = $(e.target);
+    const targetLocale = $this.data('dr-locale');
+
+    DRCommerceApi.updateShopper({ locale: targetLocale })
+      .then(() => {
+        const params = new URLSearchParams(location.search);
+        params.set('locale', targetLocale);
+        window.location.search = params.toString();
+      })
+      .catch((jqXHR) => {
+        CheckoutUtils.apiErrorHandler(jqXHR);
+      });
   });
 });
 

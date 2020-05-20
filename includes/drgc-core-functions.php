@@ -416,3 +416,34 @@ function drgc_get_business_entity_name( $entity_code = '' ) {
 function drgc_should_display_vat( $currency = '' ) {
 	return ( $currency == 'GBP' || $currency == 'EUR' );
 }
+
+/**
+ * Get current DR locale by query param
+ *
+ * @return string
+ */
+function drgc_get_current_dr_locale() {
+  $drgc_locale_options = get_option( 'drgc_locale_options' ) ?: array();
+  $is_valid_locale = isset( $_GET['locale'] ) && false !== array_search( $_GET['locale'], array_column( $drgc_locale_options, 'dr_locale' ) );
+
+  return $is_valid_locale ?
+    $_GET['locale'] :
+    get_option( 'drgc_default_locale' ) ?: 'en_US';
+}
+
+/**
+ * Get current WP locale by DR locale
+ *
+ * @param string $dr_locale
+ * @return string
+ */
+function drgc_get_current_wp_locale( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+
+  if ( empty( $drgc_locale_options ) ) {
+    return get_wp_locale_by_map( $dr_locale );
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['wp_locale'];
+  }
+}

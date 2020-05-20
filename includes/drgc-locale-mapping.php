@@ -33,13 +33,13 @@ function get_locale_mapping() {
         'de_CH' => 'de_CH',
         'dzo' => '',
         'el' => 'el_GR',
-        'en' => 'en_US',
         'en_US' => 'en_US',
         'en_CA' => 'en_CA',
         'en_AU' => 'en_AU',
         'en_ZA' => 'en_ZA',
         'en_GB' => 'en_GB',
         'en_NZ' => 'en_NZ',
+        'en' => 'en_US',
         'eo' => '',
         'es_CL' => 'es_CL',
         'es_ES' => 'es_ES',
@@ -131,13 +131,38 @@ function get_locale_mapping() {
 }
 
 /**
+ * Convert DR locale to WP locale by mapping.
+ *
+ * @since  2.0.0
+ */
+function get_wp_locale_by_map( $dr_locale ) {
+  $mapping = get_locale_mapping();
+  $wp_locale = array_search( $dr_locale, $mapping );
+
+  // When there is no matching WP locale, find by 2 characters lang code instead
+  if ( ! $wp_locale ) {
+    $dr_locale_arr = explode( '_', $dr_locale );
+    $lang_code = $dr_locale_arr[0];
+
+    if ( isset( $lang_code ) ) {
+      $filtered = array_filter( $mapping, function( $k ) use ( $lang_code ) {
+        return substr( $k, 0, 2 ) === $lang_code;
+      }, ARRAY_FILTER_USE_KEY );
+      $wp_locale = array_key_first( $filtered );
+    }
+  }
+
+  return $wp_locale ?: 'en_US';
+}
+
+/**
  * Convert WP locale to DR locale by mapping.
  *
  * @since  1.0.0
  */
-function get_dr_locale( $wp_locale ) {
-    $mapping = get_locale_mapping();
-    return $mapping[ $wp_locale ];
+function get_dr_locale_by_map( $wp_locale ) {
+  $mapping = get_locale_mapping();
+  return $mapping[ $wp_locale ];
 }
 
 /**

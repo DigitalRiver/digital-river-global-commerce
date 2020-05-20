@@ -149,6 +149,8 @@ class DRGC_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+
+		$tab = isset( $_GET['tab'] ) ? $_GET['tab'] : null;
 		include_once 'partials/drgc-admin-display.php';
 	}
 
@@ -463,5 +465,32 @@ class DRGC_Admin {
 	public function drgc_big_blue_password_cb() {
 		$password = substr( password_hash( get_option( $this->option_name . '_big_blue_password' ), PASSWORD_DEFAULT ), 0, 16 );
 		echo '<div data-tooltip="Required to manage subscriptions" data-tooltip-location="right"><input type="password" class="regular-text" name="' . $this->option_name . '_big_blue_password' . '" id="' . $this->option_name . '_big_blue_password' . '" value="' . $password . '"></div>';
+	}
+
+	/**
+	 * Reformat locale's data structure for easier usage.
+	 *
+	 * @since    2.0.0
+	 */
+	private function reformat_locale_options( $localeOption ) {
+		return array(
+			'dr_locale' => $localeOption['locale'],
+			'wp_locale' => get_wp_locale_by_map( $localeOption['locale'] ),
+			'currencies' => $localeOption['supportedCurrencies']['currency']
+		);
+	}
+
+	/**
+	 * Call get site API and save locales data to the option.
+	 *
+	 * @since    2.0.0
+	 */
+	public function drgc_sync_locales_ajax() {
+		check_ajax_referer( 'drgc_admin_ajax', 'nonce' );
+		$site_data = DRGC()->site->get_site();
+		$locale_options = array_map( array( $this, 'reformat_locale_options' ), $site_data['site']['localeOptions']['localeOption'] );
+		update_option( $this->option_name . '_default_locale', $site_data['site']['defaultLocale'] );
+		update_option( $this->option_name . '_locale_options', $locale_options );
+		wp_send_json_success();
 	}
 }
