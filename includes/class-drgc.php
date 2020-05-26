@@ -177,6 +177,7 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shortcodes.php';
 
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-authenticator.php';
+		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-site.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shopper.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-cart.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-user-management.php';
@@ -235,6 +236,9 @@ class DRGC {
 		$this->authenticator = new DRGC_Authenticator;
 		$this->authenticator->init( $this->session );
 
+		// Initialize site
+		$this->site = new DRGC_Site;
+
 		// Initialize shopper
 		$this->shopper = new DRGC_Shopper( $this->authenticator );
 
@@ -280,6 +284,9 @@ class DRGC {
 		$this->loader->add_action( 'views_edit-dr_product', $plugin_admin, 'render_products_import_button' );
 
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'clean_variations_on_product_deletion' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_drgc_sync_locales', $plugin_admin, 'drgc_sync_locales_ajax' );
+		$this->loader->add_action( 'wp_ajax_drgc_sync_locales', $plugin_admin, 'drgc_sync_locales_ajax' );
 	}
 
 	/**
@@ -303,7 +310,8 @@ class DRGC {
 		$this->loader->add_action( 'wp_ajax_nopriv_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
 
 		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
-		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99, 2 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 98 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99 );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
 
 		$this->loader->add_action( 'wp_ajax_nopriv_drgc_login', $plugin_public, 'ajax_attempt_auth' );
