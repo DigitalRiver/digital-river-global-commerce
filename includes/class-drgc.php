@@ -310,7 +310,8 @@ class DRGC {
 		$this->loader->add_action( 'wp_ajax_nopriv_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
 
 		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
-		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 98 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_currency_selector', 98 );
 		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99 );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
 

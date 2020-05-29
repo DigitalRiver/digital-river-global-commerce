@@ -551,10 +551,28 @@ class DRGC_Public {
 	 * @since  2.0.0
 	 */
 	public function insert_locale_selector( $content ) {
-		ob_start();
-		include_once 'partials/drgc-locale-selector.php';
-		$append = ob_get_clean();
-		return $content . $append;
+		if ( ! is_page( 'thank-you' ) ) {
+			ob_start();
+			include_once 'partials/drgc-locale-selector.php';
+			$append = ob_get_clean();
+			return $content . $append;
+		}
+		return $content;
+	}
+
+	/**
+	 * Insert currency selector at menu.
+	 *
+	 * @since  2.0.0
+	 */
+	public function insert_currency_selector( $content ) {
+		if ( ! is_page( 'thank-you' ) ) {
+			ob_start();
+			include_once 'partials/drgc-currency-selector.php';
+			$append = ob_get_clean();
+			return $content . $append;
+		}
+		return $content;
 	}
 
 	/**
@@ -609,9 +627,14 @@ class DRGC_Public {
 	 */
 	public function redirect_on_page_load() {
 		if ( ! is_admin() ) {
-			// Load plugin translated text strings
 			$dr_locale = drgc_get_current_dr_locale();
 			$wp_locale = drgc_get_current_wp_locale( $dr_locale );
+
+			// Set cookie for storing selected currency (TODO: replace it with session)
+			$primary_currency = drgc_get_primary_currency( $dr_locale );
+			@setcookie( 'drgc_currency', $primary_currency, 0, '/' );
+
+			// Load plugin translated text strings
 			switch_to_locale( $wp_locale );
 			load_plugin_textdomain(
 				'digital-river-global-commerce',

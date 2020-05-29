@@ -151,6 +151,7 @@ const CheckoutUtils = (($, params) => {
   };
 
   const apiErrorHandler = (jqXHR) => {
+    $('.dr-loading').removeClass('dr-loading');
     if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) {
       const currentError = jqXHR.responseJSON.errors.error[0];
       drToast.displayMessage(currentError.description, 'error');
