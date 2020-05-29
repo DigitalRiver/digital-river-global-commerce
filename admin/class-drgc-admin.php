@@ -493,4 +493,24 @@ class DRGC_Admin {
 		update_option( $this->option_name . '_locale_options', $locale_options );
 		wp_send_json_success();
 	}
+
+	/**
+	 * Remove the Editor from the DRGC post types.
+	 *
+	 * @since    2.0.0
+	 */
+	public function remove_product_editor() {
+		remove_post_type_support( 'dr_product', 'editor' );
+		remove_post_type_support( 'dr_product_variation', 'editor' );
+	}
+
+	/**
+	 * Remove the slug meta box from the DRGC post types.
+	 *
+	 * @since    2.0.0
+	 */
+	public function remove_slug_meta_box() {
+		remove_meta_box( 'slugdiv', 'dr_product', 'normal');
+		remove_meta_box( 'slugdiv', 'dr_product_variation', 'normal');
+	}
 }

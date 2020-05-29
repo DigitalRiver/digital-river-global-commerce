@@ -10,7 +10,6 @@
  * @package    Digital_River_Global_Commerce
  * @subpackage Digital_River_Global_Commerce/admin/partials
  */
-$variations = drgc_get_product_variations( get_the_ID() );
 ?>
 <?php if ( $variations ) : ?>
     <fieldset>
@@ -29,13 +28,7 @@ $variations = drgc_get_product_variations( get_the_ID() );
                     $base_variation_attributes = get_post_meta( get_the_ID(), 'variation_attributes', true );
                     $varying_attribute_array = [];
 
-                    foreach ($base_variation_attributes as $key => $value) {
-                        if ( $value === 'productType' ) {
-                            $base_variation_attributes[$key] = 'product_type';
-                        }
-
-                        $attr = get_post_meta( $variation->ID, $base_variation_attributes[$key], true );
-
+                    foreach ( $var_attr_values[$variation->ID] as $attr ) {
                         if ( ! empty( $attr ) ) {
                             array_push( $varying_attribute_array, $attr );
                         }

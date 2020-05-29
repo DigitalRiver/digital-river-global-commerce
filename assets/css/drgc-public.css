@@ -130,6 +130,8 @@ body.page-cart #dr-minicart, body.page-checkout #dr-minicart, body.page-thank-yo
 
 .dr-pd-item .dr-buy-btn { display: block; margin: 0 auto; }
 
+.dr-pd-item .dr-loading { top: -50px; }
+
 @media only screen and (min-width: 768px) { .dr-pd-list { grid-template-columns: 50% 50%; } }
 
 @media only screen and (min-width: 1200px) { .dr-pd-list { grid-template-columns: 25% 25% 25% 25%; } }

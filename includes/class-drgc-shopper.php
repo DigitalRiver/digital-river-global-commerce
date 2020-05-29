@@ -22,12 +22,12 @@ class DRGC_Shopper extends AbstractHttpService {
 	/**
 	 *  Current shopper locale
 	 */
-	private $locale;
+	public $locale;
 
 	/**
 	 *  Shopper currency
 	 */
-	private $currency;
+	public $currency;
 
 	/**
 	 * Refresh token for limited access only | string
@@ -407,6 +407,34 @@ class DRGC_Shopper extends AbstractHttpService {
 			$res = $this->get($url);
 
 			return $res['order'];
+		} catch (\Exception $e) {
+			return false;
+		}
+	}
+
+	/**
+	 * Update locale and currency for the current shopper
+	 *
+	 * @param string $locale locale
+	 * @param string $currency currency code
+	 * 
+	 * @return bool
+	 */
+	public function update_locale_and_currency( $locale, $currency ) {
+		$params = array(
+			'locale'         => $locale,
+			'currency'       => $currency
+		);
+
+		$url = '/v1/shoppers/me?' . http_build_query( $params );
+
+		try {
+			$this->post( $url );
+
+			$this->locale = $locale;
+			$this->currency = $currency;
+
+			return true;
 		} catch (\Exception $e) {
 			return false;
 		}
