@@ -484,6 +484,7 @@ class DRGC_Public {
 
 			if ( ! empty( $products ) ) {
 				echo get_permalink( $products[0]->ID );
+				die();
 			}
 		}
 
@@ -519,7 +520,7 @@ class DRGC_Public {
 			'menu_item_parent' => 0,
 			'ID'               => 'login',
 			'db_id'            => 'login',
-			'url'              => get_site_url() . '/login',
+			'url'              => get_permalink( get_page_by_path( 'login' ) ),
 			'classes'          => $is_logged_in ? array( 'menu-item', 'menu-item-has-children' ) : array( 'menu-item' ),
 			'target'           => null,
 			'xfn'              => null,
@@ -821,5 +822,19 @@ class DRGC_Public {
 		} else {
 			wp_send_json_error();
 		}
+	}
+
+	/**
+	 * Append query string at URL.
+	 *
+	 * @since  2.0.0
+	 * @param  string
+	 * @return string
+	 */
+	public function append_query_string( $url ) {
+		if ( isset( $_GET['locale'] ) ) {
+			$url = add_query_arg( 'locale', $_GET['locale'], $url );
+		}
+		return $url;
 	}
 }
