@@ -14,21 +14,6 @@
 <div class="meta-form-group">
     <table class="form-table">
         <tbody>
-            <?php if ( $post_parent > 0 ) : ?>
-                <fieldset>
-                    <legend><span><?php echo __( 'Variation Attributes', 'digital-river-global-commerce' ); ?></span></legend>
-                    <?php foreach ($var_attr_values as $key => $value) : ?>
-                        <dl>
-                            <dt>
-                                <label><?php echo esc_attr( $key ); ?>: </label>
-                            </dt>
-                            <dd>
-                                <div class="regular-text" id="variation-attributes"><?php echo esc_attr( $value ); ?></div>
-                            </dd>
-                        </dl>
-                    <?php endforeach; ?>
-                </fieldset>
-            <?php endif; ?>
             <tr>
                 <th scope="row"> <label for="gc-product-id"><?php echo __( 'GC Product ID', 'digital-river-global-commerce' ); ?></label></th>
                 <td><input type="text" class="regular-text" id="gc-product-id" name="gc_product_id" value="<?php echo esc_attr( get_post_meta( get_the_ID(), 'gc_product_id', true ) ); ?>" readonly /></td>
@@ -53,6 +38,56 @@
             <?php endforeach; ?>
         </nav>
         <div class="tab-content">
+            <?php if ( $variations ) : ?>
+                <fieldset>
+                    <legend><span><?php echo __( 'Variations', 'digital-river-global-commerce' ); ?></span></legend>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th><?php echo __( 'ID', 'digital-river-global-commerce' ); ?></th>
+                                <th><?php echo __( 'Internal Variation Name', 'digital-river-global-commerce' ); ?></th>
+                                <th><?php echo __( 'Variation Attributes', 'digital-river-global-commerce' ); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php 
+                            foreach ( $variations as $variation ) {
+                                $base_variation_attributes = get_post_meta( get_the_ID(), 'variation_attributes', true );
+                                $varying_attribute_array = [];
+
+                                foreach ( $var_attr_values[$variation->ID] as $attr ) {
+                                    if ( ! empty( $attr ) ) {
+                                        array_push( $varying_attribute_array, $attr );
+                                    }
+                                }
+                        ?>
+                                <tr>
+                                    <td><a href="<?php echo admin_url( 'post.php?post=' . $variation->ID . '&action=edit' ) ?>"><?php echo esc_attr( get_post_meta( $variation->ID, 'gc_product_id', true ) ) ?></a></td>
+                                    <td><?php echo esc_attr( $variation->post_title ) ?></td>
+                                    <td><?php echo esc_attr( implode( ', ', $varying_attribute_array) ) ?></td>
+                                </tr>
+                        <?php
+                            }
+                        ?>
+                        </tbody>
+                    </table>
+                </fieldset>
+            <?php endif; ?>
+            <?php if ( $post_parent > 0 ) : ?>
+                <fieldset>
+                    <legend><span><?php echo __( 'Variation Attributes', 'digital-river-global-commerce' ); ?></span></legend>
+                    <?php foreach ($var_attr_values as $key => $value) : ?>
+                        <dl>
+                            <dt>
+                                <label><?php echo esc_attr( $key ); ?>: </label>
+                            </dt>
+                            <dd>
+                                <div class="regular-text" id="variation-attributes"><?php echo esc_attr( $value ); ?></div>
+                            </dd>
+                        </dl>
+                    <?php endforeach; ?>
+                </fieldset>
+            <?php endif; ?>
             <table class="form-table">
                 <tbody>
                     <tr>

@@ -260,7 +260,6 @@ class DRGC_Post_Types {
 
 		echo '<h2 id="drcc-link"><a href="https://gc.digitalriver.com/gc/ent/site/selectSite.do?siteID=' . get_option( 'drgc_site_id' ) . '" target="_blank">Manage Products</a></h2>';
 
-		include_once 'partials/drgc-product-variations.php';
 		include_once 'partials/drgc-product-details-meta-box.php';
 	}
 
