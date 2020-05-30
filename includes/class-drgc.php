@@ -293,6 +293,7 @@ class DRGC {
 
 		$this->loader->add_action( 'init', $plugin_admin, 'remove_product_editor' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_slug_meta_box' );
+		$this->loader->add_action( 'load-post.php', $plugin_admin, 'disable_drag_meta_box' );
 	}
 
 	/**

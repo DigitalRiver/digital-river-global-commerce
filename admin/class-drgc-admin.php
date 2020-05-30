@@ -513,4 +513,15 @@ class DRGC_Admin {
 		remove_meta_box( 'slugdiv', 'dr_product', 'normal');
 		remove_meta_box( 'slugdiv', 'dr_product_variation', 'normal');
 	}
+
+	/**
+	 * Disable dragging of the meta box for the DRGC post types.
+	 *
+	 * @since    2.0.0
+	 */
+	public function disable_drag_meta_box() {
+		if ( ( get_current_screen()->post_type === 'dr_product' ) || ( get_current_screen()->post_type === 'dr_product_variation' ) ) {
+			wp_deregister_script( 'postbox' );
+		}
+	}
 }
