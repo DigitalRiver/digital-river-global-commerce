@@ -65,7 +65,7 @@ $total_value = $order['order']['pricing']['formattedTotal'] ?? '';
 
 <div class="dr-summary__total">
 
-    <p class="total-label"><?php echo drgc_should_display_vat( $order['order']['pricing']['total']['currency'] ) ? __( 'Order Total Incl. VAT', 'digital-river-global-commerce' ) : __( 'Order Total', 'digital-river-global-commerce' ); ?></p>
+    <p class="total-label"><?php echo drgc_should_display_vat( $order['order']['pricing']['total']['currency'] ) ? __( 'Total Incl. VAT', 'digital-river-global-commerce' ) : __( 'Total', 'digital-river-global-commerce' ); ?></p>
 
     <p class="total-value"><?php echo $total_value; ?></p>
 
