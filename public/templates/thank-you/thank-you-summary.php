@@ -14,7 +14,6 @@
 
 <?php
 // $subtotal_items = $order['order']['totalItemsInCart'];
-
 $subtotal_items = 0;
 
 if ( isset( $order['order'] ) ) {
@@ -42,7 +41,7 @@ $total_value = $order['order']['pricing']['formattedTotal'] ?? '';
 
 <div class="dr-summary__tax">
 
-    <p class="item-label"><?php echo __( 'Tax', 'digital-river-global-commerce' ) ?></p>
+    <p class="item-label"><?php echo drgc_should_display_vat( $order['order']['pricing']['total']['currency'] ) ? __( 'VAT', 'digital-river-global-commerce' ) : __( 'Tax', 'digital-river-global-commerce' ); ?></p>
 
     <p class="item-value"><?php echo $tax_value; ?></p>
 
@@ -66,7 +65,7 @@ $total_value = $order['order']['pricing']['formattedTotal'] ?? '';
 
 <div class="dr-summary__total">
 
-    <p class="total-label"><?php echo __( 'Total', 'digital-river-global-commerce' ) ?></p>
+    <p class="total-label"><?php echo drgc_should_display_vat( $order['order']['pricing']['total']['currency'] ) ? __( 'Order Total Incl. VAT', 'digital-river-global-commerce' ) : __( 'Order Total', 'digital-river-global-commerce' ); ?></p>
 
     <p class="total-value"><?php echo $total_value; ?></p>
 
