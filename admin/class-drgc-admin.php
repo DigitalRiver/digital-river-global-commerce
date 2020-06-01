@@ -524,4 +524,65 @@ class DRGC_Admin {
 			wp_deregister_script( 'postbox' );
 		}
 	}
+
+  /**
+   * Create a translation string file for menu labels.
+   *
+   * @since    2.0.0
+   */
+	public function create_menu_label_trans_strings() {
+    $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
+    $locs = get_nav_menu_locations();
+
+    foreach ( $locs as $loc => $value ) {
+      $labels = '';
+      $menu = wp_get_nav_menu_object( $value );
+
+      if ( $menu ) {
+        $items = wp_get_nav_menu_items( $menu->term_id );
+
+        foreach ( $items as $k => $v ) {
+          $labels = $labels . ( empty( $labels ) ? '' : ' . ' . PHP_EOL ) . '__( ' . '"' . $items[ $k ]->title . '"' . ', "digital-river-global-commerce" )';
+        }
+      }
+    } 
+
+    fwrite( $fh, "<?php" . PHP_EOL . "\$drgc_nav_menu_labels = " . PHP_EOL . "$labels;" ) or die( __( 'Could not write to file', 'digital-river-global-commerce' ) );
+    fclose( $fh );
+	}
+
+  /**
+   * Create a translation string file for category names.
+   *
+   * @since    2.0.0
+   */
+	public function create_category_name_trans_strings() {
+    $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-category-name-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
+    $terms = get_terms( array( 
+      'taxonomy' => 'dr_product_category', 
+      'hide_empty' => false 
+    ) );
+
+    if ( ! empty( $terms ) ) {
+      $cat_names = '';
+
+      foreach ( $terms as $term ) {
+        $cat_names = $cat_names . ( empty( $cat_names ) ? '' : ' . ' . PHP_EOL ) . '__( ' . '"' . $term->name . '"' . ', "digital-river-global-commerce" )';
+      }
+
+      fwrite( $fh, "<?php" . PHP_EOL . "\$drgc_category_names = " . PHP_EOL . "$cat_names;" ) or die( __( 'Could not write to file', 'digital-river-global-commerce' ) );
+      fclose( $fh );
+    }
+  }
+  
+  /**
+   * Initiate the translation string file for category names.
+   *
+   * @since    2.0.0
+   */
+  public function init_category_name_trans_strings() {
+    if ( ! file_exists( plugin_dir_path( __DIR__ ) . 'drgc-category-name-trans-strings.php' ) ) {
+      $this->create_category_name_trans_strings();
+    }
+  }
 }
