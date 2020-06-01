@@ -36,6 +36,10 @@ const CheckoutModule = (($) => {
                 drgc_params.translations.tax_label
             );
             $('.dr-summary__shipping .item-label').text(drgc_params.translations.shipping_label);
+            $('.dr-summary__total .total-label').text(shouldDisplayVat() ?
+                drgc_params.translations.order_total_vat_label :
+                drgc_params.translations.order_total_label
+            );
         } else {
             $('.dr-summary__tax .item-label').text(shouldDisplayVat() ?
                 drgc_params.translations.estimated_vat_label :
@@ -141,7 +145,7 @@ const CheckoutModule = (($) => {
         });
 
         payload[addressType].emailAddress = email;
-        
+
         if (payload[addressType].country !== 'US') {
             payload[addressType].countrySubdivision = '';
         }
@@ -419,7 +423,7 @@ jQuery(document).ready(($) => {
             const isFormValid = CheckoutModule.validateAddress($form);
 
             if (!isFormValid) return;
-            
+
             addressPayload.shipping = CheckoutModule.buildAddressPayload($form);
             const cartRequest = {
                 address: addressPayload.shipping
@@ -466,7 +470,7 @@ jQuery(document).ready(($) => {
 
             if (!isFormValid) return;
 
-            addressPayload.billing = (billingSameAsShipping) ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form); 
+            addressPayload.billing = (billingSameAsShipping) ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
             const cartRequest = {
                 address: addressPayload.billing
             };
@@ -485,7 +489,7 @@ jQuery(document).ready(($) => {
 
             DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest).then(() => DRCommerceApi.getCart({expand: 'all'})).then((data) => {
                 // Still needs to apply shipping option once again or the value will be rolled back after updateCart (API's bug)
-                return drgc_params.cart.cart.hasPhysicalProduct ? 
+                return drgc_params.cart.cart.hasPhysicalProduct ?
                     CheckoutModule.preselectShippingOption(data) :
                     new Promise(resolve => resolve(data));
             }).then((data) => {
@@ -542,7 +546,7 @@ jQuery(document).ready(($) => {
         $('form#checkout-delivery-form').on('change', 'input[type="radio"]', function() {
             const $form = $('form#checkout-delivery-form');
             const shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
-            
+
             DRCommerceApi.applyShippingOption(shippingOptionId).then((data) => {
                 CheckoutUtils.updateSummaryPricing(data.cart);
             }).catch((jqXHR) => {
