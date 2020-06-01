@@ -169,7 +169,7 @@ class DRGC_Public {
 			'cartUrl'           =>  drgc_get_page_link( 'cart' ),
 			'checkoutUrl'       =>  drgc_get_page_link( 'checkout' ),
 			'mySubsUrl'         =>  drgc_get_page_link( 'my-subscriptions' ),
-			'loginPath'         =>  parse_url( drgc_get_page_link( 'login' ) )['path'],
+			'loginPath'         =>  drgc_get_page_link( 'login' ),
 			'siteID'            =>  get_option( 'drgc_site_id' ),
 			'domain'            =>  get_option( 'drgc_domain' ),
 			'digitalRiverKey'   =>  get_option( 'drgc_digitalRiver_key' ),

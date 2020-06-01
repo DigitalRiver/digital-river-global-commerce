@@ -3418,6 +3418,7 @@ jQuery(document).ready(function ($) {
         },
         payment: function payment() {
           var cart = drgc_params.cart.cart;
+          var url = window.location.href;
           var payPalItems = [];
           $.each(cart.lineItems.lineItem, function (index, item) {
             payPalItems.push({
@@ -3431,8 +3432,8 @@ jQuery(document).ready(function ($) {
             'amount': cart.pricing.orderTotal.value,
             'currency': 'USD',
             'payPal': {
-              'returnUrl': window.location.href + '?ppsuccess=true',
-              'cancelUrl': window.location.href + '?ppcancel=true',
+              'returnUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppsuccess=true',
+              'cancelUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppcancel=true',
               'items': payPalItems,
               'taxAmount': cart.pricing.tax.value,
               'requestShipping': requestShipping
