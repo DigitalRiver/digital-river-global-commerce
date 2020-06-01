@@ -20,16 +20,6 @@
 
 		<div class="row">
 
-			<div class="col">
-				<div class=float-right>
-					<?php drgc_currency_toggler(); ?>
-				</div>
-			</div>
-
-		</div>
-
-		<div class="row">
-
 			<div class="col-md-12">
 
 				<?php if ( have_posts() ) : ?>

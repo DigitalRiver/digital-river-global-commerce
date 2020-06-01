@@ -41,8 +41,6 @@ $is_auto_renewal = false;
             <?php if ( 1 < count($cart['cart']['lineItems'] )) : ?>
             <div class="dr-cart__estimate" id="cart-estimate">
 
-                <?php drgc_currency_toggler(); ?>
-
                 <?php include_once DRGC_PLUGIN_DIR . 'public/templates/cart/cart-summary.php'; ?>
 
             </div>

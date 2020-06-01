@@ -25,7 +25,7 @@ const CheckoutModule = (($) => {
     };
 
     const shouldDisplayVat = () => {
-        const currency = $('.dr-currency-select').val();
+        const currency = drgc_params.selectedCurrency;
         return (currency === 'GBP' || currency === 'EUR');
     };
 
@@ -46,11 +46,10 @@ const CheckoutModule = (($) => {
     };
 
     const getCountryOptionsFromGC = () => {
-        const selectedLocale = $('.dr-currency-select option:selected').data('locale') || drgc_params.drLocale;
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: 'GET',
-                url: `https://drh-fonts.img.digitalrivercontent.net/store/${drgc_params.siteID}/${selectedLocale}/DisplayPage/id.SimpleRegistrationPage`,
+                url: `https://drh-fonts.img.digitalrivercontent.net/store/${drgc_params.siteID}/${drgc_params.drLocale}/DisplayPage/id.SimpleRegistrationPage`,
                 success: (response) => {
                     const addressTypes = drgc_params.cart.cart.hasPhysicalProduct ? ['shipping', 'billing'] : ['billing'];
                     addressTypes.forEach((type) => {

@@ -135,7 +135,7 @@ function drgc_the_posts_pagination( $wp_query ) {
 }
 
 /**
- * Currency switcher
+ * Currency switcher (Old currency selector, will be deprecated after it's not used by any theme)
  */
 function drgc_currency_toggler() {
 	$locales = get_option( 'drgc_store_locales' );

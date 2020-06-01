@@ -372,6 +372,7 @@ jQuery(document).ready(($) => {
       });
   });
 
+  // Old currency selector, will be deprecated after it's not used by any theme
   $('body').on('change', '.dr-currency-select', (e) => {
     e.preventDefault();
     const $this = $(e.target);

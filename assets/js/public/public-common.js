@@ -69,7 +69,7 @@ jQuery(document).ready(($) => {
     DRCommerceApi.updateShopper({ locale: drgc_params.drLocale, currency: targetCurrency })
       .then(() => {
         document.cookie = `drgc_currency=${targetCurrency}; path=/`;
-        window.location.reload();
+        window.location.reload(true);
       })
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);

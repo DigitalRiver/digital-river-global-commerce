@@ -2096,7 +2096,8 @@ jQuery(document).ready(function ($) {
       checkout_utils.apiErrorHandler(jqXHR);
       $('.dr-cart__content').removeClass('dr-loading');
     });
-  });
+  }); // Old currency selector, will be deprecated after it's not used by any theme
+
   $('body').on('change', '.dr-currency-select', function (e) {
     e.preventDefault();
     var $this = $(e.target);
@@ -2707,7 +2708,7 @@ var CheckoutModule = function ($) {
   };
 
   var shouldDisplayVat = function shouldDisplayVat() {
-    var currency = $('.dr-currency-select').val();
+    var currency = drgc_params.selectedCurrency;
     return currency === 'GBP' || currency === 'EUR';
   };
 
@@ -2722,11 +2723,10 @@ var CheckoutModule = function ($) {
   };
 
   var getCountryOptionsFromGC = function getCountryOptionsFromGC() {
-    var selectedLocale = $('.dr-currency-select option:selected').data('locale') || drgc_params.drLocale;
     return new Promise(function (resolve, reject) {
       $.ajax({
         type: 'GET',
-        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(selectedLocale, "/DisplayPage/id.SimpleRegistrationPage"),
+        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(drgc_params.drLocale, "/DisplayPage/id.SimpleRegistrationPage"),
         success: function success(response) {
           var addressTypes = drgc_params.cart.cart.hasPhysicalProduct ? ['shipping', 'billing'] : ['billing'];
           addressTypes.forEach(function (type) {
@@ -3568,7 +3568,7 @@ jQuery(document).ready(function ($) {
       currency: targetCurrency
     }).then(function () {
       document.cookie = "drgc_currency=".concat(targetCurrency, "; path=/");
-      window.location.reload();
+      window.location.reload(true);
     })["catch"](function (jqXHR) {
       checkout_utils.apiErrorHandler(jqXHR);
     });

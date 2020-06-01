@@ -16,7 +16,7 @@
         echo __( 'Your cart is empty!', 'digital-river-global-commerce' );
         $display = 'style="display:none;"';
     }
-    
+
     $customerEmail = '';
     if ( $customer && $customer['id'] != 'Anonymous' ) {
         $customerEmail = $customer['emailAddress'];
@@ -68,8 +68,6 @@
         </div>
 
         <div class="dr-summary dr-summary--checkout">
-
-            <?php drgc_currency_toggler(); ?>
 
             <div class="dr-summary__products">
 
