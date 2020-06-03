@@ -524,15 +524,40 @@ class DRGC_Admin {
 		if ( ( get_current_screen()->post_type === 'dr_product' ) || ( get_current_screen()->post_type === 'dr_product_variation' ) ) {
 			wp_deregister_script( 'postbox' );
 		}
-	}
+  }
+  
+  /**
+   * Create translation strings for supported country names.
+   *
+   * @since    2.0.0
+   */
+  public function create_country_name_trans_strings() {
+    $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
+    $locales = get_option( 'drgc_locale_options' );
+
+    foreach ( $locales as $locale ) {
+      $names = $names . ( empty( $names ) ? '' : ' . ' . PHP_EOL ) . '__( ' . '"' . get_dr_country_name( $locale['dr_locale'] ) . '"' . ', "digital-river-global-commerce" )';
+    }
+
+    fwrite( $fh, "<?php" . PHP_EOL . "\$drgc_supported_country_names = " . PHP_EOL . "$names;" . PHP_EOL ) or die( __( 'Could not write to file', 'digital-river-global-commerce' ) );
+    fclose( $fh );
+  }
 
   /**
-   * Create a translation string file for menu labels.
+   * Create translation strings for menu labels.
    *
    * @since    2.0.0
    */
 	public function create_menu_label_trans_strings() {
-    $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
+    $filename = plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php';
+    $content = file_get_contents( $filename );
+    $pos = strpos( $content, 'drgc_nav_menu_labels');
+    
+    if ( $pos > 0 ) {
+      $content_chunks = explode( '$drgc_nav_menu_labels', $content );
+      $content = $content_chunks[0];
+    }
+
     $locs = get_nav_menu_locations();
 
     foreach ( $locs as $loc => $value ) {
@@ -546,14 +571,15 @@ class DRGC_Admin {
           $labels = $labels . ( empty( $labels ) ? '' : ' . ' . PHP_EOL ) . '__( ' . '"' . $items[ $k ]->title . '"' . ', "digital-river-global-commerce" )';
         }
       }
-    } 
+    }
 
-    fwrite( $fh, "<?php" . PHP_EOL . "\$drgc_nav_menu_labels = " . PHP_EOL . "$labels;" ) or die( __( 'Could not write to file', 'digital-river-global-commerce' ) );
-    fclose( $fh );
+    $content = $content . "\$drgc_nav_menu_labels = " . PHP_EOL . "$labels;";
+    
+    file_put_contents( $filename, $content );
 	}
 
   /**
-   * Create a translation string file for category names.
+   * Create translation strings for category names.
    *
    * @since    2.0.0
    */
@@ -577,13 +603,17 @@ class DRGC_Admin {
   }
   
   /**
-   * Initiate the translation string file for category names.
+   * Initiate the translation string files.
    *
    * @since    2.0.0
    */
-  public function init_category_name_trans_strings() {
+  public function init_trans_string_files() {
     if ( ! file_exists( plugin_dir_path( __DIR__ ) . 'drgc-category-name-trans-strings.php' ) ) {
       $this->create_category_name_trans_strings();
+    }
+
+    if ( ! file_exists( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php' ) ) {
+      $this->create_country_name_trans_strings();
     }
   }
 }

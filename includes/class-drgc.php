@@ -295,7 +295,7 @@ class DRGC {
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_slug_meta_box' );
 		$this->loader->add_action( 'load-post.php', $plugin_admin, 'disable_drag_meta_box' );
 
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'init_category_name_trans_strings' );
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'init_trans_string_files' );
 		$this->loader->add_action( 'edit_dr_product_category', $plugin_admin, 'create_category_name_trans_strings' );
 
 		$this->loader->add_action( 'wp_update_nav_menu', $plugin_admin, 'create_menu_label_trans_strings' );
