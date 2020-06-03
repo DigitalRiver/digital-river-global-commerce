@@ -39,9 +39,8 @@ class DRGC_Product_Details extends AbstractHttpService {
 	 * Initialize the product details object.
 	 */
 	public function init() {
-		$currencies = get_option( 'drgc_store_locales' );
 		$this->current_locale = drgc_get_current_dr_locale();
-		$this->current_currency = $currencies['locales'][ $this->current_locale ];
+    $this->current_currency = drgc_get_selected_currency();
 		$this->token = $this->authenticator->get_token();
 	}
 

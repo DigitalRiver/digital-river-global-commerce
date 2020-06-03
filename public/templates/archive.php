@@ -11,9 +11,8 @@
  * @subpackage Digital_River_Global_Commerce/public/templates
  */
 $plugin = DRGC();
-$currencies = get_option( 'drgc_store_locales' );
 $current_locale = drgc_get_current_dr_locale();
-$current_currency = $currencies['locales'][ $current_locale ];
+$current_currency = drgc_get_selected_currency();
 
 if ( ( $plugin->shopper->locale !== $current_locale ) || ( $plugin->shopper->currency !== $current_currency ) ) {
     $plugin->shopper->update_locale_and_currency( $current_locale, $current_currency );
