@@ -43,7 +43,7 @@
                   <span class="description"><?php echo ( $locale_option['dr_locale'] === $drgc_default_locale ) ? __( '(Default)', 'digital-river-global-commerce' ) : '' ?></span>
                 </td>
                 <td><?php echo $locale_option['wp_locale'] ?></td>
-                <td><?php echo join( ', ', $locale_option['currencies'] ) ?></td>
+                <td><?php echo join( ', ', $locale_option['supported_currencies'] ) ?></td>
               </tr>
             <?php } ?>
             </tbody>

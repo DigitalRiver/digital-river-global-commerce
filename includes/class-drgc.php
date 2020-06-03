@@ -321,8 +321,15 @@ class DRGC {
 		$this->loader->add_action( 'wp_ajax_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
 		$this->loader->add_action( 'wp_ajax_nopriv_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
 
+		$this->loader->add_filter( 'page_link', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'post_link', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'post_type_archive_link', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'the_permalink', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'home_url', $plugin_public, 'append_query_string' );
+
 		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
-		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 98 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_currency_selector', 98 );
 		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99 );
 		$this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
 

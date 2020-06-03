@@ -25,7 +25,7 @@ const CheckoutModule = (($) => {
     };
 
     const shouldDisplayVat = () => {
-        const currency = $('.dr-currency-select').val();
+        const currency = drgc_params.selectedCurrency;
         return (currency === 'GBP' || currency === 'EUR');
     };
 
@@ -46,11 +46,10 @@ const CheckoutModule = (($) => {
     };
 
     const getCountryOptionsFromGC = () => {
-        const selectedLocale = $('.dr-currency-select option:selected').data('locale') || drgc_params.drLocale;
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: 'GET',
-                url: `https://drh-fonts.img.digitalrivercontent.net/store/${drgc_params.siteID}/${selectedLocale}/DisplayPage/id.SimpleRegistrationPage`,
+                url: `https://drh-fonts.img.digitalrivercontent.net/store/${drgc_params.siteID}/${drgc_params.drLocale}/DisplayPage/id.SimpleRegistrationPage`,
                 success: (response) => {
                     const addressTypes = drgc_params.cart.cart.hasPhysicalProduct ? ['shipping', 'billing'] : ['billing'];
                     addressTypes.forEach((type) => {
@@ -141,7 +140,7 @@ const CheckoutModule = (($) => {
         });
 
         payload[addressType].emailAddress = email;
-        
+
         if (payload[addressType].country !== 'US') {
             payload[addressType].countrySubdivision = '';
         }
@@ -419,7 +418,7 @@ jQuery(document).ready(($) => {
             const isFormValid = CheckoutModule.validateAddress($form);
 
             if (!isFormValid) return;
-            
+
             addressPayload.shipping = CheckoutModule.buildAddressPayload($form);
             const cartRequest = {
                 address: addressPayload.shipping
@@ -466,7 +465,7 @@ jQuery(document).ready(($) => {
 
             if (!isFormValid) return;
 
-            addressPayload.billing = (billingSameAsShipping) ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form); 
+            addressPayload.billing = (billingSameAsShipping) ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
             const cartRequest = {
                 address: addressPayload.billing
             };
@@ -485,7 +484,7 @@ jQuery(document).ready(($) => {
 
             DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest).then(() => DRCommerceApi.getCart({expand: 'all'})).then((data) => {
                 // Still needs to apply shipping option once again or the value will be rolled back after updateCart (API's bug)
-                return drgc_params.cart.cart.hasPhysicalProduct ? 
+                return drgc_params.cart.cart.hasPhysicalProduct ?
                     CheckoutModule.preselectShippingOption(data) :
                     new Promise(resolve => resolve(data));
             }).then((data) => {
@@ -542,7 +541,7 @@ jQuery(document).ready(($) => {
         $('form#checkout-delivery-form').on('change', 'input[type="radio"]', function() {
             const $form = $('form#checkout-delivery-form');
             const shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
-            
+
             DRCommerceApi.applyShippingOption(shippingOptionId).then((data) => {
                 CheckoutUtils.updateSummaryPricing(data.cart);
             }).catch((jqXHR) => {
@@ -754,6 +753,7 @@ jQuery(document).ready(($) => {
                 },
                 payment: function() {
                     const cart = drgc_params.cart.cart;
+                    const url = window.location.href;
                     let payPalItems = [];
 
                     $.each(cart.lineItems.lineItem, function( index, item ) {
@@ -769,8 +769,8 @@ jQuery(document).ready(($) => {
                         'amount': cart.pricing.orderTotal.value,
                         'currency': 'USD',
                         'payPal': {
-                            'returnUrl': window.location.href + '?ppsuccess=true',
-                            'cancelUrl': window.location.href + '?ppcancel=true',
+                            'returnUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppsuccess=true',
+                            'cancelUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppcancel=true',
                             'items': payPalItems,
                             'taxAmount': cart.pricing.tax.value,
                             'requestShipping': requestShipping

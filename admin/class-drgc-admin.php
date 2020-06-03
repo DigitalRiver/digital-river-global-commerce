@@ -476,7 +476,8 @@ class DRGC_Admin {
 		return array(
 			'dr_locale' => $localeOption['locale'],
 			'wp_locale' => get_wp_locale_by_map( $localeOption['locale'] ),
-			'currencies' => $localeOption['supportedCurrencies']['currency']
+			'primary_currency' => $localeOption['primaryCurrency'],
+			'supported_currencies' => $localeOption['supportedCurrencies']['currency']
 		);
 	}
 
