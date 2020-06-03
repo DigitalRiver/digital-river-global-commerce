@@ -267,6 +267,27 @@ function get_wp_locale_by_map( $dr_locale ) {
 }
 
 /**
+ * Get DR country name by DR locale.
+ *
+ * @since  2.0.0
+ */
+function get_dr_country_name( $dr_locale ) {
+  $mapping = get_full_locale_mapping();
+  $country = isset( $mapping[$dr_locale] ) ? $mapping[$dr_locale]['country'] : $mapping['en_US']['country'] ;
+  return $country;
+}
+
+/**
+ * Get DR country code by extracting a substring from DR locale.
+ *
+ * @since  2.0.0
+ */
+function get_dr_country_code( $dr_locale ) {
+  $arr = explode( '_', $dr_locale );
+  return isset( $arr[1] ) ? strtolower( $arr[1] ) : '';
+}
+
+/**
  * Convert WP locale to DR locale by mapping. (Will be deprecated once new localization is done)
  *
  * @since  1.0.0

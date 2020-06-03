@@ -1305,6 +1305,8 @@ var CheckoutUtils = function ($, params) {
   };
 
   var apiErrorHandler = function apiErrorHandler(jqXHR) {
+    $('.dr-loading').removeClass('dr-loading');
+
     if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) {
       var currentError = jqXHR.responseJSON.errors.error[0];
       drToast.displayMessage(currentError.description, 'error');
@@ -1982,7 +1984,7 @@ var CartModule = function ($) {
       var salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
       var listPrice = lineItem.pricing.formattedListPriceWithQuantity;
       var promise = checkout_utils.getPermalink(parentProductID).then(function (permalink) {
-        var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-sku\">\n                  <span>").concat(drgc_params.translations.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n              <span class=\"regular-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n            </div>\n          </div>");
+        var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-sku\">\n                  <span>").concat(drgc_params.translations.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n              <span class=\"regular-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n            </div>\n          </div>");
         lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
       });
       promises.push(promise);
@@ -2094,7 +2096,8 @@ jQuery(document).ready(function ($) {
       checkout_utils.apiErrorHandler(jqXHR);
       $('.dr-cart__content').removeClass('dr-loading');
     });
-  });
+  }); // Old currency selector, will be deprecated after it's not used by any theme
+
   $('body').on('change', '.dr-currency-select', function (e) {
     e.preventDefault();
     var $this = $(e.target);
@@ -2705,7 +2708,7 @@ var CheckoutModule = function ($) {
   };
 
   var shouldDisplayVat = function shouldDisplayVat() {
-    var currency = $('.dr-currency-select').val();
+    var currency = drgc_params.selectedCurrency;
     return currency === 'GBP' || currency === 'EUR';
   };
 
@@ -2720,11 +2723,10 @@ var CheckoutModule = function ($) {
   };
 
   var getCountryOptionsFromGC = function getCountryOptionsFromGC() {
-    var selectedLocale = $('.dr-currency-select option:selected').data('locale') || drgc_params.drLocale;
     return new Promise(function (resolve, reject) {
       $.ajax({
         type: 'GET',
-        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(selectedLocale, "/DisplayPage/id.SimpleRegistrationPage"),
+        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(drgc_params.drLocale, "/DisplayPage/id.SimpleRegistrationPage"),
         success: function success(response) {
           var addressTypes = drgc_params.cart.cart.hasPhysicalProduct ? ['shipping', 'billing'] : ['billing'];
           addressTypes.forEach(function (type) {
@@ -3416,6 +3418,7 @@ jQuery(document).ready(function ($) {
         },
         payment: function payment() {
           var cart = drgc_params.cart.cart;
+          var url = window.location.href;
           var payPalItems = [];
           $.each(cart.lineItems.lineItem, function (index, item) {
             payPalItems.push({
@@ -3429,8 +3432,8 @@ jQuery(document).ready(function ($) {
             'amount': cart.pricing.orderTotal.value,
             'currency': 'USD',
             'payPal': {
-              'returnUrl': window.location.href + '?ppsuccess=true',
-              'cancelUrl': window.location.href + '?ppcancel=true',
+              'returnUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppsuccess=true',
+              'cancelUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppcancel=true',
               'items': payPalItems,
               'taxAmount': cart.pricing.tax.value,
               'requestShipping': requestShipping
@@ -3537,19 +3540,35 @@ jQuery(document).ready(function ($) {
       $(elem).next('.invalid-feedback').text(elem.validationMessage);
     }
   });
-  $('#dr-locale-selector .dr-current-locale').click(function (e) {
+  $('#dr-locale-selector .dr-current-locale, #dr-currency-selector, .dr-selected-currency').click(function (e) {
     e.preventDefault();
   });
   $('#dr-locale-selector .dr-other-locales a').click(function (e) {
     e.preventDefault();
     var $this = $(e.target);
     var targetLocale = $this.data('dr-locale');
+    if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');else $('body').addClass('dr-loading');
     commerce_api.updateShopper({
       locale: targetLocale
     }).then(function () {
       var params = new URLSearchParams(location.search);
       params.set('locale', targetLocale);
       window.location.search = params.toString();
+    })["catch"](function (jqXHR) {
+      checkout_utils.apiErrorHandler(jqXHR);
+    });
+  });
+  $('#dr-currency-selector .dr-other-currencies a').click(function (e) {
+    e.preventDefault();
+    var $this = $(e.target);
+    var targetCurrency = $this.data('dr-currency');
+    if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');else $('body').addClass('dr-loading');
+    commerce_api.updateShopper({
+      locale: drgc_params.drLocale,
+      currency: targetCurrency
+    }).then(function () {
+      document.cookie = "drgc_currency=".concat(targetCurrency, "; path=/");
+      window.location.reload(true);
     })["catch"](function (jqXHR) {
       checkout_utils.apiErrorHandler(jqXHR);
     });

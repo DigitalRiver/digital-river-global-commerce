@@ -37,7 +37,7 @@ jQuery(document).ready(($) => {
     }
   });
 
-  $('#dr-locale-selector .dr-current-locale').click((e) => {
+  $('#dr-locale-selector .dr-current-locale, #dr-currency-selector, .dr-selected-currency').click((e) => {
     e.preventDefault();
   });
 
@@ -46,11 +46,30 @@ jQuery(document).ready(($) => {
     const $this = $(e.target);
     const targetLocale = $this.data('dr-locale');
 
+    if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
+    else $('body').addClass('dr-loading');
     DRCommerceApi.updateShopper({ locale: targetLocale })
       .then(() => {
         const params = new URLSearchParams(location.search);
         params.set('locale', targetLocale);
         window.location.search = params.toString();
+      })
+      .catch((jqXHR) => {
+        CheckoutUtils.apiErrorHandler(jqXHR);
+      });
+  });
+
+  $('#dr-currency-selector .dr-other-currencies a').click((e) => {
+    e.preventDefault();
+    const $this = $(e.target);
+    const targetCurrency = $this.data('dr-currency');
+
+    if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
+    else $('body').addClass('dr-loading');
+    DRCommerceApi.updateShopper({ locale: drgc_params.drLocale, currency: targetCurrency })
+      .then(() => {
+        document.cookie = `drgc_currency=${targetCurrency}; path=/`;
+        window.location.reload(true);
       })
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);

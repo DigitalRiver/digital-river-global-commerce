@@ -135,7 +135,7 @@ function drgc_the_posts_pagination( $wp_query ) {
 }
 
 /**
- * Currency switcher
+ * Currency switcher (Old currency selector, will be deprecated after it's not used by any theme)
  */
 function drgc_currency_toggler() {
 	$locales = get_option( 'drgc_store_locales' );
@@ -446,4 +446,53 @@ function drgc_get_current_wp_locale( $dr_locale ) {
     $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
     return $drgc_locale_options[$key]['wp_locale'];
   }
+}
+
+/**
+ * Get primary currency by current DR locale
+ *
+ * @param string $dr_locale
+ * @return string
+ */
+function drgc_get_primary_currency( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+
+  if ( empty( $drgc_locale_options ) ) {
+    return '';
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['primary_currency'];
+  }
+}
+
+/**
+ * Get supported currencies by current DR locale
+ *
+ * @param string $dr_locale
+ * @return array
+ */
+function drgc_get_supported_currencies( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+
+  if ( empty( $drgc_locale_options ) ) {
+    return array();
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['supported_currencies'];
+  }
+}
+
+/**
+ * Get selected currency by cookie or primary currency (TODO: replace it with session)
+ *
+ * @return string
+ */
+function drgc_get_selected_currency() {
+  $dr_locale = drgc_get_current_dr_locale();
+  $primary_currency = drgc_get_primary_currency( $dr_locale );
+  $supported_currencies = drgc_get_supported_currencies( $dr_locale );
+
+  return isset( $_COOKIE['drgc_currency'] ) && in_array( $_COOKIE['drgc_currency'], $supported_currencies ) ?
+    $_COOKIE['drgc_currency'] :
+    $primary_currency;
 }
