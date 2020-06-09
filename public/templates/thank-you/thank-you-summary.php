@@ -42,7 +42,7 @@ $show_vat_text = drgc_should_display_vat( $order['order']['pricing']['total']['c
 
 <div class="dr-summary__tax">
 
-    <p class="item-label"><?php echo drgc_should_display_vat( $order['order']['pricing']['total']['currency'] ) ? __( 'VAT', 'digital-river-global-commerce' ) : __( 'Tax', 'digital-river-global-commerce' ); ?></p>
+    <p class="item-label"><?php echo $show_vat_text  ? __( 'VAT', 'digital-river-global-commerce' ) : __( 'Tax', 'digital-river-global-commerce' ); ?></p>
 
     <p class="item-value"><?php echo $tax_value; ?></p>
 
@@ -66,7 +66,7 @@ $show_vat_text = drgc_should_display_vat( $order['order']['pricing']['total']['c
 
 <div class="dr-summary__total">
 
-    <p class="total-label"><?php echo drgc_should_display_vat( $order['order']['pricing']['total']['currency'] ) ? __( 'Total Incl. VAT', 'digital-river-global-commerce' ) : __( 'Total', 'digital-river-global-commerce' ); ?></p>
+    <p class="total-label"><?php echo $show_vat_text  ? __( 'Total Incl. VAT', 'digital-river-global-commerce' ) : __( 'Total', 'digital-river-global-commerce' ); ?></p>
 
     <p class="total-value"><?php echo $total_value; ?></p>
 
