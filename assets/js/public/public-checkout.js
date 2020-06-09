@@ -36,6 +36,10 @@ const CheckoutModule = (($) => {
                 drgc_params.translations.tax_label
             );
             $('.dr-summary__shipping .item-label').text(drgc_params.translations.shipping_label);
+            $('.dr-summary__total .total-label').text(shouldDisplayVat() ?
+                drgc_params.translations.order_total_vat_label :
+                drgc_params.translations.order_total_label
+            );
         } else {
             $('.dr-summary__tax .item-label').text(shouldDisplayVat() ?
                 drgc_params.translations.estimated_vat_label :
