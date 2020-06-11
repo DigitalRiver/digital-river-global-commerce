@@ -826,6 +826,22 @@ class DRGC_Public {
 		}
 	}
 
+	public function translate_archive_title( $title ) {
+    if ( is_tax( 'dr_product_category' ) ) {
+			return __( single_cat_title( '', false ), 'digital-river-global-commerce' );
+		}
+
+		return $title;
+	}
+
+	public function translate_menu_items( $item_output, $item ) {
+    if ( property_exists( $item, 'title' ) ) {
+			return preg_replace( '/(<.*?>).*(<\/.*?>)/s', '$1' . __( $item->title, 'digital-river-global-commerce' ) . '$2', $item_output, 1 );
+    }
+
+		return $item_output;
+	}
+	
 	/**
 	 * Append query string at URL.
 	 *

@@ -56,6 +56,7 @@ body.page-cart #dr-minicart,body.page-checkout #dr-minicart,body.page-thank-you 
 .dr-pd-item-title{margin-top:0;padding-top:0;color:#000;font-family:Open Sans,sans-serif;font-size:22px;line-height:24px;text-align:center}
 .dr-pd-item-price{display:block;text-align:center;margin-bottom:18px}
 .dr-pd-item .dr-buy-btn{display:block;margin:0 auto}
+.dr-pd-item .dr-loading{top:-50px}
 .dr-pd-thumbnail img{display:block;width:100%;margin:0 auto}
 .dr-pd-qty-wrapper{display:inline-block;margin-right:30px}
 .dr-pd-qty-minus,.dr-pd-qty-plus{display:inline-block;width:20px;height:20px;vertical-align:middle;cursor:pointer;background-size:cover;background-position:center;background-repeat:no-repeat}

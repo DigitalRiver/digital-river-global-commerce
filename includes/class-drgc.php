@@ -181,6 +181,7 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shopper.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-cart.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-user-management.php';
+		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product-details.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
@@ -248,6 +249,8 @@ class DRGC {
 		// Initialize User Management
 		$this->user_management = new DRGC_User_Management;
 
+		$this->product_details = new DRGC_Product_Details( $this->authenticator );
+
 		// Start up the cron import
 		new DRGC_Cron();
 	}
@@ -287,6 +290,15 @@ class DRGC {
 
 		$this->loader->add_action( 'wp_ajax_nopriv_drgc_sync_locales', $plugin_admin, 'drgc_sync_locales_ajax' );
 		$this->loader->add_action( 'wp_ajax_drgc_sync_locales', $plugin_admin, 'drgc_sync_locales_ajax' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'remove_product_editor' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_slug_meta_box' );
+		$this->loader->add_action( 'load-post.php', $plugin_admin, 'disable_drag_meta_box' );
+
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'init_trans_string_files' );
+		$this->loader->add_action( 'edit_dr_product_category', $plugin_admin, 'create_category_name_trans_strings' );
+
+		$this->loader->add_action( 'wp_update_nav_menu', $plugin_admin, 'create_menu_label_trans_strings' );
 	}
 
 	/**
@@ -353,6 +365,10 @@ class DRGC {
 		$this->loader->add_action( 'wp_ajax_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
 
 		$this->loader->add_action( 'wp_head', $plugin_public, 'add_modal_html' );
+
+		$this->loader->add_filter( 'get_the_archive_title', $plugin_public, 'translate_archive_title' );
+
+		$this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
 	}
 
 	/**
