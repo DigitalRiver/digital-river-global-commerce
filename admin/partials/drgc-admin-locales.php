@@ -17,6 +17,7 @@
   $drgc_locale_options = get_option( 'drgc_locale_options' );
 ?>
 
+<h2><?php _e( 'Locales', 'digital-river-global-commerce' ) ?></h2>
 <button type="button" class="button" id="dr-sync-locales-btn"><?php _e( 'Sync Locales and Currencies', 'digital-river-global-commerce' ) ?></button>
 
 <?php if ( empty( $drgc_locale_options ) ) { ?>
@@ -36,13 +37,22 @@
               </tr>
             </thead>
             <tbody>
-            <?php foreach ( $drgc_locale_options as $locale_option ) { ?>
+            <?php foreach ( $drgc_locale_options as $idx => $locale_option ) { ?>
               <tr>
                 <td>
                   <?php echo $locale_option['dr_locale'] ?>
                   <span class="description"><?php echo ( $locale_option['dr_locale'] === $drgc_default_locale ) ? __( '(Default)', 'digital-river-global-commerce' ) : '' ?></span>
                 </td>
-                <td><?php echo $locale_option['wp_locale'] ?></td>
+                <td>
+                  <?php
+                  wp_dropdown_languages(
+                    array(
+                      'id' => "drgc_locale_options_wp_locale_{$idx}",
+                      'name' => "drgc_locale_options[{$idx}][wp_locale]",
+                      'selected' => $locale_option['wp_locale']
+                    )
+                  ) ?>
+                </td>
                 <td><?php echo join( ', ', $locale_option['supported_currencies'] ) ?></td>
               </tr>
             <?php } ?>
@@ -52,4 +62,5 @@
       </tr>
     </tbody>
   </table>
+<?php submit_button(); ?>
 <?php } ?>

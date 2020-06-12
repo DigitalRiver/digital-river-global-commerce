@@ -16,21 +16,27 @@
   <h1><?php esc_html_e( get_admin_page_title(), 'digital-river-global-commerce' ); ?></h1>
 
   <nav class="nav-tab-wrapper">
-    <a href="?post_type=dr_product&page=digital-river-global-commerce" class="nav-tab <?php if ( $tab === null ) echo 'nav-tab-active'; ?>">General</a>
-    <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=locales" class="nav-tab <?php if ( $tab === 'locales' ) echo 'nav-tab-active'; ?>">Locales</a>
+    <a href="?post_type=dr_product&page=digital-river-global-commerce" class="nav-tab <?php if ( $active_tab === 'general' ) echo 'nav-tab-active'; ?>">
+      <?php _e( 'General', 'digital-river-global-commerce' ) ?>
+    </a>
+    <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=locales" class="nav-tab <?php if ( $active_tab === 'locales' ) echo 'nav-tab-active'; ?>">
+      <?php _e( 'Locales', 'digital-river-global-commerce' ) ?>
+    </a>
   </nav>
 
   <div class="tab-content">
     <form method="post" action="options.php">
-      <?php switch ( $tab ) {
-        case 'locales':
-          include_once 'drgc-admin-locales.php';
+      <?php switch ( $active_tab ) {
+        case 'general':
+          settings_fields( $this->plugin_name . '_' . $active_tab );
+          do_settings_sections( $this->plugin_name . '_' . $active_tab );
+          submit_button();
           break;
 
-        default:
-          settings_fields( $this->plugin_name );
-          do_settings_sections( $this->plugin_name );
-          submit_button();
+        case 'locales':
+          settings_fields( $this->plugin_name . '_' . $active_tab );
+          include_once 'drgc-admin-locales.php';
+          break;
       }?>
     </form>
   </div>
