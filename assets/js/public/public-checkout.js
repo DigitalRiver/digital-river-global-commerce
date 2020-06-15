@@ -5,6 +5,7 @@ import DRGooglePay from './payment-googlepay';
 import DRApplePay from './payment-applepay';
 
 const CheckoutModule = (($) => {
+    const localizedText = drgc_params.translations;
     const initPreTAndC = () => {
         $('#dr-preTAndC').change((e) => {
             if ($(e.target).is(':checked')) {
@@ -17,7 +18,7 @@ const CheckoutModule = (($) => {
 
         $('.dr-cloudpay-btn-wrapper').click(() => {
             if (!$('#dr-preTAndC').is(':checked')) {
-                $('#dr-preTAndC-err-msg').text(drgc_params.translations.required_tandc_msg).show();
+                $('#dr-preTAndC-err-msg').text(localizedText.required_tandc_msg).show();
             }
         });
 
@@ -32,20 +33,20 @@ const CheckoutModule = (($) => {
     const updateSummaryLabels = () => {
         if ($('.dr-checkout__payment').hasClass('active') || $('.dr-checkout__confirmation').hasClass('active')) {
             $('.dr-summary__tax .item-label').text(shouldDisplayVat() ?
-                drgc_params.translations.vat_label :
-                drgc_params.translations.tax_label
+                localizedText.vat_label :
+                localizedText.tax_label
             );
-            $('.dr-summary__shipping .item-label').text(drgc_params.translations.shipping_label);
+            $('.dr-summary__shipping .item-label').text(localizedText.shipping_label);
             $('.dr-summary__total .total-label').text(shouldDisplayVat() ?
-                drgc_params.translations.order_total_vat_label :
-                drgc_params.translations.order_total_label
+                localizedText.order_total_vat_label :
+                localizedText.order_total_label
             );
         } else {
             $('.dr-summary__tax .item-label').text(shouldDisplayVat() ?
-                drgc_params.translations.estimated_vat_label :
-                drgc_params.translations.estimated_tax_label
+                localizedText.estimated_vat_label :
+                localizedText.estimated_tax_label
             );
-            $('.dr-summary__shipping .item-label').text(drgc_params.translations.estimated_shipping_label);
+            $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label);
         }
     };
 
@@ -177,17 +178,17 @@ const CheckoutModule = (($) => {
                 const errorCode = jqXHR.responseJSON.errors.error[0].code;
 
                 if (errorCode === 'restricted-bill-to-country') {
-                    $target.text(drgc_params.translations.address_error_msg).show();
+                    $target.text(localizedText.address_error_msg).show();
                 } else if (errorCode === 'restricted-ship-to-country') {
-                    $target.text(drgc_params.translations.address_error_msg).show();
+                    $target.text(localizedText.address_error_msg).show();
                 } else {
-                    $target.text(drgc_params.translations.undefined_error_msg).show();
+                    $target.text(localizedText.undefined_error_msg).show();
                 }
             } else {
                 $target.text(jqXHR.responseJSON.errors.error[0].description).show();
             }
         } else {
-            $target.text(drgc_params.translations.shipping_options_error_msg).show();
+            $target.text(localizedText.shipping_options_error_msg).show();
         }
     };
 
@@ -225,7 +226,7 @@ const CheckoutModule = (($) => {
                                 ${option.description}
                             </span>
                             <span class="black">
-                                ${freeShipping ? drgc_params.translations.free_label : option.formattedCost}
+                                ${freeShipping ? localizedText.free_label : option.formattedCost}
                             </span>
                         </label>
                     </div>
@@ -304,6 +305,7 @@ const CheckoutModule = (($) => {
 jQuery(document).ready(($) => {
     if ($('#checkout-payment-form').length) {
         // Globals
+        const localizedText = drgc_params.translations;
         const domain = drgc_params.domain;
         const isLogin = drgc_params.isLogin;
         const drLocale = drgc_params.drLocale || 'en_US';
@@ -311,7 +313,9 @@ jQuery(document).ready(($) => {
         const requestShipping = (cartData.shippingOptions.shippingOption) ? true : false;
         const isGooglePayEnabled = drgc_params.isGooglePayEnabled === 'true';
         const isApplePayEnabled = drgc_params.isApplePayEnabled === 'true';
-        const digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey);
+        const digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey, {
+            'locale': drLocale.split('_').join('-')
+        });
         const addressPayload = {shipping: {}, billing: {}};
         let paymentSourceId = null;
         // Section progress
@@ -335,8 +339,8 @@ jQuery(document).ready(($) => {
             };
 
             var cardNumber = digitalriverjs.createElement('cardnumber', options);
-            var cardExpiration = digitalriverjs.createElement('cardexpiration', Object.assign({}, options, { placeholderText: 'MM/YY' }));
-            var cardCVV = digitalriverjs.createElement('cardcvv', Object.assign({}, options, { placeholderText: 'CVV' }));
+            var cardExpiration = digitalriverjs.createElement('cardexpiration', Object.assign({}, options, { placeholderText: localizedText.card_expiration_placeholder }));
+            var cardCVV = digitalriverjs.createElement('cardcvv', Object.assign({}, options, { placeholderText: localizedText.card_cvv_placeholder }));
 
             cardNumber.mount('card-number');
             cardExpiration.mount('card-expiration');
@@ -525,7 +529,7 @@ jQuery(document).ready(($) => {
             DRCommerceApi.applyShippingOption(shippingOptionId).then((data) => {
                 const $section = $('.dr-checkout__delivery');
                 const freeShipping = data.cart.pricing.shippingAndHandling.value === 0;
-                const resultText = `${$input.data('desc')} ${freeShipping ? drgc_params.translations.free_label : $input.data('cost')}`;
+                const resultText = `${$input.data('desc')} ${freeShipping ? localizedText.free_label : $input.data('cost')}`;
 
                 $button.removeClass('sending').blur();
                 $section.find('.dr-panel-result__text').text(resultText);
@@ -599,7 +603,7 @@ jQuery(document).ready(($) => {
                     $button.removeClass('sending').blur();
                     if (result.error) {
                         if (result.error.state === 'failed') {
-                            $('#dr-payment-failed-msg').text(drgc_params.translations.credit_card_error_msg).show();
+                            $('#dr-payment-failed-msg').text(localizedText.credit_card_error_msg).show();
                         }
                         if (result.error.errors) {
                             $('#dr-payment-failed-msg').text(result.error.errors[0].message).show();
@@ -608,7 +612,7 @@ jQuery(document).ready(($) => {
                         if (result.source.state === 'chargeable') {
                             paymentSourceId = result.source.id;
                             $section.find('.dr-panel-result__text').text(
-                                `${drgc_params.translations.credit_card_ending_label} ${result.source.creditCard.lastFourDigits}`
+                                `${localizedText.credit_card_ending_label} ${result.source.creditCard.lastFourDigits}`
                             );
 
                             if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -625,7 +629,7 @@ jQuery(document).ready(($) => {
         $('#checkout-confirmation-form button[type="submit"]').on('click', (e) => {
             e.preventDefault();
             if (!$('#dr-tAndC').prop('checked')) {
-                $('#dr-checkout-err-field').text(drgc_params.translations.required_tandc_msg).show();
+                $('#dr-checkout-err-field').text(localizedText.required_tandc_msg).show();
             } else {
                 $('#dr-checkout-err-field').text('').hide();
                 $(e.target).toggleClass('sending').blur();
@@ -671,14 +675,14 @@ jQuery(document).ready(($) => {
                 case 'credit-card':
                     $('#dr-paypal-button').hide();
                     $('.credit-card-info').show();
-                    $('#dr-submit-payment').text(drgc_params.translations.pay_with_card_label.toUpperCase()).show();
+                    $('#dr-submit-payment').text(localizedText.pay_with_card_label.toUpperCase()).show();
 
                     break;
                 case 'paypal':
                     $('#dr-submit-payment').hide();
                     $('.credit-card-info').hide();
                     $('#dr-paypal-button').show();
-                    $('#dr-submit-payment').text(drgc_params.translations.pay_with_paypal_label.toUpperCase());
+                    $('#dr-submit-payment').text(localizedText.pay_with_paypal_label.toUpperCase());
 
                     break;
             }

@@ -157,6 +157,8 @@ class DRGC_Public {
 			'cancel_subs_confirm'            => __('Are you sure you want to immediately unsubscribe this subscription?', 'digital-river-global-commerce'),
 			'change_renewal_qty_prompt'      => __('Please enter the required quantity:', 'digital-river-global-commerce'),
 			'shipping_options_error_msg'	   => __('There are no delivery options available for your cart or destination.', 'digital-river-global-commerce'),
+      'card_expiration_placeholder'    => __('MM/YY', 'digital-river-global-commerce'),
+      'card_cvv_placeholder'           => __('CVV', 'digital-river-global-commerce')
 		);
 
 		// transfer drgc options from PHP to JS
