@@ -340,7 +340,7 @@ msgstr "商品をインポート"
 
 #: includes/class-drgc-activator.php:30
 msgid "cart"
-msgstr "カート"
+msgstr "cart"
 
 #: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
 msgid "Cart"
@@ -348,7 +348,7 @@ msgstr "カート"
 
 #: includes/class-drgc-activator.php:38
 msgid "checkout"
-msgstr "支払い"
+msgstr "checkout"
 
 #: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
 #: public/templates/login/login.php:27
@@ -357,7 +357,7 @@ msgstr "チェックアウト"
 
 #: includes/class-drgc-activator.php:46
 msgid "login"
-msgstr "ログイン"
+msgstr "login"
 
 #: includes/class-drgc-activator.php:47, public/class-drgc-public.php:522,
 #: public/templates/login/login.php:91
@@ -365,9 +365,8 @@ msgid "Login"
 msgstr "ログイン"
 
 #: includes/class-drgc-activator.php:54
-#, fuzzy
 msgid "thank-you"
-msgstr "感謝"
+msgstr "thank-you"
 
 #: includes/class-drgc-activator.php:55
 msgid "Thank You"

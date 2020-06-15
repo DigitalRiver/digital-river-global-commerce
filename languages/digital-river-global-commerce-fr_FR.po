@@ -265,11 +265,8 @@ msgid "(Default)"
 msgstr "(Par défaut)"
 
 #: admin/partials/drgc-admin-locales.php:24
-#, fuzzy
 msgid "No locale, please sync it up by clicking button above."
-msgstr ""
-"Pas de local, s’il vous plaît synchroniser en cliquant sur le bouton ci-"
-"dessus."
+msgstr "Pas de local, cliquez sur le boutton ci-dessus pour sychroniser."
 
 #: admin/partials/drgc-product-details-meta-box.php:18
 #, fuzzy
@@ -306,7 +303,7 @@ msgstr "Prix"
 
 #: admin/partials/drgc-product-details-meta-box.php:98
 msgid "Display Name"
-msgstr "Afficher le nom"
+msgstr "Nom d'affichage"
 
 #: admin/partials/drgc-product-details-meta-box.php:102
 msgid "Short Description"
@@ -338,7 +335,7 @@ msgstr "Importer des produits"
 
 #: includes/class-drgc-activator.php:30
 msgid "cart"
-msgstr "panier"
+msgstr "cart"
 
 #: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
 msgid "Cart"
@@ -346,7 +343,7 @@ msgstr "Panier"
 
 #: includes/class-drgc-activator.php:38
 msgid "checkout"
-msgstr "commande"
+msgstr "checkout"
 
 #: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
 #: public/templates/login/login.php:27
@@ -355,17 +352,16 @@ msgstr "Commander"
 
 #: includes/class-drgc-activator.php:46
 msgid "login"
-msgstr "connexion"
+msgstr "login"
 
 #: includes/class-drgc-activator.php:47, public/class-drgc-public.php:522,
 #: public/templates/login/login.php:91
 msgid "Login"
-msgstr "Connexion"
+msgstr "S'identifier"
 
 #: includes/class-drgc-activator.php:54
-#, fuzzy
 msgid "thank-you"
-msgstr "Merci"
+msgstr "thank-you"
 
 #: includes/class-drgc-activator.php:55
 msgid "Thank You"
@@ -1249,9 +1245,8 @@ msgid "Your order was completed successfully."
 msgstr "Votre commande a été complétée avec succès."
 
 #: public/templates/thank-you/thank-you.php:66
-#, fuzzy
 msgid "Order number is: "
-msgstr "Numéro de commande"
+msgstr "Numéro de commande "
 
 #: public/templates/thank-you/thank-you.php:75
 #, fuzzy

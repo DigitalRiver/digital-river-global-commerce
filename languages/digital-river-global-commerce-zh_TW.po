@@ -334,7 +334,7 @@ msgstr "導入產品"
 
 #: includes/class-drgc-activator.php:30
 msgid "cart"
-msgstr "購物車"
+msgstr "cart"
 
 #: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
 msgid "Cart"
@@ -342,7 +342,7 @@ msgstr "購物車"
 
 #: includes/class-drgc-activator.php:38
 msgid "checkout"
-msgstr "結帳"
+msgstr "checkout"
 
 #: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
 #: public/templates/login/login.php:27
@@ -351,7 +351,7 @@ msgstr "結帳"
 
 #: includes/class-drgc-activator.php:46
 msgid "login"
-msgstr "登入"
+msgstr "login"
 
 #: includes/class-drgc-activator.php:47, public/class-drgc-public.php:522,
 #: public/templates/login/login.php:91
@@ -359,9 +359,8 @@ msgid "Login"
 msgstr "登入"
 
 #: includes/class-drgc-activator.php:54
-#, fuzzy
 msgid "thank-you"
-msgstr "謝謝"
+msgstr "thank-you"
 
 #: includes/class-drgc-activator.php:55
 msgid "Thank You"

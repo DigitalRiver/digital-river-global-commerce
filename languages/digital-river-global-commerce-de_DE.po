@@ -338,7 +338,7 @@ msgstr "Produkte importieren"
 
 #: includes/class-drgc-activator.php:30
 msgid "cart"
-msgstr "Warenkorb"
+msgstr "cart"
 
 #: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
 msgid "Cart"
@@ -346,7 +346,7 @@ msgstr "Warenkorb"
 
 #: includes/class-drgc-activator.php:38
 msgid "checkout"
-msgstr "kasse"
+msgstr "checkout"
 
 #: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
 #: public/templates/login/login.php:27
@@ -355,7 +355,7 @@ msgstr "Kasse"
 
 #: includes/class-drgc-activator.php:46
 msgid "login"
-msgstr "Login"
+msgstr "login"
 
 #: includes/class-drgc-activator.php:47, public/class-drgc-public.php:522,
 #: public/templates/login/login.php:91
@@ -364,7 +364,7 @@ msgstr "Anmelden"
 
 #: includes/class-drgc-activator.php:54
 msgid "thank-you"
-msgstr "danke"
+msgstr "thank-you"
 
 #: includes/class-drgc-activator.php:55
 msgid "Thank You"

@@ -339,7 +339,7 @@ msgstr "Importar productos"
 
 #: includes/class-drgc-activator.php:30
 msgid "cart"
-msgstr "carrito"
+msgstr "cart"
 
 #: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
 msgid "Cart"
@@ -347,7 +347,7 @@ msgstr "Carrito"
 
 #: includes/class-drgc-activator.php:38
 msgid "checkout"
-msgstr "Pago"
+msgstr "checkout"
 
 #: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
 #: public/templates/login/login.php:27
@@ -356,7 +356,7 @@ msgstr "Pagar"
 
 #: includes/class-drgc-activator.php:46
 msgid "login"
-msgstr "iniciar sesión"
+msgstr "login"
 
 #: includes/class-drgc-activator.php:47, public/class-drgc-public.php:522,
 #: public/templates/login/login.php:91
@@ -364,9 +364,8 @@ msgid "Login"
 msgstr "Iniciar sesión"
 
 #: includes/class-drgc-activator.php:54
-#, fuzzy
 msgid "thank-you"
-msgstr "gracias"
+msgstr "thank-you"
 
 #: includes/class-drgc-activator.php:55
 msgid "Thank You"

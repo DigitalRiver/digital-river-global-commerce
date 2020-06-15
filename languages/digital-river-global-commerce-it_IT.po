@@ -339,7 +339,7 @@ msgstr "Importa prodotti"
 
 #: includes/class-drgc-activator.php:30
 msgid "cart"
-msgstr "carrello"
+msgstr "cart"
 
 #: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
 msgid "Cart"
@@ -347,7 +347,7 @@ msgstr "Carrello"
 
 #: includes/class-drgc-activator.php:38
 msgid "checkout"
-msgstr "cassa"
+msgstr "checkout"
 
 #: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
 #: public/templates/login/login.php:27
