@@ -105,9 +105,8 @@ msgid "Product"
 msgstr "產品"
 
 #: admin/class-drgc-post-types.php:46
-#, fuzzy
 msgid "Digital River"
-msgstr "數位河"
+msgstr "Digital River"
 
 #: admin/class-drgc-post-types.php:47
 msgid "Add New"
@@ -153,14 +152,12 @@ msgid "No products found in trash"
 msgstr "垃圾桶里找不到商品"
 
 #: admin/class-drgc-post-types.php:83
-#, fuzzy
 msgid "DR Variations"
-msgstr "DR 變異"
+msgstr "DR Variations"
 
 #: admin/class-drgc-post-types.php:84
-#, fuzzy
 msgid "DR Variation"
-msgstr "DR 變異"
+msgstr "DR Variations"
 
 #: admin/class-drgc-post-types.php:85,
 #: admin/partials/drgc-product-details-meta-box.php:43

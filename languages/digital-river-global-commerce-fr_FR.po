@@ -106,9 +106,8 @@ msgid "Product"
 msgstr "Produit"
 
 #: admin/class-drgc-post-types.php:46
-#, fuzzy
 msgid "Digital River"
-msgstr "Rivière numérique"
+msgstr "Digital River"
 
 #: admin/class-drgc-post-types.php:47
 msgid "Add New"
