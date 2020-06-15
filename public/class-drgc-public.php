@@ -165,7 +165,6 @@ class DRGC_Public {
 		$options = array(
 			'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
 			'drLocale'          =>  drgc_get_current_dr_locale(),
-			'transLocale'       =>  get_locale(),
 			'selectedCurrency'  =>  drgc_get_selected_currency(),
 			'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
 			'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
