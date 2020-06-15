@@ -1,0 +1,1259 @@
+# Copyright (C) 2020 Digital_River_Global_Commerce
+# This file is distributed under the same license as the Digital_River_Global_Commerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Digital_River_Global_Commerce\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: GCTemplates <gcTemplates@digitalriver.com>\n"
+"Report-Msgid-Bugs-To: https://github.com/DigitalRiver/digital-river-global-"
+"commerce\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
+"_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;"
+"esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"X-Generator: Poedit 2.3.1\n"
+"Last-Translator: \n"
+"Language: ja_JP\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-drgc-admin.php:133, admin/class-drgc-admin.php:134
+msgid "Settings"
+msgstr "設定"
+
+#: admin/class-drgc-admin.php:173
+msgid "Site ID"
+msgstr "サイトID"
+
+#: admin/class-drgc-admin.php:182
+#, fuzzy
+msgid "Commerce API Key"
+msgstr "コマース API キー"
+
+#: admin/class-drgc-admin.php:191
+#, fuzzy
+msgid "Commerce API Secret"
+msgstr "コマース API シークレット"
+
+#: admin/class-drgc-admin.php:200
+msgid "Domain"
+msgstr "ドメイン"
+
+#: admin/class-drgc-admin.php:209
+#, fuzzy
+msgid "Payment Services API Key"
+msgstr "支払サービス API キー"
+
+#: admin/class-drgc-admin.php:218
+#, fuzzy
+msgid "Scheduled Products Import"
+msgstr "スケジュールされた製品のインポート"
+
+#: admin/class-drgc-admin.php:227
+#, fuzzy
+msgid "Test Order"
+msgstr "テスト順序"
+
+#: admin/class-drgc-admin.php:243
+msgid "Apple Pay"
+msgstr "Apple Pay"
+
+#: admin/class-drgc-admin.php:252
+#, fuzzy
+msgid "Google Pay"
+msgstr "グーグルペイ"
+
+#: admin/class-drgc-admin.php:304
+#, fuzzy
+msgid ""
+"Please contact your account representative for assistance with these "
+"settings."
+msgstr "これらの設定については、アカウント担当者にお問い合わせください。"
+
+#: admin/class-drgc-admin.php:372
+#, fuzzy
+msgid "Enable Test Order."
+msgstr "テスト順序を有効にします。"
+
+#: admin/class-drgc-admin.php:383
+#, fuzzy
+msgid "Twice daily product synchronization with GC."
+msgstr "GC との 1 日 2 回の製品同期。"
+
+#: admin/class-drgc-admin.php:566, admin/class-drgc-admin.php:618
+#, fuzzy
+msgid "Failed to create file"
+msgstr "ファイルの作成に失敗しました"
+
+#: admin/class-drgc-admin.php:573, admin/class-drgc-admin.php:631
+#, fuzzy
+msgid "Could not write to file"
+msgstr "ファイルに書き込みできませんでした"
+
+#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45
+msgid "Products"
+msgstr "商品"
+
+#: admin/class-drgc-post-types.php:44, public/class-drgc-public.php:132
+msgid "Product"
+msgstr "商品"
+
+#: admin/class-drgc-post-types.php:46
+#, fuzzy
+msgid "Digital River"
+msgstr "デジタルリバー"
+
+#: admin/class-drgc-post-types.php:47
+msgid "Add New"
+msgstr "新規追加"
+
+#: admin/class-drgc-post-types.php:48
+msgid "Add new product"
+msgstr "新しい項目を追加"
+
+#: admin/class-drgc-post-types.php:49,
+#: public/templates/checkout/checkout-billing.php:32,
+#: public/templates/checkout/checkout-email.php:12,
+#: public/templates/checkout/checkout-shipping.php:32
+msgid "Edit"
+msgstr "編集"
+
+#: admin/class-drgc-post-types.php:50
+msgid "Edit product"
+msgstr "商品の編集"
+
+#: admin/class-drgc-post-types.php:51
+msgid "New product"
+msgstr "新しい項目"
+
+#: admin/class-drgc-post-types.php:52
+msgid "View product"
+msgstr "アイテムを見る"
+
+#: admin/class-drgc-post-types.php:53
+msgid "View products"
+msgstr "詳しく見る"
+
+#: admin/class-drgc-post-types.php:54
+msgid "Search products"
+msgstr "商品の検索"
+
+#: admin/class-drgc-post-types.php:55
+#, fuzzy
+msgid "No products found"
+msgstr "製品が見つかりません"
+
+#: admin/class-drgc-post-types.php:56
+#, fuzzy
+msgid "No products found in trash"
+msgstr "ゴミ箱に商品が見つかりません"
+
+#: admin/class-drgc-post-types.php:83
+#, fuzzy
+msgid "DR Variations"
+msgstr "DR バリエーション"
+
+#: admin/class-drgc-post-types.php:84
+#, fuzzy
+msgid "DR Variation"
+msgstr "DRバリエーション"
+
+#: admin/class-drgc-post-types.php:85,
+#: admin/partials/drgc-product-details-meta-box.php:43
+msgid "Variations"
+msgstr "バリエーション"
+
+#: admin/class-drgc-post-types.php:115
+msgid "Product Categories"
+msgstr "商品カテゴリ"
+
+#: admin/class-drgc-post-types.php:116
+msgid "Category"
+msgstr "カテゴリー"
+
+#: admin/class-drgc-post-types.php:117
+msgid "Categories"
+msgstr "カテゴリー"
+
+#: admin/class-drgc-post-types.php:118
+msgid "Search categories"
+msgstr "カテゴリーを探す"
+
+#: admin/class-drgc-post-types.php:119
+msgid "All categories"
+msgstr "全カテゴリー"
+
+#: admin/class-drgc-post-types.php:120
+msgid "Parent category"
+msgstr "親カテゴリ"
+
+#: admin/class-drgc-post-types.php:121
+#, fuzzy
+msgid "Parent category:"
+msgstr "親カテゴリ:"
+
+#: admin/class-drgc-post-types.php:122
+msgid "Edit category"
+msgstr "カテゴリーの編集"
+
+#: admin/class-drgc-post-types.php:123
+msgid "Update category"
+msgstr "カテゴリーの更新"
+
+#: admin/class-drgc-post-types.php:124
+msgid "Add new category"
+msgstr "新しいカテゴリを追加"
+
+#: admin/class-drgc-post-types.php:125
+msgid "New category name"
+msgstr "新規カテゴリ―名"
+
+#: admin/class-drgc-post-types.php:126
+msgid "No categories found"
+msgstr "カテゴリが見つかりません。"
+
+#: admin/class-drgc-post-types.php:162
+msgid "Product Details"
+msgstr "商品詳細"
+
+#: admin/class-drgc-post-types.php:300
+msgid "Product ID"
+msgstr "商品ID"
+
+#: admin/class-drgc-post-types.php:301,
+#: admin/partials/drgc-product-details-meta-box.php:26
+msgid "SKU"
+msgstr "SKU"
+
+#: admin/partials/drgc-admin-display.php:20
+msgid "General"
+msgstr "一般"
+
+#: admin/partials/drgc-admin-display.php:23,
+#: admin/partials/drgc-admin-locales.php:20
+#, fuzzy
+msgid "Locales"
+msgstr "ロケール"
+
+#: admin/partials/drgc-admin-locales.php:21
+#, fuzzy
+msgid "Sync Locales and Currencies"
+msgstr "ロケールと通貨の同期"
+
+#: admin/partials/drgc-admin-locales.php:29
+#, fuzzy
+msgid "Site Locales"
+msgstr "サイト ロケール"
+
+#: admin/partials/drgc-admin-locales.php:34
+#, fuzzy
+msgid "DR Locale"
+msgstr "DR ロケール"
+
+#: admin/partials/drgc-admin-locales.php:35
+msgid "WP Language"
+msgstr "WP Language"
+
+#: admin/partials/drgc-admin-locales.php:36
+msgid "Currencies"
+msgstr "通貨"
+
+#: admin/partials/drgc-admin-locales.php:44
+msgid "(Default)"
+msgstr "(デフォルト)"
+
+#: admin/partials/drgc-admin-locales.php:24
+#, fuzzy
+msgid "No locale, please sync it up by clicking button above."
+msgstr "ロケールなし、上のボタンをクリックして同期してください。"
+
+#: admin/partials/drgc-product-details-meta-box.php:18
+#, fuzzy
+msgid "GC Product ID"
+msgstr "GC 製品 ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:22
+#, fuzzy
+msgid "External Reference ID"
+msgstr "外部参照 ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:33
+msgid "Default"
+msgstr "デフォルト"
+
+#: admin/partials/drgc-product-details-meta-box.php:47
+msgid "ID"
+msgstr "ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:48
+#, fuzzy
+msgid "Internal Variation Name"
+msgstr "内部バリエーション名"
+
+#: admin/partials/drgc-product-details-meta-box.php:49,
+#: admin/partials/drgc-product-details-meta-box.php:78
+msgid "Variation Attributes"
+msgstr "バリエーション属性。"
+
+#: admin/partials/drgc-product-details-meta-box.php:94,
+#: public/templates/my-subscriptions/my-subscriptions.php:38
+msgid "Price"
+msgstr "価格"
+
+#: admin/partials/drgc-product-details-meta-box.php:98
+msgid "Display Name"
+msgstr "表示名"
+
+#: admin/partials/drgc-product-details-meta-box.php:102
+msgid "Short Description"
+msgstr "簡単な説明"
+
+#: admin/partials/drgc-product-details-meta-box.php:106
+msgid "Long Description"
+msgstr "詳しい説明"
+
+#: admin/partials/drgc-product-details-meta-box.php:110
+msgid "Thumbnail"
+msgstr "サムネイル"
+
+#: admin/partials/drgc-product-details-meta-box.php:114
+msgid "Product Image"
+msgstr "商品画像"
+
+#: admin/partials/drgc-products-import-btn.php:16
+msgid "Import Complete!"
+msgstr "インポート完了"
+
+#: admin/partials/drgc-products-import-btn.php:20
+msgid "You must enable Javascript in order to proceed!"
+msgstr "続けるには JavaScript を有効化する必要があります!"
+
+#: admin/partials/drgc-products-import-btn.php:28
+msgid "Import Products"
+msgstr "商品をインポート"
+
+#: includes/class-drgc-activator.php:30
+msgid "cart"
+msgstr "カート"
+
+#: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
+msgid "Cart"
+msgstr "カート"
+
+#: includes/class-drgc-activator.php:38
+msgid "checkout"
+msgstr "支払い"
+
+#: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
+#: public/templates/login/login.php:27
+msgid "Checkout"
+msgstr "チェックアウト"
+
+#: includes/class-drgc-activator.php:46
+msgid "login"
+msgstr "ログイン"
+
+#: includes/class-drgc-activator.php:47, public/class-drgc-public.php:522,
+#: public/templates/login/login.php:91
+msgid "Login"
+msgstr "ログイン"
+
+#: includes/class-drgc-activator.php:54
+#, fuzzy
+msgid "thank-you"
+msgstr "感謝"
+
+#: includes/class-drgc-activator.php:55
+msgid "Thank You"
+msgstr "ありがとうございました"
+
+#: includes/drgc-core-functions.php:124
+#, fuzzy
+msgid "Showing %s out of %s"
+msgstr "%s を %s から表示しています"
+
+#: includes/drgc-core-functions.php:146
+msgid "Currency: "
+msgstr "通貨:"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:35
+msgid "Email"
+msgstr "メールアドレス"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:36
+msgid "Shipping information"
+msgstr "発送情報"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:37
+msgid "Billing information"
+msgstr "課金情報"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:38
+msgid "Delivery options"
+msgstr "配送設定"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:39
+msgid "Payment"
+msgstr "支払い"
+
+#: public/class-drgc-public.php:111
+msgid "Upgrade"
+msgstr "アップグレード"
+
+#: public/class-drgc-public.php:112
+msgid "Add"
+msgstr "追加"
+
+#: public/class-drgc-public.php:113,
+#: public/templates/checkout/checkout-summary.php:20,
+#: public/templates/thank-you/thank-you-summary.php:28
+msgid "FREE"
+msgstr "無料"
+
+#: public/class-drgc-public.php:114,
+#: public/templates/thank-you/thank-you-summary.php:45
+msgid "VAT"
+msgstr "付加価値税"
+
+#: public/class-drgc-public.php:115,
+#: public/templates/checkout/checkout-summary.php:36
+#, fuzzy
+msgid "Estimated VAT"
+msgstr "推定付加価値税"
+
+#: public/class-drgc-public.php:116,
+#: public/templates/thank-you/thank-you-summary.php:45
+msgid "Tax"
+msgstr "税"
+
+#: public/class-drgc-public.php:117,
+#: public/templates/checkout/checkout-summary.php:36
+#, fuzzy
+msgid "Estimated Tax"
+msgstr "見積税"
+
+#: public/class-drgc-public.php:118,
+#: public/templates/checkout/checkout-shipping.php:26,
+#: public/templates/thank-you/thank-you-summary.php:53
+msgid "Shipping"
+msgstr "配送"
+
+#: public/class-drgc-public.php:119, public/templates/cart/cart-summary.php:47,
+#: public/templates/checkout/checkout-summary.php:44
+#, fuzzy
+msgid "Estimated Shipping"
+msgstr "推定出荷"
+
+#: public/class-drgc-public.php:120
+#, fuzzy
+msgid "Credit card ending in"
+msgstr "クレジットカードの終了"
+
+#: public/class-drgc-public.php:121
+#, fuzzy
+msgid "pay with card"
+msgstr "カードで支払う"
+
+#: public/class-drgc-public.php:122
+#, fuzzy
+msgid "pay with paypal"
+msgstr "ペイパルで支払う"
+
+#: public/class-drgc-public.php:123
+msgid "View Cart"
+msgstr "カートを見る"
+
+#: public/class-drgc-public.php:125
+msgid "Remove"
+msgstr "削除"
+
+#: public/class-drgc-public.php:126
+msgid "Sub-Total"
+msgstr "小計"
+
+#: public/class-drgc-public.php:127
+msgid "Qty"
+msgstr "数量"
+
+#: public/class-drgc-public.php:128
+msgid "Shipping and Handling"
+msgstr "送料および手数料"
+
+#: public/class-drgc-public.php:129, public/templates/cart/cart-summary.php:31,
+#: public/templates/checkout/checkout-summary.php:53,
+#: public/templates/thank-you/thank-you-summary.php:61
+msgid "Discount"
+msgstr "割引"
+
+#: public/class-drgc-public.php:130,
+#: public/templates/checkout/checkout-summary.php:61,
+#: public/templates/thank-you/thank-you-summary.php:69
+msgid "Total"
+msgstr "合計"
+
+#: public/class-drgc-public.php:131,
+#: public/templates/thank-you/thank-you-summary.php:69
+#, fuzzy
+msgid "Total Incl. VAT"
+msgstr "付加価値税を含む合計"
+
+#: public/class-drgc-public.php:133
+#, fuzzy
+msgid "Password reset email sent"
+msgstr "パスワードリセットメールが送信されました"
+
+#: public/class-drgc-public.php:134
+#, fuzzy
+msgid "Password saved"
+msgstr "保存されたパスワード"
+
+#: public/class-drgc-public.php:135
+#, fuzzy
+msgid ""
+"You will be receiving an email soon with instructions on resetting your "
+"login password."
+msgstr "ログインパスワードのリセットに関する指示を記載したメールが届きます。"
+
+#: public/class-drgc-public.php:136
+#, fuzzy
+msgid "You can now log in with your new password."
+msgstr "これで、新しいパスワードでログインできます。"
+
+#: public/class-drgc-public.php:137, public/templates/cart/cart.php:37
+msgid "Your cart is empty."
+msgstr "カートは空です。"
+
+#: public/class-drgc-public.php:138
+#, fuzzy
+msgid "Please enter a valid promo code."
+msgstr "有効なプロモーション コードを入力してください。"
+
+#: public/class-drgc-public.php:139, public/class-drgc-public.php:282
+msgid "Please enter a valid email address."
+msgstr "有効なメールアドレスを入力してください"
+
+#: public/class-drgc-public.php:140
+#, fuzzy
+msgid "Address not accepted for current currency."
+msgstr "現在の通貨では住所が受け入れられません。"
+
+#: public/class-drgc-public.php:141
+#, fuzzy
+msgid "Failed payment for specified credit card."
+msgstr "指定されたクレジット カードの支払に失敗しました。"
+
+#: public/class-drgc-public.php:142,
+#: public/templates/checkout/checkout-billing.php:76,
+#: public/templates/checkout/checkout-billing.php:98,
+#: public/templates/checkout/checkout-billing.php:120,
+#: public/templates/checkout/checkout-billing.php:158,
+#: public/templates/checkout/checkout-billing.php:190,
+#: public/templates/checkout/checkout-billing.php:217,
+#: public/templates/checkout/checkout-billing.php:237,
+#: public/templates/checkout/checkout-email.php:25,
+#: public/templates/checkout/checkout-shipping.php:55,
+#: public/templates/checkout/checkout-shipping.php:77,
+#: public/templates/checkout/checkout-shipping.php:99,
+#: public/templates/checkout/checkout-shipping.php:137,
+#: public/templates/checkout/checkout-shipping.php:167,
+#: public/templates/checkout/checkout-shipping.php:195,
+#: public/templates/checkout/checkout-shipping.php:215,
+#: public/templates/login/login.php:79, public/templates/login/login.php:87,
+#: public/templates/login/login.php:47, public/templates/login/login.php:55,
+#: public/templates/login/login.php:122, public/templates/login/login.php:132,
+#: public/templates/login/login.php:142, public/templates/login/login.php:150,
+#: public/templates/login/login.php:158
+msgid "This field is required."
+msgstr "この項目は必須です。"
+
+#: public/class-drgc-public.php:143
+#, fuzzy
+msgid "Emails do not match."
+msgstr "メールが一致しません。"
+
+#: public/class-drgc-public.php:144, public/class-drgc-public.php:239
+#, fuzzy
+msgid "Password must be between 8 - 32 characters."
+msgstr "パスワードは 8 ~ 32 文字の間にする必要があります。"
+
+#: public/class-drgc-public.php:145, public/class-drgc-public.php:243
+#, fuzzy
+msgid "Must use at least one upper case letter."
+msgstr "大文字を少なくとも 1 つ使用する必要があります。"
+
+#: public/class-drgc-public.php:146, public/class-drgc-public.php:247
+#, fuzzy
+msgid "Must use at least one lower case letter."
+msgstr "小文字を少なくとも 1 つ使用する必要があります。"
+
+#: public/class-drgc-public.php:147, public/class-drgc-public.php:251
+#, fuzzy
+msgid "Must use at least one number."
+msgstr "少なくとも 1 つの数値を使用する必要があります。"
+
+#: public/class-drgc-public.php:148, public/class-drgc-public.php:255
+#, fuzzy
+msgid "Must use at least one special character (! _ @)."
+msgstr "少なくとも 1 つの特殊文字 (! _ @) を使用する必要があります。"
+
+#: public/class-drgc-public.php:149, public/class-drgc-public.php:259
+#, fuzzy
+msgid "Contains non-allowable special characters (only ! _ @ are allowed)."
+msgstr "使用できない特殊文字が含まれています (! _ @ のみ使用できます)。"
+
+#: public/class-drgc-public.php:150, public/class-drgc-public.php:235
+msgid "Passwords do not match."
+msgstr "パスワードが一致しません。"
+
+#: public/class-drgc-public.php:151
+#, fuzzy
+msgid ""
+"Please indicate you have read and accepted the privacy policy and terms of "
+"sale."
+msgstr ""
+"プライバシーポリシーおよび販売条件を読み、同意したことをご記入ください。"
+
+#: public/class-drgc-public.php:152
+msgid "Something went wrong. Please try again."
+msgstr "原因不明のエラー発生。もう一度お試し下さい."
+
+#: public/class-drgc-public.php:153
+msgid "Loading..."
+msgstr "読み込み中…"
+
+#: public/class-drgc-public.php:154,
+#: public/partials/drgc-product-details.php:22
+msgid "Buy Now"
+msgstr "今すぐ購入"
+
+#: public/class-drgc-public.php:155, public/partials/drgc-buy-button.php:31,
+#: public/templates/parts/content-archive.php:59,
+#: public/templates/parts/content-single.php:148
+msgid "Add to Cart"
+msgstr "カートに追加"
+
+#: public/class-drgc-public.php:156
+msgid "Out of Stock"
+msgstr "在庫切れ"
+
+#: public/class-drgc-public.php:157
+#, fuzzy
+msgid "Are you sure you want to immediately unsubscribe this subscription?"
+msgstr "このサブスクリプションをすぐに購読解除しますか?"
+
+#: public/class-drgc-public.php:158
+#, fuzzy
+msgid "Please enter the required quantity:"
+msgstr "必要な数量を入力してください:"
+
+#: public/class-drgc-public.php:159
+#, fuzzy
+msgid "There are no delivery options available for your cart or destination."
+msgstr "カートまたは目的地に対して利用可能な配送オプションはありません。"
+
+#: public/class-drgc-public.php:160
+#, fuzzy
+msgid "MM/YY"
+msgstr "MM/YY"
+
+#: public/class-drgc-public.php:161
+msgid "CVV"
+msgstr "CVV"
+
+#: public/class-drgc-public.php:211
+#, fuzzy
+msgid "Authorization failed for specified credentials"
+msgstr "指定された資格情報の認証に失敗しました"
+
+#: public/class-drgc-public.php:364, public/class-drgc-public.php:378
+msgid "There is no account with that username or email address."
+msgstr "そのユーザー名やメールアドレスのアカウントはありません。"
+
+#: public/class-drgc-public.php:360
+msgid "Enter a username or email address."
+msgstr "ユーザー名またはメールアドレスを入力してください."
+
+#: public/class-drgc-public.php:400
+msgid "Someone has requested a password reset for the following account:"
+msgstr "どなたかが以下のアカウントのパスワードリセットをリクエストしました :"
+
+#: public/class-drgc-public.php:401
+msgid "Site Name: %s"
+msgstr "ユーザー名: %s"
+
+#: public/class-drgc-public.php:402
+msgid "Username: %s"
+msgstr "ユーザー名: %s"
+
+#: public/class-drgc-public.php:403
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr "心当たりがない場合は無視してください。"
+
+#: public/class-drgc-public.php:404
+msgid "To reset your password, visit the following address:"
+msgstr "パスワードをリセットするには、以下へアクセスしてください :"
+
+#: public/class-drgc-public.php:406, public/class-drgc-public.php:809,
+#: public/templates/login/login.php:59
+msgid "Reset Password"
+msgstr "パスワードをリセットする"
+
+#: public/class-drgc-public.php:408
+msgid "[%s] Password Reset"
+msgstr "[%s] パスワードリセット"
+
+#: public/class-drgc-public.php:423
+#, fuzzy
+msgid ""
+"The email could not be sent. Possible reason: your host may have disabled "
+"the mail() function."
+msgstr ""
+"電子メールを送信できませんでした。考えられる理由: ホストが mail() 関数を無効"
+"にしている可能性があります。"
+
+#: public/class-drgc-public.php:445
+msgid "Something went wrong."
+msgstr "何かが間違っていました"
+
+#: public/class-drgc-public.php:463
+msgid "Invalid key"
+msgstr "無効なキー"
+
+#: public/class-drgc-public.php:461
+#, fuzzy
+msgid "Expired key"
+msgstr "期限切れキー"
+
+#: public/class-drgc-public.php:522
+msgid "Hi, "
+msgstr "こんにちは"
+
+#: public/class-drgc-public.php:536, public/class-drgc-public.php:768,
+#: public/templates/login/login.php:30
+msgid "Logout"
+msgstr "ログアウト"
+
+#: public/class-drgc-public.php:755
+#, fuzzy
+msgid "You're about to be logged out!"
+msgstr "ログアウトされようとしています!"
+
+#: public/class-drgc-public.php:760
+#, fuzzy
+msgid ""
+"For security reasons, your connection times out after you've been inactive "
+"for a while. You will be logged out in <strong>n</strong> seconds.<br>Click "
+"Continue if you'd like to stay logged in."
+msgstr ""
+"セキュリティ上の理由から、しばらく非アクティブにした後で接続がタイムアウトし"
+"ます。<strong>n</strong>秒でログアウトされます。<br>ログインしたままにする場"
+"合は、[続行] をクリックします。"
+
+#: public/class-drgc-public.php:765
+msgid "Continue"
+msgstr "続ける"
+
+#: public/class-drgc-public.php:781
+msgid "Forgot Password"
+msgstr "パスワードを忘れた場合"
+
+#: public/class-drgc-public.php:789
+#, fuzzy
+msgid ""
+"To reset your password, please enter your email address below and an email "
+"with instructions on resetting your password will be sent to you."
+msgstr ""
+"パスワードをリセットするには、以下にメールアドレスを入力し、パスワードのリ"
+"セットに関する手順を記載したメールが送信されます。"
+
+#: public/class-drgc-public.php:792
+msgid "Email Address:"
+msgstr "メールアドレス:"
+
+#: public/class-drgc-public.php:795, public/class-drgc-public.php:802
+#, fuzzy
+msgid "This field is required email."
+msgstr "このフィールドは必須の電子メールです。"
+
+#: public/class-drgc-public.php:799
+#, fuzzy
+msgid "Verify Email Address:"
+msgstr "メールアドレスの確認:"
+
+#: public/partials/drgc-legal-footer.php:17
+#, fuzzy
+msgid ""
+" is the authorized reseller and merchant of the products and services "
+"offered within this store."
+msgstr ""
+"は、このストア内で提供される製品およびサービスの認定販売代理店および販売者で"
+"す。"
+
+#: public/partials/drgc-legal-footer.php:20,
+#: public/templates/checkout/checkout-confirmation.php:17,
+#: public/templates/checkout/checkout-pretandc.php:6
+msgid "Privacy Policy"
+msgstr "プライバシーポリシー"
+
+#: public/partials/drgc-legal-footer.php:21,
+#: public/templates/checkout/checkout-confirmation.php:16,
+#: public/templates/checkout/checkout-pretandc.php:5
+#, fuzzy
+msgid "Terms of Sale"
+msgstr "販売条件"
+
+#: public/partials/drgc-legal-footer.php:22
+msgid "Cookies"
+msgstr "クッキー"
+
+#: public/partials/drgc-legal-footer.php:23
+#, fuzzy
+msgid "Cancellation Right"
+msgstr "キャンセル権"
+
+#: public/partials/drgc-legal-footer.php:24
+#, fuzzy
+msgid "Legal Notice"
+msgstr "法的通知"
+
+#: public/partials/drgc-minicart.php:16
+#, fuzzy
+msgid "ITEM(S)"
+msgstr "項目"
+
+#: public/partials/drgc-minicart.php:19
+msgid "Shopping Cart"
+msgstr "ショッピングカート"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:23,
+#: public/templates/cart/cart-auto-renewal-terms.php:29
+#, fuzzy
+msgid "Auto-Renewal Plan Terms"
+msgstr "自動更新プランの条件"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:47
+#, fuzzy
+msgid "I have read and agree to the terms and charges above."
+msgstr "私は上記の条件と料金を読んで同意しました。"
+
+#: public/templates/cart/cart-summary.php:39,
+#: public/templates/checkout/checkout-summary.php:29,
+#: public/templates/thank-you/thank-you-summary.php:38
+msgid "Subtotal"
+msgstr "小計"
+
+#: public/templates/cart/cart-summary.php:54
+#, fuzzy
+msgid "Add Promo Code"
+msgstr "プロモーション コードの追加"
+
+#: public/templates/cart/cart-summary.php:56
+#, fuzzy
+msgid "Promo Code"
+msgstr "プロモーションコード"
+
+#: public/templates/cart/cart-summary.php:57
+msgid "Apply"
+msgstr "適用"
+
+#: public/templates/cart/cart-summary.php:64
+msgid "Proceed to checkout"
+msgstr "お支払いへ進む"
+
+#: public/templates/cart/cart.php:58, public/templates/checkout/checkout.php:90
+msgid "Continue Shopping"
+msgstr "ショッピングを続ける"
+
+#: public/templates/checkout/checkout-billing.php:26
+msgid "Billing"
+msgstr "請求処理"
+
+#: public/templates/checkout/checkout-billing.php:42
+#, fuzzy
+msgid "What is your billing address?"
+msgstr "請求先住所は何ですか?"
+
+#: public/templates/checkout/checkout-billing.php:52
+#, fuzzy
+msgid "Billing address is the same as delivery address"
+msgstr "請求先住所は配送先住所と同じです。"
+
+#: public/templates/checkout/checkout-billing.php:68,
+#: public/templates/checkout/checkout-shipping.php:47
+msgid "First Name"
+msgstr "名"
+
+#: public/templates/checkout/checkout-billing.php:90,
+#: public/templates/checkout/checkout-shipping.php:69
+msgid "Last Name"
+msgstr "姓"
+
+#: public/templates/checkout/checkout-billing.php:112,
+#: public/templates/checkout/checkout-shipping.php:91
+msgid "Address line 1"
+msgstr "丁目、番地、号など"
+
+#: public/templates/checkout/checkout-billing.php:134,
+#: public/templates/checkout/checkout-shipping.php:113
+#, fuzzy
+msgid "Address line 2/Company"
+msgstr "住所行 2/会社"
+
+#: public/templates/checkout/checkout-billing.php:150,
+#: public/templates/checkout/checkout-shipping.php:129
+msgid "City"
+msgstr "市区町村"
+
+#: public/templates/checkout/checkout-billing.php:171,
+#: public/templates/checkout/checkout-shipping.php:149
+msgid "Select Country"
+msgstr "国を選択"
+
+#: public/templates/checkout/checkout-billing.php:201,
+#: public/templates/checkout/checkout-shipping.php:179
+#, fuzzy
+msgid "Select State"
+msgstr "状態の選択"
+
+#: public/templates/checkout/checkout-billing.php:229,
+#: public/templates/checkout/checkout-shipping.php:207
+msgid "Zipcode"
+msgstr "郵便番号"
+
+#: public/templates/checkout/checkout-billing.php:251,
+#: public/templates/checkout/checkout-shipping.php:229
+msgid "Phone"
+msgstr "電話番号"
+
+#: public/templates/checkout/checkout-billing.php:267,
+#: public/templates/checkout/checkout-delivery.php:45,
+#: public/templates/checkout/checkout-email.php:34,
+#: public/templates/checkout/checkout-shipping.php:243
+msgid "Save and continue"
+msgstr "保存して続行"
+
+#: public/templates/checkout/checkout-confirmation.php:4
+#, fuzzy
+msgid "Please review your order details and place your order below."
+msgstr "ご注文内容を確認し、下記のご注文をお願いします。"
+
+#: public/templates/checkout/checkout-confirmation.php:19
+#, fuzzy
+msgid "By submitting the order, I agree to %s and %s of %s"
+msgstr "注文を送信することで、%s と %s %s に同意します"
+
+#: public/templates/checkout/checkout-confirmation.php:25
+msgid "Place Order"
+msgstr "注文する"
+
+#: public/templates/checkout/checkout-delivery.php:27
+msgid "Delivery"
+msgstr "配信"
+
+#: public/templates/checkout/checkout-email.php:21
+msgid "Please enter your email address"
+msgstr "メール アドレスを入力してください"
+
+#: public/templates/checkout/checkout-payment.php:22
+#, fuzzy
+msgid "How would you like to pay?"
+msgstr "どのように支払いをしますか?"
+
+#: public/templates/checkout/checkout-payment.php:42
+msgid "Credit Card"
+msgstr "クレジットカード"
+
+#: public/templates/checkout/checkout-payment.php:101
+msgid "PayPal"
+msgstr "PayPal"
+
+#: public/templates/checkout/checkout-payment.php:131
+#, fuzzy
+msgid "Pay with card"
+msgstr "カードでのお支払い"
+
+#: public/templates/checkout/checkout-pretandc.php:8
+#, fuzzy
+msgid "I agree to %s and %s of %s"
+msgstr "%s と %s に同意します"
+
+#: public/templates/checkout/checkout-shipping.php:38
+#, fuzzy
+msgid "Fields marked with * are mandatory"
+msgstr "* でマークされたフィールドは必須です"
+
+#: public/templates/checkout/checkout-summary.php:17,
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "items"
+msgstr "アイテム"
+
+#: public/templates/checkout/checkout-summary.php:17,
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "item"
+msgstr "アイテム"
+
+#: public/templates/checkout/checkout.php:16
+#, fuzzy
+msgid "Your cart is empty!"
+msgstr "あなたのカートは空です!"
+
+#: public/templates/login/login.php:69
+#, fuzzy
+msgid "Returning Customer"
+msgstr "顧客の返品"
+
+#: public/templates/login/login.php:70
+#, fuzzy
+msgid "If you have an existing account, please sign in."
+msgstr "既存のアカウントをお持ちの場合は、サインインしてください。"
+
+#: public/templates/login/login.php:97
+msgid "Forgot password?"
+msgstr "パスワードをお忘れですか?"
+
+#: public/templates/login/login.php:37
+msgid "New password"
+msgstr "新しいパスワード"
+
+#: public/templates/login/login.php:38
+#, fuzzy
+msgid "Please enter secure password twice to continue"
+msgstr "続行するには、2 回安全なパスワードを入力してください。"
+
+#: public/templates/login/login.php:107
+#, fuzzy
+msgid "NEW CUSTOMER"
+msgstr "新規顧客"
+
+#: public/templates/login/login.php:110
+#, fuzzy
+msgid ""
+"You can checkout as a guest or become a member for faster checkout and great "
+"offers."
+msgstr ""
+"ゲストとしてチェックアウトしたり、より速いチェックアウトと素晴らしいオファー"
+"を提供するためにメンバーになることができます。"
+
+#: public/templates/login/login.php:165
+msgid "Sign Up"
+msgstr "サインアップ"
+
+#: public/templates/login/login.php:167
+#, fuzzy
+msgid "Continue As Guest"
+msgstr "ゲストとして続行"
+
+#: public/templates/login/login.php:23
+msgid "Welcome "
+msgstr "ようこそ山本精肉店へ"
+
+#: public/templates/login/login.php:177
+#, fuzzy
+msgid "PAYPAL CUSTOMERS"
+msgstr "ペイパルのお客様"
+
+#: public/templates/login/login.php:179
+#, fuzzy
+msgid "Make your payment with PayPal's secure services."
+msgstr "PayPalの安全なサービスで支払いを行います。"
+
+#: public/templates/login/login.php:180
+#, fuzzy
+msgid "You can still add promotion codes before you complete your order."
+msgstr "注文を完了する前に、プロモーション コードを追加できます。"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:32
+msgid "Product Name"
+msgstr "商品名"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:34
+msgid "Status"
+msgstr "ステータス"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:36
+#, fuzzy
+msgid "Auto Renewal Date"
+msgstr "自動更新日"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:40,
+#: public/templates/subscription-details/subscription-details-account-info.php:57,
+#: public/templates/subscription-details/subscription-details-status.php:61
+msgid "Expiration Date"
+msgstr "有効期限"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:61
+msgid "Not Applicable"
+msgstr "該当なし"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:58
+#, fuzzy
+msgid "Renew Now!"
+msgstr "今すぐ更新!"
+
+#: public/templates/parts/content-none.php:17
+msgid "Nothing Found"
+msgstr "何も見つかりません"
+
+#: public/templates/parts/content-none.php:26
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr "お探しのコンテンツは見つかりませんでした。検索をお試しください。"
+
+#: public/templates/parts/content-none.php:23
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+"申し訳ありませんが、検索条件に一致するものはありません。 別のキーワードでもう"
+"一度お試しください。"
+
+#: public/templates/parts/content-none.php:21
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+"最初の投稿を公開する準備はできましたか ? <a href=\"%1$s\">ここから始めましょ"
+"う</a>。"
+
+#: public/templates/parts/content-single.php:117
+msgid "Select "
+msgstr "選択 "
+
+#: public/templates/subscription-details/subscription-details-account-info.php:49
+msgid "Account Information"
+msgstr "アカウント情報"
+
+#: public/templates/subscription-details/subscription-details-account-info.php:53
+#, fuzzy
+msgid "The following is the information currently being used for payment."
+msgstr "現在お支払い方法としてご利用いただいている情報は以下の通りです。"
+
+#: public/templates/subscription-details/subscription-details-account-info.php:63,
+#: public/templates/thank-you/thank-you.php:122
+msgid "Billing Address"
+msgstr "請求先住所"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:20
+msgid "Order History"
+msgstr "注文履歴"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:24
+#, fuzzy
+msgid "View the order history for your subscription."
+msgstr "サブスクリプションの注文履歴を表示します。"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:30
+#, fuzzy
+msgid "View Order History"
+msgstr "注文履歴の表示"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:39
+msgid "Order Number"
+msgstr "注文番号"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:41
+msgid "Order Date"
+msgstr "注文日"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:43
+msgid "Order Amount"
+msgstr "注文金額"
+
+#: public/templates/subscription-details/subscription-details-status.php:33
+msgid "Subscription Status"
+msgstr "定期支払いステータス"
+
+#: public/templates/subscription-details/subscription-details-status.php:57,
+#: public/templates/subscription-details/subscription-details-status.php:43
+#, fuzzy
+msgid "Automatic Renewals"
+msgstr "自動更新"
+
+#: public/templates/subscription-details/subscription-details-status.php:57,
+#: public/templates/subscription-details/subscription-details-status.php:43
+msgid "Off"
+msgstr "オフ"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+#, fuzzy
+msgid "Your subscription will automatically renew on"
+msgstr "サブスクリプションは自動的に更新されます"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+#, fuzzy
+msgid ""
+"If you do not wish for it to automatically renew, update the setting below."
+msgstr "自動更新を希望しない場合は、以下の設定を更新してください。"
+
+#: public/templates/subscription-details/subscription-details-status.php:53
+msgid "On"
+msgstr "オン"
+
+#: public/templates/subscription-details/subscription-details-status.php:63
+msgid "Renew Now"
+msgstr "今すぐ更新 "
+
+#: public/templates/subscription-details/subscription-details-status.php:67
+msgid "Cancel Subscription"
+msgstr "定期支払をキャンセル"
+
+#: public/templates/subscription-details/subscription-details.php:29
+#, fuzzy
+msgid "Back to My Subscriptions Page"
+msgstr "[マイ サブスクリプション] ページに戻る"
+
+#: public/templates/subscription-details/subscription-details.php:37
+msgid "Subscription ID"
+msgstr "購読ID"
+
+#: public/templates/subscription-details/subscription-details.php:51
+#, fuzzy
+msgid "Current Quantity"
+msgstr "現在の数量"
+
+#: public/templates/subscription-details/subscription-details.php:53
+#, fuzzy
+msgid "Next Renewal Quantity"
+msgstr "次回の更新数量"
+
+#: public/templates/subscription-details/subscription-details.php:57
+#, fuzzy
+msgid "Change Quantity"
+msgstr "数量の変更"
+
+#: public/templates/thank-you/thank-you-my-subs.php:32
+msgid "My Subscriptions"
+msgstr "私の定期支払い"
+
+#: public/templates/thank-you/thank-you.php:58
+msgid "Thank you"
+msgstr "ありがとうございます"
+
+#: public/templates/thank-you/thank-you.php:62
+#, fuzzy
+msgid "Your order was completed successfully."
+msgstr "注文は正常に完了しました。"
+
+#: public/templates/thank-you/thank-you.php:66
+#, fuzzy
+msgid "Order number is: "
+msgstr "注文番号は次のとおりです。"
+
+#: public/templates/thank-you/thank-you.php:75
+#, fuzzy
+msgid "You will receive an email confirmation shortly at %s"
+msgstr "%s にまもなく確認メールが届きます"
+
+#: public/templates/thank-you/thank-you.php:79
+msgid "Print Receipt"
+msgstr "領収書を印刷"
+
+#: public/templates/thank-you/thank-you.php:108
+msgid "Shipping Address"
+msgstr "配送先住所"
