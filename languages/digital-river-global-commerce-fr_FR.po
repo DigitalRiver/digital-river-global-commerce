@@ -498,7 +498,7 @@ msgstr "Total Incl. TVA"
 
 #: public/class-drgc-public.php:133
 msgid "Password reset email sent"
-msgstr "Courriel de réinitialisation de mot de passe envoyé"
+msgstr "Courriel de réinitialisation de mot de passe a été envoyé"
 
 #: public/class-drgc-public.php:134
 #, fuzzy
@@ -506,13 +506,12 @@ msgid "Password saved"
 msgstr "Mot de passe enregistré"
 
 #: public/class-drgc-public.php:135
-#, fuzzy
 msgid ""
 "You will be receiving an email soon with instructions on resetting your "
 "login password."
 msgstr ""
-"Vous recevrez bientôt un e-mail avec des instructions sur la "
-"réinitialisation de votre mot de passe de connexion."
+"Vous recevrez bientôt un e-mail avec des instructions pour changer votre mot "
+"de passe."
 
 #: public/class-drgc-public.php:136
 #, fuzzy
@@ -530,7 +529,7 @@ msgstr "Veuillez entrer un code promo valide."
 
 #: public/class-drgc-public.php:139, public/class-drgc-public.php:282
 msgid "Please enter a valid email address."
-msgstr "Veuillez saisir une adresse de messagerie valide."
+msgstr "Veuillez entrer une adresse e-mail valide."
 
 #: public/class-drgc-public.php:140
 #, fuzzy
@@ -564,36 +563,31 @@ msgstr "Défaut de paiement pour la carte de crédit spécifiée."
 #: public/templates/login/login.php:142, public/templates/login/login.php:150,
 #: public/templates/login/login.php:158
 msgid "This field is required."
-msgstr "Ce champ est requis."
+msgstr "Ce champ est obligatoire."
 
 #: public/class-drgc-public.php:143
 msgid "Emails do not match."
-msgstr "Les emails ne sont pas identiques."
+msgstr "Les adresses e-mail ne correspondent pas."
 
 #: public/class-drgc-public.php:144, public/class-drgc-public.php:239
-#, fuzzy
 msgid "Password must be between 8 - 32 characters."
-msgstr "Le mot de passe doit être compris entre 8 et 32 caractères."
+msgstr "Le mot de passe doit comporter de 8 à 32 caractères."
 
 #: public/class-drgc-public.php:145, public/class-drgc-public.php:243
-#, fuzzy
 msgid "Must use at least one upper case letter."
-msgstr "Doit utiliser au moins une lettre majuscule."
+msgstr "Se compose d'au moins une lettre minuscule."
 
 #: public/class-drgc-public.php:146, public/class-drgc-public.php:247
-#, fuzzy
 msgid "Must use at least one lower case letter."
-msgstr "Doit utiliser au moins une lettre minuscule."
+msgstr "Se compose d'au moins une lettre majuscule."
 
 #: public/class-drgc-public.php:147, public/class-drgc-public.php:251
-#, fuzzy
 msgid "Must use at least one number."
-msgstr "Doit utiliser au moins un numéro."
+msgstr "Se compose d'au moins un numéro."
 
 #: public/class-drgc-public.php:148, public/class-drgc-public.php:255
-#, fuzzy
 msgid "Must use at least one special character (! _ @)."
-msgstr "Doit utiliser au moins un caractère spécial (! _ @)."
+msgstr "Se compose d'au moins un caractère spécial (! _ @)."
 
 #: public/class-drgc-public.php:149, public/class-drgc-public.php:259
 #, fuzzy
@@ -639,9 +633,9 @@ msgid "Out of Stock"
 msgstr "Rupture de stock"
 
 #: public/class-drgc-public.php:157
-#, fuzzy
 msgid "Are you sure you want to immediately unsubscribe this subscription?"
-msgstr "Êtes-vous sûr de vouloir immédiatement désabonner cet abonnement ?"
+msgstr ""
+"Êtes-vous sûr de vouloir immédiatement vous désabonner cet abonnement ?"
 
 #: public/class-drgc-public.php:158
 #, fuzzy
@@ -677,7 +671,7 @@ msgstr ""
 
 #: public/class-drgc-public.php:360
 msgid "Enter a username or email address."
-msgstr "Saisissez un nom d&rsquo;utilisateur ou une adresse email."
+msgstr "Saisissez un nom d'utilisateur ou une adresse e-mail."
 
 #: public/class-drgc-public.php:400
 msgid "Someone has requested a password reset for the following account:"
@@ -740,7 +734,7 @@ msgstr "Bonjour, "
 #: public/class-drgc-public.php:536, public/class-drgc-public.php:768,
 #: public/templates/login/login.php:30
 msgid "Logout"
-msgstr "Déconnexion"
+msgstr "Déconnectez-vous"
 
 #: public/class-drgc-public.php:755
 #, fuzzy
@@ -748,15 +742,15 @@ msgid "You're about to be logged out!"
 msgstr "Tu es sur le point d’être déconnecté !"
 
 #: public/class-drgc-public.php:760
-#, fuzzy
 msgid ""
 "For security reasons, your connection times out after you've been inactive "
 "for a while. You will be logged out in <strong>n</strong> seconds.<br>Click "
 "Continue if you'd like to stay logged in."
 msgstr ""
-"Pour des raisons de sécurité, vos temps de connexion après avoir été inactif "
-"pendant un certain temps. Vous serez déconnecté en <strong>quelques secondes."
-"</strong><br>Cliquez sur Continuer si vous souhaitez rester connecté."
+"Pour des raisons de sécurité, votre connexion interrompue après  avoir été "
+"inactif pour une période. . Vous serez voud déconnecter en <strong>quelques "
+"secondes.\"\"</strong><br>Cliquez sur Continuer si vous souhaitez rester "
+"connecté."
 
 #: public/class-drgc-public.php:765
 msgid "Continue"
@@ -767,18 +761,17 @@ msgid "Forgot Password"
 msgstr "Mot de passe oublié"
 
 #: public/class-drgc-public.php:789
-#, fuzzy
 msgid ""
 "To reset your password, please enter your email address below and an email "
 "with instructions on resetting your password will be sent to you."
 msgstr ""
 "Pour réinitialiser votre mot de passe, entrez votre adresse e-mail ci-"
-"dessous et un e-mail avec des instructions sur la réinitialisation de votre "
-"mot de passe vous sera envoyé."
+"dessous et un e-mail avec des instructions sur la manière  de réinitialiser "
+"votre mot de passe vous sera envoyé."
 
 #: public/class-drgc-public.php:792
 msgid "Email Address:"
-msgstr "Adresse Email:"
+msgstr "Adresse E-mail:"
 
 #: public/class-drgc-public.php:795, public/class-drgc-public.php:802
 #, fuzzy
@@ -791,13 +784,12 @@ msgid "Verify Email Address:"
 msgstr "Vérifiez l’adresse e-mail :"
 
 #: public/partials/drgc-legal-footer.php:17
-#, fuzzy
 msgid ""
 " is the authorized reseller and merchant of the products and services "
 "offered within this store."
 msgstr ""
-"est le revendeur autorisé et le marchand des produits et services offerts "
-"dans ce magasin."
+"est-ce que le revendeur autorisé et le marchand des produits et services "
+"offerts dans ce magasin."
 
 #: public/partials/drgc-legal-footer.php:20,
 #: public/templates/checkout/checkout-confirmation.php:17,
@@ -899,7 +891,7 @@ msgstr "Nom"
 #: public/templates/checkout/checkout-billing.php:112,
 #: public/templates/checkout/checkout-shipping.php:91
 msgid "Address line 1"
-msgstr "Adresse ligne 1"
+msgstr "Ligne d'adresse 1"
 
 #: public/templates/checkout/checkout-billing.php:134,
 #: public/templates/checkout/checkout-shipping.php:113
@@ -937,7 +929,7 @@ msgstr "Téléphone"
 #: public/templates/checkout/checkout-email.php:34,
 #: public/templates/checkout/checkout-shipping.php:243
 msgid "Save and continue"
-msgstr "Enregistrer et continuer"
+msgstr "Sauvegarde poursuite"
 
 #: public/templates/checkout/checkout-confirmation.php:4
 #, fuzzy
@@ -987,9 +979,8 @@ msgid "I agree to %s and %s of %s"
 msgstr "J’accepte les %s et %s de %s"
 
 #: public/templates/checkout/checkout-shipping.php:38
-#, fuzzy
 msgid "Fields marked with * are mandatory"
-msgstr "Les champs marqués par * sont obligatoires"
+msgstr "Les champs marqués  avec * sont obligatoires."
 
 #: public/templates/checkout/checkout-summary.php:17,
 #: public/templates/thank-you/thank-you-summary.php:25
@@ -1006,9 +997,8 @@ msgid "Your cart is empty!"
 msgstr "Votre panier est vide!"
 
 #: public/templates/login/login.php:69
-#, fuzzy
 msgid "Returning Customer"
-msgstr "Client de retour"
+msgstr "Client enregistré"
 
 #: public/templates/login/login.php:70
 #, fuzzy
@@ -1095,7 +1085,7 @@ msgstr "Non Applicable"
 
 #: public/templates/my-subscriptions/my-subscriptions.php:58
 msgid "Renew Now!"
-msgstr "Renouvellez maintenant !"
+msgstr "Renouveller maintenant !"
 
 #: public/templates/parts/content-none.php:17
 msgid "Nothing Found"
@@ -1183,17 +1173,15 @@ msgid "Off"
 msgstr "Off"
 
 #: public/templates/subscription-details/subscription-details-status.php:39
-#, fuzzy
 msgid "Your subscription will automatically renew on"
-msgstr "Votre abonnement se renouvelle automatiquement le"
+msgstr "Votre abonnement sera automatiquement renouvelé"
 
 #: public/templates/subscription-details/subscription-details-status.php:39
-#, fuzzy
 msgid ""
 "If you do not wish for it to automatically renew, update the setting below."
 msgstr ""
-"Si vous ne souhaitez pas qu’il se renouvelle automatiquement, mettez à jour "
-"le paramètre ci-dessous."
+"Si vous ne souhaitez pas qu’il se renouvelle automatiquement, changer le "
+"paramètre ci-dessous."
 
 #: public/templates/subscription-details/subscription-details-status.php:53
 msgid "On"
@@ -1208,13 +1196,12 @@ msgid "Cancel Subscription"
 msgstr "Annuler l'abonnement"
 
 #: public/templates/subscription-details/subscription-details.php:29
-#, fuzzy
 msgid "Back to My Subscriptions Page"
-msgstr "Retour à la page Mes abonnements"
+msgstr "Retour à la page de Mes abonnements"
 
 #: public/templates/subscription-details/subscription-details.php:37
 msgid "Subscription ID"
-msgstr "ID de l'Adhésion"
+msgstr "ID d'abonnement"
 
 #: public/templates/subscription-details/subscription-details.php:51
 #, fuzzy
