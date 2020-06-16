@@ -1,0 +1,1249 @@
+# Copyright (C) 2020 Digital_River_Global_Commerce
+# This file is distributed under the same license as the Digital_River_Global_Commerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Digital_River_Global_Commerce\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language-Team: GCTemplates <gcTemplates@digitalriver.com>\n"
+"Report-Msgid-Bugs-To: https://github.com/DigitalRiver/digital-river-global-"
+"commerce\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
+"_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;"
+"esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"X-Generator: Poedit 2.3.1\n"
+"Last-Translator: \n"
+"Language: fr_FR\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-drgc-admin.php:133, admin/class-drgc-admin.php:134
+msgid "Settings"
+msgstr "Paramètres"
+
+#: admin/class-drgc-admin.php:173
+msgid "Site ID"
+msgstr "Identifiant du site"
+
+#: admin/class-drgc-admin.php:182
+#, fuzzy
+msgid "Commerce API Key"
+msgstr "Clé API commerciale"
+
+#: admin/class-drgc-admin.php:191
+#, fuzzy
+msgid "Commerce API Secret"
+msgstr "Commerce API Secret"
+
+#: admin/class-drgc-admin.php:200
+msgid "Domain"
+msgstr "Domaine"
+
+#: admin/class-drgc-admin.php:209
+#, fuzzy
+msgid "Payment Services API Key"
+msgstr "Clé API des services de paiement"
+
+#: admin/class-drgc-admin.php:218
+#, fuzzy
+msgid "Scheduled Products Import"
+msgstr "Importation de produits planifiés"
+
+#: admin/class-drgc-admin.php:227
+msgid "Test Order"
+msgstr "Essai de commande"
+
+#: admin/class-drgc-admin.php:243
+msgid "Apple Pay"
+msgstr "Apple Pay"
+
+#: admin/class-drgc-admin.php:252
+#, fuzzy
+msgid "Google Pay"
+msgstr "Google Pay"
+
+#: admin/class-drgc-admin.php:304
+#, fuzzy
+msgid ""
+"Please contact your account representative for assistance with these "
+"settings."
+msgstr ""
+"Veuillez contacter votre représentant de compte pour obtenir de l’aide sur "
+"ces paramètres."
+
+#: admin/class-drgc-admin.php:372
+#, fuzzy
+msgid "Enable Test Order."
+msgstr "Activer l’ordre de test."
+
+#: admin/class-drgc-admin.php:383
+#, fuzzy
+msgid "Twice daily product synchronization with GC."
+msgstr "Synchronisation deux fois par jour avec GC."
+
+#: admin/class-drgc-admin.php:566, admin/class-drgc-admin.php:618
+#, fuzzy
+msgid "Failed to create file"
+msgstr "Échec de la création de fichier"
+
+#: admin/class-drgc-admin.php:573, admin/class-drgc-admin.php:631
+#, fuzzy
+msgid "Could not write to file"
+msgstr "Impossible d’écrire dans le fichier"
+
+#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45
+msgid "Products"
+msgstr "Produits"
+
+#: admin/class-drgc-post-types.php:44, public/class-drgc-public.php:132
+msgid "Product"
+msgstr "Produit"
+
+#: admin/class-drgc-post-types.php:46
+msgid "Digital River"
+msgstr "Digital River"
+
+#: admin/class-drgc-post-types.php:47
+msgid "Add New"
+msgstr "Ajouter"
+
+#: admin/class-drgc-post-types.php:48
+msgid "Add new product"
+msgstr "Ajouter un nouveau produit"
+
+#: admin/class-drgc-post-types.php:49,
+#: public/templates/checkout/checkout-billing.php:32,
+#: public/templates/checkout/checkout-email.php:12,
+#: public/templates/checkout/checkout-shipping.php:32
+msgid "Edit"
+msgstr "Modifier"
+
+#: admin/class-drgc-post-types.php:50
+msgid "Edit product"
+msgstr "Modifier le produit"
+
+#: admin/class-drgc-post-types.php:51
+msgid "New product"
+msgstr "Nouveau produit"
+
+#: admin/class-drgc-post-types.php:52
+msgid "View product"
+msgstr "Voir le produit"
+
+#: admin/class-drgc-post-types.php:53
+msgid "View products"
+msgstr "Voir les produits"
+
+#: admin/class-drgc-post-types.php:54
+msgid "Search products"
+msgstr "Rechercher des produits"
+
+#: admin/class-drgc-post-types.php:55
+msgid "No products found"
+msgstr "Aucun produit trouvé"
+
+#: admin/class-drgc-post-types.php:56
+msgid "No products found in trash"
+msgstr "Aucun produit trouvé dans la corbeille"
+
+#: admin/class-drgc-post-types.php:83
+#, fuzzy
+msgid "DR Variations"
+msgstr "DR Variations"
+
+#: admin/class-drgc-post-types.php:84
+#, fuzzy
+msgid "DR Variation"
+msgstr "DR Variation"
+
+#: admin/class-drgc-post-types.php:85,
+#: admin/partials/drgc-product-details-meta-box.php:43
+msgid "Variations"
+msgstr "Variations"
+
+#: admin/class-drgc-post-types.php:115
+msgid "Product Categories"
+msgstr "Catégories de produits"
+
+#: admin/class-drgc-post-types.php:116
+msgid "Category"
+msgstr "Catégorie"
+
+#: admin/class-drgc-post-types.php:117
+msgid "Categories"
+msgstr "Catégories"
+
+#: admin/class-drgc-post-types.php:118
+msgid "Search categories"
+msgstr "Chercher dans les catégories"
+
+#: admin/class-drgc-post-types.php:119
+msgid "All categories"
+msgstr "Toutes les catégories"
+
+#: admin/class-drgc-post-types.php:120
+msgid "Parent category"
+msgstr "Catégorie parente"
+
+#: admin/class-drgc-post-types.php:121
+msgid "Parent category:"
+msgstr "Catégorie parente :"
+
+#: admin/class-drgc-post-types.php:122
+msgid "Edit category"
+msgstr "Modifier la catégorie"
+
+#: admin/class-drgc-post-types.php:123
+msgid "Update category"
+msgstr "Mettre à jour la catégorie"
+
+#: admin/class-drgc-post-types.php:124
+msgid "Add new category"
+msgstr "Ajouter une nouvelle catégorie"
+
+#: admin/class-drgc-post-types.php:125
+msgid "New category name"
+msgstr "Nom de la nouvelle catégorie"
+
+#: admin/class-drgc-post-types.php:126
+msgid "No categories found"
+msgstr "Aucune catégorie trouvée"
+
+#: admin/class-drgc-post-types.php:162
+msgid "Product Details"
+msgstr "Détails du produit"
+
+#: admin/class-drgc-post-types.php:300
+msgid "Product ID"
+msgstr "ID produit"
+
+#: admin/class-drgc-post-types.php:301,
+#: admin/partials/drgc-product-details-meta-box.php:26
+msgid "SKU"
+msgstr "SKU"
+
+#: admin/partials/drgc-admin-display.php:20
+msgid "General"
+msgstr "Général"
+
+#: admin/partials/drgc-admin-display.php:23,
+#: admin/partials/drgc-admin-locales.php:20
+msgid "Locales"
+msgstr "Langues"
+
+#: admin/partials/drgc-admin-locales.php:21
+#, fuzzy
+msgid "Sync Locales and Currencies"
+msgstr "Synchroniser les localisations et les devises"
+
+#: admin/partials/drgc-admin-locales.php:29
+#, fuzzy
+msgid "Site Locales"
+msgstr "Site Locales"
+
+#: admin/partials/drgc-admin-locales.php:34
+#, fuzzy
+msgid "DR Locale"
+msgstr "DR Locale"
+
+#: admin/partials/drgc-admin-locales.php:35
+msgid "WP Language"
+msgstr "Langue de WordPress"
+
+#: admin/partials/drgc-admin-locales.php:36
+msgid "Currencies"
+msgstr "Devises"
+
+#: admin/partials/drgc-admin-locales.php:44
+msgid "(Default)"
+msgstr "(Par défaut)"
+
+#: admin/partials/drgc-admin-locales.php:24
+msgid "No locale, please sync it up by clicking button above."
+msgstr "Pas de local, cliquez sur le boutton ci-dessus pour sychroniser."
+
+#: admin/partials/drgc-product-details-meta-box.php:18
+#, fuzzy
+msgid "GC Product ID"
+msgstr "ID de produit GC"
+
+#: admin/partials/drgc-product-details-meta-box.php:22
+#, fuzzy
+msgid "External Reference ID"
+msgstr "ID de référence externe"
+
+#: admin/partials/drgc-product-details-meta-box.php:33
+msgid "Default"
+msgstr "Par défaut"
+
+#: admin/partials/drgc-product-details-meta-box.php:47
+msgid "ID"
+msgstr "ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:48
+#, fuzzy
+msgid "Internal Variation Name"
+msgstr "Nom de la variation interne"
+
+#: admin/partials/drgc-product-details-meta-box.php:49,
+#: admin/partials/drgc-product-details-meta-box.php:78
+msgid "Variation Attributes"
+msgstr "Attributs de variations"
+
+#: admin/partials/drgc-product-details-meta-box.php:94,
+#: public/templates/my-subscriptions/my-subscriptions.php:38
+msgid "Price"
+msgstr "Prix"
+
+#: admin/partials/drgc-product-details-meta-box.php:98
+msgid "Display Name"
+msgstr "Nom d'affichage"
+
+#: admin/partials/drgc-product-details-meta-box.php:102
+msgid "Short Description"
+msgstr "Description courte"
+
+#: admin/partials/drgc-product-details-meta-box.php:106
+msgid "Long Description"
+msgstr "Description détaillée"
+
+#: admin/partials/drgc-product-details-meta-box.php:110
+msgid "Thumbnail"
+msgstr "Miniature"
+
+#: admin/partials/drgc-product-details-meta-box.php:114
+msgid "Product Image"
+msgstr "Image du produit"
+
+#: admin/partials/drgc-products-import-btn.php:16
+msgid "Import Complete!"
+msgstr "Importation terminée!"
+
+#: admin/partials/drgc-products-import-btn.php:20
+msgid "You must enable Javascript in order to proceed!"
+msgstr "Vous devez activer Javascript afin de procéder !"
+
+#: admin/partials/drgc-products-import-btn.php:28
+msgid "Import Products"
+msgstr "Importer des produits"
+
+#: includes/class-drgc-activator.php:30
+msgid "cart"
+msgstr "cart"
+
+#: includes/class-drgc-activator.php:31, public/templates/login/login.php:26
+msgid "Cart"
+msgstr "Panier"
+
+#: includes/class-drgc-activator.php:38
+msgid "checkout"
+msgstr "checkout"
+
+#: includes/class-drgc-activator.php:39, public/class-drgc-public.php:124,
+#: public/templates/login/login.php:27
+msgid "Checkout"
+msgstr "Commander"
+
+#: includes/class-drgc-activator.php:46
+msgid "login"
+msgstr "login"
+
+#: includes/class-drgc-activator.php:47, public/class-drgc-public.php:522,
+#: public/templates/login/login.php:91
+msgid "Login"
+msgstr "S'identifier"
+
+#: includes/class-drgc-activator.php:54
+msgid "thank-you"
+msgstr "thank-you"
+
+#: includes/class-drgc-activator.php:55
+msgid "Thank You"
+msgstr "Merci"
+
+#: includes/drgc-core-functions.php:124
+#, fuzzy
+msgid "Showing %s out of %s"
+msgstr "Affichage de %s hors %s"
+
+#: includes/drgc-core-functions.php:146
+msgid "Currency: "
+msgstr "Devise: "
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:35
+msgid "Email"
+msgstr "Courriel"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:36
+msgid "Shipping information"
+msgstr "Informations de livraison"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:37
+msgid "Billing information"
+msgstr "Renseignements sur la facturation"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:38
+msgid "Delivery options"
+msgstr "Options de livraison"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:39
+msgid "Payment"
+msgstr "Paiement"
+
+#: public/class-drgc-public.php:111
+msgid "Upgrade"
+msgstr "Mise à jour"
+
+#: public/class-drgc-public.php:112
+msgid "Add"
+msgstr "Ajouter"
+
+#: public/class-drgc-public.php:113,
+#: public/templates/checkout/checkout-summary.php:20,
+#: public/templates/thank-you/thank-you-summary.php:28
+msgid "FREE"
+msgstr "GRATUIT"
+
+#: public/class-drgc-public.php:114,
+#: public/templates/thank-you/thank-you-summary.php:45
+msgid "VAT"
+msgstr "TVA"
+
+#: public/class-drgc-public.php:115,
+#: public/templates/checkout/checkout-summary.php:36
+#, fuzzy
+msgid "Estimated VAT"
+msgstr "TVA estimée"
+
+#: public/class-drgc-public.php:116,
+#: public/templates/thank-you/thank-you-summary.php:45
+msgid "Tax"
+msgstr "Taxe"
+
+#: public/class-drgc-public.php:117,
+#: public/templates/checkout/checkout-summary.php:36
+#, fuzzy
+msgid "Estimated Tax"
+msgstr "Impôt estimé"
+
+#: public/class-drgc-public.php:118,
+#: public/templates/checkout/checkout-shipping.php:26,
+#: public/templates/thank-you/thank-you-summary.php:53
+msgid "Shipping"
+msgstr "Livraison"
+
+#: public/class-drgc-public.php:119, public/templates/cart/cart-summary.php:47,
+#: public/templates/checkout/checkout-summary.php:44
+msgid "Estimated Shipping"
+msgstr "Frais de Livraison Estimés"
+
+#: public/class-drgc-public.php:120
+#, fuzzy
+msgid "Credit card ending in"
+msgstr "Carte de crédit se terminant en"
+
+#: public/class-drgc-public.php:121
+#, fuzzy
+msgid "pay with card"
+msgstr "payer avec carte"
+
+#: public/class-drgc-public.php:122
+#, fuzzy
+msgid "pay with paypal"
+msgstr "payer avec paypal"
+
+#: public/class-drgc-public.php:123
+msgid "View Cart"
+msgstr "Voir le panier"
+
+#: public/class-drgc-public.php:125
+msgid "Remove"
+msgstr "Supprimer"
+
+#: public/class-drgc-public.php:126
+msgid "Sub-Total"
+msgstr "Sous-total"
+
+#: public/class-drgc-public.php:127
+msgid "Qty"
+msgstr "Qté"
+
+#: public/class-drgc-public.php:128
+msgid "Shipping and Handling"
+msgstr "Frais de livraison"
+
+#: public/class-drgc-public.php:129, public/templates/cart/cart-summary.php:31,
+#: public/templates/checkout/checkout-summary.php:53,
+#: public/templates/thank-you/thank-you-summary.php:61
+msgid "Discount"
+msgstr "Remise"
+
+#: public/class-drgc-public.php:130,
+#: public/templates/checkout/checkout-summary.php:61,
+#: public/templates/thank-you/thank-you-summary.php:69
+msgid "Total"
+msgstr "Total"
+
+#: public/class-drgc-public.php:131,
+#: public/templates/thank-you/thank-you-summary.php:69
+#, fuzzy
+msgid "Total Incl. VAT"
+msgstr "Total Incl. TVA"
+
+#: public/class-drgc-public.php:133
+msgid "Password reset email sent"
+msgstr "Courriel de réinitialisation de mot de passe a été envoyé"
+
+#: public/class-drgc-public.php:134
+#, fuzzy
+msgid "Password saved"
+msgstr "Mot de passe enregistré"
+
+#: public/class-drgc-public.php:135
+msgid ""
+"You will be receiving an email soon with instructions on resetting your "
+"login password."
+msgstr ""
+"Vous recevrez bientôt un e-mail avec des instructions pour changer votre mot "
+"de passe."
+
+#: public/class-drgc-public.php:136
+#, fuzzy
+msgid "You can now log in with your new password."
+msgstr "Vous pouvez maintenant vous connecter avec votre nouveau mot de passe."
+
+#: public/class-drgc-public.php:137, public/templates/cart/cart.php:37
+msgid "Your cart is empty."
+msgstr "Votre panier est vide."
+
+#: public/class-drgc-public.php:138
+#, fuzzy
+msgid "Please enter a valid promo code."
+msgstr "Veuillez entrer un code promo valide."
+
+#: public/class-drgc-public.php:139, public/class-drgc-public.php:282
+msgid "Please enter a valid email address."
+msgstr "Veuillez entrer une adresse e-mail valide."
+
+#: public/class-drgc-public.php:140
+#, fuzzy
+msgid "Address not accepted for current currency."
+msgstr "Adresse non acceptée pour la devise actuelle."
+
+#: public/class-drgc-public.php:141
+#, fuzzy
+msgid "Failed payment for specified credit card."
+msgstr "Défaut de paiement pour la carte de crédit spécifiée."
+
+#: public/class-drgc-public.php:142,
+#: public/templates/checkout/checkout-billing.php:76,
+#: public/templates/checkout/checkout-billing.php:98,
+#: public/templates/checkout/checkout-billing.php:120,
+#: public/templates/checkout/checkout-billing.php:158,
+#: public/templates/checkout/checkout-billing.php:190,
+#: public/templates/checkout/checkout-billing.php:217,
+#: public/templates/checkout/checkout-billing.php:237,
+#: public/templates/checkout/checkout-email.php:25,
+#: public/templates/checkout/checkout-shipping.php:55,
+#: public/templates/checkout/checkout-shipping.php:77,
+#: public/templates/checkout/checkout-shipping.php:99,
+#: public/templates/checkout/checkout-shipping.php:137,
+#: public/templates/checkout/checkout-shipping.php:167,
+#: public/templates/checkout/checkout-shipping.php:195,
+#: public/templates/checkout/checkout-shipping.php:215,
+#: public/templates/login/login.php:79, public/templates/login/login.php:87,
+#: public/templates/login/login.php:47, public/templates/login/login.php:55,
+#: public/templates/login/login.php:122, public/templates/login/login.php:132,
+#: public/templates/login/login.php:142, public/templates/login/login.php:150,
+#: public/templates/login/login.php:158
+msgid "This field is required."
+msgstr "Ce champ est obligatoire."
+
+#: public/class-drgc-public.php:143
+msgid "Emails do not match."
+msgstr "Les adresses e-mail ne correspondent pas."
+
+#: public/class-drgc-public.php:144, public/class-drgc-public.php:239
+msgid "Password must be between 8 - 32 characters."
+msgstr "Le mot de passe doit comporter de 8 à 32 caractères."
+
+#: public/class-drgc-public.php:145, public/class-drgc-public.php:243
+msgid "Must use at least one upper case letter."
+msgstr "Se compose d'au moins une lettre minuscule."
+
+#: public/class-drgc-public.php:146, public/class-drgc-public.php:247
+msgid "Must use at least one lower case letter."
+msgstr "Se compose d'au moins une lettre majuscule."
+
+#: public/class-drgc-public.php:147, public/class-drgc-public.php:251
+msgid "Must use at least one number."
+msgstr "Se compose d'au moins un numéro."
+
+#: public/class-drgc-public.php:148, public/class-drgc-public.php:255
+msgid "Must use at least one special character (! _ @)."
+msgstr "Se compose d'au moins un caractère spécial (! _ @)."
+
+#: public/class-drgc-public.php:149, public/class-drgc-public.php:259
+#, fuzzy
+msgid "Contains non-allowable special characters (only ! _ @ are allowed)."
+msgstr ""
+"Contient des caractères spéciaux non autorisés (uniquement ! _ @ sont "
+"autorisés)."
+
+#: public/class-drgc-public.php:150, public/class-drgc-public.php:235
+msgid "Passwords do not match."
+msgstr "Les mots de passe ne correspondent pas."
+
+#: public/class-drgc-public.php:151
+#, fuzzy
+msgid ""
+"Please indicate you have read and accepted the privacy policy and terms of "
+"sale."
+msgstr ""
+"Veuillez indiquer que vous avez lu et accepté la politique de "
+"confidentialité et les conditions de vente."
+
+#: public/class-drgc-public.php:152
+msgid "Something went wrong. Please try again."
+msgstr "Quelque chose s'est mal passé. Veuillez réessayer."
+
+#: public/class-drgc-public.php:153
+msgid "Loading..."
+msgstr "Chargement..."
+
+#: public/class-drgc-public.php:154,
+#: public/partials/drgc-product-details.php:22
+msgid "Buy Now"
+msgstr "Acheter maintenant"
+
+#: public/class-drgc-public.php:155, public/partials/drgc-buy-button.php:31,
+#: public/templates/parts/content-archive.php:59,
+#: public/templates/parts/content-single.php:148
+msgid "Add to Cart"
+msgstr "Ajouter au panier"
+
+#: public/class-drgc-public.php:156
+msgid "Out of Stock"
+msgstr "Rupture de stock"
+
+#: public/class-drgc-public.php:157
+msgid "Are you sure you want to immediately unsubscribe this subscription?"
+msgstr ""
+"Êtes-vous sûr de vouloir immédiatement vous désabonner cet abonnement ?"
+
+#: public/class-drgc-public.php:158
+#, fuzzy
+msgid "Please enter the required quantity:"
+msgstr "Veuillez saisir la quantité requise :"
+
+#: public/class-drgc-public.php:159
+#, fuzzy
+msgid "There are no delivery options available for your cart or destination."
+msgstr ""
+"Il n’y a pas d’options de livraison disponibles pour votre panier ou votre "
+"destination."
+
+#: public/class-drgc-public.php:160
+msgid "MM/YY"
+msgstr "MM/YY"
+
+#: public/class-drgc-public.php:161
+msgid "CVV"
+msgstr "CVV"
+
+#: public/class-drgc-public.php:211
+#, fuzzy
+msgid "Authorization failed for specified credentials"
+msgstr ""
+"Échec de l’autorisation pour les informations d’identification spécifiées"
+
+#: public/class-drgc-public.php:364, public/class-drgc-public.php:378
+msgid "There is no account with that username or email address."
+msgstr ""
+"Il n’y a pas de compte avec ce nom d’utilisateur ou cette adresse "
+"électronique."
+
+#: public/class-drgc-public.php:360
+msgid "Enter a username or email address."
+msgstr "Saisissez un nom d'utilisateur ou une adresse e-mail."
+
+#: public/class-drgc-public.php:400
+msgid "Someone has requested a password reset for the following account:"
+msgstr ""
+"Nous avons reçu une demande de réinitialisation du mot de passe pour le "
+"compte suivant :"
+
+#: public/class-drgc-public.php:401
+msgid "Site Name: %s"
+msgstr "Nom du site: %s"
+
+#: public/class-drgc-public.php:402
+msgid "Username: %s"
+msgstr "Nom d’utilisateur : %s"
+
+#: public/class-drgc-public.php:403
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+"S'il s'agit d'une erreur, ignorez simplement cet email et rien ne se "
+"produira."
+
+#: public/class-drgc-public.php:404
+msgid "To reset your password, visit the following address:"
+msgstr "Pour réinitialiser votre mot de passe, visitez l'adresse suivante :"
+
+#: public/class-drgc-public.php:406, public/class-drgc-public.php:809,
+#: public/templates/login/login.php:59
+msgid "Reset Password"
+msgstr "Réinitialiser le mot de passe"
+
+#: public/class-drgc-public.php:408
+msgid "[%s] Password Reset"
+msgstr "[%s] Réinitialiser le mot de passe"
+
+#: public/class-drgc-public.php:423
+msgid ""
+"The email could not be sent. Possible reason: your host may have disabled "
+"the mail() function."
+msgstr ""
+"L'e-mail n'a pas pu être envoyé. Raison possible : votre hôte peut avoir "
+"désactivé la fonction de courrier()."
+
+#: public/class-drgc-public.php:445
+msgid "Something went wrong."
+msgstr "Quelque chose s'est mal passé."
+
+#: public/class-drgc-public.php:463
+msgid "Invalid key"
+msgstr "Clé invalide"
+
+#: public/class-drgc-public.php:461
+#, fuzzy
+msgid "Expired key"
+msgstr "Clé expirée"
+
+#: public/class-drgc-public.php:522
+msgid "Hi, "
+msgstr "Bonjour, "
+
+#: public/class-drgc-public.php:536, public/class-drgc-public.php:768,
+#: public/templates/login/login.php:30
+msgid "Logout"
+msgstr "Déconnectez-vous"
+
+#: public/class-drgc-public.php:755
+#, fuzzy
+msgid "You're about to be logged out!"
+msgstr "Tu es sur le point d’être déconnecté !"
+
+#: public/class-drgc-public.php:760
+msgid ""
+"For security reasons, your connection times out after you've been inactive "
+"for a while. You will be logged out in <strong>n</strong> seconds.<br>Click "
+"Continue if you'd like to stay logged in."
+msgstr ""
+"Pour des raisons de sécurité, votre connexion interrompue après  avoir été "
+"inactif pour une période. . Vous serez voud déconnecter en <strong>quelques "
+"secondes.\"\"</strong><br>Cliquez sur Continuer si vous souhaitez rester "
+"connecté."
+
+#: public/class-drgc-public.php:765
+msgid "Continue"
+msgstr "Continuer"
+
+#: public/class-drgc-public.php:781
+msgid "Forgot Password"
+msgstr "Mot de passe oublié"
+
+#: public/class-drgc-public.php:789
+msgid ""
+"To reset your password, please enter your email address below and an email "
+"with instructions on resetting your password will be sent to you."
+msgstr ""
+"Pour réinitialiser votre mot de passe, entrez votre adresse e-mail ci-"
+"dessous et un e-mail avec des instructions sur la manière  de réinitialiser "
+"votre mot de passe vous sera envoyé."
+
+#: public/class-drgc-public.php:792
+msgid "Email Address:"
+msgstr "Adresse E-mail:"
+
+#: public/class-drgc-public.php:795, public/class-drgc-public.php:802
+#, fuzzy
+msgid "This field is required email."
+msgstr "Ce champ est obligatoire par e-mail."
+
+#: public/class-drgc-public.php:799
+#, fuzzy
+msgid "Verify Email Address:"
+msgstr "Vérifiez l’adresse e-mail :"
+
+#: public/partials/drgc-legal-footer.php:17
+msgid ""
+" is the authorized reseller and merchant of the products and services "
+"offered within this store."
+msgstr ""
+"est-ce que le revendeur autorisé et le marchand des produits et services "
+"offerts dans ce magasin."
+
+#: public/partials/drgc-legal-footer.php:20,
+#: public/templates/checkout/checkout-confirmation.php:17,
+#: public/templates/checkout/checkout-pretandc.php:6
+msgid "Privacy Policy"
+msgstr "Politique de confidentialité"
+
+#: public/partials/drgc-legal-footer.php:21,
+#: public/templates/checkout/checkout-confirmation.php:16,
+#: public/templates/checkout/checkout-pretandc.php:5
+#, fuzzy
+msgid "Terms of Sale"
+msgstr "Conditions de vente"
+
+#: public/partials/drgc-legal-footer.php:22
+msgid "Cookies"
+msgstr "Cookies"
+
+#: public/partials/drgc-legal-footer.php:23
+#, fuzzy
+msgid "Cancellation Right"
+msgstr "Droit d’annulation"
+
+#: public/partials/drgc-legal-footer.php:24
+msgid "Legal Notice"
+msgstr "Mentions légales"
+
+#: public/partials/drgc-minicart.php:16
+#, fuzzy
+msgid "ITEM(S)"
+msgstr "ARTICLE(S)"
+
+#: public/partials/drgc-minicart.php:19
+msgid "Shopping Cart"
+msgstr "Panier"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:23,
+#: public/templates/cart/cart-auto-renewal-terms.php:29
+#, fuzzy
+msgid "Auto-Renewal Plan Terms"
+msgstr "Conditions du plan de renouvellement automatique"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:47
+#, fuzzy
+msgid "I have read and agree to the terms and charges above."
+msgstr "J’ai lu et j’accepte les modalités et les frais ci-dessus."
+
+#: public/templates/cart/cart-summary.php:39,
+#: public/templates/checkout/checkout-summary.php:29,
+#: public/templates/thank-you/thank-you-summary.php:38
+msgid "Subtotal"
+msgstr "Sous-total"
+
+#: public/templates/cart/cart-summary.php:54
+#, fuzzy
+msgid "Add Promo Code"
+msgstr "Ajouter du code promo"
+
+#: public/templates/cart/cart-summary.php:56
+msgid "Promo Code"
+msgstr "Code promo"
+
+#: public/templates/cart/cart-summary.php:57
+msgid "Apply"
+msgstr "Appliquer"
+
+#: public/templates/cart/cart-summary.php:64
+msgid "Proceed to checkout"
+msgstr "Procéder au paiement"
+
+#: public/templates/cart/cart.php:58, public/templates/checkout/checkout.php:90
+msgid "Continue Shopping"
+msgstr "Continuer vos achats"
+
+#: public/templates/checkout/checkout-billing.php:26
+msgid "Billing"
+msgstr "Facturation"
+
+#: public/templates/checkout/checkout-billing.php:42
+#, fuzzy
+msgid "What is your billing address?"
+msgstr "Quelle est votre adresse de facturation ?"
+
+#: public/templates/checkout/checkout-billing.php:52
+#, fuzzy
+msgid "Billing address is the same as delivery address"
+msgstr "L’adresse de facturation est la même que l’adresse de livraison"
+
+#: public/templates/checkout/checkout-billing.php:68,
+#: public/templates/checkout/checkout-shipping.php:47
+msgid "First Name"
+msgstr "Prénom"
+
+#: public/templates/checkout/checkout-billing.php:90,
+#: public/templates/checkout/checkout-shipping.php:69
+msgid "Last Name"
+msgstr "Nom"
+
+#: public/templates/checkout/checkout-billing.php:112,
+#: public/templates/checkout/checkout-shipping.php:91
+msgid "Address line 1"
+msgstr "Ligne d'adresse 1"
+
+#: public/templates/checkout/checkout-billing.php:134,
+#: public/templates/checkout/checkout-shipping.php:113
+#, fuzzy
+msgid "Address line 2/Company"
+msgstr "Ligne d’adresse 2/Société"
+
+#: public/templates/checkout/checkout-billing.php:150,
+#: public/templates/checkout/checkout-shipping.php:129
+msgid "City"
+msgstr "Ville"
+
+#: public/templates/checkout/checkout-billing.php:171,
+#: public/templates/checkout/checkout-shipping.php:149
+msgid "Select Country"
+msgstr "Sélectionnez un pays"
+
+#: public/templates/checkout/checkout-billing.php:201,
+#: public/templates/checkout/checkout-shipping.php:179
+msgid "Select State"
+msgstr "Sélectionnez un département"
+
+#: public/templates/checkout/checkout-billing.php:229,
+#: public/templates/checkout/checkout-shipping.php:207
+msgid "Zipcode"
+msgstr "Code postal"
+
+#: public/templates/checkout/checkout-billing.php:251,
+#: public/templates/checkout/checkout-shipping.php:229
+msgid "Phone"
+msgstr "Téléphone"
+
+#: public/templates/checkout/checkout-billing.php:267,
+#: public/templates/checkout/checkout-delivery.php:45,
+#: public/templates/checkout/checkout-email.php:34,
+#: public/templates/checkout/checkout-shipping.php:243
+msgid "Save and continue"
+msgstr "Sauvegarde poursuite"
+
+#: public/templates/checkout/checkout-confirmation.php:4
+#, fuzzy
+msgid "Please review your order details and place your order below."
+msgstr ""
+"Veuillez consulter les détails de votre commande et passer votre commande ci-"
+"dessous."
+
+#: public/templates/checkout/checkout-confirmation.php:19
+#, fuzzy
+msgid "By submitting the order, I agree to %s and %s of %s"
+msgstr "En soumettant l’ordonnance, j’accepte de %s et %s de %s"
+
+#: public/templates/checkout/checkout-confirmation.php:25
+msgid "Place Order"
+msgstr "Passer la commande"
+
+#: public/templates/checkout/checkout-delivery.php:27
+msgid "Delivery"
+msgstr "Livraison"
+
+#: public/templates/checkout/checkout-email.php:21
+msgid "Please enter your email address"
+msgstr "Merci d'indiquer votre adresse e-mail"
+
+#: public/templates/checkout/checkout-payment.php:22
+#, fuzzy
+msgid "How would you like to pay?"
+msgstr "Que voulez-vous payer?"
+
+#: public/templates/checkout/checkout-payment.php:42
+msgid "Credit Card"
+msgstr "Carte de crédit"
+
+#: public/templates/checkout/checkout-payment.php:101
+msgid "PayPal"
+msgstr "PayPal"
+
+#: public/templates/checkout/checkout-payment.php:131
+#, fuzzy
+msgid "Pay with card"
+msgstr "Payer avec carte"
+
+#: public/templates/checkout/checkout-pretandc.php:8
+#, fuzzy
+msgid "I agree to %s and %s of %s"
+msgstr "J’accepte les %s et %s de %s"
+
+#: public/templates/checkout/checkout-shipping.php:38
+msgid "Fields marked with * are mandatory"
+msgstr "Les champs marqués  avec * sont obligatoires."
+
+#: public/templates/checkout/checkout-summary.php:17,
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "items"
+msgstr "articles"
+
+#: public/templates/checkout/checkout-summary.php:17,
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "item"
+msgstr "article"
+
+#: public/templates/checkout/checkout.php:16
+msgid "Your cart is empty!"
+msgstr "Votre panier est vide!"
+
+#: public/templates/login/login.php:69
+msgid "Returning Customer"
+msgstr "Client enregistré"
+
+#: public/templates/login/login.php:70
+#, fuzzy
+msgid "If you have an existing account, please sign in."
+msgstr "Si vous avez un compte existant, veuillez vous connecter."
+
+#: public/templates/login/login.php:97
+msgid "Forgot password?"
+msgstr "Mot de passe oublié?"
+
+#: public/templates/login/login.php:37
+msgid "New password"
+msgstr "Nouveau mot de passe"
+
+#: public/templates/login/login.php:38
+#, fuzzy
+msgid "Please enter secure password twice to continue"
+msgstr "Veuillez saisir le mot de passe sécurisé deux fois pour continuer"
+
+#: public/templates/login/login.php:107
+msgid "NEW CUSTOMER"
+msgstr "NOUVEAU CLIENT"
+
+#: public/templates/login/login.php:110
+#, fuzzy
+msgid ""
+"You can checkout as a guest or become a member for faster checkout and great "
+"offers."
+msgstr ""
+"Vous pouvez faire une caisse en tant qu’invité ou devenir membre pour une "
+"caisse plus rapide et de grandes offres."
+
+#: public/templates/login/login.php:165
+msgid "Sign Up"
+msgstr "S'inscrire"
+
+#: public/templates/login/login.php:167
+msgid "Continue As Guest"
+msgstr "Continuer En Tant Qu'Invité"
+
+#: public/templates/login/login.php:23
+msgid "Welcome "
+msgstr "Bienvenue "
+
+#: public/templates/login/login.php:177
+#, fuzzy
+msgid "PAYPAL CUSTOMERS"
+msgstr "CLIENTS PAYPAL"
+
+#: public/templates/login/login.php:179
+#, fuzzy
+msgid "Make your payment with PayPal's secure services."
+msgstr "Effectuez votre paiement avec les services sécurisés de PayPal."
+
+#: public/templates/login/login.php:180
+#, fuzzy
+msgid "You can still add promotion codes before you complete your order."
+msgstr ""
+"Vous pouvez toujours ajouter des codes de promotion avant de terminer votre "
+"commande."
+
+#: public/templates/my-subscriptions/my-subscriptions.php:32
+msgid "Product Name"
+msgstr "Nom du produit"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:34
+msgid "Status"
+msgstr "Statut"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:36
+#, fuzzy
+msgid "Auto Renewal Date"
+msgstr "Date de renouvellement automatique"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:40,
+#: public/templates/subscription-details/subscription-details-account-info.php:57,
+#: public/templates/subscription-details/subscription-details-status.php:61
+msgid "Expiration Date"
+msgstr "Date d'expiration"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:61
+msgid "Not Applicable"
+msgstr "Non Applicable"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:58
+msgid "Renew Now!"
+msgstr "Renouveller maintenant !"
+
+#: public/templates/parts/content-none.php:17
+msgid "Nothing Found"
+msgstr "Aucun résultat"
+
+#: public/templates/parts/content-none.php:26
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+"Il semble que ce que vous cherchez est introuvable. Essayez une autre "
+"recherche."
+
+#: public/templates/parts/content-none.php:23
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+"Désolé, mais rien ne correspond à vos termes de recherche. Veuillez "
+"réessayer avec d'autres mots-clés."
+
+#: public/templates/parts/content-none.php:21
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+"Prêt à publier votre premier article ? <a href=\"%1$s\">Commencez ici</a>."
+
+#: public/templates/parts/content-single.php:117
+msgid "Select "
+msgstr "Sélectionner "
+
+#: public/templates/subscription-details/subscription-details-account-info.php:49
+msgid "Account Information"
+msgstr "Information Compte"
+
+#: public/templates/subscription-details/subscription-details-account-info.php:53
+#, fuzzy
+msgid "The following is the information currently being used for payment."
+msgstr "Voici les informations actuellement utilisées pour le paiement."
+
+#: public/templates/subscription-details/subscription-details-account-info.php:63,
+#: public/templates/thank-you/thank-you.php:122
+msgid "Billing Address"
+msgstr "Adresse de facturation"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:20
+msgid "Order History"
+msgstr "Historique de commande"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:24
+#, fuzzy
+msgid "View the order history for your subscription."
+msgstr "Consultez l’historique des commandes de votre abonnement."
+
+#: public/templates/subscription-details/subscription-details-order-history.php:30
+msgid "View Order History"
+msgstr "Voir historique de commande"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:39
+msgid "Order Number"
+msgstr "Numéro de commande"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:41
+msgid "Order Date"
+msgstr "Date de commande"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:43
+msgid "Order Amount"
+msgstr "Montant de la commande"
+
+#: public/templates/subscription-details/subscription-details-status.php:33
+msgid "Subscription Status"
+msgstr "État de l'abonnement"
+
+#: public/templates/subscription-details/subscription-details-status.php:57,
+#: public/templates/subscription-details/subscription-details-status.php:43
+#, fuzzy
+msgid "Automatic Renewals"
+msgstr "Renouvellements automatiques"
+
+#: public/templates/subscription-details/subscription-details-status.php:57,
+#: public/templates/subscription-details/subscription-details-status.php:43
+#, fuzzy
+msgid "Off"
+msgstr "Off"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+msgid "Your subscription will automatically renew on"
+msgstr "Votre abonnement sera automatiquement renouvelé"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+msgid ""
+"If you do not wish for it to automatically renew, update the setting below."
+msgstr ""
+"Si vous ne souhaitez pas qu’il se renouvelle automatiquement, changer le "
+"paramètre ci-dessous."
+
+#: public/templates/subscription-details/subscription-details-status.php:53
+msgid "On"
+msgstr "On"
+
+#: public/templates/subscription-details/subscription-details-status.php:63
+msgid "Renew Now"
+msgstr "Renouveler maintenant"
+
+#: public/templates/subscription-details/subscription-details-status.php:67
+msgid "Cancel Subscription"
+msgstr "Annuler l'abonnement"
+
+#: public/templates/subscription-details/subscription-details.php:29
+msgid "Back to My Subscriptions Page"
+msgstr "Retour à la page de Mes abonnements"
+
+#: public/templates/subscription-details/subscription-details.php:37
+msgid "Subscription ID"
+msgstr "ID d'abonnement"
+
+#: public/templates/subscription-details/subscription-details.php:51
+#, fuzzy
+msgid "Current Quantity"
+msgstr "Quantité actuelle"
+
+#: public/templates/subscription-details/subscription-details.php:53
+#, fuzzy
+msgid "Next Renewal Quantity"
+msgstr "Quantity de renouvellement suivant"
+
+#: public/templates/subscription-details/subscription-details.php:57
+#, fuzzy
+msgid "Change Quantity"
+msgstr "Modifier la quantité"
+
+#: public/templates/thank-you/thank-you-my-subs.php:32
+msgid "My Subscriptions"
+msgstr "Mes abonnements"
+
+#: public/templates/thank-you/thank-you.php:58
+msgid "Thank you"
+msgstr "Merci"
+
+#: public/templates/thank-you/thank-you.php:62
+#, fuzzy
+msgid "Your order was completed successfully."
+msgstr "Votre commande a été complétée avec succès."
+
+#: public/templates/thank-you/thank-you.php:66
+msgid "Order number is: "
+msgstr "Numéro de commande "
+
+#: public/templates/thank-you/thank-you.php:75
+#, fuzzy
+msgid "You will receive an email confirmation shortly at %s"
+msgstr "Vous recevrez une confirmation par e-mail sous peu à %s"
+
+#: public/templates/thank-you/thank-you.php:79
+msgid "Print Receipt"
+msgstr "Imprimer le recu"
+
+#: public/templates/thank-you/thank-you.php:108
+msgid "Shipping Address"
+msgstr "Adresse de livraison"
