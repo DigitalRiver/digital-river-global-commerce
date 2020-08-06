@@ -217,7 +217,7 @@ class DRGC_Admin {
 			$this->option_name . '_big_blue_username',
 			__( 'UMS Username', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_big_blue_username_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_big_blue_username' )
 		);
@@ -226,7 +226,7 @@ class DRGC_Admin {
 			$this->option_name . '_big_blue_password',
 			__( 'UMS Password', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_big_blue_password_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_big_blue_password' )
 		);
@@ -252,8 +252,6 @@ class DRGC_Admin {
 			__( 'Test Order', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_testOrder_handler_cb' ),
 			$this->plugin_name . '_general',
-			// $this->option_name . '_general',
-			// $this->plugin_name,
 			$this->option_name . '_checkout',
 			array( 'label_for' => $this->option_name . '_testOrder_handler' )
 		);
