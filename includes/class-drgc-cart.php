@@ -212,4 +212,26 @@ class DRGC_Cart extends AbstractHttpService {
 
         return $res;
     }
+
+    /**
+     * Retrieve all offers for a product by giving the name of the point-of-promotion and the product ID.
+     */
+    public function get_offers_by_pop( $pop_type, $product_id, $params = array()) {
+        $product_uri = $product_id ? "products/{$product_id}/" : '';
+        $default = array(
+            'expand' => 'all'
+        );
+
+        $params = array_merge(
+            $default,
+            array_intersect_key( $params, $default )
+        );
+
+        try {
+            $res = $this->get( "/v1/shoppers/me/{$product_uri}point-of-promotions/{$pop_type}/offers?" . http_build_query( $params ) );
+            return $res;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
 }

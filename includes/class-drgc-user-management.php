@@ -24,7 +24,7 @@ class DRGC_User_Management extends AbstractHttpService {
     parent::__construct($handler);
 
     $this->site_id = get_option( 'drgc_site_id' );
-    $this->endpoint = "https://gc.digitalriver.com/integration/job/request/UserManagement/{$this->site_id}/site/";
+    $this->endpoint = "https://gc.digitalriver.com/integration/job/request/UserManagement/{$this->site_id}/company/";
   }
 
   /**
@@ -48,8 +48,8 @@ class DRGC_User_Management extends AbstractHttpService {
               <subscriptionKey>
                 <subscriptionID>{$id}</subscriptionID>
               </subscriptionKey>
-            </CancelSubscriptionRequest>"; 
-          
+            </CancelSubscriptionRequest>";
+
           break;
         case 'SWITCH_RENEWAL_TYPE':
           if ( isset( $params['renewal_type'] ) ) {
@@ -118,21 +118,21 @@ class DRGC_User_Management extends AbstractHttpService {
       if ( trim( $xml->errorCode ) === '0' ) {
         wp_send_json_success();
       } else {
-        wp_send_json_error( 'ERROR: ' . $xml->errorMessage );
+        wp_send_json_error( array( 'message' => $xml->errorMessage ) );
       }
-    } else if ( strpos( $response, 'html' ) > -1 ) {
+    } elseif ( strpos( $response, 'html' ) > -1 ) {
       $dom = new DomDocument;
       $dom->loadHTML( $response );
       $h1s = $dom->getElementsByTagName( 'h1' );
-      $error_msg = 'ERROR: Service Temporarily Unavailable!';
+      $error_msg = 'Service Temporarily Unavailable!';
       
       if ( strlen( trim( $h1s[0]->nodeValue ) ) ) {
         $error_msg = trim( $h1s[0]->nodeValue );
       }
 
-      wp_send_json_error( $error_msg );
+      wp_send_json_error( array( 'message' => $error_msg ) );
     } else {
-      wp_send_json_error( 'ERROR: An unknown error has occurred.' );
+      wp_send_json_error( array( 'message' => 'An unknown error has occurred.' ) );
     }
   }
 }

@@ -66,6 +66,10 @@ assets/bower_components/*
 library/vendors/composer
 assets/img/.DS_Store
 
+# For text string translation
+drgc-category-name-trans-strings.php
+drgc-menu-label-trans-strings.php
+
 # Package-lock.json #
 package-lock.json
 

@@ -56,14 +56,12 @@
     &.dr-panel-edit--shipping &__check,
     &.dr-panel-edit--billing &__check {
         .field-text {
-            font-family: Open Sans;
             font-size: 18px;
             color: $gray-darkest;
         }
 
         .field-checkbox {
             label {
-                font-family: Open Sans;
                 font-size: 16px;
                 color: $gray-darkest;
             }
@@ -105,7 +103,6 @@
 
         .field-radio label span {
             width: 100%;
-            font-family: Open Sans;
             font-size: 16px;
             color: $gray-darkest;
 
@@ -129,7 +126,6 @@
         margin-top: 11px;
 
         .delivery-info {
-            font-family: Open Sans;
             font-size: 16px;
             color: $gray-darkest;
 
@@ -256,7 +252,7 @@
             label {
                 display: flex;
                 align-items: center;
-                font-family: Open Sans;
+                
                 font-size: 14px;
                 color: $color-text-base;
                 line-height: 24px;
@@ -311,14 +307,14 @@
 
     .required-text {
         width: 100%;
-        font-family: Open Sans;
+        
         font-size: 12px;
         color: #d40b00;
         text-align: right;
     }
 
     .error-label {
-        font-family: Open Sans;
+        
         font-size: 16px;
         color: #ff0d00;
     }

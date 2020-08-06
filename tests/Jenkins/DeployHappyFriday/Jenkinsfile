@@ -1,0 +1,34 @@
+pipeline {
+  agent { label 'nprod-small' }
+
+    environment {
+        hostName = 'happy-friday.c141.drcloud.zone'
+        userName = 'ubuntu'
+        cloudHome = '/home/ubuntu/'
+        shellScriptPath = "/home/ubuntu/DRWPAutoTest/DeployHappyFriday/"
+        deployScriptName = 'deploy.sh'
+    }
+
+    stages {
+        stage('Deploy') {
+            steps {
+                script {
+                    env.sshCmd = "ssh -o StrictHostKeyChecking=no ${env.userName}@${env.hostName}"
+                }
+                sshagent(credentials:['happy-friday-cicd-cred']) {
+                    sh "${env.sshCmd} '(${shellScriptPath}${deployScriptName})'"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            sshagent(credentials:['happy-friday-cicd-cred']) {
+                echo 'POST'
+                emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                recipientProviders: [requestor()],
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+            }
+        }
+    }
+}

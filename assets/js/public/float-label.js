@@ -24,6 +24,7 @@ const FloatLabel = (() => {
     // register events
     const bindEvents = (element) => {
         const floatField = element.querySelector('input');
+        if (!floatField) return;
         floatField.addEventListener('focus', handleFocus);
         floatField.addEventListener('blur', handleBlur);
     };
@@ -35,7 +36,7 @@ const FloatLabel = (() => {
         for (let i = 0; i < floatContainers.length; i++) {
             let element = floatContainers[i];
 
-            if (element.querySelector('input').value) {
+            if (element.querySelector('input') && element.querySelector('input').value) {
                 element.classList.add('active');
             }
 

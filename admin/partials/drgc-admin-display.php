@@ -14,6 +14,7 @@
 
 <div class="wrap">
   <h1><?php esc_html_e( get_admin_page_title(), 'digital-river-global-commerce' ); ?></h1>
+  <?php settings_errors(); ?>
 
   <nav class="nav-tab-wrapper">
     <a href="?post_type=dr_product&page=digital-river-global-commerce" class="nav-tab <?php if ( $active_tab === 'general' ) echo 'nav-tab-active'; ?>">

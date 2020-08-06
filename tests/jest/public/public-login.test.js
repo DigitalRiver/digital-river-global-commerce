@@ -100,6 +100,6 @@ describe('Test logout', () => {
       expect.any(Function)
     );
     expect($(logoutBtn).hasClass('sending')).toBe(true);
-    expect($('body').css('opacity')).toEqual('0.5');
+    expect($('body').hasClass('dr-loading')).toBe(true);
   });
 });

@@ -17,14 +17,61 @@ $shipping_price = $cart['cart']['pricing']['formattedShippingAndHandling'];
 $discount       = $cart['cart']['pricing']['discount']['value'];
 $formatted_discount = $cart['cart']['pricing']['formattedDiscount'];
 $subtotal_items = $cart['cart']['totalItemsInCart'];
+$subtotal_value = $cart['cart']['pricing']['formattedSubtotal'];
 $subtotal_with_discount_value = $cart['cart']['pricing']['formattedSubtotalWithDiscount'];
-
-$delivery_info = 'Delivery in 2-5 working days and extended 30 days return period';
+$tax = $cart['cart']['pricing']['formattedTax'];
+$order_total = $cart['cart']['pricing']['formattedOrderTotal'];
+$should_display_vat = drgc_should_display_vat( $customer['currency'] );
+$is_tax_inclusive = drgc_is_tax_inclusive( $customer['locale'] );
+$force_excl_tax = drgc_force_excl_tax();
+$tax_suffix_label = $is_tax_inclusive ?
+  $force_excl_tax ? ' ' . __( 'Excl. VAT', 'digital-river-global-commerce' ) : ' ' . __( 'Incl. VAT', 'digital-river-global-commerce' ) :
+  '';
 ?>
 
 
 
 <div class="dr-summary dr-summary--cart">
+
+    <div class="dr-summary__subtotal">
+
+        <p class="subtotal-label"><?php echo __( 'Subtotal', 'digital-river-global-commerce' ) . $tax_suffix_label ?></p>
+
+        <p class="subtotal-value"><?php echo $subtotal_value; ?></p>
+
+    </div>
+
+    <div class="dr-summary__discounted-subtotal" style="display: none;">
+
+        <p class="discounted-subtotal-label"><?php echo __( 'Subtotal', 'digital-river-global-commerce' ) ?></p>
+
+        <p class="discounted-subtotal-value"><?php echo $subtotal_with_discount_value; ?></p>
+
+    </div>
+
+    <div class="dr-summary__tax <?php echo ( $is_tax_inclusive && ! $force_excl_tax ) ? 'tree-sub-item' : '' ?>">
+
+        <p class="tax-label"><?php echo $should_display_vat ? __( 'Estimated VAT', 'digital-river-global-commerce' ) : __( 'Estimated Tax', 'digital-river-global-commerce' ) ?></p>
+
+        <p class="tax-value">--</p>
+
+    </div>
+
+    <div class="dr-summary__shipping">
+
+        <p class="shipping-label"><?php echo __( 'Estimated Shipping', 'digital-river-global-commerce' ) . $tax_suffix_label ?></p>
+
+        <p class="shipping-value"><?php echo $shipping_price; ?></p>
+
+    </div>
+
+    <div class="dr-summary__shipping-tax <?php echo ( $is_tax_inclusive && ! $force_excl_tax ) ? 'tree-sub-item' : '' ?>">
+
+        <p class="shipping-tax-label"><?php echo $should_display_vat ? __( 'Estimated Shipping VAT', 'digital-river-global-commerce' ) : __( 'Estimated Shipping Tax', 'digital-river-global-commerce' ) ?></p>
+
+        <p class="shipping-tax-value">--</p>
+
+    </div>
 
     <div class="dr-summary__discount" <?php if ( $discount === 0 ) echo 'style="display: none;"' ?>>
 
@@ -34,21 +81,7 @@ $delivery_info = 'Delivery in 2-5 working days and extended 30 days return perio
 
     </div>
 
-    <div class="dr-summary__discounted-subtotal">
-
-        <p class="discounted-subtotal-label"><?php echo __( 'Subtotal', 'digital-river-global-commerce' ) ?></p>
-
-        <p class="discounted-subtotal-value"><?php echo $subtotal_with_discount_value; ?></p>
-
-    </div>
-
-    <div class="dr-summary__shipping">
-
-        <p class="shipping-label"><?php echo __( 'Estimated Shipping', 'digital-river-global-commerce' ) ?></p>
-
-        <p class="shipping-value"><?php echo $shipping_price; ?></p>
-
-    </div>
+    <hr class="dashed">
 
     <div class="dr-summary__promo-code">
         <a class="promo-code-toggle" href="javascript:void(0);"><?php echo __( 'Add Promo Code', 'digital-river-global-commerce' ) ?> +</a>
@@ -59,21 +92,20 @@ $delivery_info = 'Delivery in 2-5 working days and extended 30 days return perio
         </div>
     </div>
 
+    <hr class="solid">
+
+    <div class="dr-summary__total">
+
+        <p class="total-label"><?php echo __( 'Total', 'digital-river-global-commerce' ) ?></p>
+
+        <p class="total-value"><?php echo $order_total; ?></p>
+
+    </div>
+
 	<?php if ( 1 < count($cart['cart']['lineItems'] )) : ?>
 
         <a href="<?php echo esc_url( drgc_get_page_link( 'checkout' ) ); ?>" class="dr-summary__proceed-checkout dr-btn"><?php echo __( 'Proceed to checkout', 'digital-river-global-commerce' ) ?></a>
 
 	<?php endif; ?>
-
-
-    <?php /*
-    <div class="dr-summary__delivery delivery-info">
-
-        <span class="delivery-info__icon"></span>
-
-        <span class="delivery-info__text"><?php echo $delivery_info; ?></span>
-
-    </div>
- */ ?>
 
 </div>

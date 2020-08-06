@@ -51,7 +51,7 @@ jQuery(document).ready(($) => {
       DRCommerceApi.updateCart({expand: 'all'}, cartRequest).then(() => {
         window.location.href = drgc_params.cartUrl;
       }).catch((jqXHR) => {
-        CheckoutUtils.displayAlertMessage(jqXHR.responseJSON.errors.error[0].description);
+        CheckoutUtils.displayAlertMessage(CheckoutUtils.getAjaxErrorMessage(jqXHR));
         CheckoutUtils.resetBodyOpacity();
       });
     });
@@ -158,7 +158,7 @@ jQuery(document).ready(($) => {
       DRCommerceApi.updateCart({expand: 'all'}, cartRequest).then(() => {
         window.location.href = drgc_params.cartUrl;
       }).catch((jqXHR) => {
-        CheckoutUtils.displayAlertMessage(jqXHR.responseJSON.errors.error[0].description);
+        CheckoutUtils.displayAlertMessage(CheckoutUtils.getAjaxErrorMessage(jqXHR));
         CheckoutUtils.resetBodyOpacity();
       });
     });

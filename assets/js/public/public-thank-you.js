@@ -1,16 +1,16 @@
 import CheckoutUtils from './checkout-utils';
 
-const ThankYouModule = {};
+const ThankYouModule = (($) => {
+})(jQuery);
 
 jQuery(document).ready(($) => {
-    if ($('.dr-thank-you-wrapper').length) {
-        $(document).on('click', '#print-button', function() {
-            var printContents = $('.dr-thank-you-wrapper').html();
-            var originalContents = document.body.innerHTML;
+    if ($('.dr-thank-you-wrapper:visible').length) {
+        if (drgc_params.order && drgc_params.order.order) {
+          CheckoutUtils.updateSummaryPricing(drgc_params.order.order, drgc_params.isTaxInclusive === 'true');
+        }
 
-            document.body.innerHTML = printContents;
+        $(document).on('click', '#print-button', function() {
             window.print();
-            document.body.innerHTML = originalContents;
         });
 
         const digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey);

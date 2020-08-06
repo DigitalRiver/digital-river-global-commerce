@@ -86,28 +86,31 @@
 
     </div>
 
-    <div class="dr-panel-edit__el">
+    <?php if ( ! $check_subs['has_subs'] ) : ?>
 
-        <div class="field-radio">
+        <div class="dr-panel-edit__el">
 
-            <input type="radio" id="radio-paypal" name="selector" value="paypal" >
+            <div class="field-radio">
 
-            <label for="radio-paypal">
+                <input type="radio" id="radio-paypal" name="selector" value="paypal" >
 
-                <span class="paypal-icon"></span>
+                <label for="radio-paypal">
 
-                <span class="black">
+                    <span class="paypal-icon"></span>
 
-                    <?php echo __( 'PayPal', 'digital-river-global-commerce' ); ?>
+                    <span class="black">
 
-                </span>
+                        <?php echo __( 'PayPal', 'digital-river-global-commerce' ); ?>
 
-            </label>
+                    </span>
+
+                </label>
+
+            </div>
 
         </div>
 
-    </div>
-
+    <?php endif; ?>
     <!-- <div class="dr-panel-edit__el">
 
         <div class="field-radio">

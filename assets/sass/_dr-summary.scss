@@ -1,14 +1,43 @@
+.drgc-wrapper .dr-summary p {
+  margin-bottom: 0;
+}
+
 .dr-summary {
     display: inline-block;
     width: 100%;
     height: 100%;
 
-    &--cart {
-        .dr-summary__shipping {
-            padding: 20px 0;
-            border-top: 1px dashed $gray-lighter;
-            border-bottom: 1px solid $gray-lighter;
+    hr {
+      margin: 20px 0;
+
+      &.solid {
+        border-top: 1px solid $gray-lighter;
+      }
+
+      &.dashed {
+        border-top: 1px dashed $gray-lighter;
+      }
+    }
+
+    .tree-sub-item {
+      &:before {
+        content: '';
+        position: absolute;
+        left: 5px;
+        top: -12px;
+        width: 10px;
+        height: 22px;
+        border: 1px dashed $gray-lighter;
+        border-width: 0 0 1px 1px;
+      }
+
+      p {
+        color: #aaa;
+
+        &:first-child {
+          margin-left: 20px;
         }
+      }
     }
 
     &--checkout,
@@ -19,29 +48,27 @@
         float: right;
         background-color: #ffffff;
 
+        .tree-sub-item::before {
+          left: 28px;
+        }
+
         .dr-summary__subtotal {
             margin-bottom: 24px;
             padding: 0 24px;
         }
 
-        .dr-summary__shipping,
+        .dr-summary__shipping-tax,
         .dr-summary__tax,
+        .dr-summary__shipping,
         .dr-summary__discount {
             padding: 0 24px;
         }
 
         .dr-summary__total {
-            margin-bottom: 0;
             margin-top: 24px;
             padding: 24px 24px;
             background-color: $white-smoke;
 
-        }
-
-        .dr-summary__savings {
-            margin-bottom: 0;
-            padding: 0 24px 24px 24px;
-            background-color: $white-smoke;
         }
 
         .item-label,
@@ -49,8 +76,6 @@
             font-size: 16px;
             color: $color-text-base;
             line-height: 14px;
-
-            margin-bottom: 0;
         }
 
         .total-label,
@@ -59,8 +84,6 @@
             color: $color-text-base;
             font-weight: 700;
             line-height: 16px;
-
-            margin-bottom: 0;
         }
 
     }
@@ -76,10 +99,6 @@
     }
 
     &__promo-code {
-        padding-bottom: 24px;
-        margin-bottom: 24px;
-        border-bottom: 1px solid $gray-lighter;
-
         .promo-code-toggle {
             display: inline-block;
             font-size: 16px;
@@ -114,6 +133,7 @@
         text-transform: uppercase;
     }
 
+    &__shipping-tax,
     &__shipping,
     &__subtotal,
     &__discounted-subtotal,
@@ -122,13 +142,12 @@
     &__tax,
     &__discount,
     &__total {
+        position: relative;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-
         margin-bottom: 16px;
-
         -webkit-print-color-adjust: exact;
 
         @include for-desktop-up {
@@ -136,82 +155,50 @@
         }
     }
 
-    &__shipping {
-        margin-bottom: 16px;
-
-        & .shipping-label {
-            font-size: 14px;
-            line-height: 16px;
-            color: $color-text-base;
-            margin-bottom: 0;
-        }
-
-        & .shipping-value {
-            font-size: 16px;
-            color: $color-text-base;
-            font-weight: 700;
-            line-height: 16px;
-            text-align: right;
-            margin-bottom: 0;
-        }
-    }
-
-    &__subtotal {
-        & .subtotal-label,
-        & .subtotal-value {
-            font-size: 18px;
-            color: $color-text-base;
-            font-weight: 600;
-            line-height: 16px;
-            margin-bottom: 0;
-        }
-
-        & .subtotal-value {
-            text-align: right;
-
-        }
-    }
-
     &__discounted-subtotal {
-        & .discounted-subtotal-label,
-        & .discounted-subtotal-value {
-            font-size: 18px;
-            color: $color-text-base;
-            font-weight: 600;
-            line-height: 16px;
-            margin-bottom: 0;
-        }
+        margin-bottom: 30px;
 
-        & .discounted-subtotal-value {
-            text-align: right;
-
+        @include for-desktop-up {
+          margin-bottom: 30px;
         }
+    }
+
+    &__tax .tax-label,
+    &__shipping-tax .shipping-tax-label,
+    &__shipping .shipping-label {
+        font-size: 14px;
+        line-height: 16px;
+        color: $color-text-base;
+    }
+
+    &__tax .tax-value,
+    &__shipping-tax .shipping-tax-value,
+    &__shipping .shipping-value {
+        font-size: 16px;
+        color: $color-text-base;
+        line-height: 16px;
+        text-align: right;
+    }
+
+    &__subtotal,
+    &__discounted-subtotal,
+    &__total {
+      font-size: 18px;
+      color: $color-text-base;
+      font-weight: 700;
+      line-height: 16px;
+    }
+
+    &__subtotal .subtotal-value,
+    &__discounted-subtotal .discounted-subtotal-value,
+    &__total .total-value {
+      text-align: right;
     }
 
     &__discount {
         .discount-label,
         .discount-value {
             color: $red;
-            margin-bottom: 0;
-        }
-    }
-
-    &__savings {
-
-        .savings-label,
-        .savings-value {
-            font-size: 16px;
-            color: #e30b00;
-            line-height: 16px;
-            margin-bottom: 0
-        }
-
-        .savings-value {
-            text-align: right;
-        }
-
-        @include for-desktop-up {
-            margin-bottom: 0;
         }
     }
 

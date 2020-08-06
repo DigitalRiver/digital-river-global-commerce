@@ -27,15 +27,20 @@ const DRGooglePay = (($, translations) => {
       CheckoutUtils.displayPreTAndC();
     });
 
+    googlepay.on('click', () => {
+      $('#dr-preTAndC-err-msg').text('').hide();
+    });
+
     googlepay.on('shippingaddresschange', (event) => {
       const shippingAddress = event.shippingAddress;
+      const supportedCountries = CheckoutUtils.getSupportedCountries('shipping');
 
-      if (shippingAddress.address.country === 'US') {
+      if (supportedCountries.indexOf(shippingAddress.address.country) > -1) {
         const cartRequest = {
           shippingAddress: {
             id: 'shippingAddress',
             city: shippingAddress.address.city,
-            countrySubdivision: shippingAddress.address.state,
+            countrySubdivision: shippingAddress.address.state || 'NA',
             postalCode: shippingAddress.address.postalCode,
             country: shippingAddress.address.country
           }
@@ -62,7 +67,7 @@ const DRGooglePay = (($, translations) => {
           event.updateWith({
             status: 'failure',
             error: {
-              message: jqXHR.responseJSON.errors.error[0].description
+              message: CheckoutUtils.getAjaxErrorMessage(jqXHR)
             }
           });
         });
@@ -70,7 +75,7 @@ const DRGooglePay = (($, translations) => {
         event.updateWith({
           status: 'failure',
           error: {
-            message: 'We can only ship to the US.'
+            message: translations.shipping_country_error_msg
           }
         });
       }
@@ -88,7 +93,7 @@ const DRGooglePay = (($, translations) => {
         const requestUpdateObject = {
           status: 'success',
           total: {
-            label: translations.order_total_label,
+            label: ranslations.order_total_label,
             amount: data.cart.pricing.orderTotal.value
           },
           displayItems: displayItems,
@@ -96,65 +101,59 @@ const DRGooglePay = (($, translations) => {
         };
 
         event.updateWith(requestUpdateObject);
-        CheckoutUtils.updateSummaryPricing(data.cart);
+        CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
       }).catch((jqXHR) => {
         event.updateWith({
           status: 'failure',
           error: {
-            message: jqXHR.responseJSON.errors.error[0].description
+            message: CheckoutUtils.getAjaxErrorMessage(jqXHR)
           }
         });
       });
     });
 
     googlepay.on('source', (event) => {
-      const cartRequest = { cart: {} };
-      const sourceId = event.source.id;
-      const billingAddressObj = {
-        id: 'billingAddress',
-        firstName: event.billingAddress.firstName,
-        lastName: event.billingAddress.lastName,
-        line1: event.billingAddress.address.line1,
-        line2: event.billingAddress.address.line2,
-        city: event.billingAddress.address.city,
-        countrySubdivision: event.billingAddress.address.state,
-        postalCode: event.billingAddress.address.postalCode,
-        country: event.billingAddress.address.country,
-        phoneNumber: event.billingAddress.phone,
-        emailAddress: event.billingAddress.email
-      };
+      const $errorMsg = $('#dr-preTAndC-err-msg');
+      let shippingNotSupported = false;
+      let billingNotSupported = false;
+      const billingCountries = CheckoutUtils.getSupportedCountries('billing');
 
-      cartRequest.cart.billingAddress = billingAddressObj;
+      billingNotSupported = (billingCountries.indexOf(event.billingAddress.address.country) === -1) ? true : false;
 
       if (requestShipping) {
-        const shippingAddressObj = {
-          id: 'shippingAddress',
-          firstName: event.shippingAddress.firstName,
-          lastName: event.shippingAddress.lastName,
-          line1: event.shippingAddress.address.line1,
-          line2: event.shippingAddress.address.line2,
-          city: event.shippingAddress.address.city,
-          countrySubdivision: event.shippingAddress.address.state,
-          postalCode: event.shippingAddress.address.postalCode,
-          country: event.shippingAddress.address.country,
-          phoneNumber: event.shippingAddress.phone,
-          emailAddress: event.shippingAddress.email
-        };
-
-        cartRequest.cart.shippingAddress = shippingAddressObj;
+        const shippingCountries = CheckoutUtils.getSupportedCountries('shipping');
+        shippingNotSupported = (shippingCountries.indexOf(event.shippingAddress.address.country) === -1) ? true : false;
       }
 
-      sessionStorage.setItem('paymentSourceId', sourceId);
-      $('body').css({'pointer-events': 'none', 'opacity': 0.5});
+      if (shippingNotSupported) {
+        $errorMsg.text(translations.shipping_country_error_msg).show();
+        event.complete('fail');
+      } else if (billingNotSupported) {
+        $errorMsg.text(translations.billing_country_error_msg).show();
+        event.complete('fail');
+      } else {
+        $errorMsg.text('').hide();
 
-      DRCommerceApi.updateCart({expand: 'all'}, cartRequest).then(() => {
-        DRCommerceApi.applyPaymentAndSubmitCart(sourceId);
-      }).catch((jqXHR) => {
-        CheckoutUtils.displayAlertMessage(jqXHR.responseJSON.errors.error[0].description);
-        CheckoutUtils.resetBodyOpacity();
-      });
+        const sourceId = event.source.id;
+        const cartRequest = CheckoutUtils.createCartRequest(event, requestShipping);
 
-      event.complete('success');
+        sessionStorage.setItem('paymentSourceId', sourceId);
+        $('body').addClass('dr-loading');
+
+        DRCommerceApi.updateCart({expand: 'all'}, cartRequest)
+          .then(() => DRCommerceApi.applyPaymentMethod(sourceId))
+          .then(() => DRCommerceApi.submitCart({ipAddress: drgc_params.client_ip}))
+          .then((data) => {
+            $('#checkout-confirmation-form > input[name="order_id"]').val(data.submitCart.order.id);
+            $('#checkout-confirmation-form').submit();
+          })
+          .catch((jqXHR) => {
+            CheckoutUtils.displayAlertMessage(CheckoutUtils.getAjaxErrorMessage(jqXHR));
+            $('body').removeClass('dr-loading');
+          });
+
+        event.complete('success');
+      }
     });
   };
 

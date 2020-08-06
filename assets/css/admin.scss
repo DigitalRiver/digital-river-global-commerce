@@ -144,6 +144,14 @@ input:checked + .slider:before {
     border-radius: 50%;
 }
 
+.payment-btn-field {
+  min-width: 310px;
+
+  > legend {
+    display: none;
+  }
+}
+
 #product-thumbnail {
   max-width: 150px;
 }

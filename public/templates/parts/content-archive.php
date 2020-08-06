@@ -14,6 +14,7 @@
 
 <?php
 $variations = drgc_get_product_variations( get_the_ID() );
+$gc_parent_id = '';
 $post_id = '';
 
 if ( $variations && isset( $variations[0] ) ) {
@@ -35,7 +36,8 @@ if ( $variations && isset( $variations[0] ) ) {
     });
 
     $variations = $variations_sort;
-    $post_id = $variations[0]->ID;
+    $post_parent = $variations[0]->post_parent;
+    $gc_parent_id = get_post_meta( $post_parent, 'gc_product_id', true );
 } else {
     $post_id = get_the_ID();
 }
@@ -55,7 +57,7 @@ $product_thumbnail_url = get_post_meta( $post_id, 'gc_thumbnail_url', true );
         <div class="dr-pd-info" style="display: none;">
             <?php the_title( '<h3 class="dr-pd-item-title">', '</h3>' ); ?>
             <p class="dr-pd-price dr-pd-item-price"></p>
-            <button type="button" class="dr-btn dr-buy-btn" data-product-id="<?php echo $gc_id; ?>">
+            <button type="button" class="dr-btn dr-buy-btn" data-parent-id="<?php echo $gc_parent_id; ?>" data-product-id="<?php echo $gc_id; ?>" <?php echo 'true' !== $purchasable ? 'disabled' : ''; ?>>
                 <?php echo __( 'Add to Cart', 'digital-river-global-commerce'); ?>
             </button>
         </div>

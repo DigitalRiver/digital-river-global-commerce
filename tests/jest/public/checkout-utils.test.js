@@ -436,16 +436,16 @@ describe('Checkout Utils', () => {
     window.drToast = {};
     drToast.displayMessage = jest.fn();
 
-    test('drToast.displayMessage should not been called when the error is not well-formed', () => {
+    test('It should display general error message when the error is not well-formed', () => {
       const jqXHR = {
         status: 409,
         responseJSON: {}
       };
       CheckoutUtils.apiErrorHandler(jqXHR);
-      expect(drToast.displayMessage).not.toBeCalled();
+      expect(drToast.displayMessage).toBeCalledWith('Something went wrong. Please try again.', 'error');
     });
 
-    test('drToast.displayMessage should been called when there is a standard error', () => {
+    test('It should display error description when there is a standard error', () => {
       const jqXHR = {
         status: 409,
         responseJSON: {

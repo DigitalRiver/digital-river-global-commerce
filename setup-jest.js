@@ -32,12 +32,14 @@ global.drgc_params = {
     password_banned_char_error_msg: 'Contains non-allowable special characters (only ! _ @ are allowed).',
     buy_now: 'Buy Now',
     add_to_cart: 'Add to Cart',
-    out_of_stock: 'Out of Stock'
+    out_of_stock: 'Out of Stock',
+    undefined_error_msg: 'Something went wrong. Please try again.'
   },
   cart: {
     cart: {
       hasPhysicalProduct: true,
-      businessEntityCode: 'DR_INC-ENTITY'
+      businessEntityCode: 'DR_INC-ENTITY',
+      shippingOptions: {}
     }
   }
 };

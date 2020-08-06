@@ -41,17 +41,13 @@ const PdpModule = (($) => {
     };
 
     const displayRealTimeBuyBtn = (purchasable, isRedirectBuyBtn, $target) => {
-        if (isRedirectBuyBtn) {
-            $target
-                .text(drgc_params.translations.buy_now)
-                .addClass('dr-redirect-buy-btn')
-                .prop('disabled', false);
-        } else {
-            purchasable = purchasable === 'true';
-            $target
-                .text(purchasable ? drgc_params.translations.add_to_cart : drgc_params.translations.out_of_stock)
-                .prop('disabled', !purchasable);
-        }
+        const isOutOfStock = purchasable === 'false';
+
+        $target
+            .prop('disabled', isOutOfStock)
+            .text(isOutOfStock ? drgc_params.translations.out_of_stock :
+                isRedirectBuyBtn ? drgc_params.translations.buy_now : drgc_params.translations.add_to_cart)
+            .addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
     };
 
     return {
@@ -340,20 +336,28 @@ jQuery(document).ready(($) => {
             const $priceDiv = $(elem).find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
             const $buyBtn = $(elem).find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
             const productID = $buyBtn.data('product-id');
+            const parentId = $buyBtn.data('parent-id');
 
             if (!productID) return;
-            DRCommerceApi.getProduct(productID, { expand: 'inventoryStatus' }).then((res) => {
-                const purchasable = res.product.inventoryStatus.productIsInStock;
-                const isVariation = res.product.parentProduct ? true : false;
 
-                isPdCard = true; // to avoid being overwritten by concurrency
-                PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
-                PdpModule.displayRealTimeBuyBtn(purchasable, isVariation, $buyBtn);
-                $title.text(res.product.displayName);
-                $thumbnail.attr('alt', res.product.displayName);
-                $loadingIcon.hide();
-                $productInfo.show();
-            });
+            if (parentId) {
+                DRCommerceApi.getProduct(parentId, {fields: 'variations', expand: 'all'}).then((res) => {
+                    const variations = res.product.variations.product;
+                    const isInStock = variations.some(elem => elem.inventoryStatus.availableQuantity > 0);
+
+                    isPdCard = true; // to avoid being overwritten by concurrency
+                    PdpModule.displayRealTimePricing(variations[0].pricing, pdDisplayOption, $priceDiv);
+                    PdpModule.displayRealTimeBuyBtn(isInStock.toString(), true, $buyBtn);
+                });
+            } else {
+                DRCommerceApi.getProduct(productID, { expand: 'inventoryStatus' }).then((res) => {
+                    const purchasable = res.product.inventoryStatus.productIsInStock;
+    
+                    isPdCard = true; // to avoid being overwritten by concurrency
+                    PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
+                    PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+                });
+            }
         });
     }
 });

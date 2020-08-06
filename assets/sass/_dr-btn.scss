@@ -1,26 +1,52 @@
 .dr-btn {
     position: relative;
     display: inline-block;
-    background-color: $blue;
-    color: white;
+    background-color: $blue !important;
+    color: white !important;
     font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-    line-height: 1;
-    text-transform: uppercase;
-    text-align: center;
-    border: none;
-    padding: 13px;
-    text-decoration: none;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    line-height: 1 !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 13px !important;
+    text-decoration: none !important;
 
     &:hover {
-        background-color: $blue-dark;
+        background: $blue-dark !important;
         text-decoration: none;
         color: white;
     }
 
     &:focus {
         outline: none;
+    }
+
+    &-black {
+        background-color: $gray-900 !important;
+        &:hover {
+            background-color: $black !important;
+        }
+    }
+
+    &-green {
+        background-color: $success !important;
+        &:hover {
+            background-color: darken($success, 10) !important;
+        }
+    }
+
+    &-gray {
+        background-color: $gray !important;
+        &:hover {
+            background-color: $gray-darker !important;
+        }
+        &:focus {
+            outline: none !important;
+            border: none !important;
+        }
     }
 
     &:not(.disabled) {

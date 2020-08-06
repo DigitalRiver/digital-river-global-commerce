@@ -10,7 +10,7 @@
  * Plugin Name:       Digital River Global Commerce
  * Plugin URI:        https://www.digitalriver.com
  * Description:       The Digital River Global Commerce plugin from Digital River allows you to easily integrate with Digital River's Global Commerce platform
- * Version:           1.2.0
+ * Version:           1.3.1
  * Author:            Digital River
  * Author URI:        https://www.digitalriver.com/company/
  * License:           GPL-2.0+
@@ -27,7 +27,7 @@ if ( !defined( 'WPINC' ) ) {
 /**
  * Current Plugin Version
  */
-define( 'DRGC_VERSION', '1.2.0.' . time() );
+define( 'DRGC_VERSION', '1.3.1.' . time() );
 define( 'DRGC_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 define( 'DRGC_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 

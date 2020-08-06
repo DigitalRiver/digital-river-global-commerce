@@ -1,13 +1,21 @@
 <?php
+$current_locale = DRGC()->shopper->get_locale();
 $billingAddress = $cart['cart']['billingAddress'];
-if ( $customer_address ) {
-    $billingAddress = $customer_address[0];
-} elseif ( $customer ) {
-    $billingAddress['firstName'] = $billingAddress['firstName'] ?: $customer['firstName'];
-    $billingAddress['lastName'] = $billingAddress['lastName'] ?: $customer['lastName'];
+
+if ( ! ( isset( $billingAddress['firstName'] ) && isset( $billingAddress['lastName'] ) ) && $is_logged_in ) {
+    $billingAddress = $default_address;
 }
-if ( $cart['cart']['billingAddress']['line1'] != '') {
-    $billingAddress = $cart['cart']['billingAddress'];
+
+$companyEIN = '';
+$custom_attributes = $cart['cart']['customAttributes']['attribute'] ?? [];
+
+if ( count( $custom_attributes ) > 0 ) {
+    foreach( $custom_attributes as $attr ) {
+        if ( 'companyEIN' === $attr['name'] ) {
+            $companyEIN = $attr['value'];
+            break;
+        }
+    }
 }
 ?>
 <div class="dr-checkout__billing dr-checkout__el">
@@ -45,7 +53,7 @@ if ( $cart['cart']['billingAddress']['line1'] != '') {
 
             <div class="field-checkbox">
 
-                <input type="checkbox" name="checkbox-billing" id="checkbox-billing" checked="checked">
+                <input type="checkbox" name="checkbox-billing" id="checkbox-billing" <?php echo ( $companyEIN === '' ) && $cart['cart']['hasPhysicalProduct'] ? 'checked="checked"' : '' ?>>
 
                 <label for="checkbox-billing" class="checkbox-label">
 
@@ -56,6 +64,76 @@ if ( $cart['cart']['billingAddress']['line1'] != '') {
             </div>
 
         </div>
+
+        <?php if ( 'en_US' === $current_locale ) : ?>
+
+            <div class="form-group dr-panel-edit__el">
+
+                <div class="field-checkbox">
+
+                    <input type="checkbox" name="checkbox-business" id="checkbox-business" <?php echo ( $companyEIN !== '' ) ? 'checked="checked"' : '' ?>>
+
+                    <label for="checkbox-business" class="checkbox-label">
+
+                        <?php echo __( 'Business Checkout', 'digital-river-global-commerce' ); ?>
+
+                    </label>
+
+                </div>
+
+            </div>
+
+        <?php endif; ?>
+
+        <?php if ( $is_logged_in ): ?>
+
+            <button class="dr-btn dr-btn-black dr-address-book-btn billing" type="button" style="display: none;"><?php echo __( 'My Address Book', 'digital-river-global-commerce' ); ?></button>
+
+            <div class="dr-address-book billing" style="display: none;">
+
+                <h4><?php echo __( 'Choose billing address', 'digital-river-global-commerce' ); ?></h4>
+
+                <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-address-book.php'; ?>
+
+            </div>
+
+        <?php endif; ?>
+
+        <?php if ( 'en_US' === $current_locale ) : ?>
+
+            <div class="form-group dr-panel-edit__el form-group-business<?php echo ( $companyEIN === '' ) ? ' hide' : '' ?>">
+
+                <div class="float-container float-container--company-name">
+
+                    <label for="billing-field-company-name" class="float-label">
+
+                        <?php echo __( 'Company Name', 'digital-river-global-commerce' ); ?>
+
+                    </label>
+
+                    <input id="billing-field-company-name" type="text" name="billing-companyName" value="<?php echo $billingAddress['companyName'] ?>" class="form-control float-field float-field--company-name">
+
+                </div>
+
+            </div>
+
+            <div class="form-group dr-panel-edit__el form-group-business <?php echo ( $companyEIN === '' ) ? ' hide' : '' ?>">
+
+                <div class="float-container float-container--company-ein">
+
+                    <label for="billing-field-company-ein" class="float-label">
+
+                        <?php echo __( 'Company EIN', 'digital-river-global-commerce' ); ?>
+
+                    </label>
+
+                    <input id="billing-field-company-ein" type="text" name="billing-companyEIN" value="<?php echo $companyEIN; ?>" class="form-control float-field float-field--company-ein">
+
+                </div>
+
+            </div>
+
+        <?php endif; ?>
 
         <div class="billing-section" <?php echo !$cart['cart']['hasPhysicalProduct'] ? 'style="display: block;"' : '' ?>>
 
@@ -131,7 +209,7 @@ if ( $cart['cart']['billingAddress']['line1'] != '') {
 
                     <label for="billing-field-address2" class="float-label">
 
-                        <?php echo __( 'Address line 2/Company', 'digital-river-global-commerce' ); ?>
+                        <?php echo __( 'Address line 2', 'digital-river-global-commerce' ); ?>
 
                     </label>
 
@@ -171,18 +249,16 @@ if ( $cart['cart']['billingAddress']['line1'] != '') {
                         <?php echo __( 'Select Country', 'digital-river-global-commerce' ); ?> *
                     </option>
 
-                    <?php foreach ( $locales['locales'] as $locale => $currency ): ?>
-                        <?php
-                            $country = drgc_code_to_counry($locale);
-                            $abrvCountyName = drgc_code_to_counry($locale, true);
+                    <?php
+                        $all_countries = drgc_list_countries();
 
+                        foreach ( $all_countries as $country_code => $country_name ):
                             $output = "<option ";
-                            $output .= ($billingAddress['country'] === $abrvCountyName ? 'selected ' : '');
-                            $output .= "value=\"{$abrvCountyName}\">{$country}</option>";
+                            $output .= $billingAddress['country'] === $country_code ? 'selected ' : '';
+                            $output .= "value=\"{$country_code}\">{$country_name}</option>";
                             echo $output;
-                        ?>
-                    <?php endforeach; ?>
-
+                        endforeach;
+                    ?>
                 </select>
 
                 <div class="invalid-feedback">
@@ -220,7 +296,7 @@ if ( $cart['cart']['billingAddress']['line1'] != '') {
 
             </div>
 
-            <div class="dr-panel-edit__el">
+            <div class="form-group dr-panel-edit__el">
 
                 <div class="float-container float-container--zip">
 
@@ -258,6 +334,24 @@ if ( $cart['cart']['billingAddress']['line1'] != '') {
 
             </div>
 
+            <?php if ( $is_logged_in ): ?>
+            
+                <div class="field-checkbox">
+                    
+                    <input type="hidden" name="addresses-no-default" value="<?php echo $no_default ?>">
+
+                    <input type="checkbox" name="checkbox-save-billing" id="checkbox-save-billing">
+
+                    <label for="checkbox-save-billing" class="checkbox-label">
+
+                        <?php echo __( 'Save this address for future purchases', 'digital-river-global-commerce' ); ?>
+
+                    </label>
+
+                </div>
+
+            <?php endif; ?>
+
         </div>
 
         <div class="invalid-feedback dr-err-field" style="display: none"></div>
@@ -277,3 +371,4 @@ if ( $cart['cart']['billingAddress']['line1'] != '') {
     </div>
 
 </div>
+
