@@ -29,7 +29,7 @@ fixture `===== DRGC P2 Automation Test - Currency Unit When Switch Currency'====
 
 test('Switch Currency: Product Page', async t => {
   console.log('Test Case: Check the unit of currency after switching currency in Product Page.');
-  const price = Selector('.c-product-card-content__text').withText(physicalProdName.toUpperCase()).parent(2).find('span').nth(1);
+  const price = Selector('.c-product-card-content__text').withText(physicalProdName.toUpperCase()).parent(2).find('span');
   await switchCurrencyFromUsdToEur();
   console.log('>> Default USD, switch currency to EUR and check the currency display correctly');
   await t.expect(price.innerText).contains('EUR');
@@ -51,20 +51,9 @@ test('Switch Currency: Cart Page', async t => {
   await minicartPage.clickViewCartBtn();
 
   console.log('>> Default USD, switch currency to EUR and check the currency display correctly');
-  await checkPriceUnitInCart('USD')
+  await checkPriceUnitInCart('$')
   await switchCurrencyFromUsdToEur();
   await checkPriceUnitInCart('EUR')
-});
-
-test('Switch Currency: Checkout Page', async t => {
-  console.log('Test Case: Check the unit of currency after switching currency in Checkout Page.');
-  await utils.addProductAndProceedToCheckout(homePage.addPhyProduct);
-  await utils.clickItem(new LoginPage().continueAsGuestBtn);
-
-  console.log('>> Default USD, switch currency to EUR and check the currency display correctly');
-  await checkPriceUnitInCheckout('USD')
-  await switchCurrencyFromUsdToEur();
-  await checkPriceUnitInCheckout('EUR')
 });
 
 async function checkPriceUnitInCart(unit) {

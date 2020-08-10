@@ -11,7 +11,8 @@ export default class CheckoutPage {
 
     this.emailBtn = Selector('#checkout-email-form > button');
     this.shippingBtn = Selector('#checkout-shipping-form > button');
-    this.billingInfoSubmitBtn = Selector('#checkout-billing-form > button');
+    this.longinBillingInfoSubmitBtn = Selector('#checkout-billing-form').find('button').nth(1);
+    this.guestBillingInfoSubmitBtn = Selector('#checkout-billing-form > button');
     this.deliverByExpress = Selector('#shipping-option-8196700');
     this.deliverByStandard = Selector('#shipping-option-167400');
     this.deliveryOptionSubmitBtn = Selector('#checkout-delivery-form > button');
@@ -71,6 +72,7 @@ export default class CheckoutPage {
       .typeText(this.shippingLastName, shippingInfo.lastName, { replace: true })
       .typeText(this.shippingAddress1, shippingInfo.addrLine1)
       .typeText(this.shippingCity, shippingInfo.city)
+      .hover(this.shippingCountry)
       .click(this.shippingCountry)
       .click(shippingCountryOption.withText(shippingInfo.country))
       .expect(this.shippingCountry.value).eql(shippingInfo.countryValue)
@@ -83,7 +85,7 @@ export default class CheckoutPage {
       .click(this.shippingBtn);
   }
 
-  async completeFormBillingInfo() {
+  async completeFormBillingInfo(isGuest) {
     const billingInfo = this.utils.getBillingUserData();
     const billingStateOption = this.billingState.find('option');
     const billingCountryOption = this.billingCountry.find('option');
@@ -93,15 +95,22 @@ export default class CheckoutPage {
       .typeText(this.billingLastName, billingInfo.lastName, { replace: true })
       .typeText(this.billingAddress1, billingInfo.addrLine1)
       .typeText(this.billingCity, billingInfo.city)
+      .hover(this.billingCountry)
+      .click(this.billingCountry)
+      .click(billingCountryOption.withText(billingInfo.country))
+      .expect(this.billingCountry.value).eql(billingInfo.countryValue)
+      .hover(this.billingState)
       .click(this.billingState)
       .click(billingStateOption.withText(billingInfo.state))
       .expect(this.billingState.value).eql(billingInfo.stateValue)
       .typeText(this.billingPostalCode, billingInfo.postCode)
-      .click(this.billingCountry)
-      .click(billingCountryOption.withText(billingInfo.country))
-      .expect(this.billingCountry.value).eql(billingInfo.countryValue)
-      .typeText(this.billingPhoneNumber, billingInfo.phoneNo)
-      .click(this.billingInfoSubmitBtn);
+      .typeText(this.billingPhoneNumber, billingInfo.phoneNo);
+
+    if (isGuest) {
+      await t.click(this.guestBillingInfoSubmitBtn);
+    } else {
+      await t.click(this.longinBillingInfoSubmitBtn);
+    }
   }
 
   async setDeliveryOption(deliveryOption) {

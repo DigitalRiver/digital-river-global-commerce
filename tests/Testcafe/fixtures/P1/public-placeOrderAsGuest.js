@@ -28,7 +28,8 @@ fixture `===== DRGC P1 Automation Test - Place Order As Guest =====`
 
 test('Place order with physical product', async t => {
   console.log('Test Case: Place Order with Physical Product');
-
+  const isPhysical = true;
+  const isGuest = true;
   await utils.addProductAndProceedToCheckout(homePage.addPhyProduct);
 
   //Continue as a guest
@@ -38,13 +39,15 @@ test('Place order with physical product', async t => {
   // Enter Email and continue
   console.log('>> Checkout page - Entering email');
   await checkoutPage.completeFormEmail(testEmail);
-  await utils.fillOrderInfoAndSubmitOrder(true);
+  await utils.fillOrderInfoAndSubmitOrder(isPhysical, isGuest);
 });
 
 test('Place order with digital product', async t => {
   console.log('Test Case: Place Order with Digital Product');
-
-  await utils.addProductAndProceedToCheckout(homePage.addDigiProduct, true);
+  const isPhysical = false;
+  const isGuest = true;
+  const isVariation = false;
+  await utils.addProductAndProceedToCheckout(homePage.addDigiProduct, isVariation);
 
   //Continue as a guest
   console.log('>> Checkout page - Continue checkout as a guest');
@@ -54,5 +57,5 @@ test('Place order with digital product', async t => {
   console.log('>> Checkout page - Entering email');
   await checkoutPage.completeFormEmail(testEmail);
 
-  await utils.fillOrderInfoAndSubmitOrder(false);
+  await utils.fillOrderInfoAndSubmitOrder(isPhysical, isGuest);
 });
