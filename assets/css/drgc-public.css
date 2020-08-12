@@ -2754,3 +2754,5 @@ input[type=number] { -webkit-appearance: textfield; -moz-appearance: textfield; 
 @media (min-width: 992px) { .dr-modal-lg, .dr-modal-xl { max-width: 800px; } }
 
 @media (min-width: 1200px) { .dr-modal-xl { max-width: 1140px; } }
+
+#wrapper-navbar .navbar #dr-locale-selector .nav-link, #wrapper-navbar .navbar #dr-currency-selector .nav-link { min-width: auto; padding-right: 2rem; }

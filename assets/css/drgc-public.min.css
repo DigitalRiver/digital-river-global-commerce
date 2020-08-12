@@ -1167,6 +1167,7 @@ input[type=number]{-webkit-appearance:textfield;-moz-appearance:textfield;appear
 .dr-modal-footer>:not(:first-child){margin-left:.25rem}
 .dr-modal-footer>:not(:last-child){margin-right:.25rem}
 .dr-modal-scrollbar-measure{position:absolute;top:-9999px;width:50px;height:50px;overflow:scroll}
+#wrapper-navbar .navbar #dr-locale-selector .nav-link,#wrapper-navbar .navbar #dr-currency-selector .nav-link{min-width:auto;padding-right:2rem}
 @media(prefers-reduced-motion:reduce){.drgc-wrapper .btn{-webkit-transition:none;transition:none}
 .drgc-wrapper .form-control{-webkit-transition:none;transition:none}
 body .modal.fade .modal-dialog{-webkit-transition:none;transition:none}

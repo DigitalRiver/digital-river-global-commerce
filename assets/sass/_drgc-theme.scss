@@ -1,0 +1,10 @@
+// For DRGC theme compatibility
+#wrapper-navbar .navbar {
+  #dr-locale-selector,
+  #dr-currency-selector {
+    .nav-link {
+      min-width: auto;
+      padding-right: 2rem;
+    }
+  }
+}
