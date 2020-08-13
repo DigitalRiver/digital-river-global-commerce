@@ -94,8 +94,6 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
 
         <div class="dr-summary dr-summary--checkout">
 
-            <?php drgc_currency_toggler( 'd-none' ); ?>
-
             <div class="dr-summary__products">
 
                 <?php if ( 1 < count($cart['cart']['lineItems']) ) : ?>
