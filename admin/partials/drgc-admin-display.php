@@ -23,12 +23,20 @@
     <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=locales" class="nav-tab <?php if ( $active_tab === 'locales' ) echo 'nav-tab-active'; ?>">
       <?php _e( 'Locales', 'digital-river-global-commerce' ) ?>
     </a>
+    <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=checkout" class="nav-tab <?php if ( $active_tab === 'checkout' ) echo 'nav-tab-active'; ?>">
+      <?php _e( 'Checkout', 'digital-river-global-commerce' ) ?>
+    </a>
+    <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=payment" class="nav-tab <?php if ( $active_tab === 'payment' ) echo 'nav-tab-active'; ?>">
+      <?php _e( 'Payment', 'digital-river-global-commerce' ) ?>
+    </a>
   </nav>
 
   <div class="tab-content">
     <form method="post" action="options.php">
       <?php switch ( $active_tab ) {
         case 'general':
+        case 'checkout':
+        case 'payment':
           settings_fields( $this->plugin_name . '_' . $active_tab );
           do_settings_sections( $this->plugin_name . '_' . $active_tab );
           submit_button();

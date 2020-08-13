@@ -244,14 +244,14 @@ class DRGC_Admin {
 			$this->option_name . '_checkout',
 			__( 'Checkout', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_checkout_cb' ),
-			$this->plugin_name . '_general'
+			$this->plugin_name . '_checkout'
 		);
 
 		add_settings_field(
 			$this->option_name . '_testOrder_handler',
 			__( 'Test Order', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_testOrder_handler_cb' ),
-			$this->plugin_name . '_general',
+			$this->plugin_name . '_checkout',
 			$this->option_name . '_checkout',
 			array( 'label_for' => $this->option_name . '_testOrder_handler' )
 		);
@@ -260,7 +260,7 @@ class DRGC_Admin {
 			$this->option_name . '_force_excl_tax_handler',
 			__( 'Display As Excl. Tax', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_force_excl_tax_handler_cb' ),
-			$this->plugin_name . '_general',
+			$this->plugin_name . '_checkout',
 			$this->option_name . '_checkout',
 			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
 		);
@@ -269,14 +269,14 @@ class DRGC_Admin {
 			$this->option_name . '_payment',
 			__( 'Payment Buttons', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_payment_cb' ),
-			$this->plugin_name . '_general'
+			$this->plugin_name . '_payment'
 		);
 
 		add_settings_field(
 			$this->option_name . '_applepay_handler',
 			__( 'Apple Pay', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_applepay_handler_cb' ),
-			$this->plugin_name . '_general',
+			$this->plugin_name . '_payment',
 			$this->option_name . '_payment',
 			array( 'label_for' => $this->option_name . '_applepay_handler' )
     );
@@ -285,7 +285,7 @@ class DRGC_Admin {
       $this->option_name . '_applepay_button_type',
       __( 'Button Type', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_applepay_button_type_cb' ),
-      $this->plugin_name . '_general',
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_applepay_button_type' )
     );
@@ -294,7 +294,7 @@ class DRGC_Admin {
       $this->option_name . '_applepay_button_color',
       __( 'Button Color', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_applepay_button_color_cb' ),
-      $this->plugin_name . '_general',
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_applepay_button_color' )
     );
@@ -303,7 +303,7 @@ class DRGC_Admin {
 			$this->option_name . '_googlepay_handler',
 			__( 'Google Pay', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_googlepay_handler_cb' ),
-			$this->plugin_name . '_general',
+			$this->plugin_name . '_payment',
 			$this->option_name . '_payment',
 			array( 'label_for' => $this->option_name . '_googlepay_handler' )
     );
@@ -312,7 +312,7 @@ class DRGC_Admin {
       $this->option_name . '_googlepay_button_type',
       __( 'Button Type', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_googlepay_button_type_cb' ),
-      $this->plugin_name . '_general',
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_googlepay_button_type' )
     );
@@ -321,7 +321,7 @@ class DRGC_Admin {
       $this->option_name . '_googlepay_button_color',
       __( 'Button Color', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_googlepay_button_color_cb' ),
-      $this->plugin_name . '_general',
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_googlepay_button_color' )
     );
@@ -333,25 +333,31 @@ class DRGC_Admin {
 			$this->plugin_name . '_general'
 		);
 
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_api_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_api_secret', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_domain', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_digitalRiver_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_username', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_password', array( 'type' => 'string', 'sanitize_callback' => null ) );
+    // General
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_api_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_api_secret', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_domain', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_digitalRiver_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_username', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_password', array( 'type' => 'string', 'sanitize_callback' => null ) );
     register_setting( $this->plugin_name . '_general', $this->option_name . '_cron_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-		register_setting( $this->plugin_name . '_general', $this->option_name . '_applepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name . '_general', $this->option_name . '_googlepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name . '_general', $this->option_name . '_applepay_button_type' );
-    register_setting( $this->plugin_name . '_general', $this->option_name . '_applepay_button_color' );
-    register_setting( $this->plugin_name . '_general', $this->option_name . '_googlepay_button_type' );
-    register_setting( $this->plugin_name . '_general', $this->option_name . '_googlepay_button_color' );
 
+    // Locales
     register_setting( $this->plugin_name . '_locales', $this->option_name . '_default_locale', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name . '_locales', $this->option_name . '_locale_options', array( 'sanitize_callback' => array( $this, 'dr_sanitize_locale_options' ) ) );
+    register_setting( $this->plugin_name . '_locales', $this->option_name . '_locale_options', array( 'sanitize_callback' => array( $this, 'dr_sanitize_locale_options' ) ) );
+
+    // Checkout
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+
+    // Payment
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_button_type' );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_button_color' );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_button_type' );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_button_color' );
 	}
 
 	/**
