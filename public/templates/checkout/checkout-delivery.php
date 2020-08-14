@@ -31,7 +31,7 @@ $result = 'Standard $0.00';
 
         </span>
 
-       <span class="dr-accordion__edit"><?php echo _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+       <span class="dr-accordion__edit"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
 
     </div>
