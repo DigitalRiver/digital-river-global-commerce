@@ -56,7 +56,7 @@ msgstr ""
 msgid "Scheduled Products Import"
 msgstr ""
 
-#: admin/class-drgc-admin.php:245, includes/class-drgc-activator.php:39, public/class-drgc-public.php:138, public/templates/login/login.php:28
+#: admin/class-drgc-admin.php:245, admin/partials/drgc-admin-display.php:27, includes/class-drgc-activator.php:39, public/class-drgc-public.php:138, public/templates/login/login.php:28
 msgid "Checkout"
 msgstr ""
 
@@ -64,87 +64,87 @@ msgstr ""
 msgid "Test Order"
 msgstr ""
 
-#: admin/class-drgc-admin.php:263
+#: admin/class-drgc-admin.php:261
 msgid "Display As Excl. Tax"
 msgstr ""
 
-#: admin/class-drgc-admin.php:272
+#: admin/class-drgc-admin.php:270
 msgid "Payment Buttons"
 msgstr ""
 
-#: admin/class-drgc-admin.php:279
+#: admin/class-drgc-admin.php:277
 msgid "Apple Pay"
 msgstr ""
 
-#: admin/class-drgc-admin.php:288, admin/class-drgc-admin.php:315, admin/class-drgc-admin.php:573, admin/class-drgc-admin.php:633
+#: admin/class-drgc-admin.php:286, admin/class-drgc-admin.php:313, admin/class-drgc-admin.php:577, admin/class-drgc-admin.php:637
 msgid "Button Type"
 msgstr ""
 
-#: admin/class-drgc-admin.php:297, admin/class-drgc-admin.php:324, admin/class-drgc-admin.php:595, admin/class-drgc-admin.php:655
+#: admin/class-drgc-admin.php:295, admin/class-drgc-admin.php:322, admin/class-drgc-admin.php:599, admin/class-drgc-admin.php:659
 msgid "Button Color"
 msgstr ""
 
-#: admin/class-drgc-admin.php:306
+#: admin/class-drgc-admin.php:304
 msgid "Google Pay"
 msgstr ""
 
-#: admin/class-drgc-admin.php:392
+#: admin/class-drgc-admin.php:396
 msgid "Please contact your account representative for assistance with these settings."
 msgstr ""
 
-#: admin/class-drgc-admin.php:460
+#: admin/class-drgc-admin.php:464
 msgid "Enable Test Order."
 msgstr ""
 
-#: admin/class-drgc-admin.php:472
+#: admin/class-drgc-admin.php:476
 msgid "Display pricing as tax exclusive on checkout flow"
 msgstr ""
 
-#: admin/class-drgc-admin.php:484
+#: admin/class-drgc-admin.php:488
 msgid "Twice daily product synchronization with GC."
 msgstr ""
 
-#: admin/class-drgc-admin.php:572
+#: admin/class-drgc-admin.php:576
 msgid "Required to the type of Apple Pay button"
 msgstr ""
 
-#: admin/class-drgc-admin.php:575, admin/class-drgc-admin.php:635
+#: admin/class-drgc-admin.php:579, admin/class-drgc-admin.php:639
 msgid "Long"
 msgstr ""
 
-#: admin/class-drgc-admin.php:577, admin/class-drgc-admin.php:637
+#: admin/class-drgc-admin.php:581, admin/class-drgc-admin.php:641
 msgid "Plain"
 msgstr ""
 
-#: admin/class-drgc-admin.php:594
+#: admin/class-drgc-admin.php:598
 msgid "Required to the color of Apple Pay button"
 msgstr ""
 
-#: admin/class-drgc-admin.php:597, admin/class-drgc-admin.php:657
+#: admin/class-drgc-admin.php:601, admin/class-drgc-admin.php:661
 msgid "Black"
 msgstr ""
 
-#: admin/class-drgc-admin.php:599, admin/class-drgc-admin.php:659
+#: admin/class-drgc-admin.php:603, admin/class-drgc-admin.php:663
 msgid "White"
 msgstr ""
 
-#: admin/class-drgc-admin.php:632
+#: admin/class-drgc-admin.php:636
 msgid "Required to the type of Google Pay button"
 msgstr ""
 
-#: admin/class-drgc-admin.php:654
+#: admin/class-drgc-admin.php:658
 msgid "Required to the color of Google Pay button"
 msgstr ""
 
-#: admin/class-drgc-admin.php:755, admin/class-drgc-admin.php:808
+#: admin/class-drgc-admin.php:759, admin/class-drgc-admin.php:812
 msgid "Failed to create file"
 msgstr ""
 
-#: admin/class-drgc-admin.php:763, admin/class-drgc-admin.php:821
+#: admin/class-drgc-admin.php:767, admin/class-drgc-admin.php:825
 msgid "Could not write to file"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45
+#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45, drgc-menu-label-trans-strings.php:10
 msgid "Products"
 msgstr ""
 
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Add new product"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:49, public/templates/checkout/checkout-billing.php:40, public/templates/checkout/checkout-email.php:12, public/templates/checkout/checkout-shipping.php:27
+#: admin/class-drgc-post-types.php:49, public/templates/checkout/checkout-billing.php:40, public/templates/checkout/checkout-delivery.php:34, public/templates/checkout/checkout-email.php:12, public/templates/checkout/checkout-shipping.php:27
 msgid "Edit"
 msgstr ""
 
@@ -270,6 +270,10 @@ msgstr ""
 
 #: admin/partials/drgc-admin-display.php:24, admin/partials/drgc-admin-locales.php:20
 msgid "Locales"
+msgstr ""
+
+#: admin/partials/drgc-admin-display.php:30, includes/shortcodes/class-dr-shortcode-checkout.php:38
+msgid "Payment"
 msgstr ""
 
 #: admin/partials/drgc-admin-locales.php:21
@@ -392,7 +396,7 @@ msgstr ""
 msgid "products"
 msgstr ""
 
-#: drgc-category-name-trans-strings.php:11
+#: drgc-category-name-trans-strings.php:11, drgc-menu-label-trans-strings.php:11
 msgid "software"
 msgstr ""
 
@@ -482,10 +486,6 @@ msgstr ""
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:37
 msgid "Delivery options"
-msgstr ""
-
-#: includes/shortcodes/class-dr-shortcode-checkout.php:38
-msgid "Payment"
 msgstr ""
 
 #: public/class-drgc-public.php:119
@@ -1176,7 +1176,7 @@ msgstr ""
 msgid "Proceed to checkout"
 msgstr ""
 
-#: public/templates/cart/cart.php:58, public/templates/checkout/checkout.php:18, public/templates/checkout/checkout.php:117
+#: public/templates/cart/cart.php:58, public/templates/checkout/checkout.php:18, public/templates/checkout/checkout.php:115
 msgid "Continue Shopping"
 msgstr ""
 
@@ -1298,6 +1298,10 @@ msgstr ""
 
 #: public/templates/checkout/checkout.php:16
 msgid "Your cart is empty!"
+msgstr ""
+
+#: public/templates/checkout/checkout.php:51
+msgid "Back"
 msgstr ""
 
 #: public/templates/login/login.php:24
