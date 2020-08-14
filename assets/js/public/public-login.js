@@ -54,7 +54,7 @@ const LoginModule = (($) => {
             url: drgc_params.ajaxUrl,
             data,
             success: () => {
-                LoginModule.redirectAfterAuth();
+                LoginModule.redirectAfterAuth(false);
             }
         });
     };
@@ -70,17 +70,19 @@ const LoginModule = (($) => {
             action: 'drgc_logout',
             nonce: drgc_params.ajaxNonce
         };
-        $('body').css({ 'pointer-events': 'none', 'opacity': 0.5 });
+        $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, function(response) {
             location.reload();
         });
     };
 
-    const redirectAfterAuth = () => {
-        if (!document.referrer) {
-            window.location.href = drgc_params.homeUrl;
-        } else if (document.referrer === drgc_params.cartUrl) {
+    const redirectAfterAuth = (isLoggedIn) => {
+        if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
             window.location.href = drgc_params.checkoutUrl;
+        } else if (isLoggedIn) {
+            window.location.href = drgc_params.accountUrl;
+        } else if (!document.referrer) {
+            window.location.href = drgc_params.homeUrl;
         } else {
             window.location.href = document.referrer;
         }
@@ -92,7 +94,7 @@ const LoginModule = (($) => {
             nonce: drgc_params.ajaxNonce
         };
 
-        $('body').css({'pointer-events': 'none', 'opacity': 0.5});
+        $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, () => {
             window.location.href = url;
         });
@@ -150,7 +152,7 @@ jQuery(document).ready(($) => {
 
         $.post(ajaxUrl, data, function(response) {
             if ( response.success ) {
-                LoginModule.redirectAfterAuth();
+                LoginModule.redirectAfterAuth(true);
             } else {
                 $form.data('processing', false);
                 but.removeClass('sending').blur();
@@ -200,6 +202,8 @@ jQuery(document).ready(($) => {
             $(cpw).next('.invalid-feedback').text(drgc_params.translations.required_field_msg);
         } else if (cpw.validity.customError) {
             $(cpw).next('.invalid-feedback').text(cpw.validationMessage);
+        } else {
+            $(cpw).next('.invalid-feedback').text('');
         }
     });
 
@@ -235,7 +239,7 @@ jQuery(document).ready(($) => {
 
         $.post(ajaxUrl, data, function(response) {
             if (response.success) {
-                LoginModule.redirectAfterAuth();
+                LoginModule.redirectAfterAuth(true);
             } else {
                 $form.data('processing', false);
                 $button.removeClass('sending').blur();

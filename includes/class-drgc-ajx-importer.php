@@ -482,7 +482,7 @@ class DRGC_Ajx_Importer extends AbstractHttpService {
 		$url = '/v1/shoppers/me/products/' . $id . '/pricing?' . http_build_query( $params );
 		
 		try {
-			$res = $this->get( $url, array(), true );
+			$res = $this->get( $url, array(), false );
 
 			return isset( $res['pricing'] ) ? $res['pricing'] : array();
 		} catch (\Exception $e) {

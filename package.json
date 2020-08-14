@@ -24,7 +24,7 @@
     "gulp-concat": "^2.5.2",
     "gulp-eslint": "^5.0.0",
     "gulp-filter": "^5.1.0",
-    "gulp-imagemin": "^4.1.0",
+    "gulp-imagemin": "^7.1.0",
     "gulp-line-ending-corrector": "^1.0.1",
     "gulp-merge-media-queries": "^0.2.1",
     "gulp-notify": "^3.0.0",
@@ -39,7 +39,7 @@
     "gulp-uglifycss": "^1.0.6",
     "gulp-wp-pot": "^2.0.7",
     "jest": "^24.9.0",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.1",
     "webpack-stream": "^5.2.1"
   },
   "jest": {

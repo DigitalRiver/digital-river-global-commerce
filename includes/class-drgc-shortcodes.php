@@ -25,9 +25,10 @@ class DRGC_Shortcodes {
 	 */
 	public static function add_shortcodes() {
 		$shortcodes = array(
-			'dr-cart'            		=> __CLASS__.'::cart',
+			'dr-cart'               => __CLASS__.'::cart',
 			'dr-checkout'           => __CLASS__.'::checkout',
-			'dr-login'       				=> __CLASS__.'::login',
+			'dr-login'              => __CLASS__.'::login',
+			'dr-account'            => __CLASS__.'::account',
 			'dr-thank-you'          => __CLASS__.'::thank_you',
 			'dr-my-subs'            => __CLASS__.'::my_subs',
 			'dr-subs-details'       => __CLASS__.'::subs_details'
@@ -83,16 +84,25 @@ class DRGC_Shortcodes {
 		return self::shortcode_wrapper( array( 'DR_Shortcode_Checkout', 'output' ) );
 	}
 
-	/**
-	 * Login page shortcode.
-	 *
-	 * @return string
-	 */
-	public static function login() {
-		return self::shortcode_wrapper( array( 'DR_Shortcode_Login', 'output' ) );
+    /**
+     * Login page shortcode.
+     *
+     * @return string
+     */
+    public static function login() {
+        return self::shortcode_wrapper( array( 'DR_Shortcode_Login', 'output' ) );
+    }
+
+    /**
+     * Account page shortcode.
+     *
+     * @return string
+     */
+    public static function account() {
+        return self::shortcode_wrapper( array( 'DR_Shortcode_Account', 'output' ) );
     }
     
-  /**
+    /**
 	 * Thank you page shortcode.
 	 *
 	 * @return string

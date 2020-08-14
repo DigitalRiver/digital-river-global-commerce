@@ -152,10 +152,10 @@ describe('Test displayRealTimeBuyBtn', () => {
     expect($buyBtn.prop('disabled')).toBe(false);
   });
 
-  test('For redirect buy button, when the product is unpurchasable, its buy button should be available and display "Buy Now"', () => {
+  test('For redirect buy button, when the product is unpurchasable, its buy button should be unavailable and display "Out of Stock"', () => {
     PdpModule.displayRealTimeBuyBtn('false', true, $buyBtn);
-    expect($buyBtn.text()).toEqual('Buy Now');
-    expect($buyBtn.prop('disabled')).toBe(false);
+    expect($buyBtn.text()).toEqual('Out of Stock');
+    expect($buyBtn.prop('disabled')).toBe(true);
   });
 
 });

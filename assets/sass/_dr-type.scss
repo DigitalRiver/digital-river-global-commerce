@@ -4,6 +4,26 @@
     // Typography
     // ===
     //
+    font-size: $font-size-base;
+    font-family:"Open Sans",sans-serif;
+
+    //
+    // Headings
+    //
+    .dr-h1, .dr-h2, .dr-h3, .dr-h4, .dr-h5, .dr-h6 {
+      margin-bottom: $headings-margin-bottom;
+      font-family: $headings-font-family;
+      font-weight: $headings-font-weight;
+      line-height: $headings-line-height;
+      color: $headings-color;
+    }
+
+    .dr-h1 { @include font-size($h1-font-size); }
+    .dr-h2 { @include font-size($h2-font-size); }
+    .dr-h3 { @include font-size($h3-font-size); }
+    .dr-h4 { @include font-size($h4-font-size); }
+    .dr-h5 { @include font-size($h5-font-size); }
+    .dr-h6 { @include font-size($h6-font-size); }
 
 
     //

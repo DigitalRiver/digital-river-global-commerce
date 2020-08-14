@@ -1,4 +1,5 @@
 const CheckoutUtils = (($, params) => {
+  const localizedText = drgc_params.translations;
   const createDisplayItems = (cartData) => {
     const displayItems = [{
       label: params.translations.subtotal_label,
@@ -102,17 +103,24 @@ const CheckoutUtils = (($, params) => {
     $target.text(addressArr.join(', '));
   };
 
-  const updateSummaryPricing = (cart) => {
-    const {formattedOrderTotal, formattedTax} = cart.pricing;
+  const updateSummaryPricing = (order, isTaxInclusive) => {
+    const lineItems = order.lineItems ? order.lineItems.lineItem : (order.products || []);
+    const pricing = order.pricing;
+    const newPricing = getSeparatedPricing(lineItems, pricing, isTaxInclusive);
+    const shippingVal = pricing.shippingAndHandling ?
+      pricing.shippingAndHandling.value :
+      pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
 
-    if (Object.keys(cart.shippingMethod).length) {
-      const formattedShippingAndHandling = (cart.pricing.shippingAndHandling.value === 0) ? params.translations.free_label : cart.pricing.formattedShippingAndHandling;
-
-      $('div.dr-summary__shipping > .item-value').text(formattedShippingAndHandling);
-    }
-
-    $('div.dr-summary__tax > .item-value').text(formattedTax);
-    $('div.dr-summary__total > .total-value').text(formattedOrderTotal);
+    $('div.dr-summary__shipping > .item-value').text(
+      shippingVal === 0 ?
+      params.translations.free_label :
+      newPricing.formattedShippingAndHandling
+    );
+    $('div.dr-summary__tax > .item-value').text(newPricing.formattedProductTax);
+    $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
+    $('div.dr-summary__subtotal > .subtotal-value').text(newPricing.formattedSubtotal);
+    $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
+    $('.dr-summary').removeClass('dr-loading');
   };
 
   const getEntityCode = () => {
@@ -152,10 +160,7 @@ const CheckoutUtils = (($, params) => {
 
   const apiErrorHandler = (jqXHR) => {
     $('.dr-loading').removeClass('dr-loading');
-    if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) {
-      const currentError = jqXHR.responseJSON.errors.error[0];
-      drToast.displayMessage(currentError.description, 'error');
-    }
+    drToast.displayMessage(getAjaxErrorMessage(jqXHR), 'error');
   };
 
   const resetBodyOpacity = () => {
@@ -186,7 +191,151 @@ const CheckoutUtils = (($, params) => {
   };
 
   const getAjaxErrorMessage = (jqXHR) => {
-    return (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) ? jqXHR.responseJSON.errors.error[0].description : '';
+    let errMsg = localizedText.undefined_error_msg;
+
+    if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) {
+      const err = jqXHR.responseJSON.errors.error[0];
+      switch (err.code) {
+        case 'restricted-bill-to-country':
+        case 'restricted-ship-to-country':
+          errMsg = localizedText.address_error_msg;
+          break;
+
+        case 'cart-fraud-failure':
+        case 'order-fraud-failure':
+          errMsg = localizedText.unable_place_order_msg;
+          break;
+
+        default:
+          errMsg = err.description;
+      }
+    }
+    return errMsg;
+  };
+
+  const setShippingOption = (option, freeShipping) => {
+    const html = `
+      <div class="field-radio">
+        <input type="radio"
+          name="selector"
+          id="shipping-option-${option.id}"
+          data-cost="${option.formattedCost}"
+          data-id="${option.id}"
+          data-desc="${option.description}"
+        >
+        <label for="shipping-option-${option.id}">
+          <span>${option.description}</span>
+          <span class="black">${freeShipping ? localizedText.free_label : option.formattedCost}</span>
+        </label>
+      </div>
+    `;
+
+    $('#checkout-delivery-form .dr-panel-edit__el').append(html);
+  };
+
+  const getSupportedCountries = (addressType) => {
+    const countryCodes = $('#' + addressType + '-field-country > option').map((index, element) => element.value).get();
+    countryCodes.shift();
+
+    return countryCodes;
+  };
+
+  const createCartRequest = (event, requestShipping) => {
+    const cartRequest = {cart: {}};
+    const billingAddressObj = {
+      id: 'billingAddress',
+      firstName: event.billingAddress.firstName,
+      lastName: event.billingAddress.lastName,
+      line1: event.billingAddress.address.line1,
+      line2: event.billingAddress.address.line2,
+      city: event.billingAddress.address.city,
+      countrySubdivision: event.billingAddress.address.state || 'NA',
+      postalCode: event.billingAddress.address.postalCode,
+      country: event.billingAddress.address.country,
+      phoneNumber: event.billingAddress.phone,
+      emailAddress: event.billingAddress.email
+    };
+
+    cartRequest.cart.billingAddress = billingAddressObj;
+
+    if (requestShipping) {
+      const shippingAddressObj = {
+        id: 'shippingAddress',
+        firstName: event.shippingAddress.firstName,
+        lastName: event.shippingAddress.lastName,
+        line1: event.shippingAddress.address.line1,
+        line2: event.shippingAddress.address.line2,
+        city: event.shippingAddress.address.city,
+        countrySubdivision: event.shippingAddress.address.state || 'NA',
+        postalCode: event.shippingAddress.address.postalCode,
+        country: event.shippingAddress.address.country,
+        phoneNumber: event.shippingAddress.phone,
+        emailAddress: event.shippingAddress.email
+      };
+
+      cartRequest.cart.shippingAddress = shippingAddressObj;
+    }
+
+    return cartRequest;
+  };
+
+  const isSubsAddedToCart = (lineItems) => {
+    if (!lineItems.length) return false;
+
+    for (let i = 0; i < lineItems.length; i++) {
+      const lineItem = lineItems[i];
+      const customAttributes = lineItem.product.customAttributes.attribute || [];
+
+      if (customAttributes.some(attr => attr.name === 'subscriptionType')) return true;
+    }
+
+    return false;
+  };
+
+  const getLocalizedAutoRenewalTerms = (digitalriverjs, entityCode, locale) => {
+    const compliance = getCompliance(digitalriverjs, entityCode, locale);
+
+    return (Object.keys(compliance).length) ? compliance.autorenewalPlanTerms.localizedText : '';
+  };
+
+  const formatPrice = (val, pricing) => {
+    const localeCode = drgc_params.drLocale.replace('_', '-');
+    const currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
+    const symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
+    const formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');
+    const decimalSymbol = (0).toLocaleString(localeCode, { minimumFractionDigits: 1 })[1];
+    const digits = formattedPriceWithoutSymbol.indexOf(decimalSymbol) > -1 ?
+      formattedPriceWithoutSymbol.split(decimalSymbol).pop().length :
+      0;
+    val = val.toLocaleString(localeCode, { minimumFractionDigits: digits });
+    val = symbolAsPrefix ? (currencySymbol + val) : (val + currencySymbol);
+    return val;
+  };
+
+  const getCorrectSubtotalWithDiscount = (pricing) => {
+    const val = pricing.subtotal.value - pricing.discount.value;
+    return formatPrice(val, pricing);
+  };
+
+  const getSeparatedPricing = (lineItems, pricing, isTaxInclusive) => {
+    let productTax = 0;
+    let shippingTax = 0;
+    const forceExclTax = drgc_params.forceExclTax === 'true';
+    const shippingVal = pricing.shippingAndHandling ?
+      pricing.shippingAndHandling.value :
+      pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
+
+    lineItems.forEach((lineItem) => {
+      productTax += lineItem.pricing.productTax.value;
+      shippingTax += lineItem.pricing.shippingTax.value;
+    });
+
+    return {
+      formattedProductTax: formatPrice(productTax, pricing),
+      formattedShippingTax: formatPrice(shippingTax, pricing),
+      formattedSubtotal: (isTaxInclusive && forceExclTax) ? formatPrice(pricing.subtotal.value - productTax, pricing) : pricing.formattedSubtotal,
+      formattedShippingAndHandling: (isTaxInclusive && forceExclTax) ? formatPrice(shippingVal - shippingTax, pricing) : (pricing.formattedShippingAndHandling || pricing.formattedShipping)
+    };
   };
 
   return {
@@ -206,7 +355,15 @@ const CheckoutUtils = (($, params) => {
     getEntityCode,
     getCompliance,
     resetFormSubmitButton,
-    getAjaxErrorMessage
+    getAjaxErrorMessage,
+    setShippingOption,
+    getSupportedCountries,
+    createCartRequest,
+    isSubsAddedToCart,
+    getLocalizedAutoRenewalTerms,
+    formatPrice,
+    getCorrectSubtotalWithDiscount,
+    getSeparatedPricing
   };
 })(jQuery, drgc_params);
 

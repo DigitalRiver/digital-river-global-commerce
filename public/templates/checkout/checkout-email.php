@@ -29,7 +29,7 @@
         </div>
 
 
-        <button type="submit" class="dr-panel-edit__btn dr-btn">
+        <button type="submit" class="dr-panel-edit__btn dr-btn" disabled="disabled">
 
             <?php echo __( 'Save and continue', 'digital-river-global-commerce' ); ?>
 

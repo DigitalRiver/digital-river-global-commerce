@@ -18,20 +18,21 @@ defined( 'ABSPATH' ) || exit;
  */
 class DR_Shortcode_Thank_You {
 
-	/**
-	 * Output the cart shortcode.
-	 *
+  /**
+   * Output the cart shortcode.
+   *
      * @since    1.0.0
      * @access   public
-	 * @param array $atts Shortcode attributes.
-	 */
-	public static function output( $atts ) {
-		$order = DRGC()->cart->retrieve_order();
-		$customer = DRGC()->shopper->retrieve_shopper();
+   * @param array $atts Shortcode attributes.
+   */
+  public static function output( $atts ) {
+    $plugin = DRGC();
+    $order = $plugin->cart->retrieve_order();
+    $customer = $plugin->shopper->get_shopper_data();
 
-		drgc_get_template(
-			'thank-you/thank-you.php',
-			compact( 'order', 'customer' )
-		);
-	}
+    drgc_get_template(
+      'thank-you/thank-you.php',
+      compact( 'order', 'customer' )
+    );
+  }
 }

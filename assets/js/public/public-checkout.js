@@ -6,6 +6,7 @@ import DRApplePay from './payment-applepay';
 
 const CheckoutModule = (($) => {
     const localizedText = drgc_params.translations;
+    const requestShipping = (drgc_params.cart.cart.shippingOptions.shippingOption) ? true : false;
     const initPreTAndC = () => {
         $('#dr-preTAndC').change((e) => {
             if ($(e.target).is(':checked')) {
@@ -25,28 +26,34 @@ const CheckoutModule = (($) => {
         $('#dr-preTAndC').trigger('change');
     };
 
-    const shouldDisplayVat = () => {
-        const currency = drgc_params.selectedCurrency;
-        return (currency === 'GBP' || currency === 'EUR');
-    };
-
     const updateSummaryLabels = () => {
+        const isTaxInclusive = drgc_params.isTaxInclusive === 'true';
+        const forceExclTax = drgc_params.forceExclTax === 'true';
+        const shouldDisplayVat = drgc_params.shouldDisplayVat === 'true';
+
+        const taxSuffixLabel = isTaxInclusive ?
+            forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label :
+            '';
         if ($('.dr-checkout__payment').hasClass('active') || $('.dr-checkout__confirmation').hasClass('active')) {
-            $('.dr-summary__tax .item-label').text(shouldDisplayVat() ?
+            $('.dr-summary__tax .item-label').text(shouldDisplayVat ?
                 localizedText.vat_label :
                 localizedText.tax_label
             );
-            $('.dr-summary__shipping .item-label').text(localizedText.shipping_label);
-            $('.dr-summary__total .total-label').text(shouldDisplayVat() ?
-                localizedText.order_total_vat_label :
-                localizedText.order_total_label
+            $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+            $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ?
+                localizedText.shipping_vat_label :
+                localizedText.shipping_tax_label
             );
         } else {
-            $('.dr-summary__tax .item-label').text(shouldDisplayVat() ?
+            $('.dr-summary__tax .item-label').text(shouldDisplayVat ?
                 localizedText.estimated_vat_label :
                 localizedText.estimated_tax_label
             );
-            $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label);
+            $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label + taxSuffixLabel);
+            $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ?
+                localizedText.estimated_shipping_vat_label :
+                localizedText.estimated_shipping_tax_label
+            );
         }
     };
 
@@ -55,8 +62,9 @@ const CheckoutModule = (($) => {
             $.ajax({
                 type: 'GET',
                 url: `https://drh-fonts.img.digitalrivercontent.net/store/${drgc_params.siteID}/${drgc_params.drLocale}/DisplayPage/id.SimpleRegistrationPage`,
+                cache: false,
                 success: (response) => {
-                    const addressTypes = drgc_params.cart.cart.hasPhysicalProduct ? ['shipping', 'billing'] : ['billing'];
+                    const addressTypes = requestShipping ? ['shipping', 'billing'] : ['billing'];
                     addressTypes.forEach((type) => {
                         const savedCountryCode = $(`#${type}-field-country`).val();
                         const $options = $(response).find(`select[name=${type.toUpperCase()}country] option`).not(':first');
@@ -64,7 +72,7 @@ const CheckoutModule = (($) => {
                         $(`#${type}-field-country option`).not(':first').remove();
                         $(`#${type}-field-country`)
                             .append($options)
-                            .val(savedCountryCode.indexOf(optionArr) > -1 ? savedCountryCode : '');
+                            .val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
                     });
                     resolve();
                 },
@@ -84,6 +92,19 @@ const CheckoutModule = (($) => {
         if ($nextSection.hasClass('small-closed-left')) {
             $nextSection.removeClass('small-closed-left');
             $nextSection.next().removeClass('small-closed-right');
+        }
+
+        if ($section.find('.dr-address-book').length) {
+          $section.find('.dr-address-book-btn').removeClass('active');
+          $section.find('.dr-address-book-btn, .dr-address-book').hide();
+        }
+
+        if ($nextSection.find('.dr-address-book').length) {
+          if ($nextSection.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
+            $nextSection.find('.dr-address-book-btn').hide();
+          } else {
+            $nextSection.find('.dr-address-book-btn').show();
+          }
         }
 
         adjustColumns($section);
@@ -147,7 +168,13 @@ const CheckoutModule = (($) => {
         payload[addressType].emailAddress = email;
 
         if (payload[addressType].country !== 'US') {
-            payload[addressType].countrySubdivision = '';
+            payload[addressType].countrySubdivision = 'NA';
+        }
+
+        if (addressType === 'billing') {
+            delete payload[addressType].business;
+            delete payload[addressType].companyEIN;
+            delete payload[addressType].no;
         }
 
         return payload[addressType];
@@ -174,19 +201,7 @@ const CheckoutModule = (($) => {
 
     const displayAddressErrMsg = (jqXHR = {}, $target) => {
         if (Object.keys(jqXHR).length) {
-            if (jqXHR.status === 409) {
-                const errorCode = jqXHR.responseJSON.errors.error[0].code;
-
-                if (errorCode === 'restricted-bill-to-country') {
-                    $target.text(localizedText.address_error_msg).show();
-                } else if (errorCode === 'restricted-ship-to-country') {
-                    $target.text(localizedText.address_error_msg).show();
-                } else {
-                    $target.text(localizedText.undefined_error_msg).show();
-                }
-            } else {
-                $target.text(jqXHR.responseJSON.errors.error[0].description).show();
-            }
+            $target.text(CheckoutUtils.getAjaxErrorMessage(jqXHR)).show();
         } else {
             $target.text(localizedText.shipping_options_error_msg).show();
         }
@@ -203,85 +218,62 @@ const CheckoutModule = (($) => {
         $target.text(addressArr.join(', '));
     };
 
-    const setShippingOptions = (cart) => {
-        const freeShipping = cart.pricing.shippingAndHandling.value === 0;
-        const shippingOptionId = cart.shippingMethod.code;
-        const shippingOptions = cart.shippingOptions.shippingOption || [];
-
-        if (shippingOptions.length) {
-            $.each(shippingOptions, (index, option) => {
-                if ($('#shipping-option-' + option.id).length) return;
-
-                const html = `
-                    <div class="field-radio">
-                        <input type="radio"
-                            name="selector"
-                            id="shipping-option-${option.id}"
-                            data-cost="${option.formattedCost}"
-                            data-id="${option.id}"
-                            data-desc="${option.description}"
-                            >
-                        <label for="shipping-option-${option.id}">
-                            <span>
-                                ${option.description}
-                            </span>
-                            <span class="black">
-                                ${freeShipping ? localizedText.free_label : option.formattedCost}
-                            </span>
-                        </label>
-                    </div>
-                `;
-
-                $('form#checkout-delivery-form .dr-panel-edit__el').append(html);
-            });
-
-            $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOptionId + '"]').prop("checked", true);
-        } else {
-            $('form#checkout-delivery-form .dr-panel-edit__el').empty();
-        }
-    };
-
     const preselectShippingOption = async (data) => {
         const $errorMsgElem = $('#checkout-delivery-form > div.dr-err-field');
-        const defaultShippingOption = data.cart.shippingMethod.code;
+        let defaultShippingOption = data.cart.shippingMethod.code;
         let shippingOptions = data.cart.shippingOptions.shippingOption || [];
+        let defaultExists = false;
 
         $('#checkout-delivery-form > button[type="submit"]').prop('disabled', (shippingOptions.length === 0));
 
         if (shippingOptions.length) {
             $errorMsgElem.text('').hide();
 
-            shippingOptions = shippingOptions.map((option) => {
-                return option.id;
-            });
+            for (let index = 0; index < shippingOptions.length; index++) {
+                const option = shippingOptions[index];
+
+                if (option.id === defaultShippingOption) {
+                    defaultExists = true;
+                }
+
+                if ($('#shipping-option-' + option.id).length) continue;
+
+                const res = await DRCommerceApi.applyShippingOption(option.id);
+                const freeShipping = res.cart.pricing.shippingAndHandling.value === 0;
+
+                CheckoutUtils.setShippingOption(option, freeShipping);
+            }
 
             // If default shipping option is not in the list, then pre-select the 1st one
-            if (shippingOptions.indexOf(defaultShippingOption) === -1) {
-                const res = await DRCommerceApi.applyShippingOption(shippingOptions[0]);
-                CheckoutUtils.updateSummaryPricing(res.cart);
-                return res;
-            } else {
-                return new Promise(resolve => resolve(data));
+            if (!defaultExists) {
+                defaultShippingOption = shippingOptions[0].id;
             }
+
+            $('#checkout-delivery-form').children().find('input:radio[data-id="' + defaultShippingOption + '"]').prop("checked", true);
+
+            return DRCommerceApi.applyShippingOption(defaultShippingOption);
         } else {
+            $('#checkout-delivery-form .dr-panel-edit__el').empty();
             displayAddressErrMsg({}, $errorMsgElem);
             return new Promise(resolve => resolve(data));
         }
     };
 
-    const applyPaymentAndSubmitCart = (sourceId) => {
+    const applyPaymentAndSubmitCart = (sourceId, isPaymentButton = false) => {
         const $form = $('#checkout-confirmation-form');
-        const $errorMsgElem = $('#dr-checkout-err-field');
 
+        $('body').addClass('dr-loading');
         DRCommerceApi.applyPaymentMethod(sourceId)
         .then(() => DRCommerceApi.submitCart({ ipAddress: drgc_params.client_ip }))
         .then((data) => {
             $('#checkout-confirmation-form > input[name="order_id"]').val(data.submitCart.order.id);
             $form.submit();
         }).catch((jqXHR) => {
+            const $errorMsgElem = isPaymentButton ? $('#dr-payment-failed-msg') : $('#dr-checkout-err-field');
+
             CheckoutUtils.resetFormSubmitButton($form);
-            CheckoutUtils.resetBodyOpacity();
             $errorMsgElem.text(CheckoutUtils.getAjaxErrorMessage(jqXHR)).show();
+            $('body').removeClass('dr-loading');
         });
     };
 
@@ -296,7 +288,6 @@ const CheckoutModule = (($) => {
         getAddress,
         displayAddressErrMsg,
         displayCartAddress,
-        setShippingOptions,
         preselectShippingOption,
         applyPaymentAndSubmitCart
     };
@@ -307,9 +298,9 @@ jQuery(document).ready(($) => {
         // Globals
         const localizedText = drgc_params.translations;
         const domain = drgc_params.domain;
-        const isLogin = drgc_params.isLogin;
+        const isLoggedIn = drgc_params.isLogin === 'true';
         const drLocale = drgc_params.drLocale || 'en_US';
-        let cartData = drgc_params.cart.cart;
+        const cartData = drgc_params.cart.cart;
         const requestShipping = (cartData.shippingOptions.shippingOption) ? true : false;
         const isGooglePayEnabled = drgc_params.isGooglePayEnabled === 'true';
         const isApplePayEnabled = drgc_params.isApplePayEnabled === 'true';
@@ -320,6 +311,9 @@ jQuery(document).ready(($) => {
         let paymentSourceId = null;
         // Section progress
         let finishedSectionIdx = -1;
+
+        // Break down tax and update summary on page load
+        CheckoutUtils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
 
         // Create elements through DR.js
         if ($('.credit-card-section').length) {
@@ -434,33 +428,63 @@ jQuery(document).ready(($) => {
 
             $button.addClass('sending').blur();
 
-            if (isLogin === 'true') {
-                const address = CheckoutModule.getAddress('shipping', true);
+            if (isLoggedIn && $('#checkbox-save-shipping').prop('checked')) {
+                const setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true';
+                const address = CheckoutModule.getAddress('shipping', setAsDefault);
 
-                DRCommerceApi.updateShopperAddress(address).catch((jqXHR) => {
+                DRCommerceApi.saveShopperAddress(address).catch((jqXHR) => {
                     CheckoutUtils.apiErrorHandler(jqXHR);
                 });
             }
 
-            DRCommerceApi.updateCartShippingAddress({expand: 'all'}, cartRequest).then(() => DRCommerceApi.getCart({expand: 'all'})).then((data) => {
-                return CheckoutModule.preselectShippingOption(data);
-            }).then((data) => {
-                $button.removeClass('sending').blur();
-                CheckoutModule.setShippingOptions(data.cart);
+            DRCommerceApi.updateCartShippingAddress({expand: 'all'}, cartRequest)
+                .then(() => DRCommerceApi.getCart({expand: 'all'}))
+                .then(data => CheckoutModule.preselectShippingOption(data))
+                .then((data) => {
+                    $button.removeClass('sending').blur();
 
-                const $section = $('.dr-checkout__shipping');
-                CheckoutModule.displayCartAddress(data.cart.shippingAddress, $section.find('.dr-panel-result__text'));
+                    const $section = $('.dr-checkout__shipping');
+                    CheckoutModule.displayCartAddress(data.cart.shippingAddress, $section.find('.dr-panel-result__text'));
 
-                if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                    finishedSectionIdx = $('.dr-checkout__el').index($section);
-                }
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                        finishedSectionIdx = $('.dr-checkout__el').index($section);
+                    }
 
-                CheckoutModule.moveToNextSection($section);
-                CheckoutUtils.updateSummaryPricing(data.cart);
-            }).catch((jqXHR) => {
-                $button.removeClass('sending').blur();
-                CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-            });
+                    CheckoutModule.moveToNextSection($section);
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                })
+                .catch((jqXHR) => {
+                    $button.removeClass('sending').blur();
+                    CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                });
+        });
+
+        $('#checkbox-billing, #checkbox-business').on('change', (e) => {
+            const id = $(e.target).attr('id');
+
+            switch (id) {
+                case 'checkbox-billing':
+                    if (!$(e.target).is(':checked')) {
+                        $('.dr-address-book-btn.billing').show();
+                        $('.billing-section').slideDown();
+                    } else {
+                        $('.billing-section').slideUp();
+                        $('#checkbox-business').prop('checked', false).change();
+                        $('.dr-address-book-btn.billing').hide();
+                    }
+
+                    break;
+                case 'checkbox-business':
+                    if (!$(e.target).is(':checked')) {
+                        $('#billing-field-company-name, #billing-field-company-ein').val('');
+                        $('.form-group-business').slideUp();
+                    } else {
+                        $('#checkbox-billing').prop('checked', false).change();
+                        $('.form-group-business').slideDown();
+                    }
+
+                    break;
+            }
         });
 
         $('#checkout-billing-form').on('submit', function(e) {
@@ -474,45 +498,82 @@ jQuery(document).ready(($) => {
             if (!isFormValid) return;
 
             addressPayload.billing = (billingSameAsShipping) ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
+
+            if ($('#billing-field-company-name').length) addressPayload.billing.companyName = $('#billing-field-company-name').val();
+
             const cartRequest = {
                 address: addressPayload.billing
             };
 
             $button.addClass('sending').blur();
 
-            if (isLogin === 'true') {
+            if (isLoggedIn && $('#checkbox-save-billing').prop('checked')) {
                 if ((requestShipping && !billingSameAsShipping) || !requestShipping) {
-                    const address = CheckoutModule.getAddress('billing', false);
+                    const setAsDefault = ($('input:hidden[name="addresses-no-default"]').val() === 'true') && !requestShipping;
+                    const address = CheckoutModule.getAddress('billing', setAsDefault);
 
-                    DRCommerceApi.updateShopperAddress(address).catch((jqXHR) => {
+                    DRCommerceApi.saveShopperAddress(address).catch((jqXHR) => {
                         CheckoutUtils.apiErrorHandler(jqXHR);
                     });
                 }
             }
 
-            DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest).then(() => DRCommerceApi.getCart({expand: 'all'})).then((data) => {
+            DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest)
+                .then(() => {
+                    // Digital product still need to update some of shippingAddress attributes for tax calculating
+                    if (requestShipping) return new Promise(resolve => resolve());
+                    const patchCartRequest = {
+                        address: {
+                            country: cartRequest.address.country,
+                            countrySubdivision: cartRequest.address.countrySubdivision,
+                            postalCode: cartRequest.address.postalCode
+                        }
+                    };
+                    return DRCommerceApi.updateCartShippingAddress({expand: 'all'}, patchCartRequest);
+                })
+                .then(() => {
+                    const $companyEin = $('#billing-field-company-ein');
+
+                    if (!$companyEin.length) return new Promise(resolve => resolve());
+
+                    const companyMeta = {
+                        cart: {
+                            customAttributes: {
+                                attribute:[{
+                                    name: 'companyEIN',
+                                    value: $companyEin.val()
+                                }]
+                            }
+                        }
+                    };
+
+                    return DRCommerceApi.updateCart({}, companyMeta);
+                })
+                .then(() => DRCommerceApi.getCart({expand: 'all'}))
                 // Still needs to apply shipping option once again or the value will be rolled back after updateCart (API's bug)
-                return drgc_params.cart.cart.hasPhysicalProduct ?
-                    CheckoutModule.preselectShippingOption(data) :
-                    new Promise(resolve => resolve(data));
-            }).then((data) => {
-                $button.removeClass('sending').blur();
-                CheckoutModule.setShippingOptions(data.cart);
+                .then((data) => {
+                    return requestShipping ?
+                        CheckoutModule.preselectShippingOption(data) :
+                        new Promise(resolve => resolve(data));
+                })
+                .then((data) => {
+                    $button.removeClass('sending').blur();
 
-                const $section = $('.dr-checkout__billing');
+                    const $section = $('.dr-checkout__billing');
 
-                CheckoutModule.displayCartAddress(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                    CheckoutModule.displayCartAddress(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
 
-                if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                    finishedSectionIdx = $('.dr-checkout__el').index($section);
-                }
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                        finishedSectionIdx = $('.dr-checkout__el').index($section);
+                    }
 
-                CheckoutModule.moveToNextSection($section);
-                CheckoutUtils.updateSummaryPricing(data.cart);
-            }).catch((jqXHR) => {
-                $button.removeClass('sending').blur();
-                CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-            });
+                    CheckoutModule.moveToNextSection($section);
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                })
+                .catch((jqXHR) => {
+                    $button.removeClass('sending').blur();
+                    CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                });
         });
 
         // Submit delivery form
@@ -526,35 +587,42 @@ jQuery(document).ready(($) => {
 
             $form.find('.dr-err-field').hide();
 
-            DRCommerceApi.applyShippingOption(shippingOptionId).then((data) => {
-                const $section = $('.dr-checkout__delivery');
-                const freeShipping = data.cart.pricing.shippingAndHandling.value === 0;
-                const resultText = `${$input.data('desc')} ${freeShipping ? localizedText.free_label : $input.data('cost')}`;
+            DRCommerceApi.applyShippingOption(shippingOptionId)
+                .then((data) => {
+                    const $section = $('.dr-checkout__delivery');
+                    const freeShipping = data.cart.pricing.shippingAndHandling.value === 0;
+                    const resultText = `${$input.data('desc')} ${freeShipping ? localizedText.free_label : $input.data('cost')}`;
 
-                $button.removeClass('sending').blur();
-                $section.find('.dr-panel-result__text').text(resultText);
+                    $button.removeClass('sending').blur();
+                    $section.find('.dr-panel-result__text').text(resultText);
 
-                if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                    finishedSectionIdx = $('.dr-checkout__el').index($section);
-                }
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                        finishedSectionIdx = $('.dr-checkout__el').index($section);
+                    }
 
-                CheckoutModule.moveToNextSection($section);
-                CheckoutUtils.updateSummaryPricing(data.cart);
-            }).catch((jqXHR) => {
-                $button.removeClass('sending').blur();
-                CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-            });
+                    CheckoutModule.moveToNextSection($section);
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                })
+                .catch((jqXHR) => {
+                    $button.removeClass('sending').blur();
+                    CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                });
         });
 
         $('form#checkout-delivery-form').on('change', 'input[type="radio"]', function() {
             const $form = $('form#checkout-delivery-form');
             const shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
 
-            DRCommerceApi.applyShippingOption(shippingOptionId).then((data) => {
-                CheckoutUtils.updateSummaryPricing(data.cart);
-            }).catch((jqXHR) => {
-                CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-            });
+            $('.dr-summary').addClass('dr-loading');
+
+            DRCommerceApi.applyShippingOption(shippingOptionId)
+                .then((data) => {
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                })
+                .catch((jqXHR) => {
+                    CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                    $('.dr-summary').removeClass('dr-loading');
+                });
         });
 
         $('form#checkout-payment-form').on('submit', function(e) {
@@ -588,6 +656,7 @@ jQuery(document).ready(($) => {
                         email: addressPayload.billing.emailAddress,
                         address: {
                             line1: addressPayload.billing.line1,
+                            line2: addressPayload.billing.line2,
                             city: addressPayload.billing.city,
                             state: addressPayload.billing.countrySubdivision,
                             country: addressPayload.billing.country,
@@ -638,17 +707,6 @@ jQuery(document).ready(($) => {
             }
         });
 
-        // check billing info
-        $('[name="checkbox-billing"]').on('click', function (ev) {
-            const $this = $(this);
-
-            if (!$this.is(':checked')) {
-                $('.billing-section').css('display', 'block');
-            } else {
-                $('.billing-section').css('display', 'none');
-            }
-        });
-
         // show and hide sections
         $('.dr-accordion__edit').on('click', function(e) {
             e.preventDefault();
@@ -665,6 +723,14 @@ jQuery(document).ready(($) => {
             $finishedSections.addClass('closed');
             $activeSection.removeClass('active');
             $section.removeClass('closed').addClass('active');
+
+            if ($section.find('.dr-address-book').length) {
+              if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
+                $section.find('.dr-address-book-btn').hide();
+              } else {
+                $section.find('.dr-address-book-btn').show();
+              }
+            }
 
             CheckoutModule.adjustColumns($section);
             CheckoutModule.updateSummaryLabels();
@@ -704,8 +770,48 @@ jQuery(document).ready(($) => {
             }
         });
 
+        $('.dr-address-book-btn').on('click', (e) => {
+            const addressType = $(e.target).hasClass('shipping') ? 'shipping' : 'billing';
+            const $addressBook = $('.dr-address-book.' + addressType);
+
+            if ($addressBook.is(':hidden')) {
+                $(e.target).addClass('active');
+                $addressBook.slideDown();
+            } else {
+                $(e.target).removeClass('active');
+                $addressBook.slideUp();
+            }
+        });
+
+        $(document).on('click', '.address', (e) => {
+            const addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
+            const $address = $(e.target).closest('.address');
+
+            $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
+            $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
+            $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
+            $('#' + addressType + '-field-address2').val($address.data('lineTwo')).focus();
+            $('#' + addressType + '-field-city').val($address.data('city')).focus();
+            $('#' + addressType + '-field-state').val($address.data('state')).change();
+            $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
+            $('#' + addressType + '-field-country').val($address.data('country')).change();
+            $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
+
+            $('.dr-address-book-btn.' + addressType).removeClass('active');
+            $('.dr-address-book.' + addressType).slideUp();
+            $('#checkbox-save-' + addressType).prop('checked', false);
+        });
+
         //floating labels
         FloatLabel.init();
+
+        if (isLoggedIn && requestShipping) {
+            $('.dr-address-book.billing > .overflowContainer').clone().appendTo('.dr-address-book.shipping');
+        }
+
+        if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
+
+        $('#checkout-email-form button[type=submit]').prop('disabled', false);
 
         if ($('input[name=email]').val() && $('#checkout-email-form').length && $('#dr-panel-email-result').is(':empty')) {
             $('#checkout-email-form').submit();
@@ -775,27 +881,29 @@ jQuery(document).ready(($) => {
                     let payPalPayload = {
                         'type': 'payPal',
                         'amount': cart.pricing.orderTotal.value,
-                        'currency': 'USD',
+                        'currency': cart.pricing.orderTotal.currency,
                         'payPal': {
                             'returnUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppsuccess=true',
                             'cancelUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppcancel=true',
                             'items': payPalItems,
                             'taxAmount': cart.pricing.tax.value,
+                            'shippingAmount': cart.pricing.shippingAndHandling.value,
+                            'amountsEstimated': true,
                             'requestShipping': requestShipping
                         }
                     };
 
                     if (requestShipping) {
                         payPalPayload['shipping'] = {
-                            'recipient':  `${cart.shippingAddress.firstName} ${cart.shippingAddress.lastName} `,
-                            'phoneNumber':  cart.shippingAddress.phoneNumber,
+                            'recipient':  `${addressPayload.shipping.firstName} ${addressPayload.shipping.lastName}`,
+                            'phoneNumber':  addressPayload.shipping.phoneNumber,
                             'address': {
-                                'line1': cart.shippingAddress.line1,
-                                'line2': cart.shippingAddress.line2,
-                                'city': cart.shippingAddress.city,
-                                'state': cart.shippingAddress.countrySubdivision,
-                                'country':  cart.shippingAddress.country,
-                                'postalCode': cart.shippingAddress.postalCode
+                                'line1': addressPayload.shipping.line1,
+                                'line2': addressPayload.shipping.line2,
+                                'city': addressPayload.shipping.city,
+                                'state': addressPayload.shipping.countrySubdivision,
+                                'country':  addressPayload.shipping.country,
+                                'postalCode': addressPayload.shipping.postalCode
                             }
                         }
                     }
@@ -810,38 +918,61 @@ jQuery(document).ready(($) => {
                         }
                     });
                 },
+                onShippingChange: function(data, actions) {
+                    const supportedCountries = CheckoutUtils.getSupportedCountries('shipping');
+
+                    if (supportedCountries.indexOf(data.shipping_address.country_code) === -1) {
+                        return actions.reject();
+                    }
+            
+                    return actions.resolve();
+                },
                 onAuthorize: function() {
                     const sourceId = sessionStorage.getItem('paymentSourceId');
-
-                    $('body').css({'pointer-events': 'none', 'opacity': 0.5});
-                    CheckoutModule.applyPaymentAndSubmitCart(sourceId);
+                    CheckoutModule.applyPaymentAndSubmitCart(sourceId, true);
                 }
             }, '#dr-paypal-button');
         }
 
-        const buttonStyle = {
-            buttonType: 'long',
-            buttonColor: 'dark',
-            buttonLanguage: drLocale.split('_')[0]
-        };
-        const baseRequest = CheckoutUtils.getBaseRequestData(cartData, requestShipping, buttonStyle);
-        const paymentDataRequest = digitalriverjs.paymentRequest(baseRequest);
-
         if ($('#dr-googlepay-button').length && isGooglePayEnabled) {
+            const googlePaybuttonStyle = {
+                buttonType: drgc_params.googlePayButtonType,
+                buttonColor: drgc_params.googlePayButtonColor,
+                buttonLanguage: drLocale.split('_')[0]
+            };
+            const googlePayBaseRequest = CheckoutUtils.getBaseRequestData(cartData, requestShipping, googlePaybuttonStyle);
+            const googlePayPaymentDataRequest = digitalriverjs.paymentRequest(googlePayBaseRequest);
+
             DRGooglePay.init({
                 digitalriverJs: digitalriverjs,
-                paymentDataRequest: paymentDataRequest,
+                paymentDataRequest: googlePayPaymentDataRequest,
                 requestShipping: requestShipping
             });
         }
 
         if ($('#dr-applepay-button').length && isApplePayEnabled) {
+            const applePaybuttonStyle = {
+                buttonType: drgc_params.applePayButtonType,
+                buttonColor: drgc_params.applePayButtonColor,
+                buttonLanguage: drLocale.split('_')[0]
+            };
+            const applePayBaseRequest = CheckoutUtils.getBaseRequestData(cartData, requestShipping, applePaybuttonStyle);
+            const applePayPaymentDataRequest = digitalriverjs.paymentRequest(applePayBaseRequest);
+
             DRApplePay.init({
                 digitalriverJs: digitalriverjs,
-                paymentDataRequest: paymentDataRequest,
+                paymentDataRequest: applePayPaymentDataRequest,
                 requestShipping: requestShipping
             });
         }
+
+        $('.back-link a').click(() => {
+            if (document.referrer && document.referrer !== drgc_params.loginUrl) {
+                window.location.href = document.referrer;
+            } else {
+                window.location.href = drgc_params.cartUrl;
+            }
+        });
     }
 });
 

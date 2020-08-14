@@ -268,8 +268,9 @@ class DRGC_Session {
 			)
 		);
 
-		$this->generate_session_id();
-		$this->session_data = '';
+    $this->generate_session_id();
+    $this->reset_cookie();
+    $this->session_data = '';
 	}
 
 	/**

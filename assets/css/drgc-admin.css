@@ -46,6 +46,10 @@ input:checked + .slider:before { -webkit-transform: translateX(26px); transform:
 
 .slider.round:before { border-radius: 50%; }
 
+.payment-btn-field { min-width: 310px; }
+
+.payment-btn-field > legend { display: none; }
+
 #product-thumbnail { max-width: 150px; }
 
 #product-image { max-width: 300px; }

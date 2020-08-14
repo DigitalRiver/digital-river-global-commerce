@@ -220,73 +220,75 @@ class DRGC_Authenticator extends AbstractHttpService {
 		}
 	}
 
-	/**
-	 * Generate full access token
-	 *
-	 * @param string $username
-	 * @param string $password
-	 *
-	 * @return mixed $data
-	 */
-	public function generate_access_token_by_ref_id( $external_reference_id ) {
-		$data = array (
-			'dr_external_reference_id' => $external_reference_id,
-			'grant_type'               => 'client_credentials'
-		);
+  /**
+   * Generate full access token
+   *
+   * @param string $username
+   * @param string $password
+   *
+   * @return mixed $data
+   */
+  public function generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token = false ) {
+    $data = array (
+      'dr_external_reference_id' => $external_reference_id,
+      'grant_type'               => 'client_credentials'
+    );
 
     $this->setFormContentType();
 
-		try {
-			$res = $this->post( "/oauth20/token", $this->prepareParams( $data ) );
+    try {
+      $res = $this->post( "/oauth20/token", $this->prepareParams( $data ), $force_bearer_token );
 
-			if ( isset( $res['error'] ) ) {
-				return $res;
-			}
+      if ( isset( $res['error'] ) ) {
+        return $res;
+      }
 
-			$this->refresh_token        = null;
-			$this->token                = $res['access_token'] ?? $res['access_token'];
-			$this->tokenType            = $res['token_type'] ?? $res['token_type'];
-			$this->expires_in           = $res['expires_in'] ?? $res['expires_in'];
+      $this->refresh_token        = null;
+      $this->token                = $res['access_token'] ?? $res['access_token'];
+      $this->tokenType            = $res['token_type'] ?? $res['token_type'];
+      $this->expires_in           = $res['expires_in'] ?? $res['expires_in'];
 
-			if ( ! is_null( $this->session ) ) {
-				$this->session->generate_session_cookie_data( array(
-					'session_token' => $this->dr_session_token,
-					'refresh_token' => $this->refresh_token,
-					'access_token'  => $this->token,
-				) );
-			}
+      if ( ! is_null( $this->session ) ) {
+        $this->session->generate_session_cookie_data( array(
+          'session_token' => $this->dr_session_token,
+          'refresh_token' => $this->refresh_token,
+          'access_token'  => $this->token,
+        ) );
+      }
 
-			return $res;
-		} catch (\Exception $e) {
-			return "Error: # {$e->getMessage()}";
-		}
-	}
+      return $res;
+    } catch (\Exception $e) {
+      return "Error: # {$e->getMessage()}";
+    }
+  }
 
-	/**
-	 * Refresh Token handler
-	 */
-	public function do_refresh_access_token() {
-		$data = array(
-			"refresh_token" => $this->refresh_token,
-			"grant_type" 	  => "refresh_token"
-		);
+  /**
+   * Refresh Token handler
+   */
+  public function do_refresh_access_token() {
+    if ( is_null( $this->refresh_token ) ) return false;
 
-		$this->setFormContentType();
-		$res = $this->post( "/oauth20/token",  $this->prepareParams( $data ) );
+    $data = array(
+      "refresh_token" => $this->refresh_token,
+      "grant_type" 	  => "refresh_token"
+    );
 
-		$this->token         = $res['access_token']  ?? null;
-		$this->tokenType     = $res['token_type']    ?? null;
-		$this->expires_in    = $res['expires_in']    ?? null;
-		$this->refresh_token = $res['refresh_token'] ?? null;
+    $this->setFormContentType();
+    $res = $this->post( "/oauth20/token",  $this->prepareParams( $data ), false );
 
-		if ( ! is_null( $this->session ) ) {
-			$this->session->generate_session_cookie_data( array(
-				'session_token' => $this->dr_session_token,
-				'access_token'  => $this->token,
-				'refresh_token' => $this->refresh_token
-			));
-		}
+    $this->token         = $res['access_token']  ?? null;
+    $this->tokenType     = $res['token_type']    ?? null;
+    $this->expires_in    = $res['expires_in']    ?? null;
+    $this->refresh_token = $res['refresh_token'] ?? null;
 
-		return $res;
-	}
+    if ( ! is_null( $this->session ) ) {
+      $this->session->generate_session_cookie_data( array(
+        'session_token' => $this->dr_session_token,
+        'access_token'  => $this->token,
+        'refresh_token' => $this->refresh_token
+      ));
+    }
+
+    return $res;
+  }
 }

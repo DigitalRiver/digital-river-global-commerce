@@ -170,6 +170,7 @@ class DRGC {
 		 */
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-cart.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-login.php';
+		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-account.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-checkout.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-thank-you.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-my-subs.php';
@@ -301,25 +302,25 @@ class DRGC {
 		$this->loader->add_action( 'wp_update_nav_menu', $plugin_admin, 'create_menu_label_trans_strings' );
 	}
 
-	/**
-	 * Register all of the hooks related to the public-facing functionality
-	 * of the plugin.
-	 *
-	 * @since    1.0.0
-	 * @access   private
-	 */
-	private function define_public_hooks() {
-		$plugin_public = new DRGC_Public( $this->get_drgc(), $this->get_version() );
+  /**
+   * Register all of the hooks related to the public-facing functionality
+   * of the plugin.
+   *
+   * @since    1.0.0
+   * @access   private
+   */
+  private function define_public_hooks() {
+    $plugin_public = new DRGC_Public( $this->get_drgc(), $this->get_version() );
 
-		$this->loader->add_action( 'template_redirect', $plugin_public, 'redirect_on_page_load' );
+    $this->loader->add_action( 'wp', $plugin_public, 'prevent_browser_caching' );
+    $this->loader->add_filter( 'nocache_headers', $plugin_public, 'overwrite_nocache_headers' );
 
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+    $this->loader->add_action( 'template_redirect', $plugin_public, 'redirect_on_page_load' );
 
-		$this->loader->add_action( 'after_setup_theme', $plugin_public, 'remove_admin_bar');
+    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+    $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		$this->loader->add_action( 'wp_ajax_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
-		$this->loader->add_action( 'wp_ajax_nopriv_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
+    $this->loader->add_action( 'after_setup_theme', $plugin_public, 'remove_admin_bar');
 
 		$this->loader->add_filter( 'page_link', $plugin_public, 'append_query_string' );
 		$this->loader->add_filter( 'post_link', $plugin_public, 'append_query_string' );
@@ -330,45 +331,59 @@ class DRGC {
 		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
 		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
 		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_currency_selector', 98 );
-		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99 );
-		$this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
+    $this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99 );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_login', $plugin_public, 'ajax_attempt_auth' );
-		$this->loader->add_action( 'wp_ajax_drgc_login', $plugin_public, 'ajax_attempt_auth' );
+    $this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_signup', $plugin_public, 'dr_signup_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_signup', $plugin_public, 'dr_signup_ajax' );
+    $this->loader->add_action( 'wp_ajax_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
+    $this->loader->add_action( 'wp_ajax_nopriv_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_checkout_as_guest', $plugin_public, 'checkout_as_guest_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_checkout_as_guest', $plugin_public, 'checkout_as_guest_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_login', $plugin_public, 'ajax_attempt_auth' );
+    $this->loader->add_action( 'wp_ajax_drgc_login', $plugin_public, 'ajax_attempt_auth' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_logout', $plugin_public, 'dr_logout_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_logout', $plugin_public, 'dr_logout_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_signup', $plugin_public, 'dr_signup_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_signup', $plugin_public, 'dr_signup_ajax' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_pass_reset_request', $plugin_public, 'dr_send_email_reset_pass_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_pass_reset_request', $plugin_public, 'dr_send_email_reset_pass_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_checkout_as_guest', $plugin_public, 'checkout_as_guest_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_checkout_as_guest', $plugin_public, 'checkout_as_guest_ajax' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_reset_password', $plugin_public, 'dr_reset_password_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_reset_password', $plugin_public, 'dr_reset_password_ajax' );
-		$this->loader->add_filter( 'get_footer', $plugin_public, 'add_legal_link', 99, 2 );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_logout', $plugin_public, 'dr_logout_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_logout', $plugin_public, 'dr_logout_ajax' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_switch_renewal_type', $plugin_public, 'switch_renewal_type_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_pass_reset_request', $plugin_public, 'dr_send_email_reset_pass_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_pass_reset_request', $plugin_public, 'dr_send_email_reset_pass_ajax' );
+
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_reset_password', $plugin_public, 'dr_reset_password_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_reset_password', $plugin_public, 'dr_reset_password_ajax' );
+    $this->loader->add_filter( 'get_footer', $plugin_public, 'add_legal_link', 99, 2 );
+
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_switch_renewal_type', $plugin_public, 'switch_renewal_type_ajax' );
     $this->loader->add_action( 'wp_ajax_drgc_switch_renewal_type', $plugin_public, 'switch_renewal_type_ajax' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_change_renewal_qty', $plugin_public, 'change_renewal_qty_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_change_renewal_qty', $plugin_public, 'change_renewal_qty_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_change_renewal_qty', $plugin_public, 'change_renewal_qty_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_change_renewal_qty', $plugin_public, 'change_renewal_qty_ajax' );
 
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_cancel_subscription', $plugin_public, 'cancel_subscription_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_cancel_subscription', $plugin_public, 'cancel_subscription_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_cancel_subscription', $plugin_public, 'cancel_subscription_ajax' );
 
-		$this->loader->add_action( 'wp_ajax_nopriv_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
-		$this->loader->add_action( 'wp_ajax_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_toggle_auto_renewal_ajax', $plugin_public, 'toggle_auto_renewal_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_toggle_auto_renewal_ajax', $plugin_public, 'toggle_auto_renewal_ajax' );
+
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
+
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_change_password', $plugin_public, 'change_password_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_change_password', $plugin_public, 'change_password_ajax' );
+
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_get_offers_by_pop', $plugin_public, 'get_offers_by_pop_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_get_offers_by_pop', $plugin_public, 'get_offers_by_pop_ajax' );
 
 		$this->loader->add_action( 'wp_head', $plugin_public, 'add_modal_html' );
 
 		$this->loader->add_filter( 'get_the_archive_title', $plugin_public, 'translate_archive_title' );
 
 		$this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
+    $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
 	}
 
 	/**

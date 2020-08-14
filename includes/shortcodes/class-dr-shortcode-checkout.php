@@ -29,7 +29,6 @@ class DR_Shortcode_Checkout {
 		$locales = get_option( 'drgc_store_locales' );
 		$cart = DRGC()->cart->retrieve_cart();
 		$customer = DRGC()->shopper->retrieve_shopper();
-		$customer_address = DRGC()->shopper->retrieve_shopper_address();
 		$usa_states = retrieve_usa_states();
 		$steps_titles = apply_filters( 'drgc_checkout_titles', array(
 			'email'    => __( 'Email', 'digital-river-global-commerce' ),
@@ -41,7 +40,7 @@ class DR_Shortcode_Checkout {
 
 		drgc_get_template(
 			'checkout/checkout.php',
-			compact( 'cart', 'customer', 'customer_address', 'usa_states', 'locales', 'steps_titles' )
+			compact( 'cart', 'customer', 'usa_states', 'locales', 'steps_titles' )
 		);
 	}
 }

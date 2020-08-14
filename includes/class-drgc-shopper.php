@@ -84,9 +84,9 @@ class DRGC_Shopper extends AbstractHttpService {
 		$this->token         = $this->authenticator->get_token();
 		$this->refresh_token = $this->authenticator->get_refresh_token();
 
-		if ( ! $this->user_id && $this->token ) {
-			$this->get_access_token_information();
-		}
+    if ( $this->token ) {
+      $this->get_access_token_information();
+    }
 	}
 
 	/**
@@ -115,8 +115,8 @@ class DRGC_Shopper extends AbstractHttpService {
 	 *
 	 * @return mixed $data
 	 */
-	public function generate_access_token_by_ref_id( $external_reference_id ) {
-		$data = $this->authenticator->generate_access_token_by_ref_id( $external_reference_id );
+	public function generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token = true ) {
+		$data = $this->authenticator->generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token );
 
 		$this->refresh_token        = null;
 		$this->token                = isset( $data['access_token'] ) ? $data['access_token'] : null;
@@ -215,12 +215,15 @@ class DRGC_Shopper extends AbstractHttpService {
 		try {
 			$res = $this->get($url);
 
-			$this->shopper_data = array(
-				'username'   =>  $res['shopper']['username'],
-				'last_name'  =>  $res['shopper']['lastName'],
-				'first_name' =>  $res['shopper']['firstName'],
-				'email'      =>  $res['shopper']['emailAddress'],
-			);
+      $this->shopper_data = array(
+        'username'   =>  $res['shopper']['username'],
+        'last_name'  =>  $res['shopper']['lastName'],
+        'first_name' =>  $res['shopper']['firstName'],
+        'email'      =>  $res['shopper']['emailAddress'],
+        'id'         =>  $res['shopper']['id'],
+        'locale'     =>  $res['shopper']['locale'],
+        'currency'   =>  $res['shopper']['currency']
+      );
 
 			$this->user_id = $res['shopper']['id'];
 
@@ -230,28 +233,35 @@ class DRGC_Shopper extends AbstractHttpService {
 		}
 	}
 
-	public function retrieve_shopper_address( $params = array() ) {
-		$default = array(
-			'expand'            => 'all'
-		);
+  /**
+   * Retrieve all addresses configured for a shopper
+   *
+   * @param array $params
+   * @return array|bool
+   */
+  public function retrieve_all_addresses( $params = array() ) {
+    $default = array(
+      'expand'            => 'all'
+    );
 
-		$params = array_merge(
-			$default,
-			array_intersect_key( $params, $default )
-		);
+    $params = array_merge(
+      $default,
+      array_intersect_key( $params, $default )
+    );
 
-		$url = "/v1/shoppers/me?".http_build_query( $params );
-		try {
-			$res = $this->get($url);
+    $url = "/v1/shoppers/me/addresses?".http_build_query( $params );
 
-			if ( isset($res['shopper']['addresses']['address']) && !empty($res['shopper']['addresses']['address']) ) {
-				return $res['shopper']['addresses']['address'];
-			} else {
-				return false;
-			}
-		} catch (\Exception $e) {
-			return false;
-		}
+    try {
+      $res = $this->get($url);
+
+      if ( isset( $res['addresses']['address'] ) && ! empty( $res['addresses']['address'] ) ) {
+        return $res['addresses']['address'];
+      } else {
+        return false;
+      }
+    } catch (\Exception $e) {
+      return false;
+    }
 	}
 
 	/**
@@ -305,6 +315,28 @@ class DRGC_Shopper extends AbstractHttpService {
 		}
 	}
 
+  /**
+   * Updates password for the current shopper.
+   *
+   * @param string $password
+   *
+   * @return mixed
+   */
+  public function update_shopper_password( $password ) {
+    $data = array( 
+      'shopper' => array(
+        'password' => base64_encode( $password )
+      )
+    );
+
+    try {
+      $res = $this->post( "/v1/shoppers/me", $data );
+      return $res;
+    } catch (\Exception $e) {
+      return $e->getMessage();
+    }
+  }
+
 	/**
 	 * Return true if the shopper is authenticated
 	 *
@@ -323,39 +355,56 @@ class DRGC_Shopper extends AbstractHttpService {
 		return $this->locale;
 	}
 
-	/**
-	 * Retrieve all scriptions for the current authenticated shopper.
-	 *
-	 * @param array $params
-	 * 
-	 * @return array|bool
-	 */
-	public function retrieve_subscriptions( $params = array() ) {
-		$default = array(
-			'expand' => 'all'
-		);
+  /**
+   * Return current shopper data
+   *
+   * @return array
+   */
+  public function get_shopper_data() {
+    return $this->shopper_data;
+  }
 
-		$params = array_merge(
-			$default,
-			array_intersect_key( $params, $default )
-		);
+  /**
+   * Retrieve all scriptions for the current authenticated shopper.
+   *
+   * @param array $params
+   *
+   * @return array|bool
+   */
+  public function retrieve_subscriptions( $params = array() ) {
+    $default = array(
+      'expand' => 'all'
+    );
 
-		$url = "/v1/shoppers/me/subscriptions?" . http_build_query( $params );
+    $params = array_merge(
+      $default,
+      array_intersect_key( $params, $default )
+    );
 
-		try {
-			$res = $this->get($url);
+    $url = "/v1/shoppers/me/subscriptions?" . http_build_query( $params );
 
-			return isset( $res['subscriptions']['subscription'] ) ? $res['subscriptions']['subscription'] : '';
-		} catch (\Exception $e) {
-			return false;
-		}
-	}
+    try {
+      $res = $this->get( $url );
+      
+      if ( isset( $res['subscriptions']['subscription'] ) ) {
+        foreach ( $res['subscriptions']['subscription'] as $key => $sub ) {
+          if ( $res['subscriptions']['subscription'][$key]['products']['product']['uri'] ) {
+            $res['subscriptions']['subscription'][$key]['products']['product']['full'] = $this->get( $res['subscriptions']['subscription'][$key]['products']['product']['uri'] );
+          }
+        }
+      }
+      
+      return $res;
+    } catch (\Exception $e) {
+      return false;
+    }
+  }
 
 	/**
 	 * Retrieve the scription details by a subscription ID.
 	 *
 	 * @param array $params
-	 * 
+	 *
 	 * @return array|bool
 	 */
 	public function get_subscription_details( $params = array() ) {
@@ -383,12 +432,40 @@ class DRGC_Shopper extends AbstractHttpService {
 		}
 	}
 
+  /**
+   * Retrieve all orders for the current authenticated shopper.
+   *
+   * @param array $params
+   *
+   * @return array|bool
+   */
+  public function retrieve_orders( $params = array() ) {
+    $default = array(
+      'expand' => 'all'
+    );
+
+    $params = array_merge(
+      $default,
+      array_intersect_key( $params, $default )
+    );
+
+    $url = "/v1/shoppers/me/orders?" . http_build_query( $params );
+
+    try {
+      $res = $this->get( $url );
+
+      return $res;
+    } catch (\Exception $e) {
+      return false;
+    }
+  }
+
 	/**
-	 * Retrieve a shopper order.
-	 * 
+	 * Retrieve a shopper order by an order ID.
+	 *
 	 * @param string $order_id
 	 * @param array  $params
-	 * 
+	 *
 	 * @return array|bool
 	 */
 	public function retrieve_order( $order_id, $params = array() ) {
@@ -410,14 +487,71 @@ class DRGC_Shopper extends AbstractHttpService {
 		} catch (\Exception $e) {
 			return false;
 		}
+  }
+
+	public function retrieve_shopper_payments( $params = array() ) {
+		$default = array(
+			'expand'            => 'all'
+		);
+
+		$params = array_merge(
+			$default,
+			array_intersect_key( $params, $default )
+		);
+
+		$url = "/v1/shoppers/me/payment-options?".http_build_query( $params );
+		try {
+			$res = $this->get($url);
+
+			if ( isset($res['paymentOptions']['paymentOption']) && !empty($res['paymentOptions']['paymentOption']) ) {
+				return $res['paymentOptions']['paymentOption'];
+			} else {
+				return false;
+			}
+
+		} catch (\Exception $e) {
+			return false;
+		}
 	}
+
+	public function delete_shopper_payments( $id ) {
+
+		$url = "/v1/shoppers/me/payment-options/".$id;
+		try {
+			$res = $this->delete($url);
+
+			return $res;
+
+		} catch (\Exception $e) {
+			return false;
+		}
+	}
+
+	public function update_shopper_payments( $payLoad = array() ) {
+
+		$jsonData = array('paymentOption' => $payLoad );
+
+		$this->setJsonContentType();
+
+		try {
+			$res = $this->post( "/v1/shoppers/me/payment-options", $jsonData );
+
+			if ( isset( $res['errors']['error'] ) ) {
+				return $res;
+			}
+
+			return $res;
+		} catch (\Exception $e) {
+			return $e->getMessage();
+		}
+  }
 
 	/**
 	 * Update locale and currency for the current shopper
 	 *
 	 * @param string $locale locale
 	 * @param string $currency currency code
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function update_locale_and_currency( $locale, $currency ) {
@@ -425,15 +559,11 @@ class DRGC_Shopper extends AbstractHttpService {
 			'locale'         => $locale,
 			'currency'       => $currency
 		);
-
 		$url = '/v1/shoppers/me?' . http_build_query( $params );
-
 		try {
 			$this->post( $url );
-
 			$this->locale = $locale;
 			$this->currency = $currency;
-
 			return true;
 		} catch (\Exception $e) {
 			return false;

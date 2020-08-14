@@ -22,6 +22,8 @@ input:focus+.slider{-webkit-box-shadow:0 0 1px #008ec2;box-shadow:0 0 1px #008ec
 input:checked+.slider:before{-webkit-transform:translateX(26px);transform:translateX(26px)}
 .slider.round{border-radius:34px}
 .slider.round:before{border-radius:50%}
+.payment-btn-field{min-width:310px}
+.payment-btn-field>legend{display:none}
 #product-thumbnail{max-width:150px}
 #product-image{max-width:300px}
 #dr_product_details_box>button{display:none !important}

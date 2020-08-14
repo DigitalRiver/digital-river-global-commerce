@@ -1,13 +1,8 @@
 <?php
 $shippingAddress = $cart['cart']['shippingAddress'];
-if ( $customer_address ) {
-    $shippingAddress = $customer_address[0];
-} elseif ( $customer ) {
-    $shippingAddress['firstName'] = $shippingAddress['firstName'] ?: $customer['firstName'];
-    $shippingAddress['lastName'] = $shippingAddress['lastName'] ?: $customer['lastName'];
-}
-if ( $cart['cart']['shippingAddress']['line1'] != '') {
-    $shippingAddress = $cart['cart']['shippingAddress'];
+
+if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['lastName'] ) ) && $is_logged_in ) {
+    $shippingAddress = $default_address;
 }
 ?>
 <div class="dr-checkout__shipping dr-checkout__el">
@@ -32,6 +27,19 @@ if ( $cart['cart']['shippingAddress']['line1'] != '') {
         <span class="dr-accordion__edit"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
     </div>
+
+    <?php if ( $is_logged_in ): ?>
+
+        <button class="dr-btn dr-btn-black dr-address-book-btn shipping" type="button"><?php echo __( 'My Address Book', 'digital-river-global-commerce' ); ?></button>
+
+        <div class="dr-address-book shipping" style="display: none;">
+        
+            <h4><?php echo __( 'Choose shipping address', 'digital-river-global-commerce' ); ?></h4>
+
+        </div>
+
+    <?php endif; ?>
+    
     <form id="checkout-shipping-form" class="dr-panel-edit dr-panel-edit--shipping needs-validation" novalidate>
 
          <div class="required-text">
@@ -110,7 +118,7 @@ if ( $cart['cart']['shippingAddress']['line1'] != '') {
 
                 <label for="shipping-field-address2" class="float-label">
 
-                    <?php echo __( 'Address line 2/Company', 'digital-river-global-commerce' ); ?>
+                    <?php echo __( 'Address line 2', 'digital-river-global-commerce' ); ?>
 
                 </label>
 
@@ -149,17 +157,16 @@ if ( $cart['cart']['shippingAddress']['line1'] != '') {
                     <?php echo __( 'Select Country', 'digital-river-global-commerce' ); ?> *
                 </option>
 
-                <?php foreach ( $locales['locales'] as $locale => $currency ): ?>
-                    <?php
-                        $country = drgc_code_to_counry($locale);
-                        $abrvCountyName = drgc_code_to_counry($locale, true);
+                <?php
+                    $all_countries = drgc_list_countries();
 
+                    foreach ( $all_countries as $country_code => $country_name ):
                         $output = "<option ";
-                        $output .= ($shippingAddress['country'] === $abrvCountyName ? 'selected ' : '');
-                        $output .= "value=\"{$abrvCountyName}\">{$country}</option>";
+                        $output .= $shippingAddress['country'] === $country_code ? 'selected ' : '';
+                        $output .= "value=\"{$country_code}\">{$country_name}</option>";
                         echo $output;
-                    ?>
-                <?php endforeach; ?>
+                    endforeach;
+                ?>
             </select>
 
             <div class="invalid-feedback">
@@ -235,6 +242,22 @@ if ( $cart['cart']['shippingAddress']['line1'] != '') {
             </div>
 
         </div>
+
+        <?php if ( $is_logged_in ): ?>
+
+            <div class="field-checkbox">
+
+                <input type="checkbox" name="checkbox-save-shipping" id="checkbox-save-shipping">
+
+                <label for="checkbox-save-shipping" class="checkbox-label">
+
+                    <?php echo __( 'Save this address for future purchases', 'digital-river-global-commerce' ); ?>
+
+                </label>
+
+            </div>
+
+        <?php endif; ?>
 
         <div class="invalid-feedback dr-err-field" style="display: none"></div>
 

@@ -18,21 +18,20 @@ defined( 'ABSPATH' ) || exit;
  */
 class DR_Shortcode_Login {
 
-	/**
-	 * Output the login shortcode.
-	 *
-     * @since    1.0.0
-     * @access   public
-	 * @param array $atts Shortcode attributes.
-	 */
-	public static function output( $atts ) {
-		$customer = DRGC()->shopper->retrieve_shopper();
+  /**
+   * Output the login shortcode.
+   *
+   * @since    1.0.0
+   * @access   public
+   * @param array $atts Shortcode attributes.
+   */
+  public static function output( $atts ) {
+    $customer = DRGC()->shopper->retrieve_shopper();
+    $cart = DRGC()->cart->retrieve_cart();
 
-		drgc_get_template(
-			'login/login.php',
-			array(
-				'customer'  => $customer,
-			)
-		);
-	}
+    drgc_get_template(
+      'login/login.php',
+      compact('customer', 'cart')
+    );
+  }
 }

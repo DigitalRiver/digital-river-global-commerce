@@ -16,17 +16,18 @@
   $current_locale = drgc_get_current_dr_locale();
   $supported_currencies = drgc_get_supported_currencies( $current_locale );
   $selected_currency = drgc_get_selected_currency();
+  $has_other_currencies = count( $supported_currencies ) > 1;
 ?>
 
 <?php if ( ! empty( $supported_currencies ) ) { ?>
-<li id="dr-currency-selector">
-  <a class="dr-selected-currency" data-dr-currency="<?php echo $selected_currency ?>" href="#"><?php echo $selected_currency ?></a>
-  <?php if ( count( $supported_currencies ) > 1 ) { ?>
-  <ul class="dr-other-currencies">
+<li class="dropdown menu-item <?php echo $has_other_currencies ? 'menu-item-has-children' : '' ?>" id="dr-currency-selector">
+  <a class="<?php echo $has_other_currencies ? 'dropdown-toggle' : '' ?> nav-link dr-selected-currency" data-dr-currency="<?php echo $selected_currency ?>" href="#"><?php echo $selected_currency ?></a>
+  <?php if ( $has_other_currencies ) { ?>
+  <ul class="dropdown-menu dr-other-currencies">
     <?php foreach ( $supported_currencies as $currency ) { ?>
       <?php if ( $selected_currency !== $currency ) { ?>
-        <li>
-          <a data-dr-currency="<?php echo $currency ?>" href="#"><?php echo $currency ?></a>
+        <li class="menu-item nav-item">
+          <a class="dropdown-item" data-dr-currency="<?php echo $currency ?>" href="#"><?php echo $currency ?></a>
         </li>
       <?php } ?>
     <?php } ?>

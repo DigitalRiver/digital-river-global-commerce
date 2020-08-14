@@ -4,51 +4,55 @@ import CheckoutUtils from './checkout-utils';
 import DRCommerceApi from './commerce-api';
 
 const CartModule = (($) => {
+  const localizedText = drgc_params.translations;
   let hasPhysicalProduct = false;
 
   const hasPhysicalProductInLineItems = (lineItems) => {
     return lineItems.some(lineItem => lineItem.product.productType === 'PHYSICAL');
   };
 
-  const initAutoRenewalTerms = (digitalriverjs) => {
+  const initAutoRenewalTerms = (digitalriverjs, locale) => {
     const $checkoutBtn = $('a.dr-summary__proceed-checkout');
     const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
 
-    if (sessionStorage.getItem('isTermsChecked')) {
-      const isTermsChecked = sessionStorage.getItem('isTermsChecked') === 'true' ? true : false;
-      $termsCheckbox.prop('checked', isTermsChecked);
-    }
-
     $termsCheckbox.change((e) => {
-      if ($(e.target).is(':checked')) {
-        $('#dr-TAndC-err-msg').text('').hide();
-        $checkoutBtn.prop('href', drgc_params.checkoutUrl);
-        sessionStorage.setItem('isTermsChecked', 'true');
-      } else {
-        $checkoutBtn.prop('href', '#dr-autoRenewTermsContainer');
-        sessionStorage.setItem('isTermsChecked', 'false');
-      }
+      const isChecked = $(e.target).is(':checked');
+      const href = isChecked ? drgc_params.checkoutUrl : '#dr-autoRenewTermsContainer';
+
+      $checkoutBtn.prop('href', href);
+      if (isChecked) $('#dr-TAndC-err-msg').text('').hide();
+
+      const cartPayload = {
+        cart: {
+          customAttributes: {
+            attribute: [
+              {
+                name: 'autoRenewOptedInOnCheckout',
+                value: isChecked
+              }
+            ]
+          }
+        }
+      };
+
+      DRCommerceApi.updateCart({}, cartPayload).catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
     });
 
-    $checkoutBtn.click(() => {
+    $checkoutBtn.click((e) => {
       if (!$termsCheckbox.is(':checked')) {
-        $('#dr-TAndC-err-msg').text(drgc_params.translations.required_tandc_msg).show();
+        $('#dr-TAndC-err-msg').text(localizedText.required_tandc_msg).show();
+        $(e.target).removeClass('sending');
       }
     });
 
-    $termsCheckbox.trigger('change');
-
-    appendAutoRenewalTerms(digitalriverjs);
+    appendAutoRenewalTerms(digitalriverjs, locale);
   };
 
-  const appendAutoRenewalTerms = (digitalriverjs) => {
+  const appendAutoRenewalTerms = (digitalriverjs, locale) => {
     const entityCode = CheckoutUtils.getEntityCode();
-    const locale = drgc_params.drLocale || 'en_US';
-    const compliance = CheckoutUtils.getCompliance(digitalriverjs, entityCode, locale);
+    const terms = CheckoutUtils.getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale);
 
-    if (Object.keys(compliance).length) {
-      const terms = compliance.autorenewalPlanTerms.localizedText;
-
+    if (terms) {
       $('#dr-optInAutoRenew > .dr-optInAutoRenewTerms > p').append(terms);
       $('#dr-autoRenewTermsContainer').show();
     }
@@ -71,38 +75,58 @@ const CartModule = (($) => {
       if (qty > min) $qty.val(qty - step);
     }
 
-    $lineItem.addClass('dr-loading');
-    $('.dr-summary').addClass('dr-loading');
+    $('.dr-cart__content').addClass('dr-loading');
     DRCommerceApi.updateLineItem(lineItemID, { quantity: $qty.val() })
       .then((res) => {
         renderSingleLineItem(res.lineItem.pricing, $lineItem);
-        $lineItem.removeClass('dr-loading');
-      })
-      .then(() => DRCommerceApi.getCart({ expand: 'all' }))
-      .then((res) => {
-        renderSummary(res.cart.pricing, hasPhysicalProduct);
-        $('.dr-summary').removeClass('dr-loading');
+        CartModule.fetchFreshCart();
       })
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
-        $lineItem.removeClass('dr-loading');
-        $('.dr-summary').removeClass('dr-loading');
+        $('.dr-cart__content').removeClass('dr-loading');
       });
   };
 
-  const renderOffers = (lineItems) => {
-    lineItems.forEach((lineItem, idx) => {
-      // Candy Rack (should be inserted after specific line item)
-      DRCommerceApi.getOffersByPoP('CandyRack_ShoppingCart', { expand: 'all' }, lineItem.product.id)
-        .then((res) => {
-          const offers = res.offers.offer;
+  const getOffersByPoP = (type, productId = '') => {
+    const data = {
+      action: 'drgc_get_offers_by_pop',
+      nonce: drgc_params.ajaxNonce,
+      popType: type,
+      productId: productId
+    };
+
+    $.post(drgc_params.ajaxUrl, data, (response) => {
+      const res = response.data;
+
+      if (response.success) {
+        if (res.offers) {
+          const offers = res.offers.offer || '';
+
           if (offers && offers.length) {
             offers.forEach((offer) => {
-              renderCandyRackOffer(offer, lineItems[idx].product.id);
+              switch (type) {
+                case 'CandyRack_ShoppingCart':
+                  renderCandyRackOffer(offer, productId);
+                  break;
+                case 'Banner_ShoppingCartLocal':
+                  renderBannerOffer(offer);
+                  break;
+              }
             });
           }
-        })
-        .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
+        } else if (res.errors) {
+          drToast.displayMessage(res.errors.error[0], 'error');
+        }
+      } else {
+        drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+      }
+    });
+  };
+
+  const renderOffers = (lineItems) => {
+    lineItems.forEach((lineItem) => {
+      // Candy Rack (should be inserted after specific line item)
+      getOffersByPoP('CandyRack_ShoppingCart', lineItem.product.id);
 
       // Bundle Tight (should disable edit buttons of specific line item)
       DRCommerceApi.getOffersByProduct(lineItem.product.id, { expand: 'all' })
@@ -110,7 +134,7 @@ const CartModule = (($) => {
           const offers = res.offers.offer;
           if (offers && offers.length) {
             offers.forEach((offer) => {
-              disableEditBtnsForBundle(offer);
+              disableEditBtnsForBundle(offer, lineItem.product.id);
             });
           }
         })
@@ -118,21 +142,15 @@ const CartModule = (($) => {
     });
 
     // Banner (should be appended after all the line items)
-    DRCommerceApi.getOffersByPoP('Banner_ShoppingCartLocal', { expand: 'all' })
-      .then((res) => {
-        const offers = res.offers.offer;
-          if (offers && offers.length) {
-            offers.forEach((offer) => {
-              renderBannerOffer(offer);
-            });
-          }
-      })
-      .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
+    getOffersByPoP('Banner_ShoppingCartLocal');
   };
 
   const renderCandyRackOffer = (offer, driverProductID) => {
+    const offerType = offer.type;
     const productOffers = offer.productOffers.productOffer;
     const promoText = offer.salesPitch.length ? offer.salesPitch[0] : '';
+    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    const upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if (productOffers && productOffers.length) {
       productOffers.forEach((productOffer) => {
@@ -140,35 +158,67 @@ const CartModule = (($) => {
         const listPrice = productOffer.pricing.formattedListPriceWithQuantity;
         const purchasable = productOffer.product.inventoryStatus.productIsInStock === 'true';
         const buyBtnText = purchasable ?
-          (offer.type === 'Up-sell') ? drgc_params.translations.upgrade_label : drgc_params.translations.add_label :
-          drgc_params.translations.out_of_stock;
-        const html = `
-          <div class="dr-product dr-candyRackProduct" data-product-id="${productOffer.product.id}" data-driver-product-id="${driverProductID}">
-            <div class="dr-product-content">
-              <img src="${productOffer.product.thumbnailImage}" class="dr-candyRackProduct__img"/>
-              <div class="dr-product__info">
-                <div class="product-color">
-                  <span style="background-color: yellow;">${promoText}</span>
-                </div>
-                ${productOffer.product.displayName}
-                <div class="product-sku">
-                  <span>${drgc_params.translations.product_label} </span>
-                  <span>#${productOffer.product.id}</span>
+          (offerType === 'Up-sell') ? localizedText.upgrade_label : localizedText.add_label :
+          localizedText.out_of_stock;
+        const productSalesPitch = productOffer.salesPitch || '';
+        const shortDiscription = productOffer.product.shortDiscription || '';
+
+        if ((offerType === 'Up-sell') && (upsellDeclineArr.indexOf(driverProductID.toString()) === -1)) {
+          const declineText = localizedText.upsell_decline_label;
+          const upsellProductHtml = `
+            <div class="modal dr-upsellProduct-modal" data-product-id="${productOffer.product.id}" data-parent-product-id="${driverProductID}">
+              <div class=" modal-dialog">
+                <div class="dr-upsellProduct modal-content">
+                  <button class="dr-modal-close dr-modal-decline" data-parent-product-id="${driverProductID}"></button>
+                  <div class="dr-product-content">
+                    <div class="dr-product__info">
+                      <div class="dr-offer-header">${promoText}</div>
+                      <div class="dr-offer-content">${productSalesPitch}</div>
+                      <button type="button" class="dr-btn dr-buy-candyRack dr-buy-${buyBtnText}" data-buy-uri="${productOffer.addProductToCart.uri}">${buyBtnText}</button>
+                      <button type="button" class="dr-nothanks dr-modal-decline" data-parent-product-id="${driverProductID}">${declineText}</button>
+                    </div>
+                  </div>
+                  <div class="dr-product__price">
+                    <img src="${productOffer.product.thumbnailImage}" class="dr-upsellProduct__img"/>
+                    <div class="product-name">${productOffer.product.displayName}</div>
+                    <div class="product-short-desc">${shortDiscription}</div>
+                    <span class="sale-price">${salePrice}</span>
+                    <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-            <div class="dr-product__price">
-              <button type="button" class="dr-btn dr-buy-candyRack"
-                data-buy-uri="${productOffer.addProductToCart.uri}"
-                ${purchasable ? '' : 'disabled="disabled"'}>${buyBtnText}</button>
-              <span class="sale-price">${salePrice}</span>
-              <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
-            </div>
-          </div>`;
+            </div>`;
+
+          $('body').append(upsellProductHtml).addClass('modal-open').addClass('drgc-wrapper');
+        } else if (offerType !== 'Up-sell') {
+          const html = `
+            <div class="dr-product dr-candyRackProduct" data-product-id="${productOffer.product.id}" data-driver-product-id="${driverProductID}">
+              <div class="dr-product-content">
+                <img src="${productOffer.product.thumbnailImage}" class="dr-candyRackProduct__img"/>
+                <div class="dr-product__info">
+                  <div class="product-color">
+                    <span style="background-color: yellow;">${promoText}</span>
+                  </div>
+                  ${productOffer.product.displayName}
+                  <div class="product-sku">
+                    <span>${localizedText.product_label} </span>
+                    <span>#${productOffer.product.id}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="dr-product__price">
+                <button type="button" class="dr-btn dr-buy-candyRack"
+                  data-buy-uri="${productOffer.addProductToCart.uri}"
+                  ${purchasable ? '' : 'disabled="disabled"'}>${buyBtnText}</button>
+                <span class="sale-price">${salePrice}</span>
+                <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+              </div>
+            </div>`;
 
           if (!$(`.dr-product-line-item[data-product-id=${productOffer.product.id}]`).length) {
             $(html).insertAfter(`.dr-product-line-item[data-product-id=${driverProductID}]`);
           }
+        }
       });
     }
   };
@@ -182,15 +232,17 @@ const CartModule = (($) => {
     $('.dr-cart__products').append(html);
   };
 
-  const disableEditBtnsForBundle = (offer) => {
+  const disableEditBtnsForBundle = (offer, productID) => {
     const hasBundleTight = (offer.type === 'Bundling' && offer.policyName === 'Tight Bundle Policy');
     const productOffers = offer.productOffers.productOffer;
 
     if (hasBundleTight && productOffers && productOffers.length) {
       productOffers.forEach((productOffer) => {
-        $(`.dr-product-line-item[data-product-id=${productOffer.product.id}]`)
-          .find('.remove-icon, .dr-pd-cart-qty-minus, .dr-pd-cart-qty-plus')
-          .css({ opacity: 0, 'pointer-events': 'none' });
+        if (productOffer.product.id !== productID) { // Hide action buttons only when it's triggered by parent product
+          $(`.dr-product-line-item[data-product-id=${productOffer.product.id}]`)
+            .find('.remove-icon, .dr-pd-cart-qty-minus, .dr-pd-cart-qty-plus')
+            .css({ opacity: 0, 'pointer-events': 'none' });
+        }
       });
     }
   };
@@ -207,11 +259,12 @@ const CartModule = (($) => {
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
   };
 
-  const renderLineItems = (lineItems) => {
+  const renderLineItems = async (lineItems) => {
     const min = 1;
     const max = 999;
     const promises = [];
     const lineItemHTMLArr = [];
+    let hasAutoRenewal = false;
 
     lineItems.forEach((lineItem, idx) => {
       const parentProductID = lineItem.product.parentProduct ? lineItem.product.parentProduct.id : lineItem.product.id;
@@ -225,7 +278,7 @@ const CartModule = (($) => {
               <div class="dr-product__info">
                 <a class="product-name" href="${permalink}?locale=${drgc_params.drLocale}">${lineItem.product.displayName}</a>
                 <div class="product-sku">
-                  <span>${drgc_params.translations.product_label} </span>
+                  <span>${localizedText.product_label} </span>
                   <span>#${lineItem.product.id}</span>
                 </div>
                 <div class="product-qty">
@@ -245,31 +298,54 @@ const CartModule = (($) => {
           lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
       });
       promises.push(promise);
+
+      for (const attr of lineItem.product.customAttributes.attribute) {
+        if ((attr.name === 'isAutomatic') && (attr.value === 'true')) {
+          hasAutoRenewal = true;
+          break;
+        }
+      }
     });
+
+    if (!hasAutoRenewal) $('.dr-cart__auto-renewal-terms').remove();
 
     return Promise.all(promises).then(() => {
       $('.dr-cart__products').html(lineItemHTMLArr.join(''));
     });
   };
 
-  const renderSummary = (pricing, hasPhysicalProduct) => {
+  const renderSummary = (cart, hasPhysicalProduct) => {
+    const lineItems = cart.lineItems.lineItem;
+    const pricing = cart.pricing;
+    const $taxRow = $('.dr-summary__tax');
+    const $shippingTaxRow = $('.dr-summary__shipping-tax');
     const $discountRow = $('.dr-summary__discount');
     const $shippingRow = $('.dr-summary__shipping');
-    const $subtotalRow = $('.dr-summary__discounted-subtotal');
+    const $subtotalRow = $('.dr-summary__subtotal');
+    const $totalRow = $('.dr-summary__total');
+    const newPricing = CheckoutUtils.getSeparatedPricing(lineItems, pricing, drgc_params.isTaxInclusive === 'true');
 
     $discountRow.find('.discount-value').text(`-${pricing.formattedDiscount}`);
+    $taxRow.find('.tax-value').text(newPricing.formattedProductTax);
+    $shippingTaxRow.find('.shipping-tax-value').text(newPricing.formattedShippingTax);
     $shippingRow.find('.shipping-value').text(
       pricing.shippingAndHandling.value === 0 ?
       drgc_params.translations.free_label :
-      pricing.formattedShippingAndHandling
+      newPricing.formattedShippingAndHandling
     );
-    $subtotalRow.find('.discounted-subtotal-value').text(pricing.formattedSubtotalWithDiscount);
+    $subtotalRow.find('.subtotal-value').text(newPricing.formattedSubtotal);
+    $totalRow.find('.total-value').text(pricing.formattedOrderTotal);
 
     if (pricing.discount.value) $discountRow.show();
     else $discountRow.hide();
 
-    if (hasPhysicalProduct) $shippingRow.show();
-    else $shippingRow.hide();
+    if (hasPhysicalProduct) {
+      $shippingRow.show();
+      $shippingTaxRow.show();
+    } else {
+      $shippingRow.hide();
+      $shippingTaxRow.hide();
+    }
 
     return new Promise(resolve => resolve());
   };
@@ -286,16 +362,29 @@ const CartModule = (($) => {
           hasPhysicalProduct = hasPhysicalProductInLineItems(lineItems);
           return Promise.all([
             renderLineItems(lineItems),
-            renderSummary(res.cart.pricing, hasPhysicalProduct)
+            renderSummary(res.cart, hasPhysicalProduct)
           ]);
         } else {
-          $('.dr-cart__products').text(drgc_params.translations.empty_cart_msg);
+          if (typeof $.cookie('drgc_upsell_decline') !== 'undefined') $.removeCookie('drgc_upsell_decline', {path: '/'});
+          $('.dr-cart__auto-renewal-terms').remove();
+          $('.dr-cart__products').text(localizedText.empty_cart_msg);
           $('#cart-estimate').remove();
           return new Promise(resolve => resolve());
         }
       })
       .then(() => {
-        if (lineItems && lineItems.length) renderOffers(lineItems);
+        if (lineItems && lineItems.length) {
+          if (CheckoutUtils.isSubsAddedToCart(lineItems)) {
+            const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
+            const href = (drgc_params.isLogin !== 'true') ? drgc_params.loginPath : 
+              ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
+
+            $('a.dr-summary__proceed-checkout').prop('href', href);
+          }
+
+          renderOffers(lineItems);
+        }
+
         $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
       })
       .catch((jqXHR) => {
@@ -304,12 +393,27 @@ const CartModule = (($) => {
       });
   };
 
+  const updateUpsellCookie = (id, isDeclined = false) => {
+    const productId = id.toString();
+    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    let upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
+
+    if ((upsellDeclineArr.indexOf(productId) === -1) && isDeclined) {
+      upsellDeclineArr.push(productId);
+    } else {
+      upsellDeclineArr = upsellDeclineArr.filter(item => item !== productId);
+    }
+
+    $.cookie('drgc_upsell_decline', upsellDeclineArr.join(','), {path: '/'});
+  };
+
   return {
     hasPhysicalProduct,
     hasPhysicalProductInLineItems,
     initAutoRenewalTerms,
     appendAutoRenewalTerms,
     setProductQty,
+    getOffersByPoP,
     renderOffers,
     renderCandyRackOffer,
     renderBannerOffer,
@@ -317,11 +421,14 @@ const CartModule = (($) => {
     renderSingleLineItem,
     renderLineItems,
     renderSummary,
-    fetchFreshCart
+    fetchFreshCart,
+    updateUpsellCookie
   };
 })(jQuery);
 
 jQuery(document).ready(($) => {
+  const drLocale = drgc_params.drLocale || 'en_US';
+  const localizedText = drgc_params.translations;
   // Very basic throttle function, avoid too many calls within a short period
   const throttle = (func, limit) => {
     let inThrottle;
@@ -345,6 +452,9 @@ jQuery(document).ready(($) => {
     const $this = $(e.target);
     const $lineItem = $this.closest('.dr-product');
     const lineItemID = $lineItem.data('line-item-id');
+    const productId = $lineItem.data('product-id');
+
+    CartModule.updateUpsellCookie(productId, false);
 
     $('.dr-cart__content').addClass('dr-loading');
     DRCommerceApi.removeLineItem(lineItemID)
@@ -358,10 +468,24 @@ jQuery(document).ready(($) => {
       });
   });
 
+  $('body').on('click', '.dr-modal-decline', (e) => {
+    e.preventDefault();
+    const $this = $(e.target);
+    const productId = $this.data('parent-product-id');
+   
+    CartModule.updateUpsellCookie(productId, true);
+    $('.dr-upsellProduct-modal[data-parent-product-id="' + productId + '"]').remove();
+    $('body').removeClass('modal-open').removeClass('drgc-wrapper');
+  });
+
   $('body').on('click', '.dr-buy-candyRack', (e) => {
     e.preventDefault();
     const $this = $(e.target);
     const buyUri = $this.attr('data-buy-uri');
+
+    if ($this.hasClass('dr-buy-Upgrade')) {
+      $('body').removeClass('modal-open').removeClass('drgc-wrapper');
+    }
 
     $('.dr-cart__content').addClass('dr-loading');
     DRCommerceApi.postByUrl(`${buyUri}&testOrder=${drgc_params.testOrder}`)
@@ -400,7 +524,7 @@ jQuery(document).ready(($) => {
     const promoCode = $('#promo-code').val();
 
     if (!$.trim(promoCode)) {
-      $('#dr-promo-code-err-field').text(drgc_params.translations.invalid_promo_code_msg).show();
+      $('#dr-promo-code-err-field').text(localizedText.invalid_promo_code_msg).show();
       return;
     }
 
@@ -434,11 +558,15 @@ jQuery(document).ready(($) => {
   if ($('#dr-cart-page-wrapper').length) {
     CartModule.fetchFreshCart();
 
-    const digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey);
+    const digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey, {
+      'locale': drLocale.split('_').join('-')
+    });
+
     CheckoutUtils.applyLegalLinks(digitalriverjs);
 
     if ($('#dr-autoRenewTermsContainer').length) {
-      CartModule.initAutoRenewalTerms(digitalriverjs);
+      CartModule.initAutoRenewalTerms(digitalriverjs, drLocale);
+      $('#autoRenewOptedInOnCheckout').prop('checked', false).trigger('change');
     }
   }
 });

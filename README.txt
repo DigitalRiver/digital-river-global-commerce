@@ -15,31 +15,48 @@ Activate the free Digital River plugin and start selling anywhere in the world. 
 
 == THE DIGITAL RIVER PLUGIN FEATURES ==
 
-*   Product, cart, checkout, login and thank you pages
-*   Payment processing (cards and alternative payment methods)
-*   PCI compliance
-*   Acquirer redundancy
-*   Billing optimization
-*   Multi-currency support and conversion
-*   Product catalog management
-*   Merchandising offers
-*   Configurable shipping options
-*   Order management
-*   Tax calculation
-*   Tax management (registration, collection, filing, and remittance)
-*   Fraud screening
-*   Advanced fraud management
-*   Fraud liability guarantee
-*   Chargeback mitigation and dispute management
-*   Global regulatory compliance (e.g., GDPR and PSD2)
+Product/Pricing Management (product pages)
+
+* Product catalog management (physical, digital and subscription products)
+* Merchandising offers
+* Configurable shipping options
+* Local transaction currencies
+
+Order Management /Shopping Experience (cart, checkout and confirmation pages)
+
+* Tax calculation
+* Tax management (registration, collection, filing, and remittance)
+* Fraud screening
+* Advanced fraud management
+* Fraud liability guarantee
+* Denied Parties List (DPL)
+* Privacy requirements
+* Payment processing (credit cards and alternative payment methods)
+* Payment processing for Subscriptions (Registered Shoppers and credit card only)
+* Recurring Billing  (credit card only)
+* Payment
+* PCI compliance
+* Tokenization
+* Acquirer redundancy
+* Billing optimization
+* Support for EIN (US only)
+* Chargeback mitigation and dispute management
+* Legal responsibility for fulfilling online orders
+* Terms of sale and legal disclosures
+
+Shopper Experience (registration/login and account pages)
+
+* Profile management (register, login and manage addresses)
+* Order history
+* Manage existing subscriptions
 
 Our flexible API architecture allows you to customize your ecommerce solution. Digital River can be your complete solution or we can easily plug into your existing systems.
 
 Want a fast and easy way to sell into new markets? Activate the Digital River plugin and we’ll work behind the scenes to process payments, fight fraud, fulfill orders, and shield your business from global tax and regulatory risk.
 
 == INSTALLATION ==
-*   A Digital River account is required for use of this plugin. To inquire contact <wordpress@digitalriver.com>.
-*   Feature and Installation documentation can be found [here](https://commerceapi.digitalriver.com/docs/wordpress-plug-in).
+* A Digital River account is required for use of this plugin. To inquire contact <wordpress@digitalriver.com>.
+* Feature and Installation documentation can be found [here](https://docs.digitalriver.com/partner-integrations/wordpress-plugin).
 Follow these steps to setup Digital River Global Commerce:
 1. Activate the plugin through the ‘Plugins’ menu in WordPress
 2. Configure ‘Digital River > Settings’
@@ -77,29 +94,48 @@ No, you are responsible for hosting your own site.
 
 
 == Changelog ==
-= [1.0] - 2019-08-30 =
-* Initial release
+= [1.3.1] - 2020-08-05 =
+* Added new display for Tax inclusive/exclusive price
+* Added Change Password feature in Profile management
+* Minor Bug fixes
 
-= [1.0.1] - 2019-09-26 =
-* Updated checkout section transition animation
-* Cart banner width is now responsive.
-* Aligned legal footer.
-* Additional validation to shipping and billing information inputs.
-* Fixed an issue where a product would show an additional reduced price value even when an offer was not applied. Now only the full price will appear if there are no offers applied.
-* Fixed an issue where you could reduce line item quantity to zero without removing the entire line item. You can no longer reduce quantity lower than one during checkout for a line item without removing the whole line.
+= [1.3] - 2020-07-14 =
+* Added Subscriptions feature with support for manual/recurring billing
+* Added Profile management for registered shoppers to manage and view orders, addresses and subscriptions
+* Added Business Checkout via EIN (US only)
+* Enhanced Upsell promotion feature
+* Minor Bug fixes
+
+= [1.2.1] - 2020-05-21 =
+* Updated Shopper Security Features
+* Verified Support of WordPress V5.4
+* Automatic Logout after 1 hour idle time
+* Improved Loading animation in checkout flow
+* Bug fixes for shipping options and product variations
+
+= [1.2] - 2020-02-19 =
+* Added default legal links in the footer and Terms Of Sale checkbox during checkout
+* Updated text label of locale dropdown during checkout from "Locale" to "Currency" for ease of use by shoppers
+* Added support for dynamic naming tax field as "Tax" or "VAT" based on geographic region of sale
+
+= [1.1] - 2019-12-23 =
+* New Payment Method Support: Apple Pay and Google Pay
+* Real-time product pricing updates within your site on product catalog changes
+* Enhanced checkout pages with Account Creation and Guest Checkout options
+* When a shopper's shipping addressed is not confirmed, Shipping Costs will be shown as estimated and not actuals
+* Improved Settings Page help text
 
 = [1.0.2] - 2019-11-13 =
 * Hide locale selector when there is only one option available
 * Fixed wrong path of product image gallery
 
-= [1.1] - 2019-12-23 =
-* New Payment Method Support: Apple Pay and Google Pay.
-* Real-time product pricing updates within your site on product catalog changes.
-* Enhanced checkout pages with Account Creation and Guest Checkout options.
-* When a shopper's shipping addressed is not confirmed, Shipping Costs will be shown as estimated and not actuals.
-* Improved Settings Page help text.
+= [1.0.1] - 2019-09-26 =
+* Updated checkout section transition animation
+* Cart banner width is now responsive
+* Aligned legal footer
+* Additional validation to shipping and billing information inputs
+* Fixed an issue where a product would show an additional reduced price value even when an offer was not applied. Now only the full price will appear if there are no offers applied
+* Fixed an issue where you could reduce line item quantity to zero without removing the entire line item. You can no longer reduce quantity lower than one during checkout for a line item without removing the whole line
 
-= [1.2] - 2020-02-19 =
-* Added default legal links in the footer and Terms Of Sale checkbox during checkout.
-* Updated text label of locale dropdown during checkout from "Locale" to "Currency" for ease of use by shoppers.
-* Added support for dynamic naming tax field as "Tax" or "VAT" based on geographic region of sale.
+= [1.0] - 2019-08-30 =
+* Initial release
