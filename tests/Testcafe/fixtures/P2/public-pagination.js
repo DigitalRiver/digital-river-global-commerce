@@ -70,7 +70,7 @@ test('Search page should have 2 paginations, at most 10 posts per page with corr
   console.log('Test Case: Search Page, Pagination & Switch Page Button');
   console.log(">> Navigate to target testing website's search page");
   await t
-    .navigateTo(`${baseURL}/?s=digital&post_type=dr_product`)
+    .navigateTo(`${baseURL}/?s=product&post_type=dr_product`)
     .maximizeWindow();
 
   let currentPage = parseInt(await Selector('.page-link.current').innerText);

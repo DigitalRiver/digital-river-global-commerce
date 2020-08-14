@@ -9,8 +9,8 @@ const baseURL = Config.baseUrl[env];
 const homePage = new HomePage();
 const minicartPage = new MinicartPage();
 const utils = new GeneralUtils();
-const standardFee = '5.00USD';
-const expressFee = '7.49USD';
+const standardFee = '$5.00';
+const expressFee = '$7.49';
 
 fixture `===== DRGC P2 Automation Test - Physical Product Shipping =====`
   .httpAuth({

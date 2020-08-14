@@ -28,7 +28,9 @@ export default class GenericUtils {
       .expect(target.exists).ok()
       .wait(500)
       .hover(target)
-      .click(target);
+      .wait(500)
+      .click(target)
+      .wait(1000);
   }
 
   async checkCheckBox(checkbox, checked) {
@@ -44,8 +46,10 @@ export default class GenericUtils {
   async addProductsIntoCart(product, isVariation = false){
     const homePage = new HomePage();
     const minicartPage = new MiniCartPage();
-    await this.clickItem(homePage.productsMenu);
-    await this.clickItem(product);
+    await t
+      .click(homePage.productsMenu)
+      .hover(product)
+      .click(product);
 
     // Add to cart btn changed to buy now button of variaction products, need to click add to cart
     // when entered product's detail page after clicking buy now btn in products page.
@@ -82,7 +86,7 @@ export default class GenericUtils {
 
     // Skip Billing info
     console.log('>> Checkout page - Skip Billing info and continue, still show Estimated Shipping');
-    await this.clickItem(checkoutPage.billingInfoSubmitBtn);
+    await this.clickItem(checkoutPage.guestBillingInfoSubmitBtn);
     await this.checkShippingSummaryInfo(estimatedShipping, estShippingFee);
 
     // Set delivery option
@@ -92,7 +96,7 @@ export default class GenericUtils {
     await this.checkShippingSummaryInfo(fixedShipping, finalShippingFee);
   }
 
-  async fillOrderInfoAndSubmitOrder(isPhysical) {
+  async fillOrderInfoAndSubmitOrder(isPhysical, isGuest) {
     const tyPage = new TYPage();
     const checkoutPage = new CheckoutPage();
     if (isPhysical) {
@@ -105,10 +109,9 @@ export default class GenericUtils {
       // If checkbox is checked, the billing info will be set to same as shipping info
       await this.checkCheckBox(checkoutPage.useSameAddrCheckbox, false);
     }
-
     // Enter Billing Info
     console.log('>> Checkout page - Entering Billing Info.');
-    await checkoutPage.completeFormBillingInfo();
+    await checkoutPage.completeFormBillingInfo(isGuest);
 
     if (isPhysical) {
       await t.expect(checkoutPage.deliveryOptionSubmitBtn.exists).ok();
@@ -184,7 +187,7 @@ export default class GenericUtils {
       lastName: 'Mcclinton',
       addrLine1: '10451 Gunpowder Falls St',
       city: 'Las Vegas',
-      country: 'USA',
+      country: 'United States',
       countryValue: 'US',
       state: 'Nevada',
       stateValue: 'NV',
@@ -201,7 +204,7 @@ export default class GenericUtils {
       lastName: 'Doe',
       addrLine1: '10380 Bren Rd W',
       city: 'Minnetonka',
-      country: 'USA',
+      country: 'United States',
       countryValue: 'US',
       state: 'Minnesota',
       stateValue: 'MN',
