@@ -39,8 +39,6 @@ class DRGC_Product_Details extends AbstractHttpService {
 	 * Initialize the product details object.
 	 */
 	public function init() {
-		$this->current_locale = drgc_get_current_dr_locale();
-    $this->current_currency = drgc_get_selected_currency();
 		$this->token = $this->authenticator->get_token();
 	}
 
@@ -72,12 +70,6 @@ class DRGC_Product_Details extends AbstractHttpService {
 	 * @return array|bool
 	 */
 	public function get_product_details( $id, $params = array() ) {
-		$plugin = DRGC();
-
-		if ( ( $plugin->shopper->locale !== $this->current_locale ) || ( $plugin->shopper->currency !== $this->current_currency ) ) {
-			$plugin->shopper->update_locale_and_currency( $this->current_locale, $this->current_currency );
-		}
-
 		$url = "/v1/shoppers/me/products/{$id}?" . http_build_query( $params );
 
 		try {

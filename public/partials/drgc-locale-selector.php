@@ -13,7 +13,8 @@
 ?>
 
 <?php
-  $current_locale = drgc_get_current_dr_locale();
+  $plugin = DRGC();
+  $current_locale = $plugin->shopper->locale;
   $drgc_locale_options = get_option( 'drgc_locale_options' );
   $has_other_locales = count( $drgc_locale_options ) > 1;
 ?>

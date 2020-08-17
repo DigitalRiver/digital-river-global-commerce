@@ -186,7 +186,6 @@ class DRGC_Public {
 		$options = array(
 			'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
 			'drLocale'          =>  drgc_get_current_dr_locale(),
-			'selectedCurrency'  =>  drgc_get_selected_currency(),
 			'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
 			'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
 			'homeUrl'           =>  get_home_url(),
@@ -741,28 +740,31 @@ class DRGC_Public {
    */
   public function redirect_on_page_load() {
     if ( ! is_admin() ) {
+      $plugin = DRGC();
       $dr_locale = drgc_get_current_dr_locale();
-      $wp_locale = drgc_get_current_wp_locale( $dr_locale );
 
-      // Set cookie for storing selected currency (TODO: replace it with session)
-      $primary_currency = drgc_get_primary_currency( $dr_locale );
-      @setcookie( 'drgc_currency', $primary_currency, 0, '/' );
+      if ( $plugin->shopper->locale !== $dr_locale ) {
+        // Update shopper's locale & currency
+        $primary_currency = drgc_get_primary_currency( $dr_locale );
+        $plugin->shopper->update_locale_and_currency( $dr_locale, $primary_currency );
 
-      // Load plugin translated text strings
-      switch_to_locale( $wp_locale );
-      load_plugin_textdomain(
-        'digital-river-global-commerce',
-        false,
-        dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-      );
+        // Load plugin translated text strings
+        $wp_locale = drgc_get_current_wp_locale( $dr_locale );
+        switch_to_locale( $wp_locale );
+        load_plugin_textdomain(
+          'digital-river-global-commerce',
+          false,
+          dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+        );
+      }
 
       if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
-        $customer = DRGC()->shopper->retrieve_shopper();
+        $customer = $plugin->shopper->retrieve_shopper();
         $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
         $is_guest = 'true' === $_COOKIE['drgc_guest_flag'];
 
         if ( is_page( 'checkout' ) ) {
-          $cart = DRGC()->cart->retrieve_cart();
+          $cart = $plugin->cart->retrieve_cart();
           $check_subs = drgc_is_subs_added_to_cart( $cart );
           $terms_checked = drgc_is_auto_renewal_terms_checked( $cart );
 

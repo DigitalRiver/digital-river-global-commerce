@@ -45,18 +45,9 @@ jQuery(document).ready(($) => {
     e.preventDefault();
     const $this = $(e.target);
     const targetLocale = $this.data('dr-locale');
-
-    if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
-    else $('body').addClass('dr-loading');
-    DRCommerceApi.updateShopper({ locale: targetLocale })
-      .then(() => {
-        const params = new URLSearchParams(location.search);
-        params.set('locale', targetLocale);
-        window.location.search = params.toString();
-      })
-      .catch((jqXHR) => {
-        CheckoutUtils.apiErrorHandler(jqXHR);
-      });
+    const params = new URLSearchParams(location.search);
+    params.set('locale', targetLocale);
+    window.location.search = params.toString();
   });
 
   $('#dr-currency-selector .dr-other-currencies a').click((e) => {
@@ -66,9 +57,8 @@ jQuery(document).ready(($) => {
 
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
     else $('body').addClass('dr-loading');
-    DRCommerceApi.updateShopper({ locale: drgc_params.drLocale, currency: targetCurrency })
+    DRCommerceApi.updateShopper({ currency: targetCurrency })
       .then(() => {
-        document.cookie = `drgc_currency=${targetCurrency}; path=/`;
         window.location.reload(true);
       })
       .catch((jqXHR) => {
