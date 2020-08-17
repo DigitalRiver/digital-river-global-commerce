@@ -13,9 +13,9 @@
 ?>
 
 <?php
-$purchasable = get_post_meta( get_the_ID(), 'purchasable', true );
 $variations = drgc_get_product_variations( get_the_ID() );
 $gc_parent_id = '';
+$post_id = '';
 
 if ( $variations && isset( $variations[0] ) ) {
     //sort variation array by sale price here!
@@ -23,7 +23,7 @@ if ( $variations && isset( $variations[0] ) ) {
   
     foreach ( $variations as $variation ) {
         $var_pricing = drgc_get_product_pricing( $variation->ID );
-        $variation->sort_pricing = $var_pricing['sale_price_value'];
+        $variation->sale_price = $var_pricing['sale_price_value'];
         array_push( $variations_sort, $variation );
     }
 
@@ -32,26 +32,19 @@ if ( $variations && isset( $variations[0] ) ) {
             return 0;
         }
 
-        return ( $a->sort_pricing < $b->sort_pricing ) ? -1 : 1;
+        return ( $a->sale_price < $b->sale_price ) ? -1 : 1;
     });
 
     $variations = $variations_sort;
-    $gc_id = get_post_meta( $variations[0]->ID, 'gc_product_id', true );
-    $pricing = drgc_get_product_pricing( $variations[0]->ID );
-    $product_image_url = get_post_meta( $variations[0]->ID, 'gc_product_images_url', true );
-    $product_thumbnail_url = get_post_meta( $variations[0]->ID, 'gc_thumbnail_url', true );
     $post_parent = $variations[0]->post_parent;
     $gc_parent_id = get_post_meta( $post_parent, 'gc_product_id', true );
 } else {
-    $gc_id = get_post_meta( get_the_ID(), 'gc_product_id', true );
-    $pricing = drgc_get_product_pricing( get_the_ID() );
-    $product_image_url = get_post_meta( get_the_ID(), 'gc_product_images_url', true );
-    $product_thumbnail_url = get_post_meta( get_the_ID(), 'gc_thumbnail_url', true );
+    $post_id = get_the_ID();
 }
 
-$list_price = isset( $pricing['list_price_value'] ) ? $pricing['list_price_value'] : '';
-$sale_price = isset( $pricing['sale_price_value'] ) ? $pricing['sale_price_value'] : '';
-$price = isset( $pricing['price'] ) ? $pricing['price'] : '';
+$gc_id = get_post_meta( $post_id, 'gc_product_id', true );
+$product_image_url = get_post_meta( $post_id, 'gc_product_images_url', true );
+$product_thumbnail_url = get_post_meta( $post_id, 'gc_thumbnail_url', true );
 ?>
 
 <div class="dr-pd-item">
@@ -60,22 +53,14 @@ $price = isset( $pricing['price'] ) ? $pricing['price'] : '';
             <img src="<?php echo $product_thumbnail_url ?: $product_image_url ?>" alt="<?php the_title_attribute() ?>"/>
         </div>
 
-        <?php the_title( '<h3 class="dr-pd-item-title">', '</h3>' ); ?>
-
-        <?php if ( (int) $list_price > (int) $sale_price ) : ?>
-            <p class="dr-pd-price dr-pd-item-price">
-                <del class="dr-strike-price"><?php echo $list_price; ?></del>
-                <strong class="dr-sale-price"><?php echo $price; ?></strong>
-            </p>
-        <?php else: ?>
-            <p class="dr-pd-price dr-pd-item-price">
-                <strong class="dr-sale-price"><?php echo $price; ?></strong>
-            </p>
-        <?php endif; ?>
-
-        <button type="button" class="dr-btn dr-buy-btn" data-parent-id="<?php echo $gc_parent_id; ?>" data-product-id="<?php echo $gc_id; ?>" <?php echo 'true' !== $purchasable ? 'disabled' : ''; ?>>
-            <?php echo __( 'Add to Cart', 'digital-river-global-commerce'); ?>
-        </button>
+        <div class="dr-loading"></div>
+        <div class="dr-pd-info" style="display: none;">
+            <?php the_title( '<h3 class="dr-pd-item-title">', '</h3>' ); ?>
+            <p class="dr-pd-price dr-pd-item-price"></p>
+            <button type="button" class="dr-btn dr-buy-btn" data-parent-id="<?php echo $gc_parent_id; ?>" data-product-id="<?php echo $gc_id; ?>" <?php echo 'true' !== $purchasable ? 'disabled' : ''; ?>>
+                <?php echo __( 'Add to Cart', 'digital-river-global-commerce'); ?>
+            </button>
+        </div>
 
         <?php the_content(); ?>
     </a>

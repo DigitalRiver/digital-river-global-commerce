@@ -178,9 +178,11 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shortcodes.php';
 
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-authenticator.php';
+		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-site.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shopper.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-cart.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-user-management.php';
+		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product-details.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
@@ -236,6 +238,9 @@ class DRGC {
 		$this->authenticator = new DRGC_Authenticator;
 		$this->authenticator->init( $this->session );
 
+		// Initialize site
+		$this->site = new DRGC_Site;
+
 		// Initialize shopper
 		$this->shopper = new DRGC_Shopper( $this->authenticator );
 
@@ -244,6 +249,8 @@ class DRGC {
 
 		// Initialize User Management
 		$this->user_management = new DRGC_User_Management;
+
+		$this->product_details = new DRGC_Product_Details( $this->authenticator );
 
 		// Start up the cron import
 		new DRGC_Cron();
@@ -281,6 +288,18 @@ class DRGC {
 		$this->loader->add_action( 'views_edit-dr_product', $plugin_admin, 'render_products_import_button' );
 
 		$this->loader->add_action( 'before_delete_post', $plugin_admin, 'clean_variations_on_product_deletion' );
+
+		$this->loader->add_action( 'wp_ajax_nopriv_drgc_sync_locales', $plugin_admin, 'drgc_sync_locales_ajax' );
+		$this->loader->add_action( 'wp_ajax_drgc_sync_locales', $plugin_admin, 'drgc_sync_locales_ajax' );
+
+		$this->loader->add_action( 'init', $plugin_admin, 'remove_product_editor' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_slug_meta_box' );
+		$this->loader->add_action( 'load-post.php', $plugin_admin, 'disable_drag_meta_box' );
+
+		$this->loader->add_action( 'admin_init', $plugin_admin, 'init_trans_string_files' );
+		$this->loader->add_action( 'edit_dr_product_category', $plugin_admin, 'create_category_name_trans_strings' );
+
+		$this->loader->add_action( 'wp_update_nav_menu', $plugin_admin, 'create_menu_label_trans_strings' );
 	}
 
   /**
@@ -303,12 +322,21 @@ class DRGC {
 
     $this->loader->add_action( 'after_setup_theme', $plugin_public, 'remove_admin_bar');
 
+		$this->loader->add_filter( 'page_link', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'post_link', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'post_type_archive_link', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'the_permalink', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'home_url', $plugin_public, 'append_query_string' );
+
+		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
+		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_currency_selector', 98 );
+    $this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99 );
+
+    $this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
+
     $this->loader->add_action( 'wp_ajax_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
     $this->loader->add_action( 'wp_ajax_nopriv_get_permalink', $plugin_public, 'ajax_get_permalink_by_product_id' );
-
-    $this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
-    $this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99, 2 );
-    $this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
 
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_login', $plugin_public, 'ajax_attempt_auth' );
     $this->loader->add_action( 'wp_ajax_drgc_login', $plugin_public, 'ajax_attempt_auth' );
@@ -352,6 +380,9 @@ class DRGC {
 
 		$this->loader->add_action( 'wp_head', $plugin_public, 'add_modal_html' );
 
+		$this->loader->add_filter( 'get_the_archive_title', $plugin_public, 'translate_archive_title' );
+
+		$this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
     $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
 	}
 

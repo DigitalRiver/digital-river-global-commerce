@@ -14,7 +14,6 @@
 
 <?php
 // $subtotal_items = $order['order']['totalItemsInCart'];
-
 $subtotal_items = 0;
 
 if ( isset( $order['order'] ) ) {

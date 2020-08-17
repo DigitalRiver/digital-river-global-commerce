@@ -48,7 +48,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
     <div class="dr-checkout-wrapper__actions">
         <div class="back-link">
 
-            <a href="javascript:void(0)">&#60; Back</a>
+            <a href="javascript:void(0)">&#60; <?php _e( 'Back', 'digital-river-global-commerce' ); ?></a>
 
         </div>
 
@@ -93,8 +93,6 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
         </div>
 
         <div class="dr-summary dr-summary--checkout">
-
-            <?php drgc_currency_toggler( 'd-none' ); ?>
 
             <div class="dr-summary__products">
 

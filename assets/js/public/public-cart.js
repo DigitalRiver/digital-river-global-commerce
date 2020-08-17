@@ -276,7 +276,7 @@ const CartModule = (($) => {
             <div class="dr-product-content">
               <div class="dr-product__img" style="background-image: url(${lineItem.product.thumbnailImage})"></div>
               <div class="dr-product__info">
-                <a class="product-name" href="${permalink}">${lineItem.product.displayName}</a>
+                <a class="product-name" href="${permalink}?locale=${drgc_params.drLocale}">${lineItem.product.displayName}</a>
                 <div class="product-sku">
                   <span>${localizedText.product_label} </span>
                   <span>#${lineItem.product.id}</span>
@@ -496,6 +496,7 @@ jQuery(document).ready(($) => {
       });
   });
 
+  // Old currency selector, will be deprecated after it's not used by any theme
   $('body').on('change', '.dr-currency-select', (e) => {
     e.preventDefault();
     const $this = $(e.target);

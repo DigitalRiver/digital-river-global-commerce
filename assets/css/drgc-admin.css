@@ -50,6 +50,14 @@ input:checked + .slider:before { -webkit-transform: translateX(26px); transform:
 
 .payment-btn-field > legend { display: none; }
 
+#product-thumbnail { max-width: 150px; }
+
+#product-image { max-width: 300px; }
+
+#dr_product_details_box > button { display: none !important; }
+
+#dr_product_details_box > h2 { cursor: auto !important; }
+
 /*
 * jQuery UI CSS Framework
 * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)

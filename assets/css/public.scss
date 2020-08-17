@@ -380,6 +380,10 @@ body.page-thank-you #dr-minicart {
         display: block;
         margin: 0 auto;
     }
+
+    .dr-loading {
+        top: -50px;
+    }
 }
 
 @media only screen and (min-width: map-get($bs-breakpoints, sm)) {

@@ -329,6 +329,10 @@ jQuery(document).ready(($) => {
     if (pdDisplayOption.$card && pdDisplayOption.$card.length) {
         isPdCard = true;
         pdDisplayOption.$card.each((idx, elem) => {
+            const $loadingIcon = $(elem).find('.dr-loading');
+            const $productInfo = $(elem).find('.dr-pd-info');
+            const $title = $(elem).find('.dr-pd-item-title');
+            const $thumbnail = $(elem).find('.dr-pd-item-thumbnail > img');
             const $priceDiv = $(elem).find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
             const $buyBtn = $(elem).find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
             const productID = $buyBtn.data('product-id');
