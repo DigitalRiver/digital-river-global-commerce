@@ -742,21 +742,21 @@ class DRGC_Public {
     if ( ! is_admin() ) {
       $plugin = DRGC();
       $dr_locale = drgc_get_current_dr_locale();
+      $wp_locale = drgc_get_current_wp_locale( $dr_locale );
 
+      // Update shopper's locale & currency
       if ( $plugin->shopper->locale !== $dr_locale ) {
-        // Update shopper's locale & currency
         $primary_currency = drgc_get_primary_currency( $dr_locale );
         $plugin->shopper->update_locale_and_currency( $dr_locale, $primary_currency );
-
-        // Load plugin translated text strings
-        $wp_locale = drgc_get_current_wp_locale( $dr_locale );
-        switch_to_locale( $wp_locale );
-        load_plugin_textdomain(
-          'digital-river-global-commerce',
-          false,
-          dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-        );
       }
+
+      // Load plugin translated text strings
+      switch_to_locale( $wp_locale );
+      load_plugin_textdomain(
+        'digital-river-global-commerce',
+        false,
+        dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+      );
 
       if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
         $customer = $plugin->shopper->retrieve_shopper();

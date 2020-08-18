@@ -15457,6 +15457,10 @@ jQuery(document).ready(function ($) {
 
           PdpModule.displayRealTimePricing(variations[0].pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(isInStock.toString(), true, $buyBtn);
+          $title.text(res.product.displayName);
+          $thumbnail.attr('alt', res.product.displayName);
+          $loadingIcon.hide();
+          $productInfo.show();
         });
       } else {
         commerce_api.getProduct(productID, {
@@ -15467,6 +15471,10 @@ jQuery(document).ready(function ($) {
 
           PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+          $title.text(res.product.displayName);
+          $thumbnail.attr('alt', res.product.displayName);
+          $loadingIcon.hide();
+          $productInfo.show();
         });
       }
     });

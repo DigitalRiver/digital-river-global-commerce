@@ -72,7 +72,7 @@ if ( $variations && isset( $variations[0] ) ) {
             }
         }
 
-        if ( is_array( $var_attr_values[ $key ] ) && count( array_unique( $var_attr_values[ $key ] ) ) === $vars_count ) {
+        if ( isset( $var_attr_values[ $key ] ) && is_array( $var_attr_values[ $key ] ) && count( array_unique( $var_attr_values[ $key ] ) ) === $vars_count ) {
             $var_type = $key;
         }
     }
