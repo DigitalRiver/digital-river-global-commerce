@@ -15688,9 +15688,9 @@ var AccountModule = function ($) {
 }(jQuery);
 
 jquery_default()(function () {
-  var localizedText = drgc_params.translations;
-  var orders = drgc_params.shopperOrders.orders.order;
   if (jquery_default()('#dr-account-page-wrapper').length < 1) return;
+  var localizedText = drgc_params.translations;
+  var orders = drgc_params.shopperOrders ? drgc_params.shopperOrders.orders.order : '';
   window.drActiveOrderId = '';
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');

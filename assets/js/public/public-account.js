@@ -19,15 +19,12 @@ const AccountModule = (($) => {
 })(jQuery);
 
 $(() => {
-    const localizedText = drgc_params.translations;
-    const orders = drgc_params.shopperOrders.orders.order;
-
     if ($('#dr-account-page-wrapper').length < 1) return;
 
+    const localizedText = drgc_params.translations;
+    const orders = drgc_params.shopperOrders ? drgc_params.shopperOrders.orders.order : '';
     window.drActiveOrderId = '';
-
     var $body = $('body');
-
     var $ordersModal = $('#ordersModal');
 
     $body.append($ordersModal);
