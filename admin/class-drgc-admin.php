@@ -149,6 +149,8 @@ class DRGC_Admin {
 		if ( ! current_user_can( 'manage_options' ) ) {
 			return;
 		}
+
+		$active_tab = isset( $_GET['tab'] ) ? $_GET['tab'] : 'general';
 		include_once 'partials/drgc-admin-display.php';
 	}
 
@@ -163,14 +165,14 @@ class DRGC_Admin {
 			$this->option_name . '_general',
 			__('General', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_general_cb' ),
-			$this->plugin_name
+			$this->plugin_name . '_general'
 		);
 
 		add_settings_field(
 			$this->option_name . '_site_id',
 			__( 'Site ID', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_site_id_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_site_id' )
 		);
@@ -179,7 +181,7 @@ class DRGC_Admin {
 			$this->option_name . '_api_key',
 			__( 'Commerce API Key', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_api_key_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_api_key' )
 		);
@@ -188,7 +190,7 @@ class DRGC_Admin {
 			$this->option_name . '_api_secret',
 			__( 'Commerce API Secret', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_api_secret_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_api_secret' )
 		);
@@ -197,7 +199,7 @@ class DRGC_Admin {
 			$this->option_name . '_domain',
 			__( 'Domain', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_domain_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_domain' )
 		);
@@ -206,7 +208,7 @@ class DRGC_Admin {
 			$this->option_name . '_digitalRiver_key',
 			__( 'Payment Services API Key', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_digitalRiver_key_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_digitalRiver_key' )
 		);
@@ -215,7 +217,7 @@ class DRGC_Admin {
 			$this->option_name . '_big_blue_username',
 			__( 'UMS Username', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_big_blue_username_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_big_blue_username' )
 		);
@@ -224,7 +226,7 @@ class DRGC_Admin {
 			$this->option_name . '_big_blue_password',
 			__( 'UMS Password', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_big_blue_password_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_big_blue_password' )
 		);
@@ -233,7 +235,7 @@ class DRGC_Admin {
 			$this->option_name . '_cron_handler',
 			__( 'Scheduled Products Import', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_cron_handler_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_general',
 			$this->option_name . '_general',
 			array( 'label_for' => $this->option_name . '_cron_handler' )
     );
@@ -242,14 +244,14 @@ class DRGC_Admin {
 			$this->option_name . '_checkout',
 			__( 'Checkout', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_checkout_cb' ),
-			$this->plugin_name
+			$this->plugin_name . '_checkout'
 		);
 
 		add_settings_field(
 			$this->option_name . '_testOrder_handler',
 			__( 'Test Order', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_testOrder_handler_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_checkout',
 			$this->option_name . '_checkout',
 			array( 'label_for' => $this->option_name . '_testOrder_handler' )
 		);
@@ -258,7 +260,7 @@ class DRGC_Admin {
 			$this->option_name . '_force_excl_tax_handler',
 			__( 'Display As Excl. Tax', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_force_excl_tax_handler_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_checkout',
 			$this->option_name . '_checkout',
 			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
 		);
@@ -267,14 +269,14 @@ class DRGC_Admin {
 			$this->option_name . '_payment',
 			__( 'Payment Buttons', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_payment_cb' ),
-			$this->plugin_name
+			$this->plugin_name . '_payment'
 		);
 
 		add_settings_field(
 			$this->option_name . '_applepay_handler',
 			__( 'Apple Pay', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_applepay_handler_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_payment',
 			$this->option_name . '_payment',
 			array( 'label_for' => $this->option_name . '_applepay_handler' )
     );
@@ -283,7 +285,7 @@ class DRGC_Admin {
       $this->option_name . '_applepay_button_type',
       __( 'Button Type', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_applepay_button_type_cb' ),
-      $this->plugin_name,
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_applepay_button_type' )
     );
@@ -292,7 +294,7 @@ class DRGC_Admin {
       $this->option_name . '_applepay_button_color',
       __( 'Button Color', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_applepay_button_color_cb' ),
-      $this->plugin_name,
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_applepay_button_color' )
     );
@@ -301,7 +303,7 @@ class DRGC_Admin {
 			$this->option_name . '_googlepay_handler',
 			__( 'Google Pay', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_googlepay_handler_cb' ),
-			$this->plugin_name,
+			$this->plugin_name . '_payment',
 			$this->option_name . '_payment',
 			array( 'label_for' => $this->option_name . '_googlepay_handler' )
     );
@@ -310,7 +312,7 @@ class DRGC_Admin {
       $this->option_name . '_googlepay_button_type',
       __( 'Button Type', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_googlepay_button_type_cb' ),
-      $this->plugin_name,
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_googlepay_button_type' )
     );
@@ -319,7 +321,7 @@ class DRGC_Admin {
       $this->option_name . '_googlepay_button_color',
       __( 'Button Color', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_googlepay_button_color_cb' ),
-      $this->plugin_name,
+      $this->plugin_name . '_payment',
       $this->option_name . '_payment',
       array( 'label_for' => $this->option_name . '_googlepay_button_color' )
     );
@@ -328,25 +330,34 @@ class DRGC_Admin {
 			$this->option_name . '_extra',
 			'',
 			array( $this, $this->option_name . '_extra_cb' ),
-			$this->plugin_name
+			$this->plugin_name . '_general'
 		);
 
-		register_setting( $this->plugin_name, $this->option_name . '_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_api_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_api_secret', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_domain', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_digitalRiver_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_big_blue_username', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_big_blue_password', array( 'type' => 'string', 'sanitize_callback' => null ) );
-    register_setting( $this->plugin_name, $this->option_name . '_cron_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-		register_setting( $this->plugin_name, $this->option_name . '_applepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name, $this->option_name . '_googlepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name, $this->option_name . '_applepay_button_type' );
-    register_setting( $this->plugin_name, $this->option_name . '_applepay_button_color' );
-    register_setting( $this->plugin_name, $this->option_name . '_googlepay_button_type' );
-    register_setting( $this->plugin_name, $this->option_name . '_googlepay_button_color' );
+    // General
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_site_id', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_api_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_api_secret', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_domain', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_digitalRiver_key', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_username', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_password', array( 'type' => 'string', 'sanitize_callback' => null ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_cron_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+
+    // Locales
+    register_setting( $this->plugin_name . '_locales', $this->option_name . '_default_locale', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
+    register_setting( $this->plugin_name . '_locales', $this->option_name . '_locale_options', array( 'sanitize_callback' => array( $this, 'dr_sanitize_locale_options' ) ) );
+
+    // Checkout
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+
+    // Payment
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_button_type' );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_button_color' );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_button_type' );
+    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_button_color' );
 	}
 
 	/**
@@ -482,6 +493,30 @@ class DRGC_Admin {
 		return $new_input;
   }
   
+	/**
+	 * Update wp_locale only and install needed language packs.
+	 *
+	 * @since    2.0.0
+	 */
+	public function dr_sanitize_locale_options( $input ) {
+		$new_input = get_option( 'drgc_locale_options' );
+		$changed_wp_locales = array();
+
+		foreach ( $new_input as $idx => $locale_option ) {
+			$input_wp_locale = $input[$idx]['wp_locale'];
+			if ( $input_wp_locale && $locale_option['wp_locale'] !== $input_wp_locale ) {
+				$new_input[$idx]['wp_locale'] = $input_wp_locale;
+				array_push( $changed_wp_locales, $input_wp_locale );
+			}
+		}
+
+		if ( ! empty( $changed_wp_locales ) ) {
+			$this->install_language_packs( $changed_wp_locales );
+		}
+
+		return $new_input;
+	}
+
 	/**
 	 * Render button of products import.
 	 *
@@ -650,5 +685,172 @@ class DRGC_Admin {
 	public function drgc_big_blue_password_cb() {
 		$password = password_hash( get_option( $this->option_name . '_big_blue_password' ), PASSWORD_DEFAULT );
 		echo '<div data-tooltip="Required to manage and retrieve subscriptions via User Management Service" data-tooltip-location="right"><input type="password" class="regular-text" name="' . $this->option_name . '_big_blue_password' . '" id="' . $this->option_name . '_big_blue_password' . '" value="' . $password . '"></div>';
+	}
+
+	/**
+	 * Reformat locale's data structure for easier usage.
+	 *
+	 * @since    2.0.0
+	 */
+	private function reformat_locale_options( $localeOption ) {
+		return array(
+			'dr_locale' => $localeOption['locale'],
+			'wp_locale' => get_wp_locale_by_map( $localeOption['locale'] ),
+			'primary_currency' => $localeOption['primaryCurrency'],
+			'supported_currencies' => $localeOption['supportedCurrencies']['currency']
+		);
+	}
+
+	/**
+	 * Call get site API and save locales data to the option.
+	 *
+	 * @since    2.0.0
+	 */
+	public function drgc_sync_locales_ajax() {
+		check_ajax_referer( 'drgc_admin_ajax', 'nonce' );
+		$site_data = DRGC()->site->get_site();
+		$locale_options = array_map( array( $this, 'reformat_locale_options' ), $site_data['site']['localeOptions']['localeOption'] );
+		$wp_locales = array_column( $locale_options, 'wp_locale' );
+		update_option( $this->option_name . '_default_locale', $site_data['site']['defaultLocale'] );
+		update_option( $this->option_name . '_locale_options', $locale_options );
+		if ( ! empty( $wp_locales ) ) {
+			$this->install_language_packs( $wp_locales );
+		}
+		wp_send_json_success();
+	}
+
+	/**
+	 * Remove the Editor from the DRGC post types.
+	 *
+	 * @since    2.0.0
+	 */
+	public function remove_product_editor() {
+		remove_post_type_support( 'dr_product', 'editor' );
+		remove_post_type_support( 'dr_product_variation', 'editor' );
+	}
+
+	/**
+	 * Remove the slug meta box from the DRGC post types.
+	 *
+	 * @since    2.0.0
+	 */
+	public function remove_slug_meta_box() {
+		remove_meta_box( 'slugdiv', 'dr_product', 'normal');
+		remove_meta_box( 'slugdiv', 'dr_product_variation', 'normal');
+	}
+
+	/**
+	 * Disable dragging of the meta box for the DRGC post types.
+	 *
+	 * @since    2.0.0
+	 */
+	public function disable_drag_meta_box() {
+		if ( ( get_current_screen()->post_type === 'dr_product' ) || ( get_current_screen()->post_type === 'dr_product_variation' ) ) {
+			wp_deregister_script( 'postbox' );
+		}
+  }
+  
+  /**
+   * Create translation strings for supported country names.
+   *
+   * @since    2.0.0
+   */
+  public function create_country_name_trans_strings() {
+    $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
+    $locales = get_option( 'drgc_locale_options' );
+    $names = '';
+
+    foreach ( $locales as $locale ) {
+      $names = $names . ( empty( $names ) ? '' : ' . ' . PHP_EOL ) . '__( ' . '"' . get_dr_country_name( $locale['dr_locale'] ) . '"' . ', "digital-river-global-commerce" )';
+    }
+
+    fwrite( $fh, "<?php" . PHP_EOL . "\$drgc_supported_country_names = " . PHP_EOL . "$names;" . PHP_EOL ) or die( __( 'Could not write to file', 'digital-river-global-commerce' ) );
+    fclose( $fh );
+  }
+
+  /**
+   * Create translation strings for menu labels.
+   *
+   * @since    2.0.0
+   */
+	public function create_menu_label_trans_strings() {
+    $filename = plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php';
+    $content = file_get_contents( $filename );
+    $pos = strpos( $content, 'drgc_nav_menu_labels');
+    
+    if ( $pos > 0 ) {
+      $content_chunks = explode( '$drgc_nav_menu_labels', $content );
+      $content = $content_chunks[0];
+    }
+
+    $locs = get_nav_menu_locations();
+
+    foreach ( $locs as $loc => $value ) {
+      $labels = '';
+      $menu = wp_get_nav_menu_object( $value );
+
+      if ( $menu ) {
+        $items = wp_get_nav_menu_items( $menu->term_id );
+
+        foreach ( $items as $k => $v ) {
+          $labels = $labels . ( empty( $labels ) ? '' : ' . ' . PHP_EOL ) . '__( ' . '"' . $items[ $k ]->title . '"' . ', "digital-river-global-commerce" )';
+        }
+      }
+    }
+
+    $content = $content . "\$drgc_nav_menu_labels = " . PHP_EOL . "$labels;";
+    
+    file_put_contents( $filename, $content );
+	}
+
+  /**
+   * Create translation strings for category names.
+   *
+   * @since    2.0.0
+   */
+	public function create_category_name_trans_strings() {
+    $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-category-name-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
+    $terms = get_terms( array( 
+      'taxonomy' => 'dr_product_category', 
+      'hide_empty' => false 
+    ) );
+
+    if ( ! empty( $terms ) ) {
+      $cat_names = '';
+
+      foreach ( $terms as $term ) {
+        $cat_names = $cat_names . ( empty( $cat_names ) ? '' : ' . ' . PHP_EOL ) . '__( ' . '"' . $term->name . '"' . ', "digital-river-global-commerce" )';
+      }
+
+      fwrite( $fh, "<?php" . PHP_EOL . "\$drgc_category_names = " . PHP_EOL . "$cat_names;" ) or die( __( 'Could not write to file', 'digital-river-global-commerce' ) );
+      fclose( $fh );
+    }
+  }
+  
+  /**
+   * Initiate the translation string files.
+   *
+   * @since    2.0.0
+   */
+  public function init_trans_string_files() {
+    if ( ! file_exists( plugin_dir_path( __DIR__ ) . 'drgc-category-name-trans-strings.php' ) ) {
+      $this->create_category_name_trans_strings();
+    }
+
+    if ( ! file_exists( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php' ) ) {
+      $this->create_country_name_trans_strings();
+    }
+  }
+
+	/**
+	 * Install needed language packs from wordpress.org.
+	 *
+	 * @since    2.0.0
+	 */
+	public function install_language_packs( $locales ) {
+		require_once( ABSPATH . 'wp-admin/includes/translation-install.php' );
+		foreach ( $locales as $locale ) {
+			wp_download_language_pack( $locale );
+		}
 	}
 }

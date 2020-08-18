@@ -20,123 +20,131 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: admin/class-drgc-admin.php:164
+#: admin/class-drgc-admin.php:166, admin/partials/drgc-admin-display.php:21
 msgid "General"
 msgstr ""
 
-#: admin/class-drgc-admin.php:171
+#: admin/class-drgc-admin.php:173
 msgid "Site ID"
 msgstr ""
 
-#: admin/class-drgc-admin.php:180
+#: admin/class-drgc-admin.php:182
 msgid "Commerce API Key"
 msgstr ""
 
-#: admin/class-drgc-admin.php:189
+#: admin/class-drgc-admin.php:191
 msgid "Commerce API Secret"
 msgstr ""
 
-#: admin/class-drgc-admin.php:198
+#: admin/class-drgc-admin.php:200
 msgid "Domain"
 msgstr ""
 
-#: admin/class-drgc-admin.php:207
+#: admin/class-drgc-admin.php:209
 msgid "Payment Services API Key"
 msgstr ""
 
-#: admin/class-drgc-admin.php:216
+#: admin/class-drgc-admin.php:218
 msgid "UMS Username"
 msgstr ""
 
-#: admin/class-drgc-admin.php:225
+#: admin/class-drgc-admin.php:227
 msgid "UMS Password"
 msgstr ""
 
-#: admin/class-drgc-admin.php:234
+#: admin/class-drgc-admin.php:236
 msgid "Scheduled Products Import"
 msgstr ""
 
-#: admin/class-drgc-admin.php:243, includes/class-drgc-activator.php:39, public/class-drgc-public.php:138, public/templates/login/login.php:28
+#: admin/class-drgc-admin.php:245, admin/partials/drgc-admin-display.php:27, includes/class-drgc-activator.php:39, public/class-drgc-public.php:138, public/templates/login/login.php:28
 msgid "Checkout"
 msgstr ""
 
-#: admin/class-drgc-admin.php:250
+#: admin/class-drgc-admin.php:252
 msgid "Test Order"
 msgstr ""
 
-#: admin/class-drgc-admin.php:259
+#: admin/class-drgc-admin.php:261
 msgid "Display As Excl. Tax"
 msgstr ""
 
-#: admin/class-drgc-admin.php:268
+#: admin/class-drgc-admin.php:270
 msgid "Payment Buttons"
 msgstr ""
 
-#: admin/class-drgc-admin.php:275
+#: admin/class-drgc-admin.php:277
 msgid "Apple Pay"
 msgstr ""
 
-#: admin/class-drgc-admin.php:284, admin/class-drgc-admin.php:311, admin/class-drgc-admin.php:542, admin/class-drgc-admin.php:602
+#: admin/class-drgc-admin.php:286, admin/class-drgc-admin.php:313, admin/class-drgc-admin.php:577, admin/class-drgc-admin.php:637
 msgid "Button Type"
 msgstr ""
 
-#: admin/class-drgc-admin.php:293, admin/class-drgc-admin.php:320, admin/class-drgc-admin.php:564, admin/class-drgc-admin.php:624
+#: admin/class-drgc-admin.php:295, admin/class-drgc-admin.php:322, admin/class-drgc-admin.php:599, admin/class-drgc-admin.php:659
 msgid "Button Color"
 msgstr ""
 
-#: admin/class-drgc-admin.php:302
+#: admin/class-drgc-admin.php:304
 msgid "Google Pay"
 msgstr ""
 
-#: admin/class-drgc-admin.php:385
+#: admin/class-drgc-admin.php:396
 msgid "Please contact your account representative for assistance with these settings."
 msgstr ""
 
-#: admin/class-drgc-admin.php:453
+#: admin/class-drgc-admin.php:464
 msgid "Enable Test Order."
 msgstr ""
 
-#: admin/class-drgc-admin.php:465
+#: admin/class-drgc-admin.php:476
 msgid "Display pricing as tax exclusive on checkout flow"
 msgstr ""
 
-#: admin/class-drgc-admin.php:477
+#: admin/class-drgc-admin.php:488
 msgid "Twice daily product synchronization with GC."
 msgstr ""
 
-#: admin/class-drgc-admin.php:541
+#: admin/class-drgc-admin.php:576
 msgid "Required to the type of Apple Pay button"
 msgstr ""
 
-#: admin/class-drgc-admin.php:544, admin/class-drgc-admin.php:604
+#: admin/class-drgc-admin.php:579, admin/class-drgc-admin.php:639
 msgid "Long"
 msgstr ""
 
-#: admin/class-drgc-admin.php:546, admin/class-drgc-admin.php:606
+#: admin/class-drgc-admin.php:581, admin/class-drgc-admin.php:641
 msgid "Plain"
 msgstr ""
 
-#: admin/class-drgc-admin.php:563
+#: admin/class-drgc-admin.php:598
 msgid "Required to the color of Apple Pay button"
 msgstr ""
 
-#: admin/class-drgc-admin.php:566, admin/class-drgc-admin.php:626
+#: admin/class-drgc-admin.php:601, admin/class-drgc-admin.php:661
 msgid "Black"
 msgstr ""
 
-#: admin/class-drgc-admin.php:568, admin/class-drgc-admin.php:628
+#: admin/class-drgc-admin.php:603, admin/class-drgc-admin.php:663
 msgid "White"
 msgstr ""
 
-#: admin/class-drgc-admin.php:601
+#: admin/class-drgc-admin.php:636
 msgid "Required to the type of Google Pay button"
 msgstr ""
 
-#: admin/class-drgc-admin.php:623
+#: admin/class-drgc-admin.php:658
 msgid "Required to the color of Google Pay button"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45
+#: admin/class-drgc-admin.php:759, admin/class-drgc-admin.php:812
+msgid "Failed to create file"
+msgstr ""
+
+#: admin/class-drgc-admin.php:767, admin/class-drgc-admin.php:825
+msgid "Could not write to file"
+msgstr ""
+
+#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45, drgc-menu-label-trans-strings.php:10
 msgid "Products"
 msgstr ""
 
@@ -156,7 +164,7 @@ msgstr ""
 msgid "Add new product"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:49, public/templates/checkout/checkout-billing.php:40, public/templates/checkout/checkout-email.php:12, public/templates/checkout/checkout-shipping.php:27
+#: admin/class-drgc-post-types.php:49, public/templates/checkout/checkout-billing.php:40, public/templates/checkout/checkout-delivery.php:34, public/templates/checkout/checkout-email.php:12, public/templates/checkout/checkout-shipping.php:27
 msgid "Edit"
 msgstr ""
 
@@ -196,7 +204,7 @@ msgstr ""
 msgid "DR Variation"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:85, admin/partials/drgc-product-variations.php:17
+#: admin/class-drgc-post-types.php:85, admin/partials/drgc-product-details-meta-box.php:43
 msgid "Variations"
 msgstr ""
 
@@ -252,52 +260,96 @@ msgstr ""
 msgid "Product Details"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:214
+#: admin/class-drgc-post-types.php:300
 msgid "Product ID"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:215, admin/partials/drgc-product-details-meta-box.php:62
+#: admin/class-drgc-post-types.php:301, admin/partials/drgc-product-details-meta-box.php:26
 msgid "SKU"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:40, admin/partials/drgc-product-variations.php:23
-msgid "Variation Attributes"
+#: admin/partials/drgc-admin-display.php:24, admin/partials/drgc-admin-locales.php:20
+msgid "Locales"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:54
+#: admin/partials/drgc-admin-display.php:30, includes/shortcodes/class-dr-shortcode-checkout.php:38
+msgid "Payment"
+msgstr ""
+
+#: admin/partials/drgc-admin-locales.php:21
+msgid "Sync Locales and Currencies"
+msgstr ""
+
+#: admin/partials/drgc-admin-locales.php:24
+msgid "No locale, please sync it up by clicking button above."
+msgstr ""
+
+#: admin/partials/drgc-admin-locales.php:29
+msgid "Site Locales"
+msgstr ""
+
+#: admin/partials/drgc-admin-locales.php:34
+msgid "DR Locale"
+msgstr ""
+
+#: admin/partials/drgc-admin-locales.php:35
+msgid "WP Language"
+msgstr ""
+
+#: admin/partials/drgc-admin-locales.php:36
+msgid "Currencies"
+msgstr ""
+
+#: admin/partials/drgc-admin-locales.php:44
+msgid "(Default)"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:18
 msgid "GC Product ID"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:58
+#: admin/partials/drgc-product-details-meta-box.php:22
 msgid "External Reference ID"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:66, public/templates/my-subscriptions/my-subscriptions.php:38
-msgid "Price"
+#: admin/partials/drgc-product-details-meta-box.php:33
+msgid "Default"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:70
-msgid "Short Description"
-msgstr ""
-
-#: admin/partials/drgc-product-details-meta-box.php:74
-msgid "Long Description"
-msgstr ""
-
-#: admin/partials/drgc-product-details-meta-box.php:78
-msgid "Thumbnail"
-msgstr ""
-
-#: admin/partials/drgc-product-details-meta-box.php:82
-msgid "Product Image"
-msgstr ""
-
-#: admin/partials/drgc-product-variations.php:21
+#: admin/partials/drgc-product-details-meta-box.php:47
 msgid "ID"
 msgstr ""
 
-#: admin/partials/drgc-product-variations.php:22
+#: admin/partials/drgc-product-details-meta-box.php:48
 msgid "Internal Variation Name"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:49, admin/partials/drgc-product-details-meta-box.php:78
+msgid "Variation Attributes"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:94, public/templates/my-subscriptions/my-subscriptions.php:38
+msgid "Price"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:98
+msgid "Display Name"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:102
+msgid "Short Description"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:106
+msgid "Long Description"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:110
+msgid "Thumbnail"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:114
+msgid "Product Image"
 msgstr ""
 
 #: admin/partials/drgc-products-import-btn.php:16
@@ -310,6 +362,70 @@ msgstr ""
 
 #: admin/partials/drgc-products-import-btn.php:28
 msgid "Import Products"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:3
+msgid "all-products"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:4
+msgid "design-software"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:5
+msgid "eds"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:6
+msgid "electronics"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:7
+msgid "games"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:8
+msgid "games-entertainment"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:9
+msgid "mathware-ltd-english"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:10
+msgid "products"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:11, drgc-menu-label-trans-strings.php:11
+msgid "software"
+msgstr ""
+
+#: drgc-category-name-trans-strings.php:12
+msgid "Uncategorized"
+msgstr ""
+
+#: drgc-menu-label-trans-strings.php:3
+msgid "Taiwan"
+msgstr ""
+
+#: drgc-menu-label-trans-strings.php:4
+msgid "Japan"
+msgstr ""
+
+#: drgc-menu-label-trans-strings.php:5
+msgid "France"
+msgstr ""
+
+#: drgc-menu-label-trans-strings.php:6
+msgid "United States"
+msgstr ""
+
+#: drgc-menu-label-trans-strings.php:7
+msgid "United Kingdom"
+msgstr ""
+
+#: drgc-menu-label-trans-strings.php:8
+msgid "Germany"
 msgstr ""
 
 #: includes/class-drgc-activator.php:30
@@ -328,7 +444,7 @@ msgstr ""
 msgid "login"
 msgstr ""
 
-#: includes/class-drgc-activator.php:47, public/class-drgc-public.php:600, public/templates/login/login.php:93
+#: includes/class-drgc-activator.php:47, public/class-drgc-public.php:602, public/templates/login/login.php:93
 msgid "Login"
 msgstr ""
 
@@ -336,7 +452,7 @@ msgstr ""
 msgid "account"
 msgstr ""
 
-#: includes/class-drgc-activator.php:55, public/class-drgc-public.php:614, public/templates/login/login.php:29
+#: includes/class-drgc-activator.php:55, public/class-drgc-public.php:616, public/templates/login/login.php:29
 msgid "My Account"
 msgstr ""
 
@@ -372,10 +488,6 @@ msgstr ""
 msgid "Delivery options"
 msgstr ""
 
-#: includes/shortcodes/class-dr-shortcode-checkout.php:38
-msgid "Payment"
-msgstr ""
-
 #: public/class-drgc-public.php:119
 msgid "Upgrade"
 msgstr ""
@@ -384,19 +496,19 @@ msgstr ""
 msgid "Add"
 msgstr ""
 
-#: public/class-drgc-public.php:121, public/templates/checkout/checkout-summary.php:20, public/templates/thank-you/thank-you-summary.php:29
+#: public/class-drgc-public.php:121, public/templates/checkout/checkout-summary.php:20, public/templates/thank-you/thank-you-summary.php:28
 msgid "FREE"
 msgstr ""
 
-#: public/class-drgc-public.php:122, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:37
+#: public/class-drgc-public.php:122, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:36
 msgid "Incl. VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:123, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:37
+#: public/class-drgc-public.php:123, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:36
 msgid "Excl. VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:124, public/templates/thank-you/thank-you-summary.php:50
+#: public/class-drgc-public.php:124, public/templates/thank-you/thank-you-summary.php:49
 msgid "VAT"
 msgstr ""
 
@@ -404,7 +516,7 @@ msgstr ""
 msgid "Estimated VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:126, public/templates/thank-you/thank-you-summary.php:66
+#: public/class-drgc-public.php:126, public/templates/thank-you/thank-you-summary.php:65
 msgid "Shipping VAT"
 msgstr ""
 
@@ -412,7 +524,7 @@ msgstr ""
 msgid "Estimated Shipping VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:128, public/templates/account/account-orders.php:194, public/templates/thank-you/thank-you-summary.php:50
+#: public/class-drgc-public.php:128, public/templates/account/account-orders.php:194, public/templates/thank-you/thank-you-summary.php:49
 msgid "Tax"
 msgstr ""
 
@@ -420,7 +532,7 @@ msgstr ""
 msgid "Estimated Tax"
 msgstr ""
 
-#: public/class-drgc-public.php:130, public/templates/account/account-orders.php:203, public/templates/thank-you/thank-you-summary.php:66
+#: public/class-drgc-public.php:130, public/templates/account/account-orders.php:203, public/templates/thank-you/thank-you-summary.php:65
 msgid "Shipping Tax"
 msgstr ""
 
@@ -428,7 +540,7 @@ msgstr ""
 msgid "Estimated Shipping Tax"
 msgstr ""
 
-#: public/class-drgc-public.php:132, public/templates/account/account-orders.php:199, public/templates/checkout/checkout-shipping.php:21, public/templates/thank-you/thank-you-summary.php:58
+#: public/class-drgc-public.php:132, public/templates/account/account-orders.php:199, public/templates/checkout/checkout-shipping.php:21, public/templates/thank-you/thank-you-summary.php:57
 msgid "Shipping"
 msgstr ""
 
@@ -468,7 +580,7 @@ msgstr ""
 msgid "Shipping and Handling"
 msgstr ""
 
-#: public/class-drgc-public.php:143, public/templates/account/account-orders.php:208, public/templates/cart/cart-summary.php:78, public/templates/checkout/checkout-summary.php:67, public/templates/thank-you/thank-you-summary.php:74
+#: public/class-drgc-public.php:143, public/templates/account/account-orders.php:208, public/templates/cart/cart-summary.php:78, public/templates/checkout/checkout-summary.php:67, public/templates/thank-you/thank-you-summary.php:73
 msgid "Discount"
 msgstr ""
 
@@ -500,7 +612,7 @@ msgstr ""
 msgid "Please enter a valid promo code."
 msgstr ""
 
-#: public/class-drgc-public.php:152, public/class-drgc-public.php:311
+#: public/class-drgc-public.php:152, public/class-drgc-public.php:312
 msgid "Please enter a valid email address."
 msgstr ""
 
@@ -520,31 +632,31 @@ msgstr ""
 msgid "Emails do not match."
 msgstr ""
 
-#: public/class-drgc-public.php:157, public/class-drgc-public.php:268
+#: public/class-drgc-public.php:157, public/class-drgc-public.php:269
 msgid "Password must be between 8 - 32 characters."
 msgstr ""
 
-#: public/class-drgc-public.php:158, public/class-drgc-public.php:272
+#: public/class-drgc-public.php:158, public/class-drgc-public.php:273
 msgid "Must use at least one upper case letter."
 msgstr ""
 
-#: public/class-drgc-public.php:159, public/class-drgc-public.php:276
+#: public/class-drgc-public.php:159, public/class-drgc-public.php:277
 msgid "Must use at least one lower case letter."
 msgstr ""
 
-#: public/class-drgc-public.php:160, public/class-drgc-public.php:280
+#: public/class-drgc-public.php:160, public/class-drgc-public.php:281
 msgid "Must use at least one number."
 msgstr ""
 
-#: public/class-drgc-public.php:161, public/class-drgc-public.php:284
+#: public/class-drgc-public.php:161, public/class-drgc-public.php:285
 msgid "Must use at least one special character (! _ @)."
 msgstr ""
 
-#: public/class-drgc-public.php:162, public/class-drgc-public.php:288
+#: public/class-drgc-public.php:162, public/class-drgc-public.php:289
 msgid "Contains non-allowable special characters (only ! _ @ are allowed)."
 msgstr ""
 
-#: public/class-drgc-public.php:163, public/class-drgc-public.php:264
+#: public/class-drgc-public.php:163, public/class-drgc-public.php:265
 msgid "Passwords do not match."
 msgstr ""
 
@@ -564,7 +676,7 @@ msgstr ""
 msgid "Buy Now"
 msgstr ""
 
-#: public/class-drgc-public.php:168, public/partials/drgc-buy-button.php:31, public/templates/parts/content-archive.php:77, public/templates/parts/content-single.php:176
+#: public/class-drgc-public.php:168, public/partials/drgc-buy-button.php:31, public/templates/parts/content-archive.php:61, public/templates/parts/content-single.php:148
 msgid "Add to Cart"
 msgstr ""
 
@@ -624,119 +736,119 @@ msgstr ""
 msgid "The new password must be different from the current password."
 msgstr ""
 
-#: public/class-drgc-public.php:240
+#: public/class-drgc-public.php:241
 msgid "Authorization failed for specified credentials"
 msgstr ""
 
-#: public/class-drgc-public.php:398
+#: public/class-drgc-public.php:399
 msgid "The current password you entered is incorrect."
 msgstr ""
 
-#: public/class-drgc-public.php:402
+#: public/class-drgc-public.php:403
 msgid "Your new password can not be the same as the current password."
 msgstr ""
 
-#: public/class-drgc-public.php:439
+#: public/class-drgc-public.php:440
 msgid "Enter a username or email address."
 msgstr ""
 
-#: public/class-drgc-public.php:443, public/class-drgc-public.php:457
+#: public/class-drgc-public.php:444, public/class-drgc-public.php:458
 msgid "There is no account with that username or email address."
 msgstr ""
 
-#: public/class-drgc-public.php:479
+#: public/class-drgc-public.php:480
 msgid "Someone has requested a password reset for the following account:"
 msgstr ""
 
-#: public/class-drgc-public.php:480
+#: public/class-drgc-public.php:481
 msgid "Site Name: %s"
 msgstr ""
 
-#: public/class-drgc-public.php:481
+#: public/class-drgc-public.php:482
 msgid "Username: %s"
 msgstr ""
 
-#: public/class-drgc-public.php:482
+#: public/class-drgc-public.php:483
 msgid "If this was a mistake, just ignore this email and nothing will happen."
 msgstr ""
 
-#: public/class-drgc-public.php:483
+#: public/class-drgc-public.php:484
 msgid "To reset your password, visit the following address:"
 msgstr ""
 
-#: public/class-drgc-public.php:485, public/class-drgc-public.php:886, public/templates/login/login.php:61
+#: public/class-drgc-public.php:486, public/class-drgc-public.php:935, public/templates/login/login.php:61
 msgid "Reset Password"
 msgstr ""
 
-#: public/class-drgc-public.php:487
+#: public/class-drgc-public.php:488
 msgid "[%s] Password Reset"
 msgstr ""
 
-#: public/class-drgc-public.php:502
+#: public/class-drgc-public.php:503
 msgid "The email could not be sent. Possible reason: your host may have disabled the mail() function."
 msgstr ""
 
-#: public/class-drgc-public.php:524
+#: public/class-drgc-public.php:525
 msgid "Something went wrong."
 msgstr ""
 
-#: public/class-drgc-public.php:540
+#: public/class-drgc-public.php:541
 msgid "Expired key"
 msgstr ""
 
-#: public/class-drgc-public.php:542
+#: public/class-drgc-public.php:543
 msgid "Invalid key"
 msgstr ""
 
-#: public/class-drgc-public.php:600
+#: public/class-drgc-public.php:602
 msgid "Hi, "
 msgstr ""
 
-#: public/class-drgc-public.php:625, public/class-drgc-public.php:845, public/templates/login/login.php:32
+#: public/class-drgc-public.php:627, public/class-drgc-public.php:894, public/templates/login/login.php:32
 msgid "Logout"
 msgstr ""
 
-#: public/class-drgc-public.php:832
+#: public/class-drgc-public.php:881
 msgid "You're about to be logged out!"
 msgstr ""
 
-#: public/class-drgc-public.php:837
+#: public/class-drgc-public.php:886
 msgid "For security reasons, your connection times out after you've been inactive for a while. You will be logged out in <strong>n</strong> seconds.<br>Click Continue if you'd like to stay logged in."
 msgstr ""
 
-#: public/class-drgc-public.php:842
+#: public/class-drgc-public.php:891
 msgid "Continue"
 msgstr ""
 
-#: public/class-drgc-public.php:858
+#: public/class-drgc-public.php:907
 msgid "Forgot Password"
 msgstr ""
 
-#: public/class-drgc-public.php:866
+#: public/class-drgc-public.php:915
 msgid "To reset your password, please enter your email address below and an email with instructions on resetting your password will be sent to you."
 msgstr ""
 
-#: public/class-drgc-public.php:869
+#: public/class-drgc-public.php:918
 msgid "Email Address:"
 msgstr ""
 
-#: public/class-drgc-public.php:872, public/class-drgc-public.php:879
+#: public/class-drgc-public.php:921, public/class-drgc-public.php:928
 msgid "This field is required email."
 msgstr ""
 
-#: public/class-drgc-public.php:876
+#: public/class-drgc-public.php:925
 msgid "Verify Email Address:"
 msgstr ""
 
-#: public/class-drgc-public.php:900
+#: public/class-drgc-public.php:949
 msgid "Password Updated!"
 msgstr ""
 
-#: public/class-drgc-public.php:901
+#: public/class-drgc-public.php:950
 msgid "Your password has been changed successfully."
 msgstr ""
 
-#: public/class-drgc-public.php:904
+#: public/class-drgc-public.php:953
 msgid "OK"
 msgstr ""
 
@@ -888,11 +1000,11 @@ msgstr ""
 msgid "Billing Address"
 msgstr ""
 
-#: public/templates/account/account-orders.php:190, public/templates/cart/cart-summary.php:38, public/templates/cart/cart-summary.php:46, public/templates/checkout/checkout-summary.php:34, public/templates/thank-you/thank-you-summary.php:43
+#: public/templates/account/account-orders.php:190, public/templates/cart/cart-summary.php:38, public/templates/cart/cart-summary.php:46, public/templates/checkout/checkout-summary.php:34, public/templates/thank-you/thank-you-summary.php:42
 msgid "Subtotal"
 msgstr ""
 
-#: public/templates/account/account-orders.php:212, public/templates/cart/cart-summary.php:99, public/templates/checkout/checkout-summary.php:75, public/templates/thank-you/thank-you-summary.php:82
+#: public/templates/account/account-orders.php:212, public/templates/cart/cart-summary.php:99, public/templates/checkout/checkout-summary.php:75, public/templates/thank-you/thank-you-summary.php:81
 msgid "Total"
 msgstr ""
 
@@ -1064,7 +1176,7 @@ msgstr ""
 msgid "Proceed to checkout"
 msgstr ""
 
-#: public/templates/cart/cart.php:60, public/templates/checkout/checkout.php:18, public/templates/checkout/checkout.php:117
+#: public/templates/cart/cart.php:58, public/templates/checkout/checkout.php:18, public/templates/checkout/checkout.php:115
 msgid "Continue Shopping"
 msgstr ""
 
@@ -1176,16 +1288,20 @@ msgstr ""
 msgid "Choose shipping address"
 msgstr ""
 
-#: public/templates/checkout/checkout-summary.php:17, public/templates/thank-you/thank-you-summary.php:26
+#: public/templates/checkout/checkout-summary.php:17, public/templates/thank-you/thank-you-summary.php:25
 msgid "items"
 msgstr ""
 
-#: public/templates/checkout/checkout-summary.php:17, public/templates/thank-you/thank-you-summary.php:26
+#: public/templates/checkout/checkout-summary.php:17, public/templates/thank-you/thank-you-summary.php:25
 msgid "item"
 msgstr ""
 
 #: public/templates/checkout/checkout.php:16
 msgid "Your cart is empty!"
+msgstr ""
+
+#: public/templates/checkout/checkout.php:51
+msgid "Back"
 msgstr ""
 
 #: public/templates/login/login.php:24
@@ -1272,35 +1388,7 @@ msgstr ""
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
 msgstr ""
 
-#: public/templates/parts/content-single.php:104
-msgid "color"
-msgstr ""
-
-#: public/templates/parts/content-single.php:107
-msgid "sizes"
-msgstr ""
-
-#: public/templates/parts/content-single.php:110
-msgid "platform"
-msgstr ""
-
-#: public/templates/parts/content-single.php:113
-msgid "product type"
-msgstr ""
-
-#: public/templates/parts/content-single.php:116
-msgid "wrap type"
-msgstr ""
-
-#: public/templates/parts/content-single.php:119
-msgid "duration"
-msgstr ""
-
-#: public/templates/parts/content-single.php:122
-msgid "undefined"
-msgstr ""
-
-#: public/templates/parts/content-single.php:126
+#: public/templates/parts/content-single.php:117
 msgid "Select "
 msgstr ""
 

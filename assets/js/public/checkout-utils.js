@@ -159,6 +159,7 @@ const CheckoutUtils = (($, params) => {
   };
 
   const apiErrorHandler = (jqXHR) => {
+    $('.dr-loading').removeClass('dr-loading');
     drToast.displayMessage(getAjaxErrorMessage(jqXHR), 'error');
   };
 
@@ -298,7 +299,7 @@ const CheckoutUtils = (($, params) => {
   };
 
   const formatPrice = (val, pricing) => {
-    const localeCode = ($('.dr-currency-select').find('option:selected').data('locale') || drgc_params.drLocale).replace('_', '-');
+    const localeCode = drgc_params.drLocale.replace('_', '-');
     const currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
     const symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
     const formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');

@@ -189,8 +189,9 @@ class DRGC_Public {
 
 		// transfer drgc options from PHP to JS
 		$options = array(
-			'wpLocale'          =>  get_locale(),
-			'drLocale'          =>  get_dr_locale( get_locale() ),
+			'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
+			'drLocale'          =>  drgc_get_current_dr_locale(),
+			'selectedCurrency'  =>  drgc_get_selected_currency(),
 			'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
 			'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
 			'homeUrl'           =>  get_home_url(),
@@ -572,6 +573,7 @@ class DRGC_Public {
 
 			if ( ! empty( $products ) ) {
 				echo get_permalink( $products[0]->ID );
+				die();
 			}
 		}
 
@@ -607,7 +609,7 @@ class DRGC_Public {
 			'menu_item_parent' => 0,
 			'ID'               => 'login',
 			'db_id'            => 'login',
-			'url'              => get_site_url() . '/login',
+			'url'              => get_permalink( get_page_by_path( 'login' ) ),
 			'classes'          => $is_logged_in ? array( 'menu-item', 'menu-item-has-children' ) : array( 'menu-item' ),
 			'target'           => null,
 			'xfn'              => null,
@@ -621,7 +623,7 @@ class DRGC_Public {
 				'menu_item_parent' => 'login',
 				'ID'               => 'account',
 				'db_id'            => 'account',
-				'url'              => get_site_url() . '/account',
+				'url'              => get_permalink( get_page_by_path( 'account' ) ),
 				'classes'          => array( 'menu-item' ),
 				'target'           => null,
 				'xfn'              => null,
@@ -643,6 +645,36 @@ class DRGC_Public {
 		}
 
 		return $items;
+	}
+
+	/**
+	 * Insert locale selector at menu.
+	 *
+	 * @since  2.0.0
+	 */
+	public function insert_locale_selector( $content ) {
+		if ( ! is_page( 'thank-you' ) ) {
+			ob_start();
+			include_once 'partials/drgc-locale-selector.php';
+			$append = ob_get_clean();
+			return $content . $append;
+		}
+		return $content;
+	}
+
+	/**
+	 * Insert currency selector at menu.
+	 *
+	 * @since  2.0.0
+	 */
+	public function insert_currency_selector( $content ) {
+		if ( ! is_page( 'thank-you' ) ) {
+			ob_start();
+			include_once 'partials/drgc-currency-selector.php';
+			$append = ob_get_clean();
+			return $content . $append;
+		}
+		return $content;
 	}
 
 	/**
@@ -714,32 +746,49 @@ class DRGC_Public {
    * @since  1.1.0
    */
   public function redirect_on_page_load() {
-    if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
-      $customer = DRGC()->shopper->retrieve_shopper();
-      $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
-      $is_guest = 'true' === $_COOKIE['drgc_guest_flag'];
+    if ( ! is_admin() ) {
+      $dr_locale = drgc_get_current_dr_locale();
+      $wp_locale = drgc_get_current_wp_locale( $dr_locale );
 
-      if ( is_page( 'checkout' ) ) {
-        $cart = DRGC()->cart->retrieve_cart();
-        $check_subs = drgc_is_subs_added_to_cart( $cart );
-        $terms_checked = drgc_is_auto_renewal_terms_checked( $cart );
+      // Set cookie for storing selected currency (TODO: replace it with session)
+      $primary_currency = drgc_get_primary_currency( $dr_locale );
+      @setcookie( 'drgc_currency', $primary_currency, 0, '/' );
 
-        if ( ! $is_logged_in && ( ! $is_guest || $check_subs['has_subs'] ) ) {
-          wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
-          exit;
-        } elseif ( $check_subs['is_auto'] && ! $terms_checked ) {
-          wp_redirect( get_permalink( get_page_by_path( 'cart' ) ) );
-          exit;
-        }
-      } elseif ( is_page( 'account' ) ) {
-        if ( ! $is_logged_in ) {
-          wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
-          exit;
-        }
-      } elseif ( is_page( 'thank-you' ) ) {
-        if ( ! $is_logged_in && ! $is_guest ) {
-          wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
-          exit;
+      // Load plugin translated text strings
+      switch_to_locale( $wp_locale );
+      load_plugin_textdomain(
+        'digital-river-global-commerce',
+        false,
+        dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+      );
+
+      if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
+        $customer = DRGC()->shopper->retrieve_shopper();
+        $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
+        $is_guest = 'true' === $_COOKIE['drgc_guest_flag'];
+
+        if ( is_page( 'checkout' ) ) {
+          $cart = DRGC()->cart->retrieve_cart();
+          $check_subs = drgc_is_subs_added_to_cart( $cart );
+          $terms_checked = drgc_is_auto_renewal_terms_checked( $cart );
+
+          if ( ! $is_logged_in && ( ! $is_guest || $check_subs['has_subs'] ) ) {
+            wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
+            exit;
+          } elseif ( $check_subs['is_auto'] && ! $terms_checked ) {
+            wp_redirect( get_permalink( get_page_by_path( 'cart' ) ) );
+            exit;
+          }
+        } elseif ( is_page( 'account' ) ) {
+          if ( ! $is_logged_in ) {
+            wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
+            exit;
+          }
+        } elseif ( is_page( 'thank-you' ) ) {
+          if ( ! $is_logged_in && ! $is_guest ) {
+            wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
+            exit;
+          }
         }
       }
     }
@@ -964,5 +1013,35 @@ class DRGC_Public {
     } else {
       $plugin->authenticator->do_refresh_access_token();
     }
+  }
+
+  public function translate_archive_title( $title ) {
+    if ( is_tax( 'dr_product_category' ) ) {
+      return __( single_cat_title( '', false ), 'digital-river-global-commerce' );
+    }
+
+    return $title;
+  }
+
+  public function translate_menu_items( $item_output, $item ) {
+    if ( property_exists( $item, 'title' ) ) {
+      return preg_replace( '/(<.*?>).*(<\/.*?>)/s', '$1' . __( $item->title, 'digital-river-global-commerce' ) . '$2', $item_output, 1 );
+    }
+
+    return $item_output;
+  }
+
+  /**
+   * Append query string at URL.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function append_query_string( $url ) {
+    if ( isset( $_GET['locale'] ) ) {
+      $url = add_query_arg( 'locale', $_GET['locale'], $url );
+    }
+    return $url;
   }
 }

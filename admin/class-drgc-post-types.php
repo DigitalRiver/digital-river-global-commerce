@@ -171,9 +171,95 @@ class DRGC_Post_Types {
 	 * @since    1.0.0
 	 */
 	public function render_product_details_meta_box( $post ) {
-		echo '<h2 id="drcc-link"><a href="https://gc.digitalriver.com/gc/ent/site/selectSite.do?siteID=' . get_option('drgc_site_id') . '" target="_blank">Manage Products</a></h2>';
+    $post_parent = $post->post_parent;
+    $gc_id = get_post_meta( $post->ID, 'gc_product_id', true );
+		$plugin = DRGC();
+		$product_name = '';
+		$short_description = '';
+		$long_description = '';
+		$product_thumbnail_url = '';
+		$product_image_url = '';
+		$variation_attributes = [];
+    $variations = drgc_get_product_variations( $post->ID );
 
-		include_once 'partials/drgc-product-variations.php';
+		if ( $post_parent > 0 ) {
+      $var_attr_values = [];
+      $base_gc_id = get_post_meta( $post_parent, 'gc_product_id', true );
+      $base_product_details = $plugin->product_details->get_product_details( $base_gc_id );
+
+      if ( $base_product_details && isset( $base_product_details['variationAttributes'] ) ) {
+        foreach ( $base_product_details['variationAttributes']['attribute'] as $attribute ) {
+          $variation_attributes[ $attribute['name'] ] = $attribute['displayName'];
+        }
+      }
+
+      $product_details = $plugin->product_details->get_product_details( $gc_id, array( 'expand' => 'all' ) );
+
+      if ( $product_details && $product_details['customAttributes'] && ! empty( $variation_attributes ) ) {
+        foreach ( $variation_attributes as $key => $value ) { 
+          foreach ( $product_details['customAttributes']['attribute'] as $attribute ) {
+            if ( $key === $attribute['name'] ) {
+              $var_attr_values[ $key ] = $attribute['value'];
+            }
+          }
+        }
+      }
+		} else {
+      $var_attr_values = array( array() );
+      $product_details = $plugin->product_details->get_product_details( $gc_id );
+
+      if ( $product_details && isset( $product_details['variationAttributes'] ) ) {
+        foreach ( $product_details['variationAttributes']['attribute'] as $attribute ) {
+          $variation_attributes[ $attribute['name'] ] = $attribute['displayName'];
+        }
+      }
+
+      if ( $variations && ! empty( $variation_attributes ) ) {
+        foreach ( $variations as $variation ) {
+          $var_gc_id = get_post_meta( $variation->ID, 'gc_product_id', true );
+          $var_product_details = $plugin->product_details->get_product_details( $var_gc_id, array( 'expand' => 'all' ) );
+
+          if ( $var_product_details && $var_product_details['customAttributes'] ) {
+            foreach ( $variation_attributes as $key => $value ) {
+              foreach ( $var_product_details['customAttributes']['attribute'] as $attribute ) {
+                if ( $key === $attribute['name'] ) {
+                  $var_attr_values[ $variation->ID ][] = $attribute['value'];
+                }
+              }
+            }
+          }
+        }
+      }
+		}
+
+		if ( $product_details ) {
+      if ( isset( $product_details['displayName'] ) ) {
+        $product_name = $product_details['displayName'];
+      }
+      
+      if ( isset( $product_details['shortDescription'] ) ) {
+        $short_description = $product_details['shortDescription'];
+      }
+
+      if ( isset( $product_details['longDescription'] ) ) {
+        $long_description = $product_details['longDescription'];
+      }
+
+      if ( isset( $product_details['thumbnailImage'] ) ) {
+        $product_thumbnail_url = $product_details['thumbnailImage'];
+      }
+
+      if ( isset( $product_details['productImage'] ) ) {
+        $product_image_url = $product_details['productImage'];
+      }
+		}
+
+		$active_tab = isset( $_GET['locale'] ) ? $_GET['locale'] : 'en_US';
+		$locales = get_option( 'drgc_store_locales' );
+		$price = $product_details['pricing']['formattedListPrice'];
+
+		echo '<h2 id="drcc-link"><a href="https://gc.digitalriver.com/gc/ent/site/selectSite.do?siteID=' . get_option( 'drgc_site_id' ) . '" target="_blank">Manage Products</a></h2>';
+
 		include_once 'partials/drgc-product-details-meta-box.php';
 	}
 

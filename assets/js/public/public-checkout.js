@@ -58,11 +58,10 @@ const CheckoutModule = (($) => {
     };
 
     const getCountryOptionsFromGC = () => {
-        const selectedLocale = $('.dr-currency-select option:selected').data('locale') || drgc_params.drLocale;
         return new Promise((resolve, reject) => {
             $.ajax({
                 type: 'GET',
-                url: `https://drh-fonts.img.digitalrivercontent.net/store/${drgc_params.siteID}/${selectedLocale}/DisplayPage/id.SimpleRegistrationPage`,
+                url: `https://drh-fonts.img.digitalrivercontent.net/store/${drgc_params.siteID}/${drgc_params.drLocale}/DisplayPage/id.SimpleRegistrationPage`,
                 cache: false,
                 success: (response) => {
                     const addressTypes = requestShipping ? ['shipping', 'billing'] : ['billing'];
@@ -868,6 +867,7 @@ jQuery(document).ready(($) => {
                 },
                 payment: function() {
                     const cart = drgc_params.cart.cart;
+                    const url = window.location.href;
                     let payPalItems = [];
 
                     $.each(cart.lineItems.lineItem, function( index, item ) {
@@ -883,8 +883,8 @@ jQuery(document).ready(($) => {
                         'amount': cart.pricing.orderTotal.value,
                         'currency': cart.pricing.orderTotal.currency,
                         'payPal': {
-                            'returnUrl': window.location.href + '?ppsuccess=true',
-                            'cancelUrl': window.location.href + '?ppcancel=true',
+                            'returnUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppsuccess=true',
+                            'cancelUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppcancel=true',
                             'items': payPalItems,
                             'taxAmount': cart.pricing.tax.value,
                             'shippingAmount': cart.pricing.shippingAndHandling.value,

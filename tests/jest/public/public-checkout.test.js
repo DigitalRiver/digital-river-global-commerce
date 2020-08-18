@@ -53,13 +53,6 @@ describe('Test updateSummaryLabels', () => {
           <div class="dr-checkout__confirmation"></div>
         </div>
         <div class="dr-summary">
-          <div class="dr-currency-toggler">
-            <span>Currency: </span>
-            <select class="custom-select dr-currency-select">
-              <option data-locale="en_US" value="USD" selected>USD</option>
-              <option data-locale="en_GB" value="GBP">GBP</option>
-            </select>
-          </div>
           <div class="dr-summary__tax">
             <p class="item-label">Estimated Tax</p>
             <p class="item-label">0.00USD</p>
@@ -116,14 +109,7 @@ describe('Test updateSummaryLabels', () => {
 describe('Test getCountryOptionsFromGC', () => {
 
   test('It should call AJAX for getting country options from GC SimpleRegistrationPage', () => {
-    document.body.innerHTML = `
-      <div class="dr-currency-toggler">
-        <span>Currency: </span>
-        <select class="custom-select dr-currency-select">
-          <option data-locale="ja_JP" value="JPY">JPY</option>
-          <option data-locale="en_GB" value="GBP" selected>GBP</option>
-        </select>
-      </div>`;
+    drgc_params.drLocale = 'en_GB';
     $.ajax = jest.fn().mockImplementation(() => {
       return Promise.resolve('<!DOCTYPE html><html xml:lang="en" lang="en"></html>');
     });
