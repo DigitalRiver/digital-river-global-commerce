@@ -252,8 +252,9 @@ class DRGC_Public {
 		if ( array_key_exists( 'access_token', $attempt ) ) {
 			$plugin->session->set_guest_flag_cookie( 'false' );
 			$plugin->session->dirty_set_session( $_COOKIE['drgc_session'] );
+			$customer = $plugin->shopper->retrieve_shopper();
 
-			wp_send_json_success( $attempt );
+			wp_send_json_success( $customer );
 		}
 	}
 

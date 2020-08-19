@@ -14855,16 +14855,22 @@ var LoginModule = function ($) {
     });
   };
 
-  var redirectAfterAuth = function redirectAfterAuth(isLoggedIn) {
+  var redirectAfterAuth = function redirectAfterAuth(isLoggedIn, locale) {
+    var targetHref = '';
+
     if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
-      window.location.href = drgc_params.checkoutUrl;
+      targetHref = drgc_params.checkoutUrl;
     } else if (isLoggedIn) {
-      window.location.href = drgc_params.accountUrl;
+      targetHref = drgc_params.accountUrl;
     } else if (!document.referrer) {
-      window.location.href = drgc_params.homeUrl;
+      targetHref = drgc_params.homeUrl;
     } else {
-      window.location.href = document.referrer;
+      targetHref = document.referrer;
     }
+
+    var targetUrl = new URL(targetHref);
+    if (locale) targetUrl.searchParams.set('locale', locale);
+    window.location.href = targetUrl.toString();
   };
 
   var autoLogout = function autoLogout(url) {
@@ -14924,7 +14930,7 @@ jQuery(document).ready(function ($) {
     };
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
-        LoginModule.redirectAfterAuth(true);
+        LoginModule.redirectAfterAuth(true, response.data.locale);
       } else {
         $form.data('processing', false);
         but.removeClass('sending').blur();
