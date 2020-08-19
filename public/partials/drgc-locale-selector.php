@@ -15,7 +15,7 @@
 <?php
   $plugin = DRGC();
   $current_locale = $plugin->shopper->locale;
-  $drgc_locale_options = get_option( 'drgc_locale_options' );
+  $drgc_locale_options = get_option( 'drgc_locale_options' ) ?: array();
   $has_other_locales = count( $drgc_locale_options ) > 1;
 ?>
 
