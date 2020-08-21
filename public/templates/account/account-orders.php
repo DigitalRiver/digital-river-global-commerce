@@ -77,59 +77,6 @@
         </div>
 
     </div>
-
-    <script>
-        drOrders['<?php echo $order['id']; ?>'] = {
-            formattedTotal: '<?php echo $order['pricing']['formattedTotal']; ?>',
-            formattedSubtotal: '<?php echo $order['pricing']['formattedSubtotal']; ?>',
-            formattedIncentive: '<?php echo $order['pricing']['formattedIncentive']; ?>',
-            formattedShipping: '<?php echo $order['pricing']['formattedShipping']; ?>',
-            formattedTax: '<?php echo $order['pricing']['formattedTax']; ?>',
-            orderState: '<?php echo $order['orderState']; ?>',
-            orderDate: <?php echo date_format(date_create($order['submissionDate']),"m/d/Y"); ?>,
-            shippingMethod: '<?php echo $order['shippingMethod']['description'] ?? ''; ?>',
-            shippingMethodCode: '<?php echo $order['shippingMethod']['code'] ?? ''; ?>',
-            entityCode: '<?php echo $order['businessEntityCode']; ?>',
-            billingAddress: {
-                firstName: '<?php echo $order['billingAddress']['firstName']; ?>',
-                lastName: '<?php echo $order['billingAddress']['lastName']; ?>',
-                line1: '<?php echo $order['billingAddress']['line1']; ?>',
-                line2: '<?php echo $order['billingAddress']['line2']; ?>',
-                city: '<?php echo $order['billingAddress']['city']; ?>',
-                state: '<?php echo $order['billingAddress']['countrySubdivision']; ?>',
-                zip: '<?php echo $order['billingAddress']['postalCode']; ?>',
-                country: '<?php echo $order['billingAddress']['country']; ?>'
-            },
-            shippingAddress: {
-                firstName: '<?php echo $order['shippingAddress']['firstName']; ?>',
-                lastName: '<?php echo $order['shippingAddress']['lastName']; ?>',
-                line1: '<?php echo $order['shippingAddress']['line1']; ?>',
-                line2: '<?php echo $order['shippingAddress']['line2']; ?>',
-                city: '<?php echo $order['shippingAddress']['city']; ?>',
-                state: '<?php echo $order['shippingAddress']['countrySubdivision']; ?>',
-                zip: '<?php echo $order['shippingAddress']['postalCode']; ?>',
-                country: '<?php echo $order['shippingAddress']['country']; ?>'
-            },
-            products: [
-                <?php foreach ($order['lineItems']['lineItem'] as $lineItem): ?>
-                    {
-                        qty: '<?php echo $lineItem['quantity']; ?>',
-                        status: '<?php echo $lineItem['lineItemState']; ?>',
-                        id: '<?php echo $lineItem['product']['id']; ?>',
-                        sku: '<?php echo $lineItem['product']['sku']; ?>',
-                        name: '<?php echo $lineItem['product']['displayName']; ?>',
-                        image: '<?php echo $lineItem['product']['thumbnailImage']; ?>',
-                        salePrice: '<?php echo $lineItem['pricing']['formattedSalePriceWithQuantity']; ?>',
-                        strikePrice: '<?php echo $lineItem['pricing']['formattedListPriceWithQuantity']; ?>',
-                        encodedPricing: '<?php echo json_encode( $lineItem['pricing'] ); ?>'
-                    },
-                <?php endforeach; ?>
-            ],
-            encodedPricing: '<?php echo json_encode( $order['pricing'] ); ?>',
-            shouldDisplayVat: '<?php echo drgc_should_display_vat( $order_currency ) ? 'true' : 'false' ?>',
-            isTaxInclusive: '<?php echo drgc_is_tax_inclusive( $order_locale ) ? 'true' : 'false' ?>'
-        }
-    </script>
     
 <?php endforeach; ?>
 
