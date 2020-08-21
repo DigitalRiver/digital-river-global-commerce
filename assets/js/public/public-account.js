@@ -19,14 +19,12 @@ const AccountModule = (($) => {
 })(jQuery);
 
 $(() => {
-    const localizedText = drgc_params.translations;
-
     if ($('#dr-account-page-wrapper').length < 1) return;
 
+    const localizedText = drgc_params.translations;
+    const orders = drgc_params.shopperOrders ? drgc_params.shopperOrders.orders.order : '';
     window.drActiveOrderId = '';
-
     var $body = $('body');
-
     var $ordersModal = $('#ordersModal');
 
     $body.append($ordersModal);
@@ -35,53 +33,58 @@ $(() => {
     function fillOrderModal(e) {
         var orderID = $(this).attr('data-order');
 
-        if (!drOrders[orderID]) alert('order details not available');
-
-        const requestShipping = drOrders[orderID].shippingMethodCode !== '';
-
         if (orderID === drActiveOrderId) {
             $ordersModal.drModal('show');
         } else {
+            const selectedOrder = orders.find(order => order.id === parseInt(orderID));
+
+            if (selectedOrder === undefined) {
+                drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+                return false;
+            }
+
+            const requestShipping = 'code' in selectedOrder.shippingMethod;
+
             // orderID
             $('.dr-modal-orderNumber').text(orderID);
             // Order Pricing
-            drOrders[orderID].pricing = $.parseJSON(drOrders[orderID].encodedPricing);
-            $('.dr-modal-subtotal').text(drOrders[orderID].formattedSubtotal);
-            $('.dr-modal-tax').text(drOrders[orderID].formattedTax);
-            $('.dr-modal-shipping').text(drOrders[orderID].formattedShipping);
-            var isDiscount = parseInt(drOrders[orderID].formattedIncentive.replace(/\D/g, ''));
+            $('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
+            $('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
+            $('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
+            var isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
             if (isDiscount) {
-                $('.dr-modal-discount').text(drOrders[orderID].formattedIncentive);
+                $('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
                 $('.dr-summary__discount').show();
             } else {
                 $('.dr-summary__discount').hide();
             }
-            $('.dr-modal-total').text(drOrders[orderID].formattedTotal);
+            $('.dr-modal-total').text(selectedOrder.pricing.formattedTotal);
             // Billing
-            $('.dr-modal-billingName').text(drOrders[orderID].billingAddress.firstName + ' ' + drOrders[orderID].billingAddress.lastName);
-            var billingAddress1 = drOrders[orderID].billingAddress.line1;
-            billingAddress1 += (drOrders[orderID].billingAddress.line2) ? '<br>' + drOrders[orderID].billingAddress.line2 : '';
+            $('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
+            var billingAddress1 = selectedOrder.billingAddress.line1;
+            billingAddress1 += (selectedOrder.billingAddress.line2) ? '<br>' + selectedOrder.billingAddress.line2 : '';
             $('.dr-modal-billingAddress1').html(billingAddress1);
-            var billingAddress2 = (drOrders[orderID].billingAddress.city) ? drOrders[orderID].billingAddress.city : '';
-            billingAddress2 += (drOrders[orderID].billingAddress.state) ? ', ' + drOrders[orderID].billingAddress.state : '';
-            billingAddress2 += (drOrders[orderID].billingAddress.zip) ? ' ' + drOrders[orderID].billingAddress.zip : '';
+            var billingAddress2 = (selectedOrder.billingAddress.city) ? selectedOrder.billingAddress.city : '';
+            billingAddress2 += (selectedOrder.billingAddress.countrySubdivision) ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
+            billingAddress2 += (selectedOrder.billingAddress.postalCode) ? ' ' + selectedOrder.billingAddress.postalCode : '';
             $('.dr-modal-billingAddress2').text(billingAddress2);
-            $('.dr-modal-billingCountry').text(drOrders[orderID].billingAddress.country);
+            $('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country);
             // Shipping
-            $('.dr-modal-shippingName').text(drOrders[orderID].shippingAddress.firstName + ' ' + drOrders[orderID].shippingAddress.lastName);
-            var shippingAddress1 = drOrders[orderID].shippingAddress.line1;
-            shippingAddress1 += (drOrders[orderID].shippingAddress.line2) ? '<br>' + drOrders[orderID].shippingAddress.line2 : '';
+            $('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
+            var shippingAddress1 = selectedOrder.shippingAddress.line1;
+            shippingAddress1 += (selectedOrder.shippingAddress.line2) ? '<br>' + selectedOrder.shippingAddress.line2 : '';
             $('.dr-modal-shippingAddress1').html(shippingAddress1);
-            var shippingAddress2 = (drOrders[orderID].shippingAddress.city) ? drOrders[orderID].shippingAddress.city : '';
-            shippingAddress2 += (drOrders[orderID].shippingAddress.state) ? ', ' + drOrders[orderID].shippingAddress.state : '';
-            shippingAddress2 += (drOrders[orderID].shippingAddress.zip) ? ' ' + drOrders[orderID].shippingAddress.zip : '';
+            var shippingAddress2 = (selectedOrder.shippingAddress.city) ? selectedOrder.shippingAddress.city : '';
+            shippingAddress2 += (selectedOrder.shippingAddress.countrySubdivision) ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
+            shippingAddress2 += (selectedOrder.shippingAddress.postalCode) ? ' ' + selectedOrder.shippingAddress.postalCode : '';
             $('.dr-modal-shippingAddress2').text(shippingAddress2);
-            $('.dr-modal-shippingCountry').text(drOrders[orderID].shippingAddress.country);
+            $('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country);
 
             // Summary Labels
-            const isTaxInclusive = drOrders[orderID].isTaxInclusive === 'true';
+            const isTaxInclusive = selectedOrder.locale !== 'en_US';
             const forceExclTax = drgc_params.forceExclTax === 'true';
-            const shouldDisplayVat = drOrders[orderID].shouldDisplayVat === 'true';
+            const orderCurrency = selectedOrder.pricing.total.currency;
+            const shouldDisplayVat = (orderCurrency === 'GBP' || orderCurrency === 'EUR');
             const taxSuffixLabel = isTaxInclusive ?
                 forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label :
                 '';
@@ -103,21 +106,22 @@ $(() => {
 
             // Products
             var html = '';
-            for (var i = 0; i < drOrders[orderID].products.length; i++) {
-                var prod = drOrders[orderID].products[i];
-                prod.pricing = $.parseJSON(prod.encodedPricing);
+            const count = selectedOrder.lineItems.lineItem.length;
+
+            for (var i = 0; i < count; i++) {
+                const lineItem = selectedOrder.lineItems.lineItem[i];
 
                 html += `<div class="dr-product">
                 <div class="dr-product-content">
-                    <div class="dr-product__img dr-modal-productImgBG" style="background-image:url(${prod.image});"></div>
+                    <div class="dr-product__img dr-modal-productImgBG" style="background-image:url(${lineItem.product.thumbnailImage});"></div>
                     <div class="dr-product__info">
-                        <a class="product-name dr-modal-productName">${prod.name}</a>
+                        <a class="product-name dr-modal-productName">${lineItem.product.displayName}</a>
                         <div class="product-sku">
                             <span>Product </span>
-                            <span class="dr-modal-productSku">${prod.sku}</span>
+                            <span class="dr-modal-productSku">${lineItem.product.sku}</span>
                         </div>
                         <div class="product-qty">
-                            <span class="qty-text">Qty <span class="dr-modal-productQty">${prod.qty}</span></span>
+                            <span class="qty-text">Qty <span class="dr-modal-productQty">${lineItem.quantity}</span></span>
                             <span class="dr-pd-cart-qty-minus value-button-decrease"></span>
                             <input
                                 type="number"
@@ -125,7 +129,7 @@ $(() => {
                                 step="1"
                                 min="1"
                                 max="999"
-                                value="${prod.qty}"
+                                value="${lineItem.quantity}"
                                 maxlength="5"
                                 size="2"
                                 pattern="[0-9]*"
@@ -136,15 +140,15 @@ $(() => {
                     </div>
                 </div>
                 <div class="dr-product__price">
-                    <span class="sale-price dr-modal-salePrice">${prod.salePrice}</span>
-                    <span class="regular-price dr-modal-strikePrice" ${prod.salePrice === prod.strikePrice ? 'style="display:none"' : ''}>${prod.strikePrice}</span>
+                    <span class="sale-price dr-modal-salePrice">${lineItem.pricing.formattedSalePriceWithQuantity}</span>
+                    <span class="regular-price dr-modal-strikePrice" ${lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : ''}>${lineItem.pricing.formattedListPriceWithQuantity}</span>
                 </div>
             </div>`;
             }
 
             $('.dr-summary__products').html(html);
 
-            CheckoutUtils.updateSummaryPricing(drOrders[orderID], isTaxInclusive);
+            CheckoutUtils.updateSummaryPricing(selectedOrder, isTaxInclusive);
 
             if (!requestShipping) {
                 $('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
@@ -521,7 +525,10 @@ $(() => {
             DRCommerceApi.getSubsDetails(subsId)
                 .then((data) => {
                     const orderId = data.subscription.orders.order[0].uri.split('orders/')[1];
-                    entityCode = drOrders[orderId].entityCode;
+                    return DRCommerceApi.getOrderDetails(orderId);
+                })
+                .then((data) => {
+                    entityCode = data.order.businessEntityCode;
                     AccountModule.appendAutoRenewalTerms(digitalriverjs, entityCode, locale);
                 })
                 .catch((jqXHR) => {

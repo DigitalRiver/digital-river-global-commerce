@@ -97,10 +97,15 @@ class DRGC_Public {
       if ( is_page( 'thank-you' ) ) $order_obj = DRGC()->cart->retrieve_order();
     }
 
-		$customer = array();
-		if ( DRGC()->shopper ) {
-			$customer = DRGC()->shopper->retrieve_shopper();
-		}
+    $customer = array();
+    $orders_obj = '';
+    if ( DRGC()->shopper ) {
+      $customer = DRGC()->shopper->retrieve_shopper();
+
+      if ( is_page( 'account' ) ) {
+        $orders_obj = DRGC()->shopper->retrieve_orders();
+      }
+    }
 
     //test Order Handler
     $testOrder_option = get_option( 'drgc_testOrder_handler' );
@@ -201,7 +206,8 @@ class DRGC_Public {
 			'digitalRiverKey'   =>  get_option( 'drgc_digitalRiver_key' ),
 			'accessToken'       =>  $access_token,
 			'cart'              =>  $cart_obj,
-			'order'             =>  $order_obj,
+      'order'             =>  $order_obj,
+      'shopperOrders'     =>  $orders_obj,
 			'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
 			'isLogin'           =>  drgc_get_user_status(),
 			'payPal'            =>  array (
