@@ -13,9 +13,10 @@
 ?>
 
 <?php
-  $current_locale = drgc_get_current_dr_locale();
+  $plugin = DRGC();
+  $current_locale = $plugin->shopper->locale;
   $supported_currencies = drgc_get_supported_currencies( $current_locale );
-  $selected_currency = drgc_get_selected_currency();
+  $selected_currency = $plugin->shopper->currency;
   $has_other_currencies = count( $supported_currencies ) > 1;
 ?>
 

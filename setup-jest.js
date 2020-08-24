@@ -5,7 +5,6 @@ global.drgc_params = {
   siteID: 'drdod15',
   wpLocale: 'en_US',
   drLocale: 'en_US',
-  selectedCurrency: 'USD',
   domain: 'api.digitalriver.com',
   accessToken: 'mockedAccessToken',
   isLogin: 'false',

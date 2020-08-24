@@ -535,16 +535,3 @@ function drgc_get_supported_currencies( $dr_locale ) {
     return $drgc_locale_options[$key]['supported_currencies'];
   }
 }
-/**
- * Get selected currency by cookie or primary currency (TODO: replace it with session)
- *
- * @return string
- */
-function drgc_get_selected_currency() {
-  $dr_locale = drgc_get_current_dr_locale();
-  $primary_currency = drgc_get_primary_currency( $dr_locale );
-  $supported_currencies = drgc_get_supported_currencies( $dr_locale );
-  return isset( $_COOKIE['drgc_currency'] ) && in_array( $_COOKIE['drgc_currency'], $supported_currencies ) ?
-    $_COOKIE['drgc_currency'] :
-    $primary_currency;
-}

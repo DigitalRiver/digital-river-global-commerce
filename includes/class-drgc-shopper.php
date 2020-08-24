@@ -555,16 +555,19 @@ class DRGC_Shopper extends AbstractHttpService {
 	 * @return bool
 	 */
 	public function update_locale_and_currency( $locale, $currency ) {
-		$params = array(
-			'locale'         => $locale,
-			'currency'       => $currency
+		$data = array(
+			'shopper' => array(
+				'locale' => $locale,
+				'currency' => $currency
+			)
 		);
-		$url = '/v1/shoppers/me?' . http_build_query( $params );
+		$this->setJsonContentType();
+
 		try {
-			$this->post( $url );
+			$res = $this->post( '/v1/shoppers/me', $data );
 			$this->locale = $locale;
 			$this->currency = $currency;
-			return true;
+			return $res;
 		} catch (\Exception $e) {
 			return false;
 		}
