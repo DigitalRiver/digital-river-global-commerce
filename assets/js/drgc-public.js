@@ -15160,12 +15160,25 @@ var PdpModule = function ($) {
     $target.prop('disabled', isOutOfStock).text(isOutOfStock ? drgc_params.translations.out_of_stock : isRedirectBuyBtn ? drgc_params.translations.buy_now : drgc_params.translations.add_to_cart).addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
   };
 
+  var updateProductItem = function updateProductItem($target, product) {
+    var $loadingIcon = $target.find('.dr-loading');
+    var $productInfo = $target.find('.dr-pd-info');
+    var $title = $target.find('.dr-pd-item-title');
+    var $thumbnail = $target.find('.dr-pd-item-thumbnail > img');
+    var thumbnail = product.thumbnailImage || '';
+    $title.text(product.displayName);
+    $thumbnail.attr('src', thumbnail).attr('alt', product.displayName);
+    $loadingIcon.hide();
+    $productInfo.show();
+  };
+
   return {
     bindVariationPrice: bindVariationPrice,
     bindVariationInventoryStatus: bindVariationInventoryStatus,
     selectVariation: selectVariation,
     displayRealTimePricing: displayRealTimePricing,
-    displayRealTimeBuyBtn: displayRealTimeBuyBtn
+    displayRealTimeBuyBtn: displayRealTimeBuyBtn,
+    updateProductItem: updateProductItem
   };
 }(jQuery);
 
@@ -15440,12 +15453,9 @@ jQuery(document).ready(function ($) {
   if (pdDisplayOption.$card && pdDisplayOption.$card.length) {
     isPdCard = true;
     pdDisplayOption.$card.each(function (idx, elem) {
-      var $loadingIcon = $(elem).find('.dr-loading');
-      var $productInfo = $(elem).find('.dr-pd-info');
-      var $title = $(elem).find('.dr-pd-item-title');
-      var $thumbnail = $(elem).find('.dr-pd-item-thumbnail > img');
-      var $priceDiv = $(elem).find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-      var $buyBtn = $(elem).find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
+      var $currentElem = $(elem);
+      var $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+      var $buyBtn = $currentElem.find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
       var productID = $buyBtn.data('product-id');
       var parentId = $buyBtn.data('parent-id');
       if (!productID) return;
@@ -15459,28 +15469,24 @@ jQuery(document).ready(function ($) {
           var isInStock = variations.some(function (elem) {
             return elem.inventoryStatus.availableQuantity > 0;
           });
+          var currentProduct = variations[0];
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(variations[0].pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(isInStock.toString(), true, $buyBtn);
-          $title.text(res.product.displayName);
-          $thumbnail.attr('alt', res.product.displayName);
-          $loadingIcon.hide();
-          $productInfo.show();
+          PdpModule.updateProductItem($currentElem, currentProduct);
         });
       } else {
         commerce_api.getProduct(productID, {
           expand: 'inventoryStatus'
         }).then(function (res) {
-          var purchasable = res.product.inventoryStatus.productIsInStock;
+          var currentProduct = res.product;
+          var purchasable = currentProduct.inventoryStatus.productIsInStock;
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-          $title.text(res.product.displayName);
-          $thumbnail.attr('alt', res.product.displayName);
-          $loadingIcon.hide();
-          $productInfo.show();
+          PdpModule.updateProductItem($currentElem, currentProduct);
         });
       }
     });
@@ -15710,8 +15716,9 @@ var AccountModule = function ($) {
 }(jQuery);
 
 jquery_default()(function () {
-  var localizedText = drgc_params.translations;
   if (jquery_default()('#dr-account-page-wrapper').length < 1) return;
+  var localizedText = drgc_params.translations;
+  var orders = drgc_params.shopperOrders ? drgc_params.shopperOrders.orders.order : '';
   window.drActiveOrderId = '';
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');
@@ -15719,53 +15726,61 @@ jquery_default()(function () {
 
   function fillOrderModal(e) {
     var orderID = jquery_default()(this).attr('data-order');
-    if (!drOrders[orderID]) alert('order details not available');
-    var requestShipping = drOrders[orderID].shippingMethodCode !== '';
 
     if (orderID === drActiveOrderId) {
       $ordersModal.drModal('show');
     } else {
-      // orderID
+      var selectedOrder = orders.find(function (order) {
+        return order.id === parseInt(orderID);
+      });
+
+      if (selectedOrder === undefined) {
+        drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+        return false;
+      }
+
+      var requestShipping = 'code' in selectedOrder.shippingMethod; // orderID
+
       jquery_default()('.dr-modal-orderNumber').text(orderID); // Order Pricing
 
-      drOrders[orderID].pricing = jquery_default.a.parseJSON(drOrders[orderID].encodedPricing);
-      jquery_default()('.dr-modal-subtotal').text(drOrders[orderID].formattedSubtotal);
-      jquery_default()('.dr-modal-tax').text(drOrders[orderID].formattedTax);
-      jquery_default()('.dr-modal-shipping').text(drOrders[orderID].formattedShipping);
-      var isDiscount = parseInt(drOrders[orderID].formattedIncentive.replace(/\D/g, ''));
+      jquery_default()('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
+      jquery_default()('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
+      jquery_default()('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
+      var isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
 
       if (isDiscount) {
-        jquery_default()('.dr-modal-discount').text(drOrders[orderID].formattedIncentive);
+        jquery_default()('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
         jquery_default()('.dr-summary__discount').show();
       } else {
         jquery_default()('.dr-summary__discount').hide();
       }
 
-      jquery_default()('.dr-modal-total').text(drOrders[orderID].formattedTotal); // Billing
+      jquery_default()('.dr-modal-total').text(selectedOrder.pricing.formattedTotal); // Billing
 
-      jquery_default()('.dr-modal-billingName').text(drOrders[orderID].billingAddress.firstName + ' ' + drOrders[orderID].billingAddress.lastName);
-      var billingAddress1 = drOrders[orderID].billingAddress.line1;
-      billingAddress1 += drOrders[orderID].billingAddress.line2 ? '<br>' + drOrders[orderID].billingAddress.line2 : '';
+      jquery_default()('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
+      var billingAddress1 = selectedOrder.billingAddress.line1;
+      billingAddress1 += selectedOrder.billingAddress.line2 ? '<br>' + selectedOrder.billingAddress.line2 : '';
       jquery_default()('.dr-modal-billingAddress1').html(billingAddress1);
-      var billingAddress2 = drOrders[orderID].billingAddress.city ? drOrders[orderID].billingAddress.city : '';
-      billingAddress2 += drOrders[orderID].billingAddress.state ? ', ' + drOrders[orderID].billingAddress.state : '';
-      billingAddress2 += drOrders[orderID].billingAddress.zip ? ' ' + drOrders[orderID].billingAddress.zip : '';
+      var billingAddress2 = selectedOrder.billingAddress.city ? selectedOrder.billingAddress.city : '';
+      billingAddress2 += selectedOrder.billingAddress.countrySubdivision ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
+      billingAddress2 += selectedOrder.billingAddress.postalCode ? ' ' + selectedOrder.billingAddress.postalCode : '';
       jquery_default()('.dr-modal-billingAddress2').text(billingAddress2);
-      jquery_default()('.dr-modal-billingCountry').text(drOrders[orderID].billingAddress.country); // Shipping
+      jquery_default()('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country); // Shipping
 
-      jquery_default()('.dr-modal-shippingName').text(drOrders[orderID].shippingAddress.firstName + ' ' + drOrders[orderID].shippingAddress.lastName);
-      var shippingAddress1 = drOrders[orderID].shippingAddress.line1;
-      shippingAddress1 += drOrders[orderID].shippingAddress.line2 ? '<br>' + drOrders[orderID].shippingAddress.line2 : '';
+      jquery_default()('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
+      var shippingAddress1 = selectedOrder.shippingAddress.line1;
+      shippingAddress1 += selectedOrder.shippingAddress.line2 ? '<br>' + selectedOrder.shippingAddress.line2 : '';
       jquery_default()('.dr-modal-shippingAddress1').html(shippingAddress1);
-      var shippingAddress2 = drOrders[orderID].shippingAddress.city ? drOrders[orderID].shippingAddress.city : '';
-      shippingAddress2 += drOrders[orderID].shippingAddress.state ? ', ' + drOrders[orderID].shippingAddress.state : '';
-      shippingAddress2 += drOrders[orderID].shippingAddress.zip ? ' ' + drOrders[orderID].shippingAddress.zip : '';
+      var shippingAddress2 = selectedOrder.shippingAddress.city ? selectedOrder.shippingAddress.city : '';
+      shippingAddress2 += selectedOrder.shippingAddress.countrySubdivision ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
+      shippingAddress2 += selectedOrder.shippingAddress.postalCode ? ' ' + selectedOrder.shippingAddress.postalCode : '';
       jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
-      jquery_default()('.dr-modal-shippingCountry').text(drOrders[orderID].shippingAddress.country); // Summary Labels
+      jquery_default()('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country); // Summary Labels
 
-      var isTaxInclusive = drOrders[orderID].isTaxInclusive === 'true';
+      var isTaxInclusive = selectedOrder.locale !== 'en_US';
       var forceExclTax = drgc_params.forceExclTax === 'true';
-      var shouldDisplayVat = drOrders[orderID].shouldDisplayVat === 'true';
+      var orderCurrency = selectedOrder.pricing.total.currency;
+      var shouldDisplayVat = orderCurrency === 'GBP' || orderCurrency === 'EUR';
       var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
       jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
       jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
@@ -15780,15 +15795,15 @@ jquery_default()(function () {
 
 
       var html = '';
+      var count = selectedOrder.lineItems.lineItem.length;
 
-      for (var i = 0; i < drOrders[orderID].products.length; i++) {
-        var prod = drOrders[orderID].products[i];
-        prod.pricing = jquery_default.a.parseJSON(prod.encodedPricing);
-        html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(prod.image, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(prod.name, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(prod.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(prod.qty, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(prod.qty, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(prod.salePrice, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(prod.salePrice === prod.strikePrice ? 'style="display:none"' : '', ">").concat(prod.strikePrice, "</span>\n                </div>\n            </div>");
+      for (var i = 0; i < count; i++) {
+        var lineItem = selectedOrder.lineItems.lineItem[i];
+        html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
       }
 
       jquery_default()('.dr-summary__products').html(html);
-      checkout_utils.updateSummaryPricing(drOrders[orderID], isTaxInclusive);
+      checkout_utils.updateSummaryPricing(selectedOrder, isTaxInclusive);
 
       if (!requestShipping) {
         jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
@@ -16132,7 +16147,9 @@ jquery_default()(function () {
       var subsId = jquery_default()('#list-subscriptions .subscription').first().data('id');
       commerce_api.getSubsDetails(subsId).then(function (data) {
         var orderId = data.subscription.orders.order[0].uri.split('orders/')[1];
-        entityCode = drOrders[orderId].entityCode;
+        return commerce_api.getOrderDetails(orderId);
+      }).then(function (data) {
+        entityCode = data.order.businessEntityCode;
         AccountModule.appendAutoRenewalTerms(digitalriverjs, entityCode, locale);
       })["catch"](function (jqXHR) {
         checkout_utils.apiErrorHandler(jqXHR);

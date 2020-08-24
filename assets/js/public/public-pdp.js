@@ -50,12 +50,26 @@ const PdpModule = (($) => {
             .addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
     };
 
+    const updateProductItem = ($target, product) => {
+        const $loadingIcon = $target.find('.dr-loading');
+        const $productInfo = $target.find('.dr-pd-info');
+        const $title = $target.find('.dr-pd-item-title');
+        const $thumbnail = $target.find('.dr-pd-item-thumbnail > img');
+        const thumbnail = product.thumbnailImage || '';
+
+        $title.text(product.displayName);
+        $thumbnail.attr('src', thumbnail).attr('alt', product.displayName);
+        $loadingIcon.hide();
+        $productInfo.show();
+    };
+
     return {
         bindVariationPrice,
         bindVariationInventoryStatus,
         selectVariation,
         displayRealTimePricing,
-        displayRealTimeBuyBtn
+        displayRealTimeBuyBtn,
+        updateProductItem
     };
 })(jQuery);
 
@@ -329,12 +343,9 @@ jQuery(document).ready(($) => {
     if (pdDisplayOption.$card && pdDisplayOption.$card.length) {
         isPdCard = true;
         pdDisplayOption.$card.each((idx, elem) => {
-            const $loadingIcon = $(elem).find('.dr-loading');
-            const $productInfo = $(elem).find('.dr-pd-info');
-            const $title = $(elem).find('.dr-pd-item-title');
-            const $thumbnail = $(elem).find('.dr-pd-item-thumbnail > img');
-            const $priceDiv = $(elem).find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-            const $buyBtn = $(elem).find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
+            const $currentElem = $(elem);
+            const $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+            const $buyBtn = $currentElem.find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
             const productID = $buyBtn.data('product-id');
             const parentId = $buyBtn.data('parent-id');
 
@@ -344,26 +355,22 @@ jQuery(document).ready(($) => {
                 DRCommerceApi.getProduct(parentId, {fields: 'variations', expand: 'all'}).then((res) => {
                     const variations = res.product.variations.product;
                     const isInStock = variations.some(elem => elem.inventoryStatus.availableQuantity > 0);
+                    const currentProduct = variations[0];
 
                     isPdCard = true; // to avoid being overwritten by concurrency
-                    PdpModule.displayRealTimePricing(variations[0].pricing, pdDisplayOption, $priceDiv);
+                    PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
                     PdpModule.displayRealTimeBuyBtn(isInStock.toString(), true, $buyBtn);
-                    $title.text(res.product.displayName);
-                    $thumbnail.attr('alt', res.product.displayName);
-                    $loadingIcon.hide();
-                    $productInfo.show();
+                    PdpModule.updateProductItem($currentElem, currentProduct);
                 });
             } else {
                 DRCommerceApi.getProduct(productID, { expand: 'inventoryStatus' }).then((res) => {
-                    const purchasable = res.product.inventoryStatus.productIsInStock;
+                    const currentProduct = res.product;
+                    const purchasable = currentProduct.inventoryStatus.productIsInStock;
 
                     isPdCard = true; // to avoid being overwritten by concurrency
-                    PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
+                    PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
                     PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-                    $title.text(res.product.displayName);
-                    $thumbnail.attr('alt', res.product.displayName);
-                    $loadingIcon.hide();
-                    $productInfo.show();
+                    PdpModule.updateProductItem($currentElem, currentProduct);
                 });
             }
         });
