@@ -38,6 +38,7 @@ if ( $variations && isset( $variations[0] ) ) {
     $variations = $variations_sort;
     $post_parent = $variations[0]->post_parent;
     $gc_parent_id = get_post_meta( $post_parent, 'gc_product_id', true );
+    $post_id = $variations[0]->ID;
 } else {
     $post_id = get_the_ID();
 }

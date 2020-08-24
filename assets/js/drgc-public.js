@@ -15146,12 +15146,25 @@ var PdpModule = function ($) {
     $target.prop('disabled', isOutOfStock).text(isOutOfStock ? drgc_params.translations.out_of_stock : isRedirectBuyBtn ? drgc_params.translations.buy_now : drgc_params.translations.add_to_cart).addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
   };
 
+  var updateProductItem = function updateProductItem($target, product) {
+    var $loadingIcon = $target.find('.dr-loading');
+    var $productInfo = $target.find('.dr-pd-info');
+    var $title = $target.find('.dr-pd-item-title');
+    var $thumbnail = $target.find('.dr-pd-item-thumbnail > img');
+    var thumbnail = product.thumbnailImage || '';
+    $title.text(product.displayName);
+    $thumbnail.attr('src', thumbnail).attr('alt', product.displayName);
+    $loadingIcon.hide();
+    $productInfo.show();
+  };
+
   return {
     bindVariationPrice: bindVariationPrice,
     bindVariationInventoryStatus: bindVariationInventoryStatus,
     selectVariation: selectVariation,
     displayRealTimePricing: displayRealTimePricing,
-    displayRealTimeBuyBtn: displayRealTimeBuyBtn
+    displayRealTimeBuyBtn: displayRealTimeBuyBtn,
+    updateProductItem: updateProductItem
   };
 }(jQuery);
 
@@ -15426,12 +15439,9 @@ jQuery(document).ready(function ($) {
   if (pdDisplayOption.$card && pdDisplayOption.$card.length) {
     isPdCard = true;
     pdDisplayOption.$card.each(function (idx, elem) {
-      var $loadingIcon = $(elem).find('.dr-loading');
-      var $productInfo = $(elem).find('.dr-pd-info');
-      var $title = $(elem).find('.dr-pd-item-title');
-      var $thumbnail = $(elem).find('.dr-pd-item-thumbnail > img');
-      var $priceDiv = $(elem).find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-      var $buyBtn = $(elem).find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
+      var $currentElem = $(elem);
+      var $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+      var $buyBtn = $currentElem.find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
       var productID = $buyBtn.data('product-id');
       var parentId = $buyBtn.data('parent-id');
       if (!productID) return;
@@ -15445,20 +15455,24 @@ jQuery(document).ready(function ($) {
           var isInStock = variations.some(function (elem) {
             return elem.inventoryStatus.availableQuantity > 0;
           });
+          var currentProduct = variations[0];
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(variations[0].pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(isInStock.toString(), true, $buyBtn);
+          PdpModule.updateProductItem($currentElem, currentProduct);
         });
       } else {
         commerce_api.getProduct(productID, {
           expand: 'inventoryStatus'
         }).then(function (res) {
-          var purchasable = res.product.inventoryStatus.productIsInStock;
+          var currentProduct = res.product;
+          var purchasable = currentProduct.inventoryStatus.productIsInStock;
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+          PdpModule.updateProductItem($currentElem, currentProduct);
         });
       }
     });
