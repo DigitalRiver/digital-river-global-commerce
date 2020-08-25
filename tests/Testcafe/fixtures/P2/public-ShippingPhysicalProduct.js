@@ -22,7 +22,6 @@ fixture `===== DRGC P2 Automation Test - Physical Product Shipping =====`
     await t
       .navigateTo(baseURL)
       .maximizeWindow()
-      .click(homePage.productsMenu)
       .expect(Selector('body').hasClass('hfeed')).ok()
 });
 
@@ -47,6 +46,9 @@ async function addPhysicalProduct() {
   console.log('>> Add physical product into cart');
   await t
     .setTestSpeed(0.9)
+    .click(homePage.productsMenu)
+    .click(homePage.paginationNextBtnUpper)
+    .hover(homePage.addPhyProduct)
     .click(homePage.addPhyProduct)
     .takeScreenshot('BWC/minicart.jpg');
 

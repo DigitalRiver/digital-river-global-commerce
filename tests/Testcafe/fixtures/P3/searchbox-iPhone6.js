@@ -28,6 +28,7 @@ test('Verify searchbox is visible in iPhone6 portrait mode', async t => {
   await t
     .click(mobileViewHamburgList)
     .click(homePage.productsMenu)
+    .click(homePage.paginationNextBtnDown)
     .click(homePage.addPhyProduct);
 
   console.log('>> Check searchbox exists');
@@ -50,6 +51,7 @@ test('Verify searchbox is visible in iPhone6 landscape mode', async t => {
   await t
     .click(mobileViewHamburgList)
     .click(homePage.productsMenu)
+    .click(homePage.paginationNextBtnDown)
     .click(homePage.addPhyProduct);
 
   console.log('>> Check searchbox exists');

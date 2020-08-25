@@ -6,7 +6,7 @@ fixture `===== DRGC P3 Automation Test - Admin: Import Data =====`
   .beforeEach(async t => {
     console.log('>> Logging in into admin panel...');
     await t
-      .setTestSpeed(0.7)
+      .setTestSpeed(0.8)
       .useRole(AdminRole)
       .maximizeWindow();
     console.log('>> Login to admin panel successfully!');
