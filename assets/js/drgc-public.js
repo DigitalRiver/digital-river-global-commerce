@@ -14044,7 +14044,10 @@ jQuery(document).ready(function ($) {
       $('#checkbox-save-' + addressType).prop('checked', false);
     });
     $('.back-link a').click(function () {
-      if (document.referrer && document.referrer !== drgc_params.loginUrl && document.referrer !== drgc_params.checkoutUrl) {
+      var loginUrl = new URL(drgc_params.loginUrl);
+      var checkoutUrl = new URL(drgc_params.checkoutUrl);
+
+      if (document.referrer && document.referrer.indexOf(loginUrl.pathname) === -1 && document.referrer.indexOf(checkoutUrl.pathname) === -1) {
         window.location.href = document.referrer;
       } else {
         window.location.href = drgc_params.cartUrl;

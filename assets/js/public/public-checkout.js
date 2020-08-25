@@ -724,7 +724,10 @@ jQuery(document).ready(($) => {
         });
 
         $('.back-link a').click(() => {
-            if (document.referrer && document.referrer !== drgc_params.loginUrl && document.referrer !== drgc_params.checkoutUrl) {
+            const loginUrl = new URL(drgc_params.loginUrl);
+            const checkoutUrl = new URL(drgc_params.checkoutUrl);
+
+            if (document.referrer && (document.referrer.indexOf(loginUrl.pathname) === -1) && (document.referrer.indexOf(checkoutUrl.pathname) === -1)) {
                 window.location.href = document.referrer;
             } else {
                 window.location.href = drgc_params.cartUrl;
