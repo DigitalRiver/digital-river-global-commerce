@@ -206,7 +206,7 @@ class DRGC_Admin {
 
 		add_settings_field(
 			$this->option_name . '_digitalRiver_key',
-			__( 'Payment Services API Key', 'digital-river-global-commerce' ),
+			__( 'Payments Service API Key', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_digitalRiver_key_cb' ),
 			$this->plugin_name . '_general',
 			$this->option_name . '_general',
