@@ -64,6 +64,9 @@ class DRGC_Public {
 
 		wp_enqueue_style( $this->drgc, plugin_dir_url( __FILE__ ) . '../assets/css/drgc-public.min.css', array(), $this->version, 'all' );
 
+    if ( is_page( 'checkout' ) ) {
+      wp_enqueue_style( 'digital-river-css', 'https://js.digitalriverws.com/v1/css/DigitalRiver.css', array(), $this->version, 'all' );
+    }
 	}
 
   /**
@@ -80,9 +83,6 @@ class DRGC_Public {
 
     if ( is_page( 'cart' ) || is_page( 'checkout' ) || is_page( 'thank-you' ) || is_page( 'account' ) ) {
       wp_enqueue_script( 'digital-river-js', 'https://js.digitalriverws.com/v1/DigitalRiver.js', array( $this->drgc ), null, true );
-    }
-    if ( is_page( 'checkout' ) ) {
-      wp_enqueue_script( 'paypal-checkout-js', 'https://www.paypalobjects.com/api/checkout.js', array( $this->drgc ), null, true );
     }
 
     $access_token = '';
@@ -222,10 +222,7 @@ class DRGC_Public {
 			'isApplePayEnabled'  => $applepay_enabled,
 			'isGooglePayEnabled' => $googlepay_enabled,
 			'client_ip'          => $_SERVER['REMOTE_ADDR'],
-      'applePayButtonType'   => get_option( 'drgc_applepay_button_type' ),
-      'applePayButtonColor'  => get_option( 'drgc_applepay_button_color' ),
-      'googlePayButtonType'  => get_option( 'drgc_googlepay_button_type' ),
-      'googlePayButtonColor' => get_option( 'drgc_googlepay_button_color' )
+			'dropInConfig'       => get_option( 'drgc_drop_in_config' )
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );
