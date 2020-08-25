@@ -35,5 +35,7 @@ export default class AdminPage {
 
     this.prodLink = Selector('#sample-permalink');
     this.addToCartBtn = Selector('.dr-buy-btn');
+
+    this.checkoutTab = Selector('.nav-tab').withText('Checkout');
   }
 }

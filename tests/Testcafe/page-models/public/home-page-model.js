@@ -18,8 +18,10 @@ export default class HomePage {
     this.minicartRegularPrice = this.minicartItem.find('p.dr-minicart-item-price > .dr-strike-price');
     this.minicartSalePrice = this.minicartItem.find('p.dr-minicart-item-price > .dr-sale-price');
 
-    this.paginationPrevBtn = Selector('.prev.page-link');
-    this.paginationNextBtn = Selector('.next.page-link');
+    this.paginationPrevBtnUpper = Selector('.prev.page-link').nth(0);
+    this.paginationNextBtnUpper = Selector('.next.page-link').nth(0);
+    this.paginationPrevBtnDown = Selector('.prev.page-link').nth(1);
+    this.paginationNextBtnDown = Selector('.next.page-link').nth(1);
     this.cartBtn = Selector('.dr-btn').withText('CART');
     this.checkoutBtn = Selector('.dr-btn').withText('CHECKOUT');
   }

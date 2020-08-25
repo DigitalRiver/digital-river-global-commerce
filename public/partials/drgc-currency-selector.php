@@ -21,14 +21,14 @@
 ?>
 
 <?php if ( ! empty( $supported_currencies ) ) { ?>
-<li class="dropdown menu-item <?php echo $has_other_currencies ? 'menu-item-has-children' : '' ?>" id="dr-currency-selector">
-  <a class="<?php echo $has_other_currencies ? 'dropdown-toggle' : '' ?> nav-link dr-selected-currency" data-dr-currency="<?php echo $selected_currency ?>" href="#"><?php echo $selected_currency ?></a>
+<li class="dr-dropdown menu-item <?php echo $has_other_currencies ? 'menu-item-has-children' : '' ?>" id="dr-currency-selector">
+  <a class="<?php echo $has_other_currencies ? 'dr-dropdown-toggle' : '' ?> nav-link dr-selected-currency" data-dr-currency="<?php echo $selected_currency ?>" href="#"><?php echo $selected_currency ?></a>
   <?php if ( $has_other_currencies ) { ?>
-  <ul class="dropdown-menu dr-other-currencies">
+  <ul class="dr-dropdown-menu dr-other-currencies">
     <?php foreach ( $supported_currencies as $currency ) { ?>
       <?php if ( $selected_currency !== $currency ) { ?>
         <li class="menu-item nav-item">
-          <a class="dropdown-item" data-dr-currency="<?php echo $currency ?>" href="#"><?php echo $currency ?></a>
+          <a class="dr-dropdown-item" data-dr-currency="<?php echo $currency ?>" href="#"><?php echo $currency ?></a>
         </li>
       <?php } ?>
     <?php } ?>

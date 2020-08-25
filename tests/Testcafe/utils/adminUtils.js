@@ -28,6 +28,9 @@ export default class AdminUtils {
     await this.utils.checkCheckBox(this.adminPage.scheduledImport, true);
 
     console.log('  -> Enable test order option');
+    await t
+      .hover(this.adminPage.checkoutTab)
+      .click(this.adminPage.checkoutTab);
     await this.utils.checkCheckBox(this.adminPage.testOrder, true);
 
     console.log('  -> Save site settings changes');
