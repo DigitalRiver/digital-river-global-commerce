@@ -23,7 +23,6 @@ fixture `===== DRGC P2 Automation Test - Free Shipping =====`
     await t
       .navigateTo(baseURL)
       .maximizeWindow()
-      .click(homePage.productsMenu)
       .expect(Selector('body').hasClass('hfeed')).ok()
 });
 
@@ -55,6 +54,9 @@ async function setProductQuatityToFreeShipping() {
 
   await t
     .setTestSpeed(0.9)
+    .click(homePage.productsMenu)
+    .click(homePage.paginationNextBtnUpper)
+    .hover(homePage.addPhyProduct)
     .click(homePage.addPhyProduct)
     .takeScreenshot('BWC/minicart.jpg');
 

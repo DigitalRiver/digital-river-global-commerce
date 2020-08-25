@@ -47,7 +47,10 @@ export default class GenericUtils {
     const homePage = new HomePage();
     const minicartPage = new MiniCartPage();
     await t
+      .hover(homePage.productsMenu)
       .click(homePage.productsMenu)
+      .hover(homePage.paginationNextBtnDown)
+      .click(homePage.paginationNextBtnDown)
       .hover(product)
       .click(product);
 

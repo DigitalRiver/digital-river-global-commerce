@@ -119,9 +119,9 @@ async function checkCurrentPageDisplay(currentPage, expectedCurrentPage, lastPag
     // Dont display: prevBtn
       console.log("  -> 1st Page -- Checking...");
       await t
-        .expect(homePage.paginationPrevBtn.exists).notOk()
-        .expect(homePage.paginationNextBtn.exists).ok()
-        .expect(homePage.paginationNextBtn.innerText).eql(nextBtnText);
+        .expect(homePage.paginationPrevBtnUpper.exists).notOk()
+        .expect(homePage.paginationNextBtnUpper.exists).ok()
+        .expect(homePage.paginationNextBtnUpper.innerText).eql(nextBtnText);
       break;
     case lastPage:
     // Last page.
@@ -129,9 +129,9 @@ async function checkCurrentPageDisplay(currentPage, expectedCurrentPage, lastPag
     // Dont display: nextBtn
       console.log("  -> Last Page -- Checking...");
       await t
-        .expect(homePage.paginationNextBtn.exists).notOk()
-        .expect(homePage.paginationPrevBtn.exists).ok()
-        .expect(homePage.paginationPrevBtn.innerText).eql(prevBtnText)
+        .expect(homePage.paginationNextBtnUpper.exists).notOk()
+        .expect(homePage.paginationPrevBtnUpper.exists).ok()
+        .expect(homePage.paginationPrevBtnUpper.innerText).eql(prevBtnText)
         .expect(getLocation()).contains(`/page/${lastPage}`);
       break;
     default:
@@ -139,10 +139,10 @@ async function checkCurrentPageDisplay(currentPage, expectedCurrentPage, lastPag
     // Display: prevBtn, nextBtn, address should have page number
       console.log("  -> Mid Page -- Checking...");
       await t
-        .expect(homePage.paginationPrevBtn.exists).ok()
-        .expect(homePage.paginationPrevBtn.innerText).eql(prevBtnText)
-        .expect(homePage.paginationNextBtn.exists).ok()
-        .expect(homePage.paginationNextBtn.innerText).eql(nextBtnText)
+        .expect(homePage.paginationPrevBtnUpper.exists).ok()
+        .expect(homePage.paginationPrevBtnUpper.innerText).eql(prevBtnText)
+        .expect(homePage.paginationNextBtnUpper.exists).ok()
+        .expect(homePage.paginationNextBtnUpper.innerText).eql(nextBtnText)
         .expect(getLocation()).contains(`/page/${expectedPages}`);
       break;
   }
@@ -150,7 +150,7 @@ async function checkCurrentPageDisplay(currentPage, expectedCurrentPage, lastPag
   //If there is more pages, go to next page
   if (!isLastPage) {
     console.log(">> Go to next page");
-    await t.click(homePage.paginationNextBtn);
+    await t.click(homePage.paginationNextBtnUpper);
     expectedCurrentPage += 1;
   }
   return expectedCurrentPage;
