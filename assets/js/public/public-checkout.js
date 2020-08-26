@@ -701,7 +701,6 @@ jQuery(document).ready(($) => {
                 $('#dr-checkout-err-field').text(localizedText.required_tandc_msg).show();
             } else {
                 $('#dr-checkout-err-field').text('').hide();
-                $(e.target).toggleClass('sending').blur();
                 $('#dr-payment-failed-msg').hide();
                 CheckoutModule.applyPaymentAndSubmitCart(paymentSourceId);
             }
