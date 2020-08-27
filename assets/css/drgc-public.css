@@ -48,6 +48,10 @@ html { scroll-behavior: smooth; }
 
 .data-table th:last-child { border-right: 0px; }
 
+#dr-test-order { text-align: center; background: rgba(8, 62, 111, 0.6); position: fixed; z-index: 9999; width: 100%; }
+
+#dr-test-order > p { color: white !important; text-transform: uppercase !important; font-size: 18px !important; font-weight: bold !important; margin: 0 !important; padding: 5px !important; }
+
 /* Minicart
 ------------------------------------------------------------------------*/
 #dr-minicart .dr-minicart-display { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; position: absolute; text-align: left; top: 61px; right: 0; width: 330px; min-height: 300px; max-height: 400px; background-color: #fff; border: 1px solid #ddd; -webkit-box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2); z-index: 99; font-size: 18px; }

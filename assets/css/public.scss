@@ -125,6 +125,23 @@ html {
         border-right: 0px;
     }
 }
+
+#dr-test-order {
+    text-align: center;
+    background: rgba(8, 62, 111, 0.6);
+    position: fixed;
+    z-index: 9999;
+    width: 100%;
+
+    > p {
+        color: white !important;
+        text-transform: uppercase !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+        margin: 0 !important;
+        padding: 5px !important;
+    }
+}
 /* Minicart
 ------------------------------------------------------------------------*/
 #dr-minicart {
