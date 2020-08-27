@@ -72,6 +72,12 @@
                 width: 100%;
             }
         }
+
+        .dr-order-address {
+            .address-info p {
+                white-space: nowrap;
+            }
+        }
     }
 }
 

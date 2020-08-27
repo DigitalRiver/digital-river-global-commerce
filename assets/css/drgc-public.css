@@ -2629,6 +2629,8 @@ input[type=number] { -webkit-appearance: textfield; -moz-appearance: textfield; 
 
 @media (max-width: 767px) { .dr-thank-you-wrapper__summary .order-summary { width: 100%; } }
 
+.dr-thank-you-wrapper__summary .dr-order-address .address-info p { white-space: nowrap; }
+
 @media print { .page-title { display: block; width: 100%; margin-top: 5rem; text-align: center; }
   .print-button { display: none; } }
 

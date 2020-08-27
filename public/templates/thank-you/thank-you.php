@@ -17,6 +17,7 @@ $shipping_first_name = isset($order['order']['shippingAddress']['firstName']) ? 
 $shipping_last_name = isset($order['order']['shippingAddress']['lastName']) ? $order['order']['shippingAddress']['lastName'] : '';
 $shipping_address1 = isset($order['order']['shippingAddress']['line1']) ? $order['order']['shippingAddress']['line1'] : '';
 $shipping_city = isset($order['order']['shippingAddress']['city']) ? $order['order']['shippingAddress']['city'] : '';
+$shipping_state = isset($order['order']['shippingAddress']['countrySubdivision']) ? $order['order']['shippingAddress']['countrySubdivision'] : '';
 $shipping_code = isset($order['order']['shippingAddress']['postalCode']) ? $order['order']['shippingAddress']['postalCode'] : '';
 $shipping_country = isset($order['order']['shippingAddress']['countryName']) ? $order['order']['shippingAddress']['countryName'] : '';
 
@@ -24,28 +25,31 @@ $billing_first_name = isset($order['order']['billingAddress']['firstName']) ? $o
 $billing_last_name = isset($order['order']['billingAddress']['lastName']) ? $order['order']['billingAddress']['lastName'] : '';
 $billing_address1 = isset($order['order']['billingAddress']['line1']) ? $order['order']['billingAddress']['line1'] : '';
 $billing_city = isset($order['order']['billingAddress']['city']) ? $order['order']['billingAddress']['city'] : '';
+$billing_state = isset($order['order']['billingAddress']['countrySubdivision']) ? $order['order']['billingAddress']['countrySubdivision'] : '';
 $billing_code = isset($order['order']['billingAddress']['postalCode']) ? $order['order']['billingAddress']['postalCode'] : '';
 $billing_country = isset($order['order']['billingAddress']['countryName']) ? $order['order']['billingAddress']['countryName'] : '';
 
-if($shipping_first_name !== '' && $shipping_last_name !== '') {
+if ( $shipping_first_name !== '' && $shipping_last_name !== '' ) {
     $shipping_name = $shipping_first_name . ' ' . $shipping_last_name;
 } else {
     $shipping_name = $shipping_first_name . $shipping_last_name;
 }
 
-if($shipping_city !== '' && $shipping_code !== '') {
+if ( $shipping_city !== '' && $shipping_code !== '' ) {
+    $shipping_code = $shipping_state ? $shipping_state . ' ' . $shipping_code : $shipping_code;
     $shipping_address2 = $shipping_city . ', ' . $shipping_code;
 } else {
     $shipping_address2 = $shipping_city . $shipping_code;
 }
 
-if($billing_first_name !== '' && $billing_last_name !== '') {
+if ( $billing_first_name !== '' && $billing_last_name !== '' ) {
     $billing_name = $billing_first_name . ' ' . $billing_last_name;
 } else {
     $billing_name = $billing_first_name . $billing_last_name;
 }
 
-if($billing_city !== '' && $billing_code !== '') {
+if ( $billing_city !== '' && $billing_code !== '' ) {
+    $billing_code = $billing_state ? $billing_state . ' ' . $billing_code : $billing_code;
     $billing_address2 = $billing_city . ', ' . $billing_code;
 } else {
     $billing_address2 = $billing_city . $billing_code;
