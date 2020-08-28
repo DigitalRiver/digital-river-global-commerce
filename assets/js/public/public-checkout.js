@@ -670,8 +670,15 @@ jQuery(document).ready(($) => {
             $activeSection.removeClass('active');
             $section.removeClass('closed').addClass('active');
 
-            $('.dr-checkout__payment').removeClass('small-closed-left');
-            $('.dr-checkout__confirmation').removeClass('small-closed-right').addClass('d-none');
+            if ($section.find('.dr-address-book').length) {
+                if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
+                    $section.find('.dr-address-book-btn').hide();
+                } else {
+                    $section.find('.dr-address-book-btn').show();
+                }
+            }
+  
+            CheckoutModule.adjustColumns($section);
             CheckoutModule.updateSummaryLabels();
         });
 

@@ -187,42 +187,35 @@ class DRGC_Public {
       'new_password_error_msg'         => __('The new password must be different from the current password.', 'digital-river-global-commerce')
     );
 
-		// transfer drgc options from PHP to JS
-		$options = array(
-			'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
-			'drLocale'          =>  drgc_get_current_dr_locale(),
-			'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
-			'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
-			'homeUrl'           =>  get_home_url(),
-			'cartUrl'           =>  drgc_get_page_link( 'cart' ),
-			'checkoutUrl'       =>  drgc_get_page_link( 'checkout' ),
-			'accountUrl'        =>  drgc_get_page_link( 'account' ),
-			'mySubsUrl'         =>  drgc_get_page_link( 'my-subscriptions' ),
-			'loginUrl'          =>  drgc_get_page_link( 'login' ),
-			'loginPath'         =>  parse_url( drgc_get_page_link( 'login' ) )['path'],
-			'siteID'            =>  get_option( 'drgc_site_id' ),
-			'domain'            =>  get_option( 'drgc_domain' ),
-			'digitalRiverKey'   =>  get_option( 'drgc_digitalRiver_key' ),
-			'accessToken'       =>  $access_token,
-			'cart'              =>  $cart_obj,
+    // transfer drgc options from PHP to JS
+    $options = array(
+      'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
+      'drLocale'          =>  drgc_get_current_dr_locale(),
+      'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
+      'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
+      'homeUrl'           =>  get_home_url(),
+      'cartUrl'           =>  drgc_get_page_link( 'cart' ),
+      'checkoutUrl'       =>  drgc_get_page_link( 'checkout' ),
+      'accountUrl'        =>  drgc_get_page_link( 'account' ),
+      'mySubsUrl'         =>  drgc_get_page_link( 'my-subscriptions' ),
+      'loginUrl'          =>  drgc_get_page_link( 'login' ),
+      'loginPath'         =>  parse_url( drgc_get_page_link( 'login' ) )['path'],
+      'siteID'            =>  get_option( 'drgc_site_id' ),
+      'domain'            =>  get_option( 'drgc_domain' ),
+      'digitalRiverKey'   =>  get_option( 'drgc_digitalRiver_key' ),
+      'accessToken'       =>  $access_token,
+      'cart'              =>  $cart_obj,
       'order'             =>  $order_obj,
       'shopperOrders'     =>  $orders_obj,
-			'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
-			'isLogin'           =>  drgc_get_user_status(),
-			'payPal'            =>  array (
-				'sourceId' => isset( $_GET['sourceId'] ) ? $_GET['sourceId'] : false,
-				'failure'  => isset( $_GET['ppcancel'] ) ? $_GET['ppcancel'] : false,
-				'success'  => isset ( $_GET['ppsuccess'] ) ? $_GET['ppsuccess'] : false,
-      ),
-			'testOrder'          => $testOrder_enable,
-			'shouldDisplayVat'   => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
-			'isTaxInclusive'     => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
-			'forceExclTax'       => $force_excl_tax_enable,
-			'translations'       => $translation_array,
-			'isApplePayEnabled'  => $applepay_enabled,
-			'isGooglePayEnabled' => $googlepay_enabled,
-			'client_ip'          => $_SERVER['REMOTE_ADDR'],
-			'dropInConfig'       => get_option( 'drgc_drop_in_config' )
+      'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
+      'isLogin'           =>  drgc_get_user_status(),
+      'testOrder'         => $testOrder_enable,
+      'shouldDisplayVat'  => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
+      'isTaxInclusive'    => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
+      'forceExclTax'      => $force_excl_tax_enable,
+      'translations'      => $translation_array,
+      'client_ip'         => $_SERVER['REMOTE_ADDR'],
+      'dropInConfig'      => get_option( 'drgc_drop_in_config' )
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );
