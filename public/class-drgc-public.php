@@ -193,7 +193,7 @@ class DRGC_Public {
       'drLocale'          =>  drgc_get_current_dr_locale(),
       'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
       'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
-      'homeUrl'           =>  get_home_url(),
+      'homeUrl'           =>  $this->append_query_string( get_home_url() ),
       'cartUrl'           =>  drgc_get_page_link( 'cart' ),
       'checkoutUrl'       =>  drgc_get_page_link( 'checkout' ),
       'accountUrl'        =>  drgc_get_page_link( 'account' ),
@@ -1033,8 +1033,20 @@ class DRGC_Public {
    */
   public function append_query_string( $url ) {
     if ( isset( $_GET['locale'] ) ) {
-      $url = add_query_arg( 'locale', $_GET['locale'], $url );
+      $url = esc_url( add_query_arg( 'locale', $_GET['locale'], $url ) );
     }
     return $url;
+  }
+
+  public function append_query_string_to_menu( $items ) {
+    $output = array();
+    foreach ( $items as $item ) {
+      if ( isset ( $item->url ) ) {
+        $item->url = $this->append_query_string( $item->url );
+      }
+
+      $output[] = $item;
+    }
+    return $output;
   }
 }

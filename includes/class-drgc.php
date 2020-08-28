@@ -326,9 +326,9 @@ class DRGC {
 
 		$this->loader->add_filter( 'page_link', $plugin_public, 'append_query_string' );
 		$this->loader->add_filter( 'post_link', $plugin_public, 'append_query_string' );
-		$this->loader->add_filter( 'post_type_archive_link', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'post_type_link', $plugin_public, 'append_query_string' );
 		$this->loader->add_filter( 'the_permalink', $plugin_public, 'append_query_string' );
-		$this->loader->add_filter( 'home_url', $plugin_public, 'append_query_string' );
+		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'append_query_string_to_menu' );
 
 		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
 		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
