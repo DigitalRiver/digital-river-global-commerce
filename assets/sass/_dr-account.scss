@@ -832,13 +832,20 @@
 #dr-passwordUpdated {
     .dr-modal-content {
         text-align: center;
-    }
-    .dr-modal-icon > img {
-        max-width: 25%;
-    }
 
-    .dr-modal-footer > button {
-        width: 100%;
+        > .dr-modal-body {
+            p {
+                text-align: left;
+            }
+
+            > .dr-modal-icon > img {
+                max-width: 25%;
+            }
+        }
+    
+        > .dr-modal-footer > button {
+            width: 100%;
+        }
     }
 }
 

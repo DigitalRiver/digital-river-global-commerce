@@ -956,7 +956,7 @@ class DRGC_Public {
             <div class="dr-modal-body">
               <div class="dr-modal-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/success-icon.svg' ?>" alt="success icon"></div>
               <h4><?php echo __( 'Password Updated!', 'digital-river-global-commerce' ); ?></h4>
-              <p><?php echo __( 'Your password has been changed successfully.', 'digital-river-global-commerce' ); ?></p>
+              <p><?php echo __( 'Your password has been changed successfully. Please log in to your account using your new password.', 'digital-river-global-commerce' ); ?></p>
             </div>
             <div class="dr-modal-footer">
               <button type="button" class="dr-btn dr-btn-blue" data-dismiss="dr-modal"><?php echo __( 'OK', 'digital-river-global-commerce' ); ?></button>
