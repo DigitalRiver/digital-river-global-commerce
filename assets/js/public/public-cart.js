@@ -277,6 +277,9 @@ const CartModule = (($) => {
               <div class="dr-product__img" style="background-image: url(${lineItem.product.thumbnailImage})"></div>
               <div class="dr-product__info">
                 <a class="product-name" href="${permalink}?locale=${drgc_params.drLocale}">${lineItem.product.displayName}</a>
+                <div class="product-short-description">
+                  <span>${drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : ''}</span>
+                </div>
                 <div class="product-sku">
                   <span>${localizedText.product_label} </span>
                   <span>#${lineItem.product.id}</span>

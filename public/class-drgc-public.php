@@ -114,6 +114,9 @@ class DRGC_Public {
     $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
     $force_excl_tax_enable = ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? "true" : "false";
 
+    $short_description_option = get_option( 'drgc_display_short_description_handler' );
+    $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
+
     $applepay_option = get_option( 'drgc_applepay_handler' );
     $applepay_enabled = ( is_array( $applepay_option ) && '1' == $applepay_option['checkbox'] )  ? 'true' : 'false';
 
@@ -214,18 +217,19 @@ class DRGC_Public {
 				'failure'  => isset( $_GET['ppcancel'] ) ? $_GET['ppcancel'] : false,
 				'success'  => isset ( $_GET['ppsuccess'] ) ? $_GET['ppsuccess'] : false,
       ),
-			'testOrder'          => $testOrder_enable,
-			'shouldDisplayVat'   => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
-			'isTaxInclusive'     => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
-			'forceExclTax'       => $force_excl_tax_enable,
-			'translations'       => $translation_array,
-			'isApplePayEnabled'  => $applepay_enabled,
-			'isGooglePayEnabled' => $googlepay_enabled,
-			'client_ip'          => $_SERVER['REMOTE_ADDR'],
-      'applePayButtonType'   => get_option( 'drgc_applepay_button_type' ),
-      'applePayButtonColor'  => get_option( 'drgc_applepay_button_color' ),
-      'googlePayButtonType'  => get_option( 'drgc_googlepay_button_type' ),
-      'googlePayButtonColor' => get_option( 'drgc_googlepay_button_color' )
+			'testOrder'               => $testOrder_enable,
+			'shouldDisplayVat'        => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
+			'isTaxInclusive'          => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
+      'forceExclTax'            => $force_excl_tax_enable,
+      'displayShortDescription' => $short_description_enabled,
+      'translations'            => $translation_array,
+      'isApplePayEnabled'       => $applepay_enabled,
+      'isGooglePayEnabled'      => $googlepay_enabled,
+      'client_ip'               => $_SERVER['REMOTE_ADDR'],
+      'applePayButtonType'      => get_option( 'drgc_applepay_button_type' ),
+      'applePayButtonColor'     => get_option( 'drgc_applepay_button_color' ),
+      'googlePayButtonType'     => get_option( 'drgc_googlepay_button_type' ),
+      'googlePayButtonColor'    => get_option( 'drgc_googlepay_button_color' )
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );

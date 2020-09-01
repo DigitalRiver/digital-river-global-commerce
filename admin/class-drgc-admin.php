@@ -265,6 +265,15 @@ class DRGC_Admin {
 			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
 		);
 
+    add_settings_field(
+      $this->option_name . '_display_short_description_handler',
+      __( 'Product Short Description', 'digital-river-global-commerce' ),
+      array( $this, $this->option_name . '_display_short_description_handler_cb' ),
+      $this->plugin_name . '_checkout',
+      $this->option_name . '_checkout',
+      array( 'label_for' => $this->option_name . '_display_short_description_handler' )
+    );
+
 		add_settings_section(
 			$this->option_name . '_payment',
 			__( 'Payment Buttons', 'digital-river-global-commerce' ),
@@ -350,6 +359,7 @@ class DRGC_Admin {
     // Checkout
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_display_short_description_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
 
     // Payment
     register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
@@ -461,7 +471,7 @@ class DRGC_Admin {
 		}
 
 		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_testOrder_handler[checkbox]" id="' . $this->option_name . '_testOrder_handler" value="1" ' . $checked . ' />';
-		echo '<span class="description" id="cron-description">' . __( 'Enable Test Order.', 'digital-river-global-commerce' ) . '</span>';
+		echo '<span class="description" id="test-order-description">' . __( 'Enable Test Order.', 'digital-river-global-commerce' ) . '</span>';
 	}
 
 	public function drgc_force_excl_tax_handler_cb() {
@@ -475,6 +485,18 @@ class DRGC_Admin {
 		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_force_excl_tax_handler[checkbox]" id="' . $this->option_name . '_force_excl_tax_handler" value="1" ' . $checked . ' />';
 		echo '<span class="description" id="force-excl-tax-description">' . __( 'Display pricing as tax exclusive on checkout flow', 'digital-river-global-commerce' ) . '</span>';
 	}
+
+  public function drgc_display_short_description_handler_cb() {
+    $option = get_option( $this->option_name . '_display_short_description_handler' );
+    $checked = '';
+
+    if ( is_array( $option ) && $option['checkbox'] === '1' ) {
+      $checked = 'checked="checked"';
+    }
+
+    echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_display_short_description_handler[checkbox]" id="' . $this->option_name . '_display_short_description_handler" value="1" ' . $checked . ' />';
+    echo '<span class="description" id="short-description-description">' . __( 'Display Short Description along with the product name', 'digital-river-global-commerce' ) . '</span>';
+  }
 
 	public function drgc_cron_handler_cb() {
 		$option = get_option( $this->option_name . '_cron_handler' );

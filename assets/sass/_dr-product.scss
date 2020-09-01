@@ -128,6 +128,15 @@
             }
 
         }
+
+        .product-short-description {
+            font-size: 12px;
+            line-height: normal;
+
+            @include for-tablet-portrait-up {
+                font-size: 14px;
+            }
+        }
     }
 
     &__price {
