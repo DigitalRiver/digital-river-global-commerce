@@ -281,6 +281,8 @@ class DRGC {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_guten_styles' );
+		$this->loader->add_action( 'enqueue_block_editor_assets', $plugin_admin, 'enqueue_guten_scripts' );
 
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'add_settings_page' );
 		$this->loader->add_action( 'admin_menu', $plugin_admin, 'register_settings_fields' );
@@ -293,6 +295,8 @@ class DRGC {
 		$this->loader->add_action( 'wp_ajax_drgc_sync_locales', $plugin_admin, 'drgc_sync_locales_ajax' );
 
 		$this->loader->add_action( 'init', $plugin_admin, 'remove_product_editor' );
+		$this->loader->add_action( 'init', $plugin_admin, 'setup_post_meta' );
+		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_custom_meta_box' );
 		$this->loader->add_action( 'add_meta_boxes', $plugin_admin, 'remove_slug_meta_box' );
 		$this->loader->add_action( 'load-post.php', $plugin_admin, 'disable_drag_meta_box' );
 
@@ -384,6 +388,9 @@ class DRGC {
 
 		$this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
     $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
+
+    $this->loader->add_filter( 'the_title', $plugin_public, 'localize_title' );
+    $this->loader->add_filter( 'the_content', $plugin_public, 'localize_content' );
 	}
 
 	/**

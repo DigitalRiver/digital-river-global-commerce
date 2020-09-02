@@ -118,9 +118,38 @@ class DRGC_Admin {
 				'drgc_ajx_instance_id'  => $this->drgc_ajx->instance_id,
 				'ajax_url'              => admin_url( 'admin-ajax.php' ),
 				'ajax_nonce'            => wp_create_nonce( 'drgc_admin_ajax' ),
+				'default_locale'        => get_option( 'drgc_default_locale' ) ?: 'en_US',
+				'locale_options'        => get_option( 'drgc_locale_options' ) ?: array(),
 			)
 		);
 	}
+
+  /**
+   * Register the stylesheets for Gutenberg admin area.
+   *
+   * @since    2.0.0
+   */
+  public function enqueue_guten_styles() {
+    wp_enqueue_style(
+      'admin-guten-style',
+      DRGC_PLUGIN_URL . 'assets/css/drgc-admin-guten.css'
+    );
+  }
+
+  /**
+   * Register the JavaScript for Gutenberg admin area.
+   *
+   * @since    2.0.0
+   */
+  public function enqueue_guten_scripts() {
+    wp_enqueue_script(
+      'admin-guten-script',
+      DRGC_PLUGIN_URL . 'assets/js/drgc-admin-guten.js',
+      array( $this->drgc, 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data' ),
+      $this->version,
+      false
+    );
+  }
 
 	/**
 	 * Add settings menu and link it to settings page.
@@ -853,4 +882,35 @@ class DRGC_Admin {
 			wp_download_language_pack( $locale );
 		}
 	}
+
+  /**
+   * Register post meta for saving localized title/content.
+   *
+   * @since    2.0.0
+   */
+  public function setup_post_meta() {
+    $locales = get_option( 'drgc_locale_options' ) ?: array();
+    $args = array(
+      'show_in_rest' => true,
+      'single' => true,
+      'type' => 'string',
+    );
+
+    foreach ( $locales as $locale ) {
+      register_post_meta( 'page', 'drgc_title_' . $locale['dr_locale'], $args );
+      register_post_meta( 'page', 'drgc_content_' . $locale['dr_locale'], $args );
+      register_post_meta( 'post', 'drgc_title_' . $locale['dr_locale'], $args );
+      register_post_meta( 'post', 'drgc_content_' . $locale['dr_locale'], $args );
+    }
+  }
+
+  /**
+   * Remove custom fields for avoiding conflicts of classic & Gutenburg form.
+   *
+   * @since    2.0.0
+   */
+  public function remove_custom_meta_box() {
+    remove_meta_box( 'postcustom', 'page', 'normal' );
+    remove_meta_box( 'postcustom', 'post', 'normal' );
+  }
 }
