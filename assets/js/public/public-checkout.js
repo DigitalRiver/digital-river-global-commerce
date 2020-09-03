@@ -541,6 +541,10 @@ jQuery(document).ready(($) => {
                     CheckoutModule.moveToNextSection($section);
                     CheckoutUtils.updateSummaryPricing(updatedCart.cart, drgc_params.isTaxInclusive === 'true');
                     paymentResponse = res;
+
+                    if (!res.paymentMethodTypes.length) {
+                        $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg).show();
+                    }
                 },
                 onCancel: (res) => {
                     paymentResponse = res;

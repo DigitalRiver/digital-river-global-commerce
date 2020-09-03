@@ -184,7 +184,8 @@ class DRGC_Public {
       'invalid_region_msg'             => __('Your region value is invalid. Please supply a different one.', 'digital-river-global-commerce'),
       'upsell_decline_label'           => __('No, thanks', 'digital-river-global-commerce'),
       'unable_place_order_msg'         => __('Unable to place order', 'digital-river-global-commerce'),
-      'new_password_error_msg'         => __('The new password must be different from the current password.', 'digital-river-global-commerce')
+      'new_password_error_msg'         => __('The new password must be different from the current password.', 'digital-river-global-commerce'),
+      'payment_methods_error_msg'      => __('Sorry, it seems that there are no available payment methods for your location.', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
