@@ -58,6 +58,8 @@ input:checked + .slider:before { -webkit-transform: translateX(26px); transform:
 
 #dr_product_details_box > h2 { cursor: auto !important; }
 
+.CodeMirror { border: 1px solid #ddd; resize: vertical; }
+
 /*
 * jQuery UI CSS Framework
 * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
