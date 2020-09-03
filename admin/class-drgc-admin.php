@@ -690,7 +690,7 @@ class DRGC_Admin {
    * @since    2.0.0
    */
   public function drgc_drop_in_config_cb() {
-    $config = get_option( $this->option_name . '_drop_in_config' );
+    $config = get_option( $this->option_name . '_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT );
     echo '<div><textarea name="' . $this->option_name . '_drop_in_config' . '" id="' . $this->option_name . '_drop_in_config' . '">' . esc_textarea( wp_unslash( $config ) ) . '</textarea></div>';
   }
 
