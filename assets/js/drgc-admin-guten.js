@@ -1,4 +1,8 @@
 (function(wp, drgc_admin_params, $) {
+  var defaultLocale = drgc_admin_params.default_locale;
+  var localeOptions = drgc_admin_params.locale_options;
+  if (!localeOptions || !localeOptions.length) return;
+
   var registerPlugin = wp.plugins.registerPlugin;
   var PluginSidebar = wp.editPost.PluginSidebar;
   var PluginSidebarMoreMenuItem = wp.editPost.PluginSidebarMoreMenuItem;
@@ -14,8 +18,6 @@
   var Text = wp.components.TextControl;
   var Textarea = wp.components.TextareaControl;
 
-  var defaultLocale = drgc_admin_params.default_locale;
-  var localeOptions = drgc_admin_params.locale_options;
   var localeChoices = localeOptions.map(function(localeOption) {
     var isDefault = localeOption.dr_locale === defaultLocale;
     return {
