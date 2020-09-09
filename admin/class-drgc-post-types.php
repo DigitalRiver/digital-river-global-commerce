@@ -165,24 +165,28 @@ class DRGC_Post_Types {
 		);
 	}
 
-	/**
-	 * Render meta box for product details.
-	 *
-	 * @since    1.0.0
-	 */
-	public function render_product_details_meta_box( $post ) {
+  /**
+   * Render meta box for product details.
+   *
+   * @since    1.0.0
+   */
+  public function render_product_details_meta_box( $post ) {
     $post_parent = $post->post_parent;
     $gc_id = get_post_meta( $post->ID, 'gc_product_id', true );
-		$plugin = DRGC();
-		$product_name = '';
-		$short_description = '';
-		$long_description = '';
-		$product_thumbnail_url = '';
-		$product_image_url = '';
-		$variation_attributes = [];
+    $plugin = DRGC();
+    $product_name = '';
+    $short_description = '';
+    $long_description = '';
+    $product_thumbnail_url = '';
+    $product_image_url = '';
+    $variation_attributes = [];
     $variations = drgc_get_product_variations( $post->ID );
+    $dr_locale = $_GET['locale'] ?? 'en_US';
+    $primary_currency = drgc_get_primary_currency( $dr_locale );
 
-		if ( $post_parent > 0 ) {
+    $plugin->shopper->update_locale_and_currency( $dr_locale, $primary_currency );
+
+    if ( $post_parent > 0 ) {
       $var_attr_values = [];
       $base_gc_id = get_post_meta( $post_parent, 'gc_product_id', true );
       $base_product_details = $plugin->product_details->get_product_details( $base_gc_id );
@@ -204,7 +208,7 @@ class DRGC_Post_Types {
           }
         }
       }
-		} else {
+    } else {
       $var_attr_values = array( array() );
       $product_details = $plugin->product_details->get_product_details( $gc_id );
 
@@ -230,9 +234,9 @@ class DRGC_Post_Types {
           }
         }
       }
-		}
+    }
 
-		if ( $product_details ) {
+    if ( $product_details ) {
       if ( isset( $product_details['displayName'] ) ) {
         $product_name = $product_details['displayName'];
       }
@@ -252,16 +256,16 @@ class DRGC_Post_Types {
       if ( isset( $product_details['productImage'] ) ) {
         $product_image_url = $product_details['productImage'];
       }
-		}
+    }
 
-		$active_tab = isset( $_GET['locale'] ) ? $_GET['locale'] : 'en_US';
-		$locales = get_option( 'drgc_store_locales' );
-		$price = $product_details['pricing']['formattedListPrice'];
+    $active_tab = isset( $_GET['locale'] ) ? $_GET['locale'] : 'en_US';
+    $locales = get_option( 'drgc_store_locales' );
+    $price = $product_details['pricing']['formattedListPrice'];
 
-		echo '<h2 id="drcc-link"><a href="https://gc.digitalriver.com/gc/ent/site/selectSite.do?siteID=' . get_option( 'drgc_site_id' ) . '" target="_blank">Manage Products</a></h2>';
+    echo '<h2 id="drcc-link"><a href="https://gc.digitalriver.com/gc/ent/site/selectSite.do?siteID=' . get_option( 'drgc_site_id' ) . '" target="_blank">Manage Products</a></h2>';
 
-		include_once 'partials/drgc-product-details-meta-box.php';
-	}
+    include_once 'partials/drgc-product-details-meta-box.php';
+  }
 
 	/**
 	 * Save meta data.

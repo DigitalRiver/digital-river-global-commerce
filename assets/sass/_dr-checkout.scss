@@ -143,4 +143,41 @@
             content: "\2212";
         }
     }
+
+    .edit-link {
+        text-transform: uppercase;
+        display: none;
+        float: right;
+        opacity: 0.5;
+    }
+
+    .DR-logo-button {
+        font-size: 16px;
+        font-weight: bold;
+
+        &:hover, &:focus {
+            background: none;
+        }
+    }
+
+    .DR-payment-method-logo {
+        height: 24px;
+    }
+
+    .DR-pay-button {
+        padding: 0;
+        background-color: #00a7e1;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1;
+        border: none;
+        border-radius: 0;
+        padding: 13px;
+        text-decoration: none;
+        height: 41px;
+    }
+
+    .DR-Legal-Footer {
+        display: none;
+    }
 }
