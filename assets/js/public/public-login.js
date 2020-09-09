@@ -77,8 +77,11 @@ const LoginModule = (($) => {
     };
 
     const redirectAfterAuth = (isLoggedIn, locale) => {
+        const cartUrl = new URL(drgc_params.cartUrl);
+        const checkoutUrl = new URL(drgc_params.checkoutUrl);
         let targetHref = '';
-        if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
+
+        if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
             targetHref = drgc_params.checkoutUrl;
         } else if (isLoggedIn) {
             targetHref = drgc_params.accountUrl;

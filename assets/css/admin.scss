@@ -168,6 +168,11 @@ input:checked + .slider:before {
   cursor: auto !important;
 }
 
+.CodeMirror {
+  border: 1px solid #ddd;
+  resize: vertical;
+}
+
 /*
 * jQuery UI CSS Framework
 * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
