@@ -58,19 +58,17 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
 
         <div class="dr-checkout">
 
-            <div class="dr-checkout__el dr-checkout__cloudpay">
+            <div class="edit-link dr-accordion__edit">
+            
+                <span>
 
-                <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-pretandc.php'; ?>
+                    <?php if ( $cart['cart']['hasPhysicalProduct'] ): ?>
+                        <?php _e( 'Edit Shipping/Billing', 'digital-river-global-commerce' ); ?>>
+                    <?php else: ?>
+                        <?php _e( 'Edit Billing', 'digital-river-global-commerce' ); ?>>
+                    <?php endif; ?>
 
-                <?php if ( ! $check_subs['has_subs'] ) : ?>
-
-                    <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-googlepay.php'; ?>
-
-                    <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-applepay.php'; ?>
-
-                <?php endif; ?>
-
-                <div class="invalid-feedback" id="dr-preTAndC-err-msg"></div>
+                </span>
 
             </div>
 
@@ -86,7 +84,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                 include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-delivery.php';
             endif; ?>
 
-            <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-payment.php'; ?>
+            <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-drop-in.php'; ?>
 
             <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-confirmation.php'; ?>
 

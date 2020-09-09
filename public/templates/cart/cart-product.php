@@ -15,6 +15,10 @@
 <?php
 $product_name = $line_item['product']['displayName'];
 $product_image_uri = $line_item['product']['thumbnailImage'];
+<<<<<<< HEAD
+=======
+$product_colors = ['Black', 'Red'];
+>>>>>>> 86b3aff29e238939b8c6899f4aabee8e2da0c988
 $product_sku = $line_item['product']['id'];
 $sale_price = $line_item['pricing']['formattedSalePriceWithQuantity'];
 $price = $line_item['pricing']['formattedListPriceWithQuantity'];
