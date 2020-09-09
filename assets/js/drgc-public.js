@@ -14240,9 +14240,11 @@ var LoginModule = function ($) {
   };
 
   var redirectAfterAuth = function redirectAfterAuth(isLoggedIn, locale) {
+    var cartUrl = new URL(drgc_params.cartUrl);
+    var checkoutUrl = new URL(drgc_params.checkoutUrl);
     var targetHref = '';
 
-    if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
+    if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
       targetHref = drgc_params.checkoutUrl;
     } else if (isLoggedIn) {
       targetHref = drgc_params.accountUrl;
