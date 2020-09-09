@@ -26,8 +26,8 @@
     <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=checkout" class="nav-tab <?php if ( $active_tab === 'checkout' ) echo 'nav-tab-active'; ?>">
       <?php _e( 'Checkout', 'digital-river-global-commerce' ) ?>
     </a>
-    <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=payment" class="nav-tab <?php if ( $active_tab === 'payment' ) echo 'nav-tab-active'; ?>">
-      <?php _e( 'Payment', 'digital-river-global-commerce' ) ?>
+    <a href="?post_type=dr_product&page=digital-river-global-commerce&tab=drop_in" class="nav-tab <?php if ( $active_tab === 'drop_in' ) echo 'nav-tab-active'; ?>">
+      <?php _e( 'Payments', 'digital-river-global-commerce' ) ?>
     </a>
   </nav>
 
@@ -36,7 +36,7 @@
       <?php switch ( $active_tab ) {
         case 'general':
         case 'checkout':
-        case 'payment':
+        case 'drop_in':
           settings_fields( $this->plugin_name . '_' . $active_tab );
           do_settings_sections( $this->plugin_name . '_' . $active_tab );
           submit_button();
