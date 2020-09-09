@@ -265,55 +265,11 @@ class DRGC_Admin {
 			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
 		);
 
-<<<<<<< HEAD
-    add_settings_field(
-      $this->option_name . '_display_short_description_handler',
-      __( 'Product Short Description', 'digital-river-global-commerce' ),
-      array( $this, $this->option_name . '_display_short_description_handler_cb' ),
-      $this->plugin_name . '_checkout',
-      $this->option_name . '_checkout',
-      array( 'label_for' => $this->option_name . '_display_short_description_handler' )
-    );
-
-		add_settings_section(
-			$this->option_name . '_payment',
-			__( 'Payment Buttons', 'digital-river-global-commerce' ),
-			array( $this, $this->option_name . '_payment_cb' ),
-			$this->plugin_name . '_payment'
-		);
-
-		add_settings_field(
-			$this->option_name . '_applepay_handler',
-			__( 'Apple Pay', 'digital-river-global-commerce' ),
-			array( $this, $this->option_name . '_applepay_handler_cb' ),
-			$this->plugin_name . '_payment',
-			$this->option_name . '_payment',
-			array( 'label_for' => $this->option_name . '_applepay_handler' )
-    );
-    
-    add_settings_field(
-      $this->option_name . '_applepay_button_type',
-      __( 'Button Type', 'digital-river-global-commerce' ),
-      array( $this, $this->option_name . '_applepay_button_type_cb' ),
-      $this->plugin_name . '_payment',
-      $this->option_name . '_payment',
-      array( 'label_for' => $this->option_name . '_applepay_button_type' )
-    );
-    
-    add_settings_field(
-      $this->option_name . '_applepay_button_color',
-      __( 'Button Color', 'digital-river-global-commerce' ),
-      array( $this, $this->option_name . '_applepay_button_color_cb' ),
-      $this->plugin_name . '_payment',
-      $this->option_name . '_payment',
-      array( 'label_for' => $this->option_name . '_applepay_button_color' )
-=======
     add_settings_section(
       $this->option_name . '_drop_in',
       __( 'Drop-in', 'digital-river-global-commerce' ),
       array( $this, $this->option_name . '_drop_in_cb' ),
       $this->plugin_name . '_drop_in'
->>>>>>> 86b3aff29e238939b8c6899f4aabee8e2da0c988
     );
 
     add_settings_field(

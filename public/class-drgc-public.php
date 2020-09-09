@@ -211,28 +211,6 @@ class DRGC_Public {
       'cart'              =>  $cart_obj,
       'order'             =>  $order_obj,
       'shopperOrders'     =>  $orders_obj,
-<<<<<<< HEAD
-			'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
-			'isLogin'           =>  drgc_get_user_status(),
-			'payPal'            =>  array (
-				'sourceId' => isset( $_GET['sourceId'] ) ? $_GET['sourceId'] : false,
-				'failure'  => isset( $_GET['ppcancel'] ) ? $_GET['ppcancel'] : false,
-				'success'  => isset ( $_GET['ppsuccess'] ) ? $_GET['ppsuccess'] : false,
-      ),
-			'testOrder'               => $testOrder_enable,
-			'shouldDisplayVat'        => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
-			'isTaxInclusive'          => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
-      'forceExclTax'            => $force_excl_tax_enable,
-      'displayShortDescription' => $short_description_enabled,
-      'translations'            => $translation_array,
-      'isApplePayEnabled'       => $applepay_enabled,
-      'isGooglePayEnabled'      => $googlepay_enabled,
-      'client_ip'               => $_SERVER['REMOTE_ADDR'],
-      'applePayButtonType'      => get_option( 'drgc_applepay_button_type' ),
-      'applePayButtonColor'     => get_option( 'drgc_applepay_button_color' ),
-      'googlePayButtonType'     => get_option( 'drgc_googlepay_button_type' ),
-      'googlePayButtonColor'    => get_option( 'drgc_googlepay_button_color' )
-=======
       'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
       'isLogin'           =>  drgc_get_user_status(),
       'testOrder'         => $testOrder_enable,
@@ -242,7 +220,6 @@ class DRGC_Public {
       'translations'      => $translation_array,
       'client_ip'         => $_SERVER['REMOTE_ADDR'],
       'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT )
->>>>>>> 86b3aff29e238939b8c6899f4aabee8e2da0c988
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );
