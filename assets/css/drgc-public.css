@@ -2417,9 +2417,11 @@ body.dr-loading:after { position: fixed; }
 
 #dr-passwordUpdated .dr-modal-content { text-align: center; }
 
-#dr-passwordUpdated .dr-modal-icon > img { max-width: 25%; }
+#dr-passwordUpdated .dr-modal-content > .dr-modal-body p { text-align: left; }
 
-#dr-passwordUpdated .dr-modal-footer > button { width: 100%; }
+#dr-passwordUpdated .dr-modal-content > .dr-modal-body > .dr-modal-icon > img { max-width: 25%; }
+
+#dr-passwordUpdated .dr-modal-content > .dr-modal-footer > button { width: 100%; }
 
 .drgc-wrapper #dr-account-page-wrapper .dr-panel-edit label { cursor: text; }
 

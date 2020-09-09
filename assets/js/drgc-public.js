@@ -15624,8 +15624,21 @@ jquery_default()(function () {
 
     if (e.target.id === 'list-password-list' && sessionStorage.getItem('drgc-pw-changed') === 'true') {
       sessionStorage.setItem('drgc-pw-changed', 'false');
-      jquery_default()('#dr-passwordUpdated').drModal('show');
+      jquery_default()('#dr-passwordUpdated').drModal({
+        backdrop: 'static',
+        keyboard: false
+      });
     }
+  });
+  jquery_default()('#dr-passwordUpdated button').on('click', function () {
+    var data = {
+      action: 'drgc_logout',
+      nonce: drgc_params.ajaxNonce
+    };
+    jquery_default()('body').addClass('dr-loading');
+    jquery_default.a.post(drgc_params.ajaxUrl, data, function () {
+      window.location.href = drgc_params.loginUrl;
+    });
   });
 
   if (sessionStorage.drAccountTab && jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {
