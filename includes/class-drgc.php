@@ -385,7 +385,9 @@ class DRGC {
 		$this->loader->add_filter( 'get_the_archive_title', $plugin_public, 'translate_archive_title' );
 
 		$this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
-    $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
+		$this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
+
+    $this->loader->add_action( 'wp_head', $plugin_public, 'add_test_order_banner' );
 	}
 
 	/**

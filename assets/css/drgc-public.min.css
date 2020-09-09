@@ -17,6 +17,8 @@ html{scroll-behavior:smooth}
 .data-table th{background-color:#f9f9f9;color:black;text-align:left;white-space:nowrap;font-weight:bold;padding:8px 10px 8px 5px}
 .data-table td{background-color:white;text-align:left;vertical-align:top;padding:5px 10px 5px 5px}
 .data-table th:last-child{border-right:0}
+#dr-test-order{text-align:center;background:rgba(8,62,111,0.6);position:fixed;z-index:9999;width:100%}
+#dr-test-order>p{color:white !important;text-transform:uppercase !important;font-size:18px !important;font-weight:bold !important;margin:0 !important;padding:5px !important}
 #dr-minicart .dr-minicart-display{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;position:absolute;text-align:left;top:61px;right:0;width:330px;min-height:300px;max-height:400px;background-color:#fff;border:1px solid #ddd;-webkit-box-shadow:0 3px 10px rgba(0,0,0,0.2);box-shadow:0 3px 10px rgba(0,0,0,0.2);z-index:99;font-size:18px}
 #dr-minicart .dr-minicart-header,#dr-minicart .dr-minicart-body,#dr-minicart .dr-minicart-footer{padding:0 10px}
 #dr-minicart .dr-minicart-header{padding:1rem 0 1rem 1rem;border-bottom:1px solid #eee}

@@ -956,8 +956,20 @@ class DRGC_Public {
         </div>
       </div>
     <?php endif; ?>
-	<?php
-	}
+  <?php
+  }
+
+  public function add_test_order_banner() {
+    $test_order_option = get_option( 'drgc_testOrder_handler' );
+    $is_test_order_enabled = is_array( $test_order_option ) && ( $test_order_option['checkbox'] === '1' );
+  ?>
+    <?php if ( $is_test_order_enabled && ( is_page( 'cart' ) || is_page( 'checkout' ) || is_page( 'thank-you' ) ) ): ?>
+      <div id="dr-test-order">
+        <p>*** <?php _e( 'This is a test order', 'digital-river-global-commerce' ); ?> ***</p>
+      </div>
+    <?php endif; ?>
+  <?php
+  }
 
 	public function reset_cookie_ajax() {
 		check_ajax_referer( 'drgc_ajax', 'nonce' );
