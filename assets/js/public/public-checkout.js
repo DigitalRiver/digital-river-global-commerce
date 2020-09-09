@@ -1,30 +1,10 @@
 import FloatLabel from './float-label'; // 3rd-party plugin
 import DRCommerceApi from './commerce-api';
 import CheckoutUtils from './checkout-utils';
-import DRGooglePay from './payment-googlepay';
-import DRApplePay from './payment-applepay';
 
 const CheckoutModule = (($) => {
     const localizedText = drgc_params.translations;
     const requestShipping = (drgc_params.cart.cart.shippingOptions.shippingOption) ? true : false;
-    const initPreTAndC = () => {
-        $('#dr-preTAndC').change((e) => {
-            if ($(e.target).is(':checked')) {
-                $('#dr-preTAndC-err-msg').text('').hide();
-                $('.dr-cloudpay-btn').css({ 'pointer-events': 'auto' });
-            } else {
-                $('.dr-cloudpay-btn').css({ 'pointer-events': 'none' });
-            }
-        });
-
-        $('.dr-cloudpay-btn-wrapper').click(() => {
-            if (!$('#dr-preTAndC').is(':checked')) {
-                $('#dr-preTAndC-err-msg').text(localizedText.required_tandc_msg).show();
-            }
-        });
-
-        $('#dr-preTAndC').trigger('change');
-    };
 
     const updateSummaryLabels = () => {
         const isTaxInclusive = drgc_params.isTaxInclusive === 'true';
@@ -105,6 +85,15 @@ const CheckoutModule = (($) => {
           } else {
             $nextSection.find('.dr-address-book-btn').show();
           }
+        }
+
+        if ($nextSection.hasClass('dr-checkout__payment') || $nextSection.hasClass('dr-checkout__confirmation')) {
+            $('.dr-accordion__edit').hide();
+            $('.edit-link').show();
+        }
+
+        if ($nextSection.hasClass('dr-checkout__confirmation')) {
+            $section.find('span.dr-accordion__edit').show();
         }
 
         adjustColumns($section);
@@ -259,6 +248,23 @@ const CheckoutModule = (($) => {
         }
     };
 
+    const getDropinBillingAddress = (addressPayload) => {
+        return {
+            firstName: addressPayload.billing.firstName,
+            lastName: addressPayload.billing.lastName,
+            email: addressPayload.billing.emailAddress,
+            phoneNumber: addressPayload.billing.phoneNumber,
+            address: {
+                line1: addressPayload.billing.line1,
+                line2: addressPayload.billing.line2,
+                city: addressPayload.billing.city,
+                state: addressPayload.billing.countrySubdivision || 'NA',
+                postalCode: addressPayload.billing.postalCode,
+                country: addressPayload.billing.country
+            }
+        };
+    };
+
     const applyPaymentAndSubmitCart = (sourceId, isPaymentButton = false) => {
         const $form = $('#checkout-confirmation-form');
 
@@ -278,7 +284,6 @@ const CheckoutModule = (($) => {
     };
 
     return {
-        initPreTAndC,
         updateSummaryLabels,
         getCountryOptionsFromGC,
         moveToNextSection,
@@ -289,6 +294,7 @@ const CheckoutModule = (($) => {
         displayAddressErrMsg,
         displayCartAddress,
         preselectShippingOption,
+        getDropinBillingAddress,
         applyPaymentAndSubmitCart
     };
 })(jQuery);
@@ -297,94 +303,23 @@ jQuery(document).ready(($) => {
     if ($('#checkout-payment-form').length) {
         // Globals
         const localizedText = drgc_params.translations;
-        const domain = drgc_params.domain;
         const isLoggedIn = drgc_params.isLogin === 'true';
         const drLocale = drgc_params.drLocale || 'en_US';
         const cartData = drgc_params.cart.cart;
         const requestShipping = (cartData.shippingOptions.shippingOption) ? true : false;
-        const isGooglePayEnabled = drgc_params.isGooglePayEnabled === 'true';
-        const isApplePayEnabled = drgc_params.isApplePayEnabled === 'true';
         const digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey, {
             'locale': drLocale.split('_').join('-')
         });
         const addressPayload = {shipping: {}, billing: {}};
         let paymentSourceId = null;
+        const currency = drgc_params.cart.cart.pricing.orderTotal.currency;
+        const dropInConfig = JSON.parse(drgc_params.dropInConfig);
+        let paymentResponse = null;
         // Section progress
         let finishedSectionIdx = -1;
 
         // Break down tax and update summary on page load
         CheckoutUtils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
-
-        // Create elements through DR.js
-        if ($('.credit-card-section').length) {
-            const options = {
-                classes: {
-                    base: 'DRElement',
-                    complete: 'DRElement--complete',
-                    empty: 'DRElement--empty',
-                    invalid: 'DRElement--invalid'
-                },
-                style: {
-                    base: getStyleOptionsFromClass('DRElement'),
-                    complete: getStyleOptionsFromClass('DRElement--complete'),
-                    empty: getStyleOptionsFromClass('DRElement--empty'),
-                    invalid: getStyleOptionsFromClass('DRElement--invalid')
-                }
-            };
-
-            var cardNumber = digitalriverjs.createElement('cardnumber', options);
-            var cardExpiration = digitalriverjs.createElement('cardexpiration', Object.assign({}, options, { placeholderText: localizedText.card_expiration_placeholder }));
-            var cardCVV = digitalriverjs.createElement('cardcvv', Object.assign({}, options, { placeholderText: localizedText.card_cvv_placeholder }));
-
-            cardNumber.mount('card-number');
-            cardExpiration.mount('card-expiration');
-            cardCVV.mount('card-cvv');
-
-            cardNumber.on('change', function(evt) {
-                activeCardLogo(evt);
-                displayDRElementError(evt, $('#card-number-error'));
-            });
-            cardExpiration.on('change', function(evt) {
-                displayDRElementError(evt, $('#card-expiration-error'));
-            });
-            cardCVV.on('change', function(evt) {
-                displayDRElementError(evt, $('#card-cvv-error'));
-            });
-
-            function getStyleOptionsFromClass(className) {
-                const tempDiv = document.createElement('div');
-                tempDiv.setAttribute('id', 'tempDiv' + className);
-                tempDiv.className = className;
-                document.body.appendChild(tempDiv);
-                const tempDivEl = document.getElementById('tempDiv' + className);
-                const tempStyle = window.getComputedStyle(tempDivEl);
-
-                const styles = {
-                    color: tempStyle.color,
-                    fontFamily: tempStyle.fontFamily.replace(new RegExp('"', 'g'), ''),
-                    fontSize: tempStyle.fontSize,
-                    height: tempStyle.height
-                };
-                document.body.removeChild(tempDivEl);
-
-                return styles;
-            }
-
-            function activeCardLogo(evt) {
-                $('.cards .active').removeClass('active');
-                if (evt.brand && evt.brand !== 'unknown') {
-                    $(`.cards .${evt.brand}-icon`).addClass('active');
-                }
-            }
-
-            function displayDRElementError(evt, $target) {
-                if (evt.error) {
-                    $target.text(evt.error.message).show();
-                } else {
-                    $target.text('').hide();
-                }
-            }
-        }
 
         $('#checkout-email-form').on('submit', function(e) {
             e.preventDefault();
@@ -487,7 +422,7 @@ jQuery(document).ready(($) => {
             }
         });
 
-        $('#checkout-billing-form').on('submit', function(e) {
+        $('#checkout-billing-form').on('submit', async (e) => {
             e.preventDefault();
 
             const $form = $(e.target);
@@ -518,7 +453,7 @@ jQuery(document).ready(($) => {
                 }
             }
 
-            DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest)
+            const updatedCart = await DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest)
                 .then(() => {
                     // Digital product still need to update some of shippingAddress attributes for tax calculating
                     if (requestShipping) return new Promise(resolve => resolve());
@@ -556,24 +491,72 @@ jQuery(document).ready(($) => {
                         CheckoutModule.preselectShippingOption(data) :
                         new Promise(resolve => resolve(data));
                 })
-                .then((data) => {
+                .catch((jqXHR) => {
+                    $button.removeClass('sending').blur();
+                    CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                });
+            
+            const billingAddress = CheckoutModule.getDropinBillingAddress(addressPayload);
+            const lang = drLocale.split('_')[0];
+
+            if ('onlineBanking' in dropInConfig) {
+                dropInConfig.onlineBanking.onlineBanking = {
+                    currency: currency,
+                    country: billingAddress.address.country
+                }
+            }
+
+            if ('googlePay' in dropInConfig) {
+                dropInConfig.googlePay.style.buttonLanguage = lang;
+            }
+
+            if ('applePay' in dropInConfig) {
+                dropInConfig.applePay.style.buttonLanguage = lang;
+            }
+
+            const config = {
+                sessionId: updatedCart.cart.paymentSession ? updatedCart.cart.paymentSession.id : '',
+                billingAddress: billingAddress,
+                paymentMethodConfiguration: dropInConfig,
+                onSuccess: (res) => {
+                    sessionStorage.setItem('drgcPaymentSource', JSON.stringify(res.source));
+                    paymentResponse = res;
+                    $('#checkout-payment-form').submit();
+                },
+                onError: (res) => {
+                    console.error(res.errors);
+                    paymentResponse = res;
+                },
+                onReady: (res) => {
                     $button.removeClass('sending').blur();
 
                     const $section = $('.dr-checkout__billing');
 
-                    CheckoutModule.displayCartAddress(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                    CheckoutModule.displayCartAddress(updatedCart.cart.billingAddress, $section.find('.dr-panel-result__text'));
 
                     if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                         finishedSectionIdx = $('.dr-checkout__el').index($section);
                     }
 
                     CheckoutModule.moveToNextSection($section);
-                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-                })
-                .catch((jqXHR) => {
-                    $button.removeClass('sending').blur();
-                    CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-                });
+                    CheckoutUtils.updateSummaryPricing(updatedCart.cart, drgc_params.isTaxInclusive === 'true');
+                    paymentResponse = res;
+
+                    if (!res.paymentMethodTypes.length) {
+                        $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg).show();
+                    }
+                },
+                onCancel: (res) => {
+                    paymentResponse = res;
+                }
+            };
+
+            try {
+                digitalriverjs.createDropin(config).mount('dr-payment-info');
+            } catch (error) {
+                $button.removeClass('sending').blur();
+                console.error(error.message);
+            }
         });
 
         // Submit delivery form
@@ -644,54 +627,22 @@ jQuery(document).ready(($) => {
 
             $('#dr-payment-failed-msg, #dr-checkout-err-field').text('').hide();
 
-            const $section = $('.dr-checkout__payment');
+            if (paymentResponse.errors) {
+                $('#dr-payment-failed-msg').text(paymentResponse.errors[0].message).show();
+            } else {
+                if (paymentResponse.source.state === 'chargeable' || paymentResponse.source.state === 'pending_funds') {
+                    const $section = $('.dr-checkout__payment');
+                    const label = (paymentResponse.source.type === 'creditCard') ? `${drgc_params.translations.credit_card_ending_label} ${paymentResponse.source.creditCard.lastFourDigits}` : paymentResponse.source.type;
+                    paymentSourceId = paymentResponse.source.id;
 
-            if (paymentPayload.selector === 'credit-card') {
-                const cart = drgc_params.cart.cart;
-                const creditCardPayload = {
-                    type: 'creditCard',
-                    owner: {
-                        firstName: addressPayload.billing.firstName,
-                        lastName: addressPayload.billing.lastName,
-                        email: addressPayload.billing.emailAddress,
-                        address: {
-                            line1: addressPayload.billing.line1,
-                            line2: addressPayload.billing.line2,
-                            city: addressPayload.billing.city,
-                            state: addressPayload.billing.countrySubdivision,
-                            country: addressPayload.billing.country,
-                            postalCode: addressPayload.billing.postalCode
-                        }
-                    },
-                    amount: cart.pricing.orderTotal.value,
-                    currency: cart.pricing.orderTotal.currency
-                };
+                    $section.find('.dr-panel-result__text').text(label);
 
-                $button.addClass('sending').blur();
-                digitalriverjs.createSource(cardNumber, creditCardPayload).then(function(result) {
-                    $button.removeClass('sending').blur();
-                    if (result.error) {
-                        if (result.error.state === 'failed') {
-                            $('#dr-payment-failed-msg').text(localizedText.credit_card_error_msg).show();
-                        }
-                        if (result.error.errors) {
-                            $('#dr-payment-failed-msg').text(result.error.errors[0].message).show();
-                        }
-                    } else {
-                        if (result.source.state === 'chargeable') {
-                            paymentSourceId = result.source.id;
-                            $section.find('.dr-panel-result__text').text(
-                                `${localizedText.credit_card_ending_label} ${result.source.creditCard.lastFourDigits}`
-                            );
-
-                            if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                                finishedSectionIdx = $('.dr-checkout__el').index($section);
-                            }
-
-                            CheckoutModule.moveToNextSection($section);
-                        }
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                        finishedSectionIdx = $('.dr-checkout__el').index($section);
                     }
-                });
+
+                    CheckoutModule.moveToNextSection($section);
+                }
             }
         });
 
@@ -701,7 +652,6 @@ jQuery(document).ready(($) => {
                 $('#dr-checkout-err-field').text(localizedText.required_tandc_msg).show();
             } else {
                 $('#dr-checkout-err-field').text('').hide();
-                $(e.target).toggleClass('sending').blur();
                 $('#dr-payment-failed-msg').hide();
                 CheckoutModule.applyPaymentAndSubmitCart(paymentSourceId);
             }
@@ -725,33 +675,15 @@ jQuery(document).ready(($) => {
             $section.removeClass('closed').addClass('active');
 
             if ($section.find('.dr-address-book').length) {
-              if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
-                $section.find('.dr-address-book-btn').hide();
-              } else {
-                $section.find('.dr-address-book-btn').show();
-              }
+                if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
+                    $section.find('.dr-address-book-btn').hide();
+                } else {
+                    $section.find('.dr-address-book-btn').show();
+                }
             }
-
+  
             CheckoutModule.adjustColumns($section);
             CheckoutModule.updateSummaryLabels();
-        });
-
-        $('input:radio[name="selector"]').on('change', function() {
-            switch ($(this).val()) {
-                case 'credit-card':
-                    $('#dr-paypal-button').hide();
-                    $('.credit-card-info').show();
-                    $('#dr-submit-payment').text(localizedText.pay_with_card_label.toUpperCase()).show();
-
-                    break;
-                case 'paypal':
-                    $('#dr-submit-payment').hide();
-                    $('.credit-card-info').hide();
-                    $('#dr-paypal-button').show();
-                    $('#dr-submit-payment').text(localizedText.pay_with_paypal_label.toUpperCase());
-
-                    break;
-            }
         });
 
         $('#shipping-field-country').on('change', function() {
@@ -802,16 +734,26 @@ jQuery(document).ready(($) => {
             $('#checkbox-save-' + addressType).prop('checked', false);
         });
 
-        //floating labels
-        FloatLabel.init();
+        $('.back-link a').click(() => {
+            const loginUrl = new URL(drgc_params.loginUrl);
+            const checkoutUrl = new URL(drgc_params.checkoutUrl);
+
+            if (document.referrer && (document.referrer.indexOf(loginUrl.pathname) === -1) && (document.referrer.indexOf(checkoutUrl.pathname) === -1)) {
+                window.location.href = document.referrer;
+            } else {
+                window.location.href = drgc_params.cartUrl;
+            }
+        });
+
+        $('.edit-link > span').on('click', () => {
+            location.reload();
+        });
 
         if (isLoggedIn && requestShipping) {
             $('.dr-address-book.billing > .overflowContainer').clone().appendTo('.dr-address-book.shipping');
         }
 
         if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
-
-        $('#checkout-email-form button[type=submit]').prop('disabled', false);
 
         if ($('input[name=email]').val() && $('#checkout-email-form').length && $('#dr-panel-email-result').is(':empty')) {
             $('#checkout-email-form').submit();
@@ -822,157 +764,11 @@ jQuery(document).ready(($) => {
                 $('#shipping-field-country, #billing-field-country').trigger('change');
             });
         }
+
+        //floating labels
+        FloatLabel.init();
         CheckoutUtils.applyLegalLinks(digitalriverjs);
-        CheckoutModule.initPreTAndC();
-
-        if ($('#radio-credit-card').is(':checked')) {
-            $('.credit-card-info').show();
-        }
-
-        // Initial state for payPal
-        if (drgc_params.payPal.sourceId) {
-            $('.dr-checkout').children().addClass('closed');
-            $('.dr-checkout').children().removeClass('active');
-            $('.dr-checkout__payment').removeClass('closed').addClass('active');
-
-            if (drgc_params.payPal.failure == 'true') {
-                // TODO: Display Error on paypal form maybe
-            }
-
-            if (drgc_params.payPal.success == 'true') {
-                CheckoutModule.applyPaymentAndSubmitCart(drgc_params.payPal.sourceId);
-            }
-        }
-
-        if ($('#dr-paypal-button').length) {
-            // need to get the actual height of the wrapper for rendering the PayPal button
-            $('#checkout-payment-form').removeClass('dr-panel-edit').css('visibility', 'hidden');
-
-            paypal.Button.render({
-                env: (domain.indexOf('test') === -1) ? 'production' : 'sandbox',
-                locale: drLocale,
-                style: {
-                    label: 'checkout',
-                    size: 'responsive',
-                    height: 40,
-                    color: 'gold',
-                    shape: 'rect',
-                    layout: 'horizontal',
-                    fundingicons: 'false',
-                    tagline: 'false'
-                },
-                onEnter: function() {
-                    $('#checkout-payment-form').addClass('dr-panel-edit').css('visibility', 'visible');
-                    $('#dr-paypal-button').hide();
-                },
-                payment: function() {
-                    const cart = drgc_params.cart.cart;
-                    const url = window.location.href;
-                    let payPalItems = [];
-
-                    $.each(cart.lineItems.lineItem, function( index, item ) {
-                        payPalItems.push({
-                            'name': item.product.name,
-                            'quantity': item.quantity,
-                            'unitAmount': item.pricing.listPrice.value
-                        })
-                    });
-
-                    let payPalPayload = {
-                        'type': 'payPal',
-                        'amount': cart.pricing.orderTotal.value,
-                        'currency': cart.pricing.orderTotal.currency,
-                        'payPal': {
-                            'returnUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppsuccess=true',
-                            'cancelUrl': url + (url.indexOf('?') >= 0 ? '&' : '?') + 'ppcancel=true',
-                            'items': payPalItems,
-                            'taxAmount': cart.pricing.tax.value,
-                            'shippingAmount': cart.pricing.shippingAndHandling.value,
-                            'amountsEstimated': true,
-                            'requestShipping': requestShipping
-                        }
-                    };
-
-                    if (requestShipping) {
-                        payPalPayload['shipping'] = {
-                            'recipient':  `${addressPayload.shipping.firstName} ${addressPayload.shipping.lastName}`,
-                            'phoneNumber':  addressPayload.shipping.phoneNumber,
-                            'address': {
-                                'line1': addressPayload.shipping.line1,
-                                'line2': addressPayload.shipping.line2,
-                                'city': addressPayload.shipping.city,
-                                'state': addressPayload.shipping.countrySubdivision,
-                                'country':  addressPayload.shipping.country,
-                                'postalCode': addressPayload.shipping.postalCode
-                            }
-                        }
-                    }
-
-                    return digitalriverjs.createSource(payPalPayload).then(function(result) {
-                        if (result.error) {
-                            $('#dr-payment-failed-msg').text(result.error.errors[0].message).show();
-                        } else {
-                            sessionStorage.setItem('paymentSourceId', result.source.id);
-
-                            return result.source.payPal.token;
-                        }
-                    });
-                },
-                onShippingChange: function(data, actions) {
-                    const supportedCountries = CheckoutUtils.getSupportedCountries('shipping');
-
-                    if (supportedCountries.indexOf(data.shipping_address.country_code) === -1) {
-                        return actions.reject();
-                    }
-            
-                    return actions.resolve();
-                },
-                onAuthorize: function() {
-                    const sourceId = sessionStorage.getItem('paymentSourceId');
-                    CheckoutModule.applyPaymentAndSubmitCart(sourceId, true);
-                }
-            }, '#dr-paypal-button');
-        }
-
-        if ($('#dr-googlepay-button').length && isGooglePayEnabled) {
-            const googlePaybuttonStyle = {
-                buttonType: drgc_params.googlePayButtonType,
-                buttonColor: drgc_params.googlePayButtonColor,
-                buttonLanguage: drLocale.split('_')[0]
-            };
-            const googlePayBaseRequest = CheckoutUtils.getBaseRequestData(cartData, requestShipping, googlePaybuttonStyle);
-            const googlePayPaymentDataRequest = digitalriverjs.paymentRequest(googlePayBaseRequest);
-
-            DRGooglePay.init({
-                digitalriverJs: digitalriverjs,
-                paymentDataRequest: googlePayPaymentDataRequest,
-                requestShipping: requestShipping
-            });
-        }
-
-        if ($('#dr-applepay-button').length && isApplePayEnabled) {
-            const applePaybuttonStyle = {
-                buttonType: drgc_params.applePayButtonType,
-                buttonColor: drgc_params.applePayButtonColor,
-                buttonLanguage: drLocale.split('_')[0]
-            };
-            const applePayBaseRequest = CheckoutUtils.getBaseRequestData(cartData, requestShipping, applePaybuttonStyle);
-            const applePayPaymentDataRequest = digitalriverjs.paymentRequest(applePayBaseRequest);
-
-            DRApplePay.init({
-                digitalriverJs: digitalriverjs,
-                paymentDataRequest: applePayPaymentDataRequest,
-                requestShipping: requestShipping
-            });
-        }
-
-        $('.back-link a').click(() => {
-            if (document.referrer && document.referrer !== drgc_params.loginUrl) {
-                window.location.href = document.referrer;
-            } else {
-                window.location.href = drgc_params.cartUrl;
-            }
-        });
+        $('#checkout-email-form button[type=submit]').prop('disabled', false);
     }
 });
 

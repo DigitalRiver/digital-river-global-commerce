@@ -14,7 +14,7 @@
 
 <?php
 $product_name = $line_item['product']['displayName'];
-$product_image_uri = $line_item['product']['thumbnailImage'];;
+$product_image_uri = $line_item['product']['thumbnailImage'];
 $product_colors = ['Black', 'Red'];
 $product_sku = $line_item['product']['id'];
 $sale_price = $line_item['pricing']['formattedSalePriceWithQuantity'];

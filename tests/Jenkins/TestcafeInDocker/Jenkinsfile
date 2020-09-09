@@ -2,7 +2,7 @@ pipeline {
   agent { label 'nprod-small' }
 
     environment {
-        hostName = 'happy-friday.c141.drcloud.zone'
+        hostName = 'rising-star.c141.drcloud.zone'
         userName = 'ubuntu'
         cloudHome = '/home/ubuntu/'
         browserType = 'chrome:headless'
