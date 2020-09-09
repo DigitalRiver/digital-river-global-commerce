@@ -82,6 +82,7 @@ class DRGC_Session {
    */
   public function set_cookie() {
     if ( ! headers_sent() && did_action( 'wp_loaded' ) ) {
+      // WP Engine will exclude pages where a cookie containing wordpress_ has a value set from server caching
       @setcookie( 'wordpress_wpe_page_cache', 'off', 0, '/' );
     }
   }
