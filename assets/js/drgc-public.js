@@ -14139,6 +14139,8 @@ jQuery(document).ready(function ($) {
     var $this = $(e.target);
     var targetLocale = $this.data('dr-locale');
     var params = new URLSearchParams(location.search);
+    $('body').addClass('dr-loading');
+    $('ul.dr-other-locales').hide();
     params.set('locale', targetLocale);
     window.location.search = params.toString();
   });
@@ -14147,6 +14149,7 @@ jQuery(document).ready(function ($) {
     var $this = $(e.target);
     var targetCurrency = $this.data('dr-currency');
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');else $('body').addClass('dr-loading');
+    $('ul.dr-other-currencies').hide();
     commerce_api.updateShopper({
       currency: targetCurrency
     }).then(function () {
