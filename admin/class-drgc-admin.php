@@ -449,7 +449,7 @@ class DRGC_Admin {
 	 * @since    2.0.0
 	 */
 	public function dr_sanitize_locale_options( $input ) {
-		$new_input = get_option( 'drgc_locale_options' );
+		$new_input = get_option( 'drgc_locale_options' ) ?: array();
 		$changed_wp_locales = array();
 
 		foreach ( $new_input as $idx => $locale_option ) {
@@ -587,7 +587,7 @@ class DRGC_Admin {
    */
   public function create_country_name_trans_strings() {
     $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
-    $locales = get_option( 'drgc_locale_options' );
+    $locales = get_option( 'drgc_locale_options' ) ?: array();
     $names = '';
 
     foreach ( $locales as $locale ) {
