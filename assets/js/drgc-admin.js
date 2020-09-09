@@ -89,6 +89,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./assets/js/admin/admin-import.js
@@ -264,7 +265,25 @@ jQuery(document).ready(function ($) {
   });
 });
 /* harmony default export */ var admin_sync_locales = (SyncLocalesModule);
+// CONCATENATED MODULE: ./assets/js/admin/admin-code-editor.js
+var dropinConfigModule = {};
+
+(function ($) {
+  $(function () {
+    if ($('#drgc_drop_in_config').length) {
+      var editorSettings = wp.codeEditor.defaultSettings ? _.clone(wp.codeEditor.defaultSettings) : {};
+      editorSettings.codemirror = _.extend({}, editorSettings.codemirror, {
+        indentUnit: 2,
+        tabSize: 2
+      });
+      wp.codeEditor.initialize($('#drgc_drop_in_config'), editorSettings);
+    }
+  });
+})(jQuery);
+
+/* harmony default export */ var admin_code_editor = (dropinConfigModule);
 // CONCATENATED MODULE: ./assets/js/admin/admin.js
+
 
 
 
