@@ -121,7 +121,6 @@ const DrgcUserWatcher = ((w, d, p, $) => {
           watcher.closeModal();
           watcher.eventTypes.forEach(watcher.listen);
           watcher.tick();
-          LoginModule.resetCookie();
           break;
         case 'dr-modalLogoutBtn':
           watcher.closeModal();

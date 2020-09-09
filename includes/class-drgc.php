@@ -369,9 +369,6 @@ class DRGC {
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_toggle_auto_renewal_ajax', $plugin_public, 'toggle_auto_renewal_ajax' );
     $this->loader->add_action( 'wp_ajax_drgc_toggle_auto_renewal_ajax', $plugin_public, 'toggle_auto_renewal_ajax' );
 
-    $this->loader->add_action( 'wp_ajax_nopriv_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
-    $this->loader->add_action( 'wp_ajax_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
-
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_change_password', $plugin_public, 'change_password_ajax' );
     $this->loader->add_action( 'wp_ajax_drgc_change_password', $plugin_public, 'change_password_ajax' );
 
@@ -384,6 +381,8 @@ class DRGC {
 
 		$this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
     $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
+
+    $this->loader->add_action( 'init', $plugin_public, 'start_session', 1 );
 	}
 
 	/**

@@ -72,6 +72,10 @@ const LoginModule = (($) => {
         };
         $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, function(response) {
+            if (sessionStorage.getItem('drgc_upsell_decline')) {
+                sessionStorage.removeItem('drgc_upsell_decline');
+            }
+
             location.reload();
         });
     };
@@ -101,18 +105,11 @@ const LoginModule = (($) => {
 
         $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, () => {
+            if (sessionStorage.getItem('drgc_upsell_decline')) {
+                sessionStorage.removeItem('drgc_upsell_decline');
+            }
+
             window.location.href = url;
-        });
-    };
-
-    const resetCookie = () => {
-        const data = {
-            action: 'drgc_reset_cookie',
-            nonce: drgc_params.ajaxNonce
-        };
-
-        $.post(drgc_params.ajaxUrl, data, (res) => {
-            if (!res.success) throw new Error('Cookie reset failed.');
         });
     };
 
@@ -121,8 +118,7 @@ const LoginModule = (($) => {
         checkoutAsGuest,
         logout,
         redirectAfterAuth,
-        autoLogout,
-        resetCookie
+        autoLogout
     };
 })(jQuery);
 
