@@ -16,11 +16,6 @@ class DRGC_Session {
 	public $session_id;
 
 	/**
-	 * When session expires.
-	 */
-	public $expires;
-
-	/**
 	 * Holds the session data
 	 */
 	private $session_data;
@@ -196,7 +191,7 @@ class DRGC_Session {
       ON DUPLICATE KEY
       UPDATE `expires` = VALUES(`expires`), `session_data` = VALUES(`session_data`)",
         $this->session_id,
-        $this->expires,
+        0,
         $this->session_data
       )
     );
