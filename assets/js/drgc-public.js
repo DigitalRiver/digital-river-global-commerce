@@ -14308,11 +14308,14 @@ jQuery(document).ready(function ($) {
     var but = $form.find('[type="submit"]').toggleClass('sending').blur();
     $form.data('processing', true);
     $('.dr-form-error-msg').text('');
+    var params = new URL(window.location).searchParams;
+    var locale = params.get('locale');
     var data = {
       action: 'drgc_login',
       nonce: drgc_params.ajaxNonce,
       username: $('.dr-login-form input[name=username]').val(),
-      password: $('.dr-login-form input[name=password]').val()
+      password: $('.dr-login-form input[name=password]').val(),
+      locale: locale
     };
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
