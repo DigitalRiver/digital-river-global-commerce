@@ -114,6 +114,9 @@ class DRGC_Public {
     $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
     $force_excl_tax_enable = ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? "true" : "false";
 
+    $short_description_option = get_option( 'drgc_display_short_description_handler' );
+    $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
+
     $applepay_option = get_option( 'drgc_applepay_handler' );
     $applepay_enabled = ( is_array( $applepay_option ) && '1' == $applepay_option['checkbox'] )  ? 'true' : 'false';
 

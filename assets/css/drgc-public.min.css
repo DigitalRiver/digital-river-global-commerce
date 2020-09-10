@@ -811,6 +811,7 @@ body.dr-loading:after{position:fixed}
 .dr-product__info .product-qty .product-qty-number{width:48px;height:30px;padding:0 10px;margin:0 7px;font-family:"Open Sans",sans-serif;font-size:14px;border:1px solid #d1d1d1;background-color:#fff;background-size:cover;color:#000;text-align:center}
 .dr-product__info .product-qty .value-button-decrease{display:block;width:13px;height:13px;margin-left:7px;background:url("../images/minus.svg");background-position:center}
 .dr-product__info .product-qty .value-button-increase{display:block;width:13px;height:13px;background:url("../images/plus.svg");background-position:center}
+.dr-product__info .product-short-description{font-size:12px;line-height:normal}
 .dr-product__price{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-align:end;-ms-flex-align:end;align-items:flex-end}
 .dr-product__price .regular-price{font-family:"Open Sans",sans-serif;font-size:14px;color:#595959;line-height:16px}
 .dr-product__price .sale-price{font-family:"Open Sans",sans-serif;font-size:18px;color:#000;font-weight:700;text-decoration:none;line-height:16px;margin-bottom:8px}
@@ -1323,6 +1324,7 @@ body .modal-sm{max-width:300px}
 .dr-product__img{width:140px;height:140px;margin:19px 30px 19px 22px}
 .dr-product__info .product-name{font-size:16px;line-height:16px;margin-bottom:16px}
 .dr-product__info .product-sku{font-size:14px;margin-top:8px}
+.dr-product__info .product-short-description{font-size:14px}
 .dr-cart-info__help{font-size:14px}
 .dr-cart-info__info,.dr-cart-info__links a{font-size:14px}
 .dr-login{padding:32px 0}
