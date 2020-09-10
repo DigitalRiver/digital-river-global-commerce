@@ -48,27 +48,29 @@ class DRGC_Session {
   }
 
   public function maybe_construct_session_cookie() {
-    if ( empty( $this->session_id ) ) {
-      $this->session_id = session_id();
+    if ( empty( session_id() ) ) {
+      session_start();
     }
 
+    $this->session_id = session_id();
     $this->set_cookie();
   }
 
   /**
-	 * Create the cookie data
-	 *
-	 * @param array $args
-	 */
-	public function generate_session_cookie_data( $args ) {
-		$this->session_data = json_encode( array(
-			'session_token' => $args[ 'session_token' ],
-			'access_token'  => $args[ 'access_token' ],
-			'refresh_token' => $args[ 'refresh_token' ]
-		) );
+   * Create the cookie data
+   *
+   * @param array $args
+   */
+  public function generate_session_cookie_data( $args ) {
+    $this->session_data = json_encode( array(
+      'session_token'     => $args[ 'session_token' ],
+      'access_token'      => $args[ 'access_token' ],
+      'refresh_token'     => $args[ 'refresh_token' ],
+      'checkout_as_guest' => 'false'
+    ) );
 
-		$this->store_session();
-	}
+    $this->store_session();
+  }
 
 	/**
 	 * Get the cookie data
@@ -172,7 +174,6 @@ class DRGC_Session {
 
     session_unset();
     session_destroy();
-    update_option( 'drgc_guest_flag', 'false' );
   }
 
   /**
@@ -195,6 +196,26 @@ class DRGC_Session {
         0,
         $this->session_data
       )
+    );
+  }
+
+  public function update_guest_checkout_flag( $flag = 'false' ) {
+    if ( ! $this->has_session() ) {
+      return;
+    }
+
+    $session_data = $this->get_session_data();
+    $session_data['checkout_as_guest'] = $flag;
+    $this->session_data = json_encode( $session_data );
+
+    global $wpdb;
+
+    $wpdb->update(
+      $this->table_name,
+      array( 'session_data' => $this->session_data ),
+      array( 'session_id' => $this->session_id ),
+      array( '%s' ),
+      array( '%s' )
     );
   }
 }

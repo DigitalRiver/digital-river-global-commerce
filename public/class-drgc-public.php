@@ -247,7 +247,6 @@ class DRGC_Public {
 		}
 
 		if ( array_key_exists( 'access_token', $attempt ) ) {
-      update_option('drgc_guest_flag', 'false');
 			$customer = $plugin->shopper->retrieve_shopper();
 			wp_send_json_success( $customer );
 		}
@@ -345,9 +344,8 @@ class DRGC_Public {
 					wp_send_json_error( $user );
 				}
 
-        update_option('drgc_guest_flag', 'false');
 				$attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
-				wp_send_json_success( $attempt );
+        wp_send_json_success( $attempt );
 			}
 		} else {
 			wp_send_json_error();
@@ -357,7 +355,7 @@ class DRGC_Public {
   public function checkout_as_guest_ajax() {
     check_ajax_referer( 'drgc_ajax', 'nonce' );
     $plugin = DRGC();
-    update_option( 'drgc_guest_flag', 'true' );
+    $plugin->session->update_guest_checkout_flag( 'true' );
     wp_send_json_success();
   }
 
@@ -365,7 +363,6 @@ class DRGC_Public {
 		check_ajax_referer( 'drgc_ajax', 'nonce' );
 		$plugin = DRGC();
 		$plugin->shopper = null;
-    update_option( 'drgc_guest_flag', 'false' );
 		$plugin->session->clear_session();
 		wp_send_json_success();
 	}
@@ -754,8 +751,9 @@ class DRGC_Public {
 
       if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
         $customer = $plugin->shopper->retrieve_shopper();
-        $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
-        $is_guest = 'true' === get_option( 'drgc_guest_flag' );
+				$is_logged_in = $customer && 'Anonymous' !== $customer['id'];
+				$session_data = $plugin->session->get_session_data();
+        $is_guest = 'true' === $session_data['checkout_as_guest'];
 
         if ( is_page( 'checkout' ) ) {
           $cart = $plugin->cart->retrieve_cart();
@@ -1047,15 +1045,5 @@ class DRGC_Public {
       $output[] = $item;
     }
     return $output;
-  }
-
-  public function start_session() {
-    if ( ! empty( session_id() ) ) return;
-
-    session_start();
-
-    if ( empty( get_option( 'drgc_guest_flag' ) ) ) {
-      add_option( 'drgc_guest_flag', 'false' );
-    }
   }
 }

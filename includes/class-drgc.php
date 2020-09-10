@@ -388,8 +388,6 @@ class DRGC {
     $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
 
     $this->loader->add_action( 'wp_head', $plugin_public, 'add_test_order_banner' );
-
-    $this->loader->add_action( 'init', $plugin_public, 'start_session', 1 );
 	}
 
 	/**
