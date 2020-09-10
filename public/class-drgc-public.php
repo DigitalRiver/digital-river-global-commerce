@@ -252,8 +252,8 @@ class DRGC_Public {
     }
 
 		if ( array_key_exists( 'access_token', $attempt ) ) {
+      $plugin->shopper->update_locale_and_currency( $locale, $primary_currency );
 			$customer = $plugin->shopper->retrieve_shopper();
-			$plugin->shopper->update_locale_and_currency( $locale, $primary_currency );
 			wp_send_json_success( $customer );
 		}
 	}
