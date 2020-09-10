@@ -36,7 +36,7 @@ if ( $shipping_first_name !== '' && $shipping_last_name !== '' ) {
 }
 
 if ( $shipping_city !== '' && $shipping_code !== '' ) {
-    $shipping_code = $shipping_state ? $shipping_state . ' ' . $shipping_code : $shipping_code;
+    $shipping_code = ( $shipping_state && $shipping_state !== 'NA' ) ? $shipping_state . ' ' . $shipping_code : $shipping_code;
     $shipping_address2 = $shipping_city . ', ' . $shipping_code;
 } else {
     $shipping_address2 = $shipping_city . $shipping_code;
@@ -49,7 +49,7 @@ if ( $billing_first_name !== '' && $billing_last_name !== '' ) {
 }
 
 if ( $billing_city !== '' && $billing_code !== '' ) {
-    $billing_code = $billing_state ? $billing_state . ' ' . $billing_code : $billing_code;
+    $billing_code = ( $billing_state && $billing_state !== 'NA' ) ? $billing_state . ' ' . $billing_code : $billing_code;
     $billing_address2 = $billing_city . ', ' . $billing_code;
 } else {
     $billing_address2 = $billing_city . $billing_code;
