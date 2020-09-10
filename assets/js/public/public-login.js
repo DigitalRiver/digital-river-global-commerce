@@ -147,11 +147,14 @@ jQuery(document).ready(($) => {
         $form.data('processing', true);
         $('.dr-form-error-msg').text('');
 
+        const params = (new URL(window.location)).searchParams;
+        const locale = params.get('locale');
         const data = {
             action  : 'drgc_login',
             nonce   : drgc_params.ajaxNonce,
             username: $('.dr-login-form input[name=username]').val(),
-            password: $('.dr-login-form input[name=password]').val()
+            password: $('.dr-login-form input[name=password]').val(),
+            locale: locale
         };
 
         $.post(ajaxUrl, data, function(response) {

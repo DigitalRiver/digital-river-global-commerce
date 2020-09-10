@@ -114,6 +114,9 @@ class DRGC_Public {
     $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
     $force_excl_tax_enable = ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? "true" : "false";
 
+    $short_description_option = get_option( 'drgc_display_short_description_handler' );
+    $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
+
     $applepay_option = get_option( 'drgc_applepay_handler' );
     $applepay_enabled = ( is_array( $applepay_option ) && '1' == $applepay_option['checkbox'] )  ? 'true' : 'false';
 
@@ -222,32 +225,35 @@ class DRGC_Public {
     wp_localize_script( $this->drgc, 'drgc_params', $options );
   }
 
-	public function ajax_attempt_auth() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
+  public function ajax_attempt_auth() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
 
-		$plugin = DRGC();
+    $plugin = DRGC();
+    $locale = $_POST['locale'] ?? 'en_US';
+    $primary_currency = drgc_get_primary_currency( $locale );
 
-		if ( (isset( $_POST['username'] ) && isset( $_POST['password'] )) ) {
-			$username = sanitize_text_field( $_POST['username'] );
-			$password = sanitize_text_field( $_POST['password'] );
+    if ( (isset( $_POST['username'] ) && isset( $_POST['password'] )) ) {
+      $username = sanitize_text_field( $_POST['username'] );
+      $password = sanitize_text_field( $_POST['password'] );
 
-			$user = wp_authenticate( $username, $password );
+      $user = wp_authenticate( $username, $password );
 
-			if ( is_wp_error( $user ) ) {
-				wp_send_json_error( __( 'Authorization failed for specified credentials', 'digital-river-global-commerce' ) );
-			}
+      if ( is_wp_error( $user ) ) {
+        wp_send_json_error( __( 'Authorization failed for specified credentials', 'digital-river-global-commerce' ) );
+      }
 
-			$current_user = get_user_by( 'login', $username );
-			$externalReferenceId = get_user_meta( $current_user->ID, '_external_reference_id', true );
-			$attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
-		}
+      $current_user = get_user_by( 'login', $username );
+      $externalReferenceId = get_user_meta( $current_user->ID, '_external_reference_id', true );
+      $attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
+    }
 
-		if ( array_key_exists( 'error', $attempt ) ) {
-			wp_send_json_error( $attempt );
-		}
+    if ( array_key_exists( 'error', $attempt ) ) {
+      wp_send_json_error( $attempt );
+    }
 
 		if ( array_key_exists( 'access_token', $attempt ) ) {
 			$customer = $plugin->shopper->retrieve_shopper();
+			$plugin->shopper->update_locale_and_currency( $locale, $primary_currency );
 			wp_send_json_success( $customer );
 		}
 	}

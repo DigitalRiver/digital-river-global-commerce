@@ -1936,6 +1936,10 @@ body.dr-loading:after { position: fixed; }
 
 .dr-product__info .product-qty .value-button-increase { display: block; width: 13px; height: 13px; background: url("../images/plus.svg"); background-position: center; }
 
+.dr-product__info .product-short-description { font-size: 12px; line-height: normal; }
+
+@media (min-width: 768px) { .dr-product__info .product-short-description { font-size: 14px; } }
+
 .dr-product__price { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-align: end; -ms-flex-align: end; align-items: flex-end; }
 
 .dr-product__price .regular-price { font-family: "Open Sans", sans-serif; font-size: 14px; color: #595959; line-height: 16px; }
