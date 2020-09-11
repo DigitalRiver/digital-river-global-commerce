@@ -148,7 +148,7 @@
     defaultPostContent = currentPost.content;
 
     // Make sure default post title/content is synced with default locale's meta data on form submitted
-    $('.editor-post-publish-button').click(function(e) {
+    $('.editor-post-publish-button__button').click(function(e) {
       if ($(e.target).attr('aria-disabled') === 'true') return;
       $('#dr-locale-choices-wrapper button.components-menu-items-choice').eq(0).trigger('click');
     });

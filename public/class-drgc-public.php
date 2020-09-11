@@ -1068,7 +1068,7 @@ class DRGC_Public {
    * @return string
    */
   public function localize_title( $title ) {
-    if ( ( is_single() || is_page() ) && in_the_loop() && is_main_query() ) {
+    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
       global $post;
       $meta = get_post_meta( $post->ID );
       $locale = drgc_get_current_dr_locale();
@@ -1088,7 +1088,7 @@ class DRGC_Public {
    * @return string
    */
   public function localize_content( $content ) {
-    if ( ( is_single() || is_page() ) && in_the_loop() && is_main_query() ) {
+    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
       global $post;
       $meta = get_post_meta( $post->ID );
       $locale = drgc_get_current_dr_locale();
