@@ -302,6 +302,8 @@ class DRGC {
 		$this->loader->add_action( 'wp_update_nav_menu', $plugin_admin, 'create_menu_label_trans_strings' );
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'codemirror_enqueue_scripts' );
+
+    $this->loader->add_action( 'admin_notices', $plugin_admin, 'add_custom_notice' );
 	}
 
   /**

@@ -87,7 +87,11 @@ class DRGC_Admin {
 		$this->drgc_ajx = $drgc_ajx;
 		$this->drgc_site_id = get_option( 'drgc_site_id' );
 		$this->drgc_api_key = get_option( 'drgc_api_key' );
-		$this->drgc_api_secret = get_option( 'drgc_api_secret' );
+    $this->drgc_api_secret = get_option( 'drgc_api_secret' );
+
+    if ( empty( get_option( 'drgc_sync_locales' ) ) ) {
+      add_option( 'drgc_sync_locales', 'false' );
+    }
 	}
 
 	/**
@@ -559,6 +563,8 @@ class DRGC_Admin {
 		if ( ! empty( $wp_locales ) ) {
 			$this->install_language_packs( $wp_locales );
 		}
+
+    update_option( 'drgc_sync_locales', 'true' );
 		wp_send_json_success();
 	}
 
@@ -720,5 +726,22 @@ class DRGC_Admin {
     wp_enqueue_code_editor( array( 'type' => 'application/json' ) );
     wp_enqueue_script( 'wp-theme-plugin-editor' );
     wp_enqueue_style( 'wp-codemirror' );
+  }
+
+  /**
+   * Add the custom notice when locales sync is complete.
+   *
+   * @since    2.0.0
+   */
+  public function add_custom_notice() {
+    if ( isset( $_GET['tab'] ) && $_GET['tab'] === 'locales' ) {      
+      if ( get_option( 'drgc_sync_locales' ) === 'true' ) {
+        $class = 'notice notice-success is-dismissible';
+        $message = __( 'Sync Complete!', 'digital-river-global-commerce' );
+
+        printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+        update_option( 'drgc_sync_locales', 'false' );
+      }
+    }
   }
 }
