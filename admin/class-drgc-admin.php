@@ -265,6 +265,15 @@ class DRGC_Admin {
 			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
 		);
 
+    add_settings_field(
+      $this->option_name . '_display_short_description_handler',
+      __( 'Product Short Description', 'digital-river-global-commerce' ),
+      array( $this, $this->option_name . '_display_short_description_handler_cb' ),
+      $this->plugin_name . '_checkout',
+      $this->option_name . '_checkout',
+      array( 'label_for' => $this->option_name . '_display_short_description_handler' )
+    );
+
     add_settings_section(
       $this->option_name . '_drop_in',
       __( 'Drop-in', 'digital-river-global-commerce' ),
