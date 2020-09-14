@@ -219,7 +219,8 @@ class DRGC_Public {
       'forceExclTax'      => $force_excl_tax_enable,
       'translations'      => $translation_array,
       'client_ip'         => $_SERVER['REMOTE_ADDR'],
-      'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT )
+			'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT ),
+			'displayShortDescription' => $short_description_enabled
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );
