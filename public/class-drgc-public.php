@@ -1068,4 +1068,44 @@ class DRGC_Public {
     }
     return $output;
   }
+
+  /**
+   * Localize title at storefront.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function localize_title( $title ) {
+    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
+      global $post;
+      $meta = get_post_meta( $post->ID );
+      $locale = drgc_get_current_dr_locale();
+
+      if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
+        return $meta['drgc_title_' . $locale][0] ?: $title;
+      }
+    }
+    return $title;
+  }
+
+  /**
+   * Localize content at storefront.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function localize_content( $content ) {
+    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
+      global $post;
+      $meta = get_post_meta( $post->ID );
+      $locale = drgc_get_current_dr_locale();
+
+      if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
+        return $meta['drgc_content_' . $locale][0] ?: $content;
+      }
+    }
+    return $content;
+  }
 }
