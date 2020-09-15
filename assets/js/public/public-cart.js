@@ -379,7 +379,7 @@ const CartModule = (($) => {
         if (lineItems && lineItems.length) {
           if (CheckoutUtils.isSubsAddedToCart(lineItems)) {
             const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-            const href = (drgc_params.isLogin !== 'true') ? drgc_params.loginPath : 
+            const href = (drgc_params.isLogin !== 'true') ? drgc_params.loginUrl :
               ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
 
             $('a.dr-summary__proceed-checkout').prop('href', href);
