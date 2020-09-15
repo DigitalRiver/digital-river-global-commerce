@@ -12965,7 +12965,7 @@ var CartModule = function ($) {
                 var salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
                 var listPrice = lineItem.pricing.formattedListPriceWithQuantity;
                 var promise = checkout_utils.getPermalink(parentProductID).then(function (permalink) {
-                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n              <span class=\"regular-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n            </div>\n          </div>");
+                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-short-description\">\n                  <span>").concat(drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : '', "</span>\n                </div>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n              <span class=\"regular-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n            </div>\n          </div>");
                   lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
                 });
                 promises.push(promise);
@@ -14156,6 +14156,8 @@ jQuery(document).ready(function ($) {
     var $this = $(e.target);
     var targetLocale = $this.data('dr-locale');
     var params = new URLSearchParams(location.search);
+    $('body').addClass('dr-loading');
+    $('ul.dr-other-locales').hide();
     params.set('locale', targetLocale);
     window.location.search = params.toString();
   });
@@ -14164,6 +14166,7 @@ jQuery(document).ready(function ($) {
     var $this = $(e.target);
     var targetCurrency = $this.data('dr-currency');
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');else $('body').addClass('dr-loading');
+    $('ul.dr-other-currencies').hide();
     commerce_api.updateShopper({
       currency: targetCurrency
     }).then(function () {
@@ -14254,9 +14257,11 @@ var LoginModule = function ($) {
   };
 
   var redirectAfterAuth = function redirectAfterAuth(isLoggedIn, locale) {
+    var cartUrl = new URL(drgc_params.cartUrl);
+    var checkoutUrl = new URL(drgc_params.checkoutUrl);
     var targetHref = '';
 
-    if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
+    if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
       targetHref = drgc_params.checkoutUrl;
     } else if (isLoggedIn) {
       targetHref = drgc_params.accountUrl;
@@ -14320,11 +14325,14 @@ jQuery(document).ready(function ($) {
     var but = $form.find('[type="submit"]').toggleClass('sending').blur();
     $form.data('processing', true);
     $('.dr-form-error-msg').text('');
+    var params = new URL(window.location).searchParams;
+    var locale = params.get('locale');
     var data = {
       action: 'drgc_login',
       nonce: drgc_params.ajaxNonce,
       username: $('.dr-login-form input[name=username]').val(),
-      password: $('.dr-login-form input[name=password]').val()
+      password: $('.dr-login-form input[name=password]').val(),
+      locale: locale
     };
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
@@ -15636,8 +15644,21 @@ jquery_default()(function () {
 
     if (e.target.id === 'list-password-list' && sessionStorage.getItem('drgc-pw-changed') === 'true') {
       sessionStorage.setItem('drgc-pw-changed', 'false');
-      jquery_default()('#dr-passwordUpdated').drModal('show');
+      jquery_default()('#dr-passwordUpdated').drModal({
+        backdrop: 'static',
+        keyboard: false
+      });
     }
+  });
+  jquery_default()('#dr-passwordUpdated button').on('click', function () {
+    var data = {
+      action: 'drgc_logout',
+      nonce: drgc_params.ajaxNonce
+    };
+    jquery_default()('body').addClass('dr-loading');
+    jquery_default.a.post(drgc_params.ajaxUrl, data, function () {
+      window.location.href = drgc_params.loginUrl;
+    });
   });
 
   if (sessionStorage.drAccountTab && jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {

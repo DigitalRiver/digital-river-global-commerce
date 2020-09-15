@@ -118,9 +118,38 @@ class DRGC_Admin {
 				'drgc_ajx_instance_id'  => $this->drgc_ajx->instance_id,
 				'ajax_url'              => admin_url( 'admin-ajax.php' ),
 				'ajax_nonce'            => wp_create_nonce( 'drgc_admin_ajax' ),
+				'default_locale'        => get_option( 'drgc_default_locale' ) ?: 'en_US',
+				'locale_options'        => get_option( 'drgc_locale_options' ) ?: array(),
 			)
 		);
 	}
+
+  /**
+   * Register the stylesheets for Gutenberg admin area.
+   *
+   * @since    2.0.0
+   */
+  public function enqueue_guten_styles() {
+    wp_enqueue_style(
+      'admin-guten-style',
+      DRGC_PLUGIN_URL . 'assets/css/drgc-admin-guten.css'
+    );
+  }
+
+  /**
+   * Register the JavaScript for Gutenberg admin area.
+   *
+   * @since    2.0.0
+   */
+  public function enqueue_guten_scripts() {
+    wp_enqueue_script(
+      'admin-guten-script',
+      DRGC_PLUGIN_URL . 'assets/js/drgc-admin-guten.js',
+      array( $this->drgc, 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data' ),
+      $this->version,
+      false
+    );
+  }
 
 	/**
 	 * Add settings menu and link it to settings page.
@@ -305,6 +334,7 @@ class DRGC_Admin {
     // Checkout
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_display_short_description_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
 
     // Payments
     register_setting( $this->plugin_name . '_drop_in', $this->option_name . '_drop_in_config', array( 'type' => 'string', 'sanitize_callback' => null ) );
@@ -411,7 +441,7 @@ class DRGC_Admin {
 		}
 
 		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_testOrder_handler[checkbox]" id="' . $this->option_name . '_testOrder_handler" value="1" ' . $checked . ' />';
-		echo '<span class="description" id="cron-description">' . __( 'Enable Test Order.', 'digital-river-global-commerce' ) . '</span>';
+		echo '<span class="description" id="test-order-description">' . __( 'Enable Test Order.', 'digital-river-global-commerce' ) . '</span>';
 	}
 
 	public function drgc_force_excl_tax_handler_cb() {
@@ -425,6 +455,18 @@ class DRGC_Admin {
 		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_force_excl_tax_handler[checkbox]" id="' . $this->option_name . '_force_excl_tax_handler" value="1" ' . $checked . ' />';
 		echo '<span class="description" id="force-excl-tax-description">' . __( 'Display pricing as tax exclusive on checkout flow', 'digital-river-global-commerce' ) . '</span>';
 	}
+
+  public function drgc_display_short_description_handler_cb() {
+    $option = get_option( $this->option_name . '_display_short_description_handler' );
+    $checked = '';
+
+    if ( is_array( $option ) && $option['checkbox'] === '1' ) {
+      $checked = 'checked="checked"';
+    }
+
+    echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_display_short_description_handler[checkbox]" id="' . $this->option_name . '_display_short_description_handler" value="1" ' . $checked . ' />';
+    echo '<span class="description" id="short-description-description">' . __( 'Display Short Description along with the product name', 'digital-river-global-commerce' ) . '</span>';
+  }
 
 	public function drgc_cron_handler_cb() {
 		$option = get_option( $this->option_name . '_cron_handler' );
@@ -449,7 +491,7 @@ class DRGC_Admin {
 	 * @since    2.0.0
 	 */
 	public function dr_sanitize_locale_options( $input ) {
-		$new_input = get_option( 'drgc_locale_options' );
+		$new_input = get_option( 'drgc_locale_options' ) ?: array();
 		$changed_wp_locales = array();
 
 		foreach ( $new_input as $idx => $locale_option ) {
@@ -587,7 +629,7 @@ class DRGC_Admin {
    */
   public function create_country_name_trans_strings() {
     $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
-    $locales = get_option( 'drgc_locale_options' );
+    $locales = get_option( 'drgc_locale_options' ) ?: array();
     $names = '';
 
     foreach ( $locales as $locale ) {
@@ -682,8 +724,39 @@ class DRGC_Admin {
 		foreach ( $locales as $locale ) {
 			wp_download_language_pack( $locale );
 		}
+	}
+
+  /**
+   * Register post meta for saving localized title/content.
+   *
+   * @since    2.0.0
+   */
+  public function setup_post_meta() {
+    $locales = get_option( 'drgc_locale_options' ) ?: array();
+    $args = array(
+      'show_in_rest' => true,
+      'single' => true,
+      'type' => 'string',
+    );
+
+    foreach ( $locales as $locale ) {
+      register_post_meta( 'page', 'drgc_title_' . $locale['dr_locale'], $args );
+      register_post_meta( 'page', 'drgc_content_' . $locale['dr_locale'], $args );
+      register_post_meta( 'post', 'drgc_title_' . $locale['dr_locale'], $args );
+      register_post_meta( 'post', 'drgc_content_' . $locale['dr_locale'], $args );
+    }
   }
-  
+
+  /**
+   * Remove custom fields for avoiding conflicts of classic & Gutenburg form.
+   *
+   * @since    2.0.0
+   */
+  public function remove_custom_meta_box() {
+    remove_meta_box( 'postcustom', 'page', 'normal' );
+    remove_meta_box( 'postcustom', 'post', 'normal' );
+  }
+
   /**
    * Render the textarea for Drop-in configuration.
    *

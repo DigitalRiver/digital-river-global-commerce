@@ -46,6 +46,9 @@ jQuery(document).ready(($) => {
     const $this = $(e.target);
     const targetLocale = $this.data('dr-locale');
     const params = new URLSearchParams(location.search);
+
+    $('body').addClass('dr-loading');
+    $('ul.dr-other-locales').hide();
     params.set('locale', targetLocale);
     window.location.search = params.toString();
   });
@@ -57,6 +60,9 @@ jQuery(document).ready(($) => {
 
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
     else $('body').addClass('dr-loading');
+    
+    $('ul.dr-other-currencies').hide();
+
     DRCommerceApi.updateShopper({ currency: targetCurrency })
       .then(() => {
         window.location.reload(true);
