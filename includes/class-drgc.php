@@ -304,6 +304,8 @@ class DRGC {
 		$this->loader->add_action( 'edit_dr_product_category', $plugin_admin, 'create_category_name_trans_strings' );
 
 		$this->loader->add_action( 'wp_update_nav_menu', $plugin_admin, 'create_menu_label_trans_strings' );
+
+		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'codemirror_enqueue_scripts' );
 	}
 
   /**
@@ -391,6 +393,8 @@ class DRGC {
 
     $this->loader->add_filter( 'the_title', $plugin_public, 'localize_title' );
     $this->loader->add_filter( 'the_content', $plugin_public, 'localize_content' );
+
+    $this->loader->add_action( 'wp_head', $plugin_public, 'add_test_order_banner' );
 	}
 
 	/**

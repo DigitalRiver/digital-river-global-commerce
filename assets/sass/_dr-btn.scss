@@ -160,6 +160,12 @@
     }
 }
 
+body.dr-loading {
+    &:after {
+        position: fixed;
+    }
+}
+
 // Loader
 @mixin rotate {
     0%    { transform: rotate(0deg); }

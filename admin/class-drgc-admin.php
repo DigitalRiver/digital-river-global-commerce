@@ -235,7 +235,7 @@ class DRGC_Admin {
 
 		add_settings_field(
 			$this->option_name . '_digitalRiver_key',
-			__( 'Payment Services API Key', 'digital-river-global-commerce' ),
+			__( 'Payments Service API Key', 'digital-river-global-commerce' ),
 			array( $this, $this->option_name . '_digitalRiver_key_cb' ),
 			$this->plugin_name . '_general',
 			$this->option_name . '_general',
@@ -294,65 +294,20 @@ class DRGC_Admin {
 			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
 		);
 
-		add_settings_section(
-			$this->option_name . '_payment',
-			__( 'Payment Buttons', 'digital-river-global-commerce' ),
-			array( $this, $this->option_name . '_payment_cb' ),
-			$this->plugin_name . '_payment'
-		);
-
-		add_settings_field(
-			$this->option_name . '_applepay_handler',
-			__( 'Apple Pay', 'digital-river-global-commerce' ),
-			array( $this, $this->option_name . '_applepay_handler_cb' ),
-			$this->plugin_name . '_payment',
-			$this->option_name . '_payment',
-			array( 'label_for' => $this->option_name . '_applepay_handler' )
-    );
-    
-    add_settings_field(
-      $this->option_name . '_applepay_button_type',
-      __( 'Button Type', 'digital-river-global-commerce' ),
-      array( $this, $this->option_name . '_applepay_button_type_cb' ),
-      $this->plugin_name . '_payment',
-      $this->option_name . '_payment',
-      array( 'label_for' => $this->option_name . '_applepay_button_type' )
-    );
-    
-    add_settings_field(
-      $this->option_name . '_applepay_button_color',
-      __( 'Button Color', 'digital-river-global-commerce' ),
-      array( $this, $this->option_name . '_applepay_button_color_cb' ),
-      $this->plugin_name . '_payment',
-      $this->option_name . '_payment',
-      array( 'label_for' => $this->option_name . '_applepay_button_color' )
+    add_settings_section(
+      $this->option_name . '_drop_in',
+      __( 'Drop-in', 'digital-river-global-commerce' ),
+      array( $this, $this->option_name . '_drop_in_cb' ),
+      $this->plugin_name . '_drop_in'
     );
 
-		add_settings_field(
-			$this->option_name . '_googlepay_handler',
-			__( 'Google Pay', 'digital-river-global-commerce' ),
-			array( $this, $this->option_name . '_googlepay_handler_cb' ),
-			$this->plugin_name . '_payment',
-			$this->option_name . '_payment',
-			array( 'label_for' => $this->option_name . '_googlepay_handler' )
-    );
-    
     add_settings_field(
-      $this->option_name . '_googlepay_button_type',
-      __( 'Button Type', 'digital-river-global-commerce' ),
-      array( $this, $this->option_name . '_googlepay_button_type_cb' ),
-      $this->plugin_name . '_payment',
-      $this->option_name . '_payment',
-      array( 'label_for' => $this->option_name . '_googlepay_button_type' )
-    );
-    
-    add_settings_field(
-      $this->option_name . '_googlepay_button_color',
-      __( 'Button Color', 'digital-river-global-commerce' ),
-      array( $this, $this->option_name . '_googlepay_button_color_cb' ),
-      $this->plugin_name . '_payment',
-      $this->option_name . '_payment',
-      array( 'label_for' => $this->option_name . '_googlepay_button_color' )
+      $this->option_name . '_drop_in_config',
+      __( 'Payment Method Configuration', 'digital-river-global-commerce' ),
+      array( $this, $this->option_name . '_drop_in_config_cb' ),
+      $this->plugin_name . '_drop_in',
+      $this->option_name . '_drop_in',
+      array( 'label_for' => $this->option_name . '_drop_in_config' )
     );
 
 		add_settings_section(
@@ -379,14 +334,10 @@ class DRGC_Admin {
     // Checkout
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_display_short_description_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
 
-    // Payment
-    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_button_type' );
-    register_setting( $this->plugin_name . '_payment', $this->option_name . '_applepay_button_color' );
-    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_button_type' );
-    register_setting( $this->plugin_name . '_payment', $this->option_name . '_googlepay_button_color' );
+    // Payments
+    register_setting( $this->plugin_name . '_drop_in', $this->option_name . '_drop_in_config', array( 'type' => 'string', 'sanitize_callback' => null ) );
 	}
 
 	/**
@@ -412,7 +363,7 @@ class DRGC_Admin {
 	 *
 	 * @since  1.0.2
 	 */
-	public function drgc_payment_cb() {
+	public function drgc_drop_in_cb() {
 		return; // No need to print section message
 	}
 
@@ -490,7 +441,7 @@ class DRGC_Admin {
 		}
 
 		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_testOrder_handler[checkbox]" id="' . $this->option_name . '_testOrder_handler" value="1" ' . $checked . ' />';
-		echo '<span class="description" id="cron-description">' . __( 'Enable Test Order.', 'digital-river-global-commerce' ) . '</span>';
+		echo '<span class="description" id="test-order-description">' . __( 'Enable Test Order.', 'digital-river-global-commerce' ) . '</span>';
 	}
 
 	public function drgc_force_excl_tax_handler_cb() {
@@ -504,6 +455,18 @@ class DRGC_Admin {
 		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_force_excl_tax_handler[checkbox]" id="' . $this->option_name . '_force_excl_tax_handler" value="1" ' . $checked . ' />';
 		echo '<span class="description" id="force-excl-tax-description">' . __( 'Display pricing as tax exclusive on checkout flow', 'digital-river-global-commerce' ) . '</span>';
 	}
+
+  public function drgc_display_short_description_handler_cb() {
+    $option = get_option( $this->option_name . '_display_short_description_handler' );
+    $checked = '';
+
+    if ( is_array( $option ) && $option['checkbox'] === '1' ) {
+      $checked = 'checked="checked"';
+    }
+
+    echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_display_short_description_handler[checkbox]" id="' . $this->option_name . '_display_short_description_handler" value="1" ' . $checked . ' />';
+    echo '<span class="description" id="short-description-description">' . __( 'Display Short Description along with the product name', 'digital-river-global-commerce' ) . '</span>';
+  }
 
 	public function drgc_cron_handler_cb() {
 		$option = get_option( $this->option_name . '_cron_handler' );
@@ -528,7 +491,7 @@ class DRGC_Admin {
 	 * @since    2.0.0
 	 */
 	public function dr_sanitize_locale_options( $input ) {
-		$new_input = get_option( 'drgc_locale_options' );
+		$new_input = get_option( 'drgc_locale_options' ) ?: array();
 		$changed_wp_locales = array();
 
 		foreach ( $new_input as $idx => $locale_option ) {
@@ -576,126 +539,6 @@ class DRGC_Admin {
 		}
 	}
 
-	/**
-	 * Render checkbox field for enabling Apple Pay
-	 *
-	 * @since    1.0.2
-	 */
-	public function drgc_applepay_handler_cb() {
-		$option = get_option( $this->option_name . '_applepay_handler' );
-		$checked = '';
-
-		if ( is_array( $option ) && $option['checkbox'] === '1' ) {
-			$checked = 'checked="checked"';
-		}
-
-		echo '<label class="switch"><input type="checkbox" class="regular-text" name="' . $this->option_name . '_applepay_handler[checkbox]" id="' . $this->option_name . '_applepay_handler" value="1" ' . $checked . ' /><span class="slider round"></span></label>';
-	}
-
-  /**
-   * Render radio button for Apple Pay button type.
-   *
-   * @since    1.3.0
-   */
-	public function drgc_applepay_button_type_cb() {
-    $button_type = get_option( $this->option_name . '_applepay_button_type', 'buy' );
-    $option = get_option( $this->option_name . '_applepay_handler' );
-    $disabled = ( is_array( $option ) && $option['checkbox'] === '1' ) ? '' : 'disabled';
-  ?>
-    <fieldset class="payment-btn-field" data-tooltip="<?php _e( 'Required to the type of Apple Pay button', 'digital-river-global-commerce' ); ?>" data-tooltip-location="up" <?php echo $disabled; ?>>
-      <legend><span><?php _e( 'Button Type', 'digital-river-global-commerce' ); ?></span></legend>
-      <input type="radio" id="applepay_long" name="<?php echo $this->option_name; ?>_applepay_button_type" value="buy" <?php checked( $button_type, 'buy' ); ?> />
-      <label for="applepay_long"><?php _e( 'Long', 'digital-river-global-commerce' ); ?></label><br />
-      <input type="radio" id="applepay_plain" name="<?php echo $this->option_name; ?>_applepay_button_type" value="plain" <?php checked( $button_type, 'plain' ); ?> />
-      <label for="applepay_plain"><?php _e( 'Plain', 'digital-river-global-commerce' ); ?></label>
-    </fieldset>
-  <?php if ( $disabled ): ?>
-    <input type="hidden" id="applepay_button_type" name="<?php echo $this->option_name; ?>_applepay_button_type" value="<?php echo $button_type; ?>" />
-  <?php endif; ?>
-  <?php }
-  
-  /**
-   * Render radio button for Apple Pay button color.
-   *
-   * @since    1.3.0
-   */
-  public function drgc_applepay_button_color_cb() {
-    $button_color = get_option( $this->option_name . '_applepay_button_color', 'dark' );
-    $option = get_option( $this->option_name . '_applepay_handler' );
-    $disabled = ( is_array( $option ) && $option['checkbox'] === '1' ) ? '' : 'disabled';
-  ?>
-    <fieldset class="payment-btn-field" data-tooltip="<?php _e( 'Required to the color of Apple Pay button', 'digital-river-global-commerce' ); ?>" data-tooltip-location="up" <?php echo $disabled; ?>>
-      <legend><span><?php __( 'Button Color', 'digital-river-global-commerce' ) ?></span></legend>
-      <input type="radio" id="applepay_black" name="<?php echo $this->option_name; ?>_applepay_button_color" value="dark" <?php checked( $button_color, 'dark' ); ?> />
-      <label for="applepay_black"><?php _e( 'Black', 'digital-river-global-commerce' ); ?></label><br />
-      <input type="radio" id="applepay_white" name="<?php echo $this->option_name; ?>_applepay_button_color" value="light" <?php checked( $button_color, 'light' ); ?> />
-      <label for="applepay_white"><?php _e( 'White', 'digital-river-global-commerce' ); ?></label>
-    </fieldset>
-  <?php if ( $disabled ): ?>
-    <input type="hidden" id="applepay_button_color" name="<?php echo $this->option_name; ?>_applepay_button_color" value="<?php echo $button_color; ?>" />
-  <?php endif; ?>
-  <?php }
-
-	/**
-	 * Render checkbox field for enabling Google Pay
-	 *
-	 * @since    1.0.2
-	 */
-	public function drgc_googlepay_handler_cb() {
-		$option = get_option( $this->option_name . '_googlepay_handler' );
-		$checked = '';
-
-		if ( is_array( $option ) && $option['checkbox'] === '1' ) {
-			$checked = 'checked="checked"';
-		}
-
-		echo '<label class="switch"><input type="checkbox" class="regular-text" name="' . $this->option_name . '_googlepay_handler[checkbox]" id="' . $this->option_name . '_googlepay_handler" value="1" ' . $checked . ' /><span class="slider round"></span></label>';
-	}
-	
-  /**
-   * Render radio button for Google Pay button type.
-   *
-   * @since    1.3.0
-   */
-  public function drgc_googlepay_button_type_cb() {
-    $button_type = get_option( $this->option_name . '_googlepay_button_type', 'long' );
-    $option = get_option( $this->option_name . '_googlepay_handler' );
-    $disabled = ( is_array( $option ) && $option['checkbox'] === '1' ) ? '' : 'disabled';
-  ?>
-    <fieldset class="payment-btn-field" data-tooltip="<?php _e( 'Required to the type of Google Pay button', 'digital-river-global-commerce' ); ?>" data-tooltip-location="up" <?php echo $disabled; ?>>
-      <legend><span><?php _e( 'Button Type', 'digital-river-global-commerce' ); ?></span></legend>
-      <input type="radio" id="googlepay_long" name="<?php echo $this->option_name; ?>_googlepay_button_type" value="long" <?php checked( $button_type, 'long' ); ?> />
-      <label for="googlepay_long"><?php _e( 'Long', 'digital-river-global-commerce' ); ?></label><br />
-      <input type="radio" id="googlepay_plain" name="<?php echo $this->option_name; ?>_googlepay_button_type" value="plain" <?php checked( $button_type, 'plain' ); ?> />
-      <label for="googlepay_plain"><?php _e( 'Plain', 'digital-river-global-commerce' ); ?></label>
-    </fieldset>
-  <?php if ( $disabled ): ?>
-    <input type="hidden" id="googlepay_button_type" name="<?php echo $this->option_name; ?>_googlepay_button_type" value="<?php echo $button_type; ?>" />
-  <?php endif; ?>
-  <?php }
-
-  /**
-   * Render radio button for Google Pay button color.
-   *
-   * @since    1.3.0
-   */
-  public function drgc_googlepay_button_color_cb() {
-    $button_color = get_option( $this->option_name . '_googlepay_button_color', 'dark' );
-    $option = get_option( $this->option_name . '_googlepay_handler' );
-    $disabled = ( is_array( $option ) && $option['checkbox'] === '1' ) ? '' : 'disabled';
-  ?>
-    <fieldset class="payment-btn-field" data-tooltip="<?php _e( 'Required to the color of Google Pay button', 'digital-river-global-commerce' ); ?>" data-tooltip-location="up" <?php echo $disabled; ?>>
-      <legend><span><?php __( 'Button Color', 'digital-river-global-commerce' ) ?></span></legend>
-      <input type="radio" id="googlepay_black" name="<?php echo $this->option_name; ?>_googlepay_button_color" value="dark" <?php checked( $button_color, 'dark' ); ?> />
-      <label for="googlepay_black"><?php _e( 'Black', 'digital-river-global-commerce' ); ?></label><br />
-      <input type="radio" id="googlepay_white" name="<?php echo $this->option_name; ?>_googlepay_button_color" value="light" <?php checked( $button_color, 'light' ); ?> />
-      <label for="googlepay_white"><?php _e( 'White', 'digital-river-global-commerce' ); ?></label>
-    </fieldset>
-  <?php if ( $disabled ): ?>
-    <input type="hidden" id="googlepay_button_color" name="<?php echo $this->option_name; ?>_googlepay_button_color" value="<?php echo $button_color; ?>" />
-  <?php endif; ?>
-  <?php }
-  
   /**
 	 * Render input text field for UMS username.
 	 *
@@ -786,7 +629,7 @@ class DRGC_Admin {
    */
   public function create_country_name_trans_strings() {
     $fh = fopen( plugin_dir_path( __DIR__ ) . 'drgc-menu-label-trans-strings.php', 'w' ) or die( __( 'Failed to create file', 'digital-river-global-commerce' ) );
-    $locales = get_option( 'drgc_locale_options' );
+    $locales = get_option( 'drgc_locale_options' ) ?: array();
     $names = '';
 
     foreach ( $locales as $locale ) {
@@ -912,5 +755,30 @@ class DRGC_Admin {
   public function remove_custom_meta_box() {
     remove_meta_box( 'postcustom', 'page', 'normal' );
     remove_meta_box( 'postcustom', 'post', 'normal' );
+  }
+
+  /**
+   * Render the textarea for Drop-in configuration.
+   *
+   * @since    2.0.0
+   */
+  public function drgc_drop_in_config_cb() {
+    $config = get_option( $this->option_name . '_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT );
+    echo '<div><textarea name="' . $this->option_name . '_drop_in_config' . '" id="' . $this->option_name . '_drop_in_config' . '">' . esc_textarea( wp_unslash( $config ) ) . '</textarea></div>';
+  }
+
+  /**
+   * Load the codemirror scripts on dr_product_page_digital-river-global-commerce only.
+   *
+   * @since    2.0.0
+   */
+  public function codemirror_enqueue_scripts( $hook ) {
+    if ( $hook !== 'dr_product_page_digital-river-global-commerce' ) {
+      return;
+    }
+  
+    wp_enqueue_code_editor( array( 'type' => 'application/json' ) );
+    wp_enqueue_script( 'wp-theme-plugin-editor' );
+    wp_enqueue_style( 'wp-codemirror' );
   }
 }
