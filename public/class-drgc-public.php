@@ -203,7 +203,6 @@ class DRGC_Public {
       'accountUrl'        =>  drgc_get_page_link( 'account' ),
       'mySubsUrl'         =>  drgc_get_page_link( 'my-subscriptions' ),
       'loginUrl'          =>  drgc_get_page_link( 'login' ),
-      'loginPath'         =>  parse_url( drgc_get_page_link( 'login' ) )['path'],
       'siteID'            =>  get_option( 'drgc_site_id' ),
       'domain'            =>  get_option( 'drgc_domain' ),
       'digitalRiverKey'   =>  get_option( 'drgc_digitalRiver_key' ),
@@ -219,7 +218,8 @@ class DRGC_Public {
       'forceExclTax'      => $force_excl_tax_enable,
       'translations'      => $translation_array,
       'client_ip'         => $_SERVER['REMOTE_ADDR'],
-      'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT )
+      'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT ),
+      'displayShortDescription' => $short_description_enabled
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );
@@ -1067,5 +1067,45 @@ class DRGC_Public {
       $output[] = $item;
     }
     return $output;
+  }
+
+  /**
+   * Localize title at storefront.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function localize_title( $title ) {
+    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
+      global $post;
+      $meta = get_post_meta( $post->ID );
+      $locale = drgc_get_current_dr_locale();
+
+      if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
+        return $meta['drgc_title_' . $locale][0] ?: $title;
+      }
+    }
+    return $title;
+  }
+
+  /**
+   * Localize content at storefront.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function localize_content( $content ) {
+    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
+      global $post;
+      $meta = get_post_meta( $post->ID );
+      $locale = drgc_get_current_dr_locale();
+
+      if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
+        return $meta['drgc_content_' . $locale][0] ?: $content;
+      }
+    }
+    return $content;
   }
 }

@@ -8,7 +8,8 @@ global.drgc_params = {
   domain: 'api.digitalriver.com',
   accessToken: 'mockedAccessToken',
   isLogin: 'false',
-  loginPath: null,
+  loginUrl: 'https://my-site/login/',
+  cartUrl: 'https://my-site/cart/',
   translations: {
     subtotal_label: 'Sub-total',
     vat_label: 'VAT',
