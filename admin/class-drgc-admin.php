@@ -87,7 +87,11 @@ class DRGC_Admin {
 		$this->drgc_ajx = $drgc_ajx;
 		$this->drgc_site_id = get_option( 'drgc_site_id' );
 		$this->drgc_api_key = get_option( 'drgc_api_key' );
-		$this->drgc_api_secret = get_option( 'drgc_api_secret' );
+    $this->drgc_api_secret = get_option( 'drgc_api_secret' );
+
+    if ( empty( get_option( 'drgc_sync_locales' ) ) ) {
+      add_option( 'drgc_sync_locales', 'false' );
+    }
 	}
 
 	/**
@@ -118,9 +122,38 @@ class DRGC_Admin {
 				'drgc_ajx_instance_id'  => $this->drgc_ajx->instance_id,
 				'ajax_url'              => admin_url( 'admin-ajax.php' ),
 				'ajax_nonce'            => wp_create_nonce( 'drgc_admin_ajax' ),
+				'default_locale'        => get_option( 'drgc_default_locale' ) ?: 'en_US',
+				'locale_options'        => get_option( 'drgc_locale_options' ) ?: array(),
 			)
 		);
 	}
+
+  /**
+   * Register the stylesheets for Gutenberg admin area.
+   *
+   * @since    2.0.0
+   */
+  public function enqueue_guten_styles() {
+    wp_enqueue_style(
+      'admin-guten-style',
+      DRGC_PLUGIN_URL . 'assets/css/drgc-admin-guten.css'
+    );
+  }
+
+  /**
+   * Register the JavaScript for Gutenberg admin area.
+   *
+   * @since    2.0.0
+   */
+  public function enqueue_guten_scripts() {
+    wp_enqueue_script(
+      'admin-guten-script',
+      DRGC_PLUGIN_URL . 'assets/js/drgc-admin-guten.js',
+      array( $this->drgc, 'wp-plugins', 'wp-edit-post', 'wp-element', 'wp-components', 'wp-data' ),
+      $this->version,
+      false
+    );
+  }
 
 	/**
 	 * Add settings menu and link it to settings page.
@@ -264,6 +297,15 @@ class DRGC_Admin {
 			$this->option_name . '_checkout',
 			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
 		);
+
+    add_settings_field(
+      $this->option_name . '_display_short_description_handler',
+      __( 'Product Short Description', 'digital-river-global-commerce' ),
+      array( $this, $this->option_name . '_display_short_description_handler_cb' ),
+      $this->plugin_name . '_checkout',
+      $this->option_name . '_checkout',
+      array( 'label_for' => $this->option_name . '_display_short_description_handler' )
+    );
 
     add_settings_section(
       $this->option_name . '_drop_in',
@@ -559,6 +601,8 @@ class DRGC_Admin {
 		if ( ! empty( $wp_locales ) ) {
 			$this->install_language_packs( $wp_locales );
 		}
+
+    update_option( 'drgc_sync_locales', 'true' );
 		wp_send_json_success();
 	}
 
@@ -695,8 +739,39 @@ class DRGC_Admin {
 		foreach ( $locales as $locale ) {
 			wp_download_language_pack( $locale );
 		}
+	}
+
+  /**
+   * Register post meta for saving localized title/content.
+   *
+   * @since    2.0.0
+   */
+  public function setup_post_meta() {
+    $locales = get_option( 'drgc_locale_options' ) ?: array();
+    $args = array(
+      'show_in_rest' => true,
+      'single' => true,
+      'type' => 'string',
+    );
+
+    foreach ( $locales as $locale ) {
+      register_post_meta( 'page', 'drgc_title_' . $locale['dr_locale'], $args );
+      register_post_meta( 'page', 'drgc_content_' . $locale['dr_locale'], $args );
+      register_post_meta( 'post', 'drgc_title_' . $locale['dr_locale'], $args );
+      register_post_meta( 'post', 'drgc_content_' . $locale['dr_locale'], $args );
+    }
   }
-  
+
+  /**
+   * Remove custom fields for avoiding conflicts of classic & Gutenburg form.
+   *
+   * @since    2.0.0
+   */
+  public function remove_custom_meta_box() {
+    remove_meta_box( 'postcustom', 'page', 'normal' );
+    remove_meta_box( 'postcustom', 'post', 'normal' );
+  }
+
   /**
    * Render the textarea for Drop-in configuration.
    *
@@ -734,6 +809,23 @@ class DRGC_Admin {
         $message = __( 'To make sure Digital River Global Commerce plugin is working as expected, please set 1 to session.use_cookies in php.ini.', 'digital-river-global-commerce' );
 
         printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+      }
+    }
+  }
+
+  /**
+   * Add the custom notice when locales sync is complete.
+   *
+   * @since    2.0.0
+   */
+  public function add_custom_notice() {
+    if ( isset( $_GET['tab'] ) && $_GET['tab'] === 'locales' ) {      
+      if ( get_option( 'drgc_sync_locales' ) === 'true' ) {
+        $class = 'notice notice-success is-dismissible';
+        $message = __( 'Sync Complete!', 'digital-river-global-commerce' );
+
+        printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+        update_option( 'drgc_sync_locales', 'false' );
       }
     }
   }

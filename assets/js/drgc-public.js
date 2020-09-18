@@ -13061,7 +13061,7 @@ var CartModule = function ($) {
       if (lineItems && lineItems.length) {
         if (checkout_utils.isSubsAddedToCart(lineItems)) {
           var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-          var href = drgc_params.isLogin !== 'true' ? drgc_params.loginPath : $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
+          var href = drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
           $('a.dr-summary__proceed-checkout').prop('href', href);
         }
 
@@ -15656,7 +15656,7 @@ var DrgcUserWatcher = function (w, d, p, $) {
     debug: false,
     eventTypes: ['mousedown', 'mousemove', 'click', 'keydown', 'scroll', 'touchstart'],
     pathname: null,
-    redirectPath: p.loginPath,
+    redirectUrl: p.loginUrl,
     escapeUrls: [],
     timerId: null,
     callback: null,
@@ -15673,12 +15673,15 @@ var DrgcUserWatcher = function (w, d, p, $) {
       this.initPathname();
 
       if (!this.callback) {
-        if (!this.redirectPath) {
+        if (!this.redirectUrl) {
           this.log('The redirect url is undefined.');
           return false;
         }
 
-        if (this.redirectPath === this.pathname && this.pathname !== p.loginPath) {
+        var redirectPath = new URL(this.redirectUrl).pathname;
+        var loginPath = new URL(drgc_params.loginUrl).pathname;
+
+        if (this.pathname === redirectPath && this.pathname !== loginPath) {
           this.log('The redirect page is the same as the current page and it is not the login page.');
           return false;
         }
@@ -15726,7 +15729,7 @@ var DrgcUserWatcher = function (w, d, p, $) {
     },
     redirect: function redirect() {
       w.clearInterval(this.countDowninterval);
-      public_login.autoLogout(this.redirectPath);
+      public_login.autoLogout(this.redirectUrl);
     },
     initPathname: function initPathname() {
       var parser = d.createElement('a');

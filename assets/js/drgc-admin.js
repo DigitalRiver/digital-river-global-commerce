@@ -250,7 +250,9 @@ jQuery(document).ready(function ($) {
 // CONCATENATED MODULE: ./assets/js/admin/admin-sync-locales.js
 var SyncLocalesModule = {};
 jQuery(document).ready(function ($) {
-  $('#dr-sync-locales-btn').click(function () {
+  $('#dr-sync-locales-btn').click(function (e) {
+    var $btn = $(e.target);
+    $btn.addClass('sending');
     $.ajax({
       type: 'POST',
       url: drgc_admin_params.ajax_url,
@@ -260,6 +262,9 @@ jQuery(document).ready(function ($) {
       },
       success: function success() {
         window.location.reload();
+      },
+      error: function error() {
+        $btn.removeClass('sending');
       }
     });
   });
