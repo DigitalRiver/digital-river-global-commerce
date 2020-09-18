@@ -13,7 +13,12 @@ class DRGC_Session {
 	/**
 	 * ID of the current session
 	 */
-	public $session_id;
+  public $session_id;
+
+  /**
+   * Session creation time
+   */
+  private $creation_time;
 
 	/**
 	 * Holds the session data
@@ -50,6 +55,7 @@ class DRGC_Session {
   public function maybe_construct_session_cookie() {
     if ( empty( session_id() ) ) {
       session_start();
+      $this->creation_time = time();
     }
 
     $this->session_id = session_id();
@@ -188,12 +194,12 @@ class DRGC_Session {
 
     $wpdb->query(
       $wpdb->prepare(
-        "INSERT INTO $this->table_name ( `session_id`, `expires`, `session_data` )
+        "INSERT INTO $this->table_name ( `session_id`, `creation_time`, `session_data` )
       VALUES ( %s, %d, %s )
       ON DUPLICATE KEY
-      UPDATE `expires` = VALUES(`expires`), `session_data` = VALUES(`session_data`)",
+      UPDATE `creation_time` = VALUES(`creation_time`), `session_data` = VALUES(`session_data`)",
         $this->session_id,
-        0,
+        $this->creation_time,
         $this->session_data
       )
     );
