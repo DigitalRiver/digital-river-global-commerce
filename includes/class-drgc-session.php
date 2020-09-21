@@ -53,7 +53,7 @@ class DRGC_Session {
   }
 
   public function maybe_construct_session_cookie() {
-    if ( empty( session_id() ) ) {
+    if ( session_status() !== PHP_SESSION_ACTIVE ) {
       session_start();
       $this->creation_time = time();
     }
