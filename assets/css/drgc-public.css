@@ -2537,9 +2537,13 @@ body.dr-loading:after { position: fixed; }
 
 .dr-panel-edit.dr-panel-edit--shipping .dr-panel-edit__check .field-checkbox label, .dr-panel-edit.dr-panel-edit--billing .dr-panel-edit__check .field-checkbox label { font-size: 16px; color: #333333; }
 
-.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el { width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; }
+.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el { width: 100%; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; }
 
-.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio { position: relative; width: 32%; height: 100%; }
+@media (min-width: 576px) { .dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el { -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; } }
+
+.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio { position: relative; width: 100%; height: 100%; }
+
+@media (min-width: 576px) { .dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio { width: 32%; } }
 
 .dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio input[type=radio] { position: absolute; top: 18px; left: 12px; }
 

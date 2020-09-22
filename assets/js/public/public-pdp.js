@@ -7,7 +7,7 @@ const PdpModule = (($) => {
     const bindVariationPrice = (pricing, $target) => {
         if (!pricing.listPrice || !pricing.salePriceWithQuantity) return;
         if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-            $target.data('old-price', pricing.listPrice.value);
+            $target.data('old-price', pricing.formattedListPrice);
             $target.data('price', pricing.formattedSalePriceWithQuantity);
         } else {
             $target.data('price', pricing.formattedSalePriceWithQuantity);
@@ -30,7 +30,7 @@ const PdpModule = (($) => {
         }
         if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
             $target.html(`
-                <${option.listPriceDiv} class="${option.listPriceClass()}">${pricing.listPrice.value}</${option.listPriceDiv}>
+                <${option.listPriceDiv} class="${option.listPriceClass()}">${pricing.formattedListPrice}</${option.listPriceDiv}>
                 <${option.salePriceDiv} class="${option.salePriceClass()}">${pricing.formattedSalePriceWithQuantity}</${option.salePriceDiv}>
             `);
         } else {

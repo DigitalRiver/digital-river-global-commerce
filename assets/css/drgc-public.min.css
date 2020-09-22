@@ -1068,8 +1068,8 @@ body.dr-loading:after{position:fixed}
 .dr-panel-edit.dr-panel-edit--shipping .dr-panel-edit__el,.dr-panel-edit.dr-panel-edit--billing .dr-panel-edit__el{margin-bottom:20px}
 .dr-panel-edit.dr-panel-edit--shipping .dr-panel-edit__check .field-text,.dr-panel-edit.dr-panel-edit--billing .dr-panel-edit__check .field-text{font-size:18px;color:#333}
 .dr-panel-edit.dr-panel-edit--shipping .dr-panel-edit__check .field-checkbox label,.dr-panel-edit.dr-panel-edit--billing .dr-panel-edit__check .field-checkbox label{font-size:16px;color:#333}
-.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}
-.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio{position:relative;width:32%;height:100%}
+.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el{width:100%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}
+.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio{position:relative;width:100%;height:100%}
 .dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio input[type=radio]{position:absolute;top:18px;left:12px}
 .dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el input[type=radio]:checked ~ label{background-color:transparent}
 .dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio label{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;width:100%;height:100%;padding:12px 12px 12px 35px;background-color:#f7f7f7;border:1px solid #ccc}
@@ -1264,6 +1264,8 @@ body .modal-sm{max-width:300px}
 .offset-sm-9{margin-left:75%}
 .offset-sm-10{margin-left:83.3333333333%}
 .offset-sm-11{margin-left:91.6666666667%}
+.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el{-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row}
+.dr-panel-edit.dr-panel-edit--delivery .dr-panel-edit__el .field-radio{width:32%}
 .dr-modal-dialog{max-width:500px;margin:1.75em auto}
 .dr-modal-dialog-scrollable{max-height:calc(100% - 3.5em)}
 .dr-modal-dialog-scrollable .dr-modal-content{max-height:calc(100vh - 3.5em)}
