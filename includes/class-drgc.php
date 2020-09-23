@@ -305,8 +305,9 @@ class DRGC {
 
 		$this->loader->add_action( 'wp_update_nav_menu', $plugin_admin, 'create_menu_label_trans_strings' );
 
-		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'codemirror_enqueue_scripts' );
+    $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'codemirror_enqueue_scripts' );
 
+    $this->loader->add_action( 'admin_notices', $plugin_admin, 'add_custom_error_msg' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'add_custom_notice' );
 	}
 
@@ -376,9 +377,6 @@ class DRGC {
 
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_toggle_auto_renewal_ajax', $plugin_public, 'toggle_auto_renewal_ajax' );
     $this->loader->add_action( 'wp_ajax_drgc_toggle_auto_renewal_ajax', $plugin_public, 'toggle_auto_renewal_ajax' );
-
-    $this->loader->add_action( 'wp_ajax_nopriv_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
-    $this->loader->add_action( 'wp_ajax_drgc_reset_cookie', $plugin_public, 'reset_cookie_ajax' );
 
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_change_password', $plugin_public, 'change_password_ajax' );
     $this->loader->add_action( 'wp_ajax_drgc_change_password', $plugin_public, 'change_password_ajax' );

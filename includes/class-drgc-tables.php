@@ -27,7 +27,7 @@ class DRGC_Tables {
 		$sql = "CREATE TABLE $table_name (
 					id bigint NOT NULL AUTO_INCREMENT,
 					session_id char(32) NOT NULL,
-					expires bigint unsigned NOT NULL,
+					creation_time bigint unsigned NOT NULL,
 					session_data longtext DEFAULT '' NOT NULL,
 					PRIMARY KEY (id),
 					UNIQUE KEY session_id (session_id)
