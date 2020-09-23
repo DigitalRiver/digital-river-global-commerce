@@ -10,6 +10,9 @@ html{scroll-behavior:smooth}
 .pagination-desc{margin-right:10px}
 .dr-loader-container{position:relative;margin:0 auto;overflow:hidden}
 .dr-loader{position:relative;margin:0 auto;text-align:center}
+.entry-header{float:none !important;width:100% !important}
+.entry-content{width:100% !important;float:none !important;margin-left:auto !important;margin-right:auto !important}
+.entry-content>.drgc-wrapper{max-width:1200px !important;margin-left:auto !important;margin-right:auto !important}
 .dr-legal-footer a{font-family:"Open Sans",sans-serif;font-size:16px;color:#000;line-height:16px;margin-right:10px;text-decoration:underline}
 .dr-legal-footer .dr-resellerDisclosure{margin-right:0}
 .data-table{clear:both;width:100%;overflow:auto;border-width:1px;border-style:solid;border-color:#ccc}
@@ -20,9 +23,11 @@ html{scroll-behavior:smooth}
 #dr-test-order{text-align:center;background:rgba(8,62,111,0.6);position:fixed;z-index:9999;width:100%}
 #dr-test-order>p{color:white !important;text-transform:uppercase !important;font-size:18px !important;font-weight:bold !important;margin:0 !important;padding:5px !important}
 #dr-minicart .dr-minicart-display{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;position:absolute;text-align:left;top:61px;right:0;width:330px;min-height:300px;max-height:400px;background-color:#fff;border:1px solid #ddd;-webkit-box-shadow:0 3px 10px rgba(0,0,0,0.2);box-shadow:0 3px 10px rgba(0,0,0,0.2);z-index:99;font-size:18px}
+#dr-minicart .dr-minicart-display>.dr-minicart-body>.dr-minicart-list{right:0;background-color:white;color:black;width:100%}
+#dr-minicart .dr-minicart-display>.dr-minicart-body>.dr-minicart-list::before,#dr-minicart .dr-minicart-display>.dr-minicart-body>.dr-minicart-list::after{content:none}
 #dr-minicart .dr-minicart-header,#dr-minicart .dr-minicart-body,#dr-minicart .dr-minicart-footer{padding:0 10px}
 #dr-minicart .dr-minicart-header{padding:1rem 0 1rem 1rem;border-bottom:1px solid #eee}
-#dr-minicart .dr-minicart-body{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;padding-top:15px;padding-bottom:15px;overflow-y:auto;max-height:15rem}
+#dr-minicart .dr-minicart-body{-webkit-box-flex:1;-ms-flex:1 1 auto;flex:1 1 auto;padding-top:15px;padding-bottom:15px;overflow-y:auto;max-height:20rem}
 #dr-minicart .dr-minicart-footer{padding-top:15px;padding-bottom:15px;border-top:1px solid #eee}
 #dr-minicart .dr-minicart-footer a{display:block;float:left;width:48%;text-align:center;position:relative;font-family:'Open Sans',sans-serif;font-size:16px;font-weight:700;line-height:1;text-decoration:none;text-transform:uppercase;text-align:center;border:0;padding:13px}
 #dr-minicart .dr-minicart-footer a:first-child{margin-right:2%;background:#fff;color:#222;border:1px solid #222}
@@ -786,6 +791,7 @@ body.dr-loading:after{position:fixed}
 .dr-flag-icon.zm{background-position:-160px -165px}
 .dr-flag-icon.zw{background-position:-176px -165px}
 .dr-cart{margin-bottom:40px}
+.dr-cart section{padding:0}
 .dr-cart__actions .continue-shopping,.dr-cart__actions-bottom .continue-shopping{font-family:"Open Sans",sans-serif;font-size:16px;color:#000;text-decoration:underline;line-height:16px}
 .dr-cart__actions-bottom{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;-webkit-box-align:center;-ms-flex-align:center;align-items:center;margin-top:32px;margin-bottom:48px}
 .dr-cart__content{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;width:100%;margin-top:13px;font-size:16px}
@@ -1030,6 +1036,7 @@ body.dr-loading:after{position:fixed}
 .dr-checkout .dr-accordion__title-short{display:none}
 .dr-checkout .small-closed-left .dr-accordion__title-long,.dr-checkout .small-closed-right .dr-accordion__title-long{display:none}
 .dr-checkout .small-closed-left .dr-accordion__title-short,.dr-checkout .small-closed-right .dr-accordion__title-short{display:block}
+.dr-checkout form.dr-panel-edit{padding:10px}
 .dr-checkout .dr-address-book{margin-top:15px}
 .dr-checkout .addresses{margin-top:15px}
 .dr-checkout .addresses .address{background-color:#f8f9fa;height:100%;padding:15px 45px 15px 15px;margin:0;font-size:14px;position:relative;border:1px solid #e9ecef;-webkit-transform:border-color 200ms,background-color 200ms,padding 200ms;transform:border-color 200ms,background-color 200ms,padding 200ms}
@@ -1049,6 +1056,7 @@ body.dr-loading:after{position:fixed}
 .dr-checkout .DR-payment-method-logo{height:24px}
 .dr-checkout .DR-pay-button{padding:0;background-color:#00a7e1;font-size:15px;font-weight:700;line-height:1;border:0;border-radius:0;padding:13px;text-decoration:none;height:41px}
 .dr-checkout .DR-Legal-Footer{display:none}
+.dr-checkout .DR-Card-Brand{display:initial}
 .dr-accordion{width:100%;height:60px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;font-family:Open Sans;font-size:16px;font-weight:600;line-height:16px;text-transform:uppercase;color:#333;background-color:#fff;background-size:cover;border:0;outline:0}
 .dr-accordion:focus{background:transparent;outline:0}
 .dr-accordion__name{display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:horizontal;-webkit-box-direction:normal;-ms-flex-direction:row;flex-direction:row;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:start;-ms-flex-pack:start;justify-content:flex-start}
@@ -1392,7 +1400,7 @@ body .modal-lg,body .modal-xl{max-width:800px}
 .dr-login .dr-login-sections__section.logged-in{width:66.6%;border:0}
 .dr-login .dr-login-sections__section.section-new .dr-btn{width:170px;padding-left:5px;padding-right:5px}
 .dr-login .dr-login-sections__section.section-new .dr-btn.dr-signup{width:160px}
-.dr-login .dr-login-sections__section.section-new #dr-guest-btn{width:200px}
+.dr-login .dr-login-sections__section.section-new #dr-guest-btn{width:205px}
 .dr-login .dr-login-sections__section.section-paypal .section-paypal-img{margin-left:0}
 .dr-login .dr-login-sections__section h2{font-size:24px}
 .dr-login .dr-login-sections__section p{font-size:18px}
