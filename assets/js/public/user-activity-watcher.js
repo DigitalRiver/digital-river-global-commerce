@@ -2,7 +2,7 @@ import LoginModule from './public-login';
 
 const DrgcUserWatcher = ((w, d, p, $) => {
   const watcher = {
-    interval: 3510,
+    interval: 900,
     debug: false,
     eventTypes: ['mousedown', 'mousemove', 'click', 'keydown', 'scroll', 'touchstart'],
     pathname: null,
