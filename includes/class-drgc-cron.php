@@ -54,7 +54,7 @@ class DRGC_Cron extends AbstractHttpService {
 
 		$wpdb->query(
 			"DELETE FROM $table_name
-			WHERE `expires` < UNIX_TIMESTAMP(NOW() - INTERVAL 24 HOUR)"
+			WHERE `creation_time` < UNIX_TIMESTAMP(NOW() - INTERVAL 24 HOUR)"
 		);
 	}
 

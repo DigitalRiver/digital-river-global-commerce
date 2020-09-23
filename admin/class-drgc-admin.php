@@ -798,6 +798,22 @@ class DRGC_Admin {
   }
 
   /**
+   * Add the custom error message to WP admin pages when session.use_cookies is not set to 1.
+   *
+   * @since    2.0.0
+   */
+  public function add_custom_error_msg() {
+    if ( is_plugin_active( 'digital-river-global-commerce/digital-river-global-commerce.php' ) ) {      
+      if ( ! ini_get( 'session.use_cookies' ) ) {
+        $class = 'notice notice-error';
+        $message = __( 'To make sure Digital River Global Commerce plugin is working as expected, please set 1 to session.use_cookies in php.ini.', 'digital-river-global-commerce' );
+
+        printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), esc_html( $message ) );
+      }
+    }
+  }
+
+  /**
    * Add the custom notice when locales sync is complete.
    *
    * @since    2.0.0

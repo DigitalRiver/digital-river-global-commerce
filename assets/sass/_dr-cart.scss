@@ -1,6 +1,10 @@
 .dr-cart {
     margin-bottom: 40px;
 
+    section {
+        padding: 0;
+    }
+
     &__actions,
     &__actions-bottom {
 
@@ -10,16 +14,6 @@
             color: $color-text-base;
             text-decoration: underline;
             line-height: 16px;
-
-            &:visited {
-
-            }
-
-            &:hover,
-            &:active,
-            &:focus {
-
-            }
         }
     }
 
