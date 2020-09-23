@@ -251,15 +251,12 @@ class DRGC_Public {
       wp_send_json_error( $attempt );
     }
 
-    if ( array_key_exists( 'access_token', $attempt ) ) {
-      $plugin->session->set_guest_flag_cookie( 'false' );
-      $plugin->session->dirty_set_session( $_COOKIE['drgc_session'] );
+		if ( array_key_exists( 'access_token', $attempt ) ) {
       $plugin->shopper->update_locale_and_currency( $locale, $primary_currency );
-      $customer = $plugin->shopper->retrieve_shopper();
-
-      wp_send_json_success( $customer );
-    }
-  }
+			$customer = $plugin->shopper->retrieve_shopper();
+			wp_send_json_success( $customer );
+		}
+	}
 
 	private function get_password_error_msgs( $password, $confirm_password ) {
 		$error_msgs = array();
@@ -308,7 +305,6 @@ class DRGC_Public {
 			$password = sanitize_text_field( $_POST['password'] );
 			$confirm_password = sanitize_text_field( $_POST['confirm_password'] );
 
-			$plugin->session->dirty_set_session( $_COOKIE['drgc_session'] );
 			$error_msgs = array();
 
 			if ( ! is_email( $email ) ) {
@@ -354,28 +350,25 @@ class DRGC_Public {
 					wp_send_json_error( $user );
 				}
 
-				$plugin->session->set_guest_flag_cookie( 'false' );
 				$attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
-				wp_send_json_success( $attempt );
+        wp_send_json_success( $attempt );
 			}
 		} else {
 			wp_send_json_error();
 		}
 	}
 
-	public function checkout_as_guest_ajax() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
-		$plugin = DRGC();
-		$plugin->session->set_guest_flag_cookie( 'true' );
-		wp_send_json_success();
-	}
+  public function checkout_as_guest_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+    $plugin = DRGC();
+    $plugin->session->update_guest_checkout_flag( 'true' );
+    wp_send_json_success();
+  }
 
 	public function dr_logout_ajax() {
 		check_ajax_referer( 'drgc_ajax', 'nonce' );
 		$plugin = DRGC();
 		$plugin->shopper = null;
-		$plugin->session->set_guest_flag_cookie( 'false' );
-		$plugin->session->dirty_set_session( $_COOKIE['drgc_session'] );
 		$plugin->session->clear_session();
 		wp_send_json_success();
 	}
@@ -764,8 +757,9 @@ class DRGC_Public {
 
       if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
         $customer = $plugin->shopper->retrieve_shopper();
-        $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
-        $is_guest = 'true' === $_COOKIE['drgc_guest_flag'];
+				$is_logged_in = $customer && 'Anonymous' !== $customer['id'];
+				$session_data = $plugin->session->get_session_data();
+        $is_guest = 'true' === $session_data['checkout_as_guest'];
 
         if ( is_page( 'checkout' ) ) {
           $cart = $plugin->cart->retrieve_cart();
@@ -976,16 +970,6 @@ class DRGC_Public {
     <?php endif; ?>
   <?php
   }
-
-	public function reset_cookie_ajax() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
-
-		if ( DRGC()->session->reset_cookie() ) {
-			wp_send_json_success();
-		} else {
-			wp_send_json_error();
-		}
-	}
 
   public function get_offers_by_pop_ajax() {
     check_ajax_referer( 'drgc_ajax', 'nonce' );

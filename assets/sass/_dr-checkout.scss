@@ -79,6 +79,10 @@
         }
     }
 
+    form.dr-panel-edit {
+        padding: 10px;
+    }
+
     .dr-address-book {
         margin-top: 15px;
     }
@@ -179,5 +183,9 @@
 
     .DR-Legal-Footer {
         display: none;
+    }
+
+    .DR-Card-Brand {
+        display: initial;
     }
 }

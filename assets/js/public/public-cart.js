@@ -149,7 +149,7 @@ const CartModule = (($) => {
     const offerType = offer.type;
     const productOffers = offer.productOffers.productOffer;
     const promoText = offer.salesPitch.length ? offer.salesPitch[0] : '';
-    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    const declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     const upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if (productOffers && productOffers.length) {
@@ -368,7 +368,7 @@ const CartModule = (($) => {
             renderSummary(res.cart, hasPhysicalProduct)
           ]);
         } else {
-          if (typeof $.cookie('drgc_upsell_decline') !== 'undefined') $.removeCookie('drgc_upsell_decline', {path: '/'});
+          if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
           $('.dr-cart__auto-renewal-terms').remove();
           $('.dr-cart__products').text(localizedText.empty_cart_msg);
           $('#cart-estimate').remove();
@@ -399,7 +399,7 @@ const CartModule = (($) => {
 
   const updateUpsellCookie = (id, isDeclined = false) => {
     const productId = id.toString();
-    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    const declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     let upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if ((upsellDeclineArr.indexOf(productId) === -1) && isDeclined) {
@@ -408,7 +408,7 @@ const CartModule = (($) => {
       upsellDeclineArr = upsellDeclineArr.filter(item => item !== productId);
     }
 
-    $.cookie('drgc_upsell_decline', upsellDeclineArr.join(','), {path: '/'});
+    sessionStorage.setItem('drgc_upsell_decline', upsellDeclineArr.join(','));
   };
 
   return {
