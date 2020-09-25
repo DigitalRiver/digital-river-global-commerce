@@ -22,8 +22,7 @@ fixture `===== DRGC P1 Automation Test - Place Order As Guest =====`
     await t
       .navigateTo(baseURL)
       .setTestSpeed(0.9)
-      .maximizeWindow()
-      .expect(Selector('body').hasClass('hfeed')).ok()
+      .maximizeWindow();
 });
 
 test('Place order with physical product', async t => {

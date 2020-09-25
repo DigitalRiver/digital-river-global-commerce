@@ -24,8 +24,7 @@ fixture `===== DRGC P2 Automation Test - No Shipping for Digital Products =====`
     console.log('Before Each: Click Menu -> Product to Enter Product Page');
     await t
       .navigateTo(baseURL)
-      .maximizeWindow()
-      .expect(Selector('body').hasClass('hfeed')).ok()
+      .maximizeWindow();
 });
 
 test('Estimated Shipping Fee - Standard free Shipping', async t => {

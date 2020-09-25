@@ -22,8 +22,7 @@ fixture `===== DRGC P2 Automation Test - Free Shipping =====`
     console.log('Before Each: Click Menu -> Product to Enter Product Page');
     await t
       .navigateTo(baseURL)
-      .maximizeWindow()
-      .expect(Selector('body').hasClass('hfeed')).ok()
+      .maximizeWindow();
 });
 
 test('Estimated Shipping Fee - Standard free Shipping', async t => {
@@ -55,7 +54,7 @@ async function setProductQuatityToFreeShipping() {
   await t
     .setTestSpeed(0.9)
     .click(homePage.productsMenu)
-    .click(homePage.paginationNextBtnUpper)
+    .click(homePage.paginationNextBtn)
     .hover(homePage.addPhyProduct)
     .click(homePage.addPhyProduct)
     .takeScreenshot('BWC/minicart.jpg');
