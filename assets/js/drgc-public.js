@@ -14168,6 +14168,10 @@ jQuery(document).ready(function ($) {
       $('#dr-minicart').show();
     }
   }
+
+  if (!$('#dr-mobile-mini-cart').length) {
+    $('#dr-minicart').show();
+  }
 });
 /* harmony default export */ var public_common = (CommonModule);
 // CONCATENATED MODULE: ./assets/js/public/public-login.js

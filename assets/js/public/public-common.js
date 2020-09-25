@@ -83,6 +83,10 @@ jQuery(document).ready(($) => {
       $('#dr-minicart').show();
     }
   }
+
+  if (!$('#dr-mobile-mini-cart').length) {
+    $('#dr-minicart').show();
+  }
 });
 
 export default CommonModule;
