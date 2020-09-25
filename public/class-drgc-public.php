@@ -1092,4 +1092,13 @@ class DRGC_Public {
     }
     return $content;
   }
+
+  /**
+   * Display the custom widget area on the page.
+   *
+   * @since  2.0.0
+   */
+  public function display_custom_widget_area() {
+    if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'drgc-header-sidebar' ) ): endif;
+  }
 }

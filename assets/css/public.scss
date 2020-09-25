@@ -162,7 +162,7 @@ html {
 }
 /* Minicart
 ------------------------------------------------------------------------*/
-#dr-minicart {
+#dr-minicart, #dr-mobile-mini-cart {
     .dr-minicart {
         &-display {
             display: flex;
@@ -177,7 +177,7 @@ html {
             background-color: #fff;
             border: 1px solid #ddd;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            z-index: 99;
+            z-index: 999;
             font-size: 18px;
 
             > .dr-minicart-body > .dr-minicart-list {

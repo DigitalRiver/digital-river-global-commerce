@@ -208,9 +208,13 @@ jQuery(document).ready(($) => {
         e.preventDefault();
         const lineItemID = $(e.target).data('line-item-id');
 
+        $('.dr-minicart-display').addClass('dr-loading');
         DRCommerceApi.removeLineItem(lineItemID)
             .then(() => DRCommerceApi.getCart())
-            .then(res => displayMiniCart(res.cart))
+            .then((res) => {
+                $('.dr-minicart-display').removeClass('dr-loading');
+                displayMiniCart(res.cart);
+            })
             .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
     });
 

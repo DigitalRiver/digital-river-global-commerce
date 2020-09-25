@@ -71,6 +71,18 @@ jQuery(document).ready(($) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
       });
   });
+
+  if ($('.dr-widget-wrapper > #dr-mobile-mini-cart').length) {
+    const $mobileMiniCart = $('#dr-mobile-mini-cart');
+    const selectors = ['body > header', 'div > header', 'div > div > header'];
+    const targetSelector = selectors.find(element => $(element).length > 0);
+
+    if (targetSelector !== undefined) {
+      $(targetSelector).after($mobileMiniCart);
+    } else {
+      $('#dr-minicart').show();
+    }
+  }
 });
 
 export default CommonModule;
