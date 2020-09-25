@@ -15654,7 +15654,7 @@ jquery_default()(function () {
 
 var DrgcUserWatcher = function (w, d, p, $) {
   var watcher = {
-    interval: 3510,
+    interval: 900,
     debug: false,
     eventTypes: ['mousedown', 'mousemove', 'click', 'keydown', 'scroll', 'touchstart'],
     pathname: null,
