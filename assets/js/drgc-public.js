@@ -14611,10 +14611,11 @@ jQuery(document).ready(function ($) {
         var listPrice = Number(li.pricing.listPriceWithQuantity.value);
         var salePrice = Number(li.pricing.salePriceWithQuantity.value);
         var formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
+        var formattedListPrice = li.pricing.formattedListPriceWithQuantity;
         var priceContent = '';
 
         if (listPrice > salePrice) {
-          priceContent = "<del class=\"dr-strike-price\">".concat(listPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
+          priceContent = "<del class=\"dr-strike-price\">".concat(formattedListPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
         } else {
           priceContent = formattedSalePrice;
         }

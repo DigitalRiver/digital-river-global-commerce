@@ -119,10 +119,11 @@ jQuery(document).ready(($) => {
                 const listPrice = Number(li.pricing.listPriceWithQuantity.value);
                 const salePrice = Number(li.pricing.salePriceWithQuantity.value);
                 const formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
+                const formattedListPrice = li.pricing.formattedListPriceWithQuantity;
                 let priceContent = '';
 
                 if (listPrice > salePrice) {
-                    priceContent = `<del class="dr-strike-price">${listPrice}</del><span class="dr-sale-price">${formattedSalePrice}</span>`;
+                    priceContent = `<del class="dr-strike-price">${formattedListPrice}</del><span class="dr-sale-price">${formattedSalePrice}</span>`;
                 } else {
                     priceContent = formattedSalePrice;
                 }
