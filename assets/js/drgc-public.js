@@ -12753,7 +12753,7 @@ var CartModule = function ($) {
   };
 
   var initAutoRenewalTerms = function initAutoRenewalTerms(digitalriverjs, locale) {
-    var $checkoutBtn = $('a.dr-summary__proceed-checkout');
+    var $checkoutBtn = $('#dr-checkout-btn');
     var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
     $termsCheckbox.change(function (e) {
       var isChecked = $(e.target).is(':checked');
@@ -13052,6 +13052,7 @@ var CartModule = function ($) {
         if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
         $('.dr-cart__auto-renewal-terms').remove();
         $('.dr-cart__products').text(localizedText.empty_cart_msg);
+        $('#dr-checkout-btn').remove();
         $('#cart-estimate').remove();
         return new Promise(function (resolve) {
           return resolve();
@@ -13061,8 +13062,8 @@ var CartModule = function ($) {
       if (lineItems && lineItems.length) {
         if (checkout_utils.isSubsAddedToCart(lineItems)) {
           var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-          var href = drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
-          $('a.dr-summary__proceed-checkout').prop('href', href);
+          var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
+          $('#dr-checkout-btn').prop('href', href);
         }
 
         renderOffers(lineItems);

@@ -12,7 +12,7 @@ const CartModule = (($) => {
   };
 
   const initAutoRenewalTerms = (digitalriverjs, locale) => {
-    const $checkoutBtn = $('a.dr-summary__proceed-checkout');
+    const $checkoutBtn = $('#dr-checkout-btn');
     const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
 
     $termsCheckbox.change((e) => {
@@ -371,6 +371,7 @@ const CartModule = (($) => {
           if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
           $('.dr-cart__auto-renewal-terms').remove();
           $('.dr-cart__products').text(localizedText.empty_cart_msg);
+          $('#dr-checkout-btn').remove();
           $('#cart-estimate').remove();
           return new Promise(resolve => resolve());
         }
@@ -379,10 +380,10 @@ const CartModule = (($) => {
         if (lineItems && lineItems.length) {
           if (CheckoutUtils.isSubsAddedToCart(lineItems)) {
             const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-            const href = (drgc_params.isLogin !== 'true') ? drgc_params.loginUrl :
-              ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
+            const href = ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : 
+              (drgc_params.isLogin !== 'true') ? drgc_params.loginUrl : drgc_params.checkoutUrl;
 
-            $('a.dr-summary__proceed-checkout').prop('href', href);
+            $('#dr-checkout-btn').prop('href', href);
           }
 
           renderOffers(lineItems);
