@@ -72,7 +72,7 @@ $order_number = $cart['cart']['id'] ?? '';
 
         <section class="dr-cart__actions-bottom">
 
-            <a href="<?php echo get_post_type_archive_link( 'dr_product' ); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
+            <a href="<?php echo drgc_get_continue_shopping_link(); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
 
         </section>
 
