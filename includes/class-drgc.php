@@ -182,7 +182,9 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shopper.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-cart.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-user-management.php';
-		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product-details.php';
+    require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product-details.php';
+
+    require_once DRGC_PLUGIN_DIR . 'includes/widgets/class-dr-widget-mini-cart.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
@@ -309,6 +311,9 @@ class DRGC {
 
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'add_custom_error_msg' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'add_custom_notice' );
+
+    $this->loader->add_action( 'widgets_init', $plugin_admin, 'register_widget_areas' );
+    $this->loader->add_action( 'widgets_init', $plugin_admin, 'register_custom_widget' );
 	}
 
   /**
@@ -331,15 +336,16 @@ class DRGC {
 
     $this->loader->add_action( 'after_setup_theme', $plugin_public, 'remove_admin_bar');
 
-		$this->loader->add_filter( 'page_link', $plugin_public, 'append_query_string' );
-		$this->loader->add_filter( 'post_link', $plugin_public, 'append_query_string' );
-		$this->loader->add_filter( 'post_type_link', $plugin_public, 'append_query_string' );
-		$this->loader->add_filter( 'the_permalink', $plugin_public, 'append_query_string' );
-		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'append_query_string_to_menu' );
+    $this->loader->add_filter( 'page_link', $plugin_public, 'append_query_string' );
+    $this->loader->add_filter( 'post_link', $plugin_public, 'append_query_string' );
+    $this->loader->add_filter( 'post_type_link', $plugin_public, 'append_query_string' );
+    $this->loader->add_filter( 'the_permalink', $plugin_public, 'append_query_string' );
+    $this->loader->add_filter( 'term_link', $plugin_public, 'append_query_string' );
+    $this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'append_query_string_to_menu' );
 
-		$this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
-		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
-		$this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_currency_selector', 98 );
+    $this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
+    $this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
+    $this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_currency_selector', 98 );
     $this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'minicart_in_header', 99 );
 
     $this->loader->add_filter( 'template_include', $plugin_public, 'overwrite_template' );
@@ -395,7 +401,9 @@ class DRGC {
     $this->loader->add_filter( 'the_content', $plugin_public, 'localize_content' );
 
     $this->loader->add_action( 'wp_head', $plugin_public, 'add_test_order_banner' );
-	}
+
+    $this->loader->add_action( 'wp_head', $plugin_public, 'display_custom_widget_area' );
+  }
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
