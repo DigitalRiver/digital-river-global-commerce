@@ -829,4 +829,30 @@ class DRGC_Admin {
       }
     }
   }
+
+  /**
+   * Register a custom widget area for adding DRGC Mobile Mini-cart widget.
+   *
+   * @since    2.0.0
+   */
+  public function register_widget_areas() {
+    register_sidebar( array(
+      'name'          => __( 'DRGC Mobile Mini-cart Area', 'digital-river-global-commerce' ),
+      'id'            => 'drgc-header-sidebar',
+      'description'   => __( 'Add mini-cart widget here to appear beneath the header and above the main content on mobile devices.', 'digital-river-global-commerce' ),
+      'before_widget' => '<div class="dr-widget-wrapper" style="display: none;">', 
+      'after_widget'  => '</div>',
+      'before_title'  => '',
+      'after_title'   => ''
+    ) );
+  }
+
+  /**
+   * Register DRGC Mobile Mini-cart widget.
+   *
+   * @since    2.0.0
+   */
+  public function register_custom_widget() {
+    register_widget( 'drgc_widget_mini_cart' );
+  }
 }

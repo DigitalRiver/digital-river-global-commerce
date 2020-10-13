@@ -373,6 +373,7 @@ const CartModule = (($) => {
           $('.dr-cart__products').text(localizedText.empty_cart_msg);
           $('#dr-checkout-btn').remove();
           $('#cart-estimate').remove();
+          $('.dr-cart-wrapper__content > .order-number').remove();
           return new Promise(resolve => resolve());
         }
       })

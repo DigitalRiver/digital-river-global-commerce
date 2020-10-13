@@ -71,14 +71,21 @@
     &.dr-panel-edit--delivery &__el {
         width: 100%;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-between;
+
+        @include for-phone-landscape-up {
+            flex-direction: row;
+        }
 
         .field-radio {
             position: relative;
-            width: 32%;
+            width: 100%;
             height: 100%;
 
+            @include for-phone-landscape-up {
+                width: 32%;
+            }
         }
 
         .field-radio input[type=radio] {
