@@ -102,10 +102,10 @@ $tax_suffix_label = $is_tax_inclusive ?
 
     </div>
 
-	<?php if ( 1 < count($cart['cart']['lineItems'] )) : ?>
+    <?php if ( ! $is_empty_cart && ! $is_auto_renewal ): ?>
 
-        <a href="<?php echo esc_url( drgc_get_page_link( 'checkout' ) ); ?>" class="dr-summary__proceed-checkout dr-btn"><?php echo __( 'Proceed to checkout', 'digital-river-global-commerce' ) ?></a>
+        <a href="<?php echo esc_url( drgc_get_page_link( 'checkout' ) ); ?>" class="dr-summary__proceed-checkout dr-btn" id="dr-checkout-btn"><?php echo __( 'Proceed to checkout', 'digital-river-global-commerce' ) ?></a>
 
-	<?php endif; ?>
+    <?php endif; ?>
 
 </div>

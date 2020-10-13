@@ -182,7 +182,9 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shopper.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-cart.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-user-management.php';
-		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product-details.php';
+    require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product-details.php';
+
+    require_once DRGC_PLUGIN_DIR . 'includes/widgets/class-dr-widget-mini-cart.php';
 
 		/**
 		 * The class responsible for defining internationalization functionality
@@ -309,6 +311,9 @@ class DRGC {
 
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'add_custom_error_msg' );
     $this->loader->add_action( 'admin_notices', $plugin_admin, 'add_custom_notice' );
+
+    $this->loader->add_action( 'widgets_init', $plugin_admin, 'register_widget_areas' );
+    $this->loader->add_action( 'widgets_init', $plugin_admin, 'register_custom_widget' );
 	}
 
   /**
@@ -396,7 +401,9 @@ class DRGC {
     $this->loader->add_filter( 'the_content', $plugin_public, 'localize_content' );
 
     $this->loader->add_action( 'wp_head', $plugin_public, 'add_test_order_banner' );
-	}
+
+    $this->loader->add_action( 'wp_head', $plugin_public, 'display_custom_widget_area' );
+  }
 
 	/**
 	 * Run the loader to execute all of the hooks with WordPress.
