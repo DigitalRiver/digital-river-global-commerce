@@ -15,7 +15,7 @@
 <?php if ( $this->list_price > $this->sale_price ) : ?>
     <p class="pd-item-price dr-pd-price dr-strike-price">
         <del>
-            <?php echo get_post_meta( get_the_ID(), 'list_price_value', true ); ?>
+            <?php echo get_post_meta( get_the_ID(), 'regular_price', true ); ?>
         </del>&nbsp;
         <span class="dr-sale-price">
         <?php echo get_post_meta( get_the_ID(), 'price', true ); ?>

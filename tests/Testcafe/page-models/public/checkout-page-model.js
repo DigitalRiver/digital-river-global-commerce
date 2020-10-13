@@ -17,7 +17,6 @@ export default class CheckoutPage {
     this.deliverByStandard = Selector('#shipping-option-167400');
     this.deliveryOptionSubmitBtn = Selector('#checkout-delivery-form > button');
     this.useSameAddrCheckbox = Selector('#checkbox-billing');
-    this.submitPaymentBtn = Selector('#dr-submit-payment');
     this.submitOrderBtn = Selector("#checkout-confirmation-form > button");
 
     this.shippingFirstName = Selector('#shipping-field-first-name');
@@ -40,13 +39,15 @@ export default class CheckoutPage {
     this.billingPhoneNumber = Selector('#billing-field-phone');
 
     // Payment Info.
-    this.creditCard = Selector('#radio-credit-card');
-    this.cardNumberIframe = Selector('#card-number > iframe');
+    this.creditCardDiv = Selector('#dr-payment-info');
+    this.cardNumberIframe = this.creditCardDiv.find('iframe').nth(0);
     this.ccNumber = Selector('#ccNumber');
-    this.cardExpIframe = Selector('#card-expiration > iframe');
+    this.cardExpIframe = this.creditCardDiv.find('iframe').nth(1);
     this.ccExpiry = Selector('#ccExpiry');
-    this.cardCVVIframe = Selector('#card-cvv > iframe');
+    this.cardCVVIframe = this.creditCardDiv.find('iframe').nth(2);
     this.ccCVV = Selector('#ccCVV');
+    this.submitPaymentBtn = this.creditCardDiv.find('button').withText('PAY NOW');
+
 
     // Shipping Summary
     this.shippingSummaryTitle = Selector('.dr-summary__shipping').find('p').nth(0);
@@ -128,7 +129,6 @@ export default class CheckoutPage {
     const creditCardInfo = this.utils.getCreditCardInfo();
 
     await t
-      .click(this.creditCard)
       .switchToIframe(this.cardNumberIframe)
       .typeText(this.ccNumber, creditCardInfo.cardNo)
       .switchToMainWindow()

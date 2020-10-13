@@ -49,8 +49,8 @@ export default class GenericUtils {
     await t
       .hover(homePage.productsMenu)
       .click(homePage.productsMenu)
-      .hover(homePage.paginationNextBtnDown)
-      .click(homePage.paginationNextBtnDown)
+      .hover(homePage.paginationNextBtn)
+      .click(homePage.paginationNextBtn)
       .hover(product)
       .click(product);
 
@@ -121,7 +121,6 @@ export default class GenericUtils {
       // Set delivery option
       console.log('>> Checkout page - Set Delivery Options as Standard');
       await checkoutPage.setDeliveryOption('standard');
-      await t.expect(checkoutPage.submitPaymentBtn.exists).ok();
     }
 
     // Enter Payment Info
@@ -131,12 +130,12 @@ export default class GenericUtils {
     // Agree to Terms of Sales and Privacy Policy then submit order
     console.log('>> Checkout page - agree to Terms of Sale');
     await this.checkCheckBox(checkoutPage.checkboxTermsofSaleAndPolicy, true);
-
     // Submit Order
     console.log('>> Checkout page - Place order');
     await t
       .takeScreenshot('BWC/payment_s.jpg')
       .click(checkoutPage.submitOrderBtn)
+      .wait(8000)
       .expect(tyPage.tyMsg.innerText).eql('Your order was completed successfully.')
       .takeScreenshot('BWC/TY_s.jpg');
 
@@ -149,7 +148,6 @@ export default class GenericUtils {
   async addProductAndProceedToCheckout(product, isVariation = false) {
     const minicartPage = new MiniCartPage();
     const cartPage = new CartPage();
-    const checkoutPage = new CheckoutPage();
     // Add a physical product into cart
     console.log('>> Add Product into Cart');
     await this.addProductsIntoCart(product, isVariation);
@@ -161,8 +159,7 @@ export default class GenericUtils {
     // Click Proceed to Checkout in View Cart page to proceed checkout
     console.log('>> Direct to checkout page');
     await t
-      .click(cartPage.proceedToCheckoutBtn)
-      .expect(checkoutPage.primary.exists).ok();
+      .click(cartPage.proceedToCheckoutBtn);
   }
 
   getNewUser() {

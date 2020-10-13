@@ -12088,7 +12088,7 @@ var CheckoutUtils = function ($, params) {
   };
 
   var setShippingOption = function setShippingOption(option, freeShipping) {
-    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n          <span class=\"black\">").concat(freeShipping ? localizedText.free_label : option.formattedCost, "</span>\n        </label>\n      </div>\n    ");
+    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n          data-free=\"").concat(freeShipping, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n        </label>\n      </div>\n    ");
     $('#checkout-delivery-form .dr-panel-edit__el').append(html);
   };
 
@@ -13053,6 +13053,7 @@ var CartModule = function ($) {
         $('.dr-cart__auto-renewal-terms').remove();
         $('.dr-cart__products').text(localizedText.empty_cart_msg);
         $('#cart-estimate').remove();
+        $('.dr-cart-wrapper__content > .order-number').remove();
         return new Promise(function (resolve) {
           return resolve();
         });
@@ -14526,7 +14527,7 @@ var PdpModule = function ($) {
     if (!pricing.listPrice || !pricing.salePriceWithQuantity) return;
 
     if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-      $target.data('old-price', pricing.listPrice.value);
+      $target.data('old-price', pricing.formattedListPrice);
       $target.data('price', pricing.formattedSalePriceWithQuantity);
     } else {
       $target.data('price', pricing.formattedSalePriceWithQuantity);
@@ -14549,7 +14550,7 @@ var PdpModule = function ($) {
     }
 
     if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.listPrice.value, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.salePriceDiv, ">\n            "));
+      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.formattedListPrice, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.salePriceDiv, ">\n            "));
     } else {
       $target.html("\n                <".concat(option.priceDiv, " class=\"").concat(option.priceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.priceDiv, ">\n            "));
     }
@@ -14628,10 +14629,11 @@ jQuery(document).ready(function ($) {
         var listPrice = Number(li.pricing.listPriceWithQuantity.value);
         var salePrice = Number(li.pricing.salePriceWithQuantity.value);
         var formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
+        var formattedListPrice = li.pricing.formattedListPriceWithQuantity;
         var priceContent = '';
 
         if (listPrice > salePrice) {
-          priceContent = "<del class=\"dr-strike-price\">".concat(listPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
+          priceContent = "<del class=\"dr-strike-price\">".concat(formattedListPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
         } else {
           priceContent = formattedSalePrice;
         }
@@ -15672,7 +15674,7 @@ jquery_default()(function () {
 
 var DrgcUserWatcher = function (w, d, p, $) {
   var watcher = {
-    interval: 3510,
+    interval: 900,
     debug: false,
     eventTypes: ['mousedown', 'mousemove', 'click', 'keydown', 'scroll', 'touchstart'],
     pathname: null,
