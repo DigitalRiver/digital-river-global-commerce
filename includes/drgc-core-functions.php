@@ -535,3 +535,38 @@ function drgc_get_supported_currencies( $dr_locale ) {
     return $drgc_locale_options[$key]['supported_currencies'];
   }
 }
+
+/**
+ * Get the category URL for Continue Shopping link
+ *
+ * @return string
+ */
+function drgc_get_continue_shopping_link() {
+  $category_link = '';
+  $categories = get_terms( array( 
+    'taxonomy' => 'dr_product_category',
+    'parent'   => 0
+  ) );
+
+  if ( ! empty( $categories ) ) {
+    $arr = [];
+
+    foreach ( $categories as $category ) {
+      $arr[] = array( $category->count );
+    }
+
+    $index = array_search( max( $arr ), $arr );
+
+    if ( $categories[$index]->slug === 'uncategorized' ) {
+      unset( $arr[$index] );
+      unset( $categories[$index] );
+      $index = array_search( max( $arr ), $arr );
+    }
+
+    $category_link = esc_url( get_term_link( $categories[$index]->slug, 'dr_product_category' ) );
+  } else {
+    $category_link = isset( $_GET['locale'] ) ? esc_url( add_query_arg( 'locale', $_GET['locale'], get_home_url() ) ) : esc_url( get_home_url() );
+  }
+
+  return $category_link;
+}
