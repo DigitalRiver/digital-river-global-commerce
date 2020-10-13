@@ -1882,6 +1882,10 @@ body.dr-loading:after { position: fixed; }
 
 @media (max-width: 767px) { .dr-cart__actions-bottom .continue-shopping { display: none; } }
 
+.dr-cart__actions-bottom > .proceed-checkout.dr-btn { width: 30%; }
+
+@media (max-width: 767px) { .dr-cart__actions-bottom > .proceed-checkout.dr-btn { width: 100%; } }
+
 .dr-cart__content { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; width: 100%; margin-top: 13px; font-size: 16px; }
 
 @media (min-width: 1200px) { .dr-cart__content { -webkit-box-orient: horizontal; -webkit-box-direction: normal; -ms-flex-direction: row; flex-direction: row; } }

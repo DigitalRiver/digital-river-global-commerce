@@ -74,6 +74,12 @@ $order_number = $cart['cart']['id'] ?? '';
 
             <a href="<?php echo get_post_type_archive_link( 'dr_product' ); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
 
+            <?php if ( ! $is_empty_cart && $is_auto_renewal ): ?>
+
+                <a href="<?php echo esc_url( drgc_get_page_link( 'checkout' ) ); ?>" class="proceed-checkout dr-btn" id="dr-checkout-btn"><?php echo __( 'Proceed to checkout', 'digital-river-global-commerce' ) ?></a>
+
+            <?php endif; ?>
+
         </section>
 
     </form>
