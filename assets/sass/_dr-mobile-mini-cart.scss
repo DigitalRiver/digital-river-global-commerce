@@ -1,0 +1,49 @@
+.dr-mobile-mini-cart {
+  text-align: right;
+  padding-right: 20px;
+  padding-top: 15px;
+
+  @include for-tablet-landscape-up {
+    display: none;
+  }
+
+  &-toggle {
+    position: relative;
+  }
+
+  &-qty {
+    position: absolute;
+    border: 1px solid #e74833;
+    border-radius: 15px;
+    background-color: #e74833;
+    color: #fff;
+    text-align: center;
+    bottom: 23px;
+    left: 12px;
+    min-width: 25px;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    padding: 0 3px;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  &-icon {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      background: url(../images/shopping-cart.svg) no-repeat;
+      background-size: contain;
+  }
+
+  .dr-widget-title {
+    vertical-align: top;
+  }
+}
+
+#dr-minicart {
+  @include for-tablet-portrait-down {
+    display: none;
+  }
+}
