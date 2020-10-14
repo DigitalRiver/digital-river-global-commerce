@@ -113,7 +113,7 @@ class DRGC_Product {
         foreach ( $var_attribute_names as $key => $value ) {
           $found_key = array_search( $key, array_column( $var_custom_attributes, 'name' ) );
 
-          if ( $found_key ) {
+          if ( $found_key !== false ) {
             $attr_value = $var_custom_attributes[ $found_key ]['value'];
             $_meta_data['variations'][ $var_product_id ][ $key ] = $attr_value;
 
