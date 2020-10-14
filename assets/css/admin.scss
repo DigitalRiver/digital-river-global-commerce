@@ -1,14 +1,23 @@
-.wrapImport {
-    display: flex;
-    align-items: center;
+#products-import-btn {
+  margin: 0 8px 0 0;
 }
 
-.wrapImportControls {
-    display: flex;
-    align-items: center;
-    p {
-        display: none;
-    }
+.products-import-controls {
+  display: flex;
+  align-items: center;
+}
+
+#products-import-progressbar {
+  width: 100%;
+}
+
+#products-import-process,
+#products-import-msg {
+  display: none;
+}
+
+#drgc_cron_schedule {
+  margin-top: 1em;
 }
 
 #drcc-link {
@@ -23,10 +32,6 @@ body.taxonomy-dr_product_category #delete-link,
 body.taxonomy-dr_product_category #col-left {
     visibility: hidden;
     display: none;
-}
-
-#dr-data-process-progressbar {
-    width: 100%;
 }
 
 fieldset {

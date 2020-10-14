@@ -1,16 +1,18 @@
-.wrapImport { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+#products-import-btn { margin: 0 8px 0 0; }
 
-.wrapImportControls { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+.products-import-controls { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 
-.wrapImportControls p { display: none; }
+#products-import-progressbar { width: 100%; }
+
+#products-import-process, #products-import-msg { display: none; }
+
+#drgc_cron_schedule { margin-top: 1em; }
 
 #drcc-link { float: right; }
 
 body.taxonomy-dr_product_category #col-right { float: none; width: 100%; }
 
 body.taxonomy-dr_product_category #delete-link, body.taxonomy-dr_product_category #col-left { visibility: hidden; display: none; }
-
-#dr-data-process-progressbar { width: 100%; }
 
 fieldset { background-color: #F1F1F1; clear: both; border: 1px solid #ccc; padding: 15px 20px 20px 20px; margin: 15px 0 20px; display: table-cell; }
 

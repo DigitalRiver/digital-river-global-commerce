@@ -119,7 +119,6 @@ class DRGC_Admin {
 				'api_key'               => $this->drgc_api_key,
 				'api_secret'            => $this->drgc_api_secret,
 				'site_id'               => $this->drgc_site_id,
-				'drgc_ajx_instance_id'  => $this->drgc_ajx->instance_id,
 				'ajax_url'              => admin_url( 'admin-ajax.php' ),
 				'ajax_nonce'            => wp_create_nonce( 'drgc_admin_ajax' ),
 				'default_locale'        => get_option( 'drgc_default_locale' ) ?: 'en_US',
@@ -339,6 +338,7 @@ class DRGC_Admin {
     register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_username', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
     register_setting( $this->plugin_name . '_general', $this->option_name . '_big_blue_password', array( 'type' => 'string', 'sanitize_callback' => null ) );
     register_setting( $this->plugin_name . '_general', $this->option_name . '_cron_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_general', $this->option_name . '_cron_utc_time', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
 
     // Locales
     register_setting( $this->plugin_name . '_locales', $this->option_name . '_default_locale', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
@@ -482,7 +482,12 @@ class DRGC_Admin {
   }
 
 	public function drgc_cron_handler_cb() {
-		$option = get_option( $this->option_name . '_cron_handler' );
+    $option = get_option( $this->option_name . '_cron_handler' );
+    $utc_time = get_option( $this->option_name . '_cron_utc_time' ) ?: '12:00';
+    $utc_time_arr = explode( ':', $utc_time );
+    $utc_hours = $utc_time_arr[0];
+    $utc_minutes = $utc_time_arr[1];
+
 		$checked = '';
 
 		if ( is_array( $option ) && $option['checkbox'] === '1' ) {
@@ -491,7 +496,24 @@ class DRGC_Admin {
 
 		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_cron_handler[checkbox]" id="' . $this->option_name . '_cron_handler" value="1" ' . $checked . ' />';
 		echo '<span class="description" id="cron-description">' . __( 'Twice daily product synchronization with GC.', 'digital-river-global-commerce' ) . '</span>';
-	}
+    echo '<div id="drgc_cron_schedule"><span>' . __( 'Will be triggered at your', 'digital-river-global-commerce' ) . '</span>';
+    echo '<input type="hidden" name="' . $this->option_name . '_cron_utc_time' . '" id="' . $this->option_name . '_cron_utc_time' . '" value="' . $utc_time . '"> ';
+    echo '<select name="' . $this->option_name . '_cron_local_hours" id="' . $this->option_name . '_cron_local_hours">';
+    for ( $h = 1; $h <= 12; $h++ ) {
+      $hh = ( $h < 10 ) ? ( '0' . $h ) : $h;
+      echo '<option value="'. $hh .'">' . $hh .'</option>';
+    }
+    echo '</select>';
+    echo ' : ';
+    echo '<select name="' . $this->option_name . '_cron_local_minutes" id="' . $this->option_name . '_cron_local_minutes">';
+    for ( $m = 0; $m <= 59; $m++ ) {
+      $mm = ( $m < 10 ) ? ( '0' . $m ) : $m;
+      echo '<option value="'. $mm .'"'. ( $mm == $utc_minutes ? ' selected' : '' ) . '>' . $mm .'</option>';
+    }
+    echo '</select>&nbsp;';
+    echo '<span>am & pm (UTC <code id="' . $this->option_name . '_cron_utc_label' . '">' . $utc_hours. ':' . $utc_minutes . '</code> am & pm)</span>';
+    echo '</div>';
+  }
 
 	public function dr_sanitize_checkbox( $input ) {
 		$new_input['checkbox'] = trim( $input['checkbox'] );
@@ -604,7 +626,7 @@ class DRGC_Admin {
 
     update_option( 'drgc_sync_locales', 'true' );
 		wp_send_json_success();
-	}
+  }
 
 	/**
 	 * Remove the Editor from the DRGC post types.
@@ -828,5 +850,14 @@ class DRGC_Admin {
         update_option( 'drgc_sync_locales', 'false' );
       }
     }
+  }
+
+  /**
+   * Reschedule cron event if trigger time is updated.
+   *
+   * @since    2.0.0
+   */
+  public function reschedule_cron() {
+    DRGC()->cron->reschedule();
   }
 }

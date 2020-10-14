@@ -165,14 +165,14 @@ function drgc_currency_toggler( string $classes = '' ) {
  * @param boolean $variation
  * @return bool|object post
  */
-function drgc_get_product_by_gcid( $gc_id , $variation = false ) {
+function drgc_get_product_by_gc_id( $gc_id , $variation = false ) {
 	$args = array(
 		'posts_per_page'   => 1,
 		'post_type'        => $variation ? 'dr_product_variation' : 'dr_product',
 		'meta_query' => array(
 			array(
 				'key' => 'gc_product_id',
-				'value' => absint( $gc_id )
+				'value' => $gc_id
 			)
 		),
 	);
