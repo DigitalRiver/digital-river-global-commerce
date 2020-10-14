@@ -335,8 +335,6 @@ jQuery(document).ready(function ($) {
   var utcTimeArr = utcTime.split(':');
   var utcHours = utcTimeArr[0];
   var utcMinutes = utcTimeArr[1];
-  $('#drgc_cron_local_hours').val(SettingsModule.convertToLocalHours(utcHours));
-  $('#drgc_cron_handler').trigger('change');
   $('#drgc_cron_handler').change(function (e) {
     var isCronEnabled = $(e.target).is(':checked');
     $('#drgc_cron_schedule').toggle(isCronEnabled);
@@ -352,6 +350,8 @@ jQuery(document).ready(function ($) {
     $('#drgc_cron_utc_time').val("".concat(utcHours, ":").concat(utcMinutes));
     $('#drgc_cron_utc_label').text("".concat(utcHours, ":").concat(utcMinutes));
   });
+  $('#drgc_cron_local_hours').val(SettingsModule.convertToLocalHours(utcHours));
+  $('#drgc_cron_handler').trigger('change');
 });
 /* harmony default export */ var admin_settings = (SettingsModule);
 // CONCATENATED MODULE: ./assets/js/admin/admin.js

@@ -25,9 +25,6 @@ jQuery(document).ready(($) => {
   let utcHours = utcTimeArr[0];
   let utcMinutes = utcTimeArr[1];
 
-  $('#drgc_cron_local_hours').val(SettingsModule.convertToLocalHours(utcHours));
-  $('#drgc_cron_handler').trigger('change');
-
   $('#drgc_cron_handler').change((e) => {
     const isCronEnabled = $(e.target).is(':checked');
     $('#drgc_cron_schedule').toggle(isCronEnabled);
@@ -45,6 +42,9 @@ jQuery(document).ready(($) => {
     $('#drgc_cron_utc_time').val(`${utcHours}:${utcMinutes}`);
     $('#drgc_cron_utc_label').text(`${utcHours}:${utcMinutes}`);
   });
+
+  $('#drgc_cron_local_hours').val(SettingsModule.convertToLocalHours(utcHours));
+  $('#drgc_cron_handler').trigger('change');
 });
 
 export default SettingsModule;
