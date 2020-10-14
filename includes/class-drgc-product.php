@@ -93,6 +93,38 @@ class DRGC_Product {
     $_meta_data['sku'] = $product['sku'];
     $_post_data['post_status'] = ( $product['displayableProduct'] === 'true' ) ? 'publish' : 'pending';
 
+    // For multi variation attributes
+    if ( $product['baseProduct'] === 'true' && isset( $product['variationAttributes']['attribute'] ) ) {
+      $_meta_data['var_attribute_names'] = array();
+      $_meta_data['variations'] = array();
+      $_meta_data['var_select_options'] = array();
+
+      foreach ( $product['variationAttributes']['attribute'] as $attribute ) {
+        $_meta_data['var_attribute_names'][ $attribute['name'] ] = $attribute['displayName'];
+      }
+
+      $var_products = $product['variations']['product'];
+      $var_attribute_names = $_meta_data['var_attribute_names'];
+
+      foreach ( $var_products as $variation ) {
+        $var_product_id = $variation['id'];
+        $var_custom_attributes = $variation['customAttributes']['attribute'];
+
+        foreach ( $var_attribute_names as $key => $value ) {
+          $found_key = array_search( $key, array_column( $var_custom_attributes, 'name' ) );
+
+          if ( $found_key ) {
+            $attr_value = $var_custom_attributes[ $found_key ]['value'];
+            $_meta_data['variations'][ $var_product_id ][ $key ] = $attr_value;
+
+            if ( ! in_array( $attr_value, $_meta_data['var_select_options'][ $value ], true ) ) {
+              $_meta_data['var_select_options'][ $value ][] = $attr_value;
+            }
+          }
+        }
+      }
+    }
+
     $this->post_data = array_merge( $this->post_data, $_post_data );
     $this->meta_data = array_merge( $this->meta_data, $_meta_data );
   }

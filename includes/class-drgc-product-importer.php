@@ -151,7 +151,15 @@ class DRGC_Product_Importer {
   }
 
   private function basic_product_query_params() {
-    $required_attrs = ['product.id', 'product.sku', 'product.displayableProduct', 'product.variations'];
+    $required_attrs = [
+      'product.id',
+      'product.sku',
+      'product.baseProduct',
+      'product.displayableProduct',
+      'product.variations',
+      'product.variationAttributes',
+      'product.variations.product.customAttributes'
+    ];
     return array( 'expand' => implode( ',', $required_attrs ) );
   }
 

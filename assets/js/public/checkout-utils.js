@@ -222,10 +222,10 @@ const CheckoutUtils = (($, params) => {
           data-cost="${option.formattedCost}"
           data-id="${option.id}"
           data-desc="${option.description}"
+          data-free="${freeShipping}"
         >
         <label for="shipping-option-${option.id}">
           <span>${option.description}</span>
-          <span class="black">${freeShipping ? localizedText.free_label : option.formattedCost}</span>
         </label>
       </div>
     `;

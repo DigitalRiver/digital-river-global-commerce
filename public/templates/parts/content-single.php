@@ -18,7 +18,6 @@ $short_description = '';
 $long_description = '';
 $product_thumbnail_url = '';
 $product_image_url = '';
-$variation_attributes = [];
 $product_details = $plugin->product_details->get_product_details( $gc_id );
 
 if ( $product_details ) {
@@ -41,64 +40,19 @@ if ( $product_details ) {
     if ( isset( $product_details['productImage'] ) ) {
         $product_image_url = $product_details['productImage'];
     }
-
-    if ( $product_details['baseProduct'] === 'true' ) {
-        if ( isset( $product_details['variationAttributes'] ) ) {
-			foreach ( $product_details['variationAttributes']['attribute'] as $attribute ) {
-                $variation_attributes[ $attribute['name'] ] = $attribute['displayName'];
-            }
-        }
-    }
 }
 
 $variations = drgc_get_product_variations( get_the_ID() );
 
 if ( $variations && isset( $variations[0] ) ) {
-    $vars_count = count( $variations );
-    $var_attr_values = array( array() );
-    $var_type = '';
-    $var_type_label = '';
-
-    foreach ( $variation_attributes as $key => $value ) {
-        foreach ( $variations as $variation ) {
-            $var_gc_id = get_post_meta( $variation->ID, 'gc_product_id', true );
-            $var_product_details = $plugin->product_details->get_product_details( $var_gc_id, array( 'expand' => 'all' ) );
-
-            foreach ( $var_product_details['customAttributes']['attribute'] as $attribute ) {
-                if ( $key === $attribute['name'] ) {
-                    $variation->$key = $attribute['value'];
-                    $var_attr_values[ $key ][] = $attribute['value'];
-                }
-            }
-        }
-
-        if ( isset( $var_attr_values[ $key ] ) && is_array( $var_attr_values[ $key ] ) && count( array_unique( $var_attr_values[ $key ] ) ) === $vars_count ) {
-            $var_type = $key;
-        }
-    }
-
-    $var_type_label = $variation_attributes[ $var_type ];
-
-    //sort variation array  by sale price here!
-    $variations_sort = array();
-
-    foreach ( $variations as $variation ) {
-        $var_gc_id = get_post_meta( $variation->ID, 'gc_product_id', true );
-        $var_product_details = $plugin->product_details->get_product_details( $var_gc_id );
-        $variation->sale_price = isset( $var_product_details['pricing']['salePriceWithQuantity'] ) ? $var_product_details['pricing']['salePriceWithQuantity']['value'] : '';
-        array_push( $variations_sort, $variation );
-    }
-
-    usort( $variations_sort, function( $a, $b ) {
-        if ( $a == $b ) {
-            return 0;
-        }
-        return ( $a->sale_price < $b->sale_price ) ? -1 : 1;
-    });
-
-    $variations = $variations_sort;
+    $all_variation_attributes = get_post_meta( get_the_ID(), 'variations', true );
+    $var_attributes_names = get_post_meta( get_the_ID(), 'var_attribute_names', true );
+    $var_select_options = get_post_meta( get_the_ID(), 'var_select_options', true );
 }
 ?>
+<script type="text/javascript">
+    var drgcVarAttrs = <?php echo json_encode( $all_variation_attributes, JSON_FORCE_OBJECT ); ?>;
+</script>
 
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="row">
@@ -113,25 +67,37 @@ if ( $variations && isset( $variations[0] ) ) {
 			    <?php } ?>
 			    <?php the_content(); ?>
 
-                <?php if ( $variations ) : ?>
-                    <h6><?php echo __( 'Select ', 'digital-river-global-commerce' ) . ( ( $lang === 'en' ) ? ucwords( $var_type_label ) : $var_type_label ) . ':'; ?></h6>
+                <?php if ( $variations ): ?>
 
-                    <div class="dr_prod-variations">
+                    <?php if ( isset( $var_select_options ) && is_array( $var_select_options ) ): ?>
 
-                        <select name="dr-variation">
-                            <?php foreach ( $variations as $variation ) :
-                                $var_gc_id = get_post_meta( $variation->ID, 'gc_product_id', true );
-                                $var_option = ( $var_type !== '' ) ? $variation->$var_type : '';
-                                $var_image_url = get_post_meta( $variation->ID, 'gc_product_images_url', true );
-                                $var_thumbnail_url = get_post_meta( $variation->ID, 'gc_thumbnail_url', true );
-                            ?>
-                                <option value="<?php echo $var_gc_id; ?>" data-thumbnail-url="<?php echo $var_thumbnail_url ?: $var_image_url ?>">
-                                    <?php echo ( $var_option !== '' ) ? ( ( $lang === 'en' ) ? ucwords( $var_option ) : $var_option ) : $variation->post_name; ?>
-                                </option>
-						    <?php endforeach; ?>
-                        </select>
+                        <h6><?php echo __( 'Select your product', 'digital-river-global-commerce'); ?>:</h6>
 
-                    </div>
+                        <?php
+                            $index = 0;
+                            foreach ( array_keys( $var_select_options ) as $label ) { 
+                                $key = array_search( $label, $var_attributes_names );
+                        ?>
+
+                            <div class="dr-prod-variations">
+
+                                <select name="dr-variation-<?php echo $key; ?>" data-var-attribute="<?php echo $key; ?>" data-index="<?php echo $index; ?>" disabled>
+                                    <option value=""><?php echo ( $lang === 'en' ) ? ucwords( $label ) : $label; ?></option>
+                                    <?php foreach ( $var_select_options[ $label ] as $value ): ?>
+                                        <option value="<?php echo $value; ?>"><?php echo ( $lang === 'en' ) ? ucwords( $value ) : $value; ?></option>
+                                    <?php endforeach; ?>
+
+                                </select>
+
+                            </div>
+
+                        <?php 
+                                $index++;
+                            } 
+                        ?>
+
+                    <?php endif; ?>
+
 			    <?php endif; ?>
 
                 <form id="dr-pd-form">

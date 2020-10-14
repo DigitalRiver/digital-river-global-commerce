@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 16);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9564,7 +9564,7 @@
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(11);
+module.exports = __webpack_require__(12);
 
 /***/ }),
 /* 2 */
@@ -9716,6 +9716,22 @@ module.exports = function (module) {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(13);
+
+var iterableToArray = __webpack_require__(14);
+
+var nonIterableSpread = __webpack_require__(15);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9731,7 +9747,7 @@ module.exports = function (module) {
  * Released under the MIT license
  */
 (function (factory) {
-  if (typeof define === 'function' && __webpack_require__(10)) {
+  if (typeof define === 'function' && __webpack_require__(11)) {
     // AMD (Register as an anonymous module)
     define(['jquery'], factory);
   } else if ((typeof exports === "undefined" ? "undefined" : _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default()(exports)) === 'object') {
@@ -9830,10 +9846,10 @@ module.exports = function (module) {
     return !$.cookie(key);
   };
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(10)(module)))
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports) {
 
 module.exports = function (originalModule) {
@@ -9863,7 +9879,7 @@ module.exports = function (originalModule) {
 };
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -9872,7 +9888,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(this, {}))
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -10585,7 +10601,43 @@ try {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7)(module)))
 
 /***/ }),
-/* 12 */
+/* 13 */
+/***/ (function(module, exports) {
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 14 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 15 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11857,7 +11909,7 @@ jquery_default.a.fn[dr_tab_NAME].noConflict = function () {
 
 /* harmony default export */ var dr_tab = (dr_tab_Tab);
 // EXTERNAL MODULE: ./assets/js/public/jquery-cookie.js
-var jquery_cookie = __webpack_require__(8);
+var jquery_cookie = __webpack_require__(9);
 
 // CONCATENATED MODULE: ./assets/js/public/dr-toast.js
 // Reference: https://www.w3schools.com/howto/howto_js_snackbar.asp
@@ -12090,7 +12142,7 @@ var CheckoutUtils = function ($, params) {
   };
 
   var setShippingOption = function setShippingOption(option, freeShipping) {
-    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n          <span class=\"black\">").concat(freeShipping ? localizedText.free_label : option.formattedCost, "</span>\n        </label>\n      </div>\n    ");
+    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n          data-free=\"").concat(freeShipping, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n        </label>\n      </div>\n    ");
     $('#checkout-delivery-form .dr-panel-edit__el').append(html);
   };
 
@@ -12749,7 +12801,7 @@ var CartModule = function ($) {
   };
 
   var initAutoRenewalTerms = function initAutoRenewalTerms(digitalriverjs, locale) {
-    var $checkoutBtn = $('a.dr-summary__proceed-checkout');
+    var $checkoutBtn = $('#dr-checkout-btn');
     var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
     $termsCheckbox.change(function (e) {
       var isChecked = $(e.target).is(':checked');
@@ -13061,7 +13113,9 @@ var CartModule = function ($) {
         if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
         $('.dr-cart__auto-renewal-terms').remove();
         $('.dr-cart__products').text(localizedText.empty_cart_msg);
+        $('#dr-checkout-btn').remove();
         $('#cart-estimate').remove();
+        $('.dr-cart-wrapper__content > .order-number').remove();
         return new Promise(function (resolve) {
           return resolve();
         });
@@ -13070,8 +13124,8 @@ var CartModule = function ($) {
       if (lineItems && lineItems.length) {
         if (checkout_utils.isSubsAddedToCart(lineItems)) {
           var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-          var href = drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
-          $('a.dr-summary__proceed-checkout').prop('href', href);
+          var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
+          $('#dr-checkout-btn').prop('href', href);
         }
 
         renderOffers(lineItems);
@@ -14171,6 +14225,24 @@ jQuery(document).ready(function ($) {
       checkout_utils.apiErrorHandler(jqXHR);
     });
   });
+
+  if ($('.dr-widget-wrapper > #dr-mobile-mini-cart').length) {
+    var $mobileMiniCart = $('#dr-mobile-mini-cart');
+    var selectors = ['body > header', 'div > header', 'div > div > header'];
+    var targetSelector = selectors.find(function (element) {
+      return $(element).length > 0;
+    });
+
+    if (targetSelector !== undefined) {
+      $(targetSelector).after($mobileMiniCart);
+    } else {
+      $('#dr-minicart').show();
+    }
+  }
+
+  if (!$('#dr-mobile-mini-cart').length) {
+    $('#dr-minicart').show();
+  }
 });
 /* harmony default export */ var public_common = (CommonModule);
 // CONCATENATED MODULE: ./assets/js/public/public-login.js
@@ -14513,7 +14585,13 @@ jQuery(document).ready(function ($) {
   }
 });
 /* harmony default export */ var public_login = (LoginModule);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(8);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
 // CONCATENATED MODULE: ./assets/js/public/public-pdp.js
+
+
 /* global drgc_params, iFrameResize */
 
 /* eslint-disable no-alert, no-console */
@@ -14525,7 +14603,7 @@ var PdpModule = function ($) {
     if (!pricing.listPrice || !pricing.salePriceWithQuantity) return;
 
     if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-      $target.data('old-price', pricing.listPrice.value);
+      $target.data('old-price', pricing.formattedListPrice);
       $target.data('price', pricing.formattedSalePriceWithQuantity);
     } else {
       $target.data('price', pricing.formattedSalePriceWithQuantity);
@@ -14548,7 +14626,7 @@ var PdpModule = function ($) {
     }
 
     if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.listPrice.value, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.salePriceDiv, ">\n            "));
+      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.formattedListPrice, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.salePriceDiv, ">\n            "));
     } else {
       $target.html("\n                <".concat(option.priceDiv, " class=\"").concat(option.priceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.priceDiv, ">\n            "));
     }
@@ -14627,10 +14705,11 @@ jQuery(document).ready(function ($) {
         var listPrice = Number(li.pricing.listPriceWithQuantity.value);
         var salePrice = Number(li.pricing.salePriceWithQuantity.value);
         var formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
+        var formattedListPrice = li.pricing.formattedListPriceWithQuantity;
         var priceContent = '';
 
         if (listPrice > salePrice) {
-          priceContent = "<del class=\"dr-strike-price\">".concat(listPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
+          priceContent = "<del class=\"dr-strike-price\">".concat(formattedListPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
         } else {
           priceContent = formattedSalePrice;
         }
@@ -14700,10 +14779,12 @@ jQuery(document).ready(function ($) {
   $('.dr-minicart-display').on('click', '.dr-minicart-item-remove-btn', function (e) {
     e.preventDefault();
     var lineItemID = $(e.target).data('line-item-id');
+    $('.dr-minicart-display').addClass('dr-loading');
     commerce_api.removeLineItem(lineItemID).then(function () {
       return commerce_api.getCart();
     }).then(function (res) {
-      return displayMiniCart(res.cart);
+      $('.dr-minicart-display').removeClass('dr-loading');
+      displayMiniCart(res.cart);
     })["catch"](function (jqXHR) {
       return checkout_utils.apiErrorHandler(jqXHR);
     });
@@ -14809,7 +14890,7 @@ jQuery(document).ready(function ($) {
   } // Real-time pricing & inventory status for single PD page (including variation/base products)
 
 
-  if ($('.single-dr_product').length) {
+  if ($('.single-dr_product').length && !$('.dr-prod-variations select').length) {
     isPdCard = false;
     $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
     pdDisplayOption.$singlePDBuyBtn.text(drgc_params.translations.loading_msg).prop('disabled', true);
@@ -14834,7 +14915,9 @@ jQuery(document).ready(function ($) {
     } else {
       // base product
       var productID = pdDisplayOption.$singlePDBuyBtn.data('product-id');
-      var $priceDiv = $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+
+      var _$priceDiv = $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+
       if (!productID) return;
       commerce_api.getProduct(productID, {
         expand: 'inventoryStatus'
@@ -14842,7 +14925,7 @@ jQuery(document).ready(function ($) {
         var purchasable = res.product.inventoryStatus.productIsInStock;
         isPdCard = false; // to avoid being overwritten by concurrency
 
-        PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
+        PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, _$priceDiv);
         PdpModule.displayRealTimeBuyBtn(purchasable, false, pdDisplayOption.$singlePDBuyBtn);
       });
     }
@@ -14890,6 +14973,90 @@ jQuery(document).ready(function ($) {
       }
     });
   }
+
+  var $varSelects = $('.dr-prod-variations select');
+  var varSelectCount = $varSelects.length;
+  var $priceDiv = $(pdDisplayOption.priceDivSelector());
+  var $buyBtn = $('.dr-buy-btn');
+
+  if (varSelectCount) {
+    $varSelects.children('option:first').prop('selected', true);
+    $varSelects.first().prop('disabled', false);
+    $buyBtn.prop('disabled', true);
+  }
+
+  $('.dr-prod-variations select').on('change', function (e) {
+    e.preventDefault();
+    $priceDiv.text('');
+    $buyBtn.prop('disabled', true);
+    var selectedVal = $(e.target).val();
+    var index = $(e.target).data('index');
+    var selectedValues = [];
+    var allSelectedVal = {};
+    var filterObj = Object.assign({}, drgcVarAttrs);
+    var i = index;
+    var j = 0;
+
+    while (i < varSelectCount) {
+      var $next = $varSelects.eq(i + 1);
+
+      if ($next.length) {
+        $next.prop('disabled', true).children('option:first').prop('selected', true);
+      }
+
+      while (j < index) {
+        selectedValues[j] = $varSelects.eq(j).val();
+        j++;
+      }
+
+      selectedValues[index] = selectedVal;
+      selectedValues.forEach(function (element, i) {
+        var attr = $varSelects.eq(i).data('var-attribute');
+        var deleteItems = Object.keys(filterObj).filter(function (key) {
+          return filterObj[key][attr] !== element;
+        });
+        deleteItems.forEach(function (key) {
+          delete filterObj[key];
+        });
+      });
+      i++;
+    }
+
+    if (index < varSelectCount - 1 && selectedVal) {
+      var $nextSelect = $varSelects.eq(index + 1);
+      var nextAttr = $nextSelect.data('var-attribute');
+
+      var options = toConsumableArray_default()(new Set(Object.keys(filterObj).map(function (key) {
+        return filterObj[key][nextAttr];
+      })));
+
+      $nextSelect.children('option:not(:first-child)').remove();
+      $.each(options, function (key, value) {
+        $nextSelect.append($('<option></option>').attr('value', value).text(value));
+      });
+      $nextSelect.prop('disabled', false);
+    }
+
+    $varSelects.children('option:selected').each(function (index, element) {
+      allSelectedVal[$(element).parent().data('var-attribute')] = $(element).val();
+    });
+    var productId = Object.keys(drgcVarAttrs).find(function (key) {
+      return JSON.stringify(drgcVarAttrs[key]) === JSON.stringify(allSelectedVal);
+    });
+
+    if (productId) {
+      $priceDiv.text(drgc_params.translations.loading_msg);
+      commerce_api.getProduct(productId, {
+        expand: 'inventoryStatus'
+      }).then(function (res) {
+        var currentProduct = res.product;
+        var purchasable = currentProduct.inventoryStatus.productIsInStock;
+        PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
+        PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+      });
+      $buyBtn.attr('data-product-id', productId).prop('disabled', false);
+    }
+  });
 });
 /* harmony default export */ var public_pdp = (PdpModule);
 // CONCATENATED MODULE: ./assets/js/public/public-thank-you.js

@@ -50,15 +50,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <?php 
+                        <?php
+                            $all_variation_attributes = get_post_meta( get_the_ID(), 'variations', true );
+
                             foreach ( $variations as $variation ) {
-                                $base_variation_attributes = get_post_meta( get_the_ID(), 'variation_attributes', true );
+                                $var_product_id = get_post_meta( $variation->ID, 'gc_product_id', true );
+                                $variation_attributes = $all_variation_attributes[ $var_product_id ];
                                 $varying_attribute_array = [];
 
-                                foreach ( $var_attr_values[$variation->ID] as $attr ) {
-                                    if ( ! empty( $attr ) ) {
-                                        array_push( $varying_attribute_array, $attr );
-                                    }
+                                foreach ( $variation_attributes as $key => $value ) {
+                                    array_push( $varying_attribute_array, $value );
                                 }
                         ?>
                                 <tr>
@@ -73,10 +74,14 @@
                     </table>
                 </fieldset>
             <?php endif; ?>
-            <?php if ( $post_parent > 0 ) : ?>
+            <?php if ( $post_parent > 0 ) {
+                $all_variation_attributes = get_post_meta( $post_parent, 'variations', true );
+                $var_product_id = get_post_meta( get_the_ID(), 'gc_product_id', true );
+                $variation_attributes = $all_variation_attributes[ $var_product_id ];
+            ?>
                 <fieldset>
                     <legend><span><?php echo __( 'Variation Attributes', 'digital-river-global-commerce' ); ?></span></legend>
-                    <?php foreach ($var_attr_values as $key => $value) : ?>
+                    <?php foreach ( $variation_attributes as $key => $value ) : ?>
                         <dl>
                             <dt>
                                 <label><?php echo esc_attr( $key ); ?>: </label>
@@ -87,7 +92,7 @@
                         </dl>
                     <?php endforeach; ?>
                 </fieldset>
-            <?php endif; ?>
+            <?php } ?>
             <table class="form-table">
                 <tbody>
                     <tr>

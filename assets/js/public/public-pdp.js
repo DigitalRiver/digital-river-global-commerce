@@ -7,7 +7,7 @@ const PdpModule = (($) => {
     const bindVariationPrice = (pricing, $target) => {
         if (!pricing.listPrice || !pricing.salePriceWithQuantity) return;
         if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-            $target.data('old-price', pricing.listPrice.value);
+            $target.data('old-price', pricing.formattedListPrice);
             $target.data('price', pricing.formattedSalePriceWithQuantity);
         } else {
             $target.data('price', pricing.formattedSalePriceWithQuantity);
@@ -30,7 +30,7 @@ const PdpModule = (($) => {
         }
         if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
             $target.html(`
-                <${option.listPriceDiv} class="${option.listPriceClass()}">${pricing.listPrice.value}</${option.listPriceDiv}>
+                <${option.listPriceDiv} class="${option.listPriceClass()}">${pricing.formattedListPrice}</${option.listPriceDiv}>
                 <${option.salePriceDiv} class="${option.salePriceClass()}">${pricing.formattedSalePriceWithQuantity}</${option.salePriceDiv}>
             `);
         } else {
@@ -119,10 +119,11 @@ jQuery(document).ready(($) => {
                 const listPrice = Number(li.pricing.listPriceWithQuantity.value);
                 const salePrice = Number(li.pricing.salePriceWithQuantity.value);
                 const formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
+                const formattedListPrice = li.pricing.formattedListPriceWithQuantity;
                 let priceContent = '';
 
                 if (listPrice > salePrice) {
-                    priceContent = `<del class="dr-strike-price">${listPrice}</del><span class="dr-sale-price">${formattedSalePrice}</span>`;
+                    priceContent = `<del class="dr-strike-price">${formattedListPrice}</del><span class="dr-sale-price">${formattedSalePrice}</span>`;
                 } else {
                     priceContent = formattedSalePrice;
                 }
@@ -208,9 +209,13 @@ jQuery(document).ready(($) => {
         e.preventDefault();
         const lineItemID = $(e.target).data('line-item-id');
 
+        $('.dr-minicart-display').addClass('dr-loading');
         DRCommerceApi.removeLineItem(lineItemID)
             .then(() => DRCommerceApi.getCart())
-            .then(res => displayMiniCart(res.cart))
+            .then((res) => {
+                $('.dr-minicart-display').removeClass('dr-loading');
+                displayMiniCart(res.cart);
+            })
             .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
     });
 
@@ -303,7 +308,7 @@ jQuery(document).ready(($) => {
     }
 
     // Real-time pricing & inventory status for single PD page (including variation/base products)
-    if ($('.single-dr_product').length) {
+    if ($('.single-dr_product').length && !$('.dr-prod-variations select').length) { 
         isPdCard = false;
         $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
         pdDisplayOption.$singlePDBuyBtn.text(drgc_params.translations.loading_msg).prop('disabled', true);
@@ -375,6 +380,91 @@ jQuery(document).ready(($) => {
             }
         });
     }
+
+    const $varSelects = $('.dr-prod-variations select');
+    const varSelectCount = $varSelects.length;
+    const $priceDiv = $(pdDisplayOption.priceDivSelector());
+    const $buyBtn = $('.dr-buy-btn');
+
+    if (varSelectCount) {
+        $varSelects.children('option:first').prop('selected', true);
+        $varSelects.first().prop('disabled', false);
+        $buyBtn.prop('disabled', true);
+    }
+
+    $('.dr-prod-variations select').on('change', (e) => {
+        e.preventDefault();
+        $priceDiv.text('');
+        $buyBtn.prop('disabled', true);
+
+        const selectedVal = $(e.target).val();
+        const index = $(e.target).data('index');
+        const selectedValues = [];
+        const allSelectedVal = {};
+        const filterObj = Object.assign({}, drgcVarAttrs);
+        let i = index;
+        let j = 0;
+
+        while (i < varSelectCount) {
+            const $next = $varSelects.eq(i + 1);
+
+            if ($next.length) {
+                $next.prop('disabled', true).children('option:first').prop('selected', true);
+            }
+
+            while (j < index) {
+                selectedValues[j] = $varSelects.eq(j).val();
+                j++;
+            }
+
+            selectedValues[index] = selectedVal;
+
+            selectedValues.forEach((element, i) => {
+                const attr = $varSelects.eq(i).data('var-attribute');
+                const deleteItems = Object.keys(filterObj).filter(key => filterObj[key][attr] !== element);
+
+                deleteItems.forEach((key) => {
+                    delete filterObj[key];
+                });    
+            });
+
+            i++;
+        }
+
+        if ((index < varSelectCount - 1) && selectedVal) {
+            const $nextSelect = $varSelects.eq(index + 1);
+            const nextAttr = $nextSelect.data('var-attribute');
+            const options = [...new Set(Object.keys(filterObj).map(key => filterObj[key][nextAttr]))];
+
+            $nextSelect.children('option:not(:first-child)').remove();
+
+            $.each(options, (key, value) => {
+                $nextSelect.append($('<option></option>').attr('value', value).text(value));
+            });
+
+            $nextSelect.prop('disabled', false);
+        }
+
+        $varSelects.children('option:selected').each((index, element) => {
+            allSelectedVal[$(element).parent().data('var-attribute')] = $(element).val();
+        });
+
+        const productId = Object.keys(drgcVarAttrs).find(key => JSON.stringify(drgcVarAttrs[key]) === JSON.stringify(allSelectedVal));
+
+        if (productId) {
+            $priceDiv.text(drgc_params.translations.loading_msg);
+            DRCommerceApi.getProduct(productId, {expand: 'inventoryStatus'})
+                .then((res) => {
+                    const currentProduct = res.product;
+                    const purchasable = currentProduct.inventoryStatus.productIsInStock;
+
+                    PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
+                    PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+                });
+
+            $buyBtn.attr('data-product-id', productId).prop('disabled', false);
+        }
+    });
 });
 
 export default PdpModule;

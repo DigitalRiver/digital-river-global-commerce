@@ -15,7 +15,7 @@ if ( $cart['cart']['totalItemsInCart'] === 0 ) {
 ?>
     <p class="dr-checkout__empty-cart"><?php echo __( 'Your cart is empty!', 'digital-river-global-commerce' ); ?></p>
     <div class="dr-checkout__actions-top">
-        <a href="<?php echo get_post_type_archive_link( 'dr_product' ); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
+        <a href="<?php echo drgc_get_continue_shopping_link(); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
     </div>
 <?php
     return;
@@ -110,7 +110,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
 
     <div class="dr-checkout__actions-bottom">
 
-        <a href="<?php echo get_post_type_archive_link( 'dr_product' ); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
+        <a href="<?php echo drgc_get_continue_shopping_link(); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
 
     </div>
 

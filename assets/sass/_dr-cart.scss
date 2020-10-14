@@ -31,6 +31,14 @@
                 display: none;
             }
         }
+
+        > .proceed-checkout.dr-btn {
+            width: 30%;
+        
+            @include for-phone-landscape-down {
+                width: 100%;
+            }
+        }
     }
 
     &__content {
