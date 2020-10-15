@@ -142,7 +142,7 @@ test('Localization - ', async t => {
   const isGuest = true;
   const isLocaleUS = false;
   const priceTYPage = Selector('.sale-price');
-  ///////////////////////////////////////////////////////////////
+
   await new CheckoutPage().completeFormEmail(testEmail);
   await new GeneralUtils().fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocaleUS);
   console.log('  Expect TY Page product name to be ' + expectProductNameTW);
