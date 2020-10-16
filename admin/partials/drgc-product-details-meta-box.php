@@ -113,11 +113,23 @@
                     </tr>
                     <tr>
                         <th scope="row"> <label for="thumbnail"><?php echo __( 'Thumbnail', 'digital-river-global-commerce' ); ?></label></th>
-                        <td><img id="product-thumbnail" src="<?php echo $product_thumbnail_url; ?>" alt="<?php echo $product_name ?>"/></td>
+                        <td>
+                          <?php if ( $product_thumbnail_url ) : ?>
+                            <img id="product-thumbnail" src="<?php echo $product_thumbnail_url; ?>" alt="<?php echo $product_name ?>"/>
+                          <?php else : ?>
+                            <?php echo __( '(No image)', 'digital-river-global-commerce' ); ?>
+                          <?php endif; ?>
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row"> <label for="product-image"><?php echo __( 'Product Image', 'digital-river-global-commerce' ); ?></label></th>
-                        <td><img id="product-image" src="<?php echo $product_image_url; ?>" alt="<?php echo $product_name ?>"/></td>
+                        <td>
+                          <?php if ( $product_image_url ) : ?>
+                            <img id="product-thumbnail" src="<?php echo $product_image_url; ?>" alt="<?php echo $product_name ?>"/>
+                          <?php else : ?>
+                            <?php echo __( '(No image)', 'digital-river-global-commerce' ); ?>
+                          <?php endif; ?>
+                        </td>
                     </tr>
                 </tbody>
             </table>
