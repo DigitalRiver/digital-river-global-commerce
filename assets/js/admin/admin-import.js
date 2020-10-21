@@ -1,22 +1,22 @@
 const ImportModule = (($) => {
   let currentIdx = 0;
   let total = 0;
-  let $importBtn;
   let $importNotice;
+  let $importBtn;
   let $importMsg;
+  let $progress;
   let $progressBar;
-  let $process;
-  let $processCounter;
-  let $processTotal;
+  let $progressCount;
+  let $progressTotal;
 
   $(() => {
-    $importBtn = $('#products-import-btn');
     $importNotice = $('.products-import-notice');
+    $importBtn = $('#products-import-btn');
     $importMsg = $('#products-import-msg');
-    $progressBar = $('#products-import-progressbar');
-    $process = $('#products-import-process');
-    $processCounter = $('#products-import-process-counter');
-    $processTotal = $('#products-import-process-total');
+    $progress = $('#products-import-progress');
+    $progressBar = $('#products-import-progress-bar');
+    $progressCount = $('#products-import-progress-count');
+    $progressTotal = $('#products-import-progress-total');
   });
 
   const importCategories = () => {
@@ -38,7 +38,7 @@ const ImportModule = (($) => {
           $importMsg.text('All categories have been imported. Fetching products...');
           fetchAndCacheProducts();
         } else {
-          if (res.data.error) displayImportNotice('error', res.data.error);
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
         }
       }
     });
@@ -63,7 +63,7 @@ const ImportModule = (($) => {
             importEachProduct(currentIdx);
           }
         } else {
-          if (res.data.error) displayImportNotice('error', res.data.error);
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
         }
       }
     });
@@ -83,33 +83,35 @@ const ImportModule = (($) => {
         colorLog('[Import Each Product]', res.success ? 'success' : 'error', res);
         if (res.success) {
           currentIdx++;
-          updateProgressBar();
+          updateProgressBar(currentIdx, total);
           if (currentIdx < total) {
             importEachProduct(currentIdx);
           } else if (currentIdx === total) {
-            const params = new URLSearchParams(location.search);
-            $importMsg.text('All products have been imported. Cleaning up...');
-            params.set('import-complete', true);
-            window.location.search = params.toString();
+            setTimeout(() => {
+              const params = new URLSearchParams(location.search);
+              $importMsg.text('All products have been imported. Cleaning up...');
+              $progress.hide();
+              params.set('import-complete', true);
+              window.location.search = params.toString();
+            }, 3000);
           }
         } else {
-          if (res.data.error) displayImportNotice('error', res.data.error);
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
         }
       }
     });
   };
 
   const initProgressBar = (count, total) => {
-    $progressBar.show();
-    $process.show();
-    $progressBar.progressbar({ value: count, max: total });
-    $processCounter.text(count);
-    $processTotal.text(total);
+    $progress.show();
+    $progressTotal.text(total);
+    updateProgressBar(count, total);
   };
 
-  const updateProgressBar = () => {
-    $progressBar.progressbar('option', 'value', currentIdx);
-    $processCounter.text(currentIdx);
+  const updateProgressBar = (count, total) => {
+    const percent = (count / total).toFixed(2) * 100;
+    $progressBar.css('width', `${percent}%`);
+    $progressCount.text(count);
   };
 
   const displayImportNotice = (type = 'success', msg) => {

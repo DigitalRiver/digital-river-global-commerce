@@ -1,19 +1,53 @@
-#products-import-btn {
-  margin: 0 8px 0 0;
-}
-
-.products-import-controls {
+.products-import-wrapper {
   display: flex;
   align-items: center;
 }
 
-#products-import-progressbar {
-  width: 100%;
+#products-import-btn {
+  margin: 0 8px 0 0;
 }
 
-#products-import-process,
 #products-import-msg {
+  white-space: nowrap;
+  margin-right: 25px;
+}
+
+#products-import-progress {
   display: none;
+  width: 100%;
+  height: 30px;
+  background-color:#a0a5aa;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#products-import-progress-bar {
+  float: left;
+  font-weight: 600;
+  width: 0%;
+  height: 100%;
+  line-height: 30px;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+  background-color: #0ecbd5;
+  background-image: linear-gradient(
+    135deg,
+    rgba(255,255,255,.2) 25%, transparent 25%,
+    transparent 50%, rgba(255,255,255,.2) 50%,
+    rgba(255,255,255,.2) 75%, transparent 75%,
+    transparent
+  );
+  background-size: 50px 50px;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.15);
+  transition: width .6s ease;
+  animation: bar-animation 3s linear infinite;
+}
+
+@keyframes bar-animation {
+  0%   { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
 }
 
 #drgc_cron_schedule {

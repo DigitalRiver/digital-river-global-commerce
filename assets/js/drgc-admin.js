@@ -95,21 +95,21 @@ __webpack_require__.r(__webpack_exports__);
 var ImportModule = function ($) {
   var currentIdx = 0;
   var total = 0;
-  var $importBtn;
   var $importNotice;
+  var $importBtn;
   var $importMsg;
+  var $progress;
   var $progressBar;
-  var $process;
-  var $processCounter;
-  var $processTotal;
+  var $progressCount;
+  var $progressTotal;
   $(function () {
-    $importBtn = $('#products-import-btn');
     $importNotice = $('.products-import-notice');
+    $importBtn = $('#products-import-btn');
     $importMsg = $('#products-import-msg');
-    $progressBar = $('#products-import-progressbar');
-    $process = $('#products-import-process');
-    $processCounter = $('#products-import-process-counter');
-    $processTotal = $('#products-import-process-total');
+    $progress = $('#products-import-progress');
+    $progressBar = $('#products-import-progress-bar');
+    $progressCount = $('#products-import-progress-count');
+    $progressTotal = $('#products-import-progress-total');
   });
 
   var importCategories = function importCategories() {
@@ -131,7 +131,7 @@ var ImportModule = function ($) {
           $importMsg.text('All categories have been imported. Fetching products...');
           fetchAndCacheProducts();
         } else {
-          if (res.data.error) displayImportNotice('error', res.data.error);
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
         }
       }
     });
@@ -158,7 +158,7 @@ var ImportModule = function ($) {
             importEachProduct(currentIdx);
           }
         } else {
-          if (res.data.error) displayImportNotice('error', res.data.error);
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
         }
       }
     });
@@ -179,37 +179,36 @@ var ImportModule = function ($) {
 
         if (res.success) {
           currentIdx++;
-          updateProgressBar();
+          updateProgressBar(currentIdx, total);
 
           if (currentIdx < total) {
             importEachProduct(currentIdx);
           } else if (currentIdx === total) {
-            var params = new URLSearchParams(location.search);
-            $importMsg.text('All products have been imported. Cleaning up...');
-            params.set('import-complete', true);
-            window.location.search = params.toString();
+            setTimeout(function () {
+              var params = new URLSearchParams(location.search);
+              $importMsg.text('All products have been imported. Cleaning up...');
+              $progress.hide();
+              params.set('import-complete', true);
+              window.location.search = params.toString();
+            }, 3000);
           }
         } else {
-          if (res.data.error) displayImportNotice('error', res.data.error);
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
         }
       }
     });
   };
 
   var initProgressBar = function initProgressBar(count, total) {
-    $progressBar.show();
-    $process.show();
-    $progressBar.progressbar({
-      value: count,
-      max: total
-    });
-    $processCounter.text(count);
-    $processTotal.text(total);
+    $progress.show();
+    $progressTotal.text(total);
+    updateProgressBar(count, total);
   };
 
-  var updateProgressBar = function updateProgressBar() {
-    $progressBar.progressbar('option', 'value', currentIdx);
-    $processCounter.text(currentIdx);
+  var updateProgressBar = function updateProgressBar(count, total) {
+    var percent = (count / total).toFixed(2) * 100;
+    $progressBar.css('width', "".concat(percent, "%"));
+    $progressCount.text(count);
   };
 
   var displayImportNotice = function displayImportNotice() {

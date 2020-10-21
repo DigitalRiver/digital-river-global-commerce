@@ -18,13 +18,11 @@
 
 <div class="products-import-wrapper">
   <noscript><p><em><?php _e( 'You must enable Javascript in order to proceed!', 'digital-river-global-commerce' ) ?></em></p></noscript>
-  <div id="products-import-progressbar"></div>
-  <p id="products-import-process">
-    Processing <span id="products-import-process-counter">0</span> out of <span id="products-import-process-total">0</span>
-  </p>
-</div>
-
-<div class="products-import-controls">
   <button type="button" id="products-import-btn" class="button"><?php _e( 'Import Products', 'digital-river-global-commerce' ); ?></button>
   <h4 id="products-import-msg"></h4>
+  <div id="products-import-progress">
+    <div id="products-import-progress-bar">
+      Processing <span id="products-import-progress-count">0</span> out of <span id="products-import-progress-total">0</span>
+    </div>
+  </div>
 </div>
