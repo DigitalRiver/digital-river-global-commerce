@@ -8,12 +8,13 @@
         width: 100%;
     }
 
-    &__billing {
+    &__billing, &__vat-info {
         margin-top: 2rem;
     }
 
     &__billing,
-    &__shipping {
+    &__shipping,
+    &__vat-info {
         width: 100%;
 
         .address-title {

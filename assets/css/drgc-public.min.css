@@ -1027,10 +1027,12 @@ body.dr-loading:after{position:fixed}
 .dr-check-account__link{font-size:14px;font-weight:600;text-decoration:underline;color:#000}
 .dr-checkout{width:100%}
 .dr-checkout .d-none{display:none !important}
-.dr-checkout__cloudpay,.dr-checkout__email,.dr-checkout__shipping,.dr-checkout__billing,.dr-checkout__delivery,.dr-checkout__payment,.dr-checkout__confirmation{background:#fff;margin-bottom:20px;padding:0 10px}
+.dr-checkout__cloudpay,.dr-checkout__email,.dr-checkout__shipping,.dr-checkout__billing,.dr-checkout__tax-id,.dr-checkout__delivery,.dr-checkout__payment,.dr-checkout__confirmation{background:#fff;margin-bottom:20px;padding:0 10px}
+.dr-checkout__email{clear:both}
 .dr-checkout__billing .billing-section{display:none}
 .dr-checkout__billing .billing-section__name{font-family:Open Sans;font-size:16px;font-weight:600;line-height:16px;text-transform:uppercase;color:#333;margin:16px 0}
-.dr-checkout__googlepay,.dr-checkout__applepay{margin-top:15px}
+.dr-checkout__tax-id .tax-id-shopper-type .shopper-type-radio{vertical-align:middle}
+.dr-checkout__tax-id .tax-id-field-info{font-size:.7em;color:#505050}
 .dr-checkout .small-closed-left{clear:both;width:48%;float:left}
 .dr-checkout .small-closed-right{width:48%;float:right}
 .dr-checkout .dr-accordion__title-long{display:block}
@@ -1137,10 +1139,10 @@ body.dr-loading:after{position:fixed}
 .dr-thank-you-wrapper__summary .order-summary{width:60%;padding-top:0}
 .dr-thank-you-wrapper__summary .dr-order-address .address-info p{white-space:nowrap}
 .dr-order-address{width:40%;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:normal;-ms-flex-direction:column;flex-direction:column;padding:0 40px 20px 40px}
-.dr-order-address__billing{margin-top:2rem}
-.dr-order-address__billing,.dr-order-address__shipping{width:100%}
-.dr-order-address__billing .address-title,.dr-order-address__shipping .address-title{font-size:18px;color:#000;font-weight:700;margin-bottom:.5rem}
-.dr-order-address__billing .address-info p,.dr-order-address__shipping .address-info p{font-size:18px;color:#333;margin-bottom:0}
+.dr-order-address__billing,.dr-order-address__vat-info{margin-top:2rem}
+.dr-order-address__billing,.dr-order-address__shipping,.dr-order-address__vat-info{width:100%}
+.dr-order-address__billing .address-title,.dr-order-address__shipping .address-title,.dr-order-address__vat-info .address-title{font-size:18px;color:#000;font-weight:700;margin-bottom:.5rem}
+.dr-order-address__billing .address-info p,.dr-order-address__shipping .address-info p,.dr-order-address__vat-info .address-info p{font-size:18px;color:#333;margin-bottom:0}
 #dr-subs-details-page-wrapper fieldset{border:1px solid silver;padding:10px;margin:15px}
 #dr-subs-details-page-wrapper fieldset legend{padding:1px;font-weight:bold;border-bottom:1px solid #e5e5e5;margin-left:0;font-size:1.5rem}
 #dr-subs-details-page-wrapper .dr-btn{width:auto}

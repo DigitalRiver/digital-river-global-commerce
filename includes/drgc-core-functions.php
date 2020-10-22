@@ -555,12 +555,16 @@ function drgc_get_continue_shopping_link() {
       $arr[] = array( $category->count );
     }
 
-    $index = array_search( max( $arr ), $arr );
-
-    if ( $categories[$index]->slug === 'uncategorized' ) {
-      unset( $arr[$index] );
-      unset( $categories[$index] );
+    if ( count( $arr ) > 2 ) {
       $index = array_search( max( $arr ), $arr );
+
+      if ( $categories[$index]->slug === 'uncategorized' ) {
+        unset( $arr[$index] );
+        unset( $categories[$index] );
+        $index = array_search( max( $arr ), $arr );
+      }
+    } else {
+      $index = 0;
     }
 
     $category_link = esc_url( get_term_link( $categories[$index]->slug, 'dr_product_category' ) );

@@ -356,4 +356,25 @@ abstract class AbstractHttpService {
 
         return $response->getBody();
     }
+
+    /**
+     * @param string  $uri
+     * @param array   $data
+     * @param boolean $force_bearer_token
+     *
+     * @return array
+     */
+    protected function put( string $uri = '', array $data = array(), $force_bearer_token = true ) {
+        if ( $this->config['headers']['Content-Type'] === 'application/json' ) {
+            $data = array( GuzzleHttp\RequestOptions::JSON => $data );
+        }
+
+        $client = $this->createClient( $force_bearer_token );
+
+        $uri = $this->normalizeUri($uri);
+
+        $response = $client->put( $uri, $data );
+
+        return $this->getResponseData( $response );
+    }
 }

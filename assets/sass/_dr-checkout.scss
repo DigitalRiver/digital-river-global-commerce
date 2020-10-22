@@ -15,12 +15,17 @@
     &__email,
     &__shipping,
     &__billing,
+    &__tax-id,
     &__delivery,
     &__payment,
     &__confirmation {
         background: #ffffff;
         margin-bottom: 20px;
         padding: 0 10px;
+    }
+
+    &__email {
+        clear: both;
     }
 
     &__billing {
@@ -40,9 +45,19 @@
         }
     }
 
-    &__googlepay,
-    &__applepay {
-        margin-top: 15px;
+    &__tax-id {
+        .tax-id-shopper-type {
+            .shopper-type-radio {
+                vertical-align: middle;
+            }
+        }
+
+        .tax-id-field {
+            &-info {
+                font-size: 0.7em;
+                color: rgb(80, 80, 80);
+            }
+        }
     }
 
     .small-closed-left {

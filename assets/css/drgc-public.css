@@ -2457,13 +2457,17 @@ body.dr-loading:after { position: fixed; }
 
 @media (min-width: 1200px) { .dr-checkout { width: 50%; } }
 
-.dr-checkout__cloudpay, .dr-checkout__email, .dr-checkout__shipping, .dr-checkout__billing, .dr-checkout__delivery, .dr-checkout__payment, .dr-checkout__confirmation { background: #ffffff; margin-bottom: 20px; padding: 0 10px; }
+.dr-checkout__cloudpay, .dr-checkout__email, .dr-checkout__shipping, .dr-checkout__billing, .dr-checkout__tax-id, .dr-checkout__delivery, .dr-checkout__payment, .dr-checkout__confirmation { background: #ffffff; margin-bottom: 20px; padding: 0 10px; }
+
+.dr-checkout__email { clear: both; }
 
 .dr-checkout__billing .billing-section { display: none; }
 
 .dr-checkout__billing .billing-section__name { font-family: Open Sans; font-size: 16px; font-weight: 600; line-height: 16px; text-transform: uppercase; color: #333; margin: 16px 0; }
 
-.dr-checkout__googlepay, .dr-checkout__applepay { margin-top: 15px; }
+.dr-checkout__tax-id .tax-id-shopper-type .shopper-type-radio { vertical-align: middle; }
+
+.dr-checkout__tax-id .tax-id-field-info { font-size: 0.7em; color: #505050; }
 
 .dr-checkout .small-closed-left { clear: both; width: 48%; float: left; }
 
@@ -2690,13 +2694,13 @@ body.dr-loading:after { position: fixed; }
 
 @media (max-width: 767px) { .dr-order-address { width: 100%; } }
 
-.dr-order-address__billing { margin-top: 2rem; }
+.dr-order-address__billing, .dr-order-address__vat-info { margin-top: 2rem; }
 
-.dr-order-address__billing, .dr-order-address__shipping { width: 100%; }
+.dr-order-address__billing, .dr-order-address__shipping, .dr-order-address__vat-info { width: 100%; }
 
-.dr-order-address__billing .address-title, .dr-order-address__shipping .address-title { font-size: 18px; color: #000000; font-weight: 700; margin-bottom: 0.5rem; }
+.dr-order-address__billing .address-title, .dr-order-address__shipping .address-title, .dr-order-address__vat-info .address-title { font-size: 18px; color: #000000; font-weight: 700; margin-bottom: 0.5rem; }
 
-.dr-order-address__billing .address-info p, .dr-order-address__shipping .address-info p { font-size: 18px; color: #333333; margin-bottom: 0; }
+.dr-order-address__billing .address-info p, .dr-order-address__shipping .address-info p, .dr-order-address__vat-info .address-info p { font-size: 18px; color: #333333; margin-bottom: 0; }
 
 #dr-subs-details-page-wrapper fieldset { border: 1px solid silver; padding: 10px; margin: 15px; }
 
