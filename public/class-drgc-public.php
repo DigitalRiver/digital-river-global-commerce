@@ -643,7 +643,7 @@ class DRGC_Public {
 	 * @since  2.0.0
 	 */
 	public function insert_locale_selector( $content ) {
-		if ( ! is_page( 'thank-you' ) ) {
+		if ( ! is_page( 'checkout' ) && ! is_page( 'thank-you' ) ) {
 			ob_start();
 			include_once 'partials/drgc-locale-selector.php';
 			$append = ob_get_clean();
@@ -658,7 +658,7 @@ class DRGC_Public {
 	 * @since  2.0.0
 	 */
 	public function insert_currency_selector( $content ) {
-		if ( ! is_page( 'thank-you' ) ) {
+		if ( ! is_page( 'checkout' ) && ! is_page( 'thank-you' ) ) {
 			ob_start();
 			include_once 'partials/drgc-currency-selector.php';
 			$append = ob_get_clean();
