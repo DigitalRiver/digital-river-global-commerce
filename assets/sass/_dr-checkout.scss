@@ -189,3 +189,13 @@
         display: initial;
     }
 }
+
+#DRPayment3ds {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #dr3dsecure {
+        left: 0 !important;
+    }
+}
