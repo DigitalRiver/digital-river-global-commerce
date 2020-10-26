@@ -89,162 +89,182 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // CONCATENATED MODULE: ./assets/js/admin/admin-import.js
-var ImportModule = {};
-jQuery(document).ready(function ($) {
-  var itemTotal,
-      itemIndex = 0,
-      batchSize = 1,
-      persist,
-      itemsBeingProcessed = [],
-      itemsCompleted = [],
-      itemsFailed = [],
-      $domStatusCounter,
-      ajaxUrl = drgc_admin_params.ajax_url,
-      ajax_nonce = drgc_admin_params.ajax_nonce,
-      instance_id = drgc_admin_params.drgc_ajx_instance_id,
-      siteID = drgc_admin_params.site_id,
-      apiKey = drgc_admin_params.api_key,
-      $progressBar = $('#dr-data-process-progressbar'),
-      $fecounter = $('.wrapImportControls p'),
-      $importButton = $('#products-import-btn');
-  $('#products-import-btn').on('click', function (e) {
-    e.preventDefault();
+var ImportModule = function ($) {
+  var currentIdx = 0;
+  var total = 0;
+  var $importNotice;
+  var $importBtn;
+  var $importMsg;
+  var $progress;
+  var $progressBar;
+  var $progressCount;
+  var $progressTotal;
+  $(function () {
+    $importNotice = $('.products-import-notice');
+    $importBtn = $('#products-import-btn');
+    $importMsg = $('#products-import-msg');
+    $progress = $('#products-import-progress');
+    $progressBar = $('#products-import-progress-bar');
+    $progressCount = $('#products-import-progress-count');
+    $progressTotal = $('#products-import-progress-total');
+  });
 
-    if (!siteID || !apiKey) {
+  var importCategories = function importCategories() {
+    $importBtn.prop('disabled', true);
+    $importNotice.hide();
+    $importMsg.text('Fetching and importing categories...').show();
+    $.ajax({
+      type: 'POST',
+      url: drgc_admin_params.ajax_url,
+      data: {
+        action: 'drgc_ajx_action',
+        nonce: drgc_admin_params.ajax_nonce,
+        step: 'import_categories'
+      },
+      success: function success(res) {
+        colorLog('[Import Categories]', res.success ? 'success' : 'error', res);
+
+        if (res.success) {
+          $importMsg.text('All categories have been imported. Fetching products...');
+          fetchAndCacheProducts();
+        } else {
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
+        }
+      }
+    });
+  };
+
+  var fetchAndCacheProducts = function fetchAndCacheProducts() {
+    $.ajax({
+      type: 'POST',
+      url: drgc_admin_params.ajax_url,
+      data: {
+        action: 'drgc_ajx_action',
+        nonce: drgc_admin_params.ajax_nonce,
+        step: 'fetch_and_cache_products'
+      },
+      success: function success(res) {
+        colorLog('[Fetch and Cache Products]', res.success ? 'success' : 'error', res);
+
+        if (res.success) {
+          total = res.data ? Object.keys(res.data).length : 0;
+
+          if (total) {
+            $importMsg.text('Importing products...');
+            initProgressBar(currentIdx, total);
+            importEachProduct(currentIdx);
+          }
+        } else {
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
+        }
+      }
+    });
+  };
+
+  var importEachProduct = function importEachProduct(idx) {
+    $.ajax({
+      type: 'POST',
+      url: drgc_admin_params.ajax_url,
+      data: {
+        action: 'drgc_ajx_action',
+        nonce: drgc_admin_params.ajax_nonce,
+        step: 'import_each_product',
+        idx: idx
+      },
+      success: function success(res) {
+        colorLog('[Import Each Product]', res.success ? 'success' : 'error', res);
+
+        if (res.success) {
+          currentIdx++;
+          updateProgressBar(currentIdx, total);
+
+          if (currentIdx < total) {
+            importEachProduct(currentIdx);
+          } else if (currentIdx === total) {
+            setTimeout(function () {
+              var params = new URLSearchParams(location.search);
+              $importMsg.text('All products have been imported. Cleaning up...');
+              $progress.hide();
+              params.set('import-complete', true);
+              window.location.search = params.toString();
+            }, 3000);
+          }
+        } else {
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
+        }
+      }
+    });
+  };
+
+  var initProgressBar = function initProgressBar(count, total) {
+    $progress.show();
+    $progressTotal.text(total);
+    updateProgressBar(count, total);
+  };
+
+  var updateProgressBar = function updateProgressBar(count, total) {
+    var percent = (count / total).toFixed(2) * 100;
+    $progressBar.css('width', "".concat(percent, "%"));
+    $progressCount.text(count);
+  };
+
+  var displayImportNotice = function displayImportNotice() {
+    var type = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'success';
+    var msg = arguments.length > 1 ? arguments[1] : undefined;
+    $importNotice.remove();
+    var $notice = $("<div class=\"notice notice-".concat(type, " is-dismissible products-import-notice\"><p>").concat(msg, "</p></div>"));
+    $notice.insertBefore('.products-import-wrapper');
+  };
+
+  var colorLog = function colorLog(msg, color, anotherMsg) {
+    color = color || 'black';
+
+    switch (color) {
+      case 'success':
+        color = 'Green';
+        break;
+
+      case 'info':
+        color = 'DodgerBlue';
+        break;
+
+      case 'error':
+        color = 'Red';
+        break;
+
+      case 'warning':
+        color = 'Orange';
+        break;
+
+      default:
+        color = color;
+    }
+
+    console.log('%c' + msg, 'color:' + color, anotherMsg);
+  };
+
+  return {
+    importCategories: importCategories,
+    fetchAndCacheProducts: fetchAndCacheProducts,
+    importEachProduct: importEachProduct,
+    initProgressBar: initProgressBar,
+    updateProgressBar: updateProgressBar,
+    displayImportNotice: displayImportNotice,
+    colorLog: colorLog
+  };
+}(jQuery);
+
+jQuery(document).ready(function ($) {
+  $('#products-import-btn').click(function (e) {
+    if (!drgc_admin_params.site_id || !drgc_admin_params.api_key) {
       return alert('Please provide siteID & apiKey!');
     }
 
-    $importButton.attr('disabled', 'disabled');
-
-    if ($('.notice').is(':visible')) {
-      $('.notice').hide();
-    }
-
-    $('.wrapImportControls').append("<h4> <b>Fetching products, locales and currencies...</b> </h4>");
-    var data = {
-      action: 'drgc_ajx_action',
-      nonce: ajax_nonce,
-      instance_id: instance_id,
-      step: 'init'
-    };
-    $.ajax({
-      dataType: 'json',
-      data: data,
-      type: 'post',
-      url: ajaxUrl,
-      context: this,
-      nonce: ajax_nonce,
-      success: ajaxInitSuccess
-    });
+    ImportModule.importCategories();
   });
-
-  function ajaxInitSuccess(data, textStatus, jqXHR) {
-    itemTotal = data.entries_count;
-    batchSize = data.batch_size;
-    itemIndex = data.index_start;
-    $('.wrapImportControls').find('h4').remove();
-    $progressBar.show();
-    $progressBar.progressbar({
-      max: itemTotal,
-      value: 0
-    });
-    $fecounter.show();
-    $importButton.hide();
-    updateTotal(itemTotal);
-    processNext();
-  }
-
-  function processNext() {
-    var counter = 0,
-        data;
-
-    while (counter < batchSize && itemIndex < itemTotal) {
-      itemsBeingProcessed.push(itemIndex);
-      itemIndex++;
-      counter++;
-    }
-
-    if (!itemsBeingProcessed.length) {
-      complete();
-      return;
-    }
-
-    data = {
-      action: 'drgc_ajx_action',
-      step: 'batchprocess',
-      persist: persist,
-      nonce: ajax_nonce,
-      instance_id: instance_id,
-      itemsBeingProcessed: itemsBeingProcessed
-    };
-    $.ajax({
-      dataType: 'json',
-      data: data,
-      type: 'post',
-      url: ajaxUrl,
-      context: this,
-      nonce: ajax_nonce,
-      success: ajaxBatchSuccess
-    });
-  }
-
-  function ajaxBatchSuccess(data, textStatus, jqXHR) {
-    var lastIndex;
-    $.each(data.results, function (key, value) {
-      if (value.success) {
-        itemsCompleted.push(key);
-      } else if ('failure' === value) {
-        itemsFailed.push(key);
-      }
-
-      lastIndex = key;
-    });
-    updateStatus(itemIndex);
-    itemsBeingProcessed = [];
-    persist = data.results[lastIndex]['persist'];
-    processNext();
-  }
-
-  function updateStatus(numberProcessed) {
-    if (!$domStatusCounter) {
-      $domStatusCounter = $('#dr-data-process-counter');
-    }
-
-    $progressBar.progressbar("option", "value", numberProcessed);
-    $domStatusCounter.text(numberProcessed);
-  }
-
-  function updateTotal(numberTotal) {
-    $('#dr-data-process-total').text(numberTotal);
-  }
-
-  function complete() {
-    $progressBar.hide();
-    $('.wrapImportControls').html("<h3><b>Cleaning up...</b></h3>");
-    var data = {
-      action: 'drgc_ajx_action',
-      step: 'end',
-      persist: persist,
-      nonce: ajax_nonce,
-      instance_id: instance_id
-    };
-    $.ajax({
-      dataType: 'json',
-      data: data,
-      type: 'post',
-      url: ajaxUrl,
-      context: this,
-      success: ajaxCompleteSuccess
-    });
-  }
-
-  function ajaxCompleteSuccess(data, textStatus, jqXHR) {
-    window.location.href = data.url;
-  }
 });
 /* harmony default export */ var admin_import = (ImportModule);
 // CONCATENATED MODULE: ./assets/js/admin/admin-sync-locales.js
@@ -287,7 +307,54 @@ var dropinConfigModule = {};
 })(jQuery);
 
 /* harmony default export */ var admin_code_editor = (dropinConfigModule);
+// CONCATENATED MODULE: ./assets/js/admin/admin-settings.js
+var SettingsModule = function ($) {
+  var convertToLocalHours = function convertToLocalHours(utcHours) {
+    var utcDate = new Date("2020-01-01 ".concat(utcHours, ":00:00 UTC"));
+    var localHours = utcDate.getHours();
+    localHours = localHours === 0 ? 12 : localHours > 12 ? localHours - 12 : localHours;
+    return (localHours < 10 ? '0' : '') + localHours;
+  };
+
+  var convertToUTCHours = function convertToUTCHours(localHours) {
+    var localDate = new Date("2020-01-01 ".concat(localHours, ":00:00"));
+    var utcHours = localDate.getUTCHours();
+    utcHours = utcHours === 0 ? 12 : utcHours > 12 ? utcHours - 12 : utcHours;
+    return (utcHours < 10 ? '0' : '') + utcHours;
+  };
+
+  return {
+    convertToLocalHours: convertToLocalHours,
+    convertToUTCHours: convertToUTCHours
+  };
+}(jQuery);
+
+jQuery(document).ready(function ($) {
+  var utcTime = $('#drgc_cron_utc_time').val() || '12:00';
+  var utcTimeArr = utcTime.split(':');
+  var utcHours = utcTimeArr[0];
+  var utcMinutes = utcTimeArr[1];
+  $('#drgc_cron_handler').change(function (e) {
+    var isCronEnabled = $(e.target).is(':checked');
+    $('#drgc_cron_schedule').toggle(isCronEnabled);
+  });
+  $('#drgc_cron_local_hours').change(function (e) {
+    var localHours = $(e.target).val();
+    utcHours = SettingsModule.convertToUTCHours(localHours);
+    $('#drgc_cron_utc_time').val("".concat(utcHours, ":").concat(utcMinutes));
+    $('#drgc_cron_utc_label').text("".concat(utcHours, ":").concat(utcMinutes));
+  });
+  $('#drgc_cron_local_minutes').change(function (e) {
+    utcMinutes = $(e.target).val();
+    $('#drgc_cron_utc_time').val("".concat(utcHours, ":").concat(utcMinutes));
+    $('#drgc_cron_utc_label').text("".concat(utcHours, ":").concat(utcMinutes));
+  });
+  $('#drgc_cron_local_hours').val(SettingsModule.convertToLocalHours(utcHours));
+  $('#drgc_cron_handler').trigger('change');
+});
+/* harmony default export */ var admin_settings = (SettingsModule);
 // CONCATENATED MODULE: ./assets/js/admin/admin.js
+
 
 
 

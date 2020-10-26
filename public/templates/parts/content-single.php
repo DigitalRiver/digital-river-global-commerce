@@ -57,7 +57,9 @@ if ( $variations && isset( $variations[0] ) ) {
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="row">
         <div class="col-12 col-md-6">
+          <?php if ( $product_thumbnail_url || $product_image_url ) { ?>
             <img src="<?php echo $product_thumbnail_url ?: $product_image_url ?>" alt="<?php echo $product_name; ?>" class="dr-pd-img" />
+          <?php } ?>
         </div>
         <div class="col-12 col-md-6">
 		    <h1 class="entry-title dr-pd-title"><?php echo $product_name; ?></h1>
