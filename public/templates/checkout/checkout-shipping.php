@@ -233,11 +233,17 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
                 <label for="shipping-field-phone" class="float-label">
 
-                    <?php echo __( 'Phone', 'digital-river-global-commerce' ); ?>
+                    <?php echo __( 'Phone', 'digital-river-global-commerce' ); ?> *
 
                 </label>
 
-                <input id="shipping-field-phone" type="text" name="shipping-phoneNumber" value="<?php echo $shippingAddress['phoneNumber'] ?>" class="form-control float-field float-field--phone">
+                <input id="shipping-field-phone" type="text" name="shipping-phoneNumber" value="<?php echo $shippingAddress['phoneNumber'] ?>" class="form-control float-field float-field--phone" required>
+
+                <div class="invalid-feedback">
+
+                    <?php _e( 'This field is required.', 'digital-river-global-commerce' ); ?>
+
+                </div>
 
             </div>
 
