@@ -103,6 +103,14 @@ class DRGC {
 	public $user_management;
 
 	/**
+	 * Cron instance
+	 * @since    2.0.0
+	 * @access   public
+	 * @var
+	 */
+	public $cron;
+
+	/**
 	 * DRGC main instance
 	 *
 	 * @since 1.0.0
@@ -199,7 +207,7 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'admin/class-drgc-post-types.php';
 
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-ajx.php';
-		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-ajx-importer.php';
+		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product-importer.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-cron.php';
 
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-product.php';
@@ -220,7 +228,7 @@ class DRGC {
 		$this->loader = new DRGC_Loader();
 
 		// Initialize ajax handler
-		$this->drgc_ajx = new DRGC_Ajx( array( 'instance_id' => 'DR Ajax' ) );
+		$this->drgc_ajx = new DRGC_Ajx();
 	}
 
 	private function start_api_handler() {
@@ -255,7 +263,7 @@ class DRGC {
 		$this->product_details = new DRGC_Product_Details( $this->authenticator );
 
 		// Start up the cron import
-		new DRGC_Cron();
+		$this->cron = new DRGC_Cron();
 	}
 
 	/**
@@ -314,6 +322,8 @@ class DRGC {
 
     $this->loader->add_action( 'widgets_init', $plugin_admin, 'register_widget_areas' );
     $this->loader->add_action( 'widgets_init', $plugin_admin, 'register_custom_widget' );
+
+    $this->loader->add_action( 'update_option_drgc_cron_utc_time', $plugin_admin, 'reschedule_cron' );
 	}
 
   /**

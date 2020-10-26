@@ -44,14 +44,13 @@ if ( $variations && isset( $variations[0] ) ) {
 }
 
 $gc_id = get_post_meta( $post_id, 'gc_product_id', true );
-$product_image_url = get_post_meta( $post_id, 'gc_product_images_url', true );
-$product_thumbnail_url = get_post_meta( $post_id, 'gc_thumbnail_url', true );
 ?>
 
 <div class="dr-pd-item">
     <a href="<?php echo get_permalink(); ?>">
         <div class="dr-pd-item-thumbnail">
-            <img src="<?php echo $product_thumbnail_url ?: $product_image_url ?>" alt="<?php the_title_attribute() ?>"/>
+            <!-- Before JS is loaded, render 1x1 px transparent gif to avoid breaking image -->
+            <img src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" alt="<?php the_title_attribute() ?>"/>
         </div>
 
         <div class="dr-loading"></div>
