@@ -1060,14 +1060,18 @@ class DRGC_Public {
    * @param  string
    * @return string
    */
-  public function localize_title( $title ) {
-    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
-      global $post;
-      $meta = get_post_meta( $post->ID );
-      $locale = drgc_get_current_dr_locale();
+  public function localize_title( $title, $post_id ) {
+    if( ! is_admin() && isset( $post_id ) ) {
+      $post = get_post( $post_id );
+      $post_type = get_post_type( $post_id );
 
-      if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
-        return $meta['drgc_title_' . $locale][0] ?: $title;
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
+          return $meta['drgc_title_' . $locale][0] ?: $title;
+        }
       }
     }
     return $title;
@@ -1081,13 +1085,18 @@ class DRGC_Public {
    * @return string
    */
   public function localize_content( $content ) {
-    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
+    if( ! is_admin() ) {
       global $post;
-      $meta = get_post_meta( $post->ID );
-      $locale = drgc_get_current_dr_locale();
+      $post_id = $post->ID;
+      $post_type = $post->post_type;
 
-      if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
-        return $meta['drgc_content_' . $locale][0] ?: $content;
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
+          return $meta['drgc_content_' . $locale][0] ?: $content;
+        }
       }
     }
     return $content;
