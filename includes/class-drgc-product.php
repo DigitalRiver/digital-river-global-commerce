@@ -116,8 +116,9 @@ class DRGC_Product {
           if ( $found_key !== false ) {
             $attr_value = $var_custom_attributes[ $found_key ]['value'];
             $_meta_data['variations'][ $var_product_id ][ $key ] = $attr_value;
+            $select_options = $_meta_data['var_select_options'][ $value ] ?? array();
 
-            if ( ! in_array( $attr_value, $_meta_data['var_select_options'][ $value ], true ) ) {
+            if ( ! in_array( $attr_value, $select_options, true ) ) {
               $_meta_data['var_select_options'][ $value ][] = $attr_value;
             }
           }
