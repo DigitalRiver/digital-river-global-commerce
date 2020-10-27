@@ -9570,6 +9570,49 @@ module.exports = __webpack_require__(15);
 /* 2 */
 /***/ (function(module, exports) {
 
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -9607,49 +9650,6 @@ function _asyncToGenerator(fn) {
 }
 
 module.exports = _asyncToGenerator;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
 
 /***/ }),
 /* 5 */
@@ -9788,7 +9788,7 @@ module.exports = _toConsumableArray;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 /* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -10748,7 +10748,7 @@ module.exports = _nonIterableSpread;
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(3);
+var helpers_typeof = __webpack_require__(2);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // CONCATENATED MODULE: ./assets/js/public/modal.js
@@ -10968,7 +10968,7 @@ jQuery(document).ready(function ($) {
   }
 });
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(4);
+var defineProperty = __webpack_require__(3);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -12035,7 +12035,7 @@ var regenerator = __webpack_require__(1);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(2);
+var asyncToGenerator = __webpack_require__(4);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
@@ -12420,6 +12420,32 @@ var CheckoutUtils = function ($, params) {
     });
   };
 
+  var getTaxRegistration = function getTaxRegistration() {
+    var data = {
+      action: 'drgc_get_tax_registration',
+      nonce: drgc_params.ajaxNonce
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
   return {
     updateDeliverySection: updateDeliverySection,
     updateAddressSection: updateAddressSection,
@@ -12448,7 +12474,8 @@ var CheckoutUtils = function ($, params) {
     getTaxSchema: getTaxSchema,
     validateVatNumber: validateVatNumber,
     createTaxIdElement: createTaxIdElement,
-    applyTaxRegistration: applyTaxRegistration
+    applyTaxRegistration: applyTaxRegistration,
+    getTaxRegistration: getTaxRegistration
   };
 }(jQuery, drgc_params);
 
@@ -13563,12 +13590,20 @@ var CheckoutModule = function ($) {
       }
     }
 
-    if ($section.hasClass('dr-checkout__billing')) {
+    if ($section.hasClass('dr-checkout__billing') || $section.hasClass('dr-checkout__tax-id')) {
       $('.dr-accordion__edit').hide();
       $('.edit-link').show();
     }
 
-    if ($nextSection.hasClass('dr-checkout__confirmation') || $section.hasClass('dr-checkout__tax-id') || $section.hasClass('dr-checkout__delivery')) {
+    if ($nextSection.hasClass('dr-checkout__confirmation') || $section.hasClass('dr-checkout__delivery')) {
+      $section.find('span.dr-accordion__edit').show();
+    }
+
+    if ($nextSection.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') === 'true') {
+      $('#checkout-tax-id-form').trigger('submit');
+    }
+
+    if ($section.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') !== 'true') {
       $section.find('span.dr-accordion__edit').show();
     }
 
@@ -13931,11 +13966,12 @@ jQuery(document).ready(function ($) {
       }
     });
     $('#checkout-billing-form').on('submit', /*#__PURE__*/function () {
-      var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
-        var $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, billingAddress, lang, config;
-        return regenerator_default.a.wrap(function _callee3$(_context3) {
+      var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
+        var $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, lineItems, isTaxExempt, _address, taxRegs, taxIds, shopperType, _iterator, _step, element, $field, billingAddress, lang, config;
+
+        return regenerator_default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 e.preventDefault();
                 $form = $(e.target);
@@ -13944,11 +13980,11 @@ jQuery(document).ready(function ($) {
                 isFormValid = CheckoutModule.validateAddress($form);
 
                 if (isFormValid) {
-                  _context3.next = 7;
+                  _context2.next = 7;
                   break;
                 }
 
-                return _context3.abrupt("return");
+                return _context2.abrupt("return");
 
               case 7:
                 addressPayload.billing = billingSameAsShipping ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
@@ -13968,7 +14004,7 @@ jQuery(document).ready(function ($) {
                   }
                 }
 
-                _context3.next = 14;
+                _context2.next = 14;
                 return commerce_api.updateCartBillingAddress({
                   expand: 'all'
                 }, cartRequest).then(function () {
@@ -13986,111 +14022,7 @@ jQuery(document).ready(function ($) {
                   return commerce_api.updateCartShippingAddress({
                     expand: 'all'
                   }, patchCartRequest);
-                }).then( /*#__PURE__*/asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2() {
-                  var country, _address, taxSchema, taxRegs, taxIds, _iterator, _step, element, $field;
-
-                  return regenerator_default.a.wrap(function _callee2$(_context2) {
-                    while (1) {
-                      switch (_context2.prev = _context2.next) {
-                        case 0:
-                          if (!$('#checkout-tax-id-form').length) {
-                            _context2.next = 40;
-                            break;
-                          }
-
-                          country = requestShipping ? $('#shipping-field-country').val() : $('#billing-field-country').val();
-                          _address = requestShipping ? addressPayload.shipping : addressPayload.billing;
-
-                          if (!(country !== selectedCountry)) {
-                            _context2.next = 12;
-                            break;
-                          }
-
-                          if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                          _context2.next = 7;
-                          return checkout_utils.getTaxSchema(_address);
-
-                        case 7:
-                          taxSchema = _context2.sent;
-                          float_label.init();
-                          return _context2.abrupt("return", taxSchema);
-
-                        case 12:
-                          if (!sessionStorage.getItem('drgcTaxRegs')) {
-                            _context2.next = 37;
-                            break;
-                          }
-
-                          taxRegs = JSON.parse(sessionStorage.getItem('drgcTaxRegs'));
-                          taxIds = taxRegs.taxRegistrations;
-                          _iterator = public_checkout_createForOfIteratorHelper(taxIds);
-                          _context2.prev = 16;
-
-                          _iterator.s();
-
-                        case 18:
-                          if ((_step = _iterator.n()).done) {
-                            _context2.next = 29;
-                            break;
-                          }
-
-                          element = _step.value;
-                          $field = $('#tax-id-field-' + element.key);
-
-                          if ($field.length) {
-                            _context2.next = 26;
-                            break;
-                          }
-
-                          sessionStorage.removeItem('drgcTaxRegs');
-                          return _context2.abrupt("break", 29);
-
-                        case 26:
-                          $field.val(element.value).parent().addClass('active');
-
-                        case 27:
-                          _context2.next = 18;
-                          break;
-
-                        case 29:
-                          _context2.next = 34;
-                          break;
-
-                        case 31:
-                          _context2.prev = 31;
-                          _context2.t0 = _context2["catch"](16);
-
-                          _iterator.e(_context2.t0);
-
-                        case 34:
-                          _context2.prev = 34;
-
-                          _iterator.f();
-
-                          return _context2.finish(34);
-
-                        case 37:
-                          return _context2.abrupt("return", new Promise(function (resolve) {
-                            return resolve();
-                          }));
-
-                        case 38:
-                          _context2.next = 42;
-                          break;
-
-                        case 40:
-                          if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                          return _context2.abrupt("return", new Promise(function (resolve) {
-                            return resolve();
-                          }));
-
-                        case 42:
-                        case "end":
-                          return _context2.stop();
-                      }
-                    }
-                  }, _callee2, null, [[16, 31, 34, 37]]);
-                }))).then(function () {
+                }).then(function () {
                   var $companyEin = $('#billing-field-company-ein');
                   if (!$companyEin.length) return new Promise(function (resolve) {
                     return resolve();
@@ -14111,9 +14043,6 @@ jQuery(document).ready(function ($) {
                     expand: 'all'
                   });
                 }).then(function (data) {
-                  var lineItems = data.cart.lineItems.lineItem;
-                  var isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
-                  sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                   return requestShipping ? CheckoutModule.preselectShippingOption(data) : new Promise(function (resolve) {
                     return resolve(data);
                   });
@@ -14124,7 +14053,123 @@ jQuery(document).ready(function ($) {
                 });
 
               case 14:
-                updatedCart = _context3.sent;
+                updatedCart = _context2.sent;
+
+                if (!$('#checkout-tax-id-form').length) {
+                  _context2.next = 70;
+                  break;
+                }
+
+                lineItems = updatedCart.cart.lineItems.lineItem;
+                isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+                sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+
+                if (isTaxExempt) {
+                  _context2.next = 33;
+                  break;
+                }
+
+                _address = requestShipping ? addressPayload.shipping : addressPayload.billing;
+                _context2.prev = 21;
+                _context2.next = 24;
+                return checkout_utils.getTaxSchema(_address);
+
+              case 24:
+                float_label.init();
+                _context2.next = 30;
+                break;
+
+              case 27:
+                _context2.prev = 27;
+                _context2.t0 = _context2["catch"](21);
+                console.error(_context2.t0);
+
+              case 30:
+                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+                _context2.next = 68;
+                break;
+
+              case 33:
+                _context2.prev = 33;
+                _context2.next = 36;
+                return checkout_utils.getTaxRegistration();
+
+              case 36:
+                taxRegs = _context2.sent;
+
+                if (!Object.keys(taxRegs).length) {
+                  _context2.next = 63;
+                  break;
+                }
+
+                taxIds = taxRegs.taxRegistrations;
+                shopperType = taxRegs.customerType;
+                $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
+                _iterator = public_checkout_createForOfIteratorHelper(taxIds);
+                _context2.prev = 42;
+
+                _iterator.s();
+
+              case 44:
+                if ((_step = _iterator.n()).done) {
+                  _context2.next = 54;
+                  break;
+                }
+
+                element = _step.value;
+                $field = $('#tax-id-field-' + element.key);
+
+                if ($field.length) {
+                  _context2.next = 51;
+                  break;
+                }
+
+                return _context2.abrupt("break", 54);
+
+              case 51:
+                $field.val(element.value).parent().addClass('active');
+
+              case 52:
+                _context2.next = 44;
+                break;
+
+              case 54:
+                _context2.next = 59;
+                break;
+
+              case 56:
+                _context2.prev = 56;
+                _context2.t1 = _context2["catch"](42);
+
+                _iterator.e(_context2.t1);
+
+              case 59:
+                _context2.prev = 59;
+
+                _iterator.f();
+
+                return _context2.finish(59);
+
+              case 62:
+                sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+
+              case 63:
+                _context2.next = 68;
+                break;
+
+              case 65:
+                _context2.prev = 65;
+                _context2.t2 = _context2["catch"](33);
+                console.error(_context2.t2);
+
+              case 68:
+                _context2.next = 71;
+                break;
+
+              case 70:
+                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+
+              case 71:
                 billingAddress = checkout_utils.getDropinBillingAddress(addressPayload);
                 lang = drLocale.split('_')[0];
 
@@ -14185,12 +14230,12 @@ jQuery(document).ready(function ($) {
                   console.error(error.message);
                 }
 
-              case 22:
+              case 78:
               case "end":
-                return _context3.stop();
+                return _context2.stop();
             }
           }
-        }, _callee3);
+        }, _callee2, null, [[21, 27], [33, 65], [42, 56, 59, 62]]);
       }));
 
       return function (_x2) {
@@ -14215,22 +14260,42 @@ jQuery(document).ready(function ($) {
       checkout_utils.validateVatNumber(e);
     });
     $('#checkout-tax-id-form').on('submit', /*#__PURE__*/function () {
-      var _ref4 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
-        var $button, shopperType, typeText, $taxFields, $section, $error, taxRegs, taxIds;
-        return regenerator_default.a.wrap(function _callee4$(_context4) {
+      var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
+        var $button, $section, $error, isTaxExempt, taxRegs, typeText, taxIds, regs, shopperType, $taxFields, _regs;
+
+        return regenerator_default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 e.preventDefault();
                 $button = $(e.target).find('button[type="submit"]');
-                shopperType = $('input[name="shopper-type"]:checked').val();
-                typeText = shopperType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
-                $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
                 $section = $('.dr-checkout__tax-id');
                 $error = $section.find('.dr-err-field');
-                taxRegs = [];
+                isTaxExempt = sessionStorage.getItem('drgcTaxExempt') === 'true';
+                taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+                typeText = '';
                 taxIds = '';
+
+                if (!(isTaxExempt && Object.keys(taxRegs).length)) {
+                  _context3.next = 15;
+                  break;
+                }
+
+                regs = taxRegs.taxRegistrations;
+                regs.forEach(function (element) {
+                  taxIds = "".concat(taxIds, "<br>").concat(element.value);
+                  ;
+                });
+                typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+                $error.text('').hide();
+                _context3.next = 23;
+                break;
+
+              case 15:
                 $button.addClass('sending').blur();
+                shopperType = $('input[name="shopper-type"]:checked').val();
+                $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
+                _regs = [];
 
                 if ($taxFields.length) {
                   $taxFields.each(function (index, element) {
@@ -14238,35 +14303,32 @@ jQuery(document).ready(function ($) {
 
                     if (!$element.hasClass('d-none')) {
                       var key = $element.data('key');
-                      var title = $element.data('title');
                       var value = $element.val();
                       var taxRegObj = {};
 
                       if (value) {
                         taxRegObj['key'] = key;
                         taxRegObj['value'] = value;
-                        taxRegs.push(taxRegObj);
+
+                        _regs.push(taxRegObj);
                       }
 
-                      taxIds = "".concat(taxIds, "<br>").concat(title, ": ").concat(value);
+                      taxIds = "".concat(taxIds, "<br>").concat(value);
                     }
                   });
                 }
 
-                $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
-
-                if (!taxRegs.length) {
-                  _context4.next = 17;
-                  break;
-                }
-
-                _context4.next = 15;
-                return checkout_utils.applyTaxRegistration(shopperType, taxRegs).then(function (data) {
+                typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+                _context3.next = 23;
+                return checkout_utils.applyTaxRegistration(shopperType, _regs).then(function (data) {
                   sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
                   return commerce_api.getCart({
-                    expand: 'customAttributes'
+                    expand: 'all'
                   });
                 }).then(function (data) {
+                  var lineItems = data.cart.lineItems.lineItem;
+                  var isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+                  sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                   checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                   $button.removeClass('sending').blur();
                   $error.text('').hide();
@@ -14276,31 +14338,25 @@ jQuery(document).ready(function ($) {
                   console.error(error);
                 });
 
-              case 15:
-                _context4.next = 19;
-                break;
+              case 23:
+                $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
 
-              case 17:
-                $button.removeClass('sending').blur();
-                $error.text('').hide();
-
-              case 19:
                 if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                   finishedSectionIdx = $('.dr-checkout__el').index($section);
                 }
 
                 CheckoutModule.moveToNextSection($section);
 
-              case 21:
+              case 26:
               case "end":
-                return _context4.stop();
+                return _context3.stop();
             }
           }
-        }, _callee4);
+        }, _callee3);
       }));
 
       return function (_x3) {
-        return _ref4.apply(this, arguments);
+        return _ref3.apply(this, arguments);
       };
     }()); // Submit delivery form
 

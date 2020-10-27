@@ -404,6 +404,8 @@ class DRGC {
     $this->loader->add_action( 'wp_ajax_drgc_get_tax_schema', $plugin_public, 'get_tax_schema_ajax' );
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_apply_tax_registration', $plugin_public, 'apply_tax_registration_ajax' );
     $this->loader->add_action( 'wp_ajax_drgc_apply_tax_registration', $plugin_public, 'apply_tax_registration_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_get_tax_registration', $plugin_public, 'get_tax_registration_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_get_tax_registration', $plugin_public, 'get_tax_registration_ajax' );
 
     $this->loader->add_action( 'wp_head', $plugin_public, 'add_modal_html' );
 

@@ -1160,4 +1160,25 @@ class DRGC_Public {
       wp_send_json_error();
     }
   }
+	
+	/**
+   * Ajax handles getting the tax registrations from the current cart
+   *
+   * @since  2.0.0
+   */
+  public function get_tax_registration_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    $response = DRGC()->cart->get_tax_registration();
+
+    if ( $response && is_array( $response ) ) {
+      if ( array_key_exists( 'customerType', $response ) && array_key_exists( 'taxRegistrations', $response ) ) {
+        wp_send_json_success( $response );
+      } else {
+        wp_send_json_error( $response );
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
 }

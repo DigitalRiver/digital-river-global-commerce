@@ -29,12 +29,20 @@ const CheckoutModule = (($) => {
           }
         }
 
-        if ($section.hasClass('dr-checkout__billing')) {
+        if ($section.hasClass('dr-checkout__billing') || $section.hasClass('dr-checkout__tax-id')) {
             $('.dr-accordion__edit').hide();
             $('.edit-link').show();
         }
 
-        if ($nextSection.hasClass('dr-checkout__confirmation') || $section.hasClass('dr-checkout__tax-id') || $section.hasClass('dr-checkout__delivery')) {
+        if ($nextSection.hasClass('dr-checkout__confirmation') || $section.hasClass('dr-checkout__delivery')) {
+            $section.find('span.dr-accordion__edit').show();
+        }
+
+        if ($nextSection.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') === 'true') {
+            $('#checkout-tax-id-form').trigger('submit');
+        }
+
+        if ($section.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') !== 'true') {
             $section.find('span.dr-accordion__edit').show();
         }
 
@@ -402,42 +410,6 @@ jQuery(document).ready(($) => {
                     };
                     return DRCommerceApi.updateCartShippingAddress({expand: 'all'}, patchCartRequest);
                 })
-                .then(async () => {
-                    if ($('#checkout-tax-id-form').length) {
-                        const country = requestShipping ? $('#shipping-field-country').val() : $('#billing-field-country').val();
-                        const address = requestShipping ? addressPayload.shipping : addressPayload.billing;
-
-                        if (country !== selectedCountry) {
-                            if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-
-                            const taxSchema = await CheckoutUtils.getTaxSchema(address);
-                            FloatLabel.init();
-
-                            return taxSchema;
-                        } else {
-                            if (sessionStorage.getItem('drgcTaxRegs')) {
-                                const taxRegs = JSON.parse(sessionStorage.getItem('drgcTaxRegs'));
-                                const taxIds = taxRegs.taxRegistrations;
-
-                                for (const element of taxIds) {
-                                    const $field = $('#tax-id-field-' + element.key);
-
-                                    if (!$field.length) {
-                                        sessionStorage.removeItem('drgcTaxRegs');
-                                        break;
-                                    } else {
-                                        $field.val(element.value).parent().addClass('active');
-                                    }
-                                }
-                            }
-
-                            return new Promise(resolve => resolve());
-                        }
-                    } else {
-                        if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                        return new Promise(resolve => resolve());
-                    }
-                })
                 .then(() => {
                     const $companyEin = $('#billing-field-company-ein');
 
@@ -458,11 +430,6 @@ jQuery(document).ready(($) => {
                 })
                 .then(() => DRCommerceApi.getCart({expand: 'all'}))
                 .then((data) => {
-                    const lineItems = data.cart.lineItems.lineItem;
-                    const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
-
-                    sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
-
                     return requestShipping ?
                         CheckoutModule.preselectShippingOption(data) :
                         new Promise(resolve => resolve(data));
@@ -473,6 +440,53 @@ jQuery(document).ready(($) => {
                     console.error(jqXHR);
                 });
             
+            if ($('#checkout-tax-id-form').length) {
+                const lineItems = updatedCart.cart.lineItems.lineItem;
+                const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+
+                sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+
+                if (!isTaxExempt) {
+                    const address = requestShipping ? addressPayload.shipping : addressPayload.billing;
+                    
+                    try {
+                        await CheckoutUtils.getTaxSchema(address);
+                        FloatLabel.init();
+                    } catch (error) {
+                        console.error(error);
+                    }
+
+                    if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+                } else {
+                    try {
+                        const taxRegs = await CheckoutUtils.getTaxRegistration();
+
+                        if (Object.keys(taxRegs).length) {
+                            const taxIds = taxRegs.taxRegistrations;
+                            const shopperType = taxRegs.customerType;
+
+                            $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
+
+                            for (const element of taxIds) {
+                                const $field = $('#tax-id-field-' + element.key);
+
+                                if (!$field.length) {
+                                    break;
+                                } else {
+                                    $field.val(element.value).parent().addClass('active');
+                                }
+                            }
+
+                            sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+            } else {
+                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+            }
+
             const billingAddress = CheckoutUtils.getDropinBillingAddress(addressPayload);
             const lang = drLocale.split('_')[0];
 
@@ -560,46 +574,61 @@ jQuery(document).ready(($) => {
             e.preventDefault();
 
             const $button = $(e.target).find('button[type="submit"]');
-            const shopperType = $('input[name="shopper-type"]:checked').val();
-            const typeText = (shopperType === 'I') ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
-            const $taxFields = (shopperType === 'I') ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
             const $section = $('.dr-checkout__tax-id');
             const $error = $section.find('.dr-err-field');
-            const taxRegs = [];
+            const isTaxExempt = sessionStorage.getItem('drgcTaxExempt') === 'true';
+            const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+            let typeText = '';
             let taxIds = '';
 
-            $button.addClass('sending').blur();
+            if (isTaxExempt && Object.keys(taxRegs).length) {
+                const regs = taxRegs.taxRegistrations;
 
-            if ($taxFields.length) {
-                $taxFields.each((index, element) => {
-                    const $element = $(element);
-
-                    if (!$element.hasClass('d-none')) {
-                        const key = $element.data('key');
-                        const title = $element.data('title');
-                        const value = $element.val();
-                        const taxRegObj = {};
-    
-                        if (value) {
-                            taxRegObj['key'] = key;
-                            taxRegObj['value'] = value;
-                            taxRegs.push(taxRegObj);
-                        }
-
-                        taxIds = `${taxIds}<br>${title}: ${value}`;
-                    }
+                regs.forEach((element) => {
+                    taxIds = `${taxIds}<br>${element.value}`;;
                 });
-            }
 
-            $section.find('.dr-panel-result__text').html(`${typeText}${taxIds}`);
+                typeText = (taxRegs.customerType === 'I') ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+                $error.text('').hide();
+            } else {
+                $button.addClass('sending').blur();
 
-            if (taxRegs.length) {
-                await CheckoutUtils.applyTaxRegistration(shopperType, taxRegs)
+                const shopperType = $('input[name="shopper-type"]:checked').val();
+                const $taxFields = (shopperType === 'I') ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
+                const regs = [];
+
+                if ($taxFields.length) {
+                    $taxFields.each((index, element) => {
+                        const $element = $(element);
+
+                        if (!$element.hasClass('d-none')) {
+                            const key = $element.data('key');
+                            const value = $element.val();
+                            const taxRegObj = {};
+
+                            if (value) {
+                                taxRegObj['key'] = key;
+                                taxRegObj['value'] = value;
+                                regs.push(taxRegObj);
+                            }
+
+                            taxIds = `${taxIds}<br>${value}`;
+                        }
+                    });
+                }
+
+                typeText = ($('input[name="shopper-type"]:checked').val() === 'I') ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+
+                await CheckoutUtils.applyTaxRegistration(shopperType, regs)
                     .then((data) => {
                         sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
-                        return DRCommerceApi.getCart({expand: 'customAttributes'})
+                        return DRCommerceApi.getCart({expand: 'all'});
                     })
                     .then((data) => {
+                        const lineItems = data.cart.lineItems.lineItem;
+                        const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+
+                        sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                         CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                         $button.removeClass('sending').blur();
                         $error.text('').hide();
@@ -609,10 +638,9 @@ jQuery(document).ready(($) => {
                         $button.removeClass('sending').blur();
                         console.error(error);
                     });
-            } else {
-                $button.removeClass('sending').blur();
-                $error.text('').hide();
             }
+
+            $section.find('.dr-panel-result__text').html(`${typeText}${taxIds}`);
 
             if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                 finishedSectionIdx = $('.dr-checkout__el').index($section);

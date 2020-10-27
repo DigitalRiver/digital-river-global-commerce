@@ -432,6 +432,33 @@ const CheckoutUtils = (($, params) => {
     });
   };
 
+  const getTaxRegistration = () => {
+    const data = {
+      action: 'drgc_get_tax_registration',
+      nonce: drgc_params.ajaxNonce
+    };
+
+    return new Promise((resolve, reject) => {
+      $.post(drgc_params.ajaxUrl, data, (response) => {
+        if (!response.success) {
+          let error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
   return {
     updateDeliverySection,
     updateAddressSection,
@@ -460,7 +487,8 @@ const CheckoutUtils = (($, params) => {
     getTaxSchema,
     validateVatNumber,
     createTaxIdElement,
-    applyTaxRegistration
+    applyTaxRegistration,
+    getTaxRegistration
   };
 })(jQuery, drgc_params);
 
