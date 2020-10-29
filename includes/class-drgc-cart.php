@@ -234,4 +234,131 @@ class DRGC_Cart extends AbstractHttpService {
             return false;
         }
     }
+
+    /**
+     * Updates the shipping address for a cart
+     */
+    public function update_cart_shipping( $data = array() ) {
+        $this->setJsonContentType();
+
+        try {
+            $this->put( '/v1/shoppers/me/carts/active/shipping-address', $data );
+            return true;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Updates the billing address for a cart
+     */
+    public function update_cart_billing( $data = array() ) {
+        $this->setJsonContentType();
+
+        try {
+            $this->put( '/v1/shoppers/me/carts/active/billing-address', $data );
+            return true;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Get the tax schema
+     */
+    public function get_tax_schema( $address ) {
+        if ( $address['country'] === 'US' ) return false;
+
+        $data = array(
+            'address' => $address
+        );
+
+        try {
+            if ( ! $this->update_cart_shipping( $data ) ) return false;
+
+            $res = $this->get( "/carts/active/tax-registrations/schema" );
+
+            if ( isset( $res['errors'] ) && ( $res['errors'][0]['code'] === 'vat-exemption-failure' ) ) {
+                return false;
+            } elseif ( isset( $res['oneOf'] ) && is_array( $res['oneOf'] ) ) {
+                $enabled_types = [];
+                $shopper_types = $res['oneOf'];
+                $len = strlen('definitions/');
+
+                foreach ( $shopper_types as $type ) {
+                    if ( isset( $type['properties']['customerType']['enum'] ) && is_array( $type['properties']['customerType']['enum'] ) ) {
+                        $customer_type = $type['properties']['customerType']['enum'];
+                        $enabled_types[ $type['title'] ]['customerType'] = $customer_type[0];
+                    }
+
+                    if ( isset( $type['properties']['taxRegistrations']['items'] ) && is_array( $type['properties']['taxRegistrations']['items'] ) ) {
+                        $items = $type['properties']['taxRegistrations']['items'];
+
+                        if ( count( $items ) > 0 ) {
+                            foreach ( $items as $item ) {
+                                $ref = $item['$ref'];
+                                $ref_key = substr( $ref, strpos( $ref, 'definitions') + $len );
+
+                                if ( isset( $res['definitions'][ $ref_key ] ) ) { 
+                                    $definition = $res['definitions'][ $ref_key ]['properties']['value'];
+                                    $enabled_types[ $type['title'] ]['taxRegistrations'][] = array( 
+                                        $ref_key => array(
+                                            'title'       => $definition['title'],
+                                            'description' => $definition['description'],
+                                            'pattern'     => $definition['pattern']
+                                        ) 
+                                    );
+                                }
+                            }
+                        } else {
+                            $enabled_types[ $type['title'] ]['taxRegistrations'] = [];
+                        }
+                    }
+                }
+
+                return $enabled_types;
+            } else {
+                return [];
+            }
+        } catch ( RequestException $e ) {
+            if ( $e->hasResponse() ) {
+                $response = $e->getResponse();
+                return $response->getReasonPhrase();
+            } else {
+                $response = $e->getHandlerContext();
+                return ( $response['error'] ) ?? false;
+            }
+        }
+    }
+
+    /**
+     * Apply the tax registrations to cart
+     */
+    public function apply_tax_registration( $customer_type, $tax_regs = array() ) {
+        $data = array(
+            'customerType' => $customer_type,
+            'taxRegistrations' => $tax_regs
+        );
+
+        $this->setJsonContentType();
+
+        try {
+            $res = $this->post( '/carts/active/tax-registrations', $data );
+            return $res;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Get the tax registrations from the current cart
+     */
+    public function get_tax_registration() {
+        try {
+            $res = $this->get( '/carts/active/tax-registrations' );
+            return $res;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
 }

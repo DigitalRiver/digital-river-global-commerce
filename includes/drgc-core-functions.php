@@ -544,23 +544,28 @@ function drgc_get_supported_currencies( $dr_locale ) {
 function drgc_get_continue_shopping_link() {
   $category_link = '';
   $categories = get_terms( array( 
-    'taxonomy' => 'dr_product_category',
-    'parent'   => 0
+    'taxonomy'   => 'dr_product_category',
+    'parent'     => 0,
+    'hide_empty' => false
   ) );
 
   if ( ! empty( $categories ) ) {
     $arr = [];
 
     foreach ( $categories as $category ) {
-      $arr[] = array( $category->count );
+      $arr[] = $category->count;
     }
 
-    $index = array_search( max( $arr ), $arr );
-
-    if ( $categories[$index]->slug === 'uncategorized' ) {
-      unset( $arr[$index] );
-      unset( $categories[$index] );
+    if ( count( $arr ) > 2 ) {
       $index = array_search( max( $arr ), $arr );
+
+      if ( $categories[$index]->slug === 'uncategorized' ) {
+        unset( $arr[$index] );
+        unset( $categories[$index] );
+        $index = array_search( max( $arr ), $arr );
+      }
+    } else {
+      $index = 0;
     }
 
     $category_link = esc_url( get_term_link( $categories[$index]->slug, 'dr_product_category' ) );
