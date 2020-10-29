@@ -566,7 +566,7 @@ jQuery(document).ready(($) => {
             });
         });
 
-        $('#checkout-tax-id-form > .tax-id-field input[type="text"]').on('input', (e) => {
+        $(document).on('input', '#checkout-tax-id-form > .tax-id-field input[type="text"]', (e) => {
             CheckoutUtils.validateVatNumber(e);
         });
 

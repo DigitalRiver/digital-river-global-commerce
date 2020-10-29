@@ -14266,7 +14266,7 @@ jQuery(document).ready(function ($) {
         }
       });
     });
-    $('#checkout-tax-id-form > .tax-id-field input[type="text"]').on('input', function (e) {
+    $(document).on('input', '#checkout-tax-id-form > .tax-id-field input[type="text"]', function (e) {
       checkout_utils.validateVatNumber(e);
     });
     $('#checkout-tax-id-form').on('submit', /*#__PURE__*/function () {
