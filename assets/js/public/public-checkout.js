@@ -156,10 +156,6 @@ const CheckoutModule = (($) => {
 
         payload[addressType].emailAddress = email;
 
-        if (payload[addressType].country !== 'US') {
-            payload[addressType].countrySubdivision = 'NA';
-        }
-
         if (addressType === 'billing') {
             delete payload[addressType].business;
             delete payload[addressType].companyEIN;
@@ -258,7 +254,7 @@ const CheckoutModule = (($) => {
                 line1: addressPayload.billing.line1,
                 line2: addressPayload.billing.line2,
                 city: addressPayload.billing.city,
-                state: addressPayload.billing.countrySubdivision || 'NA',
+                state: addressPayload.billing.countrySubdivision,
                 postalCode: addressPayload.billing.postalCode,
                 country: addressPayload.billing.country
             }
