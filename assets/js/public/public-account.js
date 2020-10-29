@@ -612,10 +612,10 @@ $(() => {
                 }
 
                 $error.css('color', 'red');
-                sessionStorage.setItem('drgc-pw-changed', 'false');
+                sessionStorage.setItem('drgcPwChanged', 'false');
                 $('body').removeClass('dr-loading');
             } else {
-                sessionStorage.setItem('drgc-pw-changed', 'true');
+                sessionStorage.setItem('drgcPwChanged', 'true');
                 location.reload();
             }
 
@@ -628,25 +628,32 @@ $(() => {
     $('#dr-account-page-wrapper a[data-toggle="dr-list"]').on('shown.dr.bs.tab', function(e) {
         sessionStorage.drAccountTab = $(e.target).attr('href');
 
-        if ((e.target.id === 'list-password-list') && (sessionStorage.getItem('drgc-pw-changed') === 'true')) {
-            sessionStorage.setItem('drgc-pw-changed', 'false');
-            $('#dr-passwordUpdated').drModal({
-                backdrop: 'static',
-                keyboard: false
+        if ((e.target.id === 'list-password-list') && (sessionStorage.getItem('drgcPwChanged') === 'true')) {
+            sessionStorage.setItem('drgcPwChanged', 'false');
+
+            const data = {
+                action: 'drgc_logout',
+                nonce: drgc_params.ajaxNonce
+            };
+
+            $('body').addClass('dr-loading');
+            $.post(drgc_params.ajaxUrl, data, (response) => {
+                if (response.success) {
+                    $('body').removeClass('dr-loading');
+                    $('#dr-passwordUpdated').drModal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                } else {
+                    location.reload();
+                }
             });
         }
     });
 
     $('#dr-passwordUpdated button').on('click', () => {
-        const data = {
-            action: 'drgc_logout',
-            nonce: drgc_params.ajaxNonce
-        };
-
         $('body').addClass('dr-loading');
-        $.post(drgc_params.ajaxUrl, data, () => {
-            window.location.href = drgc_params.loginUrl;
-        });
+        window.location.href = drgc_params.loginUrl;
     });
 
     if (sessionStorage.drAccountTab && $('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {

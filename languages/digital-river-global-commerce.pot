@@ -16,139 +16,123 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: admin/class-drgc-admin.php:133, admin/class-drgc-admin.php:134
+#: admin/class-drgc-admin.php:165, admin/class-drgc-admin.php:166
 msgid "Settings"
 msgstr ""
 
-#: admin/class-drgc-admin.php:166, admin/partials/drgc-admin-display.php:21
+#: admin/class-drgc-admin.php:198, admin/partials/drgc-admin-display.php:21
 msgid "General"
 msgstr ""
 
-#: admin/class-drgc-admin.php:173
+#: admin/class-drgc-admin.php:205
 msgid "Site ID"
 msgstr ""
 
-#: admin/class-drgc-admin.php:182
+#: admin/class-drgc-admin.php:214
 msgid "Commerce API Key"
 msgstr ""
 
-#: admin/class-drgc-admin.php:191
+#: admin/class-drgc-admin.php:223
 msgid "Commerce API Secret"
 msgstr ""
 
-#: admin/class-drgc-admin.php:200
+#: admin/class-drgc-admin.php:232
 msgid "Domain"
 msgstr ""
 
-#: admin/class-drgc-admin.php:209
-msgid "Payment Services API Key"
+#: admin/class-drgc-admin.php:241
+msgid "Payments Service API Key"
 msgstr ""
 
-#: admin/class-drgc-admin.php:218
+#: admin/class-drgc-admin.php:250
 msgid "UMS Username"
 msgstr ""
 
-#: admin/class-drgc-admin.php:227
+#: admin/class-drgc-admin.php:259
 msgid "UMS Password"
 msgstr ""
 
-#: admin/class-drgc-admin.php:236
+#: admin/class-drgc-admin.php:268
 msgid "Scheduled Products Import"
 msgstr ""
 
-#: admin/class-drgc-admin.php:245, admin/partials/drgc-admin-display.php:27, includes/class-drgc-activator.php:39, public/class-drgc-public.php:138, public/templates/login/login.php:28
+#: admin/class-drgc-admin.php:277, admin/partials/drgc-admin-display.php:27, includes/class-drgc-activator.php:39, public/class-drgc-public.php:146, public/templates/login/login.php:28
 msgid "Checkout"
 msgstr ""
 
-#: admin/class-drgc-admin.php:252
+#: admin/class-drgc-admin.php:284
 msgid "Test Order"
 msgstr ""
 
-#: admin/class-drgc-admin.php:261
+#: admin/class-drgc-admin.php:293
 msgid "Display As Excl. Tax"
 msgstr ""
 
-#: admin/class-drgc-admin.php:270
-msgid "Payment Buttons"
+#: admin/class-drgc-admin.php:302
+msgid "Product Short Description"
 msgstr ""
 
-#: admin/class-drgc-admin.php:277
-msgid "Apple Pay"
+#: admin/class-drgc-admin.php:311
+msgid "Drop-in"
 msgstr ""
 
-#: admin/class-drgc-admin.php:286, admin/class-drgc-admin.php:313, admin/class-drgc-admin.php:577, admin/class-drgc-admin.php:637
-msgid "Button Type"
+#: admin/class-drgc-admin.php:318
+msgid "Payment Method Configuration"
 msgstr ""
 
-#: admin/class-drgc-admin.php:295, admin/class-drgc-admin.php:322, admin/class-drgc-admin.php:599, admin/class-drgc-admin.php:659
-msgid "Button Color"
-msgstr ""
-
-#: admin/class-drgc-admin.php:304
-msgid "Google Pay"
-msgstr ""
-
-#: admin/class-drgc-admin.php:396
+#: admin/class-drgc-admin.php:389
 msgid "Please contact your account representative for assistance with these settings."
 msgstr ""
 
-#: admin/class-drgc-admin.php:464
+#: admin/class-drgc-admin.php:457
 msgid "Enable Test Order."
 msgstr ""
 
-#: admin/class-drgc-admin.php:476
+#: admin/class-drgc-admin.php:469
 msgid "Display pricing as tax exclusive on checkout flow"
 msgstr ""
 
-#: admin/class-drgc-admin.php:488
+#: admin/class-drgc-admin.php:481
+msgid "Display Short Description along with the product name"
+msgstr ""
+
+#: admin/class-drgc-admin.php:498
 msgid "Twice daily product synchronization with GC."
 msgstr ""
 
-#: admin/class-drgc-admin.php:576
-msgid "Required to the type of Apple Pay button"
+#: admin/class-drgc-admin.php:499
+msgid "Will be triggered at your"
 msgstr ""
 
-#: admin/class-drgc-admin.php:579, admin/class-drgc-admin.php:639
-msgid "Long"
-msgstr ""
-
-#: admin/class-drgc-admin.php:581, admin/class-drgc-admin.php:641
-msgid "Plain"
-msgstr ""
-
-#: admin/class-drgc-admin.php:598
-msgid "Required to the color of Apple Pay button"
-msgstr ""
-
-#: admin/class-drgc-admin.php:601, admin/class-drgc-admin.php:661
-msgid "Black"
-msgstr ""
-
-#: admin/class-drgc-admin.php:603, admin/class-drgc-admin.php:663
-msgid "White"
-msgstr ""
-
-#: admin/class-drgc-admin.php:636
-msgid "Required to the type of Google Pay button"
-msgstr ""
-
-#: admin/class-drgc-admin.php:658
-msgid "Required to the color of Google Pay button"
-msgstr ""
-
-#: admin/class-drgc-admin.php:759, admin/class-drgc-admin.php:812
+#: admin/class-drgc-admin.php:668, admin/class-drgc-admin.php:721
 msgid "Failed to create file"
 msgstr ""
 
-#: admin/class-drgc-admin.php:767, admin/class-drgc-admin.php:825
+#: admin/class-drgc-admin.php:676, admin/class-drgc-admin.php:734
 msgid "Could not write to file"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45, drgc-menu-label-trans-strings.php:10
+#: admin/class-drgc-admin.php:831
+msgid "To make sure Digital River Global Commerce plugin is working as expected, please set 1 to session.use_cookies in php.ini."
+msgstr ""
+
+#: admin/class-drgc-admin.php:847
+msgid "Sync Complete!"
+msgstr ""
+
+#: admin/class-drgc-admin.php:862
+msgid "DRGC Mobile Mini-cart Area"
+msgstr ""
+
+#: admin/class-drgc-admin.php:864
+msgid "Add mini-cart widget here to appear beneath the header and above the main content on mobile devices."
+msgstr ""
+
+#: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45
 msgid "Products"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:44, public/class-drgc-public.php:145
+#: admin/class-drgc-post-types.php:44, public/class-drgc-public.php:153, public/templates/cart/cart-product.php:48
 msgid "Product"
 msgstr ""
 
@@ -164,7 +148,7 @@ msgstr ""
 msgid "Add new product"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:49, public/templates/checkout/checkout-billing.php:40, public/templates/checkout/checkout-delivery.php:34, public/templates/checkout/checkout-email.php:12, public/templates/checkout/checkout-shipping.php:27
+#: admin/class-drgc-post-types.php:49, public/templates/checkout/checkout-billing.php:40, public/templates/checkout/checkout-delivery.php:34, public/templates/checkout/checkout-drop-in.php:11, public/templates/checkout/checkout-email.php:12, public/templates/checkout/checkout-shipping.php:27
 msgid "Edit"
 msgstr ""
 
@@ -260,11 +244,11 @@ msgstr ""
 msgid "Product Details"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:300
+#: admin/class-drgc-post-types.php:254
 msgid "Product ID"
 msgstr ""
 
-#: admin/class-drgc-post-types.php:301, admin/partials/drgc-product-details-meta-box.php:26
+#: admin/class-drgc-post-types.php:255, admin/partials/drgc-product-details-meta-box.php:26
 msgid "SKU"
 msgstr ""
 
@@ -272,8 +256,8 @@ msgstr ""
 msgid "Locales"
 msgstr ""
 
-#: admin/partials/drgc-admin-display.php:30, includes/shortcodes/class-dr-shortcode-checkout.php:38
-msgid "Payment"
+#: admin/partials/drgc-admin-display.php:30
+msgid "Payments"
 msgstr ""
 
 #: admin/partials/drgc-admin-locales.php:21
@@ -324,31 +308,35 @@ msgstr ""
 msgid "Internal Variation Name"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:49, admin/partials/drgc-product-details-meta-box.php:78
+#: admin/partials/drgc-product-details-meta-box.php:49, admin/partials/drgc-product-details-meta-box.php:83
 msgid "Variation Attributes"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:94, public/templates/my-subscriptions/my-subscriptions.php:38
+#: admin/partials/drgc-product-details-meta-box.php:99, public/templates/my-subscriptions/my-subscriptions.php:38
 msgid "Price"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:98
+#: admin/partials/drgc-product-details-meta-box.php:103
 msgid "Display Name"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:102
+#: admin/partials/drgc-product-details-meta-box.php:107
 msgid "Short Description"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:106
+#: admin/partials/drgc-product-details-meta-box.php:111
 msgid "Long Description"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:110
+#: admin/partials/drgc-product-details-meta-box.php:115
 msgid "Thumbnail"
 msgstr ""
 
-#: admin/partials/drgc-product-details-meta-box.php:114
+#: admin/partials/drgc-product-details-meta-box.php:120, admin/partials/drgc-product-details-meta-box.php:130
+msgid "(No image)"
+msgstr ""
+
+#: admin/partials/drgc-product-details-meta-box.php:125
 msgid "Product Image"
 msgstr ""
 
@@ -360,72 +348,8 @@ msgstr ""
 msgid "You must enable Javascript in order to proceed!"
 msgstr ""
 
-#: admin/partials/drgc-products-import-btn.php:28
+#: admin/partials/drgc-products-import-btn.php:21
 msgid "Import Products"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:3
-msgid "all-products"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:4
-msgid "design-software"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:5
-msgid "eds"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:6
-msgid "electronics"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:7
-msgid "games"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:8
-msgid "games-entertainment"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:9
-msgid "mathware-ltd-english"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:10
-msgid "products"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:11, drgc-menu-label-trans-strings.php:11
-msgid "software"
-msgstr ""
-
-#: drgc-category-name-trans-strings.php:12
-msgid "Uncategorized"
-msgstr ""
-
-#: drgc-menu-label-trans-strings.php:3
-msgid "Taiwan"
-msgstr ""
-
-#: drgc-menu-label-trans-strings.php:4
-msgid "Japan"
-msgstr ""
-
-#: drgc-menu-label-trans-strings.php:5
-msgid "France"
-msgstr ""
-
-#: drgc-menu-label-trans-strings.php:6
-msgid "United States"
-msgstr ""
-
-#: drgc-menu-label-trans-strings.php:7
-msgid "United Kingdom"
-msgstr ""
-
-#: drgc-menu-label-trans-strings.php:8
-msgid "Germany"
 msgstr ""
 
 #: includes/class-drgc-activator.php:30
@@ -444,7 +368,7 @@ msgstr ""
 msgid "login"
 msgstr ""
 
-#: includes/class-drgc-activator.php:47, public/class-drgc-public.php:602, public/templates/login/login.php:93
+#: includes/class-drgc-activator.php:47, public/class-drgc-public.php:598, public/templates/login/login.php:93
 msgid "Login"
 msgstr ""
 
@@ -452,7 +376,7 @@ msgstr ""
 msgid "account"
 msgstr ""
 
-#: includes/class-drgc-activator.php:55, public/class-drgc-public.php:616, public/templates/login/login.php:29
+#: includes/class-drgc-activator.php:55, public/class-drgc-public.php:612, public/templates/login/login.php:29
 msgid "My Account"
 msgstr ""
 
@@ -464,12 +388,412 @@ msgstr ""
 msgid "Thank You"
 msgstr ""
 
+#: includes/class-drgc-product-importer.php:87
+msgid "No products found."
+msgstr ""
+
 #: includes/drgc-core-functions.php:124
 msgid "Showing %s out of %s"
 msgstr ""
 
 #: includes/drgc-core-functions.php:146
 msgid "Currency: "
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:136
+msgid "Albania"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:137
+msgid "Algeria"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:138
+msgid "Bahrain"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:139
+msgid "Egypt"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:140
+msgid "Iraq"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:141
+msgid "Jordan"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:142
+msgid "Kuwait"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:143
+msgid "Lebanon"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:144
+msgid "Libya"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:145
+msgid "Morocco"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:146
+msgid "Oman"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:147
+msgid "Qatar"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:148
+msgid "Saudi Arabia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:149
+msgid "Sudan"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:150
+msgid "Syria"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:151
+msgid "Tunisia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:152
+msgid "United Arab Emirates"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:153
+msgid "Yemen"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:154
+msgid "Belarus"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:155
+msgid "Bulgaria"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:156, includes/drgc-locale-mapping.php:246
+msgid "Spain"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:157
+msgid "China"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:158, includes/drgc-locale-mapping.php:172
+msgid "Hong Kong SAR China"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:159
+msgid "Macau SAR China"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:160
+msgid "Taiwan"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:161
+msgid "Bosnia & Herzegovina"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:162
+msgid "Croatia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:163
+msgid "Czechia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:164, includes/drgc-locale-mapping.php:170
+msgid "Denmark"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:165, includes/drgc-locale-mapping.php:168, includes/drgc-locale-mapping.php:193
+msgid "Belgium"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:166, includes/drgc-locale-mapping.php:179
+msgid "Netherlands"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:167
+msgid "Australia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:169, includes/drgc-locale-mapping.php:194
+msgid "Canada"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:171, includes/drgc-locale-mapping.php:192
+msgid "Finland"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:173, includes/drgc-locale-mapping.php:208
+msgid "Iceland"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:174, includes/drgc-locale-mapping.php:206
+msgid "India"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:175, includes/drgc-locale-mapping.php:209
+msgid "Indonesia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:176
+msgid "Ireland"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:177, includes/drgc-locale-mapping.php:218
+msgid "Malaysia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:178
+msgid "Malta"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:180
+msgid "New Zealand"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:181, includes/drgc-locale-mapping.php:219
+msgid "Norway"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:182
+msgid "Philippines"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:183, includes/drgc-locale-mapping.php:245
+msgid "Puerto Rico"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:184
+msgid "Singapore"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:185
+msgid "South Africa"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:186, includes/drgc-locale-mapping.php:249
+msgid "Sweden"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:187, includes/drgc-locale-mapping.php:198, includes/drgc-locale-mapping.php:203, includes/drgc-locale-mapping.php:211
+msgid "Switzerland"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:188, includes/drgc-locale-mapping.php:250
+msgid "Thailand"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:189
+msgid "United Kingdom"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:190
+msgid "United States"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:191
+msgid "Estonia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:195
+msgid "France"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:196, includes/drgc-locale-mapping.php:202
+msgid "Luxembourg"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:197
+msgid "St. Pierre & Miquelon"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:199
+msgid "Austria"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:200
+msgid "Germany"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:201
+msgid "Liechtenstein"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:204
+msgid "Greece"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:205
+msgid "Israel"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:207
+msgid "Hungary"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:210
+msgid "Italy"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:212
+msgid "Japan"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:213
+msgid "Kazakhstan"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:214
+msgid "South Korea"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:215
+msgid "Latvia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:216
+msgid "Lithuania"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:217
+msgid "Macedonia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:220
+msgid "Norway, Nynorsk"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:221
+msgid "Poland"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:222
+msgid "Brazil"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:223
+msgid "Portugal"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:224
+msgid "Romania"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:225
+msgid "Russia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:226
+msgid "Serbia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:227
+msgid "YU"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:228
+msgid "Slovakia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:229
+msgid "Slovenia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:230
+msgid "Argentina"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:231
+msgid "Bolivia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:232
+msgid "Chile"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:233
+msgid "Colombia"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:234
+msgid "Costa Rica"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:235
+msgid "Dominican Republic"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:236
+msgid "Ecuador"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:237
+msgid "El Salvador"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:238
+msgid "Guatemala"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:239
+msgid "Honduras"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:240
+msgid "Mexico"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:241
+msgid "Nicaragua"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:242
+msgid "Panama"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:243
+msgid "Paraguay"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:244
+msgid "Peru"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:247
+msgid "Uruguay"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:248
+msgid "Venezuela"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:251
+msgid "Thailand, TH, Thai Digits"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:252
+msgid "Turkey"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:253
+msgid "Ukraine"
+msgstr ""
+
+#: includes/drgc-locale-mapping.php:254
+msgid "Vietnam"
 msgstr ""
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:34
@@ -488,323 +812,343 @@ msgstr ""
 msgid "Delivery options"
 msgstr ""
 
-#: public/class-drgc-public.php:119
+#: includes/shortcodes/class-dr-shortcode-checkout.php:38
+msgid "Payment"
+msgstr ""
+
+#: includes/widgets/class-dr-widget-mini-cart.php:24
+msgid "DRGC Mini-cart for mobile viewing."
+msgstr ""
+
+#: includes/widgets/class-dr-widget-mini-cart.php:28
+msgid "DRGC Mobile Mini-cart"
+msgstr ""
+
+#: includes/widgets/class-dr-widget-mini-cart.php:52, public/partials/drgc-minicart.php:19
+msgid "Shopping Cart"
+msgstr ""
+
+#: public/class-drgc-public.php:127
 msgid "Upgrade"
 msgstr ""
 
-#: public/class-drgc-public.php:120, public/templates/account/account-addresses.php:491
+#: public/class-drgc-public.php:128, public/templates/account/account-addresses.php:491
 msgid "Add"
 msgstr ""
 
-#: public/class-drgc-public.php:121, public/templates/checkout/checkout-summary.php:20, public/templates/thank-you/thank-you-summary.php:28
+#: public/class-drgc-public.php:129, public/templates/checkout/checkout-summary.php:20, public/templates/thank-you/thank-you-summary.php:28
 msgid "FREE"
 msgstr ""
 
-#: public/class-drgc-public.php:122, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:36
+#: public/class-drgc-public.php:130, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:36
 msgid "Incl. VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:123, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:36
+#: public/class-drgc-public.php:131, public/templates/cart/cart-summary.php:28, public/templates/checkout/checkout-summary.php:28, public/templates/thank-you/thank-you-summary.php:36
 msgid "Excl. VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:124, public/templates/thank-you/thank-you-summary.php:49
+#: public/class-drgc-public.php:132, public/templates/thank-you/thank-you-summary.php:49
 msgid "VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:125, public/templates/cart/cart-summary.php:54, public/templates/checkout/checkout-summary.php:41
+#: public/class-drgc-public.php:133, public/templates/cart/cart-summary.php:54, public/templates/checkout/checkout-summary.php:41
 msgid "Estimated VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:126, public/templates/thank-you/thank-you-summary.php:65
+#: public/class-drgc-public.php:134, public/templates/thank-you/thank-you-summary.php:65
 msgid "Shipping VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:127, public/templates/cart/cart-summary.php:70, public/templates/checkout/checkout-summary.php:58
+#: public/class-drgc-public.php:135, public/templates/cart/cart-summary.php:70, public/templates/checkout/checkout-summary.php:58
 msgid "Estimated Shipping VAT"
 msgstr ""
 
-#: public/class-drgc-public.php:128, public/templates/account/account-orders.php:194, public/templates/thank-you/thank-you-summary.php:49
+#: public/class-drgc-public.php:136, public/templates/account/account-orders.php:141, public/templates/thank-you/thank-you-summary.php:49
 msgid "Tax"
 msgstr ""
 
-#: public/class-drgc-public.php:129, public/templates/cart/cart-summary.php:54, public/templates/checkout/checkout-summary.php:41
+#: public/class-drgc-public.php:137, public/templates/cart/cart-summary.php:54, public/templates/checkout/checkout-summary.php:41
 msgid "Estimated Tax"
 msgstr ""
 
-#: public/class-drgc-public.php:130, public/templates/account/account-orders.php:203, public/templates/thank-you/thank-you-summary.php:65
+#: public/class-drgc-public.php:138, public/templates/account/account-orders.php:150, public/templates/thank-you/thank-you-summary.php:65
 msgid "Shipping Tax"
 msgstr ""
 
-#: public/class-drgc-public.php:131, public/templates/cart/cart-summary.php:70, public/templates/checkout/checkout-summary.php:58
+#: public/class-drgc-public.php:139, public/templates/cart/cart-summary.php:70, public/templates/checkout/checkout-summary.php:58
 msgid "Estimated Shipping Tax"
 msgstr ""
 
-#: public/class-drgc-public.php:132, public/templates/account/account-orders.php:199, public/templates/checkout/checkout-shipping.php:21, public/templates/thank-you/thank-you-summary.php:57
+#: public/class-drgc-public.php:140, public/templates/account/account-orders.php:146, public/templates/checkout/checkout-shipping.php:21, public/templates/thank-you/thank-you-summary.php:57
 msgid "Shipping"
 msgstr ""
 
-#: public/class-drgc-public.php:133, public/templates/cart/cart-summary.php:62, public/templates/checkout/checkout-summary.php:50
+#: public/class-drgc-public.php:141, public/templates/cart/cart-summary.php:62, public/templates/checkout/checkout-summary.php:50
 msgid "Estimated Shipping"
 msgstr ""
 
-#: public/class-drgc-public.php:134
+#: public/class-drgc-public.php:142
 msgid "Credit card ending in"
 msgstr ""
 
-#: public/class-drgc-public.php:135
+#: public/class-drgc-public.php:143
 msgid "pay with card"
 msgstr ""
 
-#: public/class-drgc-public.php:136
+#: public/class-drgc-public.php:144
 msgid "pay with paypal"
 msgstr ""
 
-#: public/class-drgc-public.php:137
+#: public/class-drgc-public.php:145
 msgid "View Cart"
 msgstr ""
 
-#: public/class-drgc-public.php:139
+#: public/class-drgc-public.php:147
 msgid "Remove"
 msgstr ""
 
-#: public/class-drgc-public.php:140
-msgid "Sub-Total"
+#: public/class-drgc-public.php:148, public/templates/account/account-orders.php:137, public/templates/cart/cart-summary.php:38, public/templates/cart/cart-summary.php:46, public/templates/checkout/checkout-summary.php:34, public/templates/thank-you/thank-you-summary.php:42
+msgid "Subtotal"
 msgstr ""
 
-#: public/class-drgc-public.php:141
+#: public/class-drgc-public.php:149, public/templates/cart/cart-product.php:56
 msgid "Qty"
 msgstr ""
 
-#: public/class-drgc-public.php:142
+#: public/class-drgc-public.php:150
 msgid "Shipping and Handling"
 msgstr ""
 
-#: public/class-drgc-public.php:143, public/templates/account/account-orders.php:208, public/templates/cart/cart-summary.php:78, public/templates/checkout/checkout-summary.php:67, public/templates/thank-you/thank-you-summary.php:73
+#: public/class-drgc-public.php:151, public/templates/account/account-orders.php:155, public/templates/cart/cart-summary.php:78, public/templates/checkout/checkout-summary.php:67, public/templates/thank-you/thank-you-summary.php:73
 msgid "Discount"
 msgstr ""
 
-#: public/class-drgc-public.php:144
+#: public/class-drgc-public.php:152
 msgid "Order Total"
 msgstr ""
 
-#: public/class-drgc-public.php:146
+#: public/class-drgc-public.php:154
 msgid "Password reset email sent"
 msgstr ""
 
-#: public/class-drgc-public.php:147
+#: public/class-drgc-public.php:155
 msgid "Password saved"
 msgstr ""
 
-#: public/class-drgc-public.php:148
+#: public/class-drgc-public.php:156
 msgid "You will be receiving an email soon with instructions on resetting your login password."
 msgstr ""
 
-#: public/class-drgc-public.php:149
+#: public/class-drgc-public.php:157
 msgid "You can now log in with your new password."
 msgstr ""
 
-#: public/class-drgc-public.php:150, public/templates/cart/cart.php:37
+#: public/class-drgc-public.php:158, public/templates/cart/cart.php:50
 msgid "Your cart is empty."
 msgstr ""
 
-#: public/class-drgc-public.php:151
+#: public/class-drgc-public.php:159
 msgid "Please enter a valid promo code."
 msgstr ""
 
-#: public/class-drgc-public.php:152, public/class-drgc-public.php:312
+#: public/class-drgc-public.php:160, public/class-drgc-public.php:311
 msgid "Please enter a valid email address."
 msgstr ""
 
-#: public/class-drgc-public.php:153
+#: public/class-drgc-public.php:161
 msgid "Address not accepted for current currency."
 msgstr ""
 
-#: public/class-drgc-public.php:154
+#: public/class-drgc-public.php:162
 msgid "Failed payment for specified credit card."
 msgstr ""
 
-#: public/class-drgc-public.php:155, public/templates/account/account-addresses.php:66, public/templates/account/account-addresses.php:88, public/templates/account/account-addresses.php:110, public/templates/account/account-addresses.php:132, public/templates/account/account-addresses.php:154, public/templates/account/account-addresses.php:192, public/templates/account/account-addresses.php:222, public/templates/account/account-addresses.php:261, public/templates/account/account-addresses.php:283, public/templates/account/account-addresses.php:355, public/templates/account/account-addresses.php:366, public/templates/account/account-addresses.php:377, public/templates/account/account-addresses.php:389, public/templates/account/account-addresses.php:400, public/templates/account/account-addresses.php:420, public/templates/account/account-addresses.php:441, public/templates/account/account-addresses.php:465, public/templates/account/account-addresses.php:476, public/templates/account/account-password.php:21, public/templates/account/account-password.php:43, public/templates/account/account-password.php:65, public/templates/account/account-payments.php:52, public/templates/checkout/checkout-billing.php:154, public/templates/checkout/checkout-billing.php:176, public/templates/checkout/checkout-billing.php:198, public/templates/checkout/checkout-billing.php:236, public/templates/checkout/checkout-billing.php:266, public/templates/checkout/checkout-billing.php:293, public/templates/checkout/checkout-billing.php:313, public/templates/checkout/checkout-email.php:25, public/templates/checkout/checkout-shipping.php:63, public/templates/checkout/checkout-shipping.php:85, public/templates/checkout/checkout-shipping.php:107, public/templates/checkout/checkout-shipping.php:145, public/templates/checkout/checkout-shipping.php:174, public/templates/checkout/checkout-shipping.php:202, public/templates/checkout/checkout-shipping.php:222, public/templates/login/login.php:49, public/templates/login/login.php:57, public/templates/login/login.php:81, public/templates/login/login.php:89, public/templates/login/login.php:124, public/templates/login/login.php:134, public/templates/login/login.php:144, public/templates/login/login.php:152, public/templates/login/login.php:160
+#: public/class-drgc-public.php:163, public/templates/account/account-addresses.php:66, public/templates/account/account-addresses.php:88, public/templates/account/account-addresses.php:110, public/templates/account/account-addresses.php:132, public/templates/account/account-addresses.php:154, public/templates/account/account-addresses.php:192, public/templates/account/account-addresses.php:222, public/templates/account/account-addresses.php:261, public/templates/account/account-addresses.php:283, public/templates/account/account-addresses.php:355, public/templates/account/account-addresses.php:366, public/templates/account/account-addresses.php:377, public/templates/account/account-addresses.php:389, public/templates/account/account-addresses.php:400, public/templates/account/account-addresses.php:420, public/templates/account/account-addresses.php:441, public/templates/account/account-addresses.php:465, public/templates/account/account-addresses.php:476, public/templates/account/account-password.php:21, public/templates/account/account-password.php:43, public/templates/account/account-password.php:65, public/templates/account/account-payments.php:52, public/templates/checkout/checkout-billing.php:154, public/templates/checkout/checkout-billing.php:176, public/templates/checkout/checkout-billing.php:198, public/templates/checkout/checkout-billing.php:236, public/templates/checkout/checkout-billing.php:266, public/templates/checkout/checkout-billing.php:293, public/templates/checkout/checkout-billing.php:313, public/templates/checkout/checkout-email.php:25, public/templates/checkout/checkout-shipping.php:63, public/templates/checkout/checkout-shipping.php:85, public/templates/checkout/checkout-shipping.php:107, public/templates/checkout/checkout-shipping.php:145, public/templates/checkout/checkout-shipping.php:174, public/templates/checkout/checkout-shipping.php:202, public/templates/checkout/checkout-shipping.php:222, public/templates/login/login.php:49, public/templates/login/login.php:57, public/templates/login/login.php:81, public/templates/login/login.php:89, public/templates/login/login.php:124, public/templates/login/login.php:134, public/templates/login/login.php:144, public/templates/login/login.php:152, public/templates/login/login.php:160
 msgid "This field is required."
 msgstr ""
 
-#: public/class-drgc-public.php:156
+#: public/class-drgc-public.php:164
 msgid "Emails do not match."
 msgstr ""
 
-#: public/class-drgc-public.php:157, public/class-drgc-public.php:269
+#: public/class-drgc-public.php:165, public/class-drgc-public.php:269
 msgid "Password must be between 8 - 32 characters."
 msgstr ""
 
-#: public/class-drgc-public.php:158, public/class-drgc-public.php:273
+#: public/class-drgc-public.php:166, public/class-drgc-public.php:273
 msgid "Must use at least one upper case letter."
 msgstr ""
 
-#: public/class-drgc-public.php:159, public/class-drgc-public.php:277
+#: public/class-drgc-public.php:167, public/class-drgc-public.php:277
 msgid "Must use at least one lower case letter."
 msgstr ""
 
-#: public/class-drgc-public.php:160, public/class-drgc-public.php:281
+#: public/class-drgc-public.php:168, public/class-drgc-public.php:281
 msgid "Must use at least one number."
 msgstr ""
 
-#: public/class-drgc-public.php:161, public/class-drgc-public.php:285
+#: public/class-drgc-public.php:169, public/class-drgc-public.php:285
 msgid "Must use at least one special character (! _ @)."
 msgstr ""
 
-#: public/class-drgc-public.php:162, public/class-drgc-public.php:289
+#: public/class-drgc-public.php:170, public/class-drgc-public.php:289
 msgid "Contains non-allowable special characters (only ! _ @ are allowed)."
 msgstr ""
 
-#: public/class-drgc-public.php:163, public/class-drgc-public.php:265
+#: public/class-drgc-public.php:171, public/class-drgc-public.php:265
 msgid "Passwords do not match."
 msgstr ""
 
-#: public/class-drgc-public.php:164
+#: public/class-drgc-public.php:172
 msgid "Please indicate you have read and accepted the privacy policy and terms of sale."
 msgstr ""
 
-#: public/class-drgc-public.php:165
+#: public/class-drgc-public.php:173
 msgid "Something went wrong. Please try again."
 msgstr ""
 
-#: public/class-drgc-public.php:166
+#: public/class-drgc-public.php:174
 msgid "Loading..."
 msgstr ""
 
-#: public/class-drgc-public.php:167, public/partials/drgc-product-details.php:22
+#: public/class-drgc-public.php:175, public/partials/drgc-product-details.php:22
 msgid "Buy Now"
 msgstr ""
 
-#: public/class-drgc-public.php:168, public/partials/drgc-buy-button.php:31, public/templates/parts/content-archive.php:61, public/templates/parts/content-single.php:148
+#: public/class-drgc-public.php:176, public/partials/drgc-buy-button.php:31, public/templates/parts/content-archive.php:61, public/templates/parts/content-single.php:116
 msgid "Add to Cart"
 msgstr ""
 
-#: public/class-drgc-public.php:169
+#: public/class-drgc-public.php:177
 msgid "Out of Stock"
 msgstr ""
 
-#: public/class-drgc-public.php:170
+#: public/class-drgc-public.php:178
 msgid "Are you sure you want to immediately unsubscribe this subscription?"
 msgstr ""
 
-#: public/class-drgc-public.php:171
+#: public/class-drgc-public.php:179
 msgid "Please enter the required quantity:"
 msgstr ""
 
-#: public/class-drgc-public.php:172
+#: public/class-drgc-public.php:180
 msgid "There are no delivery options available for your cart or destination."
 msgstr ""
 
-#: public/class-drgc-public.php:173
+#: public/class-drgc-public.php:181
 msgid "MM/YY"
 msgstr ""
 
-#: public/class-drgc-public.php:174
+#: public/class-drgc-public.php:182
 msgid "CVV"
 msgstr ""
 
-#: public/class-drgc-public.php:175
+#: public/class-drgc-public.php:183
 msgid "Shipping country is not supported."
 msgstr ""
 
-#: public/class-drgc-public.php:176
+#: public/class-drgc-public.php:184
 msgid "Billing country is not supported."
 msgstr ""
 
-#: public/class-drgc-public.php:177
+#: public/class-drgc-public.php:185
 msgid "Your postal code is invalid."
 msgstr ""
 
-#: public/class-drgc-public.php:178
+#: public/class-drgc-public.php:186
 msgid "Your city is invalid."
 msgstr ""
 
-#: public/class-drgc-public.php:179
+#: public/class-drgc-public.php:187
 msgid "Your region value is invalid. Please supply a different one."
 msgstr ""
 
-#: public/class-drgc-public.php:180
+#: public/class-drgc-public.php:188
 msgid "No, thanks"
 msgstr ""
 
-#: public/class-drgc-public.php:181
+#: public/class-drgc-public.php:189
 msgid "Unable to place order"
 msgstr ""
 
-#: public/class-drgc-public.php:182
+#: public/class-drgc-public.php:190
 msgid "The new password must be different from the current password."
 msgstr ""
 
-#: public/class-drgc-public.php:241
+#: public/class-drgc-public.php:191
+msgid "Sorry, it seems that there are no available payment methods for your location."
+msgstr ""
+
+#: public/class-drgc-public.php:242
 msgid "Authorization failed for specified credentials"
 msgstr ""
 
-#: public/class-drgc-public.php:399
+#: public/class-drgc-public.php:395
 msgid "The current password you entered is incorrect."
 msgstr ""
 
-#: public/class-drgc-public.php:403
+#: public/class-drgc-public.php:399
 msgid "Your new password can not be the same as the current password."
 msgstr ""
 
-#: public/class-drgc-public.php:440
+#: public/class-drgc-public.php:436
 msgid "Enter a username or email address."
 msgstr ""
 
-#: public/class-drgc-public.php:444, public/class-drgc-public.php:458
+#: public/class-drgc-public.php:440, public/class-drgc-public.php:454
 msgid "There is no account with that username or email address."
 msgstr ""
 
-#: public/class-drgc-public.php:480
+#: public/class-drgc-public.php:476
 msgid "Someone has requested a password reset for the following account:"
 msgstr ""
 
-#: public/class-drgc-public.php:481
+#: public/class-drgc-public.php:477
 msgid "Site Name: %s"
 msgstr ""
 
-#: public/class-drgc-public.php:482
+#: public/class-drgc-public.php:478
 msgid "Username: %s"
 msgstr ""
 
-#: public/class-drgc-public.php:483
+#: public/class-drgc-public.php:479
 msgid "If this was a mistake, just ignore this email and nothing will happen."
 msgstr ""
 
-#: public/class-drgc-public.php:484
+#: public/class-drgc-public.php:480
 msgid "To reset your password, visit the following address:"
 msgstr ""
 
-#: public/class-drgc-public.php:486, public/class-drgc-public.php:935, public/templates/login/login.php:61
+#: public/class-drgc-public.php:482, public/class-drgc-public.php:935, public/templates/login/login.php:61
 msgid "Reset Password"
 msgstr ""
 
-#: public/class-drgc-public.php:488
+#: public/class-drgc-public.php:484
 msgid "[%s] Password Reset"
 msgstr ""
 
-#: public/class-drgc-public.php:503
+#: public/class-drgc-public.php:499
 msgid "The email could not be sent. Possible reason: your host may have disabled the mail() function."
 msgstr ""
 
-#: public/class-drgc-public.php:525
+#: public/class-drgc-public.php:521
 msgid "Something went wrong."
 msgstr ""
 
-#: public/class-drgc-public.php:541
+#: public/class-drgc-public.php:537
 msgid "Expired key"
 msgstr ""
 
-#: public/class-drgc-public.php:543
+#: public/class-drgc-public.php:539
 msgid "Invalid key"
 msgstr ""
 
-#: public/class-drgc-public.php:602
+#: public/class-drgc-public.php:598
 msgid "Hi, "
 msgstr ""
 
-#: public/class-drgc-public.php:627, public/class-drgc-public.php:894, public/templates/login/login.php:32
+#: public/class-drgc-public.php:623, public/class-drgc-public.php:894, public/templates/login/login.php:32
 msgid "Logout"
 msgstr ""
 
@@ -845,11 +1189,15 @@ msgid "Password Updated!"
 msgstr ""
 
 #: public/class-drgc-public.php:950
-msgid "Your password has been changed successfully."
+msgid "Your password has been changed successfully. Please log in to your account using your new password."
 msgstr ""
 
 #: public/class-drgc-public.php:953
 msgid "OK"
+msgstr ""
+
+#: public/class-drgc-public.php:968
+msgid "This is a test order"
 msgstr ""
 
 #: public/partials/drgc-legal-footer.php:17
@@ -878,10 +1226,6 @@ msgstr ""
 
 #: public/partials/drgc-minicart.php:16
 msgid "ITEM(S)"
-msgstr ""
-
-#: public/partials/drgc-minicart.php:19
-msgid "Shopping Cart"
 msgstr ""
 
 #: public/templates/account/account-addresses.php:18
@@ -980,39 +1324,35 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: public/templates/account/account-orders.php:75, public/templates/account/account-orders.php:141
+#: public/templates/account/account-orders.php:75, public/templates/account/account-orders.php:88
 msgid "Order Details"
 msgstr ""
 
-#: public/templates/account/account-orders.php:151
+#: public/templates/account/account-orders.php:98
 msgid "Order number: "
 msgstr ""
 
-#: public/templates/account/account-orders.php:155, public/templates/thank-you/thank-you.php:98
+#: public/templates/account/account-orders.php:102, public/templates/thank-you/thank-you.php:119
 msgid "Print Receipt"
 msgstr ""
 
-#: public/templates/account/account-orders.php:169, public/templates/thank-you/thank-you.php:127
+#: public/templates/account/account-orders.php:116, public/templates/thank-you/thank-you.php:150
 msgid "Shipping Address"
 msgstr ""
 
-#: public/templates/account/account-orders.php:179, public/templates/subscription-details/subscription-details-account-info.php:63, public/templates/thank-you/thank-you.php:141
+#: public/templates/account/account-orders.php:126, public/templates/subscription-details/subscription-details-account-info.php:63, public/templates/thank-you/thank-you.php:164
 msgid "Billing Address"
 msgstr ""
 
-#: public/templates/account/account-orders.php:190, public/templates/cart/cart-summary.php:38, public/templates/cart/cart-summary.php:46, public/templates/checkout/checkout-summary.php:34, public/templates/thank-you/thank-you-summary.php:42
-msgid "Subtotal"
-msgstr ""
-
-#: public/templates/account/account-orders.php:212, public/templates/cart/cart-summary.php:99, public/templates/checkout/checkout-summary.php:75, public/templates/thank-you/thank-you-summary.php:81
+#: public/templates/account/account-orders.php:159, public/templates/cart/cart-summary.php:99, public/templates/checkout/checkout-summary.php:75, public/templates/thank-you/thank-you-summary.php:81
 msgid "Total"
 msgstr ""
 
-#: public/templates/account/account-orders.php:221
+#: public/templates/account/account-orders.php:168
 msgid "Close"
 msgstr ""
 
-#: public/templates/account/account-orders.php:222
+#: public/templates/account/account-orders.php:169
 msgid "Print"
 msgstr ""
 
@@ -1172,11 +1512,15 @@ msgstr ""
 msgid "Apply"
 msgstr ""
 
-#: public/templates/cart/cart-summary.php:107
+#: public/templates/cart/cart-summary.php:107, public/templates/cart/cart.php:79
 msgid "Proceed to checkout"
 msgstr ""
 
-#: public/templates/cart/cart.php:58, public/templates/checkout/checkout.php:18, public/templates/checkout/checkout.php:115
+#: public/templates/cart/cart.php:27
+msgid "Order Number:"
+msgstr ""
+
+#: public/templates/cart/cart.php:75, public/templates/checkout/checkout.php:18, public/templates/checkout/checkout.php:113
 msgid "Continue Shopping"
 msgstr ""
 
@@ -1208,11 +1552,11 @@ msgstr ""
 msgid "Company EIN"
 msgstr ""
 
-#: public/templates/checkout/checkout-billing.php:146, public/templates/checkout/checkout-shipping.php:55
+#: public/templates/checkout/checkout-billing.php:146, public/templates/checkout/checkout-shipping.php:55, public/templates/login/login.php:121
 msgid "First Name"
 msgstr ""
 
-#: public/templates/checkout/checkout-billing.php:168, public/templates/checkout/checkout-shipping.php:77
+#: public/templates/checkout/checkout-billing.php:168, public/templates/checkout/checkout-shipping.php:77, public/templates/login/login.php:131
 msgid "Last Name"
 msgstr ""
 
@@ -1260,12 +1604,12 @@ msgstr ""
 msgid "Delivery"
 msgstr ""
 
-#: public/templates/checkout/checkout-email.php:21
-msgid "Please enter your email address"
+#: public/templates/checkout/checkout-drop-in.php:21, public/templates/checkout/checkout-payment.php:22
+msgid "How would you like to pay?"
 msgstr ""
 
-#: public/templates/checkout/checkout-payment.php:22
-msgid "How would you like to pay?"
+#: public/templates/checkout/checkout-email.php:21
+msgid "Please enter your email address"
 msgstr ""
 
 #: public/templates/checkout/checkout-payment.php:42
@@ -1304,6 +1648,14 @@ msgstr ""
 msgid "Back"
 msgstr ""
 
+#: public/templates/checkout/checkout.php:66
+msgid "Edit Shipping/Billing"
+msgstr ""
+
+#: public/templates/checkout/checkout.php:68
+msgid "Edit Billing"
+msgstr ""
+
 #: public/templates/login/login.php:24
 msgid "Welcome "
 msgstr ""
@@ -1316,12 +1668,28 @@ msgstr ""
 msgid "Please enter secure password twice to continue"
 msgstr ""
 
+#: public/templates/login/login.php:46
+msgid "New Password"
+msgstr ""
+
+#: public/templates/login/login.php:54
+msgid "Confirm New Password"
+msgstr ""
+
 #: public/templates/login/login.php:71
 msgid "Returning Customer"
 msgstr ""
 
 #: public/templates/login/login.php:72
 msgid "If you have an existing account, please sign in."
+msgstr ""
+
+#: public/templates/login/login.php:78, public/templates/login/login.php:141
+msgid "Email Address"
+msgstr ""
+
+#: public/templates/login/login.php:86, public/templates/login/login.php:149
+msgid "Password"
 msgstr ""
 
 #: public/templates/login/login.php:99
@@ -1334,6 +1702,10 @@ msgstr ""
 
 #: public/templates/login/login.php:112
 msgid "You can checkout as a guest or become a member for faster checkout and great offers."
+msgstr ""
+
+#: public/templates/login/login.php:157
+msgid "Confirm Password"
 msgstr ""
 
 #: public/templates/login/login.php:167
@@ -1388,8 +1760,8 @@ msgstr ""
 msgid "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps searching can help."
 msgstr ""
 
-#: public/templates/parts/content-single.php:117
-msgid "Select "
+#: public/templates/parts/content-single.php:76
+msgid "Select your product"
 msgstr ""
 
 #: public/templates/subscription-details/subscription-details-account-info.php:49
@@ -1472,18 +1844,86 @@ msgstr ""
 msgid "Change Quantity"
 msgstr ""
 
-#: public/templates/thank-you/thank-you.php:75
+#: public/templates/thank-you/thank-you.php:80
 msgid "Thank you"
 msgstr ""
 
-#: public/templates/thank-you/thank-you.php:81
-msgid "Your order was completed successfully."
-msgstr ""
-
-#: public/templates/thank-you/thank-you.php:85
-msgid "Order number is: "
+#: public/templates/thank-you/thank-you.php:90
+msgid "Your order has been successfully placed."
 msgstr ""
 
 #: public/templates/thank-you/thank-you.php:94
+msgid "Your order was completed successfully."
+msgstr ""
+
+#: public/templates/thank-you/thank-you.php:100
+msgid "Order number is: "
+msgstr ""
+
+#: public/templates/thank-you/thank-you.php:115
 msgid "You will receive an email confirmation shortly at %s"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:6
+msgid "Your order has been entered and is awaiting payment."
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:8
+msgid "Please make your payment now to complete your order. All funds must be drawn in the currency shown below."
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:10
+msgid "Provide your bank with the following wire transfer instructions:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:14
+msgid "Amount:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:16
+msgid "Wire Transfer Reference Number:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:18
+msgid "*Be sure to include this number or your payment may not be received."
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:20
+msgid "Bank:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:22
+msgid "Location:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:24
+msgid "Account Holder:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:26
+msgid "Account Number:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:28
+msgid "Swift Code:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:32
+msgid "IBAN*:"
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:38
+msgid "Please ensure you use your 'Reference Number' as your transaction reference when you electronically transfer the money for payment. If you do not use this reference number we will not be able to process your payment."
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:40
+msgid "After we receive confirmation that our bank has received your funds, we will send you an email notification. If a payment is not received within 20 business days, your order will be cancelled."
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:42
+msgid "Print this page for your records as all bank details are required to make your payment. You can use this information to make your payment to the fore mentioned bank account. Any orders placed without all of the above information may not be processed."
+msgstr ""
+
+#: public/templates/thank-you/wire-transfer-instructions.php:44
+msgid "When we have finished processing your order, you will be sent a confirmation email at the address provided."
 msgstr ""

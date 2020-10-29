@@ -37,5 +37,11 @@ export default class AdminPage {
     this.addToCartBtn = Selector('.dr-buy-btn');
 
     this.checkoutTab = Selector('.nav-tab').withText('Checkout');
+
+    this.localesTab = Selector('.nav-tab').withText('Locales');
+    this.synclocaleBtn = Selector('#dr-sync-locales-btn');
+
+    this.siteSettingsTab = Selector('.wp-menu-name').withText('Settings');
+    this.siteSettingsGeneral = Selector('.wp-submenu.wp-submenu-wrap').find('a').withText('General');
   }
 }
