@@ -14288,7 +14288,7 @@ jQuery(document).ready(function ($) {
                 });
                 typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
                 $error.text('').hide();
-                _context3.next = 27;
+                _context3.next = 28;
                 break;
 
               case 15:
@@ -14345,13 +14345,14 @@ jQuery(document).ready(function ($) {
                 });
 
               case 24:
-                _context3.next = 27;
+                _context3.next = 28;
                 break;
 
               case 26:
                 $button.removeClass('sending').blur();
+                $error.text('').hide();
 
-              case 27:
+              case 28:
                 $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
 
                 if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -14360,7 +14361,7 @@ jQuery(document).ready(function ($) {
 
                 CheckoutModule.moveToNextSection($section);
 
-              case 30:
+              case 31:
               case "end":
                 return _context3.stop();
             }

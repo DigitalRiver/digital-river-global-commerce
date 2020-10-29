@@ -641,6 +641,7 @@ jQuery(document).ready(($) => {
                         });
                 } else {
                     $button.removeClass('sending').blur();
+                    $error.text('').hide();
                 }
             }
 
