@@ -619,25 +619,27 @@ jQuery(document).ready(($) => {
 
                 typeText = ($('input[name="shopper-type"]:checked').val() === 'I') ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
 
-                await CheckoutUtils.applyTaxRegistration(shopperType, regs)
-                    .then((data) => {
-                        sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
-                        return DRCommerceApi.getCart({expand: 'all'});
-                    })
-                    .then((data) => {
-                        const lineItems = data.cart.lineItems.lineItem;
-                        const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+                if (regs.length) {
+                    await CheckoutUtils.applyTaxRegistration(shopperType, regs)
+                        .then((data) => {
+                            sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
+                            return DRCommerceApi.getCart({expand: 'all'});
+                        })
+                        .then((data) => {
+                            const lineItems = data.cart.lineItems.lineItem;
+                            const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
 
-                        sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
-                        CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-                        $button.removeClass('sending').blur();
-                        $error.text('').hide();
-                    })
-                    .catch((error) => {
-                        $error.text(localizedText.invalid_tax_id_error_msg).show();
-                        $button.removeClass('sending').blur();
-                        console.error(error);
-                    });
+                            sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+                            CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                            $button.removeClass('sending').blur();
+                            $error.text('').hide();
+                        })
+                        .catch((error) => {
+                            $error.text(localizedText.invalid_tax_id_error_msg).show();
+                            $button.removeClass('sending').blur();
+                            console.error(error);
+                        });
+                }
             }
 
             $section.find('.dr-panel-result__text').html(`${typeText}${taxIds}`);

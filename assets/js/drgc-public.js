@@ -14288,7 +14288,7 @@ jQuery(document).ready(function ($) {
                 });
                 typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
                 $error.text('').hide();
-                _context3.next = 23;
+                _context3.next = 24;
                 break;
 
               case 15:
@@ -14319,7 +14319,13 @@ jQuery(document).ready(function ($) {
                 }
 
                 typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
-                _context3.next = 23;
+
+                if (!_regs.length) {
+                  _context3.next = 24;
+                  break;
+                }
+
+                _context3.next = 24;
                 return checkout_utils.applyTaxRegistration(shopperType, _regs).then(function (data) {
                   sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
                   return commerce_api.getCart({
@@ -14338,7 +14344,7 @@ jQuery(document).ready(function ($) {
                   console.error(error);
                 });
 
-              case 23:
+              case 24:
                 $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
 
                 if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -14347,7 +14353,7 @@ jQuery(document).ready(function ($) {
 
                 CheckoutModule.moveToNextSection($section);
 
-              case 26:
+              case 27:
               case "end":
                 return _context3.stop();
             }
