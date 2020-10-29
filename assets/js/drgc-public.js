@@ -14343,11 +14343,17 @@ jQuery(document).ready(function ($) {
                   });
                 }).then(function (data) {
                   var lineItems = data.cart.lineItems.lineItem;
+                  var tax = data.cart.pricing.tax.value;
                   var isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
                   sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                   checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                   $button.removeClass('sending').blur();
-                  $error.text('').hide();
+
+                  if (tax > 0) {
+                    $error.text(localizedText.invalid_tax_id_error_msg).show();
+                  } else {
+                    $error.text('').hide();
+                  }
                 })["catch"](function (error) {
                   $error.text(localizedText.invalid_tax_id_error_msg).show();
                   $button.removeClass('sending').blur();

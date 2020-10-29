@@ -627,12 +627,18 @@ jQuery(document).ready(($) => {
                         })
                         .then((data) => {
                             const lineItems = data.cart.lineItems.lineItem;
+                            const tax = data.cart.pricing.tax.value;
                             const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
 
                             sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                             CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                             $button.removeClass('sending').blur();
-                            $error.text('').hide();
+
+                            if (tax > 0) {
+                                $error.text(localizedText.invalid_tax_id_error_msg).show();
+                            } else {
+                                $error.text('').hide();
+                            }
                         })
                         .catch((error) => {
                             $error.text(localizedText.invalid_tax_id_error_msg).show();
