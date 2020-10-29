@@ -38,7 +38,7 @@ const CheckoutModule = (($) => {
             $section.find('span.dr-accordion__edit').show();
         }
 
-        if ($nextSection.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') === 'true') {
+        if ($nextSection.hasClass('dr-checkout__tax-id') && (sessionStorage.getItem('drgcTaxExempt') === 'true') && sessionStorage.getItem('drgcTaxRegs')) {
             $('#checkout-tax-id-form').trigger('submit');
         }
 
@@ -461,7 +461,7 @@ jQuery(document).ready(($) => {
                     try {
                         const taxRegs = await CheckoutUtils.getTaxRegistration();
 
-                        if (Object.keys(taxRegs).length) {
+                        if (Object.keys(taxRegs).length && taxRegs.customerType) {
                             const taxIds = taxRegs.taxRegistrations;
                             const shopperType = taxRegs.customerType;
 
@@ -581,7 +581,7 @@ jQuery(document).ready(($) => {
             let typeText = '';
             let taxIds = '';
 
-            if (isTaxExempt && Object.keys(taxRegs).length) {
+            if (isTaxExempt && Object.keys(taxRegs).length && taxRegs.customerType) {
                 const regs = taxRegs.taxRegistrations;
 
                 regs.forEach((element) => {

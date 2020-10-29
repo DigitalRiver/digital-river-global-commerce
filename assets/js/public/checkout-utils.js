@@ -59,6 +59,17 @@ const CheckoutUtils = (($, params) => {
       pricing.shippingAndHandling.value :
       pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
 
+    if (order.lineItems) {
+      lineItems.forEach((item) => {
+        const $item = $('div.dr-summary__products > div[data-line-item-id=' + item.id + ']');
+        const $salePrice = $item.find('span.sale-price');
+        const $regularPrice = $item.find('span.regular-price');
+
+        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
+        $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
+      });
+    }
+
     $('div.dr-summary__shipping > .item-value').text(
       shippingVal === 0 ?
       params.translations.free_label :

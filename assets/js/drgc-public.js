@@ -12083,6 +12083,16 @@ var CheckoutUtils = function ($, params) {
     var newPricing = getSeparatedPricing(lineItems, pricing, isTaxInclusive);
     var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
 
+    if (order.lineItems) {
+      lineItems.forEach(function (item) {
+        var $item = $('div.dr-summary__products > div[data-line-item-id=' + item.id + ']');
+        var $salePrice = $item.find('span.sale-price');
+        var $regularPrice = $item.find('span.regular-price');
+        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
+        $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
+      });
+    }
+
     $('div.dr-summary__shipping > .item-value').text(shippingVal === 0 ? params.translations.free_label : newPricing.formattedShippingAndHandling);
     $('div.dr-summary__tax > .item-value').text(newPricing.formattedProductTax);
     $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
@@ -13599,7 +13609,7 @@ var CheckoutModule = function ($) {
       $section.find('span.dr-accordion__edit').show();
     }
 
-    if ($nextSection.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') === 'true') {
+    if ($nextSection.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') === 'true' && sessionStorage.getItem('drgcTaxRegs')) {
       $('#checkout-tax-id-form').trigger('submit');
     }
 
@@ -14097,7 +14107,7 @@ jQuery(document).ready(function ($) {
               case 36:
                 taxRegs = _context2.sent;
 
-                if (!Object.keys(taxRegs).length) {
+                if (!(Object.keys(taxRegs).length && taxRegs.customerType)) {
                   _context2.next = 63;
                   break;
                 }
@@ -14276,7 +14286,7 @@ jQuery(document).ready(function ($) {
                 typeText = '';
                 taxIds = '';
 
-                if (!(isTaxExempt && Object.keys(taxRegs).length)) {
+                if (!(isTaxExempt && Object.keys(taxRegs).length && taxRegs.customerType)) {
                   _context3.next = 15;
                   break;
                 }
