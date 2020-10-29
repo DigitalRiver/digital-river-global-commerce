@@ -14288,7 +14288,7 @@ jQuery(document).ready(function ($) {
                 });
                 typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
                 $error.text('').hide();
-                _context3.next = 24;
+                _context3.next = 27;
                 break;
 
               case 15:
@@ -14321,7 +14321,7 @@ jQuery(document).ready(function ($) {
                 typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
 
                 if (!_regs.length) {
-                  _context3.next = 24;
+                  _context3.next = 26;
                   break;
                 }
 
@@ -14345,6 +14345,13 @@ jQuery(document).ready(function ($) {
                 });
 
               case 24:
+                _context3.next = 27;
+                break;
+
+              case 26:
+                $button.removeClass('sending').blur();
+
+              case 27:
                 $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
 
                 if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -14353,7 +14360,7 @@ jQuery(document).ready(function ($) {
 
                 CheckoutModule.moveToNextSection($section);
 
-              case 27:
+              case 30:
               case "end":
                 return _context3.stop();
             }

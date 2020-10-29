@@ -639,6 +639,8 @@ jQuery(document).ready(($) => {
                             $button.removeClass('sending').blur();
                             console.error(error);
                         });
+                } else {
+                    $button.removeClass('sending').blur();
                 }
             }
 
