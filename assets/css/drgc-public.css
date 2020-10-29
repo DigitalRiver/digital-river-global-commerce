@@ -2523,6 +2523,10 @@ body.dr-loading:after { position: fixed; }
 
 .dr-checkout .DR-Card-Brand { display: initial; }
 
+#DRPayment3ds { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
+
+#DRPayment3ds #dr3dsecure { left: 0 !important; }
+
 .dr-accordion { width: 100%; height: 60px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; font-family: Open Sans; font-size: 16px; font-weight: 600; line-height: 16px; text-transform: uppercase; color: #333333; background-color: #ffffff; background-size: cover; border: none; outline: none; }
 
 .dr-accordion:focus { background: transparent; outline: none; }
