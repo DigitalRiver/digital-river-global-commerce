@@ -184,7 +184,7 @@ class DRGC_Shopper extends AbstractHttpService {
 			$this->currency          = $res['currency'];
 			$this->cart_id           = $res['cartId'];
 			$this->user_id           = $res['userId'];
-			$this->authenticated     = (bool) $res['authenticated'];
+			$this->authenticated     = $res['authenticated']=='true';
 			$this->client_ip_address = $res['clientIpAddress'];
 
 			return $res;
@@ -372,6 +372,9 @@ class DRGC_Shopper extends AbstractHttpService {
    * @return array|bool
    */
   public function retrieve_subscriptions( $params = array() ) {
+	  			
+	if(!$this->is_shopper_logged_in()) return false;
+
     $default = array(
       'expand' => 'all'
     );
