@@ -48,12 +48,13 @@ export default class GenericUtils {
     const minicartPage = new MiniCartPage();
     await t
       .hover(homePage.productsMenu)
-      .click(homePage.productsMenu)
-      .hover(homePage.paginationNextBtn)
-      .click(homePage.paginationNextBtn)
+      .click(homePage.productsMenu);
+
+    await this.findTestProduct(product);
+    await t
       .hover(product)
       .click(product);
-
+    
     // Add to cart btn changed to buy now button of variaction products, need to click add to cart
     // when entered product's detail page after clicking buy now btn in products page.
     if (isVariation) {
@@ -62,6 +63,27 @@ export default class GenericUtils {
     }
 
     await t.expect(minicartPage.viewCartBtn.exists).ok();
+  }
+
+  async findTestProduct(product) {
+    const homePage = new HomePage();
+    const POSTSPERPAGE = 10;
+    let pagiMsg = ()  => Selector('.pagination-container').find('span');
+    let pagiMsgText = await pagiMsg().innerText;
+    const totalPosts = parseInt(pagiMsgText.match(/\d+/g)[1]) || 0;
+    const expectedPages = Math.ceil(totalPosts / POSTSPERPAGE);
+    for (let i = 1; i <= expectedPages; i++) {
+      if(await product.exists) {
+        break;
+      } else {
+        if (i == expectedPages) {
+          throw('Error: Unable to find target products.');
+        }
+        await t
+          .hover(homePage.paginationNextBtn)
+          .click(homePage.paginationNextBtn);
+      }
+    }
   }
 
   async testShippingFee(estShippingFee, shippingMethod, finalShippingFee) {
