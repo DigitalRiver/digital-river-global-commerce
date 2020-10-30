@@ -54,7 +54,7 @@ export default class GenericUtils {
     await t
       .hover(product)
       .click(product);
-    
+
     // Add to cart btn changed to buy now button of variaction products, need to click add to cart
     // when entered product's detail page after clicking buy now btn in products page.
     if (isVariation) {
