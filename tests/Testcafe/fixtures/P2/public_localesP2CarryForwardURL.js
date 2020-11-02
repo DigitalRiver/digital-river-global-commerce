@@ -16,6 +16,7 @@ fixture `===== DRGC P1 Automation Test - Localization: Locale change =====`
 
 const homePage = new HomePage();
 const localUtil = new LocaleUtils();
+const utils = new GeneralUtils();
 const baseURL = Config.baseUrl[Config.env];
 const testEmail = Config.testEmail;
 const localeTW = 'zh_TW';
@@ -45,9 +46,8 @@ test('Localization - ', async t => {
   await checkUrl();
 
   console.log('Expect the url contains locale in product detail page');
+  await utils.findTestProduct(homePage.addLocaleProduct);
   await t
-    .hover(homePage.paginationNextBtn)
-    .click(homePage.paginationNextBtn)
     .hover(productCard)
     .click(productCard)
     .wait(3000);
@@ -75,7 +75,7 @@ test('Localization - ', async t => {
   
   console.log('Expect the url contains locale in TY page');
   await new CheckoutPage().completeFormEmail(testEmail);
-  await new GeneralUtils().fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocaleUS);
+  await utils.fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocaleUS);
   await checkUrl();
 });
 
