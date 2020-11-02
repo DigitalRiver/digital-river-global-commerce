@@ -46,8 +46,7 @@ export default class CheckoutPage {
     this.ccExpiry = Selector('#ccExpiry');
     this.cardCVVIframe = this.creditCardDiv.find('iframe').nth(2);
     this.ccCVV = Selector('#ccCVV');
-    this.submitPaymentBtn = this.creditCardDiv.find('button').withText('PAY NOW');
-
+    this.submitPaymentBtn = this.creditCardDiv.find('button[type="submit"]');
 
     // Shipping Summary
     this.shippingSummaryTitle = Selector('.dr-summary__shipping').find('p').nth(0);
@@ -60,10 +59,11 @@ export default class CheckoutPage {
   async completeFormEmail(testEmail) {
     await t
       .typeText(this.email, testEmail)
+      .hover(this.emailBtn)
       .click(this.emailBtn);
   }
 
-  async completeFormShippingInfo() {
+  async completeFormShippingInfo(isLocaleUS = true) {
     const shippingInfo = this.utils.getShippingUserData();
     const shippingStateOption = this.shippingState.find('option');
     const shippingCountryOption = this.shippingCountry.find('option');
@@ -73,20 +73,25 @@ export default class CheckoutPage {
       .typeText(this.shippingLastName, shippingInfo.lastName, { replace: true })
       .typeText(this.shippingAddress1, shippingInfo.addrLine1)
       .typeText(this.shippingCity, shippingInfo.city)
-      .hover(this.shippingCountry)
-      .click(this.shippingCountry)
-      .click(shippingCountryOption.withText(shippingInfo.country))
-      .expect(this.shippingCountry.value).eql(shippingInfo.countryValue)
-      .hover(this.shippingState)
-      .click(this.shippingState)
-      .click(shippingStateOption.withText(shippingInfo.state))
-      .expect(this.shippingState.value).eql(shippingInfo.stateValue)
+    if (isLocaleUS){
+      await t
+        .hover(this.shippingCountry)
+        .click(this.shippingCountry)
+        .click(shippingCountryOption.withText(shippingInfo.country))
+        .expect(this.shippingCountry.value).eql(shippingInfo.countryValue)
+        .hover(this.shippingState)
+        .click(this.shippingState)
+        .click(shippingStateOption.withText(shippingInfo.state))
+        .expect(this.shippingState.value).eql(shippingInfo.stateValue);
+    }
+    await t
       .typeText(this.shippingPostalCode, shippingInfo.postCode)
       .typeText(this.shippingPhoneNumber, shippingInfo.phoneNo)
+      .hover(this.shippingBtn)
       .click(this.shippingBtn);
   }
 
-  async completeFormBillingInfo(isGuest) {
+  async completeFormBillingInfo(isGuest, isLocaleUS = true) {
     const billingInfo = this.utils.getBillingUserData();
     const billingStateOption = this.billingState.find('option');
     const billingCountryOption = this.billingCountry.find('option');
@@ -96,21 +101,29 @@ export default class CheckoutPage {
       .typeText(this.billingLastName, billingInfo.lastName, { replace: true })
       .typeText(this.billingAddress1, billingInfo.addrLine1)
       .typeText(this.billingCity, billingInfo.city)
-      .hover(this.billingCountry)
-      .click(this.billingCountry)
-      .click(billingCountryOption.withText(billingInfo.country))
-      .expect(this.billingCountry.value).eql(billingInfo.countryValue)
-      .hover(this.billingState)
-      .click(this.billingState)
-      .click(billingStateOption.withText(billingInfo.state))
-      .expect(this.billingState.value).eql(billingInfo.stateValue)
+    if (isLocaleUS){
+      await t
+        .hover(this.billingCountry)
+        .click(this.billingCountry)
+        .click(billingCountryOption.withText(billingInfo.country))
+        .expect(this.billingCountry.value).eql(billingInfo.countryValue)
+        .hover(this.billingState)
+        .click(this.billingState)
+        .click(billingStateOption.withText(billingInfo.state))
+        .expect(this.billingState.value).eql(billingInfo.stateValue);
+    }
+    await t
       .typeText(this.billingPostalCode, billingInfo.postCode)
       .typeText(this.billingPhoneNumber, billingInfo.phoneNo);
 
     if (isGuest) {
-      await t.click(this.guestBillingInfoSubmitBtn);
+      await t
+        .hover(this.guestBillingInfoSubmitBtn)
+        .click(this.guestBillingInfoSubmitBtn);
     } else {
-      await t.click(this.longinBillingInfoSubmitBtn);
+      await t
+        .hover(this.longinBillingInfoSubmitBtn)
+        .click(this.longinBillingInfoSubmitBtn);
     }
   }
 
@@ -138,6 +151,7 @@ export default class CheckoutPage {
       .switchToIframe(this.cardCVVIframe)
       .typeText(this.ccCVV, creditCardInfo.cvv)
       .switchToMainWindow()
+      .hover(this.submitPaymentBtn)
       .click(this.submitPaymentBtn);
   }
 }

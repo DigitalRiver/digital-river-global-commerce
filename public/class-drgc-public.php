@@ -188,7 +188,11 @@ class DRGC_Public {
       'upsell_decline_label'           => __('No, thanks', 'digital-river-global-commerce'),
       'unable_place_order_msg'         => __('Unable to place order', 'digital-river-global-commerce'),
       'new_password_error_msg'         => __('The new password must be different from the current password.', 'digital-river-global-commerce'),
-      'payment_methods_error_msg'      => __('Sorry, it seems that there are no available payment methods for your location.', 'digital-river-global-commerce')
+      'payment_methods_error_msg'      => __('Sorry, it seems that there are no available payment methods for your location.', 'digital-river-global-commerce'),
+      'shopper_type'                   => __('Shopper Type', 'digital-river-global-commerce'),
+      'personal_shopper_type'          => __('Personal', 'digital-river-global-commerce'),
+      'business_shopper_type'          => __('Business', 'digital-river-global-commerce'),
+      'invalid_tax_id_error_msg'       => __('Your tax ID could not be verified. Tax may apply.', 'digital-river-global-commerce')                
     );
 
     // transfer drgc options from PHP to JS
@@ -1109,5 +1113,81 @@ class DRGC_Public {
    */
   public function display_custom_widget_area() {
     if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'drgc-header-sidebar' ) ): endif;
+  }
+
+  /**
+	 * Ajax handles getting the tax schema.
+   *
+   * @since  2.0.0
+   */
+  public function get_tax_schema_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    if ( isset( $_POST['address'] ) ) {
+      $address = $_POST['address'];
+      
+      if ( $address['country'] === 'US' ) {
+        wp_send_json_error();
+      }
+
+      $response = DRGC()->cart->get_tax_schema( $address );
+
+      if ( $response && is_array( $response ) ) {
+        wp_send_json_success( $response );
+      } else {
+        wp_send_json_error( $response );
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
+
+  /**
+   * Ajax handles applying the tax registrations to cart
+   *
+   * @since  2.0.0
+   */
+  public function apply_tax_registration_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    if ( isset( $_POST['customerType'] ) && isset( $_POST['taxRegs'] ) ) {
+      $customer_type = $_POST['customerType'];
+      $tax_regs = $_POST['taxRegs'];
+
+      $response = DRGC()->cart->apply_tax_registration( $customer_type, $tax_regs );
+
+      if ( $response && is_array( $response ) ) {
+        if ( isset( $response['customerType'] ) && isset( $response['taxRegistrations'] ) ) {
+          wp_send_json_success( $response );
+        } else {
+          wp_send_json_error( $response );
+        }
+      } else {
+        wp_send_json_error();
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
+	
+	/**
+   * Ajax handles getting the tax registrations from the current cart
+   *
+   * @since  2.0.0
+   */
+  public function get_tax_registration_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    $response = DRGC()->cart->get_tax_registration();
+
+    if ( $response && is_array( $response ) ) {
+      if ( array_key_exists( 'customerType', $response ) && array_key_exists( 'taxRegistrations', $response ) ) {
+        wp_send_json_success( $response );
+      } else {
+        wp_send_json_error( $response );
+      }
+    } else {
+      wp_send_json_error();
+    }
   }
 }

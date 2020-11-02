@@ -544,8 +544,9 @@ function drgc_get_supported_currencies( $dr_locale ) {
 function drgc_get_continue_shopping_link() {
   $category_link = '';
   $categories = get_terms( array( 
-    'taxonomy' => 'dr_product_category',
-    'parent'   => 0
+    'taxonomy'   => 'dr_product_category',
+    'parent'     => 0,
+    'hide_empty' => false
   ) );
 
   if ( ! empty( $categories ) ) {

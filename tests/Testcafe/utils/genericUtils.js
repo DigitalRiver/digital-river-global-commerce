@@ -48,9 +48,10 @@ export default class GenericUtils {
     const minicartPage = new MiniCartPage();
     await t
       .hover(homePage.productsMenu)
-      .click(homePage.productsMenu)
-      .hover(homePage.paginationNextBtn)
-      .click(homePage.paginationNextBtn)
+      .click(homePage.productsMenu);
+
+    await this.findTestProduct(product);
+    await t
       .hover(product)
       .click(product);
 
@@ -62,6 +63,27 @@ export default class GenericUtils {
     }
 
     await t.expect(minicartPage.viewCartBtn.exists).ok();
+  }
+
+  async findTestProduct(product) {
+    const homePage = new HomePage();
+    const POSTSPERPAGE = 10;
+    let pagiMsg = ()  => Selector('.pagination-container').find('span');
+    let pagiMsgText = await pagiMsg().innerText;
+    const totalPosts = parseInt(pagiMsgText.match(/\d+/g)[1]) || 0;
+    const expectedPages = Math.ceil(totalPosts / POSTSPERPAGE);
+    for (let i = 1; i <= expectedPages; i++) {
+      if(await product.exists) {
+        break;
+      } else {
+        if (i == expectedPages) {
+          throw('Error: Unable to find target products.');
+        }
+        await t
+          .hover(homePage.paginationNextBtn)
+          .click(homePage.paginationNextBtn);
+      }
+    }
   }
 
   async testShippingFee(estShippingFee, shippingMethod, finalShippingFee) {
@@ -99,13 +121,13 @@ export default class GenericUtils {
     await this.checkShippingSummaryInfo(fixedShipping, finalShippingFee);
   }
 
-  async fillOrderInfoAndSubmitOrder(isPhysical, isGuest) {
+  async fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocaleUS = true) {
     const tyPage = new TYPage();
     const checkoutPage = new CheckoutPage();
     if (isPhysical) {
       // Enter shipping info
       console.log('>> Checkout page - Entering Shipping Info.');
-      await checkoutPage.completeFormShippingInfo();
+      await checkoutPage.completeFormShippingInfo(isLocaleUS);
       await t.expect(checkoutPage.useSameAddrCheckbox.exists).ok();
 
       // Set billing info as diff from shipping info
@@ -114,7 +136,7 @@ export default class GenericUtils {
     }
     // Enter Billing Info
     console.log('>> Checkout page - Entering Billing Info.');
-    await checkoutPage.completeFormBillingInfo(isGuest);
+    await checkoutPage.completeFormBillingInfo(isGuest, isLocaleUS);
 
     if (isPhysical) {
       await t.expect(checkoutPage.deliveryOptionSubmitBtn.exists).ok();
