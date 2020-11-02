@@ -1,6 +1,7 @@
 import { Selector, t } from 'testcafe';
 import HomePage from '../../page-models/public/home-page-model';
 import LocaleUtils from '../../utils/localeUtils';
+import GenericUtils from '../../utils/genericUtils';
 import Config from '../../config';
 
 fixture `===== DRGC P1 Automation Test - Localization: Locale change =====`
@@ -14,6 +15,7 @@ fixture `===== DRGC P1 Automation Test - Localization: Locale change =====`
 
 const homePage = new HomePage();
 const localUtil = new LocaleUtils();
+const utils = new GenericUtils();
 const baseURL = Config.baseUrl[Config.env];
 const localeTW = 'zh_TW';
 const expectCurrency = {TWD: 'TWD', USD: 'USD'};
@@ -26,9 +28,8 @@ test('Localization - ', async t => {
 
   await t
     .hover(homePage.productsMenu)
-    .click(homePage.productsMenu)
-    .hover(homePage.paginationNextBtn)
-    .click(homePage.paginationNextBtn);
+    .click(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addLocaleProduct);
   await localUtil.changeLocales(localeTW);
   
   console.log('Expect currency contains ' + expectCurrency['TWD']);
@@ -50,9 +51,9 @@ test('Localization - ', async t => {
   console.log('Click product card to go to product detail page')
   await t
     .hover(homePage.productsMenu)
-    .click(homePage.productsMenu)
-    .hover(homePage.paginationNextBtn)
-    .click(homePage.paginationNextBtn)
+    .click(homePage.productsMenu);
+  await new GenericUtils().findTestProduct(homePage.addLocaleProduct);
+  await t
     .hover(productCard)
     .click(productCard);
   await localUtil.changeLocales(localeTW);

@@ -50,9 +50,12 @@ if ( $variations && isset( $variations[0] ) ) {
     $var_select_options = get_post_meta( get_the_ID(), 'var_select_options', true );
 }
 ?>
-<script type="text/javascript">
-    var drgcVarAttrs = <?php echo json_encode( $all_variation_attributes, JSON_FORCE_OBJECT ); ?>;
-</script>
+
+<?php if ( isset( $all_variation_attributes ) ): ?>
+    <script type="text/javascript">
+        var drgcVarAttrs = <?php echo json_encode( $all_variation_attributes, JSON_FORCE_OBJECT ); ?>;
+    </script>
+<?php endif; ?>
 
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
     <div class="row">

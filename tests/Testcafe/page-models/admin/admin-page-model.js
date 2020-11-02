@@ -25,7 +25,7 @@ export default class AdminPage {
 
     this.trashLink = Selector('a').withText('Trash');
     this.emptyTrashBtn = Selector('#delete_all');
-    this.importProgress = Selector('#dr-data-process-progressbar > div');
+    this.importProgress = Selector('#products-import-progress-bar');
     this.importResult = Selector('.is-dismissible');
     this.displayNum = Selector('.displaying-num');
     this.searchProductsInput = Selector('#post-search-input');

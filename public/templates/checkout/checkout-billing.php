@@ -1,5 +1,4 @@
 <?php
-$current_locale = DRGC()->shopper->get_locale();
 $billingAddress = $cart['cart']['billingAddress'];
 
 if ( ! ( isset( $billingAddress['firstName'] ) && isset( $billingAddress['lastName'] ) ) && $is_logged_in ) {
@@ -324,12 +323,18 @@ if ( count( $custom_attributes ) > 0 ) {
 
                     <label for="billing-field-phone" class="float-label ">
 
-                        <?php echo __( 'Phone', 'digital-river-global-commerce' ); ?>
+                        <?php echo __( 'Phone', 'digital-river-global-commerce' ); ?> *
 
                     </label>
 
-                    <input id="billing-field-phone" type="text" name="billing-phoneNumber" value="<?php echo $billingAddress['phoneNumber'] ?>" class="form-control float-field float-field--phone" >
+                    <input id="billing-field-phone" type="text" name="billing-phoneNumber" value="<?php echo $billingAddress['phoneNumber'] ?>" class="form-control float-field float-field--phone" required>
 
+                    <div class="invalid-feedback">
+
+                        <?php _e( 'This field is required.', 'digital-river-global-commerce' ); ?>
+
+                    </div>
+                
                 </div>
 
             </div>
