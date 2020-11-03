@@ -19,11 +19,13 @@ $subs_count = isset( $subscriptions['subscriptions']['subscription'] ) && is_arr
 $customer_address = $customer['addresses']['address'] ?? '';
 $addr_count = is_array( $customer_address ) ? count( $customer_address ) : 0;
 
-if($first_name !== '' && $last_name !== '') {
+if ($first_name !== '' && $last_name !== '') {
     $full_name = $first_name . ' ' . $last_name;
 } else {
     $full_name = $first_name . $last_name;
 }
+
+$total_pages = $orders['orders']['totalResultPages'];
 ?>
 
 <div class="dr-account-wrapper container" id="dr-account-page-wrapper">
@@ -70,7 +72,7 @@ if($first_name !== '' && $last_name !== '') {
         </ul>
     </div>
 
-    <div class="dr-tab-content" id="nav-tabContent">
+    <div class="dr-tab-content dr-loading" id="nav-tabContent">
 
         <div class="dr-tab-pane fade" id="list-orders" role="tabpanel" aria-labelledby="list-orders-list">
             <div class="dr-h4"><span class="back">&lsaquo;</span><?php echo __( 'My Orders', 'digital-river-global-commerce' ); ?><span class="back close">&times;</span></div>
@@ -78,6 +80,24 @@ if($first_name !== '' && $last_name !== '') {
             <div class="overflowContainer">
                 <?php if ( 0 < $orders['orders']['totalResults'] ) : ?>
                     <?php include DRGC_PLUGIN_DIR . 'public/templates/account/account-orders.php'; ?>
+
+                    <div class="dr-pagination">
+                        <?php if ( $total_pages > 1 ): ?>
+                            <a class="page-link prev" href="javascript:void(0)">
+                                <button class="btn" disabled>&laquo;</button>
+                            </a>
+                        <?php endif; ?>
+                        <a class="page-link active" href="javascript:void(0)" data-page-number="1">1</a>
+                        <?php for ( $x = 1; $x < $total_pages; $x++ ) { ?>
+                            <a class="page-link" href="javascript:void(0)" data-page-number="<?php echo ( $x + 1 ); ?>"><?php echo ( $x + 1 ); ?></a>
+                        <?php } ?>
+                        <?php if ( $total_pages > 1 ): ?>
+                            <a class="page-link next" href="javascript:void(0)">
+                                <button class="btn">&raquo;</button>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+
                 <?php else: ?>
                     <?php echo __( 'You have no recorded orders. If you just place an order, please wait a few miniutes and reload the page. The order detail will be there.', 'digital-river-global-commerce' ); ?>
                 <?php endif; ?>
@@ -113,23 +133,6 @@ if($first_name !== '' && $last_name !== '') {
 
                 <?php else: ?>
                     <?php echo __( 'You have no saved addresses.', 'digital-river-global-commerce' ); ?>
-                <?php endif; ?>
-            </div>
-
-        </div>
-        <div class="dr-tab-pane fade" id="list-payments" role="tabpanel" aria-labelledby="list-payments-list">
-            <div class="dr-h4"><span class="back">&lsaquo;</span><?php echo __( 'My Payments', 'digital-river-global-commerce' ); ?><span class="back close">&times;</span></div>
-
-            <div class="overflowContainer">
-                <?php if ( $payments && count($payments) ) : ?>
-                    <div class="container-fluid">
-                        <div class="row payments">
-                            <?php include DRGC_PLUGIN_DIR . 'public/templates/account/account-payments.php'; ?>
-                        </div>
-                    </div>
-
-                <?php else: ?>
-                    <?php echo __( 'You have no saved payments.', 'digital-river-global-commerce' ); ?>
                 <?php endif; ?>
             </div>
 

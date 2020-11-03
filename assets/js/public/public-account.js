@@ -5,6 +5,8 @@ import CheckoutUtils from './checkout-utils';
 import LoginModule from './public-login';
 
 const AccountModule = (($) => {
+    const localizedText = drgc_params.translations;
+
     const appendAutoRenewalTerms = (digitalriverjs, entityCode, locale) => {
         const terms = CheckoutUtils.getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale);
 
@@ -13,32 +15,118 @@ const AccountModule = (($) => {
         }
     };
 
+    const getRightOfWithdrawalLink = (locale) => {
+        const gcFontsDomain = 'drh-fonts.img.digitalrivercontent.net';
+
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: 'GET',
+                url: `https://${gcFontsDomain}/store/${drgc_params.siteID}/${locale}/DisplayHelpPage`,
+                success: (response) => {
+                    const $rightOfWithdrawal = $(response).find('#dr_rightOfWithdrawalFAQ');
+                    let url = '';
+
+                    if ($rightOfWithdrawal.length) {
+                        url = $rightOfWithdrawal.find('a.dr_rightOfWithdrawal').prop('href').split('?')[1];
+                        url = `https://gc.digitalriver.com/store?${url}`;
+                    }
+
+                    resolve(url);
+                },
+                error: (jqXHR) => {
+                    reject(jqXHR);
+                }
+            });
+        });
+    };
+
+    const initRightOfWithdrawalLink = async () => {
+        try {
+            const rightOfWithdrawalLink = await AccountModule.getRightOfWithdrawalLink(drgc_params.drLocale);
+
+            if (rightOfWithdrawalLink) {
+                $('a.right-of-withdrawal-link').prop('href', rightOfWithdrawalLink);
+                $('.dr-right-of-withdrawal').show();
+            } else {
+                $('.dr-right-of-withdrawal').hide();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const createOrderList = (orders) => {
+        let listHtml = '';
+
+        orders.forEach((element) => {
+            const submissionDate = new Date(element.submissionDate).toLocaleDateString();
+            const status = element.orderState.toLowerCase().split(' ').join('');
+
+            listHtml = `
+                ${listHtml}
+                <div class="order">
+                    <div class="order-id" data-heading="${localizedText.order_id_label}">${element.id}</div>
+                    <div class="order-date" data-heading="${localizedText.date_label}">${submissionDate}</div>
+                    <div class="order-amount" data-heading="${localizedText.amount_label}">${element.pricing.formattedTotal}</div>
+                    <div class="order-status ${status}" data-heading="${localizedText.status_label}">${element.orderState}</div>
+                    <div class="order-details">
+                        <button type="button" class="btn btn-transparent" data-order="${element.id}">${localizedText.order_details_label}</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        return listHtml;
+    };
+
+    const updateListAndPagination = (list, $selectedNum, orders) => {
+        $('#list-orders > .overflowContainer > .order:not(.order-headings)').remove();
+        $('#list-orders > .overflowContainer > .order-headings').after(list);
+        $('#list-orders > .overflowContainer > .dr-pagination > .page-link').not($selectedNum).removeClass('active');
+        $selectedNum.addClass('active');
+        $('#list-orders > .overflowContainer > .dr-pagination > .next > .btn').prop('disabled', !orders.hasOwnProperty('nextPage'));
+        $('#list-orders > .overflowContainer > .dr-pagination > .prev > .btn').prop('disabled', !orders.hasOwnProperty('previousPage'));
+    };
+
     return {
-        appendAutoRenewalTerms
+        appendAutoRenewalTerms,
+        getRightOfWithdrawalLink,
+        initRightOfWithdrawalLink,
+        createOrderList,
+        updateListAndPagination
     };
 })(jQuery);
 
 $(() => {
     if ($('#dr-account-page-wrapper').length < 1) return;
 
-    const localizedText = drgc_params.translations;
-    const orders = drgc_params.shopperOrders ? drgc_params.shopperOrders.orders.order : '';
     window.drActiveOrderId = '';
-    var $body = $('body');
-    var $ordersModal = $('#ordersModal');
+    const localizedText = drgc_params.translations;
+    const $body = $('body');
+    const $ordersModal = $('#ordersModal');
 
     $body.append($ordersModal);
 
     // Order detail click
-    function fillOrderModal(e) {
-        var orderID = $(this).attr('data-order');
+    async function fillOrderModal(e) {
+        const orderId = $(this).attr('data-order');
 
-        if (orderID === drActiveOrderId) {
+        $('a.right-of-withdrawal-link').data('orderId', orderId);
+
+        if (orderId === drActiveOrderId) {
             $ordersModal.drModal('show');
         } else {
-            const selectedOrder = orders.find(order => order.id === parseInt(orderID));
+            let selectedOrder = '';
 
-            if (selectedOrder === undefined) {
+            try {
+                const orderDetails = await DRCommerceApi.getOrderDetails(orderId, {expand: 'all'});
+                selectedOrder = orderDetails.order;
+            } catch (error) {
+                console.error(error);
+                return false;
+            }
+
+            if (!selectedOrder) {
                 drToast.displayMessage(localizedText.undefined_error_msg, 'error');
                 return false;
             }
@@ -46,7 +134,7 @@ $(() => {
             const requestShipping = 'code' in selectedOrder.shippingMethod;
 
             // orderID
-            $('.dr-modal-orderNumber').text(orderID);
+            $('.dr-modal-orderNumber').text(orderId);
             // Order Pricing
             $('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
             $('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
@@ -157,11 +245,57 @@ $(() => {
             }
 
             // set this last
-            drActiveOrderId = orderID;
+            drActiveOrderId = orderId;
             $ordersModal.drModal('show');
         }
     }
-    $('.order-details .btn').on('click', fillOrderModal);
+
+    $(document).on('click', '.order-details > .btn', fillOrderModal);
+
+    $('a.right-of-withdrawal-link').on('click', (e) => {
+        e.preventDefault();
+        const $link = $(e.target);
+        const id = $link.data('orderId');
+
+        navigator.clipboard.writeText(id).then(() => {
+            alert(localizedText.copied_order_id_msg + ': ' + id);
+            window.open($link.prop('href'), '_blank');
+        }, () => {
+            console.error('Unable to write to clipboard.');
+        });
+    });
+
+    $('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', async (e) => {
+        const $list = $('#list-orders > .overflowContainer');
+        let $selectedNum = $(e.target);
+        let pageNumber = $selectedNum.data('pageNumber');
+        let isNextBtn = false;
+
+        if (!pageNumber) {
+            const currentNum = $('#list-orders > .overflowContainer > .dr-pagination').find('.page-link.active').data('pageNumber');
+            isNextBtn = $selectedNum.parent('a.page-link').hasClass('next');
+            pageNumber = isNextBtn ? currentNum + 1 : ((currentNum - 1) < 1) ? 1 : currentNum - 1;
+            $selectedNum = $('#list-orders > .overflowContainer > .dr-pagination > .page-link[data-page-number=' + pageNumber + ']');
+        }
+
+        if ($selectedNum.hasClass('active')) return false;
+
+        $list.addClass('dr-loading');
+
+        try {
+            const ordersByPage = await DRCommerceApi.getOrders({
+                pageNumber: pageNumber,
+                expand: 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
+            });
+            const list = AccountModule.createOrderList(ordersByPage.orders.order);
+
+            AccountModule.updateListAndPagination(list, $selectedNum, ordersByPage.orders);
+        } catch (error) {
+            console.error(error);
+        }
+
+        $list.removeClass('dr-loading');
+    });
 
     // modal print click
     $ordersModal.find('.dr-modal-footer .print-button').on('click', function() {
@@ -658,12 +792,15 @@ $(() => {
 
     if (sessionStorage.drAccountTab && $('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {
         $('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').drTab('show');
+        $('#nav-tabContent').removeClass('dr-loading');
     } else if (window.matchMedia && window.matchMedia('(min-width:768px)').matches) {
         $('#dr-account-page-wrapper a[data-toggle="dr-list"]').eq(0).drTab('show');
+        $('#nav-tabContent').removeClass('dr-loading');
     }
 
     //floating labels
     FloatLabel.init();
+    AccountModule.initRightOfWithdrawalLink();
 });
 
 export default AccountModule;
