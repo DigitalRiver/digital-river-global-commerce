@@ -15989,13 +15989,18 @@ jquery_default()(function () {
   jquery_default()('a.right-of-withdrawal-link').on('click', function (e) {
     e.preventDefault();
     var $link = jquery_default()(e.target);
-    var id = $link.data('orderId');
-    navigator.clipboard.writeText(id).then(function () {
-      alert(localizedText.copied_order_id_msg + ': ' + id);
+
+    if (window.isSecureContext) {
+      var id = $link.data('orderId');
+      navigator.clipboard.writeText(id).then(function () {
+        alert(localizedText.copied_order_id_msg + ': ' + id);
+        window.open($link.prop('href'), '_blank');
+      }, function () {
+        console.error('Unable to write to clipboard.');
+      });
+    } else {
       window.open($link.prop('href'), '_blank');
-    }, function () {
-      console.error('Unable to write to clipboard.');
-    });
+    }
   });
   jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
     var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {

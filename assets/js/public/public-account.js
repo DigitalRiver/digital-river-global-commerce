@@ -255,14 +255,19 @@ $(() => {
     $('a.right-of-withdrawal-link').on('click', (e) => {
         e.preventDefault();
         const $link = $(e.target);
-        const id = $link.data('orderId');
 
-        navigator.clipboard.writeText(id).then(() => {
-            alert(localizedText.copied_order_id_msg + ': ' + id);
+        if (window.isSecureContext) {
+            const id = $link.data('orderId');
+
+            navigator.clipboard.writeText(id).then(() => {
+                alert(localizedText.copied_order_id_msg + ': ' + id);
+                window.open($link.prop('href'), '_blank');
+            }, () => {
+                console.error('Unable to write to clipboard.');
+            });
+        } else {
             window.open($link.prop('href'), '_blank');
-        }, () => {
-            console.error('Unable to write to clipboard.');
-        });
+        }
     });
 
     $('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', async (e) => {
