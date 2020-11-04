@@ -307,11 +307,13 @@
         &-ar {
             margin-right:0;
             margin-left:auto;
+            white-space: nowrap;
         }
         &-title {
             margin-bottom:15px;
         }
         &-status {
+            white-space: nowrap;
             .freetrial {
                 color:$orange;
             }

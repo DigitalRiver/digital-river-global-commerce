@@ -935,8 +935,9 @@ body.dr-loading:after{position:fixed}
 .dr-account-wrapper .subscription{background-color:#e9ecef;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between;padding:30px 15px 15px 15px;margin-top:15px;position:relative}
 .dr-account-wrapper .subscription>*{margin-right:30px}
 .dr-account-wrapper .subscription-img{height:85px;width:85px;background-color:#fff;padding:5px;margin-right:10px;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:center;-ms-flex-pack:center;justify-content:center}
-.dr-account-wrapper .subscription-ar{margin-right:0;margin-left:auto}
+.dr-account-wrapper .subscription-ar{margin-right:0;margin-left:auto;white-space:nowrap}
 .dr-account-wrapper .subscription-title{margin-bottom:15px}
+.dr-account-wrapper .subscription-status{white-space:nowrap}
 .dr-account-wrapper .subscription-status .freetrial{color:#fd7e14}
 .dr-account-wrapper .subscription-status .active{color:#28a745}
 .dr-account-wrapper .subscription-content{font-size:.85em}
