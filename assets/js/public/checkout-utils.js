@@ -313,7 +313,7 @@ const CheckoutUtils = (($, params) => {
         line1: addressPayload.billing.line1,
         line2: addressPayload.billing.line2,
         city: addressPayload.billing.city,
-        state: addressPayload.billing.countrySubdivision || 'NA',
+        state: addressPayload.billing.countrySubdivision,
         postalCode: addressPayload.billing.postalCode,
         country: addressPayload.billing.country
       }
