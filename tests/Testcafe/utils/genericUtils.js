@@ -138,6 +138,12 @@ export default class GenericUtils {
     console.log('>> Checkout page - Entering Billing Info.');
     await checkoutPage.completeFormBillingInfo(isGuest, isLocaleUS);
 
+    // Since TEMS-ROW is enabled, non-US countries need to apply VAT when checkout
+    if (!isLocaleUS) {
+      let taxSubmitBtn = Selector('#checkout-tax-id-form').find('button');
+      await this.clickItem(taxSubmitBtn);
+    }
+
     if (isPhysical) {
       await t.expect(checkoutPage.deliveryOptionSubmitBtn.exists).ok();
       // Set delivery option
