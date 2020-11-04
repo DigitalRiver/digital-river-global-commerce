@@ -18,6 +18,7 @@ fixture `===== DRGC P1 Automation Test - Localization: Locale change =====`
 
 const homePage = new HomePage();
 const localUtil = new LocaleUtils();
+const utils = new GeneralUtils();
 const baseURL = Config.baseUrl[Config.env];
 const testEmail = Config.testEmail;
 const localeProdData = new ProductUtils().getLocalTestProduct();
@@ -36,9 +37,8 @@ test('Localization - ', async t => {
   const productMenu = Selector('a').withText(expectProductMenu);
   await t
     .hover(homePage.productsMenu)
-    .click(homePage.productsMenu)
-    .hover(homePage.paginationNextBtn)
-    .click(homePage.paginationNextBtn);
+    .click(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addLocaleProduct);
   await localUtil.changeLocales(localeTW);
   
   checkDisplayAfterSwitchLocale(productName, currency);
@@ -59,9 +59,9 @@ test('Localization - ', async t => {
   console.log('Click product card to go to product detail page')
   await t
     .hover(homePage.productsMenu)
-    .click(homePage.productsMenu)
-    .hover(homePage.paginationNextBtn)
-    .click(homePage.paginationNextBtn)
+    .click(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addLocaleProduct);
+  await t
     .hover(productCard)
     .click(productCard);
   
@@ -89,9 +89,8 @@ test('Localization - ', async t => {
   console.log('>> Add product into cart')
   await t
     .hover(homePage.productsMenu)
-    .click(homePage.productsMenu)
-    .hover(homePage.paginationNextBtn)
-    .click(homePage.paginationNextBtn)
+    .click(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addLocaleProduct);
 
   await localUtil.changeLocales(localeTW);
   

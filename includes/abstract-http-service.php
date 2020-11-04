@@ -216,7 +216,16 @@ abstract class AbstractHttpService {
      * @return void
      */
     protected function setEnv() {
-        $this->env = ( ( strpos( get_option( 'drgc_domain' ), 'test' ) !== false ) ? 'test' : 'production' );
+        switch (true) {
+            case ( strpos( get_option( 'drgc_domain' ), 'test' ) !== false ):
+                $this->env = 'test';
+            break;
+            case( strpos( get_option( 'drgc_domain' ), 'cte' ) !== false ):
+                $this->env = 'cte';
+            break;
+            default:
+                $this->env = 'production';
+        }
     }
 
     /**
@@ -225,8 +234,16 @@ abstract class AbstractHttpService {
      * @return string
      */
     protected function authUrl(): string {
-        $gc_domain = ( ( $this->env === 'test' ) ? 'drhadmin-sys-drx.drextenv.net' : 'store.digitalriver.com' );
-
+        switch ($this->env) {
+            case 'test':
+                $gc_domain = 'drhadmin-sys-drx.drextenv.net';
+            break;
+            case 'cte':
+                $gc_domain = 'drhadmin-cte.digitalriver.com';
+            break;
+            default:
+                $gc_domain = 'store.digitalriver.com';
+        }
         return "https://{$gc_domain}/store/{$this->site_id}/SessionToken";
     }
 
@@ -355,5 +372,26 @@ abstract class AbstractHttpService {
         $response =  $client->post( $uri, array( 'body' => $xml ) );
 
         return $response->getBody();
+    }
+
+    /**
+     * @param string  $uri
+     * @param array   $data
+     * @param boolean $force_bearer_token
+     *
+     * @return array
+     */
+    protected function put( string $uri = '', array $data = array(), $force_bearer_token = true ) {
+        if ( $this->config['headers']['Content-Type'] === 'application/json' ) {
+            $data = array( GuzzleHttp\RequestOptions::JSON => $data );
+        }
+
+        $client = $this->createClient( $force_bearer_token );
+
+        $uri = $this->normalizeUri($uri);
+
+        $response = $client->put( $uri, $data );
+
+        return $this->getResponseData( $response );
     }
 }

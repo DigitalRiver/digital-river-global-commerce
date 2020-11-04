@@ -167,31 +167,31 @@ class DRGC_Shopper extends AbstractHttpService {
 		}
 	}
 
-	/**
-	 * Get access token data
-	 */
-	public function get_access_token_information() {
-		$params = array(
-			'token' => $this->token
-		);
+  /**
+   * Get access token data
+   */
+  public function get_access_token_information() {
+    $params = array(
+      'token' => $this->token
+    );
 
-		$url = "/oauth20/access-tokens?" . http_build_query( $params );
+    $url = "/oauth20/access-tokens?" . http_build_query( $params );
 
-		try {
-			$res = $this->get( $url );
+    try {
+      $res = $this->get( $url );
 
-			$this->locale            = $res['locale'];
-			$this->currency          = $res['currency'];
-			$this->cart_id           = $res['cartId'];
-			$this->user_id           = $res['userId'];
-			$this->authenticated     = (bool) $res['authenticated'];
-			$this->client_ip_address = $res['clientIpAddress'];
+      $this->locale            = $res['locale'];
+      $this->currency          = $res['currency'];
+      $this->cart_id           = $res['cartId'];
+      $this->user_id           = $res['userId'];
+      $this->authenticated     = $res['authenticated'] === 'true';
+      $this->client_ip_address = $res['clientIpAddress'];
 
-			return $res;
-		} catch (\Exception $e) {
-			return "Error: # {$e->getMessage()}";
-		}
-	}
+      return $res;
+    } catch (\Exception $e) {
+      return "Error: # {$e->getMessage()}";
+    }
+  }
 
 	/**
 	 * Retrieve the current (anonymous and
@@ -441,7 +441,7 @@ class DRGC_Shopper extends AbstractHttpService {
    */
   public function retrieve_orders( $params = array() ) {
     $default = array(
-      'expand' => 'all'
+      'expand' => 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
     );
 
     $params = array_merge(

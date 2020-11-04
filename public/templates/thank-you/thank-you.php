@@ -56,6 +56,20 @@ if ( $billing_city !== '' && $billing_code !== '' ) {
 }
 
 $is_wire_transfer = $order['order']['paymentMethod']['type'] === 'wireTransfer';
+
+$show_vat_info = false;
+$tax = $order['order']['pricing']['tax']['value'] ?? 0;
+$custom_attributes = $order['order']['customAttributes']['attribute'] ?? [];
+$index = array_search( 'TAX_EXEMPTION_ROW_STATUS', array_column( $custom_attributes, 'name' ) );
+
+if ( $index !== false ) {
+    $tems_row_status = $custom_attributes[ $index ]['value'];
+
+    if ( $shipping_country !== 'US' && $tems_row_status === 'ELIGIBLE' && $tax === 0 ) {
+        $show_vat_info = true;
+    }
+}
+
 ?>
 
 <style>
@@ -171,6 +185,18 @@ $is_wire_transfer = $order['order']['paymentMethod']['type'] === 'wireTransfer';
                     </div>
 
                 </div>
+
+                <?php if ( $show_vat_info ): ?>
+
+                    <div class="dr-order-address__vat-info">
+
+                        <div class="address-title"><?php _e( 'VAT Information', 'digital-river-global-commerce' ) ?></div>
+
+                        <div class="address-info" id="dr-order-vat-info"></div>
+
+                    </div>
+
+                <?php endif; ?>
 
             </div>
 

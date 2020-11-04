@@ -4,6 +4,8 @@ import DRCommerceApi from './commerce-api';
 import CheckoutUtils from './checkout-utils';
 
 const PdpModule = (($) => {
+    const localizedText = drgc_params.translations;
+
     const bindVariationPrice = (pricing, $target) => {
         if (!pricing.listPrice || !pricing.salePriceWithQuantity) return;
         if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
@@ -45,8 +47,8 @@ const PdpModule = (($) => {
 
         $target
             .prop('disabled', isOutOfStock)
-            .text(isOutOfStock ? drgc_params.translations.out_of_stock :
-                isRedirectBuyBtn ? drgc_params.translations.buy_now : drgc_params.translations.add_to_cart)
+            .text(isOutOfStock ? localizedText.out_of_stock :
+                isRedirectBuyBtn ? localizedText.buy_now : localizedText.add_to_cart)
             .addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
     };
 
@@ -74,6 +76,7 @@ const PdpModule = (($) => {
 })(jQuery);
 
 jQuery(document).ready(($) => {
+    const localizedText = drgc_params.translations;
     let lineItems = [];
 
     function toggleMiniCartDisplay() {
@@ -106,13 +109,20 @@ jQuery(document).ready(($) => {
         }
 
         if (!lineItems.length) {
-            const emptyMsg = `<p class="dr-minicart-empty-msg">${drgc_params.translations.empty_cart_msg}</p>`;
+            const emptyMsg = `<p class="dr-minicart-empty-msg">${localizedText.empty_cart_msg}</p>`;
             $body.append(emptyMsg);
             $display.append($body);
         } else {
+            const params = (new URL(window.location)).searchParams;
+            const locale = params.get('locale') || drgc_params.drLocale;
+            const isTaxInclusive = locale !== 'en_US';
+            const forceExclTax = drgc_params.forceExclTax === 'true';
+            const taxSuffixLabel = isTaxInclusive ?
+                forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label :
+                '';
             let miniCartLineItems = '<ul class="dr-minicart-list">';
-            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${drgc_params.translations.subtotal_label}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
-            const miniCartViewCartBtn = `<a class="dr-btn" id="dr-minicart-view-cart-btn" href="${drgc_params.cartUrl}">${drgc_params.translations.view_cart_label}</a>`;
+            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${localizedText.subtotal_label + taxSuffixLabel}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
+            const miniCartViewCartBtn = `<a class="dr-btn" id="dr-minicart-view-cart-btn" href="${drgc_params.cartUrl}">${localizedText.view_cart_label}</a>`;
 
             lineItems.forEach((li) => {
                 const productId = li.product.uri.replace(`${DRCommerceApi.apiBaseUrl}/me/products/`, '');
@@ -135,10 +145,10 @@ jQuery(document).ready(($) => {
                     </div>
                     <div class="dr-minicart-item-info" data-product-id="${productId}">
                         <span class="dr-minicart-item-title">${li.product.displayName}</span>
-                        <span class="dr-minicart-item-qty">${drgc_params.translations.qty_label}.${li.quantity}</span>
+                        <span class="dr-minicart-item-qty">${localizedText.qty_label}.${li.quantity}</span>
                         <p class="dr-pd-price dr-minicart-item-price">${priceContent}</p>
                     </div>
-                    <a href="#" class="dr-minicart-item-remove-btn" aria-label="Remove" data-line-item-id="${li.id}">${drgc_params.translations.remove_label}</a>
+                    <a href="#" class="dr-minicart-item-remove-btn" aria-label="Remove" data-line-item-id="${li.id}">${localizedText.remove_label}</a>
                 </li>`;
                 miniCartLineItems += miniCartLineItem;
             });
@@ -310,8 +320,8 @@ jQuery(document).ready(($) => {
     // Real-time pricing & inventory status for single PD page (including variation/base products)
     if ($('.single-dr_product').length && !$('.dr-prod-variations select').length) { 
         isPdCard = false;
-        $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-        pdDisplayOption.$singlePDBuyBtn.text(drgc_params.translations.loading_msg).prop('disabled', true);
+        $(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+        pdDisplayOption.$singlePDBuyBtn.text(localizedText.loading_msg).prop('disabled', true);
 
         if (pdDisplayOption.$variationOption && pdDisplayOption.$variationOption.length) { // variation product
             pdDisplayOption.$variationOption.each((idx, elem) => {
@@ -331,7 +341,7 @@ jQuery(document).ready(($) => {
             });
         } else { // base product
             const productID = pdDisplayOption.$singlePDBuyBtn.data('product-id');
-            const $priceDiv = $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+            const $priceDiv = $(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
 
             if (!productID) return;
             DRCommerceApi.getProduct(productID, { expand: 'inventoryStatus' }).then((res) => {
@@ -349,8 +359,8 @@ jQuery(document).ready(($) => {
         isPdCard = true;
         pdDisplayOption.$card.each((idx, elem) => {
             const $currentElem = $(elem);
-            const $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-            const $buyBtn = $currentElem.find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
+            const $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+            const $buyBtn = $currentElem.find('.dr-buy-btn').text(localizedText.loading_msg).prop('disabled', true);
             const productID = $buyBtn.data('product-id');
             const parentId = $buyBtn.data('parent-id');
 
@@ -452,7 +462,7 @@ jQuery(document).ready(($) => {
         const productId = Object.keys(drgcVarAttrs).find(key => JSON.stringify(drgcVarAttrs[key]) === JSON.stringify(allSelectedVal));
 
         if (productId) {
-            $priceDiv.text(drgc_params.translations.loading_msg);
+            $priceDiv.text(localizedText.loading_msg);
             DRCommerceApi.getProduct(productId, {expand: 'inventoryStatus'})
                 .then((res) => {
                     const currentProduct = res.product;

@@ -42,6 +42,7 @@ if ( $is_logged_in ) {
 }
 
 $check_subs = drgc_is_subs_added_to_cart( $cart );
+$is_tems_row_enabled = is_array( $tax_schema ) && ( $selected_country !== 'US' );
 ?>
 
 <div class="dr-checkout-wrapper" id="dr-checkout-page-wrapper">
@@ -79,6 +80,10 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
             endif; ?>
 
             <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-billing.php'; ?>
+
+            <?php if ( $is_tems_row_enabled ):
+                include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-tax-identifier.php';
+            endif; ?>
 
             <?php if( $cart['cart']['hasPhysicalProduct'] ) :
                 include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-delivery.php';

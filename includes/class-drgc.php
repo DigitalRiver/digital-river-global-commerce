@@ -400,14 +400,21 @@ class DRGC {
     $this->loader->add_action( 'wp_ajax_nopriv_drgc_get_offers_by_pop', $plugin_public, 'get_offers_by_pop_ajax' );
     $this->loader->add_action( 'wp_ajax_drgc_get_offers_by_pop', $plugin_public, 'get_offers_by_pop_ajax' );
 
-		$this->loader->add_action( 'wp_head', $plugin_public, 'add_modal_html' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_get_tax_schema', $plugin_public, 'get_tax_schema_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_get_tax_schema', $plugin_public, 'get_tax_schema_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_apply_tax_registration', $plugin_public, 'apply_tax_registration_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_apply_tax_registration', $plugin_public, 'apply_tax_registration_ajax' );
+    $this->loader->add_action( 'wp_ajax_nopriv_drgc_get_tax_registration', $plugin_public, 'get_tax_registration_ajax' );
+    $this->loader->add_action( 'wp_ajax_drgc_get_tax_registration', $plugin_public, 'get_tax_registration_ajax' );
 
-		$this->loader->add_filter( 'get_the_archive_title', $plugin_public, 'translate_archive_title' );
+    $this->loader->add_action( 'wp_head', $plugin_public, 'add_modal_html' );
 
-		$this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
+    $this->loader->add_filter( 'get_the_archive_title', $plugin_public, 'translate_archive_title' );
+
+    $this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
     $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_access_token' );
 
-    $this->loader->add_filter( 'the_title', $plugin_public, 'localize_title' );
+    $this->loader->add_filter( 'the_title', $plugin_public, 'localize_title', 10, 2 );
     $this->loader->add_filter( 'the_content', $plugin_public, 'localize_content' );
 
     $this->loader->add_action( 'wp_head', $plugin_public, 'add_test_order_banner' );

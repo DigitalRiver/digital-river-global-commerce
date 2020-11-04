@@ -98,13 +98,8 @@ class DRGC_Public {
     }
 
     $customer = array();
-    $orders_obj = '';
     if ( DRGC()->shopper ) {
       $customer = DRGC()->shopper->retrieve_shopper();
-
-      if ( is_page( 'account' ) ) {
-        $orders_obj = DRGC()->shopper->retrieve_orders();
-      }
     }
 
     //test Order Handler
@@ -188,7 +183,17 @@ class DRGC_Public {
       'upsell_decline_label'           => __('No, thanks', 'digital-river-global-commerce'),
       'unable_place_order_msg'         => __('Unable to place order', 'digital-river-global-commerce'),
       'new_password_error_msg'         => __('The new password must be different from the current password.', 'digital-river-global-commerce'),
-      'payment_methods_error_msg'      => __('Sorry, it seems that there are no available payment methods for your location.', 'digital-river-global-commerce')
+      'payment_methods_error_msg'      => __('Sorry, it seems that there are no available payment methods for your location.', 'digital-river-global-commerce'),
+      'shopper_type'                   => __('Shopper Type', 'digital-river-global-commerce'),
+      'personal_shopper_type'          => __('Personal', 'digital-river-global-commerce'),
+      'business_shopper_type'          => __('Business', 'digital-river-global-commerce'),
+      'invalid_tax_id_error_msg'       => __('Your tax ID could not be verified. Tax may apply.', 'digital-river-global-commerce'),
+      'copied_order_id_msg'            => __('Copied the order number', 'digital-river-global-commerce'),
+      'order_id_label'                 => __('Order ID', 'digital-river-global-commerce'),
+      'date_label'                     => __('Date', 'digital-river-global-commerce'),
+      'amount_label'                   => __('Amount', 'digital-river-global-commerce'),
+      'status_label'                   => __('Status', 'digital-river-global-commerce'),
+      'order_details_label'            => __('Order Details', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
@@ -209,7 +214,6 @@ class DRGC_Public {
       'accessToken'       =>  $access_token,
       'cart'              =>  $cart_obj,
       'order'             =>  $order_obj,
-      'shopperOrders'     =>  $orders_obj,
       'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
       'isLogin'           =>  drgc_get_user_status(),
       'testOrder'         => $testOrder_enable,
@@ -1060,14 +1064,18 @@ class DRGC_Public {
    * @param  string
    * @return string
    */
-  public function localize_title( $title ) {
-    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
-      global $post;
-      $meta = get_post_meta( $post->ID );
-      $locale = drgc_get_current_dr_locale();
+  public function localize_title( $title, $post_id ) {
+    if( ! is_admin() && isset( $post_id ) ) {
+      $post = get_post( $post_id );
+      $post_type = get_post_type( $post_id );
 
-      if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
-        return $meta['drgc_title_' . $locale][0] ?: $title;
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
+          return $meta['drgc_title_' . $locale][0] ?: $title;
+        }
       }
     }
     return $title;
@@ -1081,13 +1089,18 @@ class DRGC_Public {
    * @return string
    */
   public function localize_content( $content ) {
-    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
+    if( ! is_admin() ) {
       global $post;
-      $meta = get_post_meta( $post->ID );
-      $locale = drgc_get_current_dr_locale();
+      $post_id = $post->ID;
+      $post_type = $post->post_type;
 
-      if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
-        return $meta['drgc_content_' . $locale][0] ?: $content;
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
+          return $meta['drgc_content_' . $locale][0] ?: $content;
+        }
       }
     }
     return $content;
@@ -1100,5 +1113,81 @@ class DRGC_Public {
    */
   public function display_custom_widget_area() {
     if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'drgc-header-sidebar' ) ): endif;
+  }
+
+  /**
+	 * Ajax handles getting the tax schema.
+   *
+   * @since  2.0.0
+   */
+  public function get_tax_schema_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    if ( isset( $_POST['address'] ) ) {
+      $address = $_POST['address'];
+      
+      if ( $address['country'] === 'US' ) {
+        wp_send_json_error();
+      }
+
+      $response = DRGC()->cart->get_tax_schema( $address );
+
+      if ( $response && is_array( $response ) ) {
+        wp_send_json_success( $response );
+      } else {
+        wp_send_json_error( $response );
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
+
+  /**
+   * Ajax handles applying the tax registrations to cart
+   *
+   * @since  2.0.0
+   */
+  public function apply_tax_registration_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    if ( isset( $_POST['customerType'] ) && isset( $_POST['taxRegs'] ) ) {
+      $customer_type = $_POST['customerType'];
+      $tax_regs = $_POST['taxRegs'];
+
+      $response = DRGC()->cart->apply_tax_registration( $customer_type, $tax_regs );
+
+      if ( $response && is_array( $response ) ) {
+        if ( isset( $response['customerType'] ) && isset( $response['taxRegistrations'] ) ) {
+          wp_send_json_success( $response );
+        } else {
+          wp_send_json_error( $response );
+        }
+      } else {
+        wp_send_json_error();
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
+	
+	/**
+   * Ajax handles getting the tax registrations from the current cart
+   *
+   * @since  2.0.0
+   */
+  public function get_tax_registration_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    $response = DRGC()->cart->get_tax_registration();
+
+    if ( $response && is_array( $response ) ) {
+      if ( array_key_exists( 'customerType', $response ) && array_key_exists( 'taxRegistrations', $response ) ) {
+        wp_send_json_success( $response );
+      } else {
+        wp_send_json_error( $response );
+      }
+    } else {
+      wp_send_json_error();
+    }
   }
 }
