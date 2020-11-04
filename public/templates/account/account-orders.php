@@ -11,11 +11,6 @@
  * @subpackage Digital_River_Global_Commerce/public/partials
  */
 ?>
-
-<script>
-    window.drOrders = window.drOrders || {};
-</script>
-
 <?php 
   $orderID = __( 'Order ID', 'digital-river-global-commerce' );
   $date = __( 'Date', 'digital-river-global-commerce' );
@@ -162,7 +157,9 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="dr-right-of-withdrawal" style="display: none;">
+                    <a class="right-of-withdrawal-link" href="javascript:void(0)" data-order-id=""><?php _e( 'Right of Withdrawal Request', 'digital-river-global-commerce' ); ?></a>
+                </div>
             </div>
             <div class="dr-modal-footer">
                 <button type="button" class="dr-btn dr-btn-black" data-dismiss="dr-modal"><?php _e( 'Close', 'digital-river-global-commerce' ) ?></button>

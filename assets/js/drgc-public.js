@@ -9570,49 +9570,6 @@ module.exports = __webpack_require__(15);
 /* 2 */
 /***/ (function(module, exports) {
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports) {
-
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
   try {
     var info = gen[key](arg);
@@ -9650,6 +9607,49 @@ function _asyncToGenerator(fn) {
 }
 
 module.exports = _asyncToGenerator;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
 
 /***/ }),
 /* 5 */
@@ -9788,7 +9788,7 @@ module.exports = _toConsumableArray;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
 /* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -10748,7 +10748,7 @@ module.exports = _nonIterableSpread;
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(2);
+var helpers_typeof = __webpack_require__(4);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // CONCATENATED MODULE: ./assets/js/public/modal.js
@@ -12035,7 +12035,7 @@ var regenerator = __webpack_require__(1);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(4);
+var asyncToGenerator = __webpack_require__(2);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
@@ -12964,6 +12964,27 @@ var DRCommerceApi = function ($, params) {
     });
   };
 
+  var getOrders = function getOrders() {
+    var queryObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer ".concat(params.accessToken)
+        },
+        url: "".concat(apiBaseUrl, "/me/orders?").concat($.param(queryObj)),
+        success: function success(data) {
+          resolve(data);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
   return _ref = {
     apiBaseUrl: apiBaseUrl,
     updateShopper: updateShopper,
@@ -12985,7 +13006,7 @@ var DRCommerceApi = function ($, params) {
     saveShopperAddress: saveShopperAddress,
     updateShopperAddress: updateShopperAddress,
     deleteShopperAddress: deleteShopperAddress
-  }, defineProperty_default()(_ref, "submitCart", submitCart), defineProperty_default()(_ref, "getSubsDetails", getSubsDetails), defineProperty_default()(_ref, "getOrderDetails", getOrderDetails), _ref;
+  }, defineProperty_default()(_ref, "submitCart", submitCart), defineProperty_default()(_ref, "getSubsDetails", getSubsDetails), defineProperty_default()(_ref, "getOrderDetails", getOrderDetails), defineProperty_default()(_ref, "getOrders", getOrders), _ref;
 }(jQuery, drgc_params);
 
 /* harmony default export */ var commerce_api = (DRCommerceApi);
@@ -15710,7 +15731,11 @@ jQuery(document).ready(function ($) {
 
 
 
+
+
 var AccountModule = function ($) {
+  var localizedText = drgc_params.translations;
+
   var appendAutoRenewalTerms = function appendAutoRenewalTerms(digitalriverjs, entityCode, locale) {
     var terms = checkout_utils.getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale);
 
@@ -15719,114 +15744,326 @@ var AccountModule = function ($) {
     }
   };
 
+  var getRightOfWithdrawalLink = function getRightOfWithdrawalLink(locale) {
+    var gcFontsDomain = 'drh-fonts.img.digitalrivercontent.net';
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        url: "https://".concat(gcFontsDomain, "/store/").concat(drgc_params.siteID, "/").concat(locale, "/DisplayHelpPage"),
+        success: function success(response) {
+          var $rightOfWithdrawal = $(response).find('#dr_rightOfWithdrawalFAQ');
+          var url = '';
+
+          if ($rightOfWithdrawal.length) {
+            url = $rightOfWithdrawal.find('a.dr_rightOfWithdrawal').prop('href').split('?')[1];
+            url = "https://gc.digitalriver.com/store?".concat(url);
+          }
+
+          resolve(url);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var initRightOfWithdrawalLink = /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var rightOfWithdrawalLink;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return AccountModule.getRightOfWithdrawalLink(drgc_params.drLocale);
+
+            case 3:
+              rightOfWithdrawalLink = _context.sent;
+
+              if (rightOfWithdrawalLink) {
+                $('a.right-of-withdrawal-link').prop('href', rightOfWithdrawalLink);
+                $('.dr-right-of-withdrawal').show();
+              } else {
+                $('.dr-right-of-withdrawal').hide();
+              }
+
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 7]]);
+    }));
+
+    return function initRightOfWithdrawalLink() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var createOrderList = function createOrderList(orders) {
+    var listHtml = '';
+    orders.forEach(function (element) {
+      var submissionDate = new Date(element.submissionDate).toLocaleDateString();
+      var status = element.orderState.toLowerCase().split(' ').join('');
+      listHtml = "\n                ".concat(listHtml, "\n                <div class=\"order\">\n                    <div class=\"order-id\" data-heading=\"").concat(localizedText.order_id_label, "\">").concat(element.id, "</div>\n                    <div class=\"order-date\" data-heading=\"").concat(localizedText.date_label, "\">").concat(submissionDate, "</div>\n                    <div class=\"order-amount\" data-heading=\"").concat(localizedText.amount_label, "\">").concat(element.pricing.formattedTotal, "</div>\n                    <div class=\"order-status ").concat(status, "\" data-heading=\"").concat(localizedText.status_label, "\">").concat(element.orderState, "</div>\n                    <div class=\"order-details\">\n                        <button type=\"button\" class=\"btn btn-transparent\" data-order=\"").concat(element.id, "\">").concat(localizedText.order_details_label, "</button>\n                    </div>\n                </div>\n            ");
+    });
+    return listHtml;
+  };
+
+  var updateListAndPagination = function updateListAndPagination(list, $selectedNum, orders) {
+    $('#list-orders > .overflowContainer > .order:not(.order-headings)').remove();
+    $('#list-orders > .overflowContainer > .order-headings').after(list);
+    $('#list-orders > .overflowContainer > .dr-pagination > .page-link').not($selectedNum).removeClass('active');
+    $selectedNum.addClass('active');
+    $('#list-orders > .overflowContainer > .dr-pagination > .next > .btn').prop('disabled', !orders.hasOwnProperty('nextPage'));
+    $('#list-orders > .overflowContainer > .dr-pagination > .prev > .btn').prop('disabled', !orders.hasOwnProperty('previousPage'));
+  };
+
   return {
-    appendAutoRenewalTerms: appendAutoRenewalTerms
+    appendAutoRenewalTerms: appendAutoRenewalTerms,
+    getRightOfWithdrawalLink: getRightOfWithdrawalLink,
+    initRightOfWithdrawalLink: initRightOfWithdrawalLink,
+    createOrderList: createOrderList,
+    updateListAndPagination: updateListAndPagination
   };
 }(jQuery);
 
 jquery_default()(function () {
   if (jquery_default()('#dr-account-page-wrapper').length < 1) return;
-  var localizedText = drgc_params.translations;
-  var orders = drgc_params.shopperOrders ? drgc_params.shopperOrders.orders.order : '';
   window.drActiveOrderId = '';
+  var localizedText = drgc_params.translations;
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');
   $body.append($ordersModal); // Order detail click
 
-  function fillOrderModal(e) {
-    var orderID = jquery_default()(this).attr('data-order');
-
-    if (orderID === drActiveOrderId) {
-      $ordersModal.drModal('show');
-    } else {
-      var selectedOrder = orders.find(function (order) {
-        return order.id === parseInt(orderID);
-      });
-
-      if (selectedOrder === undefined) {
-        drToast.displayMessage(localizedText.undefined_error_msg, 'error');
-        return false;
-      }
-
-      var requestShipping = ('code' in selectedOrder.shippingMethod); // orderID
-
-      jquery_default()('.dr-modal-orderNumber').text(orderID); // Order Pricing
-
-      jquery_default()('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
-      jquery_default()('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
-      jquery_default()('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
-      var isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
-
-      if (isDiscount) {
-        jquery_default()('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
-        jquery_default()('.dr-summary__discount').show();
-      } else {
-        jquery_default()('.dr-summary__discount').hide();
-      }
-
-      jquery_default()('.dr-modal-total').text(selectedOrder.pricing.formattedTotal); // Billing
-
-      jquery_default()('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
-      var billingAddress1 = selectedOrder.billingAddress.line1;
-      billingAddress1 += selectedOrder.billingAddress.line2 ? '<br>' + selectedOrder.billingAddress.line2 : '';
-      jquery_default()('.dr-modal-billingAddress1').html(billingAddress1);
-      var billingAddress2 = selectedOrder.billingAddress.city ? selectedOrder.billingAddress.city : '';
-      billingAddress2 += selectedOrder.billingAddress.countrySubdivision ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
-      billingAddress2 += selectedOrder.billingAddress.postalCode ? ' ' + selectedOrder.billingAddress.postalCode : '';
-      jquery_default()('.dr-modal-billingAddress2').text(billingAddress2);
-      jquery_default()('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country); // Shipping
-
-      jquery_default()('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
-      var shippingAddress1 = selectedOrder.shippingAddress.line1;
-      shippingAddress1 += selectedOrder.shippingAddress.line2 ? '<br>' + selectedOrder.shippingAddress.line2 : '';
-      jquery_default()('.dr-modal-shippingAddress1').html(shippingAddress1);
-      var shippingAddress2 = selectedOrder.shippingAddress.city ? selectedOrder.shippingAddress.city : '';
-      shippingAddress2 += selectedOrder.shippingAddress.countrySubdivision ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
-      shippingAddress2 += selectedOrder.shippingAddress.postalCode ? ' ' + selectedOrder.shippingAddress.postalCode : '';
-      jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
-      jquery_default()('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country); // Summary Labels
-
-      var isTaxInclusive = selectedOrder.locale !== 'en_US';
-      var forceExclTax = drgc_params.forceExclTax === 'true';
-      var orderCurrency = selectedOrder.pricing.total.currency;
-      var shouldDisplayVat = orderCurrency === 'GBP' || orderCurrency === 'EUR';
-      var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
-      jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
-      jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
-      jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
-      jquery_default()('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
-
-      if (isTaxInclusive && !forceExclTax) {
-        jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
-      } else {
-        jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
-      } // Products
-
-
-      var html = '';
-      var count = selectedOrder.lineItems.lineItem.length;
-
-      for (var i = 0; i < count; i++) {
-        var lineItem = selectedOrder.lineItems.lineItem[i];
-        html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
-      }
-
-      jquery_default()('.dr-summary__products').html(html);
-      checkout_utils.updateSummaryPricing(selectedOrder, isTaxInclusive);
-
-      if (!requestShipping) {
-        jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
-      } else {
-        jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').show();
-      } // set this last
-
-
-      drActiveOrderId = orderID;
-      $ordersModal.drModal('show');
-    }
+  function fillOrderModal(_x) {
+    return _fillOrderModal.apply(this, arguments);
   }
 
-  jquery_default()('.order-details .btn').on('click', fillOrderModal); // modal print click
+  function _fillOrderModal() {
+    _fillOrderModal = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
+      var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, isTaxInclusive, forceExclTax, orderCurrency, shouldDisplayVat, taxSuffixLabel, html, count, i, lineItem;
+      return regenerator_default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              orderId = jquery_default()(this).attr('data-order');
+              jquery_default()('a.right-of-withdrawal-link').data('orderId', orderId);
+
+              if (!(orderId === drActiveOrderId)) {
+                _context3.next = 6;
+                break;
+              }
+
+              $ordersModal.drModal('show');
+              _context3.next = 65;
+              break;
+
+            case 6:
+              selectedOrder = '';
+              _context3.prev = 7;
+              _context3.next = 10;
+              return commerce_api.getOrderDetails(orderId, {
+                expand: 'all'
+              });
+
+            case 10:
+              orderDetails = _context3.sent;
+              selectedOrder = orderDetails.order;
+              _context3.next = 18;
+              break;
+
+            case 14:
+              _context3.prev = 14;
+              _context3.t0 = _context3["catch"](7);
+              console.error(_context3.t0);
+              return _context3.abrupt("return", false);
+
+            case 18:
+              if (selectedOrder) {
+                _context3.next = 21;
+                break;
+              }
+
+              drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+              return _context3.abrupt("return", false);
+
+            case 21:
+              requestShipping = 'code' in selectedOrder.shippingMethod; // orderID
+
+              jquery_default()('.dr-modal-orderNumber').text(orderId); // Order Pricing
+
+              jquery_default()('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
+              jquery_default()('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
+              jquery_default()('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
+              isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
+
+              if (isDiscount) {
+                jquery_default()('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
+                jquery_default()('.dr-summary__discount').show();
+              } else {
+                jquery_default()('.dr-summary__discount').hide();
+              }
+
+              jquery_default()('.dr-modal-total').text(selectedOrder.pricing.formattedTotal); // Billing
+
+              jquery_default()('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
+              billingAddress1 = selectedOrder.billingAddress.line1;
+              billingAddress1 += selectedOrder.billingAddress.line2 ? '<br>' + selectedOrder.billingAddress.line2 : '';
+              jquery_default()('.dr-modal-billingAddress1').html(billingAddress1);
+              billingAddress2 = selectedOrder.billingAddress.city ? selectedOrder.billingAddress.city : '';
+              billingAddress2 += selectedOrder.billingAddress.countrySubdivision ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
+              billingAddress2 += selectedOrder.billingAddress.postalCode ? ' ' + selectedOrder.billingAddress.postalCode : '';
+              jquery_default()('.dr-modal-billingAddress2').text(billingAddress2);
+              jquery_default()('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country); // Shipping
+
+              jquery_default()('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
+              shippingAddress1 = selectedOrder.shippingAddress.line1;
+              shippingAddress1 += selectedOrder.shippingAddress.line2 ? '<br>' + selectedOrder.shippingAddress.line2 : '';
+              jquery_default()('.dr-modal-shippingAddress1').html(shippingAddress1);
+              shippingAddress2 = selectedOrder.shippingAddress.city ? selectedOrder.shippingAddress.city : '';
+              shippingAddress2 += selectedOrder.shippingAddress.countrySubdivision ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
+              shippingAddress2 += selectedOrder.shippingAddress.postalCode ? ' ' + selectedOrder.shippingAddress.postalCode : '';
+              jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
+              jquery_default()('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country); // Summary Labels
+
+              isTaxInclusive = selectedOrder.locale !== 'en_US';
+              forceExclTax = drgc_params.forceExclTax === 'true';
+              orderCurrency = selectedOrder.pricing.total.currency;
+              shouldDisplayVat = orderCurrency === 'GBP' || orderCurrency === 'EUR';
+              taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
+              jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
+              jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
+              jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+              jquery_default()('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
+
+              if (isTaxInclusive && !forceExclTax) {
+                jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
+              } else {
+                jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
+              } // Products
+
+
+              html = '';
+              count = selectedOrder.lineItems.lineItem.length;
+
+              for (i = 0; i < count; i++) {
+                lineItem = selectedOrder.lineItems.lineItem[i];
+                html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
+              }
+
+              jquery_default()('.dr-summary__products').html(html);
+              checkout_utils.updateSummaryPricing(selectedOrder, isTaxInclusive);
+
+              if (!requestShipping) {
+                jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
+              } else {
+                jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').show();
+              } // set this last
+
+
+              drActiveOrderId = orderId;
+              $ordersModal.drModal('show');
+
+            case 65:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, this, [[7, 14]]);
+    }));
+    return _fillOrderModal.apply(this, arguments);
+  }
+
+  jquery_default()(document).on('click', '.order-details > .btn', fillOrderModal);
+  jquery_default()('a.right-of-withdrawal-link').on('click', function (e) {
+    e.preventDefault();
+    var $link = jquery_default()(e.target);
+
+    if (window.isSecureContext) {
+      var id = $link.data('orderId');
+      navigator.clipboard.writeText(id).then(function () {
+        alert(localizedText.copied_order_id_msg + ': ' + id);
+        window.open($link.prop('href'), '_blank');
+      }, function () {
+        console.error('Unable to write to clipboard.');
+      });
+    } else {
+      window.open($link.prop('href'), '_blank');
+    }
+  });
+  jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
+    var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
+      var $list, $selectedNum, pageNumber, isNextBtn, currentNum, ordersByPage, list;
+      return regenerator_default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              $list = jquery_default()('#list-orders > .overflowContainer');
+              $selectedNum = jquery_default()(e.target);
+              pageNumber = $selectedNum.data('pageNumber');
+              isNextBtn = false;
+
+              if (!pageNumber) {
+                currentNum = jquery_default()('#list-orders > .overflowContainer > .dr-pagination').find('.page-link.active').data('pageNumber');
+                isNextBtn = $selectedNum.parent('a.page-link').hasClass('next');
+                pageNumber = isNextBtn ? currentNum + 1 : currentNum - 1 < 1 ? 1 : currentNum - 1;
+                $selectedNum = jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link[data-page-number=' + pageNumber + ']');
+              }
+
+              if (!$selectedNum.hasClass('active')) {
+                _context2.next = 7;
+                break;
+              }
+
+              return _context2.abrupt("return", false);
+
+            case 7:
+              $list.addClass('dr-loading');
+              _context2.prev = 8;
+              _context2.next = 11;
+              return commerce_api.getOrders({
+                pageNumber: pageNumber,
+                expand: 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
+              });
+
+            case 11:
+              ordersByPage = _context2.sent;
+              list = AccountModule.createOrderList(ordersByPage.orders.order);
+              AccountModule.updateListAndPagination(list, $selectedNum, ordersByPage.orders);
+              _context2.next = 19;
+              break;
+
+            case 16:
+              _context2.prev = 16;
+              _context2.t0 = _context2["catch"](8);
+              console.error(_context2.t0);
+
+            case 19:
+              $list.removeClass('dr-loading');
+
+            case 20:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[8, 16]]);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }()); // modal print click
 
   $ordersModal.find('.dr-modal-footer .print-button').on('click', function () {
     var $dialog = $ordersModal.find('.dr-modal-dialog');
@@ -16272,12 +16509,15 @@ jquery_default()(function () {
 
   if (sessionStorage.drAccountTab && jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {
     jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').drTab('show');
+    jquery_default()('#nav-tabContent').removeClass('dr-loading');
   } else if (window.matchMedia && window.matchMedia('(min-width:768px)').matches) {
     jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"]').eq(0).drTab('show');
+    jquery_default()('#nav-tabContent').removeClass('dr-loading');
   } //floating labels
 
 
   float_label.init();
+  AccountModule.initRightOfWithdrawalLink();
 });
 /* harmony default export */ var public_account = (AccountModule);
 // CONCATENATED MODULE: ./assets/js/public/user-activity-watcher.js
