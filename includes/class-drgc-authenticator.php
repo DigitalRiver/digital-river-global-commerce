@@ -108,8 +108,8 @@ class DRGC_Authenticator extends AbstractHttpService {
 	 * Set Schedule Refresher
 	 */
 	public function set_schedule_refresher() {
-		if (! wp_next_scheduled ( 'refresh_access_token_event' )) {
-			wp_schedule_event( time(), 'hourly', 'refresh_access_token_event');
+		if ( ! wp_next_scheduled ( 'dr_refresh_access_token' ) ) {
+			wp_schedule_event( time(), 'hourly', 'dr_refresh_access_token');
 		}
 
 		add_action( 'dr_refresh_access_token', array( $this, 'do_refresh_access_token' ) );
