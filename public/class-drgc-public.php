@@ -98,13 +98,8 @@ class DRGC_Public {
     }
 
     $customer = array();
-    $orders_obj = '';
     if ( DRGC()->shopper ) {
       $customer = DRGC()->shopper->retrieve_shopper();
-
-      if ( is_page( 'account' ) ) {
-        $orders_obj = DRGC()->shopper->retrieve_orders();
-      }
     }
 
     //test Order Handler
@@ -192,7 +187,13 @@ class DRGC_Public {
       'shopper_type'                   => __('Shopper Type', 'digital-river-global-commerce'),
       'personal_shopper_type'          => __('Personal', 'digital-river-global-commerce'),
       'business_shopper_type'          => __('Business', 'digital-river-global-commerce'),
-      'invalid_tax_id_error_msg'       => __('Your tax ID could not be verified. Tax may apply.', 'digital-river-global-commerce')                
+      'invalid_tax_id_error_msg'       => __('Your tax ID could not be verified. Tax may apply.', 'digital-river-global-commerce'),
+      'copied_order_id_msg'            => __('Copied the order number', 'digital-river-global-commerce'),
+      'order_id_label'                 => __('Order ID', 'digital-river-global-commerce'),
+      'date_label'                     => __('Date', 'digital-river-global-commerce'),
+      'amount_label'                   => __('Amount', 'digital-river-global-commerce'),
+      'status_label'                   => __('Status', 'digital-river-global-commerce'),
+      'order_details_label'            => __('Order Details', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
@@ -213,7 +214,6 @@ class DRGC_Public {
       'accessToken'       =>  $access_token,
       'cart'              =>  $cart_obj,
       'order'             =>  $order_obj,
-      'shopperOrders'     =>  $orders_obj,
       'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
       'isLogin'           =>  drgc_get_user_status(),
       'testOrder'         => $testOrder_enable,
@@ -1064,14 +1064,18 @@ class DRGC_Public {
    * @param  string
    * @return string
    */
-  public function localize_title( $title ) {
-    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
-      global $post;
-      $meta = get_post_meta( $post->ID );
-      $locale = drgc_get_current_dr_locale();
+  public function localize_title( $title, $post_id ) {
+    if( ! is_admin() && isset( $post_id ) ) {
+      $post = get_post( $post_id );
+      $post_type = get_post_type( $post_id );
 
-      if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
-        return $meta['drgc_title_' . $locale][0] ?: $title;
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
+          return $meta['drgc_title_' . $locale][0] ?: $title;
+        }
       }
     }
     return $title;
@@ -1085,13 +1089,18 @@ class DRGC_Public {
    * @return string
    */
   public function localize_content( $content ) {
-    if ( ( is_single() || is_page() || in_the_loop() ) && is_main_query() ) {
+    if( ! is_admin() ) {
       global $post;
-      $meta = get_post_meta( $post->ID );
-      $locale = drgc_get_current_dr_locale();
+      $post_id = $post->ID;
+      $post_type = $post->post_type;
 
-      if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
-        return $meta['drgc_content_' . $locale][0] ?: $content;
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
+          return $meta['drgc_content_' . $locale][0] ?: $content;
+        }
       }
     }
     return $content;

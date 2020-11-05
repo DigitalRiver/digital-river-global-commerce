@@ -347,7 +347,7 @@ class DRGC_Admin {
     // Checkout
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_display_short_description_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
+    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_display_short_description_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => false ) );
 
     // Payments
     register_setting( $this->plugin_name . '_drop_in', $this->option_name . '_drop_in_config', array( 'type' => 'string', 'sanitize_callback' => null ) );
@@ -471,13 +471,16 @@ class DRGC_Admin {
 
   public function drgc_display_short_description_handler_cb() {
     $option = get_option( $this->option_name . '_display_short_description_handler' );
-    $checked = '';
+    $checkbox = 0;
 
-    if ( is_array( $option ) && $option['checkbox'] === '1' ) {
-      $checked = 'checked="checked"';
+    if ( $option === false ) {
+      $checkbox = 1;
+      update_option( $this->option_name . '_display_short_description_handler', array( 'checkbox' => '1' ) );
+    } elseif ( is_array( $option ) && isset( $option['checkbox'] ) ) {
+      $checkbox = $option['checkbox'];
     }
 
-    echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_display_short_description_handler[checkbox]" id="' . $this->option_name . '_display_short_description_handler" value="1" ' . $checked . ' />';
+    echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_display_short_description_handler[checkbox]" id="' . $this->option_name . '_display_short_description_handler" value="1" ' . checked( $checkbox, 1, false ) . ' />';
     echo '<span class="description" id="short-description-description">' . __( 'Display Short Description along with the product name', 'digital-river-global-commerce' ) . '</span>';
   }
 

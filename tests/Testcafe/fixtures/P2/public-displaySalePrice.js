@@ -41,7 +41,7 @@ test('Category page price', async t => {
   // Enter Product page and check is displays on sale price
   console.log(">> Check on sale price in product detail page");
   await utils.clickItem(homePage.productsMenu);
-  await utils.clickItem(homePage.paginationNextBtn);
+  await utils.findTestProduct(homePage.addOnSaleProduct);
   await checkSaleBtnPriceExists(homePage.categoryRegularPrice, homePage.categorySalePrice);
 });
 
@@ -58,7 +58,7 @@ test('Porduct page price', async t => {
 
   console.log('>> Checking the on sale/regular price in product\'s page');
   await utils.clickItem(homePage.productsMenu);
-  await utils.clickItem(homePage.paginationNextBtn);
+  await utils.findTestProduct(homePage.addOnSaleProduct);
   await utils.clickItem(onSaleProductPageLink);
   await checkSaleBtnPriceExists(regularPrice, salePrice);
 });

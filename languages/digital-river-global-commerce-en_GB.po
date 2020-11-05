@@ -14,72 +14,72 @@ msgstr ""
 "_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;"
 "esc_html_e;esc_html_x:1,2c\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "X-Generator: Poedit 2.3\n"
 "Last-Translator: \n"
-"Language: ja_JP\n"
+"Language: en_US\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.js\n"
 
 #: admin/class-drgc-admin.php:165, admin/class-drgc-admin.php:166
 msgid "Settings"
-msgstr "設定"
+msgstr "Settings"
 
 #: admin/class-drgc-admin.php:198, admin/partials/drgc-admin-display.php:21
 msgid "General"
-msgstr "一般"
+msgstr "General"
 
 #: admin/class-drgc-admin.php:205
 msgid "Site ID"
-msgstr "サイトID"
+msgstr "Site ID"
 
 #: admin/class-drgc-admin.php:214
 msgid "Commerce API Key"
-msgstr "コマースAPIキー"
+msgstr "Commerce API Key"
 
 #: admin/class-drgc-admin.php:223
 msgid "Commerce API Secret"
-msgstr "コマースAPIシークレット"
+msgstr "Commerce API Secret"
 
 #: admin/class-drgc-admin.php:232
 msgid "Domain"
-msgstr "ドメイン"
+msgstr "Domain"
 
 #: admin/class-drgc-admin.php:241
 msgid "Payments Service API Key"
-msgstr "ペイメントサービスAPIキー"
+msgstr "Payments Service API Key"
 
 #: admin/class-drgc-admin.php:250
 msgid "UMS Username"
-msgstr "UMSユーザー名"
+msgstr "UMS Username"
 
 #: admin/class-drgc-admin.php:259
 msgid "UMS Password"
-msgstr "UMSパスワード"
+msgstr "UMS Password"
 
 #: admin/class-drgc-admin.php:268
 msgid "Scheduled Products Import"
-msgstr "定期商品の輸入"
+msgstr "Scheduled Products Import"
 
 #: admin/class-drgc-admin.php:277, admin/partials/drgc-admin-display.php:27,
 #: includes/class-drgc-activator.php:39, public/class-drgc-public.php:146,
 #: public/templates/login/login.php:28
 msgid "Checkout"
-msgstr "チェックアウト"
+msgstr "Checkout"
 
 #: admin/class-drgc-admin.php:284
 msgid "Test Order"
-msgstr "テストオーダー"
+msgstr "Test Order"
 
 #: admin/class-drgc-admin.php:293
 msgid "Display As Excl. Tax"
-msgstr "除外として表示税金"
+msgstr "Display As Excl. Tax"
 
 #: admin/class-drgc-admin.php:302
 msgid "Product Short Description"
-msgstr "商品の説明"
+msgstr "Product Short Description"
 
 #: admin/class-drgc-admin.php:311
 msgid "Drop-in"
@@ -87,86 +87,88 @@ msgstr "Drop-in"
 
 #: admin/class-drgc-admin.php:318
 msgid "Payment Method Configuration"
-msgstr "お支払い方法の設定"
+msgstr "Payment Method Configuration"
 
 #: admin/class-drgc-admin.php:389
 msgid ""
 "Please contact your account representative for assistance with these "
 "settings."
-msgstr "これらの設定については、アカウント担当者にお問い合わせください。"
+msgstr ""
+"Please contact your account representative for assistance with these "
+"settings."
 
 #: admin/class-drgc-admin.php:457
 msgid "Enable Test Order."
-msgstr "テストオーダーを有効にします。"
+msgstr "Enable Test Order."
 
 #: admin/class-drgc-admin.php:469
 msgid "Display pricing as tax exclusive on checkout flow"
-msgstr "チェックアウトフローで税抜きとして価格を表示する"
+msgstr "Display pricing as tax exclusive on checkout flow"
 
 #: admin/class-drgc-admin.php:484
 msgid "Display Short Description along with the product name"
-msgstr "製品名とともに簡単な説明を表示する"
+msgstr "Display Short Description along with the product name"
 
 #: admin/class-drgc-admin.php:501
 msgid "Twice daily product synchronization with GC."
-msgstr "GCとの1日2回の製品同期。"
+msgstr "Twice daily product synchronization with GC."
 
 #: admin/class-drgc-admin.php:502
 msgid "Will be triggered at your"
-msgstr "あなたでトリガーされます"
+msgstr "Will be triggered at your"
 
 #: admin/class-drgc-admin.php:671, admin/class-drgc-admin.php:724
 msgid "Failed to create file"
-msgstr "ファイルの作成に失敗した"
+msgstr "Failed to create file"
 
 #: admin/class-drgc-admin.php:679, admin/class-drgc-admin.php:737
 msgid "Could not write to file"
-msgstr "ファイルに書き込めませんでした"
+msgstr "Could not write to file"
 
 #: admin/class-drgc-admin.php:834
 msgid ""
 "To make sure Digital River Global Commerce plugin is working as expected, "
 "please set 1 to session.use_cookies in php.ini."
 msgstr ""
-"Digital River Global Commerceプラグインが期待どおりに機能していることを確認す"
-"るには、php.iniのsession.use_cookiesに1を設定してください。"
+"To make sure Digital River Global Commerce plugin is working as expected, "
+"please set 1 to session.use_cookies in php.ini."
 
 #: admin/class-drgc-admin.php:850
 msgid "Sync Complete!"
-msgstr "同期が完了しました！"
+msgstr "Sync Complete!"
 
 #: admin/class-drgc-admin.php:865
 msgid "DRGC Mobile Mini-cart Area"
-msgstr "DRGCモバイルミニカートエリア"
+msgstr "DRGC Mobile Mini-cart Area"
 
 #: admin/class-drgc-admin.php:867
 msgid ""
 "Add mini-cart widget here to appear beneath the header and above the main "
 "content on mobile devices."
 msgstr ""
-"ここにミニカートウィジェットを追加して、モバイルデバイスのヘッダーの下とメイ"
-"ンコンテンツの上に表示します。"
+"Add mini-cart widget here to appear beneath the header and above the main "
+"content on mobile devices."
 
 #: admin/class-drgc-post-types.php:43, admin/class-drgc-post-types.php:45
 msgid "Products"
-msgstr "商品"
+msgstr "Products"
 
 #: admin/class-drgc-post-types.php:44, public/class-drgc-public.php:153,
 #: public/templates/cart/cart-product.php:48
 msgid "Product"
-msgstr "商品"
+msgstr "Product"
 
 #: admin/class-drgc-post-types.php:46
 msgid "Digital River"
-msgstr "デジタルリバー"
+msgstr "Digital River"
 
 #: admin/class-drgc-post-types.php:47
 msgid "Add New"
-msgstr "新規追加"
+msgstr "Add New"
 
 #: admin/class-drgc-post-types.php:48
 msgid "Add new product"
-msgstr "新しい項目を追加"
+msgstr "Add new product"
 
 #: admin/class-drgc-post-types.php:49,
 #: public/templates/checkout/checkout-billing.php:39,
@@ -176,104 +178,104 @@ msgstr "新しい項目を追加"
 #: public/templates/checkout/checkout-shipping.php:27,
 #: public/templates/checkout/checkout-tax-identifier.php:25
 msgid "Edit"
-msgstr "編集"
+msgstr "Edit"
 
 #: admin/class-drgc-post-types.php:50
 msgid "Edit product"
-msgstr "商品の編集"
+msgstr "Edit product"
 
 #: admin/class-drgc-post-types.php:51
 msgid "New product"
-msgstr "新しい項目"
+msgstr "New product"
 
 #: admin/class-drgc-post-types.php:52
 msgid "View product"
-msgstr "アイテムを見る"
+msgstr "View product"
 
 #: admin/class-drgc-post-types.php:53
 msgid "View products"
-msgstr "詳しく見る"
+msgstr "View products"
 
 #: admin/class-drgc-post-types.php:54
 msgid "Search products"
-msgstr "商品の検索"
+msgstr "Search products"
 
 #: admin/class-drgc-post-types.php:55
 msgid "No products found"
-msgstr "商品が見つかりません"
+msgstr "No products found"
 
 #: admin/class-drgc-post-types.php:56
 msgid "No products found in trash"
-msgstr "ゴミ箱に商品が見つかりません"
+msgstr "No products found in trash"
 
 #: admin/class-drgc-post-types.php:83
 msgid "DR Variations"
-msgstr "DRバリエーション"
+msgstr "DR Variations"
 
 #: admin/class-drgc-post-types.php:84
 msgid "DR Variation"
-msgstr "DRバリエーション"
+msgstr "DR Variation"
 
 #: admin/class-drgc-post-types.php:85,
 #: admin/partials/drgc-product-details-meta-box.php:43
 msgid "Variations"
-msgstr "バリエーション"
+msgstr "Variations"
 
 #: admin/class-drgc-post-types.php:115
 msgid "Product Categories"
-msgstr "商品カテゴリ"
+msgstr "Product Categories"
 
 #: admin/class-drgc-post-types.php:116
 msgid "Category"
-msgstr "カテゴリー"
+msgstr "Category"
 
 #: admin/class-drgc-post-types.php:117
 msgid "Categories"
-msgstr "カテゴリー"
+msgstr "Categories"
 
 #: admin/class-drgc-post-types.php:118
 msgid "Search categories"
-msgstr "カテゴリーを探す"
+msgstr "Search categories"
 
 #: admin/class-drgc-post-types.php:119
 msgid "All categories"
-msgstr "全カテゴリー"
+msgstr "All categories"
 
 #: admin/class-drgc-post-types.php:120
 msgid "Parent category"
-msgstr "親カテゴリ"
+msgstr "Parent category"
 
 #: admin/class-drgc-post-types.php:121
 msgid "Parent category:"
-msgstr "親カテゴリ"
+msgstr "Parent category:"
 
 #: admin/class-drgc-post-types.php:122
 msgid "Edit category"
-msgstr "カテゴリーの編集"
+msgstr "Edit category"
 
 #: admin/class-drgc-post-types.php:123
 msgid "Update category"
-msgstr "カテゴリーの更新"
+msgstr "Update category"
 
 #: admin/class-drgc-post-types.php:124
 msgid "Add new category"
-msgstr "新しいカテゴリを追加"
+msgstr "Add new category"
 
 #: admin/class-drgc-post-types.php:125
 msgid "New category name"
-msgstr "新規カテゴリ―名"
+msgstr "New category name"
 
 #: admin/class-drgc-post-types.php:126
 msgid "No categories found"
-msgstr "カテゴリが見つかりません。"
+msgstr "No categories found"
 
 #: admin/class-drgc-post-types.php:162
 msgid "Product Details"
-msgstr "商品詳細"
+msgstr "Product Details"
 
 #: admin/class-drgc-post-types.php:254
 msgid "Product ID"
-msgstr "商品ID"
+msgstr "Product ID"
 
 #: admin/class-drgc-post-types.php:255,
 #: admin/partials/drgc-product-details-meta-box.php:26
@@ -283,27 +285,27 @@ msgstr "SKU"
 #: admin/partials/drgc-admin-display.php:24,
 #: admin/partials/drgc-admin-locales.php:20
 msgid "Locales"
-msgstr "ロケール"
+msgstr "Locales"
 
 #: admin/partials/drgc-admin-display.php:30
 msgid "Payments"
-msgstr "支払い"
+msgstr "Payments"
 
 #: admin/partials/drgc-admin-locales.php:21
 msgid "Sync Locales and Currencies"
-msgstr "ロケールと通貨の同期"
+msgstr "Sync Locales and Currencies"
 
 #: admin/partials/drgc-admin-locales.php:24
 msgid "No locale, please sync it up by clicking button above."
-msgstr "ロケールはありません。上のボタンをクリックして同期してください。"
+msgstr "No locale, please sync it up by clicking button above."
 
 #: admin/partials/drgc-admin-locales.php:29
 msgid "Site Locales"
-msgstr "サイトのロケール"
+msgstr "Site Locales"
 
 #: admin/partials/drgc-admin-locales.php:34
 msgid "DR Locale"
-msgstr "DRロケール"
+msgstr "DR Locale"
 
 #: admin/partials/drgc-admin-locales.php:35
 msgid "WP Language"
@@ -311,23 +313,23 @@ msgstr "WP Language"
 
 #: admin/partials/drgc-admin-locales.php:36
 msgid "Currencies"
-msgstr "通貨"
+msgstr "Currencies"
 
 #: admin/partials/drgc-admin-locales.php:44
 msgid "(Default)"
-msgstr "(デフォルト)"
+msgstr "(Default)"
 
 #: admin/partials/drgc-product-details-meta-box.php:18
 msgid "GC Product ID"
-msgstr "GC製品ID"
+msgstr "GC Product ID"
 
 #: admin/partials/drgc-product-details-meta-box.php:22
 msgid "External Reference ID"
-msgstr "外部参照ID"
+msgstr "External Reference ID"
 
 #: admin/partials/drgc-product-details-meta-box.php:33
 msgid "Default"
-msgstr "デフォルト"
+msgstr "Default"
 
 #: admin/partials/drgc-product-details-meta-box.php:47
 msgid "ID"
@@ -335,54 +337,54 @@ msgstr "ID"
 
 #: admin/partials/drgc-product-details-meta-box.php:48
 msgid "Internal Variation Name"
-msgstr "内部バリエーション名"
+msgstr "Internal Variation Name"
 
 #: admin/partials/drgc-product-details-meta-box.php:49,
 #: admin/partials/drgc-product-details-meta-box.php:83
 msgid "Variation Attributes"
-msgstr "バリエーション属性。"
+msgstr "Variation Attributes"
 
 #: admin/partials/drgc-product-details-meta-box.php:99,
 #: public/templates/my-subscriptions/my-subscriptions.php:38
 msgid "Price"
-msgstr "価格"
+msgstr "Price"
 
 #: admin/partials/drgc-product-details-meta-box.php:103
 msgid "Display Name"
-msgstr "表示名"
+msgstr "Display Name"
 
 #: admin/partials/drgc-product-details-meta-box.php:107
 msgid "Short Description"
-msgstr "簡単な説明"
+msgstr "Short Description"
 
 #: admin/partials/drgc-product-details-meta-box.php:111
 msgid "Long Description"
-msgstr "詳しい説明"
+msgstr "Long Description"
 
 #: admin/partials/drgc-product-details-meta-box.php:115
 msgid "Thumbnail"
-msgstr "サムネイル"
+msgstr "Thumbnail"
 
 #: admin/partials/drgc-product-details-meta-box.php:120,
 #: admin/partials/drgc-product-details-meta-box.php:130
 msgid "(No image)"
-msgstr "商品画像"
+msgstr "(No image)"
 
 #: admin/partials/drgc-product-details-meta-box.php:125
 msgid "Product Image"
-msgstr "商品画像"
+msgstr "Product Image"
 
 #: admin/partials/drgc-products-import-btn.php:16
 msgid "Import Complete!"
-msgstr "インポート完了"
+msgstr "Import Complete!"
 
 #: admin/partials/drgc-products-import-btn.php:20
 msgid "You must enable Javascript in order to proceed!"
-msgstr "続けるには JavaScript を有効化する必要があります!"
+msgstr "You must enable Javascript in order to proceed!"
 
 #: admin/partials/drgc-products-import-btn.php:21
 msgid "Import Products"
-msgstr "商品をインポート"
+msgstr "Import Products"
 
 #: includes/class-drgc-activator.php:30
 msgid "cart"
@@ -390,7 +392,7 @@ msgstr "cart"
 
 #: includes/class-drgc-activator.php:31, public/templates/login/login.php:27
 msgid "Cart"
-msgstr "カート"
+msgstr "Cart"
 
 #: includes/class-drgc-activator.php:38
 msgid "checkout"
@@ -403,16 +405,16 @@ msgstr "login"
 #: includes/class-drgc-activator.php:47, public/class-drgc-public.php:602,
 #: public/templates/login/login.php:93
 msgid "Login"
-msgstr "ログイン"
+msgstr "Login"
 
 #: includes/class-drgc-activator.php:54
 msgid "account"
-msgstr "アカウント"
+msgstr "account"
 
 #: includes/class-drgc-activator.php:55, public/class-drgc-public.php:616,
 #: public/templates/login/login.php:29
 msgid "My Account"
-msgstr "マイアカウント"
+msgstr "My Account"
 
 #: includes/class-drgc-activator.php:62
 msgid "thank-you"
@@ -420,321 +422,321 @@ msgstr "thank-you"
 
 #: includes/class-drgc-activator.php:63
 msgid "Thank You"
-msgstr "ありがとうございました"
+msgstr "Thank You"
 
 #: includes/class-drgc-product-importer.php:87
 msgid "No products found."
-msgstr "商品がありません。"
+msgstr "No products found."
 
 #: includes/drgc-core-functions.php:124
 msgid "Showing %s out of %s"
-msgstr "%sから%sを表示"
+msgstr "Showing %s out of %s"
 
 #: includes/drgc-core-functions.php:146
 msgid "Currency: "
-msgstr "通貨:"
+msgstr "Currency: "
 
 #: includes/drgc-locale-mapping.php:136
 msgid "Albania"
-msgstr "アルバニア"
+msgstr "Albania"
 
 #: includes/drgc-locale-mapping.php:137
 msgid "Algeria"
-msgstr "アルジェリア"
+msgstr "Algeria"
 
 #: includes/drgc-locale-mapping.php:138
 msgid "Bahrain"
-msgstr "バーレーン"
+msgstr "Bahrain"
 
 #: includes/drgc-locale-mapping.php:139
 msgid "Egypt"
-msgstr "エジプト"
+msgstr "Egypt"
 
 #: includes/drgc-locale-mapping.php:140
 msgid "Iraq"
-msgstr "イラク"
+msgstr "Iraq"
 
 #: includes/drgc-locale-mapping.php:141
 msgid "Jordan"
-msgstr "ヨルダン"
+msgstr "Jordan"
 
 #: includes/drgc-locale-mapping.php:142
 msgid "Kuwait"
-msgstr "クウェート"
+msgstr "Kuwait"
 
 #: includes/drgc-locale-mapping.php:143
 msgid "Lebanon"
-msgstr "レバノン"
+msgstr "Lebanon"
 
 #: includes/drgc-locale-mapping.php:144
 msgid "Libya"
-msgstr "リビア"
+msgstr "Libya"
 
 #: includes/drgc-locale-mapping.php:145
 msgid "Morocco"
-msgstr "モロッコ"
+msgstr "Morocco"
 
 #: includes/drgc-locale-mapping.php:146
 msgid "Oman"
-msgstr "オマーン"
+msgstr "Oman"
 
 #: includes/drgc-locale-mapping.php:147
 msgid "Qatar"
-msgstr "カタール"
+msgstr "Qatar"
 
 #: includes/drgc-locale-mapping.php:148
 msgid "Saudi Arabia"
-msgstr "サウジアラビア"
+msgstr "Saudi Arabia"
 
 #: includes/drgc-locale-mapping.php:149
 msgid "Sudan"
-msgstr "スーダン"
+msgstr "Sudan"
 
 #: includes/drgc-locale-mapping.php:150
 msgid "Syria"
-msgstr "シリア"
+msgstr "Syria"
 
 #: includes/drgc-locale-mapping.php:151
 msgid "Tunisia"
-msgstr "チュニジア"
+msgstr "Tunisia"
 
 #: includes/drgc-locale-mapping.php:152
 msgid "United Arab Emirates"
-msgstr "アラブ首長国連邦"
+msgstr "United Arab Emirates"
 
 #: includes/drgc-locale-mapping.php:153
 msgid "Yemen"
-msgstr "イエメン"
+msgstr "Yemen"
 
 #: includes/drgc-locale-mapping.php:154
 msgid "Belarus"
-msgstr "ベラルーシ"
+msgstr "Belarus"
 
 #: includes/drgc-locale-mapping.php:155
 msgid "Bulgaria"
-msgstr "ブルガリア"
+msgstr "Bulgaria"
 
 #: includes/drgc-locale-mapping.php:156, includes/drgc-locale-mapping.php:246
 msgid "Spain"
-msgstr "スペイン"
+msgstr "Spain"
 
 #: includes/drgc-locale-mapping.php:157
 msgid "China"
-msgstr "中国"
+msgstr "China"
 
 #: includes/drgc-locale-mapping.php:158, includes/drgc-locale-mapping.php:172
 msgid "Hong Kong SAR China"
-msgstr "香港SAR中国"
+msgstr "Hong Kong SAR China"
 
 #: includes/drgc-locale-mapping.php:159
 msgid "Macau SAR China"
-msgstr "マカオSARチャイナ"
+msgstr "Macau SAR China"
 
 #: includes/drgc-locale-mapping.php:160
 msgid "Taiwan"
-msgstr "台湾"
+msgstr "Taiwan"
 
 #: includes/drgc-locale-mapping.php:161
 msgid "Bosnia & Herzegovina"
-msgstr "ボスニア・ヘルツェゴビナ"
+msgstr "Bosnia & Herzegovina"
 
 #: includes/drgc-locale-mapping.php:162
 msgid "Croatia"
-msgstr "クロアチア"
+msgstr "Croatia"
 
 #: includes/drgc-locale-mapping.php:163
 msgid "Czechia"
-msgstr "チェチア"
+msgstr "Czechia"
 
 #: includes/drgc-locale-mapping.php:164, includes/drgc-locale-mapping.php:170
 msgid "Denmark"
-msgstr "デンマーク"
+msgstr "Denmark"
 
 #: includes/drgc-locale-mapping.php:165, includes/drgc-locale-mapping.php:168,
 #: includes/drgc-locale-mapping.php:193
 msgid "Belgium"
-msgstr "ベルギー"
+msgstr "Belgium"
 
 #: includes/drgc-locale-mapping.php:166, includes/drgc-locale-mapping.php:179
 msgid "Netherlands"
-msgstr "オランダ"
+msgstr "Netherlands"
 
 #: includes/drgc-locale-mapping.php:167
 msgid "Australia"
-msgstr "オーストラリア"
+msgstr "Australia"
 
 #: includes/drgc-locale-mapping.php:169, includes/drgc-locale-mapping.php:194
 msgid "Canada"
-msgstr "カナダ"
+msgstr "Canada"
 
 #: includes/drgc-locale-mapping.php:171, includes/drgc-locale-mapping.php:192
 msgid "Finland"
-msgstr "フィンランド"
+msgstr "Finland"
 
 #: includes/drgc-locale-mapping.php:173, includes/drgc-locale-mapping.php:208
 msgid "Iceland"
-msgstr "アイスランド"
+msgstr "Iceland"
 
 #: includes/drgc-locale-mapping.php:174, includes/drgc-locale-mapping.php:206
 msgid "India"
-msgstr "インド"
+msgstr "India"
 
 #: includes/drgc-locale-mapping.php:175, includes/drgc-locale-mapping.php:209
 msgid "Indonesia"
-msgstr "インドネシア"
+msgstr "Indonesia"
 
 #: includes/drgc-locale-mapping.php:176
 msgid "Ireland"
-msgstr "アイルランド"
+msgstr "Ireland"
 
 #: includes/drgc-locale-mapping.php:177, includes/drgc-locale-mapping.php:218
 msgid "Malaysia"
-msgstr "マレーシア"
+msgstr "Malaysia"
 
 #: includes/drgc-locale-mapping.php:178
 msgid "Malta"
-msgstr "マルタ"
+msgstr "Malta"
 
 #: includes/drgc-locale-mapping.php:180
 msgid "New Zealand"
-msgstr "ニュージーランド"
+msgstr "New Zealand"
 
 #: includes/drgc-locale-mapping.php:181, includes/drgc-locale-mapping.php:219
 msgid "Norway"
-msgstr "ノルウェー"
+msgstr "Norway"
 
 #: includes/drgc-locale-mapping.php:182
 msgid "Philippines"
-msgstr "フィリピン"
+msgstr "Philippines"
 
 #: includes/drgc-locale-mapping.php:183, includes/drgc-locale-mapping.php:245
 msgid "Puerto Rico"
-msgstr "プエルトリコ"
+msgstr "Puerto Rico"
 
 #: includes/drgc-locale-mapping.php:184
 msgid "Singapore"
-msgstr "シンガポール"
+msgstr "Singapore"
 
 #: includes/drgc-locale-mapping.php:185
 msgid "South Africa"
-msgstr "南アフリカ"
+msgstr "South Africa"
 
 #: includes/drgc-locale-mapping.php:186, includes/drgc-locale-mapping.php:249
 msgid "Sweden"
-msgstr "スウェーデン"
+msgstr "Sweden"
 
 #: includes/drgc-locale-mapping.php:187, includes/drgc-locale-mapping.php:198,
 #: includes/drgc-locale-mapping.php:203, includes/drgc-locale-mapping.php:211
 msgid "Switzerland"
-msgstr "スイス"
+msgstr "Switzerland"
 
 #: includes/drgc-locale-mapping.php:188, includes/drgc-locale-mapping.php:250
 msgid "Thailand"
-msgstr "タイ"
+msgstr "Thailand"
 
 #: includes/drgc-locale-mapping.php:189
 msgid "United Kingdom"
-msgstr "イギリス"
+msgstr "United Kingdom"
 
 #: includes/drgc-locale-mapping.php:190
 msgid "United States"
-msgstr "アメリカ"
+msgstr "United States"
 
 #: includes/drgc-locale-mapping.php:191
 msgid "Estonia"
-msgstr "エストニア"
+msgstr "Estonia"
 
 #: includes/drgc-locale-mapping.php:195
 msgid "France"
-msgstr "フランス"
+msgstr "France"
 
 #: includes/drgc-locale-mapping.php:196, includes/drgc-locale-mapping.php:202
 msgid "Luxembourg"
-msgstr "ルクセンブルク"
+msgstr "Luxembourg"
 
 #: includes/drgc-locale-mapping.php:197
 msgid "St. Pierre & Miquelon"
-msgstr "サンピエール島＆ミクロン島"
+msgstr "St. Pierre & Miquelon"
 
 #: includes/drgc-locale-mapping.php:199
 msgid "Austria"
-msgstr "オーストリア"
+msgstr "Austria"
 
 #: includes/drgc-locale-mapping.php:200
 msgid "Germany"
-msgstr "ドイツ"
+msgstr "Germany"
 
 #: includes/drgc-locale-mapping.php:201
 msgid "Liechtenstein"
-msgstr "リヒテンシュタイン"
+msgstr "Liechtenstein"
 
 #: includes/drgc-locale-mapping.php:204
 msgid "Greece"
-msgstr "ギリシャ"
+msgstr "Greece"
 
 #: includes/drgc-locale-mapping.php:205
 msgid "Israel"
-msgstr "イスラエル"
+msgstr "Israel"
 
 #: includes/drgc-locale-mapping.php:207
 msgid "Hungary"
-msgstr "ハンガリー"
+msgstr "Hungary"
 
 #: includes/drgc-locale-mapping.php:210
 msgid "Italy"
-msgstr "イタリア"
+msgstr "Italy"
 
 #: includes/drgc-locale-mapping.php:212
 msgid "Japan"
-msgstr "日本"
+msgstr "Japan"
 
 #: includes/drgc-locale-mapping.php:213
 msgid "Kazakhstan"
-msgstr "カザフスタン"
+msgstr "Kazakhstan"
 
 #: includes/drgc-locale-mapping.php:214
 msgid "South Korea"
-msgstr "韓国"
+msgstr "South Korea"
 
 #: includes/drgc-locale-mapping.php:215
 msgid "Latvia"
-msgstr "ラトビア"
+msgstr "Latvia"
 
 #: includes/drgc-locale-mapping.php:216
 msgid "Lithuania"
-msgstr "リトアニア"
+msgstr "Lithuania"
 
 #: includes/drgc-locale-mapping.php:217
 msgid "Macedonia"
-msgstr "マケドニア"
+msgstr "Macedonia"
 
 #: includes/drgc-locale-mapping.php:220
 msgid "Norway, Nynorsk"
-msgstr "ノルウェー、ニーノシュク"
+msgstr "Norway, Nynorsk"
 
 #: includes/drgc-locale-mapping.php:221
 msgid "Poland"
-msgstr "ポーランド"
+msgstr "Poland"
 
 #: includes/drgc-locale-mapping.php:222
 msgid "Brazil"
-msgstr "ブラジル"
+msgstr "Brazil"
 
 #: includes/drgc-locale-mapping.php:223
 msgid "Portugal"
-msgstr "ポルトガル"
+msgstr "Portugal"
 
 #: includes/drgc-locale-mapping.php:224
 msgid "Romania"
-msgstr "ルーマニア"
+msgstr "Romania"
 
 #: includes/drgc-locale-mapping.php:225
 msgid "Russia"
-msgstr "ロシア"
+msgstr "Russia"
 
 #: includes/drgc-locale-mapping.php:226
 msgid "Serbia"
-msgstr "セルビア"
+msgstr "Serbia"
 
 #: includes/drgc-locale-mapping.php:227
 msgid "YU"
@@ -742,67 +744,67 @@ msgstr "YU"
 
 #: includes/drgc-locale-mapping.php:228
 msgid "Slovakia"
-msgstr "スロバキア"
+msgstr "Slovakia"
 
 #: includes/drgc-locale-mapping.php:229
 msgid "Slovenia"
-msgstr "スロベニア"
+msgstr "Slovenia"
 
 #: includes/drgc-locale-mapping.php:230
 msgid "Argentina"
-msgstr "アルゼンチン"
+msgstr "Argentina"
 
 #: includes/drgc-locale-mapping.php:231
 msgid "Bolivia"
-msgstr "ボリビア"
+msgstr "Bolivia"
 
 #: includes/drgc-locale-mapping.php:232
 msgid "Chile"
-msgstr "チリ"
+msgstr "Chile"
 
 #: includes/drgc-locale-mapping.php:233
 msgid "Colombia"
-msgstr "コロンビア"
+msgstr "Colombia"
 
 #: includes/drgc-locale-mapping.php:234
 msgid "Costa Rica"
-msgstr "コスタリカ"
+msgstr "Costa Rica"
 
 #: includes/drgc-locale-mapping.php:235
 msgid "Dominican Republic"
-msgstr "ドミニカ共和国"
+msgstr "Dominican Republic"
 
 #: includes/drgc-locale-mapping.php:236
 msgid "Ecuador"
-msgstr "エクアドル"
+msgstr "Ecuador"
 
 #: includes/drgc-locale-mapping.php:237
 msgid "El Salvador"
-msgstr "エルサルバドル"
+msgstr "El Salvador"
 
 #: includes/drgc-locale-mapping.php:238
 msgid "Guatemala"
-msgstr "グアテマラ"
+msgstr "Guatemala"
 
 #: includes/drgc-locale-mapping.php:239
 msgid "Honduras"
-msgstr "ホンジュラス"
+msgstr "Honduras"
 
 #: includes/drgc-locale-mapping.php:240
 msgid "Mexico"
-msgstr "メキシコ"
+msgstr "Mexico"
 
 #: includes/drgc-locale-mapping.php:241
 msgid "Nicaragua"
-msgstr "ニカラグア"
+msgstr "Nicaragua"
 
 #: includes/drgc-locale-mapping.php:242
 msgid "Panama"
-msgstr "パナマ"
+msgstr "Panama"
 
 #: includes/drgc-locale-mapping.php:243
 msgid "Paraguay"
-msgstr "パラグアイ"
+msgstr "Paraguay"
 
 #: includes/drgc-locale-mapping.php:244
 msgid "Peru"
@@ -810,165 +812,165 @@ msgstr "Peru"
 
 #: includes/drgc-locale-mapping.php:247
 msgid "Uruguay"
-msgstr "ウルグアイ"
+msgstr "Uruguay"
 
 #: includes/drgc-locale-mapping.php:248
 msgid "Venezuela"
-msgstr "ベネズエラ"
+msgstr "Venezuela"
 
 #: includes/drgc-locale-mapping.php:251
 msgid "Thailand, TH, Thai Digits"
-msgstr "タイ、TH、タイの数字"
+msgstr "Thailand, TH, Thai Digits"
 
 #: includes/drgc-locale-mapping.php:252
 msgid "Turkey"
-msgstr "トルコ"
+msgstr "Turkey"
 
 #: includes/drgc-locale-mapping.php:253
 msgid "Ukraine"
-msgstr "ウクライナ"
+msgstr "Ukraine"
 
 #: includes/drgc-locale-mapping.php:254
 msgid "Vietnam"
-msgstr "ベトナム"
+msgstr "Vietnam"
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:40
 msgid "Email"
-msgstr "メールアドレス"
+msgstr "Email"
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:41
 msgid "Shipping information"
-msgstr "発送情報"
+msgstr "Shipping information"
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:42
 msgid "Billing information"
-msgstr "課金情報"
+msgstr "Billing information"
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:43
 msgid "Tax Identifier"
-msgstr "納税者番号"
+msgstr "Tax Identifier"
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:44
 msgid "Delivery options"
-msgstr "配送設定"
+msgstr "Delivery options"
 
 #: includes/shortcodes/class-dr-shortcode-checkout.php:45
 msgid "Payment"
-msgstr "支払い"
+msgstr "Payment"
 
 #: includes/widgets/class-dr-widget-mini-cart.php:24
 msgid "DRGC Mini-cart for mobile viewing."
-msgstr "モバイル表示用のDRGCミニカート。"
+msgstr "DRGC Mini-cart for mobile viewing."
 
 #: includes/widgets/class-dr-widget-mini-cart.php:28
 msgid "DRGC Mobile Mini-cart"
-msgstr "DRGCモバイルミニカート"
+msgstr "DRGC Mobile Mini-cart"
 
 #: includes/widgets/class-dr-widget-mini-cart.php:52,
 #: public/partials/drgc-minicart.php:19
 msgid "Shopping Cart"
-msgstr "ショッピングカート"
+msgstr "Shopping Cart"
 
 #: public/class-drgc-public.php:127
 msgid "Upgrade"
-msgstr "アップグレード"
+msgstr "Upgrade"
 
 #: public/class-drgc-public.php:128,
 #: public/templates/account/account-addresses.php:491
 msgid "Add"
-msgstr "追加"
+msgstr "Add"
 
 #: public/class-drgc-public.php:129,
 #: public/templates/checkout/checkout-summary.php:20,
 #: public/templates/thank-you/thank-you-summary.php:28
 msgid "FREE"
-msgstr "無料"
+msgstr "FREE"
 
 #: public/class-drgc-public.php:130, public/templates/cart/cart-summary.php:28,
 #: public/templates/checkout/checkout-summary.php:28,
 #: public/templates/thank-you/thank-you-summary.php:36
 msgid "Incl. VAT"
-msgstr "含むバット"
+msgstr "Incl. VAT"
 
 #: public/class-drgc-public.php:131, public/templates/cart/cart-summary.php:28,
 #: public/templates/checkout/checkout-summary.php:28,
 #: public/templates/thank-you/thank-you-summary.php:36
 msgid "Excl. VAT"
-msgstr "除くバット"
+msgstr "Excl. VAT"
 
 #: public/class-drgc-public.php:132,
 #: public/templates/thank-you/thank-you-summary.php:49
 msgid "VAT"
-msgstr "付加価値税"
+msgstr "VAT"
 
 #: public/class-drgc-public.php:133, public/templates/cart/cart-summary.php:54,
 #: public/templates/checkout/checkout-summary.php:41
 msgid "Estimated VAT"
-msgstr "推定VAT"
+msgstr "Estimated VAT"
 
 #: public/class-drgc-public.php:134,
 #: public/templates/thank-you/thank-you-summary.php:65
 msgid "Shipping VAT"
-msgstr "送料VAT"
+msgstr "Shipping VAT"
 
 #: public/class-drgc-public.php:135, public/templates/cart/cart-summary.php:70,
 #: public/templates/checkout/checkout-summary.php:58
 msgid "Estimated Shipping VAT"
-msgstr "推定配送VAT"
+msgstr "Estimated Shipping VAT"
 
 #: public/class-drgc-public.php:136,
 #: public/templates/account/account-orders.php:141,
 #: public/templates/thank-you/thank-you-summary.php:49
 msgid "Tax"
-msgstr "税"
+msgstr "Tax"
 
 #: public/class-drgc-public.php:137, public/templates/cart/cart-summary.php:54,
 #: public/templates/checkout/checkout-summary.php:41
 msgid "Estimated Tax"
-msgstr "見積もり税額"
+msgstr "Estimated Tax"
 
 #: public/class-drgc-public.php:138,
 #: public/templates/account/account-orders.php:150,
 #: public/templates/thank-you/thank-you-summary.php:65
 msgid "Shipping Tax"
-msgstr "送料の税:"
+msgstr "Shipping Tax"
 
 #: public/class-drgc-public.php:139, public/templates/cart/cart-summary.php:70,
 #: public/templates/checkout/checkout-summary.php:58
 msgid "Estimated Shipping Tax"
-msgstr "推定配送料"
+msgstr "Estimated Shipping Tax"
 
 #: public/class-drgc-public.php:140,
 #: public/templates/account/account-orders.php:146,
 #: public/templates/checkout/checkout-shipping.php:21,
 #: public/templates/thank-you/thank-you-summary.php:57
 msgid "Shipping"
-msgstr "配送"
+msgstr "Shipping"
 
 #: public/class-drgc-public.php:141, public/templates/cart/cart-summary.php:62,
 #: public/templates/checkout/checkout-summary.php:50
 msgid "Estimated Shipping"
-msgstr "配送予定"
+msgstr "Estimated Shipping"
 
 #: public/class-drgc-public.php:142
 msgid "Credit card ending in"
-msgstr "で終わるクレジットカード"
+msgstr "Credit card ending in"
 
 #: public/class-drgc-public.php:143
 msgid "pay with card"
-msgstr "カードで支払う"
+msgstr "pay with card"
 
 #: public/class-drgc-public.php:144
 msgid "pay with paypal"
-msgstr "ペイパルで支払う"
+msgstr "pay with paypal"
 
 #: public/class-drgc-public.php:145
 msgid "View Cart"
-msgstr "カートを見る"
+msgstr "View Cart"
 
 #: public/class-drgc-public.php:147
 msgid "Remove"
-msgstr "削除"
+msgstr "Remove"
 
 #: public/class-drgc-public.php:148,
 #: public/templates/account/account-orders.php:137,
@@ -977,15 +979,15 @@ msgstr "削除"
 #: public/templates/checkout/checkout-summary.php:34,
 #: public/templates/thank-you/thank-you-summary.php:42
 msgid "Subtotal"
-msgstr "小計"
+msgstr "Subtotal"
 
 #: public/class-drgc-public.php:149, public/templates/cart/cart-product.php:56
 msgid "Qty"
-msgstr "数量"
+msgstr "Qty"
 
 #: public/class-drgc-public.php:150
 msgid "Shipping and Handling"
-msgstr "送料および手数料"
+msgstr "Shipping and Handling"
 
 #: public/class-drgc-public.php:151,
 #: public/templates/account/account-orders.php:155,
@@ -993,50 +995,51 @@ msgstr "送料および手数料"
 #: public/templates/checkout/checkout-summary.php:67,
 #: public/templates/thank-you/thank-you-summary.php:73
 msgid "Discount"
-msgstr "割引"
+msgstr "Discount"
 
 #: public/class-drgc-public.php:152
 msgid "Order Total"
-msgstr "ご注文合計"
+msgstr "Order Total"
 
 #: public/class-drgc-public.php:154
 msgid "Password reset email sent"
-msgstr "パスワードリセットメールが送信されました"
+msgstr "Password reset email sent"
 
 #: public/class-drgc-public.php:155
 msgid "Password saved"
-msgstr "パスワードを保存しました"
+msgstr "Password saved"
 
 #: public/class-drgc-public.php:156
 msgid ""
 "You will be receiving an email soon with instructions on resetting your "
 "login password."
 msgstr ""
-"ログインパスワードをリセットする手順が記載されたメールがまもなく届きます。"
+"You will be receiving an email soon with instructions on resetting your "
+"login password."
 
 #: public/class-drgc-public.php:157
 msgid "You can now log in with your new password."
-msgstr "これで、新しいパスワードでログインできます。"
+msgstr "You can now log in with your new password."
 
 #: public/class-drgc-public.php:158, public/templates/cart/cart.php:50
 msgid "Your cart is empty."
-msgstr "カートは空です。"
+msgstr "Your cart is empty."
 
 #: public/class-drgc-public.php:159
 msgid "Please enter a valid promo code."
-msgstr "有効なプロモーションコードを入力してください。"
+msgstr "Please enter a valid promo code."
 
 #: public/class-drgc-public.php:160, public/class-drgc-public.php:315
 msgid "Please enter a valid email address."
-msgstr "有効なメールアドレスを入力してください"
+msgstr "Please enter a valid email address."
 
 #: public/class-drgc-public.php:161
 msgid "Address not accepted for current currency."
-msgstr "現在の通貨では住所は受け付けられません。"
+msgstr "Address not accepted for current currency."
 
 #: public/class-drgc-public.php:162
 msgid "Failed payment for specified credit card."
-msgstr "指定されたクレジットカードの支払いに失敗しました。"
+msgstr "Failed payment for specified credit card."
 
 #: public/class-drgc-public.php:163,
 #: public/templates/account/account-addresses.php:66,
@@ -1084,85 +1087,86 @@ msgstr "指定されたクレジットカードの支払いに失敗しました
 #: public/templates/login/login.php:144, public/templates/login/login.php:152,
 #: public/templates/login/login.php:160
 msgid "This field is required."
-msgstr "この項目は必須です。"
+msgstr "This field is required."
 
 #: public/class-drgc-public.php:164
 msgid "Emails do not match."
-msgstr "メールが一致しません。"
+msgstr "Emails do not match."
 
 #: public/class-drgc-public.php:165, public/class-drgc-public.php:273
 msgid "Password must be between 8 - 32 characters."
-msgstr "パスワードは8〜32文字である必要があります。"
+msgstr "Password must be between 8 - 32 characters."
 
 #: public/class-drgc-public.php:166, public/class-drgc-public.php:277
 msgid "Must use at least one upper case letter."
-msgstr "少なくとも1つの大文字を使用する必要があります。"
+msgstr "Must use at least one upper case letter."
 
 #: public/class-drgc-public.php:167, public/class-drgc-public.php:281
 msgid "Must use at least one lower case letter."
-msgstr "少なくとも1つの小文字を使用する必要があります。"
+msgstr "Must use at least one lower case letter."
 
 #: public/class-drgc-public.php:168, public/class-drgc-public.php:285
 msgid "Must use at least one number."
-msgstr "少なくとも1つの番号を使用する必要があります。"
+msgstr "Must use at least one number."
 
 #: public/class-drgc-public.php:169, public/class-drgc-public.php:289
 msgid "Must use at least one special character (! _ @)."
-msgstr "少なくとも1つの特殊文字（！_ @）を使用する必要があります。"
+msgstr "Must use at least one special character (! _ @)."
 
 #: public/class-drgc-public.php:170, public/class-drgc-public.php:293
 msgid "Contains non-allowable special characters (only ! _ @ are allowed)."
-msgstr "許可されない特殊文字が含まれています（！_ @のみが許可されます）。"
+msgstr "Contains non-allowable special characters (only ! _ @ are allowed)."
 
 #: public/class-drgc-public.php:171, public/class-drgc-public.php:269
 msgid "Passwords do not match."
-msgstr "パスワードが一致しません。"
+msgstr "Passwords do not match."
 
 #: public/class-drgc-public.php:172
 msgid ""
 "Please indicate you have read and accepted the privacy policy and terms of "
 "sale."
-msgstr "プライバシーポリシーと販売条件を読み、同意したことを示してください。"
+msgstr ""
+"Please indicate you have read and accepted the privacy policy and terms of "
+"sale."
 
 #: public/class-drgc-public.php:173
 msgid "Something went wrong. Please try again."
-msgstr "原因不明のエラー発生。もう一度お試し下さい."
+msgstr "Something went wrong. Please try again."
 
 #: public/class-drgc-public.php:174
 msgid "Loading..."
-msgstr "読み込み中…"
+msgstr "Loading..."
 
 #: public/class-drgc-public.php:175,
 #: public/partials/drgc-product-details.php:22
 msgid "Buy Now"
-msgstr "今すぐ購入"
+msgstr "Buy Now"
 
 #: public/class-drgc-public.php:176, public/partials/drgc-buy-button.php:31,
 #: public/templates/parts/content-archive.php:61,
 #: public/templates/parts/content-single.php:119
 msgid "Add to Cart"
-msgstr "カートに追加"
+msgstr "Add to Cart"
 
 #: public/class-drgc-public.php:177
 msgid "Out of Stock"
-msgstr "在庫切れ"
+msgstr "Out of Stock"
 
 #: public/class-drgc-public.php:178
 msgid "Are you sure you want to immediately unsubscribe this subscription?"
-msgstr ""
-"このサブスクリプションのサブスクリプションをすぐに解除してもよろしいですか？"
+msgstr "Are you sure you want to immediately unsubscribe this subscription?"
 
 #: public/class-drgc-public.php:179
 msgid "Please enter the required quantity:"
-msgstr "必要な数量を入力してください："
+msgstr "Please enter the required quantity:"
 
 #: public/class-drgc-public.php:180
 msgid "There are no delivery options available for your cart or destination."
-msgstr "カートや目的地で利用できる配送オプションはありません。"
+msgstr "There are no delivery options available for your cart or destination."
 
 #: public/class-drgc-public.php:181
 msgid "MM/YY"
-msgstr "MM / YY"
+msgstr "MM/YY"
 
 #: public/class-drgc-public.php:182
 msgid "CVV"
@@ -1170,141 +1174,142 @@ msgstr "CVV"
 
 #: public/class-drgc-public.php:183
 msgid "Shipping country is not supported."
-msgstr "配送国はサポートされていません。"
+msgstr "Shipping country is not supported."
 
 #: public/class-drgc-public.php:184
 msgid "Billing country is not supported."
-msgstr "請求国はサポートされていません。"
+msgstr "Billing country is not supported."
 
 #: public/class-drgc-public.php:185
 msgid "Your postal code is invalid."
-msgstr "郵便番号が無効です。"
+msgstr "Your postal code is invalid."
 
 #: public/class-drgc-public.php:186
 msgid "Your city is invalid."
-msgstr "あなたの街は無効です。"
+msgstr "Your city is invalid."
 
 #: public/class-drgc-public.php:187
 msgid "Your region value is invalid. Please supply a different one."
-msgstr "地域の値が無効です。別のものを供給してください。"
+msgstr "Your region value is invalid. Please supply a different one."
 
 #: public/class-drgc-public.php:188
 msgid "No, thanks"
-msgstr "何もしない"
+msgstr "No, thanks"
 
 #: public/class-drgc-public.php:189
 msgid "Unable to place order"
-msgstr "注文できません"
+msgstr "Unable to place order"
 
 #: public/class-drgc-public.php:190
 msgid "The new password must be different from the current password."
-msgstr "新しいパスワードは、現在のパスワードとは異なる必要があります。"
+msgstr "The new password must be different from the current password."
 
 #: public/class-drgc-public.php:191
 msgid ""
 "Sorry, it seems that there are no available payment methods for your "
 "location."
 msgstr ""
-"申し訳ありませんが、お住まいの地域で利用できるお支払い方法がないようです。"
+"Sorry, it seems that there are no available payment methods for your "
+"location."
 
 #: public/class-drgc-public.php:192,
 #: public/templates/checkout/checkout-tax-identifier.php:33
 msgid "Shopper Type"
-msgstr "買い物客タイプ"
+msgstr "Shopper Type"
 
 #: public/class-drgc-public.php:193
 msgid "Personal"
-msgstr "個人"
+msgstr "Personal"
 
 #: public/class-drgc-public.php:194
 msgid "Business"
-msgstr "ビジネス"
+msgstr "Business"
 
 #: public/class-drgc-public.php:195
 msgid "Your tax ID could not be verified. Tax may apply."
-msgstr "納税者番号を確認できませんでした。税金がかかる場合があります。"
+msgstr "Your tax ID could not be verified. Tax may apply."
 
 #: public/class-drgc-public.php:246
 msgid "Authorization failed for specified credentials"
-msgstr "指定された資格情報の承認に失敗しました"
+msgstr "Authorization failed for specified credentials"
 
 #: public/class-drgc-public.php:399
 msgid "The current password you entered is incorrect."
-msgstr "入力した現在のパスワードが正しくありません。"
+msgstr "The current password you entered is incorrect."
 
 #: public/class-drgc-public.php:403
 msgid "Your new password can not be the same as the current password."
-msgstr "新しいパスワードを現在のパスワードと同じにすることはできません。"
+msgstr "Your new password can not be the same as the current password."
 
 #: public/class-drgc-public.php:440
 msgid "Enter a username or email address."
-msgstr "ユーザー名またはメールアドレスを入力してください."
+msgstr "Enter a username or email address."
 
 #: public/class-drgc-public.php:444, public/class-drgc-public.php:458
 msgid "There is no account with that username or email address."
-msgstr "そのユーザー名やメールアドレスのアカウントはありません。"
+msgstr "There is no account with that username or email address."
 
 #: public/class-drgc-public.php:480
 msgid "Someone has requested a password reset for the following account:"
-msgstr "どなたかが以下のアカウントのパスワードリセットをリクエストしました :"
+msgstr "Someone has requested a password reset for the following account:"
 
 #: public/class-drgc-public.php:481
 msgid "Site Name: %s"
-msgstr "ユーザー名: %s"
+msgstr "Site Name: %s"
 
 #: public/class-drgc-public.php:482
 msgid "Username: %s"
-msgstr "ユーザー名: %s"
+msgstr "Username: %s"
 
 #: public/class-drgc-public.php:483
 msgid "If this was a mistake, just ignore this email and nothing will happen."
-msgstr "心当たりがない場合は無視してください。"
+msgstr "If this was a mistake, just ignore this email and nothing will happen."
 
 #: public/class-drgc-public.php:484
 msgid "To reset your password, visit the following address:"
-msgstr "パスワードをリセットするには、以下へアクセスしてください :"
+msgstr "To reset your password, visit the following address:"
 
 #: public/class-drgc-public.php:486, public/class-drgc-public.php:939,
 #: public/templates/login/login.php:61
 msgid "Reset Password"
-msgstr "パスワードをリセットする"
+msgstr "Reset Password"
 
 #: public/class-drgc-public.php:488
 msgid "[%s] Password Reset"
-msgstr "[%s] パスワードリセット"
+msgstr "[%s] Password Reset"
 
 #: public/class-drgc-public.php:503
 msgid ""
 "The email could not be sent. Possible reason: your host may have disabled "
 "the mail() function."
 msgstr ""
-"メールを送信できませんでした。考えられる理由：ホストがmail（）関数を無効にし"
-"ている可能性があります。"
+"The email could not be sent. Possible reason: your host may have disabled "
+"the mail() function."
 
 #: public/class-drgc-public.php:525
 msgid "Something went wrong."
-msgstr "何かが間違っていました"
+msgstr "Something went wrong."
 
 #: public/class-drgc-public.php:541
 msgid "Expired key"
-msgstr "期限切れのキー"
+msgstr "Expired key"
 
 #: public/class-drgc-public.php:543
 msgid "Invalid key"
-msgstr "無効なキー"
+msgstr "Invalid key"
 
 #: public/class-drgc-public.php:602
 msgid "Hi, "
-msgstr "こんにちは"
+msgstr "Hi, "
 
 #: public/class-drgc-public.php:627, public/class-drgc-public.php:898,
 #: public/templates/login/login.php:32
 msgid "Logout"
-msgstr "ログアウト"
+msgstr "Logout"
 
 #: public/class-drgc-public.php:885
 msgid "You're about to be logged out!"
-msgstr "ログアウトしようとしています！"
+msgstr "You're about to be logged out!"
 
 #: public/class-drgc-public.php:890
 msgid ""
@@ -1312,49 +1317,49 @@ msgid ""
 "for a while. You will be logged out in <strong>n</strong> seconds.<br>Click "
 "Continue if you'd like to stay logged in."
 msgstr ""
-"セキュリティ上の理由から、しばらく非アクティブになっていると接続がタイムアウ"
-"トします。 <strong>n</strong>秒でログアウトします。<br>ログインしたままにする"
-"場合は、[続行]をクリックします。"
+"For security reasons, your connection times out after you've been inactive "
+"for a while. You will be logged out in <strong>n</strong> seconds.<br>Click "
+"Continue if you'd like to stay logged in."
 
 #: public/class-drgc-public.php:895
 msgid "Continue"
-msgstr "続ける"
+msgstr "Continue"
 
 #: public/class-drgc-public.php:911
 msgid "Forgot Password"
-msgstr "パスワードを忘れた場合"
+msgstr "Forgot Password"
 
 #: public/class-drgc-public.php:919
 msgid ""
 "To reset your password, please enter your email address below and an email "
 "with instructions on resetting your password will be sent to you."
 msgstr ""
-"パスワードをリセットするには、以下にメールアドレスを入力してください。パス"
-"ワードのリセット手順が記載されたメールが送信されます。"
+"To reset your password, please enter your email address below and an email "
+"with instructions on resetting your password will be sent to you."
 
 #: public/class-drgc-public.php:922
 msgid "Email Address:"
-msgstr "メールアドレス:"
+msgstr "Email Address:"
 
 #: public/class-drgc-public.php:925, public/class-drgc-public.php:932
 msgid "This field is required email."
-msgstr "このフィールドは必須の電子メールです。"
+msgstr "This field is required email."
 
 #: public/class-drgc-public.php:929
 msgid "Verify Email Address:"
-msgstr "メールアドレスの確認："
+msgstr "Verify Email Address:"
 
 #: public/class-drgc-public.php:953
 msgid "Password Updated!"
-msgstr "パスワードが更新されました！"
+msgstr "Password Updated!"
 
 #: public/class-drgc-public.php:954
 msgid ""
 "Your password has been changed successfully. Please log in to your account "
 "using your new password."
 msgstr ""
-"パスワードが正常に変更されました。新しいパスワードを使用してアカウントにログ"
-"インしてください。"
+"Your password has been changed successfully. Please log in to your account "
+"using your new password."
 
 #: public/class-drgc-public.php:957
 msgid "OK"
@@ -1362,47 +1367,47 @@ msgstr "OK"
 
 #: public/class-drgc-public.php:972
 msgid "This is a test order"
-msgstr "これはテストオーダーです"
+msgstr "This is a test order"
 
 #: public/partials/drgc-legal-footer.php:17
 msgid ""
 " is the authorized reseller and merchant of the products and services "
 "offered within this store."
 msgstr ""
-" は、このストア内で提供される製品およびサービスの認定再販業者および販売業者で"
-"す。"
+" is the authorized reseller and merchant of the products and services "
+"offered within this store."
 
 #: public/partials/drgc-legal-footer.php:20,
 #: public/templates/checkout/checkout-confirmation.php:17,
 #: public/templates/checkout/checkout-pretandc.php:6
 msgid "Privacy Policy"
-msgstr "プライバシーポリシー"
+msgstr "Privacy Policy"
 
 #: public/partials/drgc-legal-footer.php:21,
 #: public/templates/checkout/checkout-confirmation.php:16,
 #: public/templates/checkout/checkout-pretandc.php:5
 msgid "Terms of Sale"
-msgstr "販売規約"
+msgstr "Terms of Sale"
 
 #: public/partials/drgc-legal-footer.php:22
 msgid "Cookies"
-msgstr "クッキー"
+msgstr "Cookies"
 
 #: public/partials/drgc-legal-footer.php:23
 msgid "Cancellation Right"
-msgstr "キャンセル権"
+msgstr "Cancellation Right"
 
 #: public/partials/drgc-legal-footer.php:24
 msgid "Legal Notice"
-msgstr "法的通知"
+msgstr "Legal Notice"
 
 #: public/partials/drgc-minicart.php:16
 msgid "ITEM(S)"
-msgstr "アイテム"
+msgstr "ITEM(S)"
 
 #: public/templates/account/account-addresses.php:18
 msgid "Primary"
-msgstr "プライマリー"
+msgstr "Primary"
 
 #: public/templates/account/account-addresses.php:49,
 #: public/templates/account/account-addresses.php:346,
@@ -1410,83 +1415,83 @@ msgstr "プライマリー"
 #: public/templates/account/account-payments.php:35,
 #: public/templates/checkout/checkout-shipping.php:46
 msgid "Fields marked with * are mandatory"
-msgstr "の欄は必須項目です"
+msgstr "Fields marked with * are mandatory"
 
 #: public/templates/account/account-addresses.php:58,
 #: public/templates/account/account-addresses.php:351
 msgid "Nickname *"
-msgstr "ニックネーム *"
+msgstr "Nickname *"
 
 #: public/templates/account/account-addresses.php:80,
 #: public/templates/account/account-addresses.php:362
 msgid "First Name *"
-msgstr "名*"
+msgstr "First Name *"
 
 #: public/templates/account/account-addresses.php:102,
 #: public/templates/account/account-addresses.php:373
 msgid "Last Name *"
-msgstr "姓*"
+msgstr "Last Name *"
 
 #: public/templates/account/account-addresses.php:124,
 #: public/templates/account/account-addresses.php:385,
 #: public/templates/checkout/checkout-billing.php:109
 msgid "Company Name"
-msgstr "会社名"
+msgstr "Company Name"
 
 #: public/templates/account/account-addresses.php:146,
 #: public/templates/account/account-addresses.php:396
 msgid "Address line 1 *"
-msgstr "丁目、番地、号など"
+msgstr "Address line 1 *"
 
 #: public/templates/account/account-addresses.php:168,
 #: public/templates/account/account-addresses.php:407,
 #: public/templates/checkout/checkout-billing.php:211,
 #: public/templates/checkout/checkout-shipping.php:121
 msgid "Address line 2"
-msgstr "建物名、部屋番号など"
+msgstr "Address line 2"
 
 #: public/templates/account/account-addresses.php:184,
 #: public/templates/account/account-addresses.php:416
 msgid "City *"
-msgstr "都市 *"
+msgstr "City *"
 
 #: public/templates/account/account-addresses.php:204,
 #: public/templates/account/account-addresses.php:427
 msgid "Select Country *"
-msgstr "国を選択"
+msgstr "Select Country *"
 
 #: public/templates/account/account-addresses.php:234,
 #: public/templates/account/account-addresses.php:447
 msgid "State *"
-msgstr "状態*"
+msgstr "State *"
 
 #: public/templates/account/account-addresses.php:241,
 #: public/templates/account/account-addresses.php:451
 msgid "Select State *"
-msgstr "選択状態"
+msgstr "Select State *"
 
 #: public/templates/account/account-addresses.php:245,
 #: public/templates/account/account-addresses.php:454,
 #: public/templates/my-subscriptions/my-subscriptions.php:61
 msgid "Not Applicable"
-msgstr "該当なし"
+msgstr "Not Applicable"
 
 #: public/templates/account/account-addresses.php:275,
 #: public/templates/account/account-addresses.php:472
 msgid "Zipcode *"
-msgstr "郵便番号"
+msgstr "Zipcode *"
 
 #: public/templates/account/account-addresses.php:297,
 #: public/templates/account/account-addresses.php:483,
 #: public/templates/checkout/checkout-billing.php:326,
 #: public/templates/checkout/checkout-shipping.php:236
 msgid "Phone"
-msgstr "電話番号"
+msgstr "Phone"
 
 #: public/templates/account/account-addresses.php:313,
 #: public/templates/account/account-payments.php:61
 msgid "Save"
-msgstr "保存"
+msgstr "Save"
 
 #: public/templates/account/account-addresses.php:319,
 #: public/templates/account/account-addresses.php:494,
@@ -1495,136 +1500,137 @@ msgstr "保存"
 #: public/templates/account/account-subscriptions.php:146,
 #: public/templates/account/account-subscriptions.php:158
 msgid "Cancel"
-msgstr "キャンセル"
+msgstr "Cancel"
 
 #: public/templates/account/account-addresses.php:341,
 #: public/templates/account/account-addresses.php:343
 msgid "Add New Address"
-msgstr "新しい住所を追加する"
+msgstr "Add New Address"
 
 #: public/templates/account/account-addresses.php:506
 msgid ""
 "Are you sure you want to delete <strong>nickname</strong> from your address "
 "book?"
 msgstr ""
-"アドレス帳から<strong>ニックネーム</strong>を削除してもよろしいですか？"
+"Are you sure you want to delete <strong>nickname</strong> from your address "
+"book?"
 
 #: public/templates/account/account-addresses.php:509
 msgid "Delete"
-msgstr "削除"
+msgstr "Delete"
 
 #: public/templates/account/account-orders.php:20
 msgid "Order ID"
-msgstr "注文ID"
+msgstr "Order ID"
 
 #: public/templates/account/account-orders.php:21,
 #: public/templates/account/account-subscriptions.php:53
 msgid "Date"
-msgstr "日付"
+msgstr "Date"
 
 #: public/templates/account/account-orders.php:22
 msgid "Amount"
-msgstr "金額"
+msgstr "Amount"
 
 #: public/templates/account/account-orders.php:23,
 #: public/templates/account/account-subscriptions.php:85,
 #: public/templates/my-subscriptions/my-subscriptions.php:34
 msgid "Status"
-msgstr "ステータス"
+msgstr "Status"
 
 #: public/templates/account/account-orders.php:75,
 #: public/templates/account/account-orders.php:88
 msgid "Order Details"
-msgstr "ご注文の詳細"
+msgstr "Order Details"
 
 #: public/templates/account/account-orders.php:98
 msgid "Order number: "
-msgstr "注文番号:"
+msgstr "Order number: "
 
 #: public/templates/account/account-orders.php:102,
 #: public/templates/thank-you/thank-you.php:133
 msgid "Print Receipt"
-msgstr "領収書を印刷"
+msgstr "Print Receipt"
 
 #: public/templates/account/account-orders.php:116,
 #: public/templates/thank-you/thank-you.php:164
 msgid "Shipping Address"
-msgstr "配送先住所"
+msgstr "Shipping Address"
 
 #: public/templates/account/account-orders.php:126,
 #: public/templates/subscription-details/subscription-details-account-info.php:63,
 #: public/templates/thank-you/thank-you.php:178
 msgid "Billing Address"
-msgstr "請求先住所"
+msgstr "Billing Address"
 
 #: public/templates/account/account-orders.php:159,
 #: public/templates/cart/cart-summary.php:99,
 #: public/templates/checkout/checkout-summary.php:75,
 #: public/templates/thank-you/thank-you-summary.php:81
 msgid "Total"
-msgstr "合計"
+msgstr "Total"
 
 #: public/templates/account/account-orders.php:168
 msgid "Close"
-msgstr "閉じる"
+msgstr "Close"
 
 #: public/templates/account/account-orders.php:169
 msgid "Print"
-msgstr "印刷"
+msgstr "Print"
 
 #: public/templates/account/account-password.php:13
 msgid "Current Password *"
-msgstr "現在のパスワード *"
+msgstr "Current Password *"
 
 #: public/templates/account/account-password.php:35
 msgid "New Password *"
-msgstr "新しいパスワード *"
+msgstr "New Password *"
 
 #: public/templates/account/account-password.php:57
 msgid "Confirm New Password *"
-msgstr "新しいパスワードを再入力 *"
+msgstr "Confirm New Password *"
 
 #: public/templates/account/account-password.php:76,
 #: public/templates/account/account.php:59,
 #: public/templates/account/account.php:138
 msgid "Change Password"
-msgstr "パスワードの変更"
+msgstr "Change Password"
 
 #: public/templates/account/account-payments.php:44
 msgid "Card Name *"
-msgstr "カード名*"
+msgstr "Card Name *"
 
 #: public/templates/account/account-payments.php:79
 msgid "Are you sure you want to delete this payment?"
-msgstr "この支払いを削除してもよろしいですか？"
+msgstr "Are you sure you want to delete this payment?"
 
 #: public/templates/account/account-payments.php:82,
 #: public/templates/account/account-subscriptions.php:145,
 #: public/templates/account/account-subscriptions.php:157
 msgid "Accept"
-msgstr "承諾"
+msgstr "Accept"
 
 #: public/templates/account/account-subscriptions.php:57
 msgid "Activated:"
-msgstr "アクティブ化:"
+msgstr "Activated:"
 
 #: public/templates/account/account-subscriptions.php:62,
 #: public/templates/account/account-subscriptions.php:66
 msgid "Renews on:"
-msgstr "更新："
+msgstr "Renews on:"
 
 #: public/templates/account/account-subscriptions.php:62,
 #: public/templates/account/account-subscriptions.php:68
 msgid "Renewal Due:"
-msgstr "更新期限："
+msgstr "Renewal Due:"
 
 #: public/templates/account/account-subscriptions.php:77
 msgid "Cancels on:"
-msgstr "キャンセル："
+msgstr "Cancels on:"
 
 #: public/templates/account/account-subscriptions.php:91
 msgid "Auto Renewal"
-msgstr "自動更新"
+msgstr "Auto Renewal"
 
 #: public/templates/account/account-subscriptions.php:95
 msgid "on"
@@ -1632,33 +1638,33 @@ msgstr "on"
 
 #: public/templates/account/account-subscriptions.php:95
 msgid "off"
-msgstr "オフ"
+msgstr "off"
 
 #: public/templates/account/account-subscriptions.php:99,
 #: public/templates/account/account-subscriptions.php:105,
 #: public/templates/subscription-details/subscription-details-status.php:63
 msgid "Renew Now"
-msgstr "今すぐ更新 "
+msgstr "Renew Now"
 
 #: public/templates/account/account-subscriptions.php:103
 msgid "Manual Renewal"
-msgstr "手動更新"
+msgstr "Manual Renewal"
 
 #: public/templates/account/account-subscriptions.php:121
 msgid "Auto Renewal Update"
-msgstr "自動更新の更新"
+msgstr "Auto Renewal Update"
 
 #: public/templates/account/account-subscriptions.php:127
 msgid ""
 "There was a problem changing your auto renew settings for this product. "
 "Please try again, or contact customer support."
 msgstr ""
-"この製品の自動更新設定を変更する際に問題が発生しました。もう一度やり直すか、"
-"カスタマーサポートに連絡してください。"
+"There was a problem changing your auto renew settings for this product. "
+"Please try again, or contact customer support."
 
 #: public/templates/account/account-subscriptions.php:130
 msgid "Try again"
-msgstr "もう一度お試しください"
+msgstr "Try again"
 
 #: public/templates/account/account-subscriptions.php:141
 msgid ""
@@ -1666,178 +1672,178 @@ msgid ""
 "until the expiration date, however you will have to manually renew at that "
 "time or your subscription will be cancelled."
 msgstr ""
-"サブスクリプションの自動請求を停止すると、有効期限まで有効になりますが、その"
-"時点で手動で更新する必要があります。そうしないと、サブスクリプションがキャン"
-"セルされます。"
+"If you stop automatic billing for your subscription it will remain active "
+"until the expiration date, however you will have to manually renew at that "
+"time or your subscription will be cancelled."
 
 #: public/templates/account/account-subscriptions.php:142
 msgid "Are you sure you want to stop automatic billing for this subscription?"
-msgstr "このサブスクリプションの自動請求を停止してもよろしいですか？"
+msgstr "Are you sure you want to stop automatic billing for this subscription?"
 
 #: public/templates/account/account.php:32
 msgid "Hello"
-msgstr "こんにちは"
+msgstr "Hello"
 
 #: public/templates/account/account.php:38
 msgid "Orders"
-msgstr "注文"
+msgstr "Orders"
 
 #: public/templates/account/account.php:45
 msgid "Subscriptions"
-msgstr "定期購入"
+msgstr "Subscriptions"
 
 #: public/templates/account/account.php:52
 msgid "Addresses"
-msgstr "マイアカウント"
+msgstr "Addresses"
 
 #: public/templates/account/account.php:66
 msgid "Sign out"
-msgstr "ログアウト"
+msgstr "Sign out"
 
 #: public/templates/account/account.php:76
 msgid "My Orders"
-msgstr "マイ注文"
+msgstr "My Orders"
 
 #: public/templates/account/account.php:82
 msgid ""
 "You have no recorded orders. If you just place an order, please wait a few "
 "miniutes and reload the page. The order detail will be there."
 msgstr ""
-"注文は記録されていません。注文するだけの場合は、数分待ってからページをリロー"
-"ドしてください。注文の詳細はそこにあります。"
+"You have no recorded orders. If you just place an order, please wait a few "
+"miniutes and reload the page. The order detail will be there."
 
 #: public/templates/account/account.php:89,
 #: public/templates/thank-you/thank-you-my-subs.php:32
 msgid "My Subscriptions"
-msgstr "私の定期支払い"
+msgstr "My Subscriptions"
 
 #: public/templates/account/account.php:96
 msgid "You have no subscription products."
-msgstr "サブスクリプション製品はありません。"
+msgstr "You have no subscription products."
 
 #: public/templates/account/account.php:103
 msgid "My Addresses"
-msgstr "住所"
+msgstr "My Addresses"
 
 #: public/templates/account/account.php:115,
 #: public/templates/checkout/checkout-address-book.php:88
 msgid "You have no saved addresses."
-msgstr "保存されたアドレスはありません。"
+msgstr "You have no saved addresses."
 
 #: public/templates/account/account.php:121
 msgid "My Payments"
-msgstr "マイペイメント"
+msgstr "My Payments"
 
 #: public/templates/account/account.php:132
 msgid "You have no saved payments."
-msgstr "保存された支払いはありません。"
+msgstr "You have no saved payments."
 
 #: public/templates/cart/cart-auto-renewal-terms.php:23,
 #: public/templates/cart/cart-auto-renewal-terms.php:29
 msgid "Auto-Renewal Plan Terms"
-msgstr "自動更新プランの条件"
+msgstr "Auto-Renewal Plan Terms"
 
 #: public/templates/cart/cart-auto-renewal-terms.php:47
 msgid "I have read and agree to the terms and charges above."
-msgstr "上記の利用規約を読み、同意します。"
+msgstr "I have read and agree to the terms and charges above."
 
 #: public/templates/cart/cart-summary.php:87
 msgid "Add Promo Code"
-msgstr "プロモーションコードを追加する"
+msgstr "Add Promo Code"
 
 #: public/templates/cart/cart-summary.php:89
 msgid "Promo Code"
-msgstr "プロモーションコードを追加する"
+msgstr "Promo Code"
 
 #: public/templates/cart/cart-summary.php:90
 msgid "Apply"
-msgstr "適用"
+msgstr "Apply"
 
 #: public/templates/cart/cart-summary.php:107,
 #: public/templates/cart/cart.php:79
 msgid "Proceed to checkout"
-msgstr "お支払いへ進む"
+msgstr "Proceed to checkout"
 
 #: public/templates/cart/cart.php:27
 msgid "Order Number:"
-msgstr "注文番号: %s"
+msgstr "Order Number:"
 
 #: public/templates/cart/cart.php:75,
 #: public/templates/checkout/checkout.php:18,
 #: public/templates/checkout/checkout.php:118
 msgid "Continue Shopping"
-msgstr "ショッピングを続ける"
+msgstr "Continue Shopping"
 
 #: public/templates/checkout/checkout-billing.php:33
 msgid "Billing"
-msgstr "請求処理"
+msgstr "Billing"
 
 #: public/templates/checkout/checkout-billing.php:49
 msgid "What is your billing address?"
-msgstr "請求先住所は何ですか？"
+msgstr "What is your billing address?"
 
 #: public/templates/checkout/checkout-billing.php:59
 msgid "Billing address is the same as delivery address"
-msgstr "請求先住所は配送先住所と同じです"
+msgstr "Billing address is the same as delivery address"
 
 #: public/templates/checkout/checkout-billing.php:77
 msgid "Business Checkout"
-msgstr "ビジネスチェックアウト"
+msgstr "Business Checkout"
 
 #: public/templates/checkout/checkout-billing.php:89,
 #: public/templates/checkout/checkout-shipping.php:33
 msgid "My Address Book"
-msgstr "私のアドレス帳"
+msgstr "My Address Book"
 
 #: public/templates/checkout/checkout-billing.php:93
 msgid "Choose billing address"
-msgstr "請求先住所を選択してください"
+msgstr "Choose billing address"
 
 #: public/templates/checkout/checkout-billing.php:125
 msgid "Company EIN"
-msgstr "会社EIN"
+msgstr "Company EIN"
 
 #: public/templates/checkout/checkout-billing.php:145,
 #: public/templates/checkout/checkout-shipping.php:55,
 #: public/templates/login/login.php:121
 msgid "First Name"
-msgstr "名"
+msgstr "First Name"
 
 #: public/templates/checkout/checkout-billing.php:167,
 #: public/templates/checkout/checkout-shipping.php:77,
 #: public/templates/login/login.php:131
 msgid "Last Name"
-msgstr "姓"
+msgstr "Last Name"
 
 #: public/templates/checkout/checkout-billing.php:189,
 #: public/templates/checkout/checkout-shipping.php:99
 msgid "Address line 1"
-msgstr "丁目、番地、号など"
+msgstr "Address line 1"
 
 #: public/templates/checkout/checkout-billing.php:227,
 #: public/templates/checkout/checkout-shipping.php:137
 msgid "City"
-msgstr "市区町村"
+msgstr "City"
 
 #: public/templates/checkout/checkout-billing.php:248,
 #: public/templates/checkout/checkout-shipping.php:157
 msgid "Select Country"
-msgstr "国を選択"
+msgstr "Select Country"
 
 #: public/templates/checkout/checkout-billing.php:276,
 #: public/templates/checkout/checkout-shipping.php:186
 msgid "Select State"
-msgstr "選択状態"
+msgstr "Select State"
 
 #: public/templates/checkout/checkout-billing.php:304,
 #: public/templates/checkout/checkout-shipping.php:214
 msgid "Zipcode"
-msgstr "郵便番号"
+msgstr "Zipcode"
 
 #: public/templates/checkout/checkout-billing.php:352,
 #: public/templates/checkout/checkout-shipping.php:260
 msgid "Save this address for future purchases"
-msgstr "今後の購入のためにこのアドレスを保存してください"
+msgstr "Save this address for future purchases"
 
 #: public/templates/checkout/checkout-billing.php:366,
 #: public/templates/checkout/checkout-delivery.php:45,
@@ -1845,36 +1851,36 @@ msgstr "今後の購入のためにこのアドレスを保存してください
 #: public/templates/checkout/checkout-shipping.php:272,
 #: public/templates/checkout/checkout-tax-identifier.php:83
 msgid "Save and continue"
-msgstr "保存して続行"
+msgstr "Save and continue"
 
 #: public/templates/checkout/checkout-confirmation.php:4
 msgid "Please review your order details and place your order below."
-msgstr "ご注文内容をご確認の上、以下からご注文ください。"
+msgstr "Please review your order details and place your order below."
 
 #: public/templates/checkout/checkout-confirmation.php:19
 msgid "By submitting the order, I agree to %s and %s of %s"
-msgstr "注文を送信することにより、%sの%sと%sに同意します"
+msgstr "By submitting the order, I agree to %s and %s of %s"
 
 #: public/templates/checkout/checkout-confirmation.php:25
 msgid "Place Order"
-msgstr "注文する"
+msgstr "Place Order"
 
 #: public/templates/checkout/checkout-delivery.php:27
 msgid "Delivery"
-msgstr "配信"
+msgstr "Delivery"
 
 #: public/templates/checkout/checkout-drop-in.php:21,
 #: public/templates/checkout/checkout-payment.php:22
 msgid "How would you like to pay?"
-msgstr "ご希望のお支払方法は？"
+msgstr "How would you like to pay?"
 
 #: public/templates/checkout/checkout-email.php:21
 msgid "Please enter your email address"
-msgstr "メール アドレスを入力してください"
+msgstr "Please enter your email address"
 
 #: public/templates/checkout/checkout-payment.php:42
 msgid "Credit Card"
-msgstr "クレジットカード"
+msgstr "Credit Card"
 
 #: public/templates/checkout/checkout-payment.php:103
 msgid "PayPal"
@@ -1882,335 +1888,337 @@ msgstr "PayPal"
 
 #: public/templates/checkout/checkout-payment.php:134
 msgid "Pay with card"
-msgstr "カードで支払う"
+msgstr "Pay with card"
 
 #: public/templates/checkout/checkout-pretandc.php:8
 msgid "I agree to %s and %s of %s"
-msgstr "%sの%sと%sに同意します"
+msgstr "I agree to %s and %s of %s"
 
 #: public/templates/checkout/checkout-shipping.php:37
 msgid "Choose shipping address"
-msgstr "配送先住所を選択してください"
+msgstr "Choose shipping address"
 
 #: public/templates/checkout/checkout-summary.php:17,
 #: public/templates/thank-you/thank-you-summary.php:25
 msgid "items"
-msgstr "アイテム"
+msgstr "items"
 
 #: public/templates/checkout/checkout-summary.php:17,
 #: public/templates/thank-you/thank-you-summary.php:25
 msgid "item"
-msgstr "アイテム"
+msgstr "item"
 
 #: public/templates/checkout/checkout-tax-identifier.php:19
 msgid "Tax ID"
-msgstr "納税者番号"
+msgstr "Tax ID"
 
 #: public/templates/checkout/checkout-tax-identifier.php:38
 msgid "Personal purchase"
-msgstr "個人購入"
+msgstr "Personal purchase"
 
 #: public/templates/checkout/checkout-tax-identifier.php:38
 msgid "Business purchase"
-msgstr "事業購入"
+msgstr "Business purchase"
 
 #: public/templates/checkout/checkout.php:16
 msgid "Your cart is empty!"
-msgstr "カートは空です!"
+msgstr "Your cart is empty!"
 
 #: public/templates/checkout/checkout.php:52
 msgid "Back"
-msgstr "戻る"
+msgstr "Back"
 
 #: public/templates/checkout/checkout.php:67
 msgid "Edit Shipping/Billing"
-msgstr "配送/請求の編集"
+msgstr "Edit Shipping/Billing"
 
 #: public/templates/checkout/checkout.php:69
 msgid "Edit Billing"
-msgstr "請求の編集"
+msgstr "Edit Billing"
 
 #: public/templates/login/login.php:24
 msgid "Welcome "
-msgstr "ようこそ山本精肉店へ"
+msgstr "Welcome "
 
 #: public/templates/login/login.php:39
 msgid "New password"
-msgstr "新しいパスワード"
+msgstr "New password"
 
 #: public/templates/login/login.php:40
 msgid "Please enter secure password twice to continue"
-msgstr "続行するには、安全なパスワードを2回入力してください"
+msgstr "Please enter secure password twice to continue"
 
 #: public/templates/login/login.php:46
 msgid "New Password"
-msgstr "新しいパスワード"
+msgstr "New Password"
 
 #: public/templates/login/login.php:54
 msgid "Confirm New Password"
-msgstr "新しいパスワードを確認"
+msgstr "Confirm New Password"
 
 #: public/templates/login/login.php:71
 msgid "Returning Customer"
-msgstr "顧客の返品"
+msgstr "Returning Customer"
 
 #: public/templates/login/login.php:72
 msgid "If you have an existing account, please sign in."
-msgstr "既存のアカウントをお持ちの場合は、サインインしてください。"
+msgstr "If you have an existing account, please sign in."
 
 #: public/templates/login/login.php:78, public/templates/login/login.php:141
 msgid "Email Address"
-msgstr "メールアドレス"
+msgstr "Email Address"
 
 #: public/templates/login/login.php:86, public/templates/login/login.php:149
 msgid "Password"
-msgstr "パスワード"
+msgstr "Password"
 
 #: public/templates/login/login.php:99
 msgid "Forgot password?"
-msgstr "パスワードをお忘れですか?"
+msgstr "Forgot password?"
 
 #: public/templates/login/login.php:109
 msgid "NEW CUSTOMER"
-msgstr "新規顧客"
+msgstr "NEW CUSTOMER"
 
 #: public/templates/login/login.php:112
 msgid ""
 "You can checkout as a guest or become a member for faster checkout and great "
 "offers."
 msgstr ""
-"ゲストとしてチェックアウトすることも、メンバーになることで、より迅速なチェッ"
-"クアウトと優れたオファーを利用できます。"
+"You can checkout as a guest or become a member for faster checkout and great "
+"offers."
 
 #: public/templates/login/login.php:157
 msgid "Confirm Password"
-msgstr "パスワードを確認"
+msgstr "Confirm Password"
 
 #: public/templates/login/login.php:167
 msgid "Sign Up"
-msgstr "サインアップ"
+msgstr "Sign Up"
 
 #: public/templates/login/login.php:170
 msgid "Continue As Guest"
-msgstr "ゲストとして続行"
+msgstr "Continue As Guest"
 
 #: public/templates/login/login.php:181
 msgid "PAYPAL CUSTOMERS"
-msgstr "ペイパルのお客様"
+msgstr "PAYPAL CUSTOMERS"
 
 #: public/templates/login/login.php:183
 msgid "Make your payment with PayPal's secure services."
-msgstr "PayPalの安全なサービスでお支払いください。"
+msgstr "Make your payment with PayPal's secure services."
 
 #: public/templates/login/login.php:184
 msgid "You can still add promotion codes before you complete your order."
-msgstr "注文を完了する前に、プロモーションコードを追加することができます。"
+msgstr "You can still add promotion codes before you complete your order."
 
 #: public/templates/my-subscriptions/my-subscriptions.php:32
 msgid "Product Name"
-msgstr "商品名"
+msgstr "Product Name"
 
 #: public/templates/my-subscriptions/my-subscriptions.php:36
 msgid "Auto Renewal Date"
-msgstr "自動更新日"
+msgstr "Auto Renewal Date"
 
 #: public/templates/my-subscriptions/my-subscriptions.php:40,
 #: public/templates/subscription-details/subscription-details-account-info.php:57,
 #: public/templates/subscription-details/subscription-details-status.php:61
 msgid "Expiration Date"
-msgstr "有効期限"
+msgstr "Expiration Date"
 
 #: public/templates/my-subscriptions/my-subscriptions.php:58
 msgid "Renew Now!"
-msgstr "今すぐ更新 "
+msgstr "Renew Now!"
 
 #: public/templates/parts/content-none.php:17
 msgid "Nothing Found"
-msgstr "何も見つかりません"
+msgstr "Nothing Found"
 
 #: public/templates/parts/content-none.php:21
 msgid ""
 "Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
 msgstr ""
-"最初の投稿を公開する準備はできましたか ? <a href=\"%1$s\">ここから始めましょ"
-"う</a>。"
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
 
 #: public/templates/parts/content-none.php:23
 msgid ""
 "Sorry, but nothing matched your search terms. Please try again with some "
 "different keywords."
 msgstr ""
-"申し訳ありませんが、検索条件に一致するものはありません。 別のキーワードでもう"
-"一度お試しください。"
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
 
 #: public/templates/parts/content-none.php:26
 msgid ""
 "It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
 "searching can help."
-msgstr "お探しのコンテンツは見つかりませんでした。検索をお試しください。"
+msgstr ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
 
 #: public/templates/parts/content-single.php:79
 msgid "Select your product"
-msgstr "製品を選択してください"
+msgstr "Select your product"
 
 #: public/templates/subscription-details/subscription-details-account-info.php:49
 msgid "Account Information"
-msgstr "アカウント情報"
+msgstr "Account Information"
 
 #: public/templates/subscription-details/subscription-details-account-info.php:53
 msgid "The following is the information currently being used for payment."
-msgstr "以下は、現在支払いに使用されている情報です。"
+msgstr "The following is the information currently being used for payment."
 
 #: public/templates/subscription-details/subscription-details-order-history.php:20
 msgid "Order History"
-msgstr "注文履歴"
+msgstr "Order History"
 
 #: public/templates/subscription-details/subscription-details-order-history.php:24
 msgid "View the order history for your subscription."
-msgstr "サブスクリプションの注文履歴を表示します。"
+msgstr "View the order history for your subscription."
 
 #: public/templates/subscription-details/subscription-details-order-history.php:30
 msgid "View Order History"
-msgstr "注文履歴の表示"
+msgstr "View Order History"
 
 #: public/templates/subscription-details/subscription-details-order-history.php:39
 msgid "Order Number"
-msgstr "注文番号"
+msgstr "Order Number"
 
 #: public/templates/subscription-details/subscription-details-order-history.php:41
 msgid "Order Date"
-msgstr "注文日"
+msgstr "Order Date"
 
 #: public/templates/subscription-details/subscription-details-order-history.php:43
 msgid "Order Amount"
-msgstr "注文金額"
+msgstr "Order Amount"
 
 #: public/templates/subscription-details/subscription-details-status.php:33
 msgid "Subscription Status"
-msgstr "定期支払いステータス"
+msgstr "Subscription Status"
 
 #: public/templates/subscription-details/subscription-details-status.php:39
 msgid "Your subscription will automatically renew on"
-msgstr "サブスクリプションは自動的に更新されます"
+msgstr "Your subscription will automatically renew on"
 
 #: public/templates/subscription-details/subscription-details-status.php:39
 msgid ""
 "If you do not wish for it to automatically renew, update the setting below."
-msgstr "自動的に更新したくない場合は、以下の設定を更新してください。"
+msgstr ""
+"If you do not wish for it to automatically renew, update the setting below."
 
 #: public/templates/subscription-details/subscription-details-status.php:43,
 #: public/templates/subscription-details/subscription-details-status.php:57
 msgid "Automatic Renewals"
-msgstr "自動更新"
+msgstr "Automatic Renewals"
 
 #: public/templates/subscription-details/subscription-details-status.php:43,
 #: public/templates/subscription-details/subscription-details-status.php:57
 msgid "Off"
-msgstr "オフ"
+msgstr "Off"
 
 #: public/templates/subscription-details/subscription-details-status.php:53
 msgid "On"
-msgstr "オン"
+msgstr "On"
 
 #: public/templates/subscription-details/subscription-details-status.php:67
 msgid "Cancel Subscription"
-msgstr "定期支払をキャンセル"
+msgstr "Cancel Subscription"
 
 #: public/templates/subscription-details/subscription-details.php:29
 msgid "Back to My Subscriptions Page"
-msgstr "サブスクリプションページに戻る"
+msgstr "Back to My Subscriptions Page"
 
 #: public/templates/subscription-details/subscription-details.php:37
 msgid "Subscription ID"
-msgstr "購読ID"
+msgstr "Subscription ID"
 
 #: public/templates/subscription-details/subscription-details.php:51
 msgid "Current Quantity"
-msgstr "現在の数量"
+msgstr "Current Quantity"
 
 #: public/templates/subscription-details/subscription-details.php:53
 msgid "Next Renewal Quantity"
-msgstr "次の更新数量"
+msgstr "Next Renewal Quantity"
 
 #: public/templates/subscription-details/subscription-details.php:57
 msgid "Change Quantity"
-msgstr "数量の変更"
+msgstr "Change Quantity"
 
 #: public/templates/thank-you/thank-you.php:94
 msgid "Thank you"
-msgstr "ありがとうございます"
+msgstr "Thank you"
 
 #: public/templates/thank-you/thank-you.php:104
 msgid "Your order has been successfully placed."
-msgstr "ご注文は正常に行われました。"
+msgstr "Your order has been successfully placed."
 
 #: public/templates/thank-you/thank-you.php:108
 msgid "Your order was completed successfully."
-msgstr "ご注文は正常に完了しました。"
+msgstr "Your order was completed successfully."
 
 #: public/templates/thank-you/thank-you.php:114
 msgid "Order number is: "
-msgstr "注文番号:"
+msgstr "Order number is: "
 
 #: public/templates/thank-you/thank-you.php:129
 msgid "You will receive an email confirmation shortly at %s"
-msgstr "すぐに%sに確認のメールが届きます"
+msgstr "You will receive an email confirmation shortly at %s"
 
 #: public/templates/thank-you/thank-you.php:193
 msgid "VAT Information"
-msgstr "VAT情報"
+msgstr "VAT Information"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:6
 msgid "Your order has been entered and is awaiting payment."
-msgstr "ご注文が入力され、支払いを待っています。"
+msgstr "Your order has been entered and is awaiting payment."
 
 #: public/templates/thank-you/wire-transfer-instructions.php:8
 msgid ""
 "Please make your payment now to complete your order. All funds must be drawn "
 "in the currency shown below."
 msgstr ""
-"ご注文を完了するには、今すぐお支払いください。すべての資金は、以下に示す通貨"
-"で引き出す必要があります。"
+"Please make your payment now to complete your order. All funds must be drawn "
+"in the currency shown below."
 
 #: public/templates/thank-you/wire-transfer-instructions.php:10
 msgid "Provide your bank with the following wire transfer instructions:"
-msgstr "銀行に次の電信送金の手順を提供します。"
+msgstr "Provide your bank with the following wire transfer instructions:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:14
 msgid "Amount:"
-msgstr "総額："
+msgstr "Amount:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:16
 msgid "Wire Transfer Reference Number:"
-msgstr "電信送金の参照番号："
+msgstr "Wire Transfer Reference Number:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:18
 msgid "*Be sure to include this number or your payment may not be received."
-msgstr "※必ずこの番号をご記入ください。ご入金いただけない場合がございます。"
+msgstr "*Be sure to include this number or your payment may not be received."
 
 #: public/templates/thank-you/wire-transfer-instructions.php:20
 msgid "Bank:"
-msgstr "バンク："
+msgstr "Bank:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:22
 msgid "Location:"
-msgstr "位置:"
+msgstr "Location:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:24
 msgid "Account Holder:"
-msgstr "口座名義人："
+msgstr "Account Holder:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:26
 msgid "Account Number:"
-msgstr "口座番号："
+msgstr "Account Number:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:28
 msgid "Swift Code:"
-msgstr "スウィフトコード："
+msgstr "Swift Code:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:32
 msgid "IBAN*:"
-msgstr "IBAN *："
+msgstr "IBAN*:"
 
 #: public/templates/thank-you/wire-transfer-instructions.php:38
 msgid ""
@@ -2218,9 +2226,9 @@ msgid ""
 "when you electronically transfer the money for payment. If you do not use "
 "this reference number we will not be able to process your payment."
 msgstr ""
-"支払いのために電子的に送金する場合は、必ず「参照番号」を取引参照として使用し"
-"てください。この参照番号を使用しない場合、お支払いを処理することはできませ"
-"ん。"
+"Please ensure you use your 'Reference Number' as your transaction reference "
+"when you electronically transfer the money for payment. If you do not use "
+"this reference number we will not be able to process your payment."
 
 #: public/templates/thank-you/wire-transfer-instructions.php:40
 msgid ""
@@ -2228,8 +2236,9 @@ msgid ""
 "send you an email notification. If a payment is not received within 20 "
 "business days, your order will be cancelled."
 msgstr ""
-"銀行がお客様の資金を受け取ったことを確認した後、メールで通知を送信します。 20"
-"営業日以内にお支払いがない場合、ご注文はキャンセルされます。"
+"After we receive confirmation that our bank has received your funds, we will "
+"send you an email notification. If a payment is not received within 20 "
+"business days, your order will be cancelled."
 
 #: public/templates/thank-you/wire-transfer-instructions.php:42
 msgid ""
@@ -2238,13 +2247,15 @@ msgid ""
 "mentioned bank account. Any orders placed without all of the above "
 "information may not be processed."
 msgstr ""
-"支払いを行うにはすべての銀行の詳細が必要になるため、記録のためにこのページを"
-"印刷してください。この情報を使用して、前述の銀行口座に支払いを行うことができ"
-"ます。上記のすべての情報なしで行われた注文は処理されない場合があります。"
+"Print this page for your records as all bank details are required to make "
+"your payment. You can use this information to make your payment to the fore "
+"mentioned bank account. Any orders placed without all of the above "
+"information may not be processed."
 
 #: public/templates/thank-you/wire-transfer-instructions.php:44
 msgid ""
 "When we have finished processing your order, you will be sent a confirmation "
 "email at the address provided."
 msgstr ""
-"ご注文の処理が完了すると、指定されたアドレスに確認メールが送信されます。"
+"When we have finished processing your order, you will be sent a confirmation "
+"email at the address provided."

@@ -81,14 +81,14 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 22);
+/******/ 	return __webpack_require__(__webpack_require__.s = 20);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /*!
  * jQuery JavaScript Library v3.5.1
@@ -9564,53 +9564,10 @@
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(15);
+module.exports = __webpack_require__(13);
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports) {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-module.exports = _defineProperty;
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -9650,6 +9607,49 @@ function _asyncToGenerator(fn) {
 }
 
 module.exports = _asyncToGenerator;
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports) {
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+}
+
+module.exports = _defineProperty;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
+
+function _typeof(obj) {
+  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return _typeof2(obj);
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
 
 /***/ }),
 /* 5 */
@@ -9718,77 +9718,40 @@ module.exports = function (module) {
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayLikeToArray = __webpack_require__(9);
+var arrayWithHoles = __webpack_require__(14);
 
-function _unsupportedIterableToArray(o, minLen) {
-  if (!o) return;
-  if (typeof o === "string") return arrayLikeToArray(o, minLen);
-  var n = Object.prototype.toString.call(o).slice(8, -1);
-  if (n === "Object" && o.constructor) n = o.constructor.name;
-  if (n === "Map" || n === "Set") return Array.from(o);
-  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
-}
+var iterableToArrayLimit = __webpack_require__(15);
 
-module.exports = _unsupportedIterableToArray;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports) {
-
-function _arrayLikeToArray(arr, len) {
-  if (len == null || len > arr.length) len = arr.length;
-
-  for (var i = 0, arr2 = new Array(len); i < len; i++) {
-    arr2[i] = arr[i];
-  }
-
-  return arr2;
-}
-
-module.exports = _arrayLikeToArray;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayWithHoles = __webpack_require__(16);
-
-var iterableToArrayLimit = __webpack_require__(17);
-
-var unsupportedIterableToArray = __webpack_require__(8);
-
-var nonIterableRest = __webpack_require__(18);
+var nonIterableRest = __webpack_require__(16);
 
 function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
 }
 
 module.exports = _slicedToArray;
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(19);
+var arrayWithoutHoles = __webpack_require__(17);
 
-var iterableToArray = __webpack_require__(20);
+var iterableToArray = __webpack_require__(18);
 
-var unsupportedIterableToArray = __webpack_require__(8);
-
-var nonIterableSpread = __webpack_require__(21);
+var nonIterableSpread = __webpack_require__(19);
 
 function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
 }
 
 module.exports = _toConsumableArray;
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
 /* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -9800,7 +9763,7 @@ module.exports = _toConsumableArray;
  * Released under the MIT license
  */
 (function (factory) {
-  if (typeof define === 'function' && __webpack_require__(14)) {
+  if (typeof define === 'function' && __webpack_require__(12)) {
     // AMD (Register as an anonymous module)
     define(['jquery'], factory);
   } else if ((typeof exports === "undefined" ? "undefined" : _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default()(exports)) === 'object') {
@@ -9899,10 +9862,10 @@ module.exports = _toConsumableArray;
     return !$.cookie(key);
   };
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(13)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(11)(module)))
 
 /***/ }),
-/* 13 */
+/* 11 */
 /***/ (function(module, exports) {
 
 module.exports = function (originalModule) {
@@ -9932,7 +9895,7 @@ module.exports = function (originalModule) {
 };
 
 /***/ }),
-/* 14 */
+/* 12 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -9941,10 +9904,10 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(this, {}))
 
 /***/ }),
-/* 15 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -10080,7 +10043,7 @@ var runtime = function (exports) {
     };
   };
 
-  function AsyncIterator(generator, PromiseImpl) {
+  function AsyncIterator(generator) {
     function invoke(method, arg, resolve, reject) {
       var record = tryCatch(generator[method], generator, arg);
 
@@ -10091,14 +10054,14 @@ var runtime = function (exports) {
         var value = result.value;
 
         if (value && _typeof(value) === "object" && hasOwn.call(value, "__await")) {
-          return PromiseImpl.resolve(value.__await).then(function (value) {
+          return Promise.resolve(value.__await).then(function (value) {
             invoke("next", value, resolve, reject);
           }, function (err) {
             invoke("throw", err, resolve, reject);
           });
         }
 
-        return PromiseImpl.resolve(value).then(function (unwrapped) {
+        return Promise.resolve(value).then(function (unwrapped) {
           // When a yielded Promise is resolved, its final value becomes
           // the .value of the Promise<{value,done}> result for the
           // current iteration.
@@ -10116,7 +10079,7 @@ var runtime = function (exports) {
 
     function enqueue(method, arg) {
       function callInvokeWithMethodAndArg() {
-        return new PromiseImpl(function (resolve, reject) {
+        return new Promise(function (resolve, reject) {
           invoke(method, arg, resolve, reject);
         });
       }
@@ -10153,9 +10116,8 @@ var runtime = function (exports) {
   // AsyncIterator objects; they just return a Promise for the value of
   // the final result produced by the iterator.
 
-  exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
-    if (PromiseImpl === void 0) PromiseImpl = Promise;
-    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
+  exports.async = function (innerFn, outerFn, self, tryLocsList) {
+    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList));
     return exports.isGeneratorFunction(outerFn) ? iter // If outerFn is a generator, return the full iterator.
     : iter.next().then(function (result) {
       return result.done ? result.value : iter.next();
@@ -10655,7 +10617,7 @@ try {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7)(module)))
 
 /***/ }),
-/* 16 */
+/* 14 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -10665,11 +10627,14 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 17 */
+/* 15 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
-  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+    return;
+  }
+
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -10698,57 +10663,60 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 18 */
+/* 16 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance");
 }
 
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var arrayLikeToArray = __webpack_require__(9);
+/* 17 */
+/***/ (function(module, exports) {
 
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
+      arr2[i] = arr[i];
+    }
+
+    return arr2;
+  }
 }
 
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 20 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
-  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
 }
 
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 21 */
+/* 19 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
 }
 
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 22 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(2);
+var helpers_typeof = __webpack_require__(4);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // CONCATENATED MODULE: ./assets/js/public/modal.js
@@ -11219,7 +11187,9 @@ var Selector = {
  * ------------------------------------------------------------------------
  */
 
-var dr_modal_Modal = /*#__PURE__*/function () {
+var dr_modal_Modal =
+/*#__PURE__*/
+function () {
   function Modal(element, config) {
     classCallCheck_default()(this, Modal);
 
@@ -11368,7 +11338,7 @@ var dr_modal_Modal = /*#__PURE__*/function () {
   }, {
     key: "_getConfig",
     value: function _getConfig(config) {
-      config = _objectSpread(_objectSpread({}, Default), config);
+      config = _objectSpread({}, Default, {}, config);
       util.typeCheckConfig(NAME, config, DefaultType);
       return config;
     }
@@ -11673,7 +11643,7 @@ var dr_modal_Modal = /*#__PURE__*/function () {
       return this.each(function () {
         var data = jquery_default()(this).data(DATA_KEY);
 
-        var _config = _objectSpread(_objectSpread(_objectSpread({}, Default), jquery_default()(this).data()), typeof_default()(config) === 'object' && config ? config : {});
+        var _config = _objectSpread({}, Default, {}, jquery_default()(this).data(), {}, typeof_default()(config) === 'object' && config ? config : {});
 
         if (!data) {
           data = new Modal(this, _config);
@@ -11722,7 +11692,7 @@ jquery_default()(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, functi
     target = document.querySelector(selector);
   }
 
-  var config = jquery_default()(target).data(DATA_KEY) ? 'toggle' : _objectSpread(_objectSpread({}, jquery_default()(target).data()), jquery_default()(this).data());
+  var config = jquery_default()(target).data(DATA_KEY) ? 'toggle' : _objectSpread({}, jquery_default()(target).data(), {}, jquery_default()(this).data());
 
   if (this.tagName === 'A' || this.tagName === 'AREA') {
     event.preventDefault();
@@ -11811,7 +11781,9 @@ var dr_tab_Selector = {
  * ------------------------------------------------------------------------
  */
 
-var dr_tab_Tab = /*#__PURE__*/function () {
+var dr_tab_Tab =
+/*#__PURE__*/
+function () {
   function Tab(element) {
     classCallCheck_default()(this, Tab);
 
@@ -12009,7 +11981,7 @@ jquery_default.a.fn[dr_tab_NAME].noConflict = function () {
 
 /* harmony default export */ var dr_tab = (dr_tab_Tab);
 // EXTERNAL MODULE: ./assets/js/public/jquery-cookie.js
-var jquery_cookie = __webpack_require__(12);
+var jquery_cookie = __webpack_require__(10);
 
 // CONCATENATED MODULE: ./assets/js/public/dr-toast.js
 // Reference: https://www.w3schools.com/howto/howto_js_snackbar.asp
@@ -12035,11 +12007,11 @@ var regenerator = __webpack_require__(1);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(4);
+var asyncToGenerator = __webpack_require__(2);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(10);
+var slicedToArray = __webpack_require__(8);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 // CONCATENATED MODULE: ./assets/js/public/checkout-utils.js
@@ -12320,7 +12292,7 @@ var CheckoutUtils = function ($, params) {
         line1: addressPayload.billing.line1,
         line2: addressPayload.billing.line2,
         city: addressPayload.billing.city,
-        state: addressPayload.billing.countrySubdivision || 'NA',
+        state: addressPayload.billing.countrySubdivision,
         postalCode: addressPayload.billing.postalCode,
         country: addressPayload.billing.country
       }
@@ -12964,6 +12936,27 @@ var DRCommerceApi = function ($, params) {
     });
   };
 
+  var getOrders = function getOrders() {
+    var queryObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer ".concat(params.accessToken)
+        },
+        url: "".concat(apiBaseUrl, "/me/orders?").concat($.param(queryObj)),
+        success: function success(data) {
+          resolve(data);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
   return _ref = {
     apiBaseUrl: apiBaseUrl,
     updateShopper: updateShopper,
@@ -12985,19 +12978,13 @@ var DRCommerceApi = function ($, params) {
     saveShopperAddress: saveShopperAddress,
     updateShopperAddress: updateShopperAddress,
     deleteShopperAddress: deleteShopperAddress
-  }, defineProperty_default()(_ref, "submitCart", submitCart), defineProperty_default()(_ref, "getSubsDetails", getSubsDetails), defineProperty_default()(_ref, "getOrderDetails", getOrderDetails), _ref;
+  }, defineProperty_default()(_ref, "submitCart", submitCart), defineProperty_default()(_ref, "getSubsDetails", getSubsDetails), defineProperty_default()(_ref, "getOrderDetails", getOrderDetails), defineProperty_default()(_ref, "getOrders", getOrders), _ref;
 }(jQuery, drgc_params);
 
 /* harmony default export */ var commerce_api = (DRCommerceApi);
 // CONCATENATED MODULE: ./assets/js/public/public-cart.js
 
 
-
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 /* global drgc_params, iFrameResize */
 
@@ -13211,8 +13198,12 @@ var CartModule = function ($) {
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
   };
 
-  var renderLineItems = /*#__PURE__*/function () {
-    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(lineItems) {
+  var renderLineItems =
+  /*#__PURE__*/
+  function () {
+    var _ref = asyncToGenerator_default()(
+    /*#__PURE__*/
+    regenerator_default.a.mark(function _callee(lineItems) {
       var min, max, promises, lineItemHTMLArr, hasAutoRenewal;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -13232,12 +13223,12 @@ var CartModule = function ($) {
                   lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
                 });
                 promises.push(promise);
-
-                var _iterator = _createForOfIteratorHelper(lineItem.product.customAttributes.attribute),
-                    _step;
+                var _iteratorNormalCompletion = true;
+                var _didIteratorError = false;
+                var _iteratorError = undefined;
 
                 try {
-                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+                  for (var _iterator = lineItem.product.customAttributes.attribute[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                     var attr = _step.value;
 
                     if (attr.name === 'isAutomatic' && attr.value === 'true') {
@@ -13246,9 +13237,18 @@ var CartModule = function ($) {
                     }
                   }
                 } catch (err) {
-                  _iterator.e(err);
+                  _didIteratorError = true;
+                  _iteratorError = err;
                 } finally {
-                  _iterator.f();
+                  try {
+                    if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                      _iterator["return"]();
+                    }
+                  } finally {
+                    if (_didIteratorError) {
+                      throw _iteratorError;
+                    }
+                  }
                 }
               });
               if (!hasAutoRenewal) $('.dr-cart__auto-renewal-terms').remove();
@@ -13562,13 +13562,6 @@ var FloatLabel = function () {
 // CONCATENATED MODULE: ./assets/js/public/public-checkout.js
 
 
-
-function public_checkout_createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = public_checkout_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
-
-function public_checkout_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return public_checkout_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return public_checkout_arrayLikeToArray(o, minLen); }
-
-function public_checkout_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
  // 3rd-party plugin
 
 
@@ -13676,10 +13669,6 @@ var CheckoutModule = function ($) {
     });
     payload[addressType].emailAddress = email;
 
-    if (payload[addressType].country !== 'US') {
-      payload[addressType].countrySubdivision = 'NA';
-    }
-
     if (addressType === 'billing') {
       delete payload[addressType].business;
       delete payload[addressType].companyEIN;
@@ -13700,8 +13689,12 @@ var CheckoutModule = function ($) {
     }
   };
 
-  var preselectShippingOption = /*#__PURE__*/function () {
-    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(data) {
+  var preselectShippingOption =
+  /*#__PURE__*/
+  function () {
+    var _ref = asyncToGenerator_default()(
+    /*#__PURE__*/
+    regenerator_default.a.mark(function _callee(data) {
       var $errorMsgElem, defaultShippingOption, shippingOptions, defaultExists, index, option, res, freeShipping;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -13975,9 +13968,13 @@ jQuery(document).ready(function ($) {
           break;
       }
     });
-    $('#checkout-billing-form').on('submit', /*#__PURE__*/function () {
-      var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
-        var $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, lineItems, isTaxExempt, _address, taxRegs, taxIds, shopperType, _iterator, _step, element, $field, billingAddress, lang, config;
+    $('#checkout-billing-form').on('submit',
+    /*#__PURE__*/
+    function () {
+      var _ref2 = asyncToGenerator_default()(
+      /*#__PURE__*/
+      regenerator_default.a.mark(function _callee2(e) {
+        var $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, lineItems, isTaxExempt, _address, taxRegs, taxIds, shopperType, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, element, $field, billingAddress, lang, config;
 
         return regenerator_default.a.wrap(function _callee2$(_context2) {
           while (1) {
@@ -14066,7 +14063,7 @@ jQuery(document).ready(function ($) {
                 updatedCart = _context2.sent;
 
                 if (!$('#checkout-tax-id-form').length) {
-                  _context2.next = 70;
+                  _context2.next = 79;
                   break;
                 }
 
@@ -14096,7 +14093,7 @@ jQuery(document).ready(function ($) {
 
               case 30:
                 if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                _context2.next = 68;
+                _context2.next = 77;
                 break;
 
               case 33:
@@ -14108,21 +14105,22 @@ jQuery(document).ready(function ($) {
                 taxRegs = _context2.sent;
 
                 if (!(Object.keys(taxRegs).length && taxRegs.customerType)) {
-                  _context2.next = 63;
+                  _context2.next = 72;
                   break;
                 }
 
                 taxIds = taxRegs.taxRegistrations;
                 shopperType = taxRegs.customerType;
                 $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
-                _iterator = public_checkout_createForOfIteratorHelper(taxIds);
-                _context2.prev = 42;
+                _iteratorNormalCompletion = true;
+                _didIteratorError = false;
+                _iteratorError = undefined;
+                _context2.prev = 44;
+                _iterator = taxIds[Symbol.iterator]();
 
-                _iterator.s();
-
-              case 44:
-                if ((_step = _iterator.n()).done) {
-                  _context2.next = 54;
+              case 46:
+                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
+                  _context2.next = 57;
                   break;
                 }
 
@@ -14130,56 +14128,74 @@ jQuery(document).ready(function ($) {
                 $field = $('#tax-id-field-' + element.key);
 
                 if ($field.length) {
-                  _context2.next = 51;
+                  _context2.next = 53;
                   break;
                 }
 
-                return _context2.abrupt("break", 54);
+                return _context2.abrupt("break", 57);
 
-              case 51:
+              case 53:
                 $field.val(element.value).parent().addClass('active');
 
-              case 52:
-                _context2.next = 44;
-                break;
-
               case 54:
-                _context2.next = 59;
+                _iteratorNormalCompletion = true;
+                _context2.next = 46;
                 break;
 
-              case 56:
-                _context2.prev = 56;
-                _context2.t1 = _context2["catch"](42);
-
-                _iterator.e(_context2.t1);
+              case 57:
+                _context2.next = 63;
+                break;
 
               case 59:
                 _context2.prev = 59;
-
-                _iterator.f();
-
-                return _context2.finish(59);
-
-              case 62:
-                sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+                _context2.t1 = _context2["catch"](44);
+                _didIteratorError = true;
+                _iteratorError = _context2.t1;
 
               case 63:
-                _context2.next = 68;
+                _context2.prev = 63;
+                _context2.prev = 64;
+
+                if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+                  _iterator["return"]();
+                }
+
+              case 66:
+                _context2.prev = 66;
+
+                if (!_didIteratorError) {
+                  _context2.next = 69;
+                  break;
+                }
+
+                throw _iteratorError;
+
+              case 69:
+                return _context2.finish(66);
+
+              case 70:
+                return _context2.finish(63);
+
+              case 71:
+                sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+
+              case 72:
+                _context2.next = 77;
                 break;
 
-              case 65:
-                _context2.prev = 65;
+              case 74:
+                _context2.prev = 74;
                 _context2.t2 = _context2["catch"](33);
                 console.error(_context2.t2);
 
-              case 68:
-                _context2.next = 71;
+              case 77:
+                _context2.next = 80;
                 break;
 
-              case 70:
+              case 79:
                 if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
 
-              case 71:
+              case 80:
                 billingAddress = checkout_utils.getDropinBillingAddress(addressPayload);
                 lang = drLocale.split('_')[0];
 
@@ -14240,12 +14256,12 @@ jQuery(document).ready(function ($) {
                   console.error(error.message);
                 }
 
-              case 78:
+              case 87:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[21, 27], [33, 65], [42, 56, 59, 62]]);
+        }, _callee2, null, [[21, 27], [33, 74], [44, 59, 63, 71], [64,, 66, 70]]);
       }));
 
       return function (_x2) {
@@ -14269,8 +14285,12 @@ jQuery(document).ready(function ($) {
     $(document).on('input', '#checkout-tax-id-form > .tax-id-field input[type="text"]', function (e) {
       checkout_utils.validateVatNumber(e);
     });
-    $('#checkout-tax-id-form').on('submit', /*#__PURE__*/function () {
-      var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
+    $('#checkout-tax-id-form').on('submit',
+    /*#__PURE__*/
+    function () {
+      var _ref3 = asyncToGenerator_default()(
+      /*#__PURE__*/
+      regenerator_default.a.mark(function _callee3(e) {
         var $button, $section, $error, isTaxExempt, taxRegs, typeText, taxIds, regs, shopperType, $taxFields, _regs;
 
         return regenerator_default.a.wrap(function _callee3$(_context3) {
@@ -15003,7 +15023,7 @@ jQuery(document).ready(function ($) {
 });
 /* harmony default export */ var public_login = (LoginModule);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(11);
+var toConsumableArray = __webpack_require__(9);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // CONCATENATED MODULE: ./assets/js/public/public-pdp.js
@@ -15016,6 +15036,8 @@ var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableA
 
 
 var PdpModule = function ($) {
+  var localizedText = drgc_params.translations;
+
   var bindVariationPrice = function bindVariationPrice(pricing, $target) {
     if (!pricing.listPrice || !pricing.salePriceWithQuantity) return;
 
@@ -15051,7 +15073,7 @@ var PdpModule = function ($) {
 
   var displayRealTimeBuyBtn = function displayRealTimeBuyBtn(purchasable, isRedirectBuyBtn, $target) {
     var isOutOfStock = purchasable === 'false';
-    $target.prop('disabled', isOutOfStock).text(isOutOfStock ? drgc_params.translations.out_of_stock : isRedirectBuyBtn ? drgc_params.translations.buy_now : drgc_params.translations.add_to_cart).addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
+    $target.prop('disabled', isOutOfStock).text(isOutOfStock ? localizedText.out_of_stock : isRedirectBuyBtn ? localizedText.buy_now : localizedText.add_to_cart).addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
   };
 
   var updateProductItem = function updateProductItem($target, product) {
@@ -15077,6 +15099,7 @@ var PdpModule = function ($) {
 }(jQuery);
 
 jQuery(document).ready(function ($) {
+  var localizedText = drgc_params.translations;
   var lineItems = [];
 
   function toggleMiniCartDisplay() {
@@ -15110,13 +15133,18 @@ jQuery(document).ready(function ($) {
     }
 
     if (!lineItems.length) {
-      var emptyMsg = "<p class=\"dr-minicart-empty-msg\">".concat(drgc_params.translations.empty_cart_msg, "</p>");
+      var emptyMsg = "<p class=\"dr-minicart-empty-msg\">".concat(localizedText.empty_cart_msg, "</p>");
       $body.append(emptyMsg);
       $display.append($body);
     } else {
+      var params = new URL(window.location).searchParams;
+      var locale = params.get('locale') || drgc_params.drLocale;
+      var isTaxInclusive = locale !== 'en_US';
+      var forceExclTax = drgc_params.forceExclTax === 'true';
+      var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
       var miniCartLineItems = '<ul class="dr-minicart-list">';
-      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(drgc_params.translations.subtotal_label, "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
-      var miniCartViewCartBtn = "<a class=\"dr-btn\" id=\"dr-minicart-view-cart-btn\" href=\"".concat(drgc_params.cartUrl, "\">").concat(drgc_params.translations.view_cart_label, "</a>");
+      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(localizedText.subtotal_label + taxSuffixLabel, "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
+      var miniCartViewCartBtn = "<a class=\"dr-btn\" id=\"dr-minicart-view-cart-btn\" href=\"".concat(drgc_params.cartUrl, "\">").concat(localizedText.view_cart_label, "</a>");
       lineItems.forEach(function (li) {
         var productId = li.product.uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
         var listPrice = Number(li.pricing.listPriceWithQuantity.value);
@@ -15131,7 +15159,7 @@ jQuery(document).ready(function ($) {
           priceContent = formattedSalePrice;
         }
 
-        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(li.product.thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(drgc_params.translations.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(priceContent, "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(drgc_params.translations.remove_label, "</a>\n                </li>");
+        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(li.product.thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(localizedText.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(priceContent, "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(localizedText.remove_label, "</a>\n                </li>");
         miniCartLineItems += miniCartLineItem;
       });
       miniCartLineItems += '</ul>';
@@ -15309,8 +15337,8 @@ jQuery(document).ready(function ($) {
 
   if ($('.single-dr_product').length && !$('.dr-prod-variations select').length) {
     isPdCard = false;
-    $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-    pdDisplayOption.$singlePDBuyBtn.text(drgc_params.translations.loading_msg).prop('disabled', true);
+    $(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+    pdDisplayOption.$singlePDBuyBtn.text(localizedText.loading_msg).prop('disabled', true);
 
     if (pdDisplayOption.$variationOption && pdDisplayOption.$variationOption.length) {
       // variation product
@@ -15333,7 +15361,7 @@ jQuery(document).ready(function ($) {
       // base product
       var productID = pdDisplayOption.$singlePDBuyBtn.data('product-id');
 
-      var _$priceDiv = $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+      var _$priceDiv = $(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
 
       if (!productID) return;
       commerce_api.getProduct(productID, {
@@ -15353,8 +15381,8 @@ jQuery(document).ready(function ($) {
     isPdCard = true;
     pdDisplayOption.$card.each(function (idx, elem) {
       var $currentElem = $(elem);
-      var $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-      var $buyBtn = $currentElem.find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
+      var $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+      var $buyBtn = $currentElem.find('.dr-buy-btn').text(localizedText.loading_msg).prop('disabled', true);
       var productID = $buyBtn.data('product-id');
       var parentId = $buyBtn.data('parent-id');
       if (!productID) return;
@@ -15462,7 +15490,7 @@ jQuery(document).ready(function ($) {
     });
 
     if (productId) {
-      $priceDiv.text(drgc_params.translations.loading_msg);
+      $priceDiv.text(localizedText.loading_msg);
       commerce_api.getProduct(productId, {
         expand: 'inventoryStatus'
       }).then(function (res) {
@@ -15702,7 +15730,11 @@ jQuery(document).ready(function ($) {
 
 
 
+
+
 var AccountModule = function ($) {
+  var localizedText = drgc_params.translations;
+
   var appendAutoRenewalTerms = function appendAutoRenewalTerms(digitalriverjs, entityCode, locale) {
     var terms = checkout_utils.getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale);
 
@@ -15711,114 +15743,336 @@ var AccountModule = function ($) {
     }
   };
 
+  var getRightOfWithdrawalLink = function getRightOfWithdrawalLink(locale) {
+    var gcFontsDomain = 'drh-fonts.img.digitalrivercontent.net';
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        url: "https://".concat(gcFontsDomain, "/store/").concat(drgc_params.siteID, "/").concat(locale, "/DisplayHelpPage"),
+        success: function success(response) {
+          var $rightOfWithdrawal = $(response).find('#dr_rightOfWithdrawalFAQ');
+          var url = '';
+
+          if ($rightOfWithdrawal.length) {
+            url = $rightOfWithdrawal.find('a.dr_rightOfWithdrawal').prop('href').split('?')[1];
+            url = "https://gc.digitalriver.com/store?".concat(url);
+          }
+
+          resolve(url);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var initRightOfWithdrawalLink =
+  /*#__PURE__*/
+  function () {
+    var _ref = asyncToGenerator_default()(
+    /*#__PURE__*/
+    regenerator_default.a.mark(function _callee() {
+      var rightOfWithdrawalLink;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return AccountModule.getRightOfWithdrawalLink(drgc_params.drLocale);
+
+            case 3:
+              rightOfWithdrawalLink = _context.sent;
+
+              if (rightOfWithdrawalLink) {
+                $('a.right-of-withdrawal-link').prop('href', rightOfWithdrawalLink);
+                $('.dr-right-of-withdrawal').show();
+              } else {
+                $('.dr-right-of-withdrawal').hide();
+              }
+
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 7]]);
+    }));
+
+    return function initRightOfWithdrawalLink() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var createOrderList = function createOrderList(orders) {
+    var listHtml = '';
+    orders.forEach(function (element) {
+      var submissionDate = new Date(element.submissionDate).toLocaleDateString();
+      var status = element.orderState.toLowerCase().split(' ').join('');
+      listHtml = "\n                ".concat(listHtml, "\n                <div class=\"order\">\n                    <div class=\"order-id\" data-heading=\"").concat(localizedText.order_id_label, "\">").concat(element.id, "</div>\n                    <div class=\"order-date\" data-heading=\"").concat(localizedText.date_label, "\">").concat(submissionDate, "</div>\n                    <div class=\"order-amount\" data-heading=\"").concat(localizedText.amount_label, "\">").concat(element.pricing.formattedTotal, "</div>\n                    <div class=\"order-status ").concat(status, "\" data-heading=\"").concat(localizedText.status_label, "\">").concat(element.orderState, "</div>\n                    <div class=\"order-details\">\n                        <button type=\"button\" class=\"btn btn-transparent\" data-order=\"").concat(element.id, "\">").concat(localizedText.order_details_label, "</button>\n                    </div>\n                </div>\n            ");
+    });
+    return listHtml;
+  };
+
+  var updateListAndPagination = function updateListAndPagination(list, $selectedNum, orders) {
+    $('#list-orders > .overflowContainer > .order:not(.order-headings)').remove();
+    $('#list-orders > .overflowContainer > .order-headings').after(list);
+    $('#list-orders > .overflowContainer > .dr-pagination > .page-link').not($selectedNum).removeClass('active');
+    $selectedNum.addClass('active');
+    $('#list-orders > .overflowContainer > .dr-pagination > .next > .btn').prop('disabled', !orders.hasOwnProperty('nextPage'));
+    $('#list-orders > .overflowContainer > .dr-pagination > .prev > .btn').prop('disabled', !orders.hasOwnProperty('previousPage'));
+  };
+
   return {
-    appendAutoRenewalTerms: appendAutoRenewalTerms
+    appendAutoRenewalTerms: appendAutoRenewalTerms,
+    getRightOfWithdrawalLink: getRightOfWithdrawalLink,
+    initRightOfWithdrawalLink: initRightOfWithdrawalLink,
+    createOrderList: createOrderList,
+    updateListAndPagination: updateListAndPagination
   };
 }(jQuery);
 
 jquery_default()(function () {
   if (jquery_default()('#dr-account-page-wrapper').length < 1) return;
-  var localizedText = drgc_params.translations;
-  var orders = drgc_params.shopperOrders ? drgc_params.shopperOrders.orders.order : '';
   window.drActiveOrderId = '';
+  var localizedText = drgc_params.translations;
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');
   $body.append($ordersModal); // Order detail click
 
-  function fillOrderModal(e) {
-    var orderID = jquery_default()(this).attr('data-order');
-
-    if (orderID === drActiveOrderId) {
-      $ordersModal.drModal('show');
-    } else {
-      var selectedOrder = orders.find(function (order) {
-        return order.id === parseInt(orderID);
-      });
-
-      if (selectedOrder === undefined) {
-        drToast.displayMessage(localizedText.undefined_error_msg, 'error');
-        return false;
-      }
-
-      var requestShipping = ('code' in selectedOrder.shippingMethod); // orderID
-
-      jquery_default()('.dr-modal-orderNumber').text(orderID); // Order Pricing
-
-      jquery_default()('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
-      jquery_default()('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
-      jquery_default()('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
-      var isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
-
-      if (isDiscount) {
-        jquery_default()('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
-        jquery_default()('.dr-summary__discount').show();
-      } else {
-        jquery_default()('.dr-summary__discount').hide();
-      }
-
-      jquery_default()('.dr-modal-total').text(selectedOrder.pricing.formattedTotal); // Billing
-
-      jquery_default()('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
-      var billingAddress1 = selectedOrder.billingAddress.line1;
-      billingAddress1 += selectedOrder.billingAddress.line2 ? '<br>' + selectedOrder.billingAddress.line2 : '';
-      jquery_default()('.dr-modal-billingAddress1').html(billingAddress1);
-      var billingAddress2 = selectedOrder.billingAddress.city ? selectedOrder.billingAddress.city : '';
-      billingAddress2 += selectedOrder.billingAddress.countrySubdivision ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
-      billingAddress2 += selectedOrder.billingAddress.postalCode ? ' ' + selectedOrder.billingAddress.postalCode : '';
-      jquery_default()('.dr-modal-billingAddress2').text(billingAddress2);
-      jquery_default()('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country); // Shipping
-
-      jquery_default()('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
-      var shippingAddress1 = selectedOrder.shippingAddress.line1;
-      shippingAddress1 += selectedOrder.shippingAddress.line2 ? '<br>' + selectedOrder.shippingAddress.line2 : '';
-      jquery_default()('.dr-modal-shippingAddress1').html(shippingAddress1);
-      var shippingAddress2 = selectedOrder.shippingAddress.city ? selectedOrder.shippingAddress.city : '';
-      shippingAddress2 += selectedOrder.shippingAddress.countrySubdivision ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
-      shippingAddress2 += selectedOrder.shippingAddress.postalCode ? ' ' + selectedOrder.shippingAddress.postalCode : '';
-      jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
-      jquery_default()('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country); // Summary Labels
-
-      var isTaxInclusive = selectedOrder.locale !== 'en_US';
-      var forceExclTax = drgc_params.forceExclTax === 'true';
-      var orderCurrency = selectedOrder.pricing.total.currency;
-      var shouldDisplayVat = orderCurrency === 'GBP' || orderCurrency === 'EUR';
-      var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
-      jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
-      jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
-      jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
-      jquery_default()('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
-
-      if (isTaxInclusive && !forceExclTax) {
-        jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
-      } else {
-        jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
-      } // Products
-
-
-      var html = '';
-      var count = selectedOrder.lineItems.lineItem.length;
-
-      for (var i = 0; i < count; i++) {
-        var lineItem = selectedOrder.lineItems.lineItem[i];
-        html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
-      }
-
-      jquery_default()('.dr-summary__products').html(html);
-      checkout_utils.updateSummaryPricing(selectedOrder, isTaxInclusive);
-
-      if (!requestShipping) {
-        jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
-      } else {
-        jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').show();
-      } // set this last
-
-
-      drActiveOrderId = orderID;
-      $ordersModal.drModal('show');
-    }
+  function fillOrderModal(_x) {
+    return _fillOrderModal.apply(this, arguments);
   }
 
-  jquery_default()('.order-details .btn').on('click', fillOrderModal); // modal print click
+  function _fillOrderModal() {
+    _fillOrderModal = asyncToGenerator_default()(
+    /*#__PURE__*/
+    regenerator_default.a.mark(function _callee3(e) {
+      var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, isTaxInclusive, forceExclTax, orderCurrency, shouldDisplayVat, taxSuffixLabel, html, count, i, lineItem;
+      return regenerator_default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              orderId = jquery_default()(this).attr('data-order');
+              jquery_default()('a.right-of-withdrawal-link').data('orderId', orderId);
+
+              if (!(orderId === drActiveOrderId)) {
+                _context3.next = 6;
+                break;
+              }
+
+              $ordersModal.drModal('show');
+              _context3.next = 65;
+              break;
+
+            case 6:
+              selectedOrder = '';
+              _context3.prev = 7;
+              _context3.next = 10;
+              return commerce_api.getOrderDetails(orderId, {
+                expand: 'all'
+              });
+
+            case 10:
+              orderDetails = _context3.sent;
+              selectedOrder = orderDetails.order;
+              _context3.next = 18;
+              break;
+
+            case 14:
+              _context3.prev = 14;
+              _context3.t0 = _context3["catch"](7);
+              console.error(_context3.t0);
+              return _context3.abrupt("return", false);
+
+            case 18:
+              if (selectedOrder) {
+                _context3.next = 21;
+                break;
+              }
+
+              drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+              return _context3.abrupt("return", false);
+
+            case 21:
+              requestShipping = 'code' in selectedOrder.shippingMethod; // orderID
+
+              jquery_default()('.dr-modal-orderNumber').text(orderId); // Order Pricing
+
+              jquery_default()('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
+              jquery_default()('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
+              jquery_default()('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
+              isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
+
+              if (isDiscount) {
+                jquery_default()('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
+                jquery_default()('.dr-summary__discount').show();
+              } else {
+                jquery_default()('.dr-summary__discount').hide();
+              }
+
+              jquery_default()('.dr-modal-total').text(selectedOrder.pricing.formattedTotal); // Billing
+
+              jquery_default()('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
+              billingAddress1 = selectedOrder.billingAddress.line1;
+              billingAddress1 += selectedOrder.billingAddress.line2 ? '<br>' + selectedOrder.billingAddress.line2 : '';
+              jquery_default()('.dr-modal-billingAddress1').html(billingAddress1);
+              billingAddress2 = selectedOrder.billingAddress.city ? selectedOrder.billingAddress.city : '';
+              billingAddress2 += selectedOrder.billingAddress.countrySubdivision ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
+              billingAddress2 += selectedOrder.billingAddress.postalCode ? ' ' + selectedOrder.billingAddress.postalCode : '';
+              jquery_default()('.dr-modal-billingAddress2').text(billingAddress2);
+              jquery_default()('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country); // Shipping
+
+              jquery_default()('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
+              shippingAddress1 = selectedOrder.shippingAddress.line1;
+              shippingAddress1 += selectedOrder.shippingAddress.line2 ? '<br>' + selectedOrder.shippingAddress.line2 : '';
+              jquery_default()('.dr-modal-shippingAddress1').html(shippingAddress1);
+              shippingAddress2 = selectedOrder.shippingAddress.city ? selectedOrder.shippingAddress.city : '';
+              shippingAddress2 += selectedOrder.shippingAddress.countrySubdivision ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
+              shippingAddress2 += selectedOrder.shippingAddress.postalCode ? ' ' + selectedOrder.shippingAddress.postalCode : '';
+              jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
+              jquery_default()('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country); // Summary Labels
+
+              isTaxInclusive = selectedOrder.locale !== 'en_US';
+              forceExclTax = drgc_params.forceExclTax === 'true';
+              orderCurrency = selectedOrder.pricing.total.currency;
+              shouldDisplayVat = orderCurrency === 'GBP' || orderCurrency === 'EUR';
+              taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
+              jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
+              jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
+              jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+              jquery_default()('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
+
+              if (isTaxInclusive && !forceExclTax) {
+                jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
+              } else {
+                jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
+              } // Products
+
+
+              html = '';
+              count = selectedOrder.lineItems.lineItem.length;
+
+              for (i = 0; i < count; i++) {
+                lineItem = selectedOrder.lineItems.lineItem[i];
+                html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
+              }
+
+              jquery_default()('.dr-summary__products').html(html);
+              checkout_utils.updateSummaryPricing(selectedOrder, isTaxInclusive);
+
+              if (!requestShipping) {
+                jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
+              } else {
+                jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').show();
+              } // set this last
+
+
+              drActiveOrderId = orderId;
+              $ordersModal.drModal('show');
+
+            case 65:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, this, [[7, 14]]);
+    }));
+    return _fillOrderModal.apply(this, arguments);
+  }
+
+  jquery_default()(document).on('click', '.order-details > .btn', fillOrderModal);
+  jquery_default()('a.right-of-withdrawal-link').on('click', function (e) {
+    e.preventDefault();
+    var $link = jquery_default()(e.target);
+
+    if (window.isSecureContext) {
+      var id = $link.data('orderId');
+      navigator.clipboard.writeText(id).then(function () {
+        alert(localizedText.copied_order_id_msg + ': ' + id);
+        window.open($link.prop('href'), '_blank');
+      }, function () {
+        console.error('Unable to write to clipboard.');
+      });
+    } else {
+      window.open($link.prop('href'), '_blank');
+    }
+  });
+  jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click',
+  /*#__PURE__*/
+  function () {
+    var _ref2 = asyncToGenerator_default()(
+    /*#__PURE__*/
+    regenerator_default.a.mark(function _callee2(e) {
+      var $list, $selectedNum, pageNumber, isNextBtn, currentNum, ordersByPage, list;
+      return regenerator_default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              $list = jquery_default()('#list-orders > .overflowContainer');
+              $selectedNum = jquery_default()(e.target);
+              pageNumber = $selectedNum.data('pageNumber');
+              isNextBtn = false;
+
+              if (!pageNumber) {
+                currentNum = jquery_default()('#list-orders > .overflowContainer > .dr-pagination').find('.page-link.active').data('pageNumber');
+                isNextBtn = $selectedNum.parent('a.page-link').hasClass('next');
+                pageNumber = isNextBtn ? currentNum + 1 : currentNum - 1 < 1 ? 1 : currentNum - 1;
+                $selectedNum = jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link[data-page-number=' + pageNumber + ']');
+              }
+
+              if (!$selectedNum.hasClass('active')) {
+                _context2.next = 7;
+                break;
+              }
+
+              return _context2.abrupt("return", false);
+
+            case 7:
+              $list.addClass('dr-loading');
+              _context2.prev = 8;
+              _context2.next = 11;
+              return commerce_api.getOrders({
+                pageNumber: pageNumber,
+                expand: 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
+              });
+
+            case 11:
+              ordersByPage = _context2.sent;
+              list = AccountModule.createOrderList(ordersByPage.orders.order);
+              AccountModule.updateListAndPagination(list, $selectedNum, ordersByPage.orders);
+              _context2.next = 19;
+              break;
+
+            case 16:
+              _context2.prev = 16;
+              _context2.t0 = _context2["catch"](8);
+              console.error(_context2.t0);
+
+            case 19:
+              $list.removeClass('dr-loading');
+
+            case 20:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[8, 16]]);
+    }));
+
+    return function (_x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }()); // modal print click
 
   $ordersModal.find('.dr-modal-footer .print-button').on('click', function () {
     var $dialog = $ordersModal.find('.dr-modal-dialog');
@@ -16264,12 +16518,15 @@ jquery_default()(function () {
 
   if (sessionStorage.drAccountTab && jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {
     jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').drTab('show');
+    jquery_default()('#nav-tabContent').removeClass('dr-loading');
   } else if (window.matchMedia && window.matchMedia('(min-width:768px)').matches) {
     jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"]').eq(0).drTab('show');
+    jquery_default()('#nav-tabContent').removeClass('dr-loading');
   } //floating labels
 
 
   float_label.init();
+  AccountModule.initRightOfWithdrawalLink();
 });
 /* harmony default export */ var public_account = (AccountModule);
 // CONCATENATED MODULE: ./assets/js/public/user-activity-watcher.js

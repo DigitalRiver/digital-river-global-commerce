@@ -45,8 +45,9 @@ async function addPhysicalProduct() {
   console.log('>> Add physical product into cart');
   await t
     .setTestSpeed(0.9)
-    .click(homePage.productsMenu)
-    .click(homePage.paginationNextBtn)
+    .click(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addPhyProduct);
+  await t
     .hover(homePage.addPhyProduct)
     .click(homePage.addPhyProduct)
     .takeScreenshot('BWC/minicart.jpg');
