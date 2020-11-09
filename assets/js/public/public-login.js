@@ -169,7 +169,7 @@ jQuery(document).ready(($) => {
                 $form.data('processing', false);
                 but.removeClass('sending').blur();
 
-                if ( response.data.hasOwnProperty('error_description') ) {
+                if ( response.data && response.data.hasOwnProperty('error_description') ) {
                     $('.dr-form-error-msg').text(response.data.error_description);
                 }
 
