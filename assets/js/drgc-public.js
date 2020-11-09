@@ -14768,17 +14768,14 @@ var LoginModule = function ($) {
   var redirectAfterAuth = function redirectAfterAuth(isLoggedIn, locale) {
     var cartUrl = new URL(drgc_params.cartUrl);
     var checkoutUrl = new URL(drgc_params.checkoutUrl);
-    var loginUrl = new URL(drgc_params.loginUrl);
     var targetHref = '';
 
     if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
       targetHref = drgc_params.checkoutUrl;
     } else if (isLoggedIn) {
       targetHref = drgc_params.accountUrl;
-    } else if (!document.referrer || document.referrer.indexOf(loginUrl.pathname) > -1) {
-      targetHref = drgc_params.homeUrl;
     } else {
-      targetHref = document.referrer;
+      targetHref = drgc_params.homeUrl;
     }
 
     var targetUrl = new URL(targetHref);
