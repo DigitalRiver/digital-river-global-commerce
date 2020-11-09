@@ -14742,7 +14742,7 @@ var LoginModule = function ($) {
       url: drgc_params.ajaxUrl,
       data: data,
       success: function success() {
-        LoginModule.redirectAfterAuth(false);
+        LoginModule.redirectAfterAuth(false, LoginModule.getLocaleParam());
       }
     });
   };
@@ -14768,13 +14768,14 @@ var LoginModule = function ($) {
   var redirectAfterAuth = function redirectAfterAuth(isLoggedIn, locale) {
     var cartUrl = new URL(drgc_params.cartUrl);
     var checkoutUrl = new URL(drgc_params.checkoutUrl);
+    var loginUrl = new URL(drgc_params.loginUrl);
     var targetHref = '';
 
     if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
       targetHref = drgc_params.checkoutUrl;
     } else if (isLoggedIn) {
       targetHref = drgc_params.accountUrl;
-    } else if (!document.referrer) {
+    } else if (!document.referrer || document.referrer.indexOf(loginUrl.pathname) > -1) {
       targetHref = drgc_params.homeUrl;
     } else {
       targetHref = document.referrer;
@@ -14800,12 +14801,18 @@ var LoginModule = function ($) {
     });
   };
 
+  var getLocaleParam = function getLocaleParam() {
+    var params = new URL(window.location).searchParams;
+    return params.get('locale');
+  };
+
   return {
     validatePassword: validatePassword,
     checkoutAsGuest: checkoutAsGuest,
     logout: logout,
     redirectAfterAuth: redirectAfterAuth,
-    autoLogout: autoLogout
+    autoLogout: autoLogout,
+    getLocaleParam: getLocaleParam
   };
 }(jQuery);
 
@@ -14827,14 +14834,12 @@ jQuery(document).ready(function ($) {
     var but = $form.find('[type="submit"]').toggleClass('sending').blur();
     $form.data('processing', true);
     $('.dr-form-error-msg').text('');
-    var params = new URL(window.location).searchParams;
-    var locale = params.get('locale');
     var data = {
       action: 'drgc_login',
       nonce: drgc_params.ajaxNonce,
       username: $('.dr-login-form input[name=username]').val(),
       password: $('.dr-login-form input[name=password]').val(),
-      locale: locale
+      locale: LoginModule.getLocaleParam() || drgc_params.drLocale
     };
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
@@ -14914,7 +14919,7 @@ jQuery(document).ready(function ($) {
     };
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
-        LoginModule.redirectAfterAuth(true);
+        LoginModule.redirectAfterAuth(true, LoginModule.getLocaleParam());
       } else {
         $form.data('processing', false);
         $button.removeClass('sending').blur();

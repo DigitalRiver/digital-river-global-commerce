@@ -54,7 +54,7 @@ const LoginModule = (($) => {
             url: drgc_params.ajaxUrl,
             data,
             success: () => {
-                LoginModule.redirectAfterAuth(false);
+                LoginModule.redirectAfterAuth(false, LoginModule.getLocaleParam());
             }
         });
     };
@@ -83,13 +83,14 @@ const LoginModule = (($) => {
     const redirectAfterAuth = (isLoggedIn, locale) => {
         const cartUrl = new URL(drgc_params.cartUrl);
         const checkoutUrl = new URL(drgc_params.checkoutUrl);
+        const loginUrl = new URL(drgc_params.loginUrl);
         let targetHref = '';
 
         if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
             targetHref = drgc_params.checkoutUrl;
         } else if (isLoggedIn) {
             targetHref = drgc_params.accountUrl;
-        } else if (!document.referrer) {
+        } else if (!document.referrer || document.referrer.indexOf(loginUrl.pathname) > -1) {
             targetHref = drgc_params.homeUrl;
         } else {
             targetHref = document.referrer;
@@ -116,12 +117,18 @@ const LoginModule = (($) => {
         });
     };
 
+    const getLocaleParam = () => {
+      const params = (new URL(window.location)).searchParams;
+      return params.get('locale');
+    };
+
     return {
         validatePassword,
         checkoutAsGuest,
         logout,
         redirectAfterAuth,
-        autoLogout
+        autoLogout,
+        getLocaleParam
     };
 })(jQuery);
 
@@ -147,14 +154,12 @@ jQuery(document).ready(($) => {
         $form.data('processing', true);
         $('.dr-form-error-msg').text('');
 
-        const params = (new URL(window.location)).searchParams;
-        const locale = params.get('locale');
         const data = {
             action  : 'drgc_login',
             nonce   : drgc_params.ajaxNonce,
             username: $('.dr-login-form input[name=username]').val(),
             password: $('.dr-login-form input[name=password]').val(),
-            locale: locale
+            locale: LoginModule.getLocaleParam() || drgc_params.drLocale
         };
 
         $.post(ajaxUrl, data, function(response) {
@@ -246,7 +251,7 @@ jQuery(document).ready(($) => {
 
         $.post(ajaxUrl, data, function(response) {
             if (response.success) {
-                LoginModule.redirectAfterAuth(true);
+                LoginModule.redirectAfterAuth(true, LoginModule.getLocaleParam());
             } else {
                 $form.data('processing', false);
                 $button.removeClass('sending').blur();
