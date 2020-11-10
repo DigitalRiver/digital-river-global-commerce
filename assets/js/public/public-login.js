@@ -83,17 +83,14 @@ const LoginModule = (($) => {
     const redirectAfterAuth = (isLoggedIn, locale) => {
         const cartUrl = new URL(drgc_params.cartUrl);
         const checkoutUrl = new URL(drgc_params.checkoutUrl);
-        const loginUrl = new URL(drgc_params.loginUrl);
         let targetHref = '';
 
         if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
             targetHref = drgc_params.checkoutUrl;
         } else if (isLoggedIn) {
             targetHref = drgc_params.accountUrl;
-        } else if (!document.referrer || document.referrer.indexOf(loginUrl.pathname) > -1) {
-            targetHref = drgc_params.homeUrl;
         } else {
-            targetHref = document.referrer;
+            targetHref = drgc_params.homeUrl;
         }
 
         const targetUrl = new URL(targetHref);
