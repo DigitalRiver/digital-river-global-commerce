@@ -142,6 +142,7 @@ export default class CheckoutPage {
     const creditCardInfo = this.utils.getCreditCardInfo();
 
     await t
+      .wait(3000)
       .switchToIframe(this.cardNumberIframe)
       .typeText(this.ccNumber, creditCardInfo.cardNo)
       .switchToMainWindow()

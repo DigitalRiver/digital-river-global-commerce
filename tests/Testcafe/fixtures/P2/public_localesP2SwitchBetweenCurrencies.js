@@ -4,7 +4,7 @@ import LocaleUtils from '../../utils/localeUtils';
 import GenericUtils from '../../utils/genericUtils';
 import Config from '../../config';
 
-fixture `===== DRGC P1 Automation Test - Localization: Locale change =====`
+fixture `===== DRGC P2 Automation Test - Localization: Currency change =====`
   .beforeEach(async t => {
     console.log('Before Each: Go to Testing Website');
       await t

@@ -8,7 +8,7 @@ const adminPage = new AdminPage();
 const utils = new GenericUtils();
 
 test('DR Site Settings - ', async t => {
-  console.log('Test Case: Admin Page - DR Site Settings');
+  console.log('Test Case: Locales Settings - Enable DR Locales Settings');
   console.log('>> Enter admin settings page');
   await t
     .setTestSpeed(0.8)
