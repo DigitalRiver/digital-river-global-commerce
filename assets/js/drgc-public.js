@@ -15078,6 +15078,12 @@ var PdpModule = function ($) {
     $target.prop('disabled', isOutOfStock).text(isOutOfStock ? localizedText.out_of_stock : isRedirectBuyBtn ? localizedText.buy_now : localizedText.add_to_cart).addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
   };
 
+  var displayVarProductInfo = function displayVarProductInfo(product) {
+    $('.dr-pd-title').text(product.displayName);
+    $('.dr-pd-short-desc').html(product.shortDescription);
+    $('.dr-pd-long-desc').html(product.longDescription);
+  };
+
   var updateProductItem = function updateProductItem($target, product) {
     var $loadingIcon = $target.find('.dr-loading');
     var $productInfo = $target.find('.dr-pd-info');
@@ -15096,6 +15102,7 @@ var PdpModule = function ($) {
     selectVariation: selectVariation,
     displayRealTimePricing: displayRealTimePricing,
     displayRealTimeBuyBtn: displayRealTimeBuyBtn,
+    displayVarProductInfo: displayVarProductInfo,
     updateProductItem: updateProductItem
   };
 }(jQuery);
@@ -15482,6 +15489,7 @@ jQuery(document).ready(function ($) {
         var productImage = currentProduct.productImage || currentProduct.thumbnailImage;
         PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
         PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+        PdpModule.displayVarProductInfo(currentProduct);
         if (productImage) $pdImg.attr('src', productImage);
         $pdImgWrapper.removeClass('dr-loading');
       });

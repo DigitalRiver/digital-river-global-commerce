@@ -52,6 +52,12 @@ const PdpModule = (($) => {
             .addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
     };
 
+    const displayVarProductInfo = (product) => {
+      $('.dr-pd-title').text(product.displayName);
+      $('.dr-pd-short-desc').html(product.shortDescription);
+      $('.dr-pd-long-desc').html(product.longDescription);
+    };
+
     const updateProductItem = ($target, product) => {
         const $loadingIcon = $target.find('.dr-loading');
         const $productInfo = $target.find('.dr-pd-info');
@@ -71,6 +77,7 @@ const PdpModule = (($) => {
         selectVariation,
         displayRealTimePricing,
         displayRealTimeBuyBtn,
+        displayVarProductInfo,
         updateProductItem
     };
 })(jQuery);
@@ -446,6 +453,7 @@ jQuery(document).ready(($) => {
 
                     PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
                     PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+                    PdpModule.displayVarProductInfo(currentProduct);
                     if (productImage) $pdImg.attr('src', productImage);
                     $pdImgWrapper.removeClass('dr-loading');
                 });
