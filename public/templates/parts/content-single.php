@@ -61,7 +61,9 @@ if ( $variations && isset( $variations[0] ) ) {
     <div class="row">
         <div class="col-12 col-md-6">
           <?php if ( $product_thumbnail_url || $product_image_url ) { ?>
-            <img src="<?php echo $product_thumbnail_url ?: $product_image_url ?>" alt="<?php echo $product_name; ?>" class="dr-pd-img" />
+            <div class="dr-pd-img-wrapper">
+              <img src="<?php echo $product_image_url ?: $product_thumbnail_url ?>" alt="<?php echo $product_name; ?>" class="dr-pd-img" />
+            </div>
           <?php } ?>
         </div>
         <div class="col-12 col-md-6">
