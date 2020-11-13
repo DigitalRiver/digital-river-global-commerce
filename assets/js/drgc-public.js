@@ -15382,40 +15382,40 @@ jQuery(document).ready(function ($) {
   if (pdDisplayOption.$card && pdDisplayOption.$card.length) {
     isPdCard = true;
     pdDisplayOption.$card.each(function (idx, elem) {
-      var $currentElem = $(elem);
-      var $priceDiv = $currentElem.find(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
-      var $buyBtn = $currentElem.find('.dr-buy-btn').text(localizedText.loading_msg).prop('disabled', true);
+      var $pdElem = $(elem);
+      var $priceDiv = $pdElem.find(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+      var $buyBtn = $pdElem.find('.dr-buy-btn').text(localizedText.loading_msg).prop('disabled', true);
       var productID = $buyBtn.data('product-id');
       var parentId = $buyBtn.data('parent-id');
       if (!productID) return;
 
       if (parentId) {
         commerce_api.getProduct(parentId, {
-          fields: 'variations',
+          fields: 'displayName,thumbnailImage,pricing,inventoryStatus,variations',
           expand: 'all'
         }).then(function (res) {
-          var variations = res.product.variations.product;
-          var isInStock = variations.some(function (elem) {
-            return elem.inventoryStatus.availableQuantity > 0;
+          var baseProduct = res.product;
+          var variations = baseProduct.variations.product;
+          var isInStock = variations.some(function (v) {
+            return v.inventoryStatus.availableQuantity > 0;
           });
-          var currentProduct = variations[0];
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(baseProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(isInStock.toString(), true, $buyBtn);
-          PdpModule.updateProductItem($currentElem, currentProduct);
+          PdpModule.updateProductItem($pdElem, baseProduct);
         });
       } else {
         commerce_api.getProduct(productID, {
           expand: 'inventoryStatus'
         }).then(function (res) {
-          var currentProduct = res.product;
-          var purchasable = currentProduct.inventoryStatus.productIsInStock;
+          var baseProduct = res.product;
+          var purchasable = baseProduct.inventoryStatus.productIsInStock;
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(baseProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-          PdpModule.updateProductItem($currentElem, currentProduct);
+          PdpModule.updateProductItem($pdElem, baseProduct);
         });
       }
     });
