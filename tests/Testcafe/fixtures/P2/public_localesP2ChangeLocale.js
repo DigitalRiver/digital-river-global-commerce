@@ -7,7 +7,7 @@ import CheckoutPage from '../../page-models/public/checkout-page-model';
 import GeneralUtils from '../../utils/genericUtils';
 
 
-fixture `===== DRGC P1 Automation Test - Localization: Locale change =====`
+fixture `===== DRGC P2 Automation Test - Localization: Locale change =====`
   .beforeEach(async t => {
     console.log('Before Each: Go to Testing Website');
       await t
