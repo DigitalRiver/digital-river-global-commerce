@@ -15263,28 +15263,6 @@ jQuery(document).ready(function ($) {
       $qty.val('1');
     }
   });
-  $('.dr_prod-variations select').on('change', function (e) {
-    e.preventDefault();
-    var $selectedOption = $(this).children('option:selected');
-    var varId = $(this).val();
-    var price = $selectedOption.data('price');
-    var listPriceValue = $selectedOption.data('old-price');
-    var purchasable = $selectedOption.data('purchasable');
-    var $prodPrice = $('.single-dr_product .dr-pd-content .dr-pd-price');
-    var $buyBtn = $('.dr-buy-btn');
-    var prodPriceHtml = '';
-    $buyBtn.attr('data-product-id', varId);
-    if (listPriceValue) prodPriceHtml = '<del class="dr-strike-price">' + listPriceValue + '</del>';
-    prodPriceHtml += '<strong class="dr-sale-price">' + price + '</strong>';
-    $prodPrice.html(prodPriceHtml);
-    PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-    $('.dr-pd-img').attr('src', $selectedOption.data('thumbnail-url'));
-  });
-  $('input[type=radio][name=variation]').on('click', function (e) {
-    var purchasable = $(e.target).data('purchasable');
-    var $buyBtn = $('form.product-detail .dr-buy-btn');
-    PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-  });
   $("iframe[name^='controller-']").css('display', 'none'); // Real-time pricing & inventory status option (for DR child/non-DR child themes)
 
   var pdDisplayOption = {};
@@ -15425,6 +15403,8 @@ jQuery(document).ready(function ($) {
   var varSelectCount = $varSelects.length;
   var $priceDiv = $(pdDisplayOption.priceDivSelector());
   var $buyBtn = $('.dr-buy-btn');
+  var $pdImgWrapper = $('.dr-pd-img-wrapper');
+  var $pdImg = $('.dr-pd-img');
 
   if (varSelectCount) {
     $varSelects.children('option:first').prop('selected', true);
@@ -15493,13 +15473,17 @@ jQuery(document).ready(function ($) {
 
     if (productId) {
       $priceDiv.text(localizedText.loading_msg);
+      $pdImgWrapper.addClass('dr-loading');
       commerce_api.getProduct(productId, {
         expand: 'inventoryStatus'
       }).then(function (res) {
         var currentProduct = res.product;
         var purchasable = currentProduct.inventoryStatus.productIsInStock;
+        var productImage = currentProduct.productImage || currentProduct.thumbnailImage;
         PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
         PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+        if (productImage) $pdImg.attr('src', productImage);
+        $pdImgWrapper.removeClass('dr-loading');
       });
       $buyBtn.attr('data-product-id', productId).prop('disabled', false);
     }

@@ -256,34 +256,6 @@ jQuery(document).ready(($) => {
         }
     });
 
-    $('.dr_prod-variations select').on('change', function(e) {
-        e.preventDefault();
-
-        const $selectedOption = $(this).children('option:selected');
-        const varId = $(this).val();
-        const price = $selectedOption.data('price');
-        const listPriceValue = $selectedOption.data('old-price');
-        const purchasable = $selectedOption.data('purchasable');
-        const $prodPrice = $('.single-dr_product .dr-pd-content .dr-pd-price');
-        const $buyBtn = $('.dr-buy-btn');
-        let prodPriceHtml = '';
-
-        $buyBtn.attr('data-product-id', varId);
-        if (listPriceValue) prodPriceHtml = '<del class="dr-strike-price">' + listPriceValue + '</del>';
-        prodPriceHtml += '<strong class="dr-sale-price">' + price + '</strong>';
-        $prodPrice.html(prodPriceHtml);
-
-        PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-
-        $('.dr-pd-img').attr('src', $selectedOption.data('thumbnail-url'));
-    });
-
-    $('input[type=radio][name=variation]').on('click', (e) => {
-        const purchasable = $(e.target).data('purchasable');
-        const $buyBtn = $('form.product-detail .dr-buy-btn');
-        PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-    });
-
     $( "iframe[name^='controller-']" ).css('display', 'none');
 
     // Real-time pricing & inventory status option (for DR child/non-DR child themes)
@@ -395,6 +367,8 @@ jQuery(document).ready(($) => {
     const varSelectCount = $varSelects.length;
     const $priceDiv = $(pdDisplayOption.priceDivSelector());
     const $buyBtn = $('.dr-buy-btn');
+    const $pdImgWrapper = $('.dr-pd-img-wrapper');
+    const $pdImg = $('.dr-pd-img');
 
     if (varSelectCount) {
         $varSelects.children('option:first').prop('selected', true);
@@ -463,13 +437,17 @@ jQuery(document).ready(($) => {
 
         if (productId) {
             $priceDiv.text(localizedText.loading_msg);
+            $pdImgWrapper.addClass('dr-loading');
             DRCommerceApi.getProduct(productId, {expand: 'inventoryStatus'})
                 .then((res) => {
                     const currentProduct = res.product;
                     const purchasable = currentProduct.inventoryStatus.productIsInStock;
+                    const productImage = currentProduct.productImage || currentProduct.thumbnailImage;
 
                     PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
                     PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+                    if (productImage) $pdImg.attr('src', productImage);
+                    $pdImgWrapper.removeClass('dr-loading');
                 });
 
             $buyBtn.attr('data-product-id', productId).prop('disabled', false);
