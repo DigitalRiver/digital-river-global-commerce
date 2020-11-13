@@ -51,7 +51,7 @@ test('Place order as a new customer: Checkout first then Sigin', async t => {
 
   await utils.fillOrderInfoAndSubmitOrder(true);
 });
-/*
+
 test('Place order as a new customer: Regiser as a new customer when checkout', async t => {
   console.log('Test Case: Place Order as a New Customer: Regiser as a new customer when checkout');
 
@@ -70,7 +70,7 @@ test('Place order as a new customer: Regiser as a new customer when checkout', a
 
   await utils.fillOrderInfoAndSubmitOrder(true);
 });
-
+/*
 test('Place order as a new customer: Signin first then checkout', async t => {
   console.log('Test Case: Place Order as a New Customer: Signin First then Checkout');
 

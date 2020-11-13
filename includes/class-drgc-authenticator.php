@@ -83,33 +83,39 @@ class DRGC_Authenticator extends AbstractHttpService {
 		return $this->dr_session_token ?: false;
 	}
 
-	/**
-	 * Initialize tokens
-	 */
-	public function init( $session ) {
-		$this->session = $session;
-		$session_data = $this->session->get_session_data();
+  /**
+   * Initialize tokens
+   */
+  public function init( $session ) {
+    $this->session = $session;
+    $session_data = $this->session->get_session_data();
 
-		if ( ! empty( $session_data['session_token'] ) && ! is_null( $session_data['session_token'] )
-			&& ! empty( $session_data['access_token'] ) && ! is_null( $session_data['access_token'] )
-		) {
-			$this->dr_session_token = $session_data['session_token'];
-			$this->token = $session_data['access_token'];
-			$this->refresh_token = $session_data['refresh_token'];
-		} else {
-			$this->generate_dr_session_token();
-			$this->generate_access_token( '' );
-		}
-		
-		$this->set_schedule_refresher();
-	}
+    if ( ! empty( $session_data['session_token'] ) && ! is_null( $session_data['session_token'] )
+      && ! empty( $session_data['access_token'] ) && ! is_null( $session_data['access_token'] )
+    ) {
+      $token_info = $this->get_access_token_information( $session_data['access_token'] );
+
+      if ( isset( $token_info['expiresIn'] ) && $token_info['expiresIn'] > 0 ) {
+        $this->dr_session_token = $session_data['session_token'];
+        $this->token = $session_data['access_token'];
+        $this->refresh_token = $session_data['refresh_token'];
+      } else {
+        $this->do_refresh_access_token();
+      }
+    } else {
+      $this->generate_dr_session_token();
+      $this->generate_access_token( '' );
+    }
+    
+    $this->set_schedule_refresher();
+  }
 
 	/**
 	 * Set Schedule Refresher
 	 */
 	public function set_schedule_refresher() {
-		if (! wp_next_scheduled ( 'refresh_access_token_event' )) {
-			wp_schedule_event( time(), 'hourly', 'refresh_access_token_event');
+		if ( ! wp_next_scheduled ( 'dr_refresh_access_token' ) ) {
+			wp_schedule_event( time(), 'hourly', 'dr_refresh_access_token');
 		}
 
 		add_action( 'dr_refresh_access_token', array( $this, 'do_refresh_access_token' ) );
@@ -290,5 +296,28 @@ class DRGC_Authenticator extends AbstractHttpService {
     }
 
     return $res;
+  }
+
+  /**
+   * Get access token data
+   * 
+   * @param string $token
+   *
+   * @return mixed
+   */
+  public function get_access_token_information( $token ) {
+    $params = array(
+      'token' => $token
+    );
+
+    $url = "/oauth20/access-tokens?" . http_build_query( $params );
+
+    try {
+      $res = $this->get( $url );
+
+      return $res;
+    } catch (\Exception $e) {
+      return "Error: # {$e->getMessage()}";
+    }
   }
 }

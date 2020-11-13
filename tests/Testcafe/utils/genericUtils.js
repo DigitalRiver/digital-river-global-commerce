@@ -124,6 +124,7 @@ export default class GenericUtils {
   async fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocaleUS = true) {
     const tyPage = new TYPage();
     const checkoutPage = new CheckoutPage();
+    const finishOrderMsg = "Your order was completed successfully.";
     if (isPhysical) {
       // Enter shipping info
       console.log('>> Checkout page - Entering Shipping Info.');
@@ -141,6 +142,7 @@ export default class GenericUtils {
     // Since TEMS-ROW is enabled, non-US countries need to apply VAT when checkout
     if (!isLocaleUS) {
       let taxSubmitBtn = Selector('#checkout-tax-id-form').find('button');
+      finishOrderMsg = "您的訂單已成功完成。";
       await this.clickItem(taxSubmitBtn);
     }
 
@@ -164,7 +166,7 @@ export default class GenericUtils {
       .takeScreenshot('BWC/payment_s.jpg')
       .click(checkoutPage.submitOrderBtn)
       .wait(8000)
-      .expect(tyPage.tyMsg.innerText).eql('Your order was completed successfully.')
+      .expect(tyPage.tyMsg.innerText).eql(finishOrderMsg)
       .takeScreenshot('BWC/TY_s.jpg');
 
     console.log('>> Directs to the TY page');

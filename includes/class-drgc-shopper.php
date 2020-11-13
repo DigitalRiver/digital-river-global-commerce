@@ -171,26 +171,16 @@ class DRGC_Shopper extends AbstractHttpService {
    * Get access token data
    */
   public function get_access_token_information() {
-    $params = array(
-      'token' => $this->token
-    );
+    $res = $this->authenticator->get_access_token_information( $this->token );
 
-    $url = "/oauth20/access-tokens?" . http_build_query( $params );
+    $this->locale            = $res['locale'];
+    $this->currency          = $res['currency'];
+    $this->cart_id           = $res['cartId'];
+    $this->user_id           = $res['userId'];
+    $this->authenticated     = $res['authenticated'] === 'true';
+    $this->client_ip_address = $res['clientIpAddress'];
 
-    try {
-      $res = $this->get( $url );
-
-      $this->locale            = $res['locale'];
-      $this->currency          = $res['currency'];
-      $this->cart_id           = $res['cartId'];
-      $this->user_id           = $res['userId'];
-      $this->authenticated     = $res['authenticated'] === 'true';
-      $this->client_ip_address = $res['clientIpAddress'];
-
-      return $res;
-    } catch (\Exception $e) {
-      return "Error: # {$e->getMessage()}";
-    }
+    return $res;
   }
 
 	/**
@@ -372,6 +362,9 @@ class DRGC_Shopper extends AbstractHttpService {
    * @return array|bool
    */
   public function retrieve_subscriptions( $params = array() ) {
+	  			
+	if(!$this->is_shopper_logged_in()) return false;
+
     $default = array(
       'expand' => 'all'
     );

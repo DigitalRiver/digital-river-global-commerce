@@ -15179,7 +15179,7 @@ jQuery(document).ready(function ($) {
   }
 
   (function () {
-    if ($('#dr-minicart'.length)) {
+    if ($('#dr-minicart').length) {
       displayMiniCart(drgc_params.cart.cart);
     }
   })();

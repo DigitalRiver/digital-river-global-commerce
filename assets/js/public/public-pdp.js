@@ -167,7 +167,7 @@ jQuery(document).ready(($) => {
     }
 
     (function() {
-        if ( $('#dr-minicart'.length)) {
+        if ($('#dr-minicart').length) {
             displayMiniCart(drgc_params.cart.cart);
         }
     }());
