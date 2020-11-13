@@ -372,6 +372,9 @@ class DRGC_Shopper extends AbstractHttpService {
    * @return array|bool
    */
   public function retrieve_subscriptions( $params = array() ) {
+	  			
+	if(!$this->is_shopper_logged_in()) return false;
+
     $default = array(
       'expand' => 'all'
     );
