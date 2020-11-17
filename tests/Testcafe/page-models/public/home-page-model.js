@@ -6,6 +6,7 @@ const physicalProdID = dataUtils.getTestingPhysicalProduct().productID;
 const digitalProdID = dataUtils.getTestingDigitalProduct().productID;
 const onSaleProdID = dataUtils.getOnSaleProduct().productID;
 const localeProdID = dataUtils.getLocalTestProduct().productID;
+const variProdID = dataUtils.getVariationProduct().productID;
 
 export default class HomePage {
   constructor() {
@@ -14,6 +15,7 @@ export default class HomePage {
     this.addDigiProduct = Selector('.dr-buy-btn[data-product-id="' + digitalProdID + '"]');
     this.addOnSaleProduct = Selector('button[data-product-id="' + onSaleProdID + '"]');
     this.addLocaleProduct = Selector('.dr-buy-btn[data-product-id="' + localeProdID + '"]');
+    this.addVariProduct = Selector('.dr-buy-btn[data-parent-id="' + variProdID + '"]');
     this.categoryRegularPrice = this.addOnSaleProduct.parent('div').find('.dr-strike-price');
     this.categorySalePrice = this.addOnSaleProduct.parent('div').find('.dr-sale-price');
     this.minicartItem = Selector('li.dr-minicart-item > div[data-product-id="' + onSaleProdID + '"]');

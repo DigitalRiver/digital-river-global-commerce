@@ -25,8 +25,7 @@ export default class GenericUtils {
 
   async clickItem(target) {
     await t
-      .expect(target.exists).ok()
-      .wait(500)
+      .expect(target.visible).ok({timeout:20000})
       .hover(target)
       .wait(500)
       .click(target)
@@ -37,10 +36,52 @@ export default class GenericUtils {
     let ischecked = await checkbox.checked;
     while(ischecked != checked) {
       await t
+        .expect(checkbox.visible).ok({timeout:20000})
         .hover(checkbox)
         .click(checkbox);
       ischecked = await checkbox.checked;
     }
+  }
+
+  async addVariProduct(colorVari, sizeVari) {
+    let variInfo = {
+      'Black': {'9': 19.9, 'image': 'shoeBlackBig.jpg'},
+      'White':{'10': 39.1, 'image': 'shoeWhiteBig.jpg'},
+      'Grey':{'12': 29.12, 'image': 'shoeBig.jpg'}};
+    const expectedTitle = 'Pallidium ' + colorVari;
+    const expectedShortDes = colorVari + ' ' + sizeVari + ' short description';
+    const expectedLongDes = colorVari + ' ' + sizeVari + ' long description'
+
+    let colorVariOption = Selector('select[name="dr-variation-color"]');
+    let sizeVariOption = Selector('select[name="dr-variation-shoeSize"]');
+    const addToCartBtn = Selector('.dr-btn.dr-buy-btn');
+    const price = Selector('.dr-sale-price').innerText;
+    const image = Selector('.dr-pd-img-wrapper').find('img');
+    const title = Selector('.entry-title.dr-pd-title').innerText;
+    const shortDes = Selector('.dr-pd-short-desc').innerText;
+    const longDes = Selector('.dr-pd-long-desc').innerText;
+
+    await t
+    .click(colorVariOption)
+    .click(colorVariOption.find('option').withText(colorVari))
+    .click(sizeVariOption)
+    .click(sizeVariOption.find('option').withText(sizeVari));
+
+    // Check: Title
+    await t.expect(title).eql(expectedTitle);
+    // Check: Price
+    await t.expect(price).contains(variInfo[colorVari][sizeVari]);
+    // Check: Product Photo'
+    let imgStr = await image.getAttribute('src');
+    if (!imgStr.includes(variInfo[colorVari]['image'])){
+      throw('Error: Wrong image URL.');
+    }
+    // Check: Short description'
+    await t.expect(shortDes).eql(expectedShortDes);
+    // Check: Long description'
+    await t.expect(longDes).eql(expectedLongDes);
+
+    await t.click(addToCartBtn);
   }
 
   async addProductsIntoCart(product, isVariation = false){
@@ -58,8 +99,9 @@ export default class GenericUtils {
     // Add to cart btn changed to buy now button of variaction products, need to click add to cart
     // when entered product's detail page after clicking buy now btn in products page.
     if (isVariation) {
-      const addToCartBtn = Selector('.btn.btn-green.w-50.dr-buy-btn');
-      await t.click(addToCartBtn);
+      await this.addVariProduct('Black', '9');
+      await this.addVariProduct('White', '10');
+      await this.addVariProduct('Grey', '12');
     }
 
     await t.expect(minicartPage.viewCartBtn.exists).ok();
@@ -124,7 +166,7 @@ export default class GenericUtils {
   async fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocaleUS = true) {
     const tyPage = new TYPage();
     const checkoutPage = new CheckoutPage();
-    const finishOrderMsg = "Your order was completed successfully.";
+    let finishOrderMsg = "Your order was completed successfully.";
     if (isPhysical) {
       // Enter shipping info
       console.log('>> Checkout page - Entering Shipping Info.');
