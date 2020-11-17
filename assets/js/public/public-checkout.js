@@ -986,10 +986,10 @@ jQuery(document).ready(async ($) => {
                     $('#billing-field-company-name').val(res.companyName).prop('readonly', true);
                     $('#tems-us-purchase-link > p.cert-error').remove();
                     $('#tems-us-error-msg').text('').hide();
-                    $section.find('.dr-panel-result__text').html(
-                        `<p>${res.companyName}, ${res.taxAuthority}</p>
-                        <p>${res.startDate} - ${res.endDate}, ${res.fileName}</p>`
+                    $section.find('p.dr-panel-result__text').html(
+                        `<span>${res.companyName}</span>, <span>${res.taxAuthority}</span>, <span>${res.startDate}</span> - <span>${res.endDate}</span>, <span>${res.fileName}</span>`
                     );
+                    $section.find('p.new-cert').removeClass('d-none');
 
                     if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                         finishedSectionIdx = $('.dr-checkout__el').index($section);

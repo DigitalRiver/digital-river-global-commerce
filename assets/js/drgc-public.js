@@ -14833,49 +14833,50 @@ jQuery(document).ready( /*#__PURE__*/function () {
                         res = _context5.t0.parse.call(_context5.t0, _context5.t1);
 
                         if (!res.companyName) {
-                          _context5.next = 26;
+                          _context5.next = 27;
                           break;
                         }
 
                         $('#billing-field-company-name').val(res.companyName).prop('readonly', true);
                         $('#tems-us-purchase-link > p.cert-error').remove();
                         $('#tems-us-error-msg').text('').hide();
-                        $section.find('.dr-panel-result__text').html("<p>".concat(res.companyName, ", ").concat(res.taxAuthority, "</p>\n                        <p>").concat(res.startDate, " - ").concat(res.endDate, ", ").concat(res.fileName, "</p>"));
+                        $section.find('p.dr-panel-result__text').html("<span>".concat(res.companyName, "</span>, <span>").concat(res.taxAuthority, "</span>, <span>").concat(res.startDate, "</span> - <span>").concat(res.endDate, "</span>, <span>").concat(res.fileName, "</span>"));
+                        $section.find('p.new-cert').removeClass('d-none');
 
                         if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                           finishedSectionIdx = $('.dr-checkout__el').index($section);
                         }
 
-                        _context5.next = 23;
+                        _context5.next = 24;
                         return checkout_utils.updateTemsUsStatus('ELIGIBLE_EXEMPTED', true);
 
-                      case 23:
+                      case 24:
                         CheckoutModule.moveToNextSection($section);
-                        _context5.next = 27;
+                        _context5.next = 28;
                         break;
-
-                      case 26:
-                        $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
 
                       case 27:
-                        _context5.next = 33;
+                        $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
+
+                      case 28:
+                        _context5.next = 34;
                         break;
 
-                      case 29:
-                        _context5.prev = 29;
+                      case 30:
+                        _context5.prev = 30;
                         _context5.t2 = _context5["catch"](9);
                         console.error(_context5.t2);
                         $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context5.t2.responseText))).show();
 
-                      case 33:
+                      case 34:
                         $button.removeClass('sending').blur();
 
-                      case 34:
+                      case 35:
                       case "end":
                         return _context5.stop();
                     }
                   }
-                }, _callee5, null, [[9, 29]]);
+                }, _callee5, null, [[9, 30]]);
               }));
 
               return function (_x6) {
