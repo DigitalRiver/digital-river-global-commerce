@@ -167,8 +167,6 @@ if ( array_key_exists( 'eligibleCertificate', $customer_tax_regs ) ) {
 
                 <p class="dr-panel-result__text"></p>
 
-                <p class="new-cert cert-good d-none"><?php _e( 'This order is tax exempt.', 'digital-river-global-commerce' )?></p>
-
             </div>
 
             <div id="tems-us-error-msg" class="invalid-feedback"></div>

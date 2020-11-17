@@ -14081,7 +14081,10 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 if ($('#tems-us-purchase-link').length) {
                   $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
                   $('#tems-us-purchase-link > p > a').addClass('d-none');
-                  if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value);
+
+                  if ($('#tems-us-purchase-link > p.cert-good').length || $.trim($('#checkout-tem-us-wrapper > .dr-panel-result > .dr-panel-result__text').html()) !== '') {
+                    CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value);
+                  }
                 }
               })["catch"](function (jqXHR) {
                 $button.removeClass('sending').blur();
@@ -14389,7 +14392,10 @@ jQuery(document).ready( /*#__PURE__*/function () {
                             if ($('#tems-us-purchase-link').length && !requestShipping) {
                               $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
                               $('#tems-us-purchase-link > p > a').addClass('d-none');
-                              if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value);
+
+                              if ($('#tems-us-purchase-link > p.cert-good').length || $.trim($('#checkout-tem-us-wrapper > .dr-panel-result > .dr-panel-result__text').html()) !== '') {
+                                CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value);
+                              }
                             }
                           },
                           onCancel: function onCancel(res) {
@@ -14833,7 +14839,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                         res = _context5.t0.parse.call(_context5.t0, _context5.t1);
 
                         if (!res.companyName) {
-                          _context5.next = 27;
+                          _context5.next = 26;
                           break;
                         }
 
@@ -14841,42 +14847,41 @@ jQuery(document).ready( /*#__PURE__*/function () {
                         $('#tems-us-purchase-link > p.cert-error').remove();
                         $('#tems-us-error-msg').text('').hide();
                         $section.find('p.dr-panel-result__text').html("<span>".concat(res.companyName, "</span>, <span>").concat(res.taxAuthority, "</span>, <span>").concat(res.startDate, "</span> - <span>").concat(res.endDate, "</span>, <span>").concat(res.fileName, "</span>"));
-                        $section.find('p.new-cert').removeClass('d-none');
 
                         if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                           finishedSectionIdx = $('.dr-checkout__el').index($section);
                         }
 
-                        _context5.next = 24;
+                        _context5.next = 23;
                         return checkout_utils.updateTemsUsStatus('ELIGIBLE_EXEMPTED', true);
 
-                      case 24:
+                      case 23:
                         CheckoutModule.moveToNextSection($section);
-                        _context5.next = 28;
+                        _context5.next = 27;
                         break;
 
-                      case 27:
+                      case 26:
                         $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
 
-                      case 28:
-                        _context5.next = 34;
+                      case 27:
+                        _context5.next = 33;
                         break;
 
-                      case 30:
-                        _context5.prev = 30;
+                      case 29:
+                        _context5.prev = 29;
                         _context5.t2 = _context5["catch"](9);
                         console.error(_context5.t2);
                         $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context5.t2.responseText))).show();
 
-                      case 34:
+                      case 33:
                         $button.removeClass('sending').blur();
 
-                      case 35:
+                      case 34:
                       case "end":
                         return _context5.stop();
                     }
                   }
-                }, _callee5, null, [[9, 30]]);
+                }, _callee5, null, [[9, 29]]);
               }));
 
               return function (_x6) {

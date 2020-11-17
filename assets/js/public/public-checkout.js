@@ -361,7 +361,10 @@ jQuery(document).ready(async ($) => {
                         $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
                         $('#tems-us-purchase-link > p > a').addClass('d-none');
 
-                        if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value);
+                        if ($('#tems-us-purchase-link > p.cert-good').length || 
+                            ($.trim($('#checkout-tem-us-wrapper > .dr-panel-result > .dr-panel-result__text').html()) !== '')) {
+                            CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value);
+                        }
                     }
                 })
                 .catch((jqXHR) => {
@@ -593,7 +596,10 @@ jQuery(document).ready(async ($) => {
                         $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
                         $('#tems-us-purchase-link > p > a').addClass('d-none');
 
-                        if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value);
+                        if ($('#tems-us-purchase-link > p.cert-good').length || 
+                            ($.trim($('#checkout-tem-us-wrapper > .dr-panel-result > .dr-panel-result__text').html()) !== '')) {
+                            CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value);
+                        }
                     }
                 },
                 onCancel: (res) => {
@@ -989,7 +995,6 @@ jQuery(document).ready(async ($) => {
                     $section.find('p.dr-panel-result__text').html(
                         `<span>${res.companyName}</span>, <span>${res.taxAuthority}</span>, <span>${res.startDate}</span> - <span>${res.endDate}</span>, <span>${res.fileName}</span>`
                     );
-                    $section.find('p.new-cert').removeClass('d-none');
 
                     if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                         finishedSectionIdx = $('.dr-checkout__el').index($section);
