@@ -16,6 +16,9 @@ if ( count( $custom_attributes ) > 0 ) {
         }
     }
 }
+
+$company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty( $customer_tax_regs['eligibleCertificate'] ) ) ?
+    $customer_tax_regs['eligibleCertificate']['companyName'] : $billingAddress['companyName'];
 ?>
 <div class="dr-checkout__billing dr-checkout__el">
     <div class="dr-accordion">
@@ -110,13 +113,13 @@ if ( count( $custom_attributes ) > 0 ) {
 
                     </label>
 
-                    <input id="billing-field-company-name" type="text" name="billing-companyName" value="<?php echo $billingAddress['companyName'] ?>" class="form-control float-field float-field--company-name">
+                    <input id="billing-field-company-name" type="text" name="billing-companyName" value="<?php echo $company_name; ?>" class="form-control float-field float-field--company-name">
 
                 </div>
 
             </div>
 
-            <div class="form-group dr-panel-edit__el form-group-business <?php echo ( $companyEIN === '' ) ? ' hide' : '' ?>">
+            <div class="form-group dr-panel-edit__el form-group-business<?php echo ( $companyEIN === '' ) ? ' hide' : '' ?>">
 
                 <div class="float-container float-container--company-ein">
 
@@ -334,15 +337,15 @@ if ( count( $custom_attributes ) > 0 ) {
                         <?php _e( 'This field is required.', 'digital-river-global-commerce' ); ?>
 
                     </div>
-                
+
                 </div>
 
             </div>
 
             <?php if ( $is_logged_in ): ?>
-            
+
                 <div class="field-checkbox">
-                    
+
                     <input type="hidden" name="addresses-no-default" value="<?php echo $no_default ?>">
 
                     <input type="checkbox" name="checkbox-save-billing" id="checkbox-save-billing">
@@ -376,4 +379,3 @@ if ( count( $custom_attributes ) > 0 ) {
     </div>
 
 </div>
-

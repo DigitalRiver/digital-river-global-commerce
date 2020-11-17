@@ -32,10 +32,12 @@ class DR_Shortcode_Account {
     $subscriptions = $shopper->retrieve_subscriptions();
     $locales = get_option( 'drgc_store_locales' );
     $usa_states = retrieve_usa_states();
+    $current_locale = drgc_get_current_dr_locale();
+    $customer_tax_regs = ( $current_locale === 'en_US' ) ? $shopper->get_shopper_tax_registration() : '';
 
     drgc_get_template(
       'account/account.php',
-      compact( 'customer', 'usa_states', 'orders', 'subscriptions', 'locales')
+      compact( 'customer', 'usa_states', 'orders', 'subscriptions', 'locales', 'current_locale', 'customer_tax_regs' )
     );
   }
 }

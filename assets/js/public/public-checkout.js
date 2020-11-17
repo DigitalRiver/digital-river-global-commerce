@@ -6,7 +6,7 @@ const CheckoutModule = (($) => {
     const localizedText = drgc_params.translations;
 
     const moveToNextSection = ($section) => {
-        const $nextSection = $section.next();
+        const $nextSection = $section.next().hasClass('dr-checkout__tems-us') ? $section.next().next() : $section.next();
 
         $section.removeClass('active').addClass('closed');
         $nextSection.addClass('active').removeClass('closed');
@@ -211,6 +211,47 @@ const CheckoutModule = (($) => {
         }
     }
 
+    const initTemsUsStatus = (customAttrs) => {
+        const status = CheckoutUtils.getTemsUsStatus(customAttrs);
+
+        if (status !== 'ELIGIBLE_NOT_EXEMPTED') {
+            try {
+                $('#billing-field-company-name').val($('#tems-us-company-name').val()).prop('readonly', true);
+                return CheckoutUtils.updateTemsUsStatus('ELIGIBLE_EXEMPTED');
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            $('#billing-field-company-name').val('');
+            $('#tems-us-purchase-link > p.cert-good').addClass('d-none');
+            $('#tems-us-purchase-link > p.tax-exempt').removeClass('d-none');
+            $('#tems-us-purchase-link > p.taxable').addClass('d-none');
+        }
+
+        return status;
+    };
+
+    const displayTemsUsResult = (tax) => {
+        if (tax === 0) {
+            if ($('#tems-us-purchase-link > p.cert-good').hasClass('d-none')) {
+                $('#tems-us-purchase-link, #tems-us-result').addClass('d-none');
+            } else {
+                $('#tems-us-result > p.cert-good').removeClass('d-none');
+                $('#tems-us-result > p.cert-error').addClass('d-none');
+            }
+        } else {
+            if ($('#tems-us-purchase-link > p.cert-good').hasClass('d-none')) {
+                $('#tems-us-purchase-link > p > a.tax-exempt').removeClass('d-none');
+                $('#tems-us-result > p.cert-error').addClass('d-none');
+                $('#tems-us-result > p.not-exempted').removeClass('d-none');
+            } else {
+                $('#tems-us-result > p.cert-error').removeClass('d-none');
+            }
+
+            $('#tems-us-result > p.cert-good').addClass('d-none');
+        }
+    }
+
     return {
         moveToNextSection,
         adjustColumns,
@@ -220,11 +261,13 @@ const CheckoutModule = (($) => {
         preselectShippingOption,
         applyPaymentAndSubmitCart,
         initShopperTypeRadio,
-        isTaxExempt
+        isTaxExempt,
+        initTemsUsStatus,
+        displayTemsUsResult
     };
 })(jQuery);
 
-jQuery(document).ready(($) => {
+jQuery(document).ready(async ($) => {
     if ($('#checkout-payment-form').length) {
         // Globals
         const localizedText = drgc_params.translations;
@@ -313,6 +356,13 @@ jQuery(document).ready(($) => {
 
                     CheckoutModule.moveToNextSection($section);
                     CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+
+                    if ($('#tems-us-purchase-link').length) {
+                        $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
+                        $('#tems-us-purchase-link > p > a').addClass('d-none');
+
+                        if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value);
+                    }
                 })
                 .catch((jqXHR) => {
                     $button.removeClass('sending').blur();
@@ -351,11 +401,17 @@ jQuery(document).ready(($) => {
                     break;
                 case 'checkbox-business':
                     if (!$(e.target).is(':checked')) {
-                        $('#billing-field-company-name, #billing-field-company-ein').val('');
+                        if ($('#billing-field-company-name').prop('readonly')) {
+                            $('#billing-field-company-ein').val('');
+                        } else {
+                            $('#billing-field-company-name, #billing-field-company-ein').val('');
+                        }
+
                         $('.form-group-business').slideUp();
                     } else {
                         $('#checkbox-billing').prop('checked', false).change();
                         $('.form-group-business').slideDown();
+                        if (!$('#billing-field-company-name').prop('readonly')) $('#billing-field-company-name').trigger('focus');
                     }
 
                     break;
@@ -531,6 +587,13 @@ jQuery(document).ready(($) => {
 
                     if (!res.paymentMethodTypes.length) {
                         $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg).show();
+                    }
+
+                    if ($('#tems-us-purchase-link').length && !requestShipping) {
+                        $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
+                        $('#tems-us-purchase-link > p > a').addClass('d-none');
+
+                        if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value);
                     }
                 },
                 onCancel: (res) => {
@@ -756,7 +819,7 @@ jQuery(document).ready(($) => {
         $('.dr-accordion__edit').on('click', function(e) {
             e.preventDefault();
 
-            const $section = $(e.target).parent().parent();
+            const $section = ($(e.target).hasClass('tems-us')) ? $(e.target).parent().parent().parent() : $(e.target).parent().parent();
             const $allSections = $section.siblings().andSelf();
             const $finishedSections = $allSections.eq(finishedSectionIdx).prevAll().andSelf();
             const $activeSection = $allSections.filter($('.active'));
@@ -844,11 +907,110 @@ jQuery(document).ready(($) => {
             location.reload();
         });
 
+        $('#tems-us-purchase-link > p > a').on('click', async (e) => {
+            e.preventDefault();
+            const $link = $(e.target);
+            let temsUsStatus = '';
+
+            if ($link.hasClass('tax-exempt')) {
+                $link.parent().hide();
+                $('.dr-checkout__tems-us').removeClass('closed').addClass('active');
+
+                if (!$('#checkout-tem-us-wrapper').length) {
+                    $('#tems-us-purchase-link > p.cert-good').removeClass('d-none');
+                    $('#billing-field-company-name').val($('#tems-us-company-name').val()).prop('readonly', true);
+                    temsUsStatus = 'ELIGIBLE_EXEMPTED';
+                } else {
+                    $('#checkout-tem-us-wrapper').slideDown();
+                }
+
+                $link.parent().next().show().removeClass('d-none');
+            } else if ($link.hasClass('taxable')) {
+                $link.parent().hide();
+                $('.dr-checkout__tems-us').removeClass('active');
+
+                if (!$('#checkout-tem-us-wrapper').length) {
+                    $('#tems-us-purchase-link > p.cert-good, #tems-us-result > p.cert-error').addClass('d-none');
+                    $('#billing-field-company-name').val('').prop('readonly', false);
+                    temsUsStatus = 'ELIGIBLE_NOT_EXEMPTED';
+                } else {
+                    $('#checkout-tem-us-wrapper').slideUp();
+                    $('#checkout-tem-us-form').removeClass('was-validated');
+                    $('#tems-us-error-msg').text('').hide();
+                }
+
+                $link.parent().prev().show().removeClass('d-none');
+            }
+
+            if (temsUsStatus) {
+                $('body').addClass('dr-loading');
+                try {
+                    await CheckoutUtils.updateTemsUsStatus(temsUsStatus);
+                    location.reload();
+                } catch (error) {
+                    console.error(error);
+                    $('body').removeClass('dr-loading');
+                }
+            }
+        });
+
+        $('#tems-us-start-date, #tems-us-end-date').on('blur', (e) => {
+            const date = $(e.target).val();
+
+            if (date) {
+                const dateArr = date.split('-').reverse();
+                [dateArr[0], dateArr[1]] = [dateArr[1], dateArr[0]];
+                $(e.target).val(dateArr.join('/'));
+            }
+        });
+
+        $('#checkout-tem-us-form').on('submit', async (e) => {
+            e.preventDefault();
+            const $form = $(e.target);
+            const $button = $form.find('button[type="submit"]');
+            const $section = $('.dr-checkout__tems-us');
+            const customerId = drgc_params.customerId;
+
+            $form.addClass('was-validated');
+
+            if ($form[0].checkValidity() === false) {
+                return false;
+            }
+
+            $button.addClass('sending').blur();
+
+            try {
+                const res = JSON.parse(await CheckoutUtils.createTaxProfile(customerId));
+
+                if (res.companyName) {
+                    $('#billing-field-company-name').val(res.companyName).prop('readonly', true);
+                    $('#tems-us-purchase-link > p.cert-error').remove();
+                    $('#tems-us-error-msg').text('').hide();
+                    $section.find('.dr-panel-result__text').html(
+                        `<p>${res.companyName}, ${res.taxAuthority}</p>
+                        <p>${res.startDate} - ${res.endDate}, ${res.fileName}</p>`
+                    );
+
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                        finishedSectionIdx = $('.dr-checkout__el').index($section);
+                    }
+
+                    await CheckoutUtils.updateTemsUsStatus('ELIGIBLE_EXEMPTED', true);
+                    CheckoutModule.moveToNextSection($section);
+                } else {
+                    $('#tems-us-error-msg').text(CheckoutUtils.getAjaxErrorMessage()).show();
+                }
+            } catch (error) {
+                console.error(error);
+                $('#tems-us-error-msg').text(CheckoutUtils.getAjaxErrorMessage(JSON.parse(error.responseText))).show();
+            }
+
+            $button.removeClass('sending').blur();
+        });
+
         if (isLoggedIn && requestShipping) {
             $('.dr-address-book.billing > .overflowContainer').clone().appendTo('.dr-address-book.shipping');
         }
-
-        if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
 
         if ($('input[name=email]').val() && $('#checkout-email-form').length && $('#dr-panel-email-result').is(':empty')) {
             $('#checkout-email-form').submit();
@@ -866,6 +1028,8 @@ jQuery(document).ready(($) => {
         $('#checkout-email-form button[type=submit]').prop('disabled', false);
 
         if ($('#checkout-tax-id-form').length) CheckoutModule.initShopperTypeRadio();
+        if ($('#tems-us-purchase-link > p.cert-good').length) await CheckoutModule.initTemsUsStatus(drgc_params.cart.cart.customAttributes.attribute);
+        if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
     }
 });
 

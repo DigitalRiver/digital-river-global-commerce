@@ -81,14 +81,14 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 20);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* WEBPACK VAR INJECTION */(function(module) {var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /*!
  * jQuery JavaScript Library v3.5.1
@@ -9564,7 +9564,7 @@
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(13);
+module.exports = __webpack_require__(15);
 
 /***/ }),
 /* 2 */
@@ -9633,16 +9633,16 @@ module.exports = _defineProperty;
 /* 4 */
 /***/ (function(module, exports) {
 
-function _typeof2(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof2 = function _typeof2(obj) { return typeof obj; }; } else { _typeof2 = function _typeof2(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof2(obj); }
-
 function _typeof(obj) {
-  if (typeof Symbol === "function" && _typeof2(Symbol.iterator) === "symbol") {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
     module.exports = _typeof = function _typeof(obj) {
-      return _typeof2(obj);
+      return typeof obj;
     };
   } else {
     module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : _typeof2(obj);
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
     };
   }
 
@@ -9718,36 +9718,73 @@ module.exports = function (module) {
 /* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithHoles = __webpack_require__(14);
+var arrayLikeToArray = __webpack_require__(9);
 
-var iterableToArrayLimit = __webpack_require__(15);
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
 
-var nonIterableRest = __webpack_require__(16);
+module.exports = _unsupportedIterableToArray;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+module.exports = _arrayLikeToArray;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(16);
+
+var iterableToArrayLimit = __webpack_require__(17);
+
+var unsupportedIterableToArray = __webpack_require__(8);
+
+var nonIterableRest = __webpack_require__(18);
 
 function _slicedToArray(arr, i) {
-  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || nonIterableRest();
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
 }
 
 module.exports = _slicedToArray;
 
 /***/ }),
-/* 9 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var arrayWithoutHoles = __webpack_require__(17);
+var arrayWithoutHoles = __webpack_require__(19);
 
-var iterableToArray = __webpack_require__(18);
+var iterableToArray = __webpack_require__(20);
 
-var nonIterableSpread = __webpack_require__(19);
+var unsupportedIterableToArray = __webpack_require__(8);
+
+var nonIterableSpread = __webpack_require__(21);
 
 function _toConsumableArray(arr) {
-  return arrayWithoutHoles(arr) || iterableToArray(arr) || nonIterableSpread();
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
 }
 
 module.exports = _toConsumableArray;
 
 /***/ }),
-/* 10 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -9763,7 +9800,7 @@ module.exports = _toConsumableArray;
  * Released under the MIT license
  */
 (function (factory) {
-  if (typeof define === 'function' && __webpack_require__(12)) {
+  if (typeof define === 'function' && __webpack_require__(14)) {
     // AMD (Register as an anonymous module)
     define(['jquery'], factory);
   } else if ((typeof exports === "undefined" ? "undefined" : _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default()(exports)) === 'object') {
@@ -9862,10 +9899,10 @@ module.exports = _toConsumableArray;
     return !$.cookie(key);
   };
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(11)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(13)(module)))
 
 /***/ }),
-/* 11 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = function (originalModule) {
@@ -9895,7 +9932,7 @@ module.exports = function (originalModule) {
 };
 
 /***/ }),
-/* 12 */
+/* 14 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -9904,10 +9941,10 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(this, {}))
 
 /***/ }),
-/* 13 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+/* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -10043,7 +10080,7 @@ var runtime = function (exports) {
     };
   };
 
-  function AsyncIterator(generator) {
+  function AsyncIterator(generator, PromiseImpl) {
     function invoke(method, arg, resolve, reject) {
       var record = tryCatch(generator[method], generator, arg);
 
@@ -10054,14 +10091,14 @@ var runtime = function (exports) {
         var value = result.value;
 
         if (value && _typeof(value) === "object" && hasOwn.call(value, "__await")) {
-          return Promise.resolve(value.__await).then(function (value) {
+          return PromiseImpl.resolve(value.__await).then(function (value) {
             invoke("next", value, resolve, reject);
           }, function (err) {
             invoke("throw", err, resolve, reject);
           });
         }
 
-        return Promise.resolve(value).then(function (unwrapped) {
+        return PromiseImpl.resolve(value).then(function (unwrapped) {
           // When a yielded Promise is resolved, its final value becomes
           // the .value of the Promise<{value,done}> result for the
           // current iteration.
@@ -10079,7 +10116,7 @@ var runtime = function (exports) {
 
     function enqueue(method, arg) {
       function callInvokeWithMethodAndArg() {
-        return new Promise(function (resolve, reject) {
+        return new PromiseImpl(function (resolve, reject) {
           invoke(method, arg, resolve, reject);
         });
       }
@@ -10116,8 +10153,9 @@ var runtime = function (exports) {
   // AsyncIterator objects; they just return a Promise for the value of
   // the final result produced by the iterator.
 
-  exports.async = function (innerFn, outerFn, self, tryLocsList) {
-    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList));
+  exports.async = function (innerFn, outerFn, self, tryLocsList, PromiseImpl) {
+    if (PromiseImpl === void 0) PromiseImpl = Promise;
+    var iter = new AsyncIterator(wrap(innerFn, outerFn, self, tryLocsList), PromiseImpl);
     return exports.isGeneratorFunction(outerFn) ? iter // If outerFn is a generator, return the full iterator.
     : iter.next().then(function (result) {
       return result.done ? result.value : iter.next();
@@ -10617,7 +10655,7 @@ try {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7)(module)))
 
 /***/ }),
-/* 14 */
+/* 16 */
 /***/ (function(module, exports) {
 
 function _arrayWithHoles(arr) {
@@ -10627,14 +10665,11 @@ function _arrayWithHoles(arr) {
 module.exports = _arrayWithHoles;
 
 /***/ }),
-/* 15 */
+/* 17 */
 /***/ (function(module, exports) {
 
 function _iterableToArrayLimit(arr, i) {
-  if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-    return;
-  }
-
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
   var _arr = [];
   var _n = true;
   var _d = false;
@@ -10663,56 +10698,53 @@ function _iterableToArrayLimit(arr, i) {
 module.exports = _iterableToArrayLimit;
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, exports) {
 
 function _nonIterableRest() {
-  throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 module.exports = _nonIterableRest;
 
 /***/ }),
-/* 17 */
-/***/ (function(module, exports) {
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeToArray = __webpack_require__(9);
 
 function _arrayWithoutHoles(arr) {
-  if (Array.isArray(arr)) {
-    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) {
-      arr2[i] = arr[i];
-    }
-
-    return arr2;
-  }
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
 }
 
 module.exports = _arrayWithoutHoles;
 
 /***/ }),
-/* 18 */
+/* 20 */
 /***/ (function(module, exports) {
 
 function _iterableToArray(iter) {
-  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
 }
 
 module.exports = _iterableToArray;
 
 /***/ }),
-/* 19 */
+/* 21 */
 /***/ (function(module, exports) {
 
 function _nonIterableSpread() {
-  throw new TypeError("Invalid attempt to spread non-iterable instance");
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
 }
 
 module.exports = _nonIterableSpread;
 
 /***/ }),
-/* 20 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+// ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
@@ -11187,9 +11219,7 @@ var Selector = {
  * ------------------------------------------------------------------------
  */
 
-var dr_modal_Modal =
-/*#__PURE__*/
-function () {
+var dr_modal_Modal = /*#__PURE__*/function () {
   function Modal(element, config) {
     classCallCheck_default()(this, Modal);
 
@@ -11338,7 +11368,7 @@ function () {
   }, {
     key: "_getConfig",
     value: function _getConfig(config) {
-      config = _objectSpread({}, Default, {}, config);
+      config = _objectSpread(_objectSpread({}, Default), config);
       util.typeCheckConfig(NAME, config, DefaultType);
       return config;
     }
@@ -11643,7 +11673,7 @@ function () {
       return this.each(function () {
         var data = jquery_default()(this).data(DATA_KEY);
 
-        var _config = _objectSpread({}, Default, {}, jquery_default()(this).data(), {}, typeof_default()(config) === 'object' && config ? config : {});
+        var _config = _objectSpread(_objectSpread(_objectSpread({}, Default), jquery_default()(this).data()), typeof_default()(config) === 'object' && config ? config : {});
 
         if (!data) {
           data = new Modal(this, _config);
@@ -11692,7 +11722,7 @@ jquery_default()(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, functi
     target = document.querySelector(selector);
   }
 
-  var config = jquery_default()(target).data(DATA_KEY) ? 'toggle' : _objectSpread({}, jquery_default()(target).data(), {}, jquery_default()(this).data());
+  var config = jquery_default()(target).data(DATA_KEY) ? 'toggle' : _objectSpread(_objectSpread({}, jquery_default()(target).data()), jquery_default()(this).data());
 
   if (this.tagName === 'A' || this.tagName === 'AREA') {
     event.preventDefault();
@@ -11781,9 +11811,7 @@ var dr_tab_Selector = {
  * ------------------------------------------------------------------------
  */
 
-var dr_tab_Tab =
-/*#__PURE__*/
-function () {
+var dr_tab_Tab = /*#__PURE__*/function () {
   function Tab(element) {
     classCallCheck_default()(this, Tab);
 
@@ -11981,7 +12009,7 @@ jquery_default.a.fn[dr_tab_NAME].noConflict = function () {
 
 /* harmony default export */ var dr_tab = (dr_tab_Tab);
 // EXTERNAL MODULE: ./assets/js/public/jquery-cookie.js
-var jquery_cookie = __webpack_require__(10);
+var jquery_cookie = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./assets/js/public/dr-toast.js
 // Reference: https://www.w3schools.com/howto/howto_js_snackbar.asp
@@ -12011,457 +12039,9 @@ var asyncToGenerator = __webpack_require__(2);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
-var slicedToArray = __webpack_require__(8);
+var slicedToArray = __webpack_require__(10);
 var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
-// CONCATENATED MODULE: ./assets/js/public/checkout-utils.js
-
-
-var CheckoutUtils = function ($, params) {
-  var localizedText = drgc_params.translations;
-
-  var updateDeliverySection = function updateDeliverySection(shippingOption) {
-    var $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
-    var resultText = "".concat(shippingOption.label, " ").concat(shippingOption.amount === 0 ? params.translations.free_label : $selectedOption.attr('data-cost'));
-    $selectedOption.prop('checked', true);
-    $('.dr-checkout__delivery').find('.dr-panel-result__text').text(resultText);
-  };
-
-  var updateAddressSection = function updateAddressSection(addressObj, $target) {
-    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.country];
-    $target.text(addressArr.join(', '));
-  };
-
-  var updateSummaryLabels = function updateSummaryLabels() {
-    var isTaxInclusive = drgc_params.isTaxInclusive === 'true';
-    var forceExclTax = drgc_params.forceExclTax === 'true';
-    var shouldDisplayVat = drgc_params.shouldDisplayVat === 'true';
-    var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
-
-    if ($('.dr-checkout__payment').hasClass('active') || $('.dr-checkout__confirmation').hasClass('active')) {
-      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
-      $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
-      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
-    } else {
-      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.estimated_vat_label : localizedText.estimated_tax_label);
-      $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label + taxSuffixLabel);
-      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.estimated_shipping_vat_label : localizedText.estimated_shipping_tax_label);
-    }
-  };
-
-  var updateSummaryPricing = function updateSummaryPricing(order, isTaxInclusive) {
-    var lineItems = order.lineItems ? order.lineItems.lineItem : order.products || [];
-    var pricing = order.pricing;
-    var newPricing = getSeparatedPricing(lineItems, pricing, isTaxInclusive);
-    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
-
-    if (order.lineItems) {
-      lineItems.forEach(function (item) {
-        var $item = $('div.dr-summary__products > div[data-line-item-id=' + item.id + ']');
-        var $salePrice = $item.find('span.sale-price');
-        var $regularPrice = $item.find('span.regular-price');
-        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
-        $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
-      });
-    }
-
-    $('div.dr-summary__shipping > .item-value').text(shippingVal === 0 ? params.translations.free_label : newPricing.formattedShippingAndHandling);
-    $('div.dr-summary__tax > .item-value').text(newPricing.formattedProductTax);
-    $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
-    $('div.dr-summary__subtotal > .subtotal-value').text(newPricing.formattedSubtotal);
-    $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
-    $('.dr-summary').removeClass('dr-loading');
-  };
-
-  var getEntityCode = function getEntityCode() {
-    return drgc_params.order && drgc_params.order.order ? drgc_params.order.order.businessEntityCode : drgc_params.cart && drgc_params.cart.cart ? drgc_params.cart.cart.businessEntityCode : '';
-  };
-
-  var getCompliance = function getCompliance(digitalriverjs, entityCode, locale) {
-    return entityCode && locale ? digitalriverjs.Compliance.getDetails(entityCode, locale).disclosure : {};
-  };
-
-  var applyLegalLinks = function applyLegalLinks(digitalriverjs) {
-    var entityCode = getEntityCode();
-    var locale = drgc_params.drLocale;
-    var complianceData = getCompliance(digitalriverjs, entityCode, locale);
-
-    if (Object.keys(complianceData).length) {
-      $('.dr-resellerDisclosure').prop('href', complianceData.resellerDisclosure.url);
-      $('.dr-termsOfSale').prop('href', complianceData.termsOfSale.url);
-      $('.dr-privacyPolicy').prop('href', complianceData.privacyPolicy.url);
-      $('.dr-cookiePolicy').prop('href', complianceData.cookiePolicy.url);
-      $('.dr-cancellationRights').prop('href', complianceData.cancellationRights.url);
-      $('.dr-legalNotice').prop('href', complianceData.legalNotice.url);
-    }
-  };
-
-  var displayPreTAndC = function displayPreTAndC() {
-    if (drgc_params.googlePayBtnStatus && drgc_params.googlePayBtnStatus === 'LOADING') return;
-    if (drgc_params.applePayBtnStatus && drgc_params.applePayBtnStatus === 'LOADING') return;
-    $('.dr-preTAndC-wrapper').show();
-  };
-
-  var displayAlertMessage = function displayAlertMessage(message) {
-    alert('ERROR! ' + message);
-  };
-
-  var apiErrorHandler = function apiErrorHandler(jqXHR) {
-    $('.dr-loading').removeClass('dr-loading');
-    drToast.displayMessage(getAjaxErrorMessage(jqXHR), 'error');
-  };
-
-  var resetBodyOpacity = function resetBodyOpacity() {
-    $('body').css({
-      'pointer-events': 'auto',
-      'opacity': 1
-    });
-  };
-
-  var getPermalink = function getPermalink(productID) {
-    return new Promise(function (resolve, reject) {
-      $.ajax({
-        type: 'POST',
-        url: drgc_params.ajaxUrl,
-        data: {
-          action: 'get_permalink',
-          productID: productID
-        },
-        success: function success(data) {
-          resolve(data);
-        },
-        error: function error(jqXHR) {
-          reject(jqXHR);
-        }
-      });
-    });
-  };
-
-  var resetFormSubmitButton = function resetFormSubmitButton($form) {
-    $form.find('button[type="submit"]').removeClass('sending').blur();
-  };
-
-  var getAjaxErrorMessage = function getAjaxErrorMessage(jqXHR) {
-    var errMsg = localizedText.undefined_error_msg;
-
-    if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) {
-      var err = jqXHR.responseJSON.errors.error[0];
-
-      switch (err.code) {
-        case 'restricted-bill-to-country':
-        case 'restricted-ship-to-country':
-          errMsg = localizedText.address_error_msg;
-          break;
-
-        case 'cart-fraud-failure':
-        case 'order-fraud-failure':
-          errMsg = localizedText.unable_place_order_msg;
-          break;
-
-        default:
-          errMsg = err.description;
-      }
-    }
-
-    return errMsg;
-  };
-
-  var setShippingOption = function setShippingOption(option, freeShipping) {
-    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n          data-free=\"").concat(freeShipping, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n        </label>\n      </div>\n    ");
-    $('#checkout-delivery-form .dr-panel-edit__el').append(html);
-  };
-
-  var getSupportedCountries = function getSupportedCountries(addressType) {
-    var countryCodes = $('#' + addressType + '-field-country > option').map(function (index, element) {
-      return element.value;
-    }).get();
-    countryCodes.shift();
-    return countryCodes;
-  };
-
-  var isSubsAddedToCart = function isSubsAddedToCart(lineItems) {
-    if (!lineItems.length) return false;
-
-    for (var i = 0; i < lineItems.length; i++) {
-      var lineItem = lineItems[i];
-      var customAttributes = lineItem.product.customAttributes.attribute || [];
-      if (customAttributes.some(function (attr) {
-        return attr.name === 'subscriptionType';
-      })) return true;
-    }
-
-    return false;
-  };
-
-  var getLocalizedAutoRenewalTerms = function getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale) {
-    var compliance = getCompliance(digitalriverjs, entityCode, locale);
-    return Object.keys(compliance).length ? compliance.autorenewalPlanTerms.localizedText : '';
-  };
-
-  var formatPrice = function formatPrice(val, pricing) {
-    var localeCode = drgc_params.drLocale.replace('_', '-');
-    var currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
-    var symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
-    var formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');
-    var decimalSymbol = 0 .toLocaleString(localeCode, {
-      minimumFractionDigits: 1
-    })[1];
-    var digits = formattedPriceWithoutSymbol.indexOf(decimalSymbol) > -1 ? formattedPriceWithoutSymbol.split(decimalSymbol).pop().length : 0;
-    val = val.toLocaleString(localeCode, {
-      minimumFractionDigits: digits
-    });
-    val = symbolAsPrefix ? currencySymbol + val : val + currencySymbol;
-    return val;
-  };
-
-  var getCorrectSubtotalWithDiscount = function getCorrectSubtotalWithDiscount(pricing) {
-    var val = pricing.subtotal.value - pricing.discount.value;
-    return formatPrice(val, pricing);
-  };
-
-  var getSeparatedPricing = function getSeparatedPricing(lineItems, pricing, isTaxInclusive) {
-    var productTax = 0;
-    var shippingTax = 0;
-    var forceExclTax = drgc_params.forceExclTax === 'true';
-    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
-
-    lineItems.forEach(function (lineItem) {
-      productTax += lineItem.pricing.productTax.value;
-      shippingTax += lineItem.pricing.shippingTax.value;
-    });
-    return {
-      formattedProductTax: formatPrice(productTax, pricing),
-      formattedShippingTax: formatPrice(shippingTax, pricing),
-      formattedSubtotal: isTaxInclusive && forceExclTax ? formatPrice(pricing.subtotal.value - productTax, pricing) : pricing.formattedSubtotal,
-      formattedShippingAndHandling: isTaxInclusive && forceExclTax ? formatPrice(shippingVal - shippingTax, pricing) : pricing.formattedShippingAndHandling || pricing.formattedShipping
-    };
-  };
-
-  var getCountryOptionsFromGC = function getCountryOptionsFromGC(requestShipping) {
-    return new Promise(function (resolve, reject) {
-      $.ajax({
-        type: 'GET',
-        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(drgc_params.drLocale, "/DisplayPage/id.SimpleRegistrationPage"),
-        cache: false,
-        success: function success(response) {
-          var addressTypes = requestShipping ? ['shipping', 'billing'] : ['billing'];
-          addressTypes.forEach(function (type) {
-            var savedCountryCode = $("#".concat(type, "-field-country")).val();
-            var $options = $(response).find("select[name=".concat(type.toUpperCase(), "country] option")).not(':first');
-            var optionArr = $.map($options, function (option) {
-              return option.value;
-            });
-            $("#".concat(type, "-field-country option")).not(':first').remove();
-            $("#".concat(type, "-field-country")).append($options).val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
-          });
-          resolve();
-        },
-        error: function error(jqXHR) {
-          reject(jqXHR);
-        }
-      });
-    });
-  };
-
-  var getAddress = function getAddress(addressType, isDefault) {
-    return {
-      address: {
-        nickName: $('#' + addressType + '-field-address1').val(),
-        isDefault: isDefault,
-        firstName: $('#' + addressType + '-field-first-name').val(),
-        lastName: $('#' + addressType + '-field-last-name').val(),
-        line1: $('#' + addressType + '-field-address1').val(),
-        line2: $('#' + addressType + '-field-address2').val(),
-        city: $('#' + addressType + '-field-city').val(),
-        countrySubdivision: $('#' + addressType + '-field-state').val(),
-        postalCode: $('#' + addressType + '-field-zip').val(),
-        countryName: $('#' + addressType + '-field-country :selected').text(),
-        country: $('#' + addressType + '-field-country :selected').val(),
-        phoneNumber: $('#' + addressType + '-field-phone').val()
-      }
-    };
-  };
-
-  var getDropinBillingAddress = function getDropinBillingAddress(addressPayload) {
-    return {
-      firstName: addressPayload.billing.firstName,
-      lastName: addressPayload.billing.lastName,
-      email: addressPayload.billing.emailAddress,
-      phoneNumber: addressPayload.billing.phoneNumber,
-      address: {
-        line1: addressPayload.billing.line1,
-        line2: addressPayload.billing.line2,
-        city: addressPayload.billing.city,
-        state: addressPayload.billing.countrySubdivision,
-        postalCode: addressPayload.billing.postalCode,
-        country: addressPayload.billing.country
-      }
-    };
-  };
-
-  var getTaxSchema = function getTaxSchema(address) {
-    var data = {
-      action: 'drgc_get_tax_schema',
-      nonce: drgc_params.ajaxNonce,
-      address: address
-    };
-    return new Promise(function (resolve, reject) {
-      $.post(drgc_params.ajaxUrl, data, function (response) {
-        if (!response.success) {
-          var error = '';
-
-          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
-            error = response.data.errors[0].message;
-          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
-            error = response.data;
-          } else {
-            error = localizedText.undefined_error_msg;
-          }
-
-          reject(error);
-        } else {
-          $('.shopper-type-radio, .tax-id-field').remove();
-          var taxSchema = response.data;
-
-          for (var _i = 0, _Object$entries = Object.entries(taxSchema); _i < _Object$entries.length; _i++) {
-            var _Object$entries$_i = slicedToArray_default()(_Object$entries[_i], 2),
-                key = _Object$entries$_i[0],
-                value = _Object$entries$_i[1];
-
-            createTaxIdElement(key, value);
-          }
-
-          $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
-          $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
-          resolve(taxSchema);
-        }
-      });
-    });
-  };
-
-  var validateVatNumber = function validateVatNumber(e) {
-    var elem = e.target;
-    var value = elem.value;
-    var pattern = elem.dataset.pattern;
-    if (pattern.indexOf('$,') > 0) pattern = pattern.split('$,').join('$|');
-    var re = new RegExp(pattern);
-    var customErrorMsg = re.test(value) || value.trim() === '' ? '' : 'Invalid ' + elem.dataset.title;
-    elem.setCustomValidity(customErrorMsg);
-
-    if (elem.validity.customError) {
-      $(elem).nextAll('.invalid-feedback').text(elem.validationMessage);
-    } else {
-      $(elem).nextAll('.invalid-feedback').text('');
-    }
-
-    $('#checkout-tax-id-form').addClass('was-validated');
-  };
-
-  var createTaxIdElement = function createTaxIdElement(shopperType, taxRegs) {
-    var typeText = shopperType === 'Individual' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
-    var radiosHtml = "\n      <div class=\"form-check form-check-inline shopper-type-radio\">      \n        <input class=\"form-check-input\" type=\"radio\" name=\"shopper-type\" id=\"shopper-type-".concat(shopperType, "\" value=\"").concat(taxRegs.customerType, "\">\n        <label class=\"form-check-label\" for=\"shopper-type-").concat(shopperType, "\">").concat(typeText, "</label>\n      </div>\n    ");
-    var fieldsHtml = '';
-
-    if (taxRegs.taxRegistrations.length) {
-      var taxFields = taxRegs.taxRegistrations;
-      taxFields.forEach(function (element) {
-        var key = Object.keys(element)[0];
-        var taxReg = element[key];
-        fieldsHtml = "\n          ".concat(fieldsHtml, "\n          <div class=\"form-group dr-panel-edit__el tax-id-field ").concat(shopperType, "\">\n            <div class=\"float-container float-container--").concat(key, "\">\n              <label for=\"tax-id-field-").concat(key, "\" class=\"float-label\">").concat(taxReg.title, "</label>\n              <input id=\"tax-id-field-").concat(key, "\" type=\"text\" name=\"tax-id-").concat(key, "\" value=\"\" class=\"form-control float-field float-field--").concat(key, "\" data-key=\"").concat(key, "\" data-title=\"").concat(taxReg.title, "\" data-description=\"").concat(taxReg.description, "\" data-pattern=\"").concat(taxReg.pattern, "\">\n              <span class=\"tax-id-field-info\">*").concat(taxReg.description, "</span>\n              <div class=\"invalid-feedback\"></div>\n            </div>\n          </div>\n        ");
-      });
-    }
-
-    $('#checkout-tax-id-form > button[type="submit"]').before("".concat(radiosHtml).concat(fieldsHtml));
-  };
-
-  var applyTaxRegistration = function applyTaxRegistration(customerType, taxRegs) {
-    var data = {
-      action: 'drgc_apply_tax_registration',
-      nonce: drgc_params.ajaxNonce,
-      customerType: customerType,
-      taxRegs: taxRegs
-    };
-    return new Promise(function (resolve, reject) {
-      $.post(drgc_params.ajaxUrl, data, function (response) {
-        if (!response.success) {
-          var error = '';
-
-          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
-            error = response.data.errors[0].message;
-          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
-            error = response.data;
-          } else {
-            error = localizedText.undefined_error_msg;
-          }
-
-          reject(error);
-        } else {
-          resolve(response.data);
-        }
-      });
-    });
-  };
-
-  var getTaxRegistration = function getTaxRegistration() {
-    var data = {
-      action: 'drgc_get_tax_registration',
-      nonce: drgc_params.ajaxNonce
-    };
-    return new Promise(function (resolve, reject) {
-      $.post(drgc_params.ajaxUrl, data, function (response) {
-        if (!response.success) {
-          var error = '';
-
-          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
-            error = response.data.errors[0].message;
-          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
-            error = response.data;
-          } else {
-            error = localizedText.undefined_error_msg;
-          }
-
-          reject(error);
-        } else {
-          resolve(response.data);
-        }
-      });
-    });
-  };
-
-  return {
-    updateDeliverySection: updateDeliverySection,
-    updateAddressSection: updateAddressSection,
-    updateSummaryLabels: updateSummaryLabels,
-    updateSummaryPricing: updateSummaryPricing,
-    applyLegalLinks: applyLegalLinks,
-    displayPreTAndC: displayPreTAndC,
-    displayAlertMessage: displayAlertMessage,
-    apiErrorHandler: apiErrorHandler,
-    resetBodyOpacity: resetBodyOpacity,
-    getPermalink: getPermalink,
-    getEntityCode: getEntityCode,
-    getCompliance: getCompliance,
-    resetFormSubmitButton: resetFormSubmitButton,
-    getAjaxErrorMessage: getAjaxErrorMessage,
-    setShippingOption: setShippingOption,
-    getSupportedCountries: getSupportedCountries,
-    isSubsAddedToCart: isSubsAddedToCart,
-    getLocalizedAutoRenewalTerms: getLocalizedAutoRenewalTerms,
-    formatPrice: formatPrice,
-    getCorrectSubtotalWithDiscount: getCorrectSubtotalWithDiscount,
-    getSeparatedPricing: getSeparatedPricing,
-    getCountryOptionsFromGC: getCountryOptionsFromGC,
-    getAddress: getAddress,
-    getDropinBillingAddress: getDropinBillingAddress,
-    getTaxSchema: getTaxSchema,
-    validateVatNumber: validateVatNumber,
-    createTaxIdElement: createTaxIdElement,
-    applyTaxRegistration: applyTaxRegistration,
-    getTaxRegistration: getTaxRegistration
-  };
-}(jQuery, drgc_params);
-
-/* harmony default export */ var checkout_utils = (CheckoutUtils);
 // CONCATENATED MODULE: ./assets/js/public/commerce-api.js
 
 
@@ -12982,9 +12562,539 @@ var DRCommerceApi = function ($, params) {
 }(jQuery, drgc_params);
 
 /* harmony default export */ var commerce_api = (DRCommerceApi);
+// CONCATENATED MODULE: ./assets/js/public/checkout-utils.js
+
+
+
+var CheckoutUtils = function ($, params) {
+  var localizedText = drgc_params.translations;
+
+  var updateDeliverySection = function updateDeliverySection(shippingOption) {
+    var $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
+    var resultText = "".concat(shippingOption.label, " ").concat(shippingOption.amount === 0 ? params.translations.free_label : $selectedOption.attr('data-cost'));
+    $selectedOption.prop('checked', true);
+    $('.dr-checkout__delivery').find('.dr-panel-result__text').text(resultText);
+  };
+
+  var updateAddressSection = function updateAddressSection(addressObj, $target) {
+    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.country];
+    $target.text(addressArr.join(', '));
+  };
+
+  var updateSummaryLabels = function updateSummaryLabels() {
+    var isTaxInclusive = drgc_params.isTaxInclusive === 'true';
+    var forceExclTax = drgc_params.forceExclTax === 'true';
+    var shouldDisplayVat = drgc_params.shouldDisplayVat === 'true';
+    var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
+
+    if ($('.dr-checkout__payment').hasClass('active') || $('.dr-checkout__confirmation').hasClass('active')) {
+      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
+      $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
+    } else {
+      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.estimated_vat_label : localizedText.estimated_tax_label);
+      $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label + taxSuffixLabel);
+      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.estimated_shipping_vat_label : localizedText.estimated_shipping_tax_label);
+    }
+  };
+
+  var updateSummaryPricing = function updateSummaryPricing(order, isTaxInclusive) {
+    var lineItems = order.lineItems ? order.lineItems.lineItem : order.products || [];
+    var pricing = order.pricing;
+    var newPricing = getSeparatedPricing(lineItems, pricing, isTaxInclusive);
+    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
+
+    if (order.lineItems) {
+      lineItems.forEach(function (item) {
+        var $item = $('div.dr-summary__products > div[data-line-item-id=' + item.id + ']');
+        var $salePrice = $item.find('span.sale-price');
+        var $regularPrice = $item.find('span.regular-price');
+        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
+        $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
+      });
+    }
+
+    $('div.dr-summary__shipping > .item-value').text(shippingVal === 0 ? params.translations.free_label : newPricing.formattedShippingAndHandling);
+    $('div.dr-summary__tax > .item-value').text(newPricing.formattedProductTax);
+    $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
+    $('div.dr-summary__subtotal > .subtotal-value').text(newPricing.formattedSubtotal);
+    $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
+    $('.dr-summary').removeClass('dr-loading');
+  };
+
+  var getEntityCode = function getEntityCode() {
+    return drgc_params.order && drgc_params.order.order ? drgc_params.order.order.businessEntityCode : drgc_params.cart && drgc_params.cart.cart ? drgc_params.cart.cart.businessEntityCode : '';
+  };
+
+  var getCompliance = function getCompliance(digitalriverjs, entityCode, locale) {
+    return entityCode && locale ? digitalriverjs.Compliance.getDetails(entityCode, locale).disclosure : {};
+  };
+
+  var applyLegalLinks = function applyLegalLinks(digitalriverjs) {
+    var entityCode = getEntityCode();
+    var locale = drgc_params.drLocale;
+    var complianceData = getCompliance(digitalriverjs, entityCode, locale);
+
+    if (Object.keys(complianceData).length) {
+      $('.dr-resellerDisclosure').prop('href', complianceData.resellerDisclosure.url);
+      $('.dr-termsOfSale').prop('href', complianceData.termsOfSale.url);
+      $('.dr-privacyPolicy').prop('href', complianceData.privacyPolicy.url);
+      $('.dr-cookiePolicy').prop('href', complianceData.cookiePolicy.url);
+      $('.dr-cancellationRights').prop('href', complianceData.cancellationRights.url);
+      $('.dr-legalNotice').prop('href', complianceData.legalNotice.url);
+    }
+  };
+
+  var displayPreTAndC = function displayPreTAndC() {
+    if (drgc_params.googlePayBtnStatus && drgc_params.googlePayBtnStatus === 'LOADING') return;
+    if (drgc_params.applePayBtnStatus && drgc_params.applePayBtnStatus === 'LOADING') return;
+    $('.dr-preTAndC-wrapper').show();
+  };
+
+  var displayAlertMessage = function displayAlertMessage(message) {
+    alert('ERROR! ' + message);
+  };
+
+  var apiErrorHandler = function apiErrorHandler(jqXHR) {
+    $('.dr-loading').removeClass('dr-loading');
+    drToast.displayMessage(getAjaxErrorMessage(jqXHR), 'error');
+  };
+
+  var resetBodyOpacity = function resetBodyOpacity() {
+    $('body').css({
+      'pointer-events': 'auto',
+      'opacity': 1
+    });
+  };
+
+  var getPermalink = function getPermalink(productID) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'POST',
+        url: drgc_params.ajaxUrl,
+        data: {
+          action: 'get_permalink',
+          productID: productID
+        },
+        success: function success(data) {
+          resolve(data);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var resetFormSubmitButton = function resetFormSubmitButton($form) {
+    $form.find('button[type="submit"]').removeClass('sending').blur();
+  };
+
+  var getAjaxErrorMessage = function getAjaxErrorMessage(error) {
+    var errMsg = localizedText.undefined_error_msg;
+    if (!error) return errMsg;
+
+    if (error.responseJSON && error.responseJSON.errors && Array.isArray(error.responseJSON.errors.error)) {
+      var err = error.responseJSON.errors.error[0];
+
+      switch (err.code) {
+        case 'restricted-bill-to-country':
+        case 'restricted-ship-to-country':
+          errMsg = localizedText.address_error_msg;
+          break;
+
+        case 'cart-fraud-failure':
+        case 'order-fraud-failure':
+          errMsg = localizedText.unable_place_order_msg;
+          break;
+
+        default:
+          errMsg = err.description;
+      }
+    } else if (Array.isArray(error.errors)) {
+      var _err = error.errors[0];
+      var errorCode = _err.code || '';
+      var errorParam = _err.parameter || '';
+
+      if (errorCode === 'invalid_parameter') {
+        switch (errorParam) {
+          case 'endDate':
+            errMsg = localizedText.end_date_error_msg;
+            break;
+
+          default:
+            errMsg = _err.description;
+        }
+      }
+    }
+
+    return errMsg;
+  };
+
+  var setShippingOption = function setShippingOption(option, freeShipping) {
+    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n          data-free=\"").concat(freeShipping, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n        </label>\n      </div>\n    ");
+    $('#checkout-delivery-form .dr-panel-edit__el').append(html);
+  };
+
+  var getSupportedCountries = function getSupportedCountries(addressType) {
+    var countryCodes = $('#' + addressType + '-field-country > option').map(function (index, element) {
+      return element.value;
+    }).get();
+    countryCodes.shift();
+    return countryCodes;
+  };
+
+  var isSubsAddedToCart = function isSubsAddedToCart(lineItems) {
+    if (!lineItems.length) return false;
+
+    for (var i = 0; i < lineItems.length; i++) {
+      var lineItem = lineItems[i];
+      var customAttributes = lineItem.product.customAttributes.attribute || [];
+      if (customAttributes.some(function (attr) {
+        return attr.name === 'subscriptionType';
+      })) return true;
+    }
+
+    return false;
+  };
+
+  var getLocalizedAutoRenewalTerms = function getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale) {
+    var compliance = getCompliance(digitalriverjs, entityCode, locale);
+    return Object.keys(compliance).length ? compliance.autorenewalPlanTerms.localizedText : '';
+  };
+
+  var formatPrice = function formatPrice(val, pricing) {
+    var localeCode = drgc_params.drLocale.replace('_', '-');
+    var currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
+    var symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
+    var formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');
+    var decimalSymbol = 0 .toLocaleString(localeCode, {
+      minimumFractionDigits: 1
+    })[1];
+    var digits = formattedPriceWithoutSymbol.indexOf(decimalSymbol) > -1 ? formattedPriceWithoutSymbol.split(decimalSymbol).pop().length : 0;
+    val = val.toLocaleString(localeCode, {
+      minimumFractionDigits: digits
+    });
+    val = symbolAsPrefix ? currencySymbol + val : val + currencySymbol;
+    return val;
+  };
+
+  var getCorrectSubtotalWithDiscount = function getCorrectSubtotalWithDiscount(pricing) {
+    var val = pricing.subtotal.value - pricing.discount.value;
+    return formatPrice(val, pricing);
+  };
+
+  var getSeparatedPricing = function getSeparatedPricing(lineItems, pricing, isTaxInclusive) {
+    var productTax = 0;
+    var shippingTax = 0;
+    var forceExclTax = drgc_params.forceExclTax === 'true';
+    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
+
+    lineItems.forEach(function (lineItem) {
+      productTax += lineItem.pricing.productTax.value;
+      shippingTax += lineItem.pricing.shippingTax.value;
+    });
+    return {
+      formattedProductTax: formatPrice(productTax, pricing),
+      formattedShippingTax: formatPrice(shippingTax, pricing),
+      formattedSubtotal: isTaxInclusive && forceExclTax ? formatPrice(pricing.subtotal.value - productTax, pricing) : pricing.formattedSubtotal,
+      formattedShippingAndHandling: isTaxInclusive && forceExclTax ? formatPrice(shippingVal - shippingTax, pricing) : pricing.formattedShippingAndHandling || pricing.formattedShipping
+    };
+  };
+
+  var getCountryOptionsFromGC = function getCountryOptionsFromGC(requestShipping) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(drgc_params.drLocale, "/DisplayPage/id.SimpleRegistrationPage"),
+        cache: false,
+        success: function success(response) {
+          var addressTypes = requestShipping ? ['shipping', 'billing'] : ['billing'];
+          addressTypes.forEach(function (type) {
+            var savedCountryCode = $("#".concat(type, "-field-country")).val();
+            var $options = $(response).find("select[name=".concat(type.toUpperCase(), "country] option")).not(':first');
+            var optionArr = $.map($options, function (option) {
+              return option.value;
+            });
+            $("#".concat(type, "-field-country option")).not(':first').remove();
+            $("#".concat(type, "-field-country")).append($options).val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
+          });
+          resolve();
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var getAddress = function getAddress(addressType, isDefault) {
+    return {
+      address: {
+        nickName: $('#' + addressType + '-field-address1').val(),
+        isDefault: isDefault,
+        firstName: $('#' + addressType + '-field-first-name').val(),
+        lastName: $('#' + addressType + '-field-last-name').val(),
+        line1: $('#' + addressType + '-field-address1').val(),
+        line2: $('#' + addressType + '-field-address2').val(),
+        city: $('#' + addressType + '-field-city').val(),
+        countrySubdivision: $('#' + addressType + '-field-state').val(),
+        postalCode: $('#' + addressType + '-field-zip').val(),
+        countryName: $('#' + addressType + '-field-country :selected').text(),
+        country: $('#' + addressType + '-field-country :selected').val(),
+        phoneNumber: $('#' + addressType + '-field-phone').val()
+      }
+    };
+  };
+
+  var getDropinBillingAddress = function getDropinBillingAddress(addressPayload) {
+    return {
+      firstName: addressPayload.billing.firstName,
+      lastName: addressPayload.billing.lastName,
+      email: addressPayload.billing.emailAddress,
+      phoneNumber: addressPayload.billing.phoneNumber,
+      address: {
+        line1: addressPayload.billing.line1,
+        line2: addressPayload.billing.line2,
+        city: addressPayload.billing.city,
+        state: addressPayload.billing.countrySubdivision,
+        postalCode: addressPayload.billing.postalCode,
+        country: addressPayload.billing.country
+      }
+    };
+  };
+
+  var getTaxSchema = function getTaxSchema(address) {
+    var data = {
+      action: 'drgc_get_tax_schema',
+      nonce: drgc_params.ajaxNonce,
+      address: address
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          $('.shopper-type-radio, .tax-id-field').remove();
+          var taxSchema = response.data;
+
+          for (var _i = 0, _Object$entries = Object.entries(taxSchema); _i < _Object$entries.length; _i++) {
+            var _Object$entries$_i = slicedToArray_default()(_Object$entries[_i], 2),
+                key = _Object$entries$_i[0],
+                value = _Object$entries$_i[1];
+
+            createTaxIdElement(key, value);
+          }
+
+          $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
+          $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+          resolve(taxSchema);
+        }
+      });
+    });
+  };
+
+  var validateVatNumber = function validateVatNumber(e) {
+    var elem = e.target;
+    var value = elem.value;
+    var pattern = elem.dataset.pattern;
+    if (pattern.indexOf('$,') > 0) pattern = pattern.split('$,').join('$|');
+    var re = new RegExp(pattern);
+    var customErrorMsg = re.test(value) || value.trim() === '' ? '' : 'Invalid ' + elem.dataset.title;
+    elem.setCustomValidity(customErrorMsg);
+
+    if (elem.validity.customError) {
+      $(elem).nextAll('.invalid-feedback').text(elem.validationMessage);
+    } else {
+      $(elem).nextAll('.invalid-feedback').text('');
+    }
+
+    $('#checkout-tax-id-form').addClass('was-validated');
+  };
+
+  var createTaxIdElement = function createTaxIdElement(shopperType, taxRegs) {
+    var typeText = shopperType === 'Individual' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+    var radiosHtml = "\n      <div class=\"form-check form-check-inline shopper-type-radio\">      \n        <input class=\"form-check-input\" type=\"radio\" name=\"shopper-type\" id=\"shopper-type-".concat(shopperType, "\" value=\"").concat(taxRegs.customerType, "\">\n        <label class=\"form-check-label\" for=\"shopper-type-").concat(shopperType, "\">").concat(typeText, "</label>\n      </div>\n    ");
+    var fieldsHtml = '';
+
+    if (taxRegs.taxRegistrations.length) {
+      var taxFields = taxRegs.taxRegistrations;
+      taxFields.forEach(function (element) {
+        var key = Object.keys(element)[0];
+        var taxReg = element[key];
+        fieldsHtml = "\n          ".concat(fieldsHtml, "\n          <div class=\"form-group dr-panel-edit__el tax-id-field ").concat(shopperType, "\">\n            <div class=\"float-container float-container--").concat(key, "\">\n              <label for=\"tax-id-field-").concat(key, "\" class=\"float-label\">").concat(taxReg.title, "</label>\n              <input id=\"tax-id-field-").concat(key, "\" type=\"text\" name=\"tax-id-").concat(key, "\" value=\"\" class=\"form-control float-field float-field--").concat(key, "\" data-key=\"").concat(key, "\" data-title=\"").concat(taxReg.title, "\" data-description=\"").concat(taxReg.description, "\" data-pattern=\"").concat(taxReg.pattern, "\">\n              <span class=\"tax-id-field-info\">*").concat(taxReg.description, "</span>\n              <div class=\"invalid-feedback\"></div>\n            </div>\n          </div>\n        ");
+      });
+    }
+
+    $('#checkout-tax-id-form > button[type="submit"]').before("".concat(radiosHtml).concat(fieldsHtml));
+  };
+
+  var applyTaxRegistration = function applyTaxRegistration(customerType, taxRegs) {
+    var data = {
+      action: 'drgc_apply_tax_registration',
+      nonce: drgc_params.ajaxNonce,
+      customerType: customerType,
+      taxRegs: taxRegs
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
+  var getTaxRegistration = function getTaxRegistration() {
+    var data = {
+      action: 'drgc_get_tax_registration',
+      nonce: drgc_params.ajaxNonce
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
+  var createTaxProfile = function createTaxProfile(customerId) {
+    var formData = new FormData();
+    formData.append('companyName', $('#tems-us-company-name').val());
+    formData.append('taxAuthority', $('#certificate-tax-authority').val());
+    formData.append('startDate', $('#tems-us-start-date').val());
+    formData.append('endDate', $('#tems-us-end-date').val());
+    formData.append('certificate', $('#tems-us-certificate').get(0).files[0]);
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'POST',
+        headers: {
+          Accept: 'application/json',
+          Authorization: "Bearer ".concat(params.accessToken)
+        },
+        url: "https://".concat(drgc_params.domain, "/user-api/customers/").concat(customerId, "/tax-registration"),
+        cache: false,
+        processData: false,
+        contentType: false,
+        mimeType: 'multipart/form-data',
+        data: formData,
+        success: function success(data) {
+          resolve(data);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var updateTemsUsStatus = function updateTemsUsStatus(temsUsStatus) {
+    var adminSabrixCall = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var statusCustomAttr = {
+      cart: {
+        customAttributes: {
+          attribute: [{
+            name: 'TAX_EXEMPTION_US_STATUS',
+            value: temsUsStatus
+          }, {
+            name: 'TAX_PROFILE_CREATED_STATUS',
+            value: adminSabrixCall
+          }]
+        }
+      }
+    };
+    return commerce_api.updateCart({}, statusCustomAttr);
+  };
+
+  var getTemsUsStatus = function getTemsUsStatus(customAttrs) {
+    return customAttrs.find(function (attr) {
+      return attr.name === 'TAX_EXEMPTION_US_STATUS';
+    }) ? customAttrs.find(function (attr) {
+      return attr.name === 'TAX_EXEMPTION_US_STATUS';
+    }).value : '';
+  };
+
+  return {
+    updateDeliverySection: updateDeliverySection,
+    updateAddressSection: updateAddressSection,
+    updateSummaryLabels: updateSummaryLabels,
+    updateSummaryPricing: updateSummaryPricing,
+    applyLegalLinks: applyLegalLinks,
+    displayPreTAndC: displayPreTAndC,
+    displayAlertMessage: displayAlertMessage,
+    apiErrorHandler: apiErrorHandler,
+    resetBodyOpacity: resetBodyOpacity,
+    getPermalink: getPermalink,
+    getEntityCode: getEntityCode,
+    getCompliance: getCompliance,
+    resetFormSubmitButton: resetFormSubmitButton,
+    getAjaxErrorMessage: getAjaxErrorMessage,
+    setShippingOption: setShippingOption,
+    getSupportedCountries: getSupportedCountries,
+    isSubsAddedToCart: isSubsAddedToCart,
+    getLocalizedAutoRenewalTerms: getLocalizedAutoRenewalTerms,
+    formatPrice: formatPrice,
+    getCorrectSubtotalWithDiscount: getCorrectSubtotalWithDiscount,
+    getSeparatedPricing: getSeparatedPricing,
+    getCountryOptionsFromGC: getCountryOptionsFromGC,
+    getAddress: getAddress,
+    getDropinBillingAddress: getDropinBillingAddress,
+    getTaxSchema: getTaxSchema,
+    validateVatNumber: validateVatNumber,
+    createTaxIdElement: createTaxIdElement,
+    applyTaxRegistration: applyTaxRegistration,
+    getTaxRegistration: getTaxRegistration,
+    createTaxProfile: createTaxProfile,
+    updateTemsUsStatus: updateTemsUsStatus,
+    getTemsUsStatus: getTemsUsStatus
+  };
+}(jQuery, drgc_params);
+
+/* harmony default export */ var checkout_utils = (CheckoutUtils);
 // CONCATENATED MODULE: ./assets/js/public/public-cart.js
 
 
+
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 /* global drgc_params, iFrameResize */
 
@@ -13198,12 +13308,8 @@ var CartModule = function ($) {
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
   };
 
-  var renderLineItems =
-  /*#__PURE__*/
-  function () {
-    var _ref = asyncToGenerator_default()(
-    /*#__PURE__*/
-    regenerator_default.a.mark(function _callee(lineItems) {
+  var renderLineItems = /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(lineItems) {
       var min, max, promises, lineItemHTMLArr, hasAutoRenewal;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -13223,12 +13329,12 @@ var CartModule = function ($) {
                   lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
                 });
                 promises.push(promise);
-                var _iteratorNormalCompletion = true;
-                var _didIteratorError = false;
-                var _iteratorError = undefined;
+
+                var _iterator = _createForOfIteratorHelper(lineItem.product.customAttributes.attribute),
+                    _step;
 
                 try {
-                  for (var _iterator = lineItem.product.customAttributes.attribute[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                  for (_iterator.s(); !(_step = _iterator.n()).done;) {
                     var attr = _step.value;
 
                     if (attr.name === 'isAutomatic' && attr.value === 'true') {
@@ -13237,18 +13343,9 @@ var CartModule = function ($) {
                     }
                   }
                 } catch (err) {
-                  _didIteratorError = true;
-                  _iteratorError = err;
+                  _iterator.e(err);
                 } finally {
-                  try {
-                    if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                      _iterator["return"]();
-                    }
-                  } finally {
-                    if (_didIteratorError) {
-                      throw _iteratorError;
-                    }
-                  }
+                  _iterator.f();
                 }
               });
               if (!hasAutoRenewal) $('.dr-cart__auto-renewal-terms').remove();
@@ -13562,6 +13659,13 @@ var FloatLabel = function () {
 // CONCATENATED MODULE: ./assets/js/public/public-checkout.js
 
 
+
+function public_checkout_createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = public_checkout_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function public_checkout_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return public_checkout_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return public_checkout_arrayLikeToArray(o, minLen); }
+
+function public_checkout_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
  // 3rd-party plugin
 
 
@@ -13571,7 +13675,7 @@ var CheckoutModule = function ($) {
   var localizedText = drgc_params.translations;
 
   var moveToNextSection = function moveToNextSection($section) {
-    var $nextSection = $section.next();
+    var $nextSection = $section.next().hasClass('dr-checkout__tems-us') ? $section.next().next() : $section.next();
     $section.removeClass('active').addClass('closed');
     $nextSection.addClass('active').removeClass('closed');
 
@@ -13689,12 +13793,8 @@ var CheckoutModule = function ($) {
     }
   };
 
-  var preselectShippingOption =
-  /*#__PURE__*/
-  function () {
-    var _ref = asyncToGenerator_default()(
-    /*#__PURE__*/
-    regenerator_default.a.mark(function _callee(data) {
+  var preselectShippingOption = /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(data) {
       var $errorMsgElem, defaultShippingOption, shippingOptions, defaultExists, index, option, res, freeShipping;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -13826,6 +13926,47 @@ var CheckoutModule = function ($) {
     }
   };
 
+  var initTemsUsStatus = function initTemsUsStatus(customAttrs) {
+    var status = checkout_utils.getTemsUsStatus(customAttrs);
+
+    if (status !== 'ELIGIBLE_NOT_EXEMPTED') {
+      try {
+        $('#billing-field-company-name').val($('#tems-us-company-name').val()).prop('readonly', true);
+        return checkout_utils.updateTemsUsStatus('ELIGIBLE_EXEMPTED');
+      } catch (error) {
+        console.error(error);
+      }
+    } else {
+      $('#billing-field-company-name').val('');
+      $('#tems-us-purchase-link > p.cert-good').addClass('d-none');
+      $('#tems-us-purchase-link > p.tax-exempt').removeClass('d-none');
+      $('#tems-us-purchase-link > p.taxable').addClass('d-none');
+    }
+
+    return status;
+  };
+
+  var displayTemsUsResult = function displayTemsUsResult(tax) {
+    if (tax === 0) {
+      if ($('#tems-us-purchase-link > p.cert-good').hasClass('d-none')) {
+        $('#tems-us-purchase-link, #tems-us-result').addClass('d-none');
+      } else {
+        $('#tems-us-result > p.cert-good').removeClass('d-none');
+        $('#tems-us-result > p.cert-error').addClass('d-none');
+      }
+    } else {
+      if ($('#tems-us-purchase-link > p.cert-good').hasClass('d-none')) {
+        $('#tems-us-purchase-link > p > a.tax-exempt').removeClass('d-none');
+        $('#tems-us-result > p.cert-error').addClass('d-none');
+        $('#tems-us-result > p.not-exempted').removeClass('d-none');
+      } else {
+        $('#tems-us-result > p.cert-error').removeClass('d-none');
+      }
+
+      $('#tems-us-result > p.cert-good').addClass('d-none');
+    }
+  };
+
   return {
     moveToNextSection: moveToNextSection,
     adjustColumns: adjustColumns,
@@ -13835,766 +13976,956 @@ var CheckoutModule = function ($) {
     preselectShippingOption: preselectShippingOption,
     applyPaymentAndSubmitCart: applyPaymentAndSubmitCart,
     initShopperTypeRadio: initShopperTypeRadio,
-    isTaxExempt: isTaxExempt
+    isTaxExempt: isTaxExempt,
+    initTemsUsStatus: initTemsUsStatus,
+    displayTemsUsResult: displayTemsUsResult
   };
 }(jQuery);
 
-jQuery(document).ready(function ($) {
-  if ($('#checkout-payment-form').length) {
-    // Globals
-    var localizedText = drgc_params.translations;
-    var isLoggedIn = drgc_params.isLogin === 'true';
-    var drLocale = drgc_params.drLocale || 'en_US';
-    var selectedCountry = drLocale.split('_')[1];
-    var cartData = drgc_params.cart.cart;
-    var requestShipping = cartData.shippingOptions.shippingOption ? true : false;
-    var digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey, {
-      'locale': drLocale.split('_').join('-')
-    });
-    var addressPayload = {
-      shipping: {},
-      billing: {}
-    };
-    var paymentSourceId = null;
-    var currency = drgc_params.cart.cart.pricing.orderTotal.currency;
-    var dropInConfig = JSON.parse(drgc_params.dropInConfig);
-    var paymentResponse = null; // Section progress
-
-    var finishedSectionIdx = -1; // Break down tax and update summary on page load
-
-    checkout_utils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
-    $('#checkout-email-form').on('submit', function (e) {
-      e.preventDefault(); // If no items are in cart, do not even continue, maybe give feedback
-
-      if (!drgc_params.cart.cart.lineItems.hasOwnProperty('lineItem')) return;
-      var $form = $('#checkout-email-form');
-      var email = $form.find('input[name=email]').val().trim();
-      $form.addClass('was-validated');
-
-      if ($form[0].checkValidity() === false) {
-        return false;
-      }
-
-      var $section = $('.dr-checkout__email');
-      $section.find('.dr-panel-result__text').text(email);
-
-      if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-        finishedSectionIdx = $('.dr-checkout__el').index($section);
-      }
-
-      CheckoutModule.moveToNextSection($section);
-    }); // Submit shipping info form
-
-    $('#checkout-shipping-form').on('submit', function (e) {
-      e.preventDefault();
-      var $form = $(e.target);
-      var $button = $form.find('button[type="submit"]');
-      var isFormValid = CheckoutModule.validateAddress($form);
-      if (!isFormValid) return;
-      addressPayload.shipping = CheckoutModule.buildAddressPayload($form);
-      var cartRequest = {
-        address: addressPayload.shipping
-      };
-      $button.addClass('sending').blur();
-
-      if (isLoggedIn && $('#checkbox-save-shipping').prop('checked')) {
-        var setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true';
-        var address = checkout_utils.getAddress('shipping', setAsDefault);
-        commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
-          checkout_utils.apiErrorHandler(jqXHR);
-        });
-      }
-
-      commerce_api.updateCartShippingAddress({
-        expand: 'all'
-      }, cartRequest).then(function () {
-        return commerce_api.getCart({
-          expand: 'all'
-        });
-      }).then(function (data) {
-        return CheckoutModule.preselectShippingOption(data);
-      }).then(function (data) {
-        $button.removeClass('sending').blur();
-        var $section = $('.dr-checkout__shipping');
-        checkout_utils.updateAddressSection(data.cart.shippingAddress, $section.find('.dr-panel-result__text'));
-
-        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-          finishedSectionIdx = $('.dr-checkout__el').index($section);
-        }
-
-        CheckoutModule.moveToNextSection($section);
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        $button.removeClass('sending').blur();
-        CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-      });
-    });
-    $('#checkbox-billing, #checkbox-business').on('change', function (e) {
-      var id = $(e.target).attr('id');
-
-      switch (id) {
-        case 'checkbox-billing':
-          if (!$(e.target).is(':checked')) {
-            var billingMeta = {
-              cart: {
-                customAttributes: {
-                  attribute: [{
-                    name: 'SHIPPING_ADDRESS_SAME_AS_BILLING',
-                    value: false
-                  }]
-                }
-              }
-            };
-            commerce_api.updateCart({}, billingMeta);
-            $('.dr-address-book-btn.billing').show();
-            $('.billing-section').slideDown();
-          } else {
-            $('.billing-section').slideUp();
-            $('#checkbox-business').prop('checked', false).change();
-            $('.dr-address-book-btn.billing').hide();
-          }
-
-          break;
-
-        case 'checkbox-business':
-          if (!$(e.target).is(':checked')) {
-            $('#billing-field-company-name, #billing-field-company-ein').val('');
-            $('.form-group-business').slideUp();
-          } else {
-            $('#checkbox-billing').prop('checked', false).change();
-            $('.form-group-business').slideDown();
-          }
-
-          break;
-      }
-    });
-    $('#checkout-billing-form').on('submit',
-    /*#__PURE__*/
-    function () {
-      var _ref2 = asyncToGenerator_default()(
-      /*#__PURE__*/
-      regenerator_default.a.mark(function _callee2(e) {
-        var $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, lineItems, isTaxExempt, _address, taxRegs, taxIds, shopperType, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, element, $field, billingAddress, lang, config;
-
-        return regenerator_default.a.wrap(function _callee2$(_context2) {
-          while (1) {
-            switch (_context2.prev = _context2.next) {
-              case 0:
-                e.preventDefault();
-                $form = $(e.target);
-                $button = $form.find('button[type="submit"]');
-                billingSameAsShipping = $('[name="checkbox-billing"]').is(':visible:checked');
-                isFormValid = CheckoutModule.validateAddress($form);
-
-                if (isFormValid) {
-                  _context2.next = 7;
-                  break;
-                }
-
-                return _context2.abrupt("return");
-
-              case 7:
-                addressPayload.billing = billingSameAsShipping ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
-                if ($('#billing-field-company-name').length) addressPayload.billing.companyName = $('#billing-field-company-name').val();
-                cartRequest = {
-                  address: addressPayload.billing
-                };
-                $button.addClass('sending').blur();
-
-                if (isLoggedIn && $('#checkbox-save-billing').prop('checked')) {
-                  if (requestShipping && !billingSameAsShipping || !requestShipping) {
-                    setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true' && !requestShipping;
-                    address = checkout_utils.getAddress('billing', setAsDefault);
-                    commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
-                      checkout_utils.apiErrorHandler(jqXHR);
-                    });
-                  }
-                }
-
-                _context2.next = 14;
-                return commerce_api.updateCartBillingAddress({
-                  expand: 'all'
-                }, cartRequest).then(function () {
-                  // Digital product still need to update some of shippingAddress attributes for tax calculating
-                  if (requestShipping) return new Promise(function (resolve) {
-                    return resolve();
-                  });
-                  var patchCartRequest = {
-                    address: {
-                      country: cartRequest.address.country,
-                      countrySubdivision: cartRequest.address.countrySubdivision,
-                      postalCode: cartRequest.address.postalCode
-                    }
-                  };
-                  return commerce_api.updateCartShippingAddress({
-                    expand: 'all'
-                  }, patchCartRequest);
-                }).then(function () {
-                  var $companyEin = $('#billing-field-company-ein');
-                  if (!$companyEin.length) return new Promise(function (resolve) {
-                    return resolve();
-                  });
-                  var companyMeta = {
-                    cart: {
-                      customAttributes: {
-                        attribute: [{
-                          name: 'companyEIN',
-                          value: $companyEin.val()
-                        }]
-                      }
-                    }
-                  };
-                  return commerce_api.updateCart({}, companyMeta);
-                }).then(function () {
-                  return commerce_api.getCart({
-                    expand: 'all'
-                  });
-                }).then(function (data) {
-                  return requestShipping ? CheckoutModule.preselectShippingOption(data) : new Promise(function (resolve) {
-                    return resolve(data);
-                  });
-                })["catch"](function (jqXHR) {
-                  $button.removeClass('sending').blur();
-                  CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-                  console.error(jqXHR);
-                });
-
-              case 14:
-                updatedCart = _context2.sent;
-
-                if (!$('#checkout-tax-id-form').length) {
-                  _context2.next = 79;
-                  break;
-                }
-
-                lineItems = updatedCart.cart.lineItems.lineItem;
-                isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
-                sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
-
-                if (isTaxExempt) {
-                  _context2.next = 33;
-                  break;
-                }
-
-                _address = requestShipping ? addressPayload.shipping : addressPayload.billing;
-                _context2.prev = 21;
-                _context2.next = 24;
-                return checkout_utils.getTaxSchema(_address);
-
-              case 24:
-                float_label.init();
-                _context2.next = 30;
-                break;
-
-              case 27:
-                _context2.prev = 27;
-                _context2.t0 = _context2["catch"](21);
-                console.error(_context2.t0);
-
-              case 30:
-                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                _context2.next = 77;
-                break;
-
-              case 33:
-                _context2.prev = 33;
-                _context2.next = 36;
-                return checkout_utils.getTaxRegistration();
-
-              case 36:
-                taxRegs = _context2.sent;
-
-                if (!(Object.keys(taxRegs).length && taxRegs.customerType)) {
-                  _context2.next = 72;
-                  break;
-                }
-
-                taxIds = taxRegs.taxRegistrations;
-                shopperType = taxRegs.customerType;
-                $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
-                _iteratorNormalCompletion = true;
-                _didIteratorError = false;
-                _iteratorError = undefined;
-                _context2.prev = 44;
-                _iterator = taxIds[Symbol.iterator]();
-
-              case 46:
-                if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                  _context2.next = 57;
-                  break;
-                }
-
-                element = _step.value;
-                $field = $('#tax-id-field-' + element.key);
-
-                if ($field.length) {
-                  _context2.next = 53;
-                  break;
-                }
-
-                return _context2.abrupt("break", 57);
-
-              case 53:
-                $field.val(element.value).parent().addClass('active');
-
-              case 54:
-                _iteratorNormalCompletion = true;
-                _context2.next = 46;
-                break;
-
-              case 57:
-                _context2.next = 63;
-                break;
-
-              case 59:
-                _context2.prev = 59;
-                _context2.t1 = _context2["catch"](44);
-                _didIteratorError = true;
-                _iteratorError = _context2.t1;
-
-              case 63:
-                _context2.prev = 63;
-                _context2.prev = 64;
-
-                if (!_iteratorNormalCompletion && _iterator["return"] != null) {
-                  _iterator["return"]();
-                }
-
-              case 66:
-                _context2.prev = 66;
-
-                if (!_didIteratorError) {
-                  _context2.next = 69;
-                  break;
-                }
-
-                throw _iteratorError;
-
-              case 69:
-                return _context2.finish(66);
-
-              case 70:
-                return _context2.finish(63);
-
-              case 71:
-                sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
-
-              case 72:
-                _context2.next = 77;
-                break;
-
-              case 74:
-                _context2.prev = 74;
-                _context2.t2 = _context2["catch"](33);
-                console.error(_context2.t2);
-
-              case 77:
-                _context2.next = 80;
-                break;
-
-              case 79:
-                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-
-              case 80:
-                billingAddress = checkout_utils.getDropinBillingAddress(addressPayload);
-                lang = drLocale.split('_')[0];
-
-                if ('onlineBanking' in dropInConfig) {
-                  dropInConfig.onlineBanking.onlineBanking = {
-                    currency: currency,
-                    country: billingAddress.address.country
-                  };
-                }
-
-                if ('googlePay' in dropInConfig) {
-                  dropInConfig.googlePay.style.buttonLanguage = lang;
-                }
-
-                if ('applePay' in dropInConfig) {
-                  dropInConfig.applePay.style.buttonLanguage = lang;
-                }
-
-                config = {
-                  sessionId: updatedCart.cart.paymentSession ? updatedCart.cart.paymentSession.id : '',
-                  billingAddress: billingAddress,
-                  paymentMethodConfiguration: dropInConfig,
-                  onSuccess: function onSuccess(res) {
-                    sessionStorage.setItem('drgcPaymentSource', JSON.stringify(res.source));
-                    paymentResponse = res;
-                    $('#checkout-payment-form').submit();
-                  },
-                  onError: function onError(res) {
-                    console.error(res.errors);
-                    paymentResponse = res;
-                  },
-                  onReady: function onReady(res) {
-                    $button.removeClass('sending').blur();
-                    var $section = $('.dr-checkout__billing');
-                    checkout_utils.updateAddressSection(updatedCart.cart.billingAddress, $section.find('.dr-panel-result__text'));
-
-                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                      finishedSectionIdx = $('.dr-checkout__el').index($section);
-                    }
-
-                    CheckoutModule.moveToNextSection($section);
-                    checkout_utils.updateSummaryPricing(updatedCart.cart, drgc_params.isTaxInclusive === 'true');
-                    paymentResponse = res;
-
-                    if (!res.paymentMethodTypes.length) {
-                      $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg).show();
-                    }
-                  },
-                  onCancel: function onCancel(res) {
-                    paymentResponse = res;
-                  }
-                };
-
-                try {
-                  digitalriverjs.createDropin(config).mount('dr-payment-info');
-                } catch (error) {
-                  $button.removeClass('sending').blur();
-                  console.error(error.message);
-                }
-
-              case 87:
-              case "end":
-                return _context2.stop();
+jQuery(document).ready( /*#__PURE__*/function () {
+  var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee6($) {
+    var localizedText, isLoggedIn, drLocale, selectedCountry, cartData, requestShipping, digitalriverjs, addressPayload, paymentSourceId, currency, dropInConfig, paymentResponse, finishedSectionIdx;
+    return regenerator_default.a.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            if (!$('#checkout-payment-form').length) {
+              _context6.next = 47;
+              break;
             }
-          }
-        }, _callee2, null, [[21, 27], [33, 74], [44, 59, 63, 71], [64,, 66, 70]]);
-      }));
 
-      return function (_x2) {
-        return _ref2.apply(this, arguments);
-      };
-    }());
-    $(document).on('click', 'input[name="shopper-type"]', function () {
-      var $taxIdFields = $('#checkout-tax-id-form .tax-id-field');
-      $taxIdFields.each(function (index, element) {
-        var $element = $(element);
+            // Globals
+            localizedText = drgc_params.translations;
+            isLoggedIn = drgc_params.isLogin === 'true';
+            drLocale = drgc_params.drLocale || 'en_US';
+            selectedCountry = drLocale.split('_')[1];
+            cartData = drgc_params.cart.cart;
+            requestShipping = cartData.shippingOptions.shippingOption ? true : false;
+            digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey, {
+              'locale': drLocale.split('_').join('-')
+            });
+            addressPayload = {
+              shipping: {},
+              billing: {}
+            };
+            paymentSourceId = null;
+            currency = drgc_params.cart.cart.pricing.orderTotal.currency;
+            dropInConfig = JSON.parse(drgc_params.dropInConfig);
+            paymentResponse = null; // Section progress
 
-        if ($('input[name="shopper-type"]:checked').val() === 'B') {
-          if ($element.hasClass('Individual')) $element.addClass('d-none');
-          if ($element.hasClass('Business')) $element.removeClass('d-none');
-        } else {
-          if ($element.hasClass('Individual')) $element.removeClass('d-none');
-          if ($element.hasClass('Business')) $element.addClass('d-none');
-        }
-      });
-    });
-    $(document).on('input', '#checkout-tax-id-form > .tax-id-field input[type="text"]', function (e) {
-      checkout_utils.validateVatNumber(e);
-    });
-    $('#checkout-tax-id-form').on('submit',
-    /*#__PURE__*/
-    function () {
-      var _ref3 = asyncToGenerator_default()(
-      /*#__PURE__*/
-      regenerator_default.a.mark(function _callee3(e) {
-        var $button, $section, $error, isTaxExempt, taxRegs, typeText, taxIds, regs, shopperType, $taxFields, _regs;
+            finishedSectionIdx = -1; // Break down tax and update summary on page load
 
-        return regenerator_default.a.wrap(function _callee3$(_context3) {
-          while (1) {
-            switch (_context3.prev = _context3.next) {
-              case 0:
-                e.preventDefault();
-                $button = $(e.target).find('button[type="submit"]');
-                $section = $('.dr-checkout__tax-id');
-                $error = $section.find('.dr-err-field');
-                isTaxExempt = sessionStorage.getItem('drgcTaxExempt') === 'true';
-                taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
-                typeText = '';
-                taxIds = '';
+            checkout_utils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
+            $('#checkout-email-form').on('submit', function (e) {
+              e.preventDefault(); // If no items are in cart, do not even continue, maybe give feedback
 
-                if (!(isTaxExempt && Object.keys(taxRegs).length && taxRegs.customerType)) {
-                  _context3.next = 15;
-                  break;
-                }
+              if (!drgc_params.cart.cart.lineItems.hasOwnProperty('lineItem')) return;
+              var $form = $('#checkout-email-form');
+              var email = $form.find('input[name=email]').val().trim();
+              $form.addClass('was-validated');
 
-                regs = taxRegs.taxRegistrations;
-                regs.forEach(function (element) {
-                  taxIds = "".concat(taxIds, "<br>").concat(element.value);
-                  ;
+              if ($form[0].checkValidity() === false) {
+                return false;
+              }
+
+              var $section = $('.dr-checkout__email');
+              $section.find('.dr-panel-result__text').text(email);
+
+              if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                finishedSectionIdx = $('.dr-checkout__el').index($section);
+              }
+
+              CheckoutModule.moveToNextSection($section);
+            }); // Submit shipping info form
+
+            $('#checkout-shipping-form').on('submit', function (e) {
+              e.preventDefault();
+              var $form = $(e.target);
+              var $button = $form.find('button[type="submit"]');
+              var isFormValid = CheckoutModule.validateAddress($form);
+              if (!isFormValid) return;
+              addressPayload.shipping = CheckoutModule.buildAddressPayload($form);
+              var cartRequest = {
+                address: addressPayload.shipping
+              };
+              $button.addClass('sending').blur();
+
+              if (isLoggedIn && $('#checkbox-save-shipping').prop('checked')) {
+                var setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true';
+                var address = checkout_utils.getAddress('shipping', setAsDefault);
+                commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
+                  checkout_utils.apiErrorHandler(jqXHR);
                 });
-                typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
-                $error.text('').hide();
-                _context3.next = 28;
-                break;
+              }
 
-              case 15:
-                $button.addClass('sending').blur();
-                shopperType = $('input[name="shopper-type"]:checked').val();
-                $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
-                _regs = [];
-
-                if ($taxFields.length) {
-                  $taxFields.each(function (index, element) {
-                    var $element = $(element);
-
-                    if (!$element.hasClass('d-none')) {
-                      var key = $element.data('key');
-                      var value = $element.val();
-                      var taxRegObj = {};
-
-                      if (value) {
-                        taxRegObj['key'] = key;
-                        taxRegObj['value'] = value;
-
-                        _regs.push(taxRegObj);
-                      }
-
-                      taxIds = "".concat(taxIds, "<br>").concat(value);
-                    }
-                  });
-                }
-
-                typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
-
-                if (!_regs.length) {
-                  _context3.next = 26;
-                  break;
-                }
-
-                _context3.next = 24;
-                return checkout_utils.applyTaxRegistration(shopperType, _regs).then(function (data) {
-                  sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
-                  return commerce_api.getCart({
-                    expand: 'all'
-                  });
-                }).then(function (data) {
-                  var lineItems = data.cart.lineItems.lineItem;
-                  var tax = data.cart.pricing.tax.value;
-                  var isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
-                  sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
-                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-                  $button.removeClass('sending').blur();
-
-                  if (tax > 0) {
-                    $error.text(localizedText.invalid_tax_id_error_msg).show();
-                  } else {
-                    $error.text('').hide();
-                  }
-                })["catch"](function (error) {
-                  $error.text(localizedText.invalid_tax_id_error_msg).show();
-                  $button.removeClass('sending').blur();
-                  console.error(error);
+              commerce_api.updateCartShippingAddress({
+                expand: 'all'
+              }, cartRequest).then(function () {
+                return commerce_api.getCart({
+                  expand: 'all'
                 });
-
-              case 24:
-                _context3.next = 28;
-                break;
-
-              case 26:
+              }).then(function (data) {
+                return CheckoutModule.preselectShippingOption(data);
+              }).then(function (data) {
                 $button.removeClass('sending').blur();
-                $error.text('').hide();
-
-              case 28:
-                $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
+                var $section = $('.dr-checkout__shipping');
+                checkout_utils.updateAddressSection(data.cart.shippingAddress, $section.find('.dr-panel-result__text'));
 
                 if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
                   finishedSectionIdx = $('.dr-checkout__el').index($section);
                 }
 
                 CheckoutModule.moveToNextSection($section);
+                checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
 
-              case 31:
-              case "end":
-                return _context3.stop();
+                if ($('#tems-us-purchase-link').length) {
+                  $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
+                  $('#tems-us-purchase-link > p > a').addClass('d-none');
+                  if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value);
+                }
+              })["catch"](function (jqXHR) {
+                $button.removeClass('sending').blur();
+                CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+              });
+            });
+            $('#checkbox-billing, #checkbox-business').on('change', function (e) {
+              var id = $(e.target).attr('id');
+
+              switch (id) {
+                case 'checkbox-billing':
+                  if (!$(e.target).is(':checked')) {
+                    var billingMeta = {
+                      cart: {
+                        customAttributes: {
+                          attribute: [{
+                            name: 'SHIPPING_ADDRESS_SAME_AS_BILLING',
+                            value: false
+                          }]
+                        }
+                      }
+                    };
+                    commerce_api.updateCart({}, billingMeta);
+                    $('.dr-address-book-btn.billing').show();
+                    $('.billing-section').slideDown();
+                  } else {
+                    $('.billing-section').slideUp();
+                    $('#checkbox-business').prop('checked', false).change();
+                    $('.dr-address-book-btn.billing').hide();
+                  }
+
+                  break;
+
+                case 'checkbox-business':
+                  if (!$(e.target).is(':checked')) {
+                    if ($('#billing-field-company-name').prop('readonly')) {
+                      $('#billing-field-company-ein').val('');
+                    } else {
+                      $('#billing-field-company-name, #billing-field-company-ein').val('');
+                    }
+
+                    $('.form-group-business').slideUp();
+                  } else {
+                    $('#checkbox-billing').prop('checked', false).change();
+                    $('.form-group-business').slideDown();
+                    if (!$('#billing-field-company-name').prop('readonly')) $('#billing-field-company-name').trigger('focus');
+                  }
+
+                  break;
+              }
+            });
+            $('#checkout-billing-form').on('submit', /*#__PURE__*/function () {
+              var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
+                var $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, lineItems, isTaxExempt, _address, taxRegs, taxIds, shopperType, _iterator, _step, element, $field, billingAddress, lang, config;
+
+                return regenerator_default.a.wrap(function _callee2$(_context2) {
+                  while (1) {
+                    switch (_context2.prev = _context2.next) {
+                      case 0:
+                        e.preventDefault();
+                        $form = $(e.target);
+                        $button = $form.find('button[type="submit"]');
+                        billingSameAsShipping = $('[name="checkbox-billing"]').is(':visible:checked');
+                        isFormValid = CheckoutModule.validateAddress($form);
+
+                        if (isFormValid) {
+                          _context2.next = 7;
+                          break;
+                        }
+
+                        return _context2.abrupt("return");
+
+                      case 7:
+                        addressPayload.billing = billingSameAsShipping ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
+                        if ($('#billing-field-company-name').length) addressPayload.billing.companyName = $('#billing-field-company-name').val();
+                        cartRequest = {
+                          address: addressPayload.billing
+                        };
+                        $button.addClass('sending').blur();
+
+                        if (isLoggedIn && $('#checkbox-save-billing').prop('checked')) {
+                          if (requestShipping && !billingSameAsShipping || !requestShipping) {
+                            setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true' && !requestShipping;
+                            address = checkout_utils.getAddress('billing', setAsDefault);
+                            commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
+                              checkout_utils.apiErrorHandler(jqXHR);
+                            });
+                          }
+                        }
+
+                        _context2.next = 14;
+                        return commerce_api.updateCartBillingAddress({
+                          expand: 'all'
+                        }, cartRequest).then(function () {
+                          // Digital product still need to update some of shippingAddress attributes for tax calculating
+                          if (requestShipping) return new Promise(function (resolve) {
+                            return resolve();
+                          });
+                          var patchCartRequest = {
+                            address: {
+                              country: cartRequest.address.country,
+                              countrySubdivision: cartRequest.address.countrySubdivision,
+                              postalCode: cartRequest.address.postalCode
+                            }
+                          };
+                          return commerce_api.updateCartShippingAddress({
+                            expand: 'all'
+                          }, patchCartRequest);
+                        }).then(function () {
+                          var $companyEin = $('#billing-field-company-ein');
+                          if (!$companyEin.length) return new Promise(function (resolve) {
+                            return resolve();
+                          });
+                          var companyMeta = {
+                            cart: {
+                              customAttributes: {
+                                attribute: [{
+                                  name: 'companyEIN',
+                                  value: $companyEin.val()
+                                }]
+                              }
+                            }
+                          };
+                          return commerce_api.updateCart({}, companyMeta);
+                        }).then(function () {
+                          return commerce_api.getCart({
+                            expand: 'all'
+                          });
+                        }).then(function (data) {
+                          return requestShipping ? CheckoutModule.preselectShippingOption(data) : new Promise(function (resolve) {
+                            return resolve(data);
+                          });
+                        })["catch"](function (jqXHR) {
+                          $button.removeClass('sending').blur();
+                          CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                          console.error(jqXHR);
+                        });
+
+                      case 14:
+                        updatedCart = _context2.sent;
+
+                        if (!$('#checkout-tax-id-form').length) {
+                          _context2.next = 70;
+                          break;
+                        }
+
+                        lineItems = updatedCart.cart.lineItems.lineItem;
+                        isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+                        sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+
+                        if (isTaxExempt) {
+                          _context2.next = 33;
+                          break;
+                        }
+
+                        _address = requestShipping ? addressPayload.shipping : addressPayload.billing;
+                        _context2.prev = 21;
+                        _context2.next = 24;
+                        return checkout_utils.getTaxSchema(_address);
+
+                      case 24:
+                        float_label.init();
+                        _context2.next = 30;
+                        break;
+
+                      case 27:
+                        _context2.prev = 27;
+                        _context2.t0 = _context2["catch"](21);
+                        console.error(_context2.t0);
+
+                      case 30:
+                        if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+                        _context2.next = 68;
+                        break;
+
+                      case 33:
+                        _context2.prev = 33;
+                        _context2.next = 36;
+                        return checkout_utils.getTaxRegistration();
+
+                      case 36:
+                        taxRegs = _context2.sent;
+
+                        if (!(Object.keys(taxRegs).length && taxRegs.customerType)) {
+                          _context2.next = 63;
+                          break;
+                        }
+
+                        taxIds = taxRegs.taxRegistrations;
+                        shopperType = taxRegs.customerType;
+                        $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
+                        _iterator = public_checkout_createForOfIteratorHelper(taxIds);
+                        _context2.prev = 42;
+
+                        _iterator.s();
+
+                      case 44:
+                        if ((_step = _iterator.n()).done) {
+                          _context2.next = 54;
+                          break;
+                        }
+
+                        element = _step.value;
+                        $field = $('#tax-id-field-' + element.key);
+
+                        if ($field.length) {
+                          _context2.next = 51;
+                          break;
+                        }
+
+                        return _context2.abrupt("break", 54);
+
+                      case 51:
+                        $field.val(element.value).parent().addClass('active');
+
+                      case 52:
+                        _context2.next = 44;
+                        break;
+
+                      case 54:
+                        _context2.next = 59;
+                        break;
+
+                      case 56:
+                        _context2.prev = 56;
+                        _context2.t1 = _context2["catch"](42);
+
+                        _iterator.e(_context2.t1);
+
+                      case 59:
+                        _context2.prev = 59;
+
+                        _iterator.f();
+
+                        return _context2.finish(59);
+
+                      case 62:
+                        sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+
+                      case 63:
+                        _context2.next = 68;
+                        break;
+
+                      case 65:
+                        _context2.prev = 65;
+                        _context2.t2 = _context2["catch"](33);
+                        console.error(_context2.t2);
+
+                      case 68:
+                        _context2.next = 71;
+                        break;
+
+                      case 70:
+                        if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+
+                      case 71:
+                        billingAddress = checkout_utils.getDropinBillingAddress(addressPayload);
+                        lang = drLocale.split('_')[0];
+
+                        if ('onlineBanking' in dropInConfig) {
+                          dropInConfig.onlineBanking.onlineBanking = {
+                            currency: currency,
+                            country: billingAddress.address.country
+                          };
+                        }
+
+                        if ('googlePay' in dropInConfig) {
+                          dropInConfig.googlePay.style.buttonLanguage = lang;
+                        }
+
+                        if ('applePay' in dropInConfig) {
+                          dropInConfig.applePay.style.buttonLanguage = lang;
+                        }
+
+                        config = {
+                          sessionId: updatedCart.cart.paymentSession ? updatedCart.cart.paymentSession.id : '',
+                          billingAddress: billingAddress,
+                          paymentMethodConfiguration: dropInConfig,
+                          onSuccess: function onSuccess(res) {
+                            sessionStorage.setItem('drgcPaymentSource', JSON.stringify(res.source));
+                            paymentResponse = res;
+                            $('#checkout-payment-form').submit();
+                          },
+                          onError: function onError(res) {
+                            console.error(res.errors);
+                            paymentResponse = res;
+                          },
+                          onReady: function onReady(res) {
+                            $button.removeClass('sending').blur();
+                            var $section = $('.dr-checkout__billing');
+                            checkout_utils.updateAddressSection(updatedCart.cart.billingAddress, $section.find('.dr-panel-result__text'));
+
+                            if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                              finishedSectionIdx = $('.dr-checkout__el').index($section);
+                            }
+
+                            CheckoutModule.moveToNextSection($section);
+                            checkout_utils.updateSummaryPricing(updatedCart.cart, drgc_params.isTaxInclusive === 'true');
+                            paymentResponse = res;
+
+                            if (!res.paymentMethodTypes.length) {
+                              $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg).show();
+                            }
+
+                            if ($('#tems-us-purchase-link').length && !requestShipping) {
+                              $('#tems-us-purchase-link > p.cert-msg').addClass('dr-panel-result__text');
+                              $('#tems-us-purchase-link > p > a').addClass('d-none');
+                              if ($('#tems-us-purchase-link > p.cert-good').length) CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value);
+                            }
+                          },
+                          onCancel: function onCancel(res) {
+                            paymentResponse = res;
+                          }
+                        };
+
+                        try {
+                          digitalriverjs.createDropin(config).mount('dr-payment-info');
+                        } catch (error) {
+                          $button.removeClass('sending').blur();
+                          console.error(error.message);
+                        }
+
+                      case 78:
+                      case "end":
+                        return _context2.stop();
+                    }
+                  }
+                }, _callee2, null, [[21, 27], [33, 65], [42, 56, 59, 62]]);
+              }));
+
+              return function (_x3) {
+                return _ref3.apply(this, arguments);
+              };
+            }());
+            $(document).on('click', 'input[name="shopper-type"]', function () {
+              var $taxIdFields = $('#checkout-tax-id-form .tax-id-field');
+              $taxIdFields.each(function (index, element) {
+                var $element = $(element);
+
+                if ($('input[name="shopper-type"]:checked').val() === 'B') {
+                  if ($element.hasClass('Individual')) $element.addClass('d-none');
+                  if ($element.hasClass('Business')) $element.removeClass('d-none');
+                } else {
+                  if ($element.hasClass('Individual')) $element.removeClass('d-none');
+                  if ($element.hasClass('Business')) $element.addClass('d-none');
+                }
+              });
+            });
+            $(document).on('input', '#checkout-tax-id-form > .tax-id-field input[type="text"]', function (e) {
+              checkout_utils.validateVatNumber(e);
+            });
+            $('#checkout-tax-id-form').on('submit', /*#__PURE__*/function () {
+              var _ref4 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
+                var $button, $section, $error, isTaxExempt, taxRegs, typeText, taxIds, regs, shopperType, $taxFields, _regs;
+
+                return regenerator_default.a.wrap(function _callee3$(_context3) {
+                  while (1) {
+                    switch (_context3.prev = _context3.next) {
+                      case 0:
+                        e.preventDefault();
+                        $button = $(e.target).find('button[type="submit"]');
+                        $section = $('.dr-checkout__tax-id');
+                        $error = $section.find('.dr-err-field');
+                        isTaxExempt = sessionStorage.getItem('drgcTaxExempt') === 'true';
+                        taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+                        typeText = '';
+                        taxIds = '';
+
+                        if (!(isTaxExempt && Object.keys(taxRegs).length && taxRegs.customerType)) {
+                          _context3.next = 15;
+                          break;
+                        }
+
+                        regs = taxRegs.taxRegistrations;
+                        regs.forEach(function (element) {
+                          taxIds = "".concat(taxIds, "<br>").concat(element.value);
+                          ;
+                        });
+                        typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+                        $error.text('').hide();
+                        _context3.next = 28;
+                        break;
+
+                      case 15:
+                        $button.addClass('sending').blur();
+                        shopperType = $('input[name="shopper-type"]:checked').val();
+                        $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
+                        _regs = [];
+
+                        if ($taxFields.length) {
+                          $taxFields.each(function (index, element) {
+                            var $element = $(element);
+
+                            if (!$element.hasClass('d-none')) {
+                              var key = $element.data('key');
+                              var value = $element.val();
+                              var taxRegObj = {};
+
+                              if (value) {
+                                taxRegObj['key'] = key;
+                                taxRegObj['value'] = value;
+
+                                _regs.push(taxRegObj);
+                              }
+
+                              taxIds = "".concat(taxIds, "<br>").concat(value);
+                            }
+                          });
+                        }
+
+                        typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+
+                        if (!_regs.length) {
+                          _context3.next = 26;
+                          break;
+                        }
+
+                        _context3.next = 24;
+                        return checkout_utils.applyTaxRegistration(shopperType, _regs).then(function (data) {
+                          sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
+                          return commerce_api.getCart({
+                            expand: 'all'
+                          });
+                        }).then(function (data) {
+                          var lineItems = data.cart.lineItems.lineItem;
+                          var tax = data.cart.pricing.tax.value;
+                          var isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+                          sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+                          checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                          $button.removeClass('sending').blur();
+
+                          if (tax > 0) {
+                            $error.text(localizedText.invalid_tax_id_error_msg).show();
+                          } else {
+                            $error.text('').hide();
+                          }
+                        })["catch"](function (error) {
+                          $error.text(localizedText.invalid_tax_id_error_msg).show();
+                          $button.removeClass('sending').blur();
+                          console.error(error);
+                        });
+
+                      case 24:
+                        _context3.next = 28;
+                        break;
+
+                      case 26:
+                        $button.removeClass('sending').blur();
+                        $error.text('').hide();
+
+                      case 28:
+                        $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
+
+                        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                          finishedSectionIdx = $('.dr-checkout__el').index($section);
+                        }
+
+                        CheckoutModule.moveToNextSection($section);
+
+                      case 31:
+                      case "end":
+                        return _context3.stop();
+                    }
+                  }
+                }, _callee3);
+              }));
+
+              return function (_x4) {
+                return _ref4.apply(this, arguments);
+              };
+            }()); // Submit delivery form
+
+            $('form#checkout-delivery-form').on('submit', function (e) {
+              e.preventDefault();
+              var $form = $(e.target);
+              var $input = $(this).children().find('input:radio:checked').first();
+              var $button = $(this).find('button[type="submit"]').toggleClass('sending').blur();
+              var shippingOptionId = $input.data('id');
+              $form.find('.dr-err-field').hide();
+              commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
+                var $section = $('.dr-checkout__delivery');
+                var resultText = "".concat($input.data('desc'));
+                $button.removeClass('sending').blur();
+                $section.find('.dr-panel-result__text').text(resultText);
+
+                if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                  finishedSectionIdx = $('.dr-checkout__el').index($section);
+                }
+
+                CheckoutModule.moveToNextSection($section);
+                checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+              })["catch"](function (jqXHR) {
+                $button.removeClass('sending').blur();
+                CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+              });
+            });
+            $('form#checkout-delivery-form').on('change', 'input[type="radio"]', function () {
+              var $form = $('form#checkout-delivery-form');
+              var shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
+              $('.dr-summary').addClass('dr-loading');
+              commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
+                checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+              })["catch"](function (jqXHR) {
+                CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                $('.dr-summary').removeClass('dr-loading');
+              });
+            });
+            $('form#checkout-payment-form').on('submit', function (e) {
+              e.preventDefault();
+              var $form = $('form#checkout-payment-form');
+              $form.addClass('was-validated');
+
+              if ($form[0].checkValidity() === false) {
+                return false;
+              }
+
+              var formdata = $(this).serializeArray();
+              var paymentPayload = {};
+              $(formdata).each(function (index, obj) {
+                paymentPayload[obj.name] = obj.value;
+              });
+              $('#dr-payment-failed-msg, #dr-checkout-err-field').text('').hide();
+
+              if (paymentResponse.errors) {
+                $('#dr-payment-failed-msg').text(paymentResponse.errors[0].message).show();
+              } else {
+                if (paymentResponse.source.state === 'chargeable' || paymentResponse.source.state === 'pending_funds') {
+                  var $section = $('.dr-checkout__payment');
+                  var label = paymentResponse.source.type === 'creditCard' ? "".concat(drgc_params.translations.credit_card_ending_label, " ").concat(paymentResponse.source.creditCard.lastFourDigits) : paymentResponse.source.type;
+                  paymentSourceId = paymentResponse.source.id;
+                  $section.find('.dr-panel-result__text').text(label);
+
+                  if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                    finishedSectionIdx = $('.dr-checkout__el').index($section);
+                  }
+
+                  CheckoutModule.moveToNextSection($section);
+                }
+              }
+            });
+            $('#checkout-confirmation-form button[type="submit"]').on('click', function (e) {
+              e.preventDefault();
+
+              if (!$('#dr-tAndC').prop('checked')) {
+                $('#dr-checkout-err-field').text(localizedText.required_tandc_msg).show();
+              } else {
+                $('#dr-checkout-err-field').text('').hide();
+                $('#dr-payment-failed-msg').hide();
+                CheckoutModule.applyPaymentAndSubmitCart(paymentSourceId);
+              }
+            }); // show and hide sections
+
+            $('.dr-accordion__edit').on('click', function (e) {
+              e.preventDefault();
+              var $section = $(e.target).hasClass('tems-us') ? $(e.target).parent().parent().parent() : $(e.target).parent().parent();
+              var $allSections = $section.siblings().andSelf();
+              var $finishedSections = $allSections.eq(finishedSectionIdx).prevAll().andSelf();
+              var $activeSection = $allSections.filter($('.active'));
+
+              if ($allSections.index($section) > $allSections.index($activeSection)) {
+                return;
+              }
+
+              $finishedSections.addClass('closed');
+              $activeSection.removeClass('active');
+              $section.removeClass('closed').addClass('active');
+
+              if ($section.find('.dr-address-book').length) {
+                if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
+                  $section.find('.dr-address-book-btn').hide();
+                } else {
+                  $section.find('.dr-address-book-btn').show();
+                }
+              }
+
+              CheckoutModule.adjustColumns($section);
+              checkout_utils.updateSummaryLabels();
+            });
+            $('#shipping-field-country').on('change', function () {
+              if (this.value === 'US') {
+                $('#shipping-field-state').parent('.form-group').removeClass('d-none');
+              } else {
+                $('#shipping-field-state').parent('.form-group').addClass('d-none');
+              }
+            });
+            $('#billing-field-country').on('change', function () {
+              if (this.value === 'US') {
+                $('#billing-field-state').parent('.form-group').removeClass('d-none');
+              } else {
+                $('#billing-field-state').parent('.form-group').addClass('d-none');
+              }
+            });
+            $('.dr-address-book-btn').on('click', function (e) {
+              var addressType = $(e.target).hasClass('shipping') ? 'shipping' : 'billing';
+              var $addressBook = $('.dr-address-book.' + addressType);
+
+              if ($addressBook.is(':hidden')) {
+                $(e.target).addClass('active');
+                $addressBook.slideDown();
+              } else {
+                $(e.target).removeClass('active');
+                $addressBook.slideUp();
+              }
+            });
+            $(document).on('click', '.address', function (e) {
+              var addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
+              var $address = $(e.target).closest('.address');
+              $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
+              $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
+              $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
+              $('#' + addressType + '-field-address2').val($address.data('lineTwo')).focus();
+              $('#' + addressType + '-field-city').val($address.data('city')).focus();
+              $('#' + addressType + '-field-state').val($address.data('state')).change();
+              $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
+              $('#' + addressType + '-field-country').val($address.data('country')).change();
+              $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
+              $('.dr-address-book-btn.' + addressType).removeClass('active');
+              $('.dr-address-book.' + addressType).slideUp();
+              $('#checkbox-save-' + addressType).prop('checked', false);
+            });
+            $('.back-link a').click(function () {
+              var loginUrl = new URL(drgc_params.loginUrl);
+              var checkoutUrl = new URL(drgc_params.checkoutUrl);
+
+              if (document.referrer && document.referrer.indexOf(loginUrl.pathname) === -1 && document.referrer.indexOf(checkoutUrl.pathname) === -1) {
+                window.location.href = document.referrer;
+              } else {
+                window.location.href = drgc_params.cartUrl;
+              }
+            });
+            $('.edit-link > span').on('click', function () {
+              location.reload();
+            });
+            $('#tems-us-purchase-link > p > a').on('click', /*#__PURE__*/function () {
+              var _ref5 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
+                var $link, temsUsStatus;
+                return regenerator_default.a.wrap(function _callee4$(_context4) {
+                  while (1) {
+                    switch (_context4.prev = _context4.next) {
+                      case 0:
+                        e.preventDefault();
+                        $link = $(e.target);
+                        temsUsStatus = '';
+
+                        if ($link.hasClass('tax-exempt')) {
+                          $link.parent().hide();
+                          $('.dr-checkout__tems-us').removeClass('closed').addClass('active');
+
+                          if (!$('#checkout-tem-us-wrapper').length) {
+                            $('#tems-us-purchase-link > p.cert-good').removeClass('d-none');
+                            $('#billing-field-company-name').val($('#tems-us-company-name').val()).prop('readonly', true);
+                            temsUsStatus = 'ELIGIBLE_EXEMPTED';
+                          } else {
+                            $('#checkout-tem-us-wrapper').slideDown();
+                          }
+
+                          $link.parent().next().show().removeClass('d-none');
+                        } else if ($link.hasClass('taxable')) {
+                          $link.parent().hide();
+                          $('.dr-checkout__tems-us').removeClass('active');
+
+                          if (!$('#checkout-tem-us-wrapper').length) {
+                            $('#tems-us-purchase-link > p.cert-good, #tems-us-result > p.cert-error').addClass('d-none');
+                            $('#billing-field-company-name').val('').prop('readonly', false);
+                            temsUsStatus = 'ELIGIBLE_NOT_EXEMPTED';
+                          } else {
+                            $('#checkout-tem-us-wrapper').slideUp();
+                            $('#checkout-tem-us-form').removeClass('was-validated');
+                            $('#tems-us-error-msg').text('').hide();
+                          }
+
+                          $link.parent().prev().show().removeClass('d-none');
+                        }
+
+                        if (!temsUsStatus) {
+                          _context4.next = 16;
+                          break;
+                        }
+
+                        $('body').addClass('dr-loading');
+                        _context4.prev = 6;
+                        _context4.next = 9;
+                        return checkout_utils.updateTemsUsStatus(temsUsStatus);
+
+                      case 9:
+                        location.reload();
+                        _context4.next = 16;
+                        break;
+
+                      case 12:
+                        _context4.prev = 12;
+                        _context4.t0 = _context4["catch"](6);
+                        console.error(_context4.t0);
+                        $('body').removeClass('dr-loading');
+
+                      case 16:
+                      case "end":
+                        return _context4.stop();
+                    }
+                  }
+                }, _callee4, null, [[6, 12]]);
+              }));
+
+              return function (_x5) {
+                return _ref5.apply(this, arguments);
+              };
+            }());
+            $('#tems-us-start-date, #tems-us-end-date').on('blur', function (e) {
+              var date = $(e.target).val();
+
+              if (date) {
+                var dateArr = date.split('-').reverse();
+                var _ref6 = [dateArr[1], dateArr[0]];
+                dateArr[0] = _ref6[0];
+                dateArr[1] = _ref6[1];
+                $(e.target).val(dateArr.join('/'));
+              }
+            });
+            $('#checkout-tem-us-form').on('submit', /*#__PURE__*/function () {
+              var _ref7 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee5(e) {
+                var $form, $button, $section, customerId, res;
+                return regenerator_default.a.wrap(function _callee5$(_context5) {
+                  while (1) {
+                    switch (_context5.prev = _context5.next) {
+                      case 0:
+                        e.preventDefault();
+                        $form = $(e.target);
+                        $button = $form.find('button[type="submit"]');
+                        $section = $('.dr-checkout__tems-us');
+                        customerId = drgc_params.customerId;
+                        $form.addClass('was-validated');
+
+                        if (!($form[0].checkValidity() === false)) {
+                          _context5.next = 8;
+                          break;
+                        }
+
+                        return _context5.abrupt("return", false);
+
+                      case 8:
+                        $button.addClass('sending').blur();
+                        _context5.prev = 9;
+                        _context5.t0 = JSON;
+                        _context5.next = 13;
+                        return checkout_utils.createTaxProfile(customerId);
+
+                      case 13:
+                        _context5.t1 = _context5.sent;
+                        res = _context5.t0.parse.call(_context5.t0, _context5.t1);
+
+                        if (!res.companyName) {
+                          _context5.next = 26;
+                          break;
+                        }
+
+                        $('#billing-field-company-name').val(res.companyName).prop('readonly', true);
+                        $('#tems-us-purchase-link > p.cert-error').remove();
+                        $('#tems-us-error-msg').text('').hide();
+                        $section.find('.dr-panel-result__text').html("<p>".concat(res.companyName, ", ").concat(res.taxAuthority, "</p>\n                        <p>").concat(res.startDate, " - ").concat(res.endDate, ", ").concat(res.fileName, "</p>"));
+
+                        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                          finishedSectionIdx = $('.dr-checkout__el').index($section);
+                        }
+
+                        _context5.next = 23;
+                        return checkout_utils.updateTemsUsStatus('ELIGIBLE_EXEMPTED', true);
+
+                      case 23:
+                        CheckoutModule.moveToNextSection($section);
+                        _context5.next = 27;
+                        break;
+
+                      case 26:
+                        $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
+
+                      case 27:
+                        _context5.next = 33;
+                        break;
+
+                      case 29:
+                        _context5.prev = 29;
+                        _context5.t2 = _context5["catch"](9);
+                        console.error(_context5.t2);
+                        $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context5.t2.responseText))).show();
+
+                      case 33:
+                        $button.removeClass('sending').blur();
+
+                      case 34:
+                      case "end":
+                        return _context5.stop();
+                    }
+                  }
+                }, _callee5, null, [[9, 29]]);
+              }));
+
+              return function (_x6) {
+                return _ref7.apply(this, arguments);
+              };
+            }());
+
+            if (isLoggedIn && requestShipping) {
+              $('.dr-address-book.billing > .overflowContainer').clone().appendTo('.dr-address-book.shipping');
             }
-          }
-        }, _callee3);
-      }));
 
-      return function (_x3) {
-        return _ref3.apply(this, arguments);
-      };
-    }()); // Submit delivery form
+            if ($('input[name=email]').val() && $('#checkout-email-form').length && $('#dr-panel-email-result').is(':empty')) {
+              $('#checkout-email-form').submit();
+            }
 
-    $('form#checkout-delivery-form').on('submit', function (e) {
-      e.preventDefault();
-      var $form = $(e.target);
-      var $input = $(this).children().find('input:radio:checked').first();
-      var $button = $(this).find('button[type="submit"]').toggleClass('sending').blur();
-      var shippingOptionId = $input.data('id');
-      $form.find('.dr-err-field').hide();
-      commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
-        var $section = $('.dr-checkout__delivery');
-        var resultText = "".concat($input.data('desc'));
-        $button.removeClass('sending').blur();
-        $section.find('.dr-panel-result__text').text(resultText);
+            if (cartData.totalItemsInCart) {
+              checkout_utils.getCountryOptionsFromGC(requestShipping).then(function () {
+                $('#shipping-field-country, #billing-field-country').trigger('change');
+              });
+            } //floating labels
 
-        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-          finishedSectionIdx = $('.dr-checkout__el').index($section);
-        }
 
-        CheckoutModule.moveToNextSection($section);
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        $button.removeClass('sending').blur();
-        CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-      });
-    });
-    $('form#checkout-delivery-form').on('change', 'input[type="radio"]', function () {
-      var $form = $('form#checkout-delivery-form');
-      var shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
-      $('.dr-summary').addClass('dr-loading');
-      commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-        $('.dr-summary').removeClass('dr-loading');
-      });
-    });
-    $('form#checkout-payment-form').on('submit', function (e) {
-      e.preventDefault();
-      var $form = $('form#checkout-payment-form');
-      $form.addClass('was-validated');
+            float_label.init();
+            checkout_utils.applyLegalLinks(digitalriverjs);
+            $('#checkout-email-form button[type=submit]').prop('disabled', false);
+            if ($('#checkout-tax-id-form').length) CheckoutModule.initShopperTypeRadio();
 
-      if ($form[0].checkValidity() === false) {
-        return false;
-      }
+            if (!$('#tems-us-purchase-link > p.cert-good').length) {
+              _context6.next = 46;
+              break;
+            }
 
-      var formdata = $(this).serializeArray();
-      var paymentPayload = {};
-      $(formdata).each(function (index, obj) {
-        paymentPayload[obj.name] = obj.value;
-      });
-      $('#dr-payment-failed-msg, #dr-checkout-err-field').text('').hide();
+            _context6.next = 46;
+            return CheckoutModule.initTemsUsStatus(drgc_params.cart.cart.customAttributes.attribute);
 
-      if (paymentResponse.errors) {
-        $('#dr-payment-failed-msg').text(paymentResponse.errors[0].message).show();
-      } else {
-        if (paymentResponse.source.state === 'chargeable' || paymentResponse.source.state === 'pending_funds') {
-          var $section = $('.dr-checkout__payment');
-          var label = paymentResponse.source.type === 'creditCard' ? "".concat(drgc_params.translations.credit_card_ending_label, " ").concat(paymentResponse.source.creditCard.lastFourDigits) : paymentResponse.source.type;
-          paymentSourceId = paymentResponse.source.id;
-          $section.find('.dr-panel-result__text').text(label);
+          case 46:
+            if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
 
-          if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-            finishedSectionIdx = $('.dr-checkout__el').index($section);
-          }
-
-          CheckoutModule.moveToNextSection($section);
+          case 47:
+          case "end":
+            return _context6.stop();
         }
       }
-    });
-    $('#checkout-confirmation-form button[type="submit"]').on('click', function (e) {
-      e.preventDefault();
+    }, _callee6);
+  }));
 
-      if (!$('#dr-tAndC').prop('checked')) {
-        $('#dr-checkout-err-field').text(localizedText.required_tandc_msg).show();
-      } else {
-        $('#dr-checkout-err-field').text('').hide();
-        $('#dr-payment-failed-msg').hide();
-        CheckoutModule.applyPaymentAndSubmitCart(paymentSourceId);
-      }
-    }); // show and hide sections
-
-    $('.dr-accordion__edit').on('click', function (e) {
-      e.preventDefault();
-      var $section = $(e.target).parent().parent();
-      var $allSections = $section.siblings().andSelf();
-      var $finishedSections = $allSections.eq(finishedSectionIdx).prevAll().andSelf();
-      var $activeSection = $allSections.filter($('.active'));
-
-      if ($allSections.index($section) > $allSections.index($activeSection)) {
-        return;
-      }
-
-      $finishedSections.addClass('closed');
-      $activeSection.removeClass('active');
-      $section.removeClass('closed').addClass('active');
-
-      if ($section.find('.dr-address-book').length) {
-        if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
-          $section.find('.dr-address-book-btn').hide();
-        } else {
-          $section.find('.dr-address-book-btn').show();
-        }
-      }
-
-      CheckoutModule.adjustColumns($section);
-      checkout_utils.updateSummaryLabels();
-    });
-    $('#shipping-field-country').on('change', function () {
-      if (this.value === 'US') {
-        $('#shipping-field-state').parent('.form-group').removeClass('d-none');
-      } else {
-        $('#shipping-field-state').parent('.form-group').addClass('d-none');
-      }
-    });
-    $('#billing-field-country').on('change', function () {
-      if (this.value === 'US') {
-        $('#billing-field-state').parent('.form-group').removeClass('d-none');
-      } else {
-        $('#billing-field-state').parent('.form-group').addClass('d-none');
-      }
-    });
-    $('.dr-address-book-btn').on('click', function (e) {
-      var addressType = $(e.target).hasClass('shipping') ? 'shipping' : 'billing';
-      var $addressBook = $('.dr-address-book.' + addressType);
-
-      if ($addressBook.is(':hidden')) {
-        $(e.target).addClass('active');
-        $addressBook.slideDown();
-      } else {
-        $(e.target).removeClass('active');
-        $addressBook.slideUp();
-      }
-    });
-    $(document).on('click', '.address', function (e) {
-      var addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
-      var $address = $(e.target).closest('.address');
-      $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
-      $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
-      $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
-      $('#' + addressType + '-field-address2').val($address.data('lineTwo')).focus();
-      $('#' + addressType + '-field-city').val($address.data('city')).focus();
-      $('#' + addressType + '-field-state').val($address.data('state')).change();
-      $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
-      $('#' + addressType + '-field-country').val($address.data('country')).change();
-      $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
-      $('.dr-address-book-btn.' + addressType).removeClass('active');
-      $('.dr-address-book.' + addressType).slideUp();
-      $('#checkbox-save-' + addressType).prop('checked', false);
-    });
-    $('.back-link a').click(function () {
-      var loginUrl = new URL(drgc_params.loginUrl);
-      var checkoutUrl = new URL(drgc_params.checkoutUrl);
-
-      if (document.referrer && document.referrer.indexOf(loginUrl.pathname) === -1 && document.referrer.indexOf(checkoutUrl.pathname) === -1) {
-        window.location.href = document.referrer;
-      } else {
-        window.location.href = drgc_params.cartUrl;
-      }
-    });
-    $('.edit-link > span').on('click', function () {
-      location.reload();
-    });
-
-    if (isLoggedIn && requestShipping) {
-      $('.dr-address-book.billing > .overflowContainer').clone().appendTo('.dr-address-book.shipping');
-    }
-
-    if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
-
-    if ($('input[name=email]').val() && $('#checkout-email-form').length && $('#dr-panel-email-result').is(':empty')) {
-      $('#checkout-email-form').submit();
-    }
-
-    if (cartData.totalItemsInCart) {
-      checkout_utils.getCountryOptionsFromGC(requestShipping).then(function () {
-        $('#shipping-field-country, #billing-field-country').trigger('change');
-      });
-    } //floating labels
-
-
-    float_label.init();
-    checkout_utils.applyLegalLinks(digitalriverjs);
-    $('#checkout-email-form button[type=submit]').prop('disabled', false);
-    if ($('#checkout-tax-id-form').length) CheckoutModule.initShopperTypeRadio();
-  }
-});
+  return function (_x2) {
+    return _ref2.apply(this, arguments);
+  };
+}());
 /* harmony default export */ var public_checkout = (CheckoutModule);
 // CONCATENATED MODULE: ./assets/js/public/public-common.js
 
@@ -15025,7 +15356,7 @@ jQuery(document).ready(function ($) {
 });
 /* harmony default export */ var public_login = (LoginModule);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
-var toConsumableArray = __webpack_require__(9);
+var toConsumableArray = __webpack_require__(11);
 var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
 
 // CONCATENATED MODULE: ./assets/js/public/public-pdp.js
@@ -15761,12 +16092,8 @@ var AccountModule = function ($) {
     });
   };
 
-  var initRightOfWithdrawalLink =
-  /*#__PURE__*/
-  function () {
-    var _ref = asyncToGenerator_default()(
-    /*#__PURE__*/
-    regenerator_default.a.mark(function _callee() {
+  var initRightOfWithdrawalLink = /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
       var rightOfWithdrawalLink;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
@@ -15826,12 +16153,59 @@ var AccountModule = function ($) {
     $('#list-orders > .overflowContainer > .dr-pagination > .prev > .btn').prop('disabled', !orders.hasOwnProperty('previousPage'));
   };
 
+  var submitTaxCertificate = /*#__PURE__*/function () {
+    var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2($form, customerId) {
+      var res;
+      return regenerator_default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              $form.addClass('dr-loading');
+              _context2.prev = 1;
+              _context2.t0 = JSON;
+              _context2.next = 5;
+              return checkout_utils.createTaxProfile(customerId);
+
+            case 5:
+              _context2.t1 = _context2.sent;
+              res = _context2.t0.parse.call(_context2.t0, _context2.t1);
+
+              if (res.companyName) {
+                location.reload();
+              } else {
+                $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
+              }
+
+              _context2.next = 15;
+              break;
+
+            case 10:
+              _context2.prev = 10;
+              _context2.t2 = _context2["catch"](1);
+              console.error(_context2.t2);
+              $form.removeClass('dr-loading');
+              $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context2.t2.responseText))).show();
+
+            case 15:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[1, 10]]);
+    }));
+
+    return function submitTaxCertificate(_x, _x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
   return {
     appendAutoRenewalTerms: appendAutoRenewalTerms,
     getRightOfWithdrawalLink: getRightOfWithdrawalLink,
     initRightOfWithdrawalLink: initRightOfWithdrawalLink,
     createOrderList: createOrderList,
-    updateListAndPagination: updateListAndPagination
+    updateListAndPagination: updateListAndPagination,
+    submitTaxCertificate: submitTaxCertificate
   };
 }(jQuery);
 
@@ -15843,59 +16217,57 @@ jquery_default()(function () {
   var $ordersModal = jquery_default()('#ordersModal');
   $body.append($ordersModal); // Order detail click
 
-  function fillOrderModal(_x) {
+  function fillOrderModal(_x3) {
     return _fillOrderModal.apply(this, arguments);
   }
 
   function _fillOrderModal() {
-    _fillOrderModal = asyncToGenerator_default()(
-    /*#__PURE__*/
-    regenerator_default.a.mark(function _callee3(e) {
+    _fillOrderModal = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
       var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, isTaxInclusive, forceExclTax, orderCurrency, shouldDisplayVat, taxSuffixLabel, html, count, i, lineItem;
-      return regenerator_default.a.wrap(function _callee3$(_context3) {
+      return regenerator_default.a.wrap(function _callee4$(_context4) {
         while (1) {
-          switch (_context3.prev = _context3.next) {
+          switch (_context4.prev = _context4.next) {
             case 0:
               orderId = jquery_default()(this).attr('data-order');
               jquery_default()('a.right-of-withdrawal-link').data('orderId', orderId);
 
               if (!(orderId === drActiveOrderId)) {
-                _context3.next = 6;
+                _context4.next = 6;
                 break;
               }
 
               $ordersModal.drModal('show');
-              _context3.next = 65;
+              _context4.next = 65;
               break;
 
             case 6:
               selectedOrder = '';
-              _context3.prev = 7;
-              _context3.next = 10;
+              _context4.prev = 7;
+              _context4.next = 10;
               return commerce_api.getOrderDetails(orderId, {
                 expand: 'all'
               });
 
             case 10:
-              orderDetails = _context3.sent;
+              orderDetails = _context4.sent;
               selectedOrder = orderDetails.order;
-              _context3.next = 18;
+              _context4.next = 18;
               break;
 
             case 14:
-              _context3.prev = 14;
-              _context3.t0 = _context3["catch"](7);
-              console.error(_context3.t0);
-              return _context3.abrupt("return", false);
+              _context4.prev = 14;
+              _context4.t0 = _context4["catch"](7);
+              console.error(_context4.t0);
+              return _context4.abrupt("return", false);
 
             case 18:
               if (selectedOrder) {
-                _context3.next = 21;
+                _context4.next = 21;
                 break;
               }
 
               drToast.displayMessage(localizedText.undefined_error_msg, 'error');
-              return _context3.abrupt("return", false);
+              return _context4.abrupt("return", false);
 
             case 21:
               requestShipping = 'code' in selectedOrder.shippingMethod; // orderID
@@ -15976,10 +16348,10 @@ jquery_default()(function () {
 
             case 65:
             case "end":
-              return _context3.stop();
+              return _context4.stop();
           }
         }
-      }, _callee3, this, [[7, 14]]);
+      }, _callee4, this, [[7, 14]]);
     }));
     return _fillOrderModal.apply(this, arguments);
   }
@@ -16001,16 +16373,12 @@ jquery_default()(function () {
       window.open($link.prop('href'), '_blank');
     }
   });
-  jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click',
-  /*#__PURE__*/
-  function () {
-    var _ref2 = asyncToGenerator_default()(
-    /*#__PURE__*/
-    regenerator_default.a.mark(function _callee2(e) {
+  jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
+    var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
       var $list, $selectedNum, pageNumber, isNextBtn, currentNum, ordersByPage, list;
-      return regenerator_default.a.wrap(function _callee2$(_context2) {
+      return regenerator_default.a.wrap(function _callee3$(_context3) {
         while (1) {
-          switch (_context2.prev = _context2.next) {
+          switch (_context3.prev = _context3.next) {
             case 0:
               $list = jquery_default()('#list-orders > .overflowContainer');
               $selectedNum = jquery_default()(e.target);
@@ -16025,46 +16393,46 @@ jquery_default()(function () {
               }
 
               if (!$selectedNum.hasClass('active')) {
-                _context2.next = 7;
+                _context3.next = 7;
                 break;
               }
 
-              return _context2.abrupt("return", false);
+              return _context3.abrupt("return", false);
 
             case 7:
               $list.addClass('dr-loading');
-              _context2.prev = 8;
-              _context2.next = 11;
+              _context3.prev = 8;
+              _context3.next = 11;
               return commerce_api.getOrders({
                 pageNumber: pageNumber,
                 expand: 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
               });
 
             case 11:
-              ordersByPage = _context2.sent;
+              ordersByPage = _context3.sent;
               list = AccountModule.createOrderList(ordersByPage.orders.order);
               AccountModule.updateListAndPagination(list, $selectedNum, ordersByPage.orders);
-              _context2.next = 19;
+              _context3.next = 19;
               break;
 
             case 16:
-              _context2.prev = 16;
-              _context2.t0 = _context2["catch"](8);
-              console.error(_context2.t0);
+              _context3.prev = 16;
+              _context3.t0 = _context3["catch"](8);
+              console.error(_context3.t0);
 
             case 19:
               $list.removeClass('dr-loading');
 
             case 20:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
         }
-      }, _callee2, null, [[8, 16]]);
+      }, _callee3, null, [[8, 16]]);
     }));
 
-    return function (_x2) {
-      return _ref2.apply(this, arguments);
+    return function (_x4) {
+      return _ref3.apply(this, arguments);
     };
   }()); // modal print click
 
@@ -16133,6 +16501,70 @@ jquery_default()(function () {
       jquery_default()('body').removeClass('dr-loading');
       checkout_utils.apiErrorHandler(jqXHR);
     });
+  }); // Certificate
+
+  var $certificateModal = jquery_default()('#certificate-modal');
+  var $companyNameConfirmModal = jquery_default()('#company-name-confirm');
+  $body.append($certificateModal).append($companyNameConfirmModal);
+  jquery_default()('#list-certificates > div.dr-h4 > button.certificate-add-btn').on('click', function (e) {
+    e.preventDefault();
+    $certificateModal.drModal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  });
+  jquery_default()('#certificate-modal .dr-modal-footer > button.submit').on('click', function (e) {
+    e.preventDefault();
+    var $form = jquery_default()('#account-tem-us-form');
+    var accountCompanyName = jquery_default()('#account-company-name').val();
+    $form.addClass('was-validated');
+
+    if ($form[0].checkValidity() === false) {
+      return false;
+    }
+
+    if (accountCompanyName !== '' && accountCompanyName !== jquery_default()('#tems-us-company-name').val()) {
+      $certificateModal.drModal('hide');
+      $companyNameConfirmModal.drModal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    } else {
+      AccountModule.submitTaxCertificate($form, drgc_params.customerId, $certificateModal);
+    }
+  });
+  jquery_default()('#certificate-modal .dr-modal-footer > button.cancel, #certificate-modal .dr-modal-header > button.close').on('click', function (e) {
+    jquery_default()('#account-tem-us-form').removeClass('was-validated');
+    jquery_default()('#account-tem-us-form input, #certificate-tax-authority').val('');
+    jquery_default()('#tems-us-error-msg').text('').hide();
+  });
+  jquery_default()('#company-name-confirm .dr-modal-footer > button.confirm').on('click', function (e) {
+    e.preventDefault();
+    $certificateModal.drModal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    $companyNameConfirmModal.drModal('hide');
+    AccountModule.submitTaxCertificate(jquery_default()('#account-tem-us-form'), drgc_params.customerId, $certificateModal);
+  });
+  jquery_default()('#company-name-confirm .dr-modal-footer > button.cancel').on('click', function (e) {
+    e.preventDefault();
+    $certificateModal.drModal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    $companyNameConfirmModal.drModal('hide');
+  });
+  jquery_default()('#tems-us-start-date, #tems-us-end-date').on('blur', function (e) {
+    var date = jquery_default()(e.target).val();
+
+    if (date) {
+      var dateArr = date.split('-').reverse();
+      var _ref4 = [dateArr[1], dateArr[0]];
+      dateArr[0] = _ref4[0];
+      dateArr[1] = _ref4[1];
+      jquery_default()(e.target).val(dateArr.join('/'));
+    }
   }); // Payment
 
   jquery_default()('#dr-account-page-wrapper .payment').on('click', function (e) {

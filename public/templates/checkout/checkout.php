@@ -21,7 +21,6 @@ if ( $cart['cart']['totalItemsInCart'] === 0 ) {
     return;
 }
 
-$is_logged_in = $customer && ( $customer['id'] !== 'Anonymous' );
 $customerEmail = $is_logged_in ? $customer['emailAddress'] : '';
 $default_address = $cart['cart']['billingAddress'];
 $addresses = [];
@@ -43,8 +42,8 @@ if ( $is_logged_in ) {
 
 $check_subs = drgc_is_subs_added_to_cart( $cart );
 $is_tems_row_enabled = is_array( $tax_schema ) && ( $selected_country !== 'US' );
+$is_tems_us_enabled = is_array( $customer_tax_regs ) && ( $customer_tax_regs['US'] === 'ENABLED' );
 ?>
-
 <div class="dr-checkout-wrapper" id="dr-checkout-page-wrapper">
     <div class="dr-checkout-wrapper__actions">
         <div class="back-link">
@@ -60,7 +59,7 @@ $is_tems_row_enabled = is_array( $tax_schema ) && ( $selected_country !== 'US' )
         <div class="dr-checkout">
 
             <div class="edit-link dr-accordion__edit">
-            
+
                 <span>
 
                     <?php if ( $cart['cart']['hasPhysicalProduct'] ): ?>
@@ -75,7 +74,13 @@ $is_tems_row_enabled = is_array( $tax_schema ) && ( $selected_country !== 'US' )
 
             <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-email.php'; ?>
 
-            <?php if( $cart['cart']['hasPhysicalProduct'] ) :
+            <?php if ( $is_tems_us_enabled ): ?>
+
+                <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-tems-us.php'; ?>
+
+            <?php endif; ?>
+
+            <?php if ( $cart['cart']['hasPhysicalProduct'] ) :
                 include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-shipping.php';
             endif; ?>
 

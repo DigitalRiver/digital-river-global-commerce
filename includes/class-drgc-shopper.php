@@ -564,5 +564,35 @@ class DRGC_Shopper extends AbstractHttpService {
 		} catch (\Exception $e) {
 			return false;
 		}
-	}
+  }
+
+  /**
+   * Retrieve the tax registrations for a shopper.
+   *
+   * @param string $customer_id
+   *
+   * @return array|bool
+   */
+  public function get_shopper_tax_registration( $customer_id = '' ) {
+    if ( ! isset( $this->user_id ) && empty( $customer_id ) ) return;
+
+    if ( empty( $customer_id ) ) {
+      $customer_id = $this->user_id;
+    }
+
+    try {
+      $res = $this->get( "/user-api/customers/{$customer_id}/tax-registration" );
+
+      $res['US'] = array_key_exists( 'taxCertificates', $res ) ? 'ENABLED' : 'DISABLED';
+
+      if ( ( $res['US'] === 'ENABLED' ) && ! empty( $res['taxCertificates'] ) ) {
+        $found_key = array_search( 'ELIGIBLE', array_column( $res['taxCertificates'], 'status' ) );
+        $res['eligibleCertificate'] = ( $found_key !== false ) ? $res['taxCertificates'][ $found_key ] : [];
+			}
+
+      return $res;
+    } catch ( RequestException $e ) {
+      return false;
+    }
+  }
 }

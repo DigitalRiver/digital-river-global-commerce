@@ -1,3 +1,5 @@
+import DRCommerceApi from "./commerce-api";
+
 const CheckoutUtils = (($, params) => {
   const localizedText = drgc_params.translations;
 
@@ -149,11 +151,13 @@ const CheckoutUtils = (($, params) => {
     $form.find('button[type="submit"]').removeClass('sending').blur();
   };
 
-  const getAjaxErrorMessage = (jqXHR) => {
+  const getAjaxErrorMessage = (error) => {
     let errMsg = localizedText.undefined_error_msg;
 
-    if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) {
-      const err = jqXHR.responseJSON.errors.error[0];
+    if (!error) return errMsg;
+
+    if (error.responseJSON && error.responseJSON.errors && Array.isArray(error.responseJSON.errors.error)) {
+      const err = error.responseJSON.errors.error[0];
       switch (err.code) {
         case 'restricted-bill-to-country':
         case 'restricted-ship-to-country':
@@ -168,7 +172,22 @@ const CheckoutUtils = (($, params) => {
         default:
           errMsg = err.description;
       }
+    } else if (Array.isArray(error.errors)) {
+      const err = error.errors[0];
+      const errorCode = err.code || '';
+      const errorParam = err.parameter || '';
+
+      if (errorCode === 'invalid_parameter') {
+        switch (errorParam) {
+          case 'endDate':
+            errMsg = localizedText.end_date_error_msg;
+            break;
+          default:
+            errMsg = err.description;
+        }
+      }
     }
+
     return errMsg;
   };
 
@@ -470,6 +489,64 @@ const CheckoutUtils = (($, params) => {
     });
   };
 
+  const createTaxProfile = (customerId) => {
+    const formData = new FormData();
+
+    formData.append('companyName', $('#tems-us-company-name').val());
+    formData.append('taxAuthority', $('#certificate-tax-authority').val());
+    formData.append('startDate', $('#tems-us-start-date').val());
+    formData.append('endDate', $('#tems-us-end-date').val());
+    formData.append('certificate', $('#tems-us-certificate').get(0).files[0]);
+
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'POST',
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Bearer ${params.accessToken}`
+        },
+        url: `https://${drgc_params.domain}/user-api/customers/${customerId}/tax-registration`,
+        cache: false,
+        processData: false,
+        contentType: false,
+        mimeType: 'multipart/form-data',
+        data: formData,
+        success: (data) => {
+          resolve(data);
+        },
+        error: (jqXHR) => {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  const updateTemsUsStatus = (temsUsStatus, adminSabrixCall = false) => {
+    const statusCustomAttr = {
+      cart: {
+        customAttributes: {
+          attribute: [
+            {
+              name: 'TAX_EXEMPTION_US_STATUS',
+              value: temsUsStatus
+            },
+            {
+              name: 'TAX_PROFILE_CREATED_STATUS',
+              value: adminSabrixCall
+            }
+          ]
+        }
+      }
+    };
+
+    return DRCommerceApi.updateCart({}, statusCustomAttr);
+  };
+
+  const getTemsUsStatus = (customAttrs) => {
+    return customAttrs.find(attr => attr.name === 'TAX_EXEMPTION_US_STATUS') ?
+      customAttrs.find(attr => attr.name === 'TAX_EXEMPTION_US_STATUS').value : '';
+  };
+
   return {
     updateDeliverySection,
     updateAddressSection,
@@ -499,7 +576,10 @@ const CheckoutUtils = (($, params) => {
     validateVatNumber,
     createTaxIdElement,
     applyTaxRegistration,
-    getTaxRegistration
+    getTaxRegistration,
+    createTaxProfile,
+    updateTemsUsStatus,
+    getTemsUsStatus
   };
 })(jQuery, drgc_params);
 

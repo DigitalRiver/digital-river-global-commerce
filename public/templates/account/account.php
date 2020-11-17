@@ -26,6 +26,9 @@ if ($first_name !== '' && $last_name !== '') {
 }
 
 $total_pages = $orders['orders']['totalResultPages'];
+$is_tems_us_enabled = is_array( $customer_tax_regs ) && ( $customer_tax_regs['US'] === 'ENABLED' );
+$cert_count = $is_tems_us_enabled ? count( $customer_tax_regs['taxCertificates'] ) : 0;
+$account_company_name = ( $cert_count > 0 ) ? $customer_tax_regs['taxCertificates'][0]['companyName'] : '';
 ?>
 
 <div class="dr-account-wrapper container" id="dr-account-page-wrapper">
@@ -55,6 +58,19 @@ $total_pages = $orders['orders']['totalResultPages'];
                     <span class="side-nav-chev">&#8250;</span>
                 </a>
             </li>
+
+            <?php if ( $is_tems_us_enabled ): ?>
+
+                <li>
+                    <a class="dr-list-group-item dr-list-group-item-action" id="list-certificates-list" data-toggle="dr-list" href="#list-certificates" role="tab" aria-controls="certificates">
+                        <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/certificate-icon.svg' ?>" alt="certificate icon"></div>
+                        <span class="side-nav-label"><?php echo __( 'Tax Certificates', 'digital-river-global-commerce' ); ?></span>
+                        <span class="side-nav-chev">&#8250;</span>
+                    </a>
+                </li>
+
+            <?php endif; ?>
+
             <li>
                 <a class="dr-list-group-item dr-list-group-item-action" id="list-password-list" data-toggle="dr-list" href="#list-password" role="tab" aria-controls="password">
                     <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/password-icon.svg' ?>" alt="password icon"></div>
@@ -137,6 +153,32 @@ $total_pages = $orders['orders']['totalResultPages'];
             </div>
 
         </div>
+
+        <?php if ( $is_tems_us_enabled ): ?>
+
+            <div class="dr-tab-pane fade" id="list-certificates" role="tabpanel" aria-labelledby="list-certificates-list">
+                <div class="dr-h4">
+                    <span class="back">&lsaquo;</span><?php _e( 'My Tax Certificates', 'digital-river-global-commerce' ); ?><span class="back close">&times;</span>
+                    <button class="certificate-add-btn" role="img" aria-label="Add New Certificate" title="Add New Certificate"></button>
+                </div>
+                <input type="hidden" id="account-company-name" name="account-company-name" value="<?php echo $account_company_name; ?>">
+                <div class="overflowContainer">
+
+                    <?php if ( $cert_count ): ?>
+
+                        <?php include DRGC_PLUGIN_DIR . 'public/templates/account/account-tax-certificates.php'; ?>
+
+                    <?php else: ?>
+
+                        <?php _e( 'You have no tax exempt certificates.', 'digital-river-global-commerce' ); ?>
+
+                    <?php endif; ?>
+
+                </div>
+            </div>
+
+        <?php endif; ?>
+
         <div class="dr-tab-pane fade" id="list-password" role="tabpanel" aria-labelledby="list-password-list">
             <div class="dr-h4"><span class="back">&lsaquo;</span><?php echo __( 'Change Password', 'digital-river-global-commerce' ); ?><span class="back close">&times;</span></div>
 

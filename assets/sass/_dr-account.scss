@@ -631,6 +631,132 @@
         }
     }
 
+    // certificates
+    .certificate {
+        display: flex;
+        align-items: center;
+        font-size: 13px;
+        padding: 18px 4px;
+        border-top: 1px solid rgba(0,0,0,.125);
+
+        &-add-btn {
+            background: transparent url(../images/product-plus.svg) center/contain no-repeat;
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 96%;
+            transform: translate(-50%, -50%);
+            font-size: 16px;
+            border: none;
+
+            &:hover {
+                cursor: pointer;
+            }
+
+            @include media-breakpoint-down(sm) {
+                left: 90%;
+            }
+        }
+
+        &-headings {
+            margin-top: 20px;
+            padding-top: 18px;
+            font-size: 14px;
+            font-weight: bold;
+            border-top-width: 2px;
+
+            + .certificate {
+                border-top-width: 2px;
+            }
+        }
+
+        &-company-name {
+            width: 19%;
+        }
+
+        &-tax-cert {
+            width: 15%;
+        }
+
+        &-tax-authority {
+            width: 22%;
+        }
+
+        &-status {
+            width: 14%;
+        }
+
+        &-start-date {
+            width: 15%;
+        }
+
+        &-end-date {
+            width: 15%;
+        }
+
+        .eligible {
+            color: $success;
+        }
+
+        .not-eligible, .not-available {
+            color: $danger;
+        }
+
+        @include media-breakpoint-only(md) {
+            flex-direction: column;
+
+            &-headings {
+                display: none;
+            }
+
+            &-company-name,
+            &-tax-cert,
+            &-tax-authority,
+            &-status,
+            &-start-date,
+            &-end-date {
+                width: 100%;
+                margin-bottom: 1px;
+
+                &::before {
+                    content: attr(data-heading)':';
+                    width: 50%;
+                    min-width: 50px;
+                    display: inline-block;
+                    color: $gray-700;
+                    background-color: $gray-100;
+                }
+            }
+        }
+
+        @include media-breakpoint-only(xs) {
+            flex-direction: column;
+
+            &-headings {
+                display: none;
+            }
+
+            &-company-name,
+            &-tax-cert,
+            &-tax-authority,
+            &-status,
+            &-start-date,
+            &-end-date {
+                width: 100%;
+                margin-bottom: 1px;
+
+                &::before {
+                    content: attr(data-heading)':';
+                    width: 50%;
+                    min-width: 50px;
+                    display: inline-block;
+                    color: $gray-700;
+                    background-color: $gray-100;
+                }
+            }
+        }
+    }
+
     // payments
     .payments {
       margin-top:15px;
@@ -885,6 +1011,31 @@
 
         &:hover:not(.active) {
             background-color: #ddd;
+        }
+    }
+}
+
+#list-certificates > .dr-h4 {
+    position: relative;
+}
+
+#certificate-modal {
+    .help-text {
+        color: darkgray;
+        font-size: 12px;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 10px;
+        }
+
+        &.row {
+            margin: 0;
+        }
+    }
+
+    .invalid-feedback {
+        &.row {
+            margin: 0;
         }
     }
 }

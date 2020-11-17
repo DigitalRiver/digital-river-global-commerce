@@ -13,6 +13,7 @@
 
     &__cloudpay,
     &__email,
+    &__tems-us,
     &__shipping,
     &__billing,
     &__tax-id,
@@ -203,6 +204,28 @@
     .DR-Card-Brand {
         display: initial;
     }
+
+    input[type="date"], input[type="file"] {
+        height: 48px;
+        padding-top: 10px;
+    }
+
+    .cert-good {
+        color: $success;
+    }
+
+    .cert-error {
+        color: $danger;
+    }
+
+    .help-text {
+        color: darkgray;
+        font-size: 12px;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 10px;
+        }
+    }
 }
 
 #DRPayment3ds {
@@ -213,4 +236,8 @@
     #dr3dsecure {
         left: 0 !important;
     }
+}
+
+#tems-us-error-msg {
+    margin-bottom: 10px;
 }

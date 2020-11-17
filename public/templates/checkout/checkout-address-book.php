@@ -84,8 +84,8 @@ $no_default = 'true';
         </div>
     
     <?php else: ?>
-        
-        <?php echo __( 'You have no saved addresses.', 'digital-river-global-commerce' ); ?>
+
+        <p><?php echo __( 'You have no saved addresses.', 'digital-river-global-commerce' ); ?></p>
     
     <?php endif; ?>
 
