@@ -11,7 +11,7 @@ const homePage = new HomePage();
 const checkoutPage = new CheckoutPage();
 const utils = new GeneralUtils();
 
-fixture `===== DRGC P1 Automation Test - Place Order As Guest =====`
+fixture `===== DRGC P1 Automation Test - Place Order Variation =====`
   .httpAuth({
     username: Config.websiteAuth['username'],
     password: Config.websiteAuth['password'],
