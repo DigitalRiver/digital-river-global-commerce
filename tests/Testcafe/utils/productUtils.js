@@ -46,4 +46,14 @@ export default class ProductUtils {
 
     return product;
   }
+
+  getVariationProduct() {
+    const product = {
+      productID: '5458441600',
+      productName: 'Pallidium Collection(Variation)',
+      permalink: 'pallidium-collectionvariation'
+    };
+
+    return product;
+  }
 }

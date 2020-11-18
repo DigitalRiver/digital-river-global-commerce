@@ -8,7 +8,7 @@ export default class LoginPage {
     this.signupUeMail = Selector('#dr-signup-form').find('[name="uemail"]');
     this.signupPW = Selector('#dr-signup-form').find('[name="upw"]');
     this.signupConfirmPW = Selector('#dr-signup-form').find('[name="upw2"]');
-    this.logoutDropDownMenu = Selector('#menu-item-login');
+    this.logoutDropDownMenu = Selector('.menu-item.menu-item-has-children.menu-item-login');
     this.loginMenu = Selector('#menu-item-login').find('a');
     this.logoutMenu = Selector('#menu-item-logout').find('a');
     this.signupBtn = Selector('.dr-btn.dr-signup')
@@ -45,6 +45,7 @@ export default class LoginPage {
   async userLogout() {
     console.log('  -> Logout from Current User');
     await t
+      .expect(this.logoutDropDownMenu.exists).ok({timeout:20000})
       .hover(this.logoutDropDownMenu)
       .wait(500)
       .hover(this.logoutMenu)

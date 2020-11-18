@@ -39,7 +39,7 @@ export default class CheckoutPage {
     this.billingPhoneNumber = Selector('#billing-field-phone');
 
     // Payment Info.
-    this.creditCardDiv = Selector('#dr-payment-info');
+    this.creditCardDiv = Selector('.DR-card.DR-creditCard');
     this.cardNumberIframe = this.creditCardDiv.find('iframe').nth(0);
     this.ccNumber = Selector('#ccNumber');
     this.cardExpIframe = this.creditCardDiv.find('iframe').nth(1);
@@ -59,8 +59,8 @@ export default class CheckoutPage {
   async completeFormEmail(testEmail) {
     await t
       .typeText(this.email, testEmail)
-      .hover(this.emailBtn)
-      .click(this.emailBtn);
+      .click(this.emailBtn)
+      .wait(1000);
   }
 
   async completeFormShippingInfo(isLocaleUS = true) {
@@ -139,10 +139,15 @@ export default class CheckoutPage {
   }
 
   async completeFormCreditCardInfo() {
+    const creditCard = Selector('.DR-card.DR-creditCard').find('button');
     const creditCardInfo = this.utils.getCreditCardInfo();
 
+    if (await creditCard.getAttribute('aria-expanded') == 'false') {
+      await t.click(creditCard);
+    }
+
     await t
-      .wait(3000)
+      .wait(5000)
       .switchToIframe(this.cardNumberIframe)
       .typeText(this.ccNumber, creditCardInfo.cardNo)
       .switchToMainWindow()

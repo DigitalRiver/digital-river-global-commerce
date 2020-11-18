@@ -10,6 +10,7 @@ export default class MinicartPage {
   async clickViewCartBtn() {
     await t
       .wait(5000)
+      .hover(this.viewCartBtn)
       .click(this.viewCartBtn)
       .expect(Selector('a').withText('PROCEED TO CHECKOUT').exists).ok();
   }
