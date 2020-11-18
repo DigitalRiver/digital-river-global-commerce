@@ -804,7 +804,12 @@ class DRGC_Admin {
    */
   public function drgc_drop_in_config_cb() {
     $config = get_option( $this->option_name . '_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT );
-    echo '<div><textarea name="' . $this->option_name . '_drop_in_config' . '" id="' . $this->option_name . '_drop_in_config' . '">' . esc_textarea( wp_unslash( $config ) ) . '</textarea></div>';
+    echo '<div><textarea name="' . $this->option_name . '_drop_in_config' . '" id="' . $this->option_name . '_drop_in_config' . '">' . esc_textarea( wp_unslash( $config ) ) . '</textarea>';
+    echo '<p class="description">';
+    echo sprintf( __( 'Please refer to the sample code of <code>paymentMethodConfiguration</code> from <a target="_blank" href="%s">Drop-in integration guide</a> to customize the look and feel of payment elements.', 'digital-river-global-commerce' ),
+      'https://docs.digitalriver.com/commerce-api/payment-integrations-1/drop-in/drop-in-integration-guide#configuring-payment-methods-within-drop-in'
+    );
+    echo '</p></div>';
   }
 
   /**
