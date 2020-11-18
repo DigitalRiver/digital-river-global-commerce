@@ -30,12 +30,12 @@ class DR_Shortcode_Account {
     $customer = $shopper->retrieve_shopper();
     $orders = $shopper->retrieve_orders();
     $subscriptions = $shopper->retrieve_subscriptions();
-    $locales = get_option( 'drgc_store_locales' );
+    $locale_options = get_option( 'drgc_locale_options' ) ?: array();
     $usa_states = retrieve_usa_states();
 
     drgc_get_template(
       'account/account.php',
-      compact( 'customer', 'usa_states', 'orders', 'subscriptions', 'locales')
+      compact( 'customer', 'usa_states', 'orders', 'subscriptions', 'locale_options')
     );
   }
 }
