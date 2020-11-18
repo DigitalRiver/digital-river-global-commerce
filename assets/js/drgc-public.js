@@ -12019,6 +12019,14 @@ var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 var CheckoutUtils = function ($, params) {
   var localizedText = drgc_params.translations;
+  var countryOptionsObj = {
+    shipping: [],
+    billing: []
+  };
+
+  var getFetchedCountryOptions = function getFetchedCountryOptions(addressType) {
+    return countryOptionsObj[addressType] || [];
+  };
 
   var updateDeliverySection = function updateDeliverySection(shippingOption) {
     var $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
@@ -12028,8 +12036,10 @@ var CheckoutUtils = function ($, params) {
   };
 
   var updateAddressSection = function updateAddressSection(addressObj, $target) {
-    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.country];
-    $target.text(addressArr.join(', '));
+    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.countrySubdivision, addressObj.country];
+    $target.text(addressArr.filter(function (v) {
+      return v;
+    }).join(', '));
   };
 
   var updateSummaryLabels = function updateSummaryLabels() {
@@ -12248,11 +12258,11 @@ var CheckoutUtils = function ($, params) {
           addressTypes.forEach(function (type) {
             var savedCountryCode = $("#".concat(type, "-field-country")).val();
             var $options = $(response).find("select[name=".concat(type.toUpperCase(), "country] option")).not(':first');
-            var optionArr = $.map($options, function (option) {
+            countryOptionsObj[type] = $.map($options, function (option) {
               return option.value;
             });
             $("#".concat(type, "-field-country option")).not(':first').remove();
-            $("#".concat(type, "-field-country")).append($options).val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
+            $("#".concat(type, "-field-country")).append($options).val(countryOptionsObj[type].indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
           });
           resolve();
         },
@@ -12429,6 +12439,7 @@ var CheckoutUtils = function ($, params) {
   };
 
   return {
+    getFetchedCountryOptions: getFetchedCountryOptions,
     updateDeliverySection: updateDeliverySection,
     updateAddressSection: updateAddressSection,
     updateSummaryLabels: updateSummaryLabels,
@@ -13669,6 +13680,10 @@ var CheckoutModule = function ($) {
     });
     payload[addressType].emailAddress = email;
 
+    if (payload[addressType].country && payload[addressType].country !== 'US') {
+      payload[addressType].countrySubdivision = '';
+    }
+
     if (addressType === 'billing') {
       delete payload[addressType].business;
       delete payload[addressType].companyEIN;
@@ -14545,6 +14560,8 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.address', function (e) {
       var addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
       var $address = $(e.target).closest('.address');
+      var countryOptions = checkout_utils.getFetchedCountryOptions(addressType);
+      var savedCountryCode = $address.data('country');
       $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
       $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
       $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
@@ -14552,7 +14569,7 @@ jQuery(document).ready(function ($) {
       $('#' + addressType + '-field-city').val($address.data('city')).focus();
       $('#' + addressType + '-field-state').val($address.data('state')).change();
       $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
-      $('#' + addressType + '-field-country').val($address.data('country')).change();
+      $('#' + addressType + '-field-country').val(countryOptions.indexOf(savedCountryCode) > -1 ? savedCountryCode : '').change();
       $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
       $('.dr-address-book-btn.' + addressType).removeClass('active');
       $('.dr-address-book.' + addressType).slideUp();

@@ -106,6 +106,10 @@ const CheckoutModule = (($) => {
 
         payload[addressType].emailAddress = email;
 
+        if (payload[addressType].country && payload[addressType].country !== 'US') {
+          payload[addressType].countrySubdivision = '';
+        }
+
         if (addressType === 'billing') {
             delete payload[addressType].business;
             delete payload[addressType].companyEIN;
@@ -813,6 +817,8 @@ jQuery(document).ready(($) => {
         $(document).on('click', '.address', (e) => {
             const addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
             const $address = $(e.target).closest('.address');
+            const countryOptions = CheckoutUtils.getFetchedCountryOptions(addressType);
+            const savedCountryCode = $address.data('country');
 
             $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
             $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
@@ -821,7 +827,7 @@ jQuery(document).ready(($) => {
             $('#' + addressType + '-field-city').val($address.data('city')).focus();
             $('#' + addressType + '-field-state').val($address.data('state')).change();
             $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
-            $('#' + addressType + '-field-country').val($address.data('country')).change();
+            $('#' + addressType + '-field-country').val(countryOptions.indexOf(savedCountryCode) > -1 ? savedCountryCode : '').change();
             $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
 
             $('.dr-address-book-btn.' + addressType).removeClass('active');
