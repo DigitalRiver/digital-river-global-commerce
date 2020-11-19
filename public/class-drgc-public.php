@@ -193,7 +193,8 @@ class DRGC_Public {
       'date_label'                     => __('Date', 'digital-river-global-commerce'),
       'amount_label'                   => __('Amount', 'digital-river-global-commerce'),
       'status_label'                   => __('Status', 'digital-river-global-commerce'),
-      'order_details_label'            => __('Order Details', 'digital-river-global-commerce')
+      'order_details_label'            => __('Order Details', 'digital-river-global-commerce'),
+      'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
@@ -641,20 +642,20 @@ class DRGC_Public {
 		return $items;
 	}
 
-	/**
-	 * Insert locale selector at menu.
-	 *
-	 * @since  2.0.0
-	 */
-	public function insert_locale_selector( $content ) {
-		if ( ! is_page( 'checkout' ) && ! is_page( 'thank-you' ) ) {
-			ob_start();
-			include_once 'partials/drgc-locale-selector.php';
-			$append = ob_get_clean();
-			return $content . $append;
-		}
-		return $content;
-	}
+  /**
+   * Insert locale selector at menu.
+   *
+   * @since  2.0.0
+   */
+  public function insert_locale_selector( $content ) {
+    if ( ! is_page('cart') && ! is_page( 'checkout' ) && ! is_page( 'thank-you' ) ) {
+      ob_start();
+      include_once 'partials/drgc-locale-selector.php';
+      $append = ob_get_clean();
+      return $content . $append;
+    }
+    return $content;
+  }
 
 	/**
 	 * Insert currency selector at menu.
@@ -761,8 +762,8 @@ class DRGC_Public {
 
       if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
         $customer = $plugin->shopper->retrieve_shopper();
-				$is_logged_in = $customer && 'Anonymous' !== $customer['id'];
-				$session_data = $plugin->session->get_session_data();
+        $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
+        $session_data = $plugin->session->get_session_data();
         $is_guest = 'true' === $session_data['checkout_as_guest'];
 
         if ( is_page( 'checkout' ) ) {
@@ -994,27 +995,6 @@ class DRGC_Public {
     }
   }
 
-  /**
-   * Renew access token
-   */
-  public function renew_access_token() {
-    if ( ! is_page( 'thank-you' ) ) return;
-
-    $plugin = DRGC();
-    $customer = $plugin->shopper->retrieve_shopper();
-
-    $plugin->session->clear_session();
-
-    if ( $customer && ( $customer['id'] !== 'Anonymous' ) ) {
-      $current_user = get_user_by( 'login', $customer['username'] );
-      $external_reference_id = get_user_meta( $current_user->ID, '_external_reference_id', true );
-
-      $plugin->shopper->generate_access_token_by_ref_id( $external_reference_id, false );
-    } else {
-      $plugin->authenticator->do_refresh_access_token();
-    }
-  }
-
   public function translate_archive_title( $title ) {
     if ( is_tax( 'dr_product_category' ) ) {
       return __( single_cat_title( '', false ), 'digital-river-global-commerce' );
@@ -1188,6 +1168,66 @@ class DRGC_Public {
       }
     } else {
       wp_send_json_error();
+    }
+  }
+
+  /**
+   * Renew access token
+   * 
+   * @since  2.0.0
+   */
+  public function renew_access_token() {
+    $plugin = DRGC();
+    $customer = $plugin->shopper->retrieve_shopper();
+    $token_info = '';
+
+    if ( $customer && ( $customer['id'] !== 'Anonymous' ) ) {
+      $current_user = get_user_by( 'login', $customer['username'] );
+      $external_reference_id = get_user_meta( $current_user->ID, '_external_reference_id', true );
+
+      $token_info = $plugin->shopper->generate_access_token_by_ref_id( $external_reference_id, false );
+    } else {
+      $token_info = $plugin->authenticator->do_refresh_access_token();
+    }
+    
+    return $token_info;
+  }
+
+  /**
+   * Renew access token on the TY page
+   * 
+   * @since  2.0.0
+   */
+  public function renew_token_by_template_redirect() {
+    if ( ! is_page( 'thank-you' ) ) return;
+
+    $this->renew_access_token();
+  }
+
+  /**
+   * Regenerate limited/full access token to create a new cart
+   * 
+   * @since  2.0.0
+   */
+  public function recreate_access_token_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    $plugin = DRGC();
+    $customer = $plugin->shopper->retrieve_shopper();
+    $session_token = $plugin->authenticator->generate_dr_session_token();
+    $token_info = $plugin->authenticator->generate_access_token( '', array(), $session_token );
+
+    if ( $customer && ( $customer['id'] !== 'Anonymous' ) ) {
+      $plugin->cart->create_new_cart( $token_info['access_token'] );
+      $current_user = get_user_by( 'login', $customer['username'] );
+      $external_reference_id = get_user_meta( $current_user->ID, '_external_reference_id', true );
+      $token_info = $plugin->authenticator->generate_access_token_by_ref_id( $external_reference_id, $session_token );
+    }
+
+    if ( is_array( $token_info ) && isset( $token_info['access_token'] ) ) {
+      wp_send_json_success( $token_info );
+    } else {
+      wp_send_json_error( $token_info );
     }
   }
 }

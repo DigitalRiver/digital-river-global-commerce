@@ -374,10 +374,22 @@ const CartModule = (($) => {
           $('#dr-checkout-btn').remove();
           $('#cart-estimate').remove();
           $('.dr-cart-wrapper__content > .order-number').remove();
-          return new Promise(resolve => resolve());
+
+          const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+
+          if (taxRegs.customerType) {
+            if (sessionStorage.getItem('drgcTokenRenewed')) {
+              sessionStorage.removeItem('drgcTokenRenewed');
+              return new Promise(resolve => resolve());
+            } else {
+              return CheckoutUtils.recreateAccessToken();
+            }
+          } else {
+            return new Promise(resolve => resolve());
+          }
         }
       })
-      .then(() => {
+      .then((data) => {
         if (lineItems && lineItems.length) {
           if (CheckoutUtils.isSubsAddedToCart(lineItems)) {
             const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
@@ -388,9 +400,15 @@ const CartModule = (($) => {
           }
 
           renderOffers(lineItems);
+          $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
+        } else {
+          if (data && data.access_token) {
+            sessionStorage.setItem('drgcTokenRenewed', 'true');
+            location.reload();
+          } else {
+            $('.dr-cart__content').removeClass('dr-loading');
+          }
         }
-
-        $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
       })
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
@@ -513,7 +531,7 @@ jQuery(document).ready(($) => {
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
     else $('body').addClass('dr-loading');
     DRCommerceApi.updateShopper(queryParams)
-      .then(() => location.reload(true))
+      .then(() => location.reload())
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
         $('.dr-cart__content, body').removeClass('dr-loading');

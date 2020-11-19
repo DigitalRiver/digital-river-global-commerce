@@ -94,4 +94,6 @@ $personal_type_checked = array_key_exists( 'Individual', $tax_schema );
 
     </div>
 
+    <div id="tax-id-error-msg" class="invalid-feedback" style="display: none"></div>
+
 </div>
