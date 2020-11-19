@@ -379,14 +379,11 @@ const CartModule = (($) => {
       })
       .then(() => {
         if (lineItems && lineItems.length) {
-          if (CheckoutUtils.isSubsAddedToCart(lineItems)) {
-            const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-            const href = ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : 
-              (drgc_params.isLogin !== 'true') ? drgc_params.loginUrl : drgc_params.checkoutUrl;
+          const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
+          const href = ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : 
+            (drgc_params.isLogin !== 'true') ? drgc_params.loginUrl : drgc_params.checkoutUrl;
 
-            $('#dr-checkout-btn').prop('href', href);
-          }
-
+          $('#dr-checkout-btn').prop('href', href);
           renderOffers(lineItems);
         }
 
