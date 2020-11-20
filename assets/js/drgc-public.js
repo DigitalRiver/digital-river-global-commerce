@@ -14788,7 +14788,7 @@ jQuery(document).ready(function ($) {
   });
   $('#dr-locale-selector .dr-other-locales a').click( /*#__PURE__*/function () {
     var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(e) {
-      var $this, targetLocale, params, taxRegs;
+      var $this, targetLocale, params;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -14797,36 +14797,17 @@ jQuery(document).ready(function ($) {
               $this = $(e.target);
               targetLocale = $this.data('dr-locale');
               params = new URLSearchParams(location.search);
-              taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
               $('body').addClass('dr-loading');
               $('ul.dr-other-locales').hide();
               params.set('locale', targetLocale);
-              _context.prev = 8;
-
-              if (!taxRegs.customerType) {
-                _context.next = 12;
-                break;
-              }
-
-              _context.next = 12;
-              return checkout_utils.recreateAccessToken();
-
-            case 12:
               window.location.search = params.toString();
-              _context.next = 18;
-              break;
 
-            case 15:
-              _context.prev = 15;
-              _context.t0 = _context["catch"](8);
-              console.error(_context.t0);
-
-            case 18:
+            case 8:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[8, 15]]);
+      }, _callee);
     }));
 
     return function (_x) {

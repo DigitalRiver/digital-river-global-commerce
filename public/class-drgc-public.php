@@ -750,6 +750,14 @@ class DRGC_Public {
       if ( $plugin->shopper->locale !== $dr_locale ) {
         $primary_currency = drgc_get_primary_currency( $dr_locale );
         $plugin->shopper->update_locale_and_currency( $dr_locale, $primary_currency );
+
+        $tax_regs = $plugin->cart->get_tax_registration();
+
+        if ( is_array( $tax_regs ) && isset( $tax_regs['customerType'] ) ) {
+          $this->recreate_access_token();
+          wp_redirect( $_SERVER['REQUEST_URI'] );
+          exit;
+        }
       }
 
       // Load plugin translated text strings
@@ -1209,9 +1217,7 @@ class DRGC_Public {
    * 
    * @since  2.0.0
    */
-  public function recreate_access_token_ajax() {
-    check_ajax_referer( 'drgc_ajax', 'nonce' );
-
+  public function recreate_access_token() {
     $plugin = DRGC();
     $customer = $plugin->shopper->retrieve_shopper();
     $session_token = $plugin->authenticator->generate_dr_session_token();
@@ -1223,6 +1229,19 @@ class DRGC_Public {
       $external_reference_id = get_user_meta( $current_user->ID, '_external_reference_id', true );
       $token_info = $plugin->authenticator->generate_access_token_by_ref_id( $external_reference_id, $session_token );
     }
+
+    return $token_info;
+  }
+
+  /**
+   * Ajax handles regenerating limited/full access token to create a new cart
+   * 
+   * @since  2.0.0
+   */
+  public function recreate_access_token_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    $token_info = $this->recreate_access_token();
 
     if ( is_array( $token_info ) && isset( $token_info['access_token'] ) ) {
       wp_send_json_success( $token_info );

@@ -46,18 +46,11 @@ jQuery(document).ready(($) => {
     const $this = $(e.target);
     const targetLocale = $this.data('dr-locale');
     const params = new URLSearchParams(location.search);
-    const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
 
     $('body').addClass('dr-loading');
     $('ul.dr-other-locales').hide();
     params.set('locale', targetLocale);
-
-    try {
-      if (taxRegs.customerType) await CheckoutUtils.recreateAccessToken();
-      window.location.search = params.toString();
-    } catch (error) {
-      console.error(error);
-    }
+    window.location.search = params.toString();
   });
 
   $('#dr-currency-selector .dr-other-currencies a').click((e) => {
