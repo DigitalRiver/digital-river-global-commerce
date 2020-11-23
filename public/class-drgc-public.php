@@ -188,7 +188,6 @@ class DRGC_Public {
       'personal_shopper_type'          => __('Personal', 'digital-river-global-commerce'),
       'business_shopper_type'          => __('Business', 'digital-river-global-commerce'),
       'invalid_tax_id_error_msg'       => __('Your tax ID could not be verified. Tax may apply.', 'digital-river-global-commerce'),
-      'copied_order_id_msg'            => __('Copied the order number', 'digital-river-global-commerce'),
       'order_id_label'                 => __('Order ID', 'digital-river-global-commerce'),
       'date_label'                     => __('Date', 'digital-river-global-commerce'),
       'amount_label'                   => __('Amount', 'digital-river-global-commerce'),
