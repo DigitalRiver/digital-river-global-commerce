@@ -16051,7 +16051,8 @@ jquery_default()(function () {
   var localizedText = drgc_params.translations;
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');
-  $body.append($ordersModal); // Order detail click
+  var $orderIdModal = jquery_default()('#order-id-modal');
+  $body.append($ordersModal).append($orderIdModal); // Order detail click
 
   function fillOrderModal(_x) {
     return _fillOrderModal.apply(this, arguments);
@@ -16200,14 +16201,17 @@ jquery_default()(function () {
     if (window.isSecureContext) {
       var id = $link.data('orderId');
       navigator.clipboard.writeText(id).then(function () {
-        alert(localizedText.copied_order_id_msg + ': ' + id);
-        window.open($link.prop('href'), '_blank');
+        $orderIdModal.find('.dr-modal-body > p').data('rowUrl', $link.prop('href'));
+        $orderIdModal.drModal('show');
       }, function () {
         console.error('Unable to write to clipboard.');
       });
     } else {
       window.open($link.prop('href'), '_blank');
     }
+  });
+  $orderIdModal.on('hidden.dr.bs.modal', function (e) {
+    window.open(jquery_default()(e.target).find('.dr-modal-body > p').data('rowUrl'), '_blank');
   });
   jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
     var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
