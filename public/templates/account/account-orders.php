@@ -173,10 +173,10 @@
     <div class="dr-modal-dialog">
         <div class="dr-modal-content">
             <div class="dr-modal-body">
-                <p data-row-url=""><?php echo __( 'The order number has been copied. You can directly paste the number into the order number field on the Right of Withdrawal page for the request.', 'digital-river-global-commerce' ); ?></p>
+                <p><?php echo __( 'The order number has been copied. You can directly paste the number into the order number field on the Right of Withdrawal page for the request.', 'digital-river-global-commerce' ); ?></p>
             </div>
             <div class="dr-modal-footer">
-                <button type="button" class="dr-btn dr-btn-blue confirm" data-dismiss="dr-modal"><?php echo __( 'OK', 'digital-river-global-commerce' ); ?></button>
+                <button type="button" class="dr-btn dr-btn-blue confirm" data-dismiss="dr-modal" data-row-url=""><?php echo __( 'OK', 'digital-river-global-commerce' ); ?></button>
             </div>
         </div>
     </div>

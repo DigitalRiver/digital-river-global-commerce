@@ -261,7 +261,7 @@ $(() => {
             const id = $link.data('orderId');
 
             navigator.clipboard.writeText(id).then(() => {
-                $orderIdModal.find('.dr-modal-body > p').data('rowUrl', $link.prop('href'));
+                $orderIdModal.find('.dr-modal-footer > button').data('rowUrl', $link.prop('href'));
                 $orderIdModal.drModal('show');
             }, () => {
                 console.error('Unable to write to clipboard.');
@@ -272,7 +272,7 @@ $(() => {
     });
 
     $orderIdModal.on('hidden.dr.bs.modal', (e) => {
-        window.open($(e.target).find('.dr-modal-body > p').data('rowUrl'), '_blank');
+        window.open($(e.target).find('.dr-modal-footer > button').data('rowUrl'), '_blank');
     });
 
     $('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', async (e) => {

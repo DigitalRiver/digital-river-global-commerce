@@ -16201,7 +16201,7 @@ jquery_default()(function () {
     if (window.isSecureContext) {
       var id = $link.data('orderId');
       navigator.clipboard.writeText(id).then(function () {
-        $orderIdModal.find('.dr-modal-body > p').data('rowUrl', $link.prop('href'));
+        $orderIdModal.find('.dr-modal-footer > button').data('rowUrl', $link.prop('href'));
         $orderIdModal.drModal('show');
       }, function () {
         console.error('Unable to write to clipboard.');
@@ -16211,7 +16211,7 @@ jquery_default()(function () {
     }
   });
   $orderIdModal.on('hidden.dr.bs.modal', function (e) {
-    window.open(jquery_default()(e.target).find('.dr-modal-body > p').data('rowUrl'), '_blank');
+    window.open(jquery_default()(e.target).find('.dr-modal-footer > button').data('rowUrl'), '_blank');
   });
   jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
     var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
