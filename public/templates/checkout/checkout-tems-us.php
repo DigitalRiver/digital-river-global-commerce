@@ -12,8 +12,6 @@
 
                 </span>
 
-                <span class="dr-accordion__edit tems-us"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
-
             </div>
 
             <form id="checkout-tem-us-form" enctype="multipart/form-data" class="dr-panel-edit dr-panel-edit--tems-us needs-validation" novalidate>
