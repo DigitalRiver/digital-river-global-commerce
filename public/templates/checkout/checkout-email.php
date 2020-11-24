@@ -8,41 +8,77 @@
 
         </span>
 
-        <?php if ($customerEmail == '') { ?>
+        <?php if ( ! $is_logged_in ): ?>
+
             <span class="dr-accordion__edit"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
-        <?php } ?>
+
+        <?php endif; ?>
 
     </div>
 
-    <form id="checkout-email-form" class="dr-panel-edit dr-panel-edit--email needs-validation" novalidate>
+    <?php if ( ! $is_logged_in ): ?>
 
-        <div class="form-group">
+        <form id="checkout-email-form" class="dr-panel-edit dr-panel-edit--email needs-validation" novalidate>
 
-            <input type="email" name="email" value="<?php echo $customerEmail ?>" class="form-control dr-panel-edit__el" placeholder="<?php echo __( 'Please enter your email address', 'digital-river-global-commerce' ); ?>" required>
+            <div class="form-group">
 
-            <div class="invalid-feedback">
+                <input type="email" name="email" id="customer-email" value="<?php echo $customer_email ?>" class="form-control dr-panel-edit__el" placeholder="<?php echo __( 'Please enter your email address', 'digital-river-global-commerce' ); ?>" required>
 
-		        <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
+                <div class="invalid-feedback">
+
+                    <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
+
+                </div>
 
             </div>
 
-        </div>
 
+            <button type="submit" class="dr-panel-edit__btn dr-btn" disabled="disabled">
 
-        <button type="submit" class="dr-panel-edit__btn dr-btn" disabled="disabled">
+                <?php echo __( 'Save and continue', 'digital-river-global-commerce' ); ?>
 
-            <?php echo __( 'Save and continue', 'digital-river-global-commerce' ); ?>
+            </button>
 
-        </button>
+        </form>
 
-    </form>
+    <?php else: ?>
+
+        <input type="hidden" name="email" id="customer-email" value="<?php echo $customer_email; ?>">
+
+    <?php endif; ?>
 
     <div class="dr-panel-result">
 
-
-        <p id="dr-panel-email-result" class="dr-panel-result__text"></p>
-
+        <p id="dr-panel-email-result" class="dr-panel-result__text"><?php echo ( $is_logged_in ) ? $customer_email : ''; ?></p>
 
     </div>
+
+    <?php if ( $is_tems_us_enabled ): ?>
+
+        <div id="tax-certificate-status" class="<?php echo ( $tems_us_status === 'ELIGIBLE_NOT_EXEMPTED' ) ? 'd-none' : ''; ?>">
+
+            <?php if ( $certificate_status === 'ELIGIBLE' ): ?>
+
+                <input type="hidden" id="tems-us-company-name" name="tems-us-company-name" value="<?php echo $customer_tax_regs['eligibleCertificate']['companyName']; ?>">
+
+                <p class="cert-msg cert-good dr-panel-result__text"><?php _e( 'Your tax exempt certificate on file is good.', 'digital-river-global-commerce' )?> <span>(<a class="cert-details" href="javascript:void(0)"><?php _e( 'View Details', 'digital-river-global-commerce' ); ?></a>)</span></p>
+
+                <p class="cert-msg cert-not-valid dr-panel-result__text d-none"><?php _e( 'Your tax exempt certificate on file is not valid for this order.', 'digital-river-global-commerce' )?> <span>(<a class="cert-details" href="javascript:void(0)"><?php _e( 'View Details', 'digital-river-global-commerce' ); ?></a>)</span></p>
+
+                <p class="cert-msg cert-note dr-panel-result__text"><?php _e( 'Note that your purchase may still be subject to taxes if yor exemption does not cover your Shipping/Billing State.', 'digital-river-global-commerce' ); ?></p>
+
+            <?php elseif ( $certificate_status === 'NOT_ELIGIBLE' ): ?>
+
+                <p class="cert-msg cert-error dr-panel-result__text"><?php _e( 'There is a problem with your tax exempt certificate on file. Please resubmit your info.', 'digital-river-global-commerce' )?></p>
+
+            <?php else: ?>
+
+                <p class="cert-msg cert-not-found d-none"></p>
+
+            <?php endif; ?>
+
+        </div>
+
+    <?php endif; ?>
 
 </div>

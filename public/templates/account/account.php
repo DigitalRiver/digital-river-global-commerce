@@ -229,7 +229,7 @@ $account_company_name = ( $cert_count > 0 ) ? $customer_tax_regs['taxCertificate
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="help-text row">
-                                        <p>*<?php _e( 'This should be the State or official entity authorizing your business as tax exempt. Note that your purchase may still be subject to taxes if yor exemption does not cover your Billing/Shipping State.', 'digital-river-global-commerce' ) ?></p>
+                                        <p>*<?php _e( 'This should be the State or official entity authorizing your business as tax exempt. Note that your purchase may still be subject to taxes if yor exemption does not cover your Shipping/Billing State.', 'digital-river-global-commerce' ) ?></p>
                                     </div>
                                     <div class="invalid-feedback row">
                                         <?php _e( 'This field is required.', 'digital-river-global-commerce' ); ?>

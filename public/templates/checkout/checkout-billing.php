@@ -113,7 +113,7 @@ $company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty(
 
                     </label>
 
-                    <input id="billing-field-company-name" type="text" name="billing-companyName" value="<?php echo $company_name; ?>" class="form-control float-field float-field--company-name">
+                    <input id="billing-field-company-name" type="text" name="billing-companyName" value="<?php echo ( $tems_us_status === 'ELIGIBLE_NOT_EXEMPTED' ) ? '' : $company_name; ?>" class="form-control float-field float-field--company-name" <?php echo ( $tems_us_status === 'ELIGIBLE_EXEMPTED' ) ? 'readonly' : '';?>>
 
                 </div>
 

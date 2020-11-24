@@ -361,4 +361,31 @@ class DRGC_Cart extends AbstractHttpService {
             return false;
         }
     }
+
+    /**
+     * Updates the TAX_EXEMPTION_US_STATUS custom attribute for a cart
+     */
+    public function update_tems_us_status( $status = '' ) {
+        $data = array(
+            'cart' => array(
+                'customAttributes' => array(
+                    'attribute' => array(
+                        array(
+                            'name'  => 'TAX_EXEMPTION_US_STATUS',
+                            'value' => $status
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->setJsonContentType();
+
+        try {
+            $res = $this->post( '/v1/shoppers/me/carts/active', $data );
+            return $res;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
 }

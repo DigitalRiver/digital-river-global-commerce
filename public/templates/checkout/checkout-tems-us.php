@@ -1,14 +1,3 @@
-<?php
-$certificate_status = '';
-
-if ( array_key_exists( 'eligibleCertificate', $customer_tax_regs ) ) {
-    if ( empty( $customer_tax_regs['eligibleCertificate'] ) ) {
-        $certificate_status = 'NOT_ELIGIBLE';
-    } else {
-        $certificate_status = 'ELIGIBLE';
-    }
-}
-?>
 <div class="dr-checkout__tems-us dr-checkout__el">
 
     <?php if ( $certificate_status !== 'ELIGIBLE' ): ?>
@@ -71,7 +60,7 @@ if ( array_key_exists( 'eligibleCertificate', $customer_tax_regs ) ) {
 
                         <div class="help-text">
 
-                            <p>*<?php _e( 'This should be the State or official entity authorizing your business as tax exempt. Note that your purchase may still be subject to taxes if yor exemption does not cover your Billing/Shipping State.', 'digital-river-global-commerce' ) ?></p>
+                            <p>*<?php _e( 'This should be the State or official entity authorizing your business as tax exempt. Note that your purchase may still be subject to taxes if yor exemption does not cover your Shipping/Billing State.', 'digital-river-global-commerce' ) ?></p>
 
                         </div>
 
@@ -177,29 +166,13 @@ if ( array_key_exists( 'eligibleCertificate', $customer_tax_regs ) ) {
 
     <div id="tems-us-purchase-link">
 
-        <?php if ( $certificate_status === 'ELIGIBLE' ): ?>
-
-            <input type="hidden" id="tems-us-company-name" name="tems-us-company-name" value="<?php echo $customer_tax_regs['eligibleCertificate']['companyName'] ?>">
-
-            <p class="cert-msg cert-good"><?php _e( 'Your tax exempt certificate on file is good.', 'digital-river-global-commerce' )?></p>
-
-        <?php elseif ( $certificate_status === 'NOT_ELIGIBLE' ): ?>
-
-            <p class="cert-msg cert-error"><?php _e( 'There is a problem with your tax exempt certificate on file. Please resubmit your info.', 'digital-river-global-commerce' )?></p>
-
-        <?php else: ?>
-
-            <p class="cert-msg cert-not-found d-none"></p>
-
-        <?php endif; ?>
-
-        <p class="tax-exempt<?php echo ( $certificate_status === 'ELIGIBLE' ) ? ' d-none' : ''; ?>">
+        <p class="tax-exempt<?php echo ( $certificate_status === 'ELIGIBLE' ) && ( $tems_us_status !== 'ELIGIBLE_NOT_EXEMPTED' ) ? ' d-none' : ''; ?>">
 
             <a class="tax-exempt" href="javascript:void(0)"><?php _e( 'Click here if you\'re making a tax exempt purchase', 'digital-river-global-commerce' ); ?></a>
 
         </p>
 
-        <p class="taxable<?php echo ( $certificate_status === 'NOT_ELIGIBLE' ) || ( $certificate_status === '' ) ? ' d-none' : ''; ?>">
+        <p class="taxable<?php echo ( $tems_us_status === 'ELIGIBLE_NOT_EXEMPTED' ) || ( $certificate_status === 'NOT_ELIGIBLE' ) || empty( $certificate_status ) ? ' d-none' : ''; ?>">
 
             <a class="taxable" href="javascript:void(0)"><?php _e( 'Click here if you\'re making a taxable purchase', 'digital-river-global-commerce' ); ?></a>
 
@@ -207,14 +180,6 @@ if ( array_key_exists( 'eligibleCertificate', $customer_tax_regs ) ) {
 
     </div>
 
-    <div id="tems-us-result">
-
-        <p class="cert-msg cert-good d-none"><?php _e( 'This order is tax exempt.', 'digital-river-global-commerce' )?></p>
-
-        <p class="cert-msg cert-error d-none"><?php _e( 'Your tax exempt certificate on file is not valid for this order. Please update your address or continue with a taxable order', 'digital-river-global-commerce' )?></p>
-
-        <p class="cert-msg not-exempted dr-panel-result__text d-none"><?php _e( 'You\'re making a taxable purchase.', 'digital-river-global-commerce' )?></p>
-
-    </div>
+    <p id="cert-uploaded-msg" class="cert-good dr-panel-result__text d-none"><?php _e( 'Your tax exempt certificate has been uploaded successfully.', 'digital-river-global-commerce' ); ?></p>
 
 </div>

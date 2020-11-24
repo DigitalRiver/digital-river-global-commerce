@@ -34,11 +34,15 @@ $order_number = $cart['cart']['id'] ?? '';
 
             <div class="dr-cart__products">
 
-                <?php if ( ! $is_empty_cart ): ?>
-                    <?php foreach ($cart['cart']['lineItems']['lineItem'] as $line_item): ?>
+                <?php if ( ! $is_empty_cart ): 
+                    $line_items = $cart['cart']['lineItems']['lineItem'];  
+                ?>
+                    <?php foreach ( $line_items as $line_item ): 
+                        $custom_attrs = isset( $line_item['product']['customAttributes'] ) ? $line_item['product']['customAttributes']['attribute'] : array();
+                    ?>
                         <?php
-                            foreach ( $line_item['product']['customAttributes']['attribute'] as $attribute) {
-                                if ( $attribute['name'] === 'isAutomatic' && $attribute['value'] === 'true') {
+                            foreach ( $custom_attrs as $attribute ) {
+                                if ( $attribute['name'] === 'isAutomatic' && $attribute['value'] === 'true' ) {
                                     $is_auto_renewal = true;
                                     break;
                                 }

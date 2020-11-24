@@ -12,7 +12,11 @@
  */
 ?>
 
-<?php foreach ($subscriptions['subscriptions']['subscription'] as $key => $sub): ?>
+<?php 
+  $subs = $subscriptions['subscriptions']['subscription'];
+
+  foreach ( $subs as $key => $sub ):  
+?>
 
 <?php
   $subs_id = $sub['id'];

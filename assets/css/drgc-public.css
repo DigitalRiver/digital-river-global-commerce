@@ -2593,7 +2593,11 @@ body.dr-loading:after { position: fixed; }
 
 .dr-checkout .cert-good { color: #28a745; }
 
-.dr-checkout .cert-error { color: #dc3545; }
+.dr-checkout .cert-good.dr-panel-result__text > span { color: #333; }
+
+.dr-checkout .cert-error, .dr-checkout .cert-not-valid { color: #dc3545; }
+
+.dr-checkout .cert-error.dr-panel-result__text > span, .dr-checkout .cert-not-valid.dr-panel-result__text > span { color: #333; }
 
 .dr-checkout .help-text { color: darkgray; font-size: 12px; }
 
@@ -2604,6 +2608,50 @@ body.dr-loading:after { position: fixed; }
 #DRPayment3ds #dr3dsecure { left: 0 !important; }
 
 #tems-us-error-msg { margin-bottom: 10px; }
+
+#tax-certificate-status > .cert-msg { padding: 0; margin-bottom: 0; }
+
+#tems-us-result > .cert-good { color: #28a745; }
+
+#tems-us-result > .cert-error { color: #dc3545; }
+
+.certificate { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 13px; padding: 18px 4px; border-top: 1px solid rgba(0, 0, 0, 0.125); }
+
+.certificate-add-btn { background: transparent url(../images/product-plus.svg) center/contain no-repeat; margin: 0; position: absolute; top: 50%; left: 96%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); font-size: 16px; border: none; }
+
+.certificate-add-btn:hover { cursor: pointer; }
+
+@media (max-width: 767.98px) { .certificate-add-btn { left: 90%; } }
+
+.certificate-headings { margin-top: 20px; padding-top: 18px; font-size: 14px; font-weight: bold; border-top-width: 2px; }
+
+.certificate-headings + .certificate { border-top-width: 2px; }
+
+.certificate-company-name { width: 19%; }
+
+.certificate-tax-cert { width: 15%; }
+
+.certificate-tax-authority { width: 22%; }
+
+.certificate-status { width: 14%; }
+
+.certificate-start-date { width: 15%; }
+
+.certificate-end-date { width: 15%; }
+
+.certificate .eligible { color: #28a745; }
+
+.certificate .not-eligible, .certificate .not-available { color: #dc3545; }
+
+@media (min-width: 768px) and (max-width: 991.98px) { .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
+  .certificate-headings { display: none; }
+  .certificate-company-name, .certificate-tax-cert, .certificate-tax-authority, .certificate-status, .certificate-start-date, .certificate-end-date { width: 100%; margin-bottom: 1px; }
+  .certificate-company-name::before, .certificate-tax-cert::before, .certificate-tax-authority::before, .certificate-status::before, .certificate-start-date::before, .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }
+
+@media (max-width: 575.98px) { .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
+  .certificate-headings { display: none; }
+  .certificate-company-name, .certificate-tax-cert, .certificate-tax-authority, .certificate-status, .certificate-start-date, .certificate-end-date { width: 100%; margin-bottom: 1px; }
+  .certificate-company-name::before, .certificate-tax-cert::before, .certificate-tax-authority::before, .certificate-status::before, .certificate-start-date::before, .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }
 
 .dr-accordion { width: 100%; height: 60px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; font-family: Open Sans; font-size: 16px; font-weight: 600; line-height: 16px; text-transform: uppercase; color: #333333; background-color: #ffffff; background-size: cover; border: none; outline: none; }
 

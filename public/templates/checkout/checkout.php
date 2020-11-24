@@ -21,7 +21,7 @@ if ( $cart['cart']['totalItemsInCart'] === 0 ) {
     return;
 }
 
-$customerEmail = $is_logged_in ? $customer['emailAddress'] : '';
+$customer_email = $is_logged_in ? $customer['emailAddress'] : '';
 $default_address = $cart['cart']['billingAddress'];
 $addresses = [];
 
@@ -43,6 +43,29 @@ if ( $is_logged_in ) {
 $check_subs = drgc_is_subs_added_to_cart( $cart );
 $is_tems_row_enabled = is_array( $tax_schema ) && ( $selected_country !== 'US' );
 $is_tems_us_enabled = is_array( $customer_tax_regs ) && ( $customer_tax_regs['US'] === 'ENABLED' );
+
+if ( $is_tems_us_enabled ) {
+    $certificate_status = '';
+    $tems_us_status = '';
+
+    if ( array_key_exists( 'eligibleCertificate', $customer_tax_regs ) ) {
+        if ( empty( $customer_tax_regs['eligibleCertificate'] ) ) {
+            $certificate_status = 'NOT_ELIGIBLE';
+        } else {
+            $certificate_status = 'ELIGIBLE';
+        }
+    }
+
+    if ( isset( $cart['cart']['customAttributes'] ) ) {
+        $custom_attrs = $cart['cart']['customAttributes']['attribute'];
+        $found_key = array_search( 'TAX_EXEMPTION_US_STATUS', array_column( $custom_attrs, 'name' ) );
+        $tems_us_status = ( $found_key === false ) ? '' : $custom_attrs[ $found_key ]['value'];
+    }
+
+    if ( ( $certificate_status !== 'ELIGIBLE' ) && ( $tems_us_status !== 'NOT_ELIGIBLE' ) ) {
+        if ( DRGC()->cart->update_tems_us_status( 'NOT_ELIGIBLE' ) ) $tems_us_status = 'NOT_ELIGIBLE';
+    }
+}
 ?>
 <div class="dr-checkout-wrapper" id="dr-checkout-page-wrapper">
     <div class="dr-checkout-wrapper__actions">
@@ -53,6 +76,20 @@ $is_tems_us_enabled = is_array( $customer_tax_regs ) && ( $customer_tax_regs['US
         </div>
 
     </div>
+
+    <?php if ( $is_tems_us_enabled ): ?>
+
+        <div id="tems-us-result">
+
+            <input type="hidden" id="tems-us-status" name="tems-us-status" value="<?php echo $tems_us_status; ?>">
+
+            <p class="cert-msg cert-good d-none"><?php _e( 'This order is tax exempt.', 'digital-river-global-commerce' )?></p>
+
+            <p class="cert-msg cert-error d-none"><?php _e( 'Your tax exempt certificate on file is not valid for this order. Please update your address or continue with a taxable order.', 'digital-river-global-commerce' )?></p>
+
+        </div>
+
+    <?php endif; ?>
 
     <div class="dr-checkout-wrapper__content">
 
@@ -125,3 +162,20 @@ $is_tems_us_enabled = is_array( $customer_tax_regs ) && ( $customer_tax_regs['US
     </div>
 
 </div>
+
+<?php if ( $is_tems_us_enabled ): ?>
+
+    <div id="certificate-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dr-certModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <?php include_once DRGC_PLUGIN_DIR . 'public/partials/drgc-my-certificates.php'; ?>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="dr-btn dr-btn-black close" data-dismiss="modal"><?php _e( 'Close', 'digital-river-global-commerce' ) ?></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php endif; ?>
