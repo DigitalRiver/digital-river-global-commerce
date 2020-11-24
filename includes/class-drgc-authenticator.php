@@ -133,55 +133,57 @@ class DRGC_Authenticator extends AbstractHttpService {
 		return $this->dr_session_token = $this->getNoAuth( $url )['session_token'];
 	}
 
-	/**
-	 * Generate session-aware access token
-	 *
-	 * @param string $key - public API key
-	 * @param array $data - post body
-	 * 
-	 * @return array $res
-	 */
-	public function generate_access_token( $key = '', $data = array() ) {
-		try {
-			if ( empty( $key ) ) {
-				// via Oauth 2.0
-				if ( ! $data ) {
-					$data = array(
-						"dr_session_token" => $this->dr_session_token,
-						"grant_type" => "password"
-					);
-				}
-	
-				$this->setFormContentType();
-				$res = $this->post( "/oauth20/token",  $this->prepareParams( $data ) );
-			} else {
-				// via a public API key
-				$params = array(
-					'apiKey' => $key
-				);
-		
-				$url = $this->authUrl() . '?' . http_build_query( $params );
-				$res = $this->getNoAuth( $url );
-			}
-			 
-			$this->token         = $res['access_token'] ?? null;
-			$this->tokenType     = $res['token_type'] ?? null;
-			$this->expires_in    = $res['expires_in'] ?? null;
-			$this->refresh_token = $res['refresh_token'] ?? null;
-	
-			if ( ! is_null( $this->session ) ) {
-				$this->session->generate_session_cookie_data( array(
-					'session_token' => $this->dr_session_token,
-					'refresh_token' => $this->refresh_token ?: null,
-					'access_token'  => $this->token,
-				));
-			}
-	
-			return $res;
-		} catch (\Exception $e) {
-			return "Error: # {$e->getMessage()}";
-		}
-	}
+  /**
+   * Generate session-aware access token
+   *
+   * @param string $key - public API key
+   * @param array  $data - post body
+   * @param string $session_token - dr_session_token
+   * 
+   * @return array $res
+   */
+  public function generate_access_token( $key = '', $data = array(), $session_token = '' ) {
+    try {
+      if ( empty( $key ) ) {
+        // via Oauth 2.0
+        if ( ! $data ) {
+          $data = array(
+            'dr_session_token' => empty( $session_token ) ? $this->dr_session_token : $session_token,
+            'grant_type'       => 'password'
+          );
+        }
+
+        $this->setFormContentType();
+        $this->token = '';
+        $res = $this->post( '/oauth20/token',  $this->prepareParams( $data ), false );
+      } else {
+        // via a public API key
+        $params = array(
+          'apiKey' => $key
+        );
+    
+        $url = $this->authUrl() . '?' . http_build_query( $params );
+        $res = $this->getNoAuth( $url );
+      }
+
+      $this->token         = $res['access_token'] ?? null;
+      $this->tokenType     = $res['token_type'] ?? null;
+      $this->expires_in    = $res['expires_in'] ?? null;
+      $this->refresh_token = $res['refresh_token'] ?? null;
+
+      if ( ! is_null( $this->session ) ) {
+        $this->session->generate_session_cookie_data( array(
+          'session_token' => $this->dr_session_token,
+          'refresh_token' => $this->refresh_token ?: null,
+          'access_token'  => $this->token,
+        ));
+      }
+
+      return $res;
+    } catch (\Exception $e) {
+      return "Error: # {$e->getMessage()}";
+    }
+  }
 
 	/**
 	 * Generate full access token
@@ -229,21 +231,26 @@ class DRGC_Authenticator extends AbstractHttpService {
   /**
    * Generate full access token
    *
-   * @param string $username
-   * @param string $password
+   * @param string $external_reference_id
+   * @param string $session_token
    *
    * @return mixed $data
    */
-  public function generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token = false ) {
+  public function generate_access_token_by_ref_id( $external_reference_id, $session_token = '' ) {
     $data = array (
       'dr_external_reference_id' => $external_reference_id,
       'grant_type'               => 'client_credentials'
     );
+    
+    if ( ! empty( $session_token ) ) {
+      $data['dr_session_token'] = $session_token;
+    } 
 
     $this->setFormContentType();
 
     try {
-      $res = $this->post( "/oauth20/token", $this->prepareParams( $data ), $force_bearer_token );
+      $this->token = '';
+      $res = $this->post( '/oauth20/token', $this->prepareParams( $data ), false );
 
       if ( isset( $res['error'] ) ) {
         return $res;

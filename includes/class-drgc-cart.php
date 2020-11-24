@@ -114,6 +114,24 @@ class DRGC_Cart extends AbstractHttpService {
     }
 
     /**
+     * Create a brand new cart by using the new access token.
+     */
+    public function create_new_cart( $token = '' ) {
+        $data = array(
+            'cart' => ''
+        );
+
+        if ( ! empty( $token ) ) {
+            $this->token = $token;
+        }
+
+        $this->setJsonContentType();
+        $res = $this->post( '/v1/shoppers/me/carts/active', $data );
+
+        return $res;
+    }
+
+    /**
      * Retrieve a shopper order. Supply a full 
      * access token as well as an order ID and Digital 
      * River will provide all corresponding order information.

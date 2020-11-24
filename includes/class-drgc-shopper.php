@@ -115,8 +115,8 @@ class DRGC_Shopper extends AbstractHttpService {
 	 *
 	 * @return mixed $data
 	 */
-	public function generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token = true ) {
-		$data = $this->authenticator->generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token );
+	public function generate_access_token_by_ref_id( $external_reference_id ) {
+		$data = $this->authenticator->generate_access_token_by_ref_id( $external_reference_id );
 
 		$this->refresh_token        = null;
 		$this->token                = isset( $data['access_token'] ) ? $data['access_token'] : null;
