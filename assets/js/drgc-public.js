@@ -12529,6 +12529,7 @@ var DRCommerceApi = function ($, params) {
 
   var updateShopper = function updateShopper() {
     var queryStrings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var requestPayload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var queryStr = $.param(queryStrings);
     return new Promise(function (resolve, reject) {
       $.ajax({
@@ -12539,6 +12540,7 @@ var DRCommerceApi = function ($, params) {
           Authorization: "Bearer ".concat(params.accessToken)
         },
         url: "".concat(apiBaseUrl, "/me?").concat(queryStr),
+        data: !$.isEmptyObject(requestPayload) ? JSON.stringify(requestPayload) : null,
         success: function success(data) {
           resolve(data);
         },
@@ -15357,48 +15359,84 @@ jQuery(document).ready(function ($) {
     e.preventDefault();
     toggleMiniCartDisplay();
   });
-  $('body').on('click', '.dr-buy-btn', function (e) {
-    e.preventDefault();
-    var $this = $(e.target);
+  $('body').on('click', '.dr-buy-btn', /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(e) {
+      var $this, pdLink, productID, existingProducts, quantity, locale, currency, shopperData, queryObj;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              $this = $(e.target);
 
-    if ($this.hasClass('dr-redirect-buy-btn')) {
-      var pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
-      window.location.href = pdLink;
-    } else {
-      var productID = $this.attr('data-product-id') ? $this.attr('data-product-id').toString() : '';
-      var existingProducts = lineItems.map(function (li) {
-        var uri = li.product.uri;
-        var id = uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
-        return {
-          id: id,
-          quantity: li.quantity
-        };
-      });
-      var quantity = 1; // PD page
+              if (!$this.hasClass('dr-redirect-buy-btn')) {
+                _context.next = 7;
+                break;
+              }
 
-      if ($('#dr-pd-offers').length) {
-        quantity = parseInt($('#dr-pd-qty').val(), 10);
-      }
+              pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
+              window.location.href = pdLink;
+              _context.next = 19;
+              break;
 
-      existingProducts.forEach(function (pd) {
-        if (pd.id === productID) {
-          quantity += pd.quantity;
+            case 7:
+              productID = $this.attr('data-product-id') ? $this.attr('data-product-id').toString() : '';
+              existingProducts = lineItems.map(function (li) {
+                var uri = li.product.uri;
+                var id = uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
+                return {
+                  id: id,
+                  quantity: li.quantity
+                };
+              });
+              quantity = 1; // PD page
+
+              if ($('#dr-pd-offers').length) {
+                quantity = parseInt($('#dr-pd-qty').val(), 10);
+              }
+
+              existingProducts.forEach(function (pd) {
+                if (pd.id === productID) {
+                  quantity += pd.quantity;
+                }
+              });
+              locale = drgc_params.drLocale;
+              currency = $('#dr-currency-selector > a.dr-selected-currency').data('drCurrency');
+              shopperData = {
+                'shopper': {
+                  'locale': locale,
+                  'currency': currency
+                }
+              };
+              _context.next = 17;
+              return commerce_api.updateShopper({}, shopperData);
+
+            case 17:
+              queryObj = {
+                productId: productID,
+                quantity: quantity,
+                testOrder: drgc_params.testOrder,
+                expand: 'all'
+              };
+              commerce_api.updateCart(queryObj).then(function (res) {
+                displayMiniCart(res.cart);
+                openMiniCartDisplay();
+              })["catch"](function (jqXHR) {
+                return checkout_utils.apiErrorHandler(jqXHR);
+              });
+
+            case 19:
+            case "end":
+              return _context.stop();
+          }
         }
-      });
-      var queryObj = {
-        productId: productID,
-        quantity: quantity,
-        testOrder: drgc_params.testOrder,
-        expand: 'all'
-      };
-      commerce_api.updateCart(queryObj).then(function (res) {
-        displayMiniCart(res.cart);
-        openMiniCartDisplay();
-      })["catch"](function (jqXHR) {
-        return checkout_utils.apiErrorHandler(jqXHR);
-      });
-    }
-  });
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
   $('.dr-minicart-display').on('click', '.dr-minicart-item-remove-btn', function (e) {
     e.preventDefault();
     var lineItemID = $(e.target).data('line-item-id');
@@ -15407,36 +15445,36 @@ jQuery(document).ready(function ($) {
     commerce_api.removeLineItem(lineItemID).then(function () {
       return commerce_api.getCart();
     }).then( /*#__PURE__*/function () {
-      var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(res) {
+      var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(res) {
         var tokenInfo;
-        return regenerator_default.a.wrap(function _callee$(_context) {
+        return regenerator_default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
                 if (!(res.cart.totalItemsInCart === 0 && !sessionStorage.getItem('drgcTokenRenewed') && taxRegs.customerType)) {
-                  _context.next = 11;
+                  _context2.next = 11;
                   break;
                 }
 
-                _context.prev = 1;
-                _context.next = 4;
+                _context2.prev = 1;
+                _context2.next = 4;
                 return checkout_utils.recreateAccessToken();
 
               case 4:
-                tokenInfo = _context.sent;
+                tokenInfo = _context2.sent;
 
                 if (tokenInfo && tokenInfo.access_token) {
                   sessionStorage.setItem('drgcTokenRenewed', 'true');
                   location.reload();
                 }
 
-                _context.next = 11;
+                _context2.next = 11;
                 break;
 
               case 8:
-                _context.prev = 8;
-                _context.t0 = _context["catch"](1);
-                console.error(_context.t0);
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                console.error(_context2.t0);
 
               case 11:
                 $('.dr-minicart-display').removeClass('dr-loading');
@@ -15444,14 +15482,14 @@ jQuery(document).ready(function ($) {
 
               case 13:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, null, [[1, 8]]);
+        }, _callee2, null, [[1, 8]]);
       }));
 
-      return function (_x) {
-        return _ref.apply(this, arguments);
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
       };
     }())["catch"](function (jqXHR) {
       return checkout_utils.apiErrorHandler(jqXHR);
