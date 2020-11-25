@@ -1,7 +1,7 @@
 const DRCommerceApi = (($, params) => {
   const apiBaseUrl = `https://${params.domain}/v1/shoppers`;
 
-  const updateShopper = (queryStrings = {}) => {
+  const updateShopper = (queryStrings = {}, requestPayload = {}) => {
     const queryStr = $.param(queryStrings);
 
     return new Promise((resolve, reject) => {
@@ -13,6 +13,7 @@ const DRCommerceApi = (($, params) => {
           Authorization: `Bearer ${params.accessToken}`
         },
         url: `${apiBaseUrl}/me?${queryStr}`,
+        data: !$.isEmptyObject(requestPayload) ? JSON.stringify(requestPayload) : null,
         success: (data) => {
           resolve(data);
         },

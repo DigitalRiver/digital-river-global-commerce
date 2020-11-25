@@ -26,7 +26,6 @@ class DR_Shortcode_Checkout {
    * @param array $atts Shortcode attributes.
    */
   public static function output( $atts ) {
-    $locales = get_option( 'drgc_store_locales' );
     $current_locale = drgc_get_current_dr_locale();
     $selected_country = substr( $current_locale, strpos( $current_locale, '_') + 1 );
     $address = array(
@@ -47,7 +46,7 @@ class DR_Shortcode_Checkout {
 
     drgc_get_template(
       'checkout/checkout.php',
-      compact( 'cart', 'customer', 'usa_states', 'locales', 'steps_titles', 'current_locale', 'selected_country', 'tax_schema' )
+      compact( 'cart', 'customer', 'usa_states', 'steps_titles', 'current_locale', 'selected_country', 'tax_schema' )
     );
   }
 }

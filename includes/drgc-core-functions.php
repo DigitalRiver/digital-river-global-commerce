@@ -135,30 +135,6 @@ function drgc_the_posts_pagination( $wp_query ) {
 }
 
 /**
- * Currency switcher (Old currency selector, will be deprecated after it's not used by any theme)
- */
-function drgc_currency_toggler( string $classes = '' ) {
-	$locales = get_option( 'drgc_store_locales' );
-	$current_locale = DRGC()->shopper->get_locale();
-
-	if ( ! empty( $locales['locales'] ) && count( $locales['locales'] ) > 1 ) {
-		$output = "<div class=\"dr-currency-toggler {$classes}\">";
-		$output .= sprintf("<span>%s</span>", __( 'Currency: ', 'digital-river-global-commerce' ) );
-		$output .= '<select class="custom-select dr-currency-select">';
-
-		foreach ( $locales['locales'] as $locale => $currency ) {
-			$output .= "<option ";
-			$output .= $current_locale === $locale ? 'selected ' : '';
-			$output .= "data-locale=\"{$locale}\" value=\"{$currency}\">";
-			$output .= "{$currency}</option>";
-		}
-
-		$output .= '</select></div>';
-		echo $output;
-	}
-}
-
-/**
  * Get product post by external meta ID
  *
  * @param int $gc_id external ID
@@ -337,38 +313,6 @@ function drgc_code_to_counry( $code, $abriviated = false ) {
 	}
 
 	return $countries[$code];
-}
-
-/**
- * Get pricing info based on current locale and currency
- *
- * @param int $post_id
- * @return array|bool
- */
-function drgc_get_product_pricing( $post_id = 0 ) {
-	if ( ! $post_id ) return false;
-
-	$store_currencies = get_option( 'drgc_store_locales' );
-	$product_pricing = get_post_meta( absint( $post_id ), 'loc_pricing', true );
-	$current_locale = DRGC()->shopper->get_locale();
-	$current_currency = $store_currencies['locales'][ $current_locale ];
-	$cart = DRGC()->cart->cart;
-
-	if ( $cart ) {
-		$current_currency = isset( $cart['pricing']['orderTotal']['currency'] ) ? $cart['pricing']['orderTotal']['currency'] : '';
-	}
-
-	if ( isset( $product_pricing[ $current_currency ] ) ) {
-		return $product_pricing[ $current_currency ];
-	} else {
-		return array(
-			'currency'          => get_post_meta( absint( $post_id ), 'currency', true ),
-			'list_price_value'  => get_post_meta( absint( $post_id ), 'list_price_value', true ),
-			'sale_price_value'  => get_post_meta( absint( $post_id ), 'sale_price_value', true ),
-			'price'             => get_post_meta( absint( $post_id ), 'price', true ),
-			'regular_price'     => get_post_meta( absint( $post_id ), 'regular_price', true ),
-		);
-	}
 }
 
 /**

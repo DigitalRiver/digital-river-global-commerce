@@ -179,7 +179,7 @@ jQuery(document).ready(($) => {
         toggleMiniCartDisplay();
     });
 
-    $('body').on('click', '.dr-buy-btn', (e) => {
+    $('body').on('click', '.dr-buy-btn', async (e) => {
         e.preventDefault();
         const $this = $(e.target);
 
@@ -208,6 +208,17 @@ jQuery(document).ready(($) => {
                     quantity += pd.quantity;
                 }
             });
+
+            const locale = drgc_params.drLocale;
+            const currency = $('#dr-currency-selector > a.dr-selected-currency').data('drCurrency');
+            const shopperData = {
+                'shopper': {
+                  'locale': locale,
+                  'currency': currency
+                }
+            };
+
+            await DRCommerceApi.updateShopper({}, shopperData);
 
             const queryObj = {
                 productId: productID,

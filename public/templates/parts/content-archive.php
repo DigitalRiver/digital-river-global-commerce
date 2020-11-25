@@ -18,24 +18,6 @@ $gc_parent_id = '';
 $post_id = '';
 
 if ( $variations && isset( $variations[0] ) ) {
-    //sort variation array by sale price here!
-    $variations_sort = array();
-  
-    foreach ( $variations as $variation ) {
-        $var_pricing = drgc_get_product_pricing( $variation->ID );
-        $variation->sale_price = $var_pricing['sale_price_value'];
-        array_push( $variations_sort, $variation );
-    }
-
-    usort( $variations_sort, function( $a, $b ) {
-        if ( $a == $b ) {
-            return 0;
-        }
-
-        return ( $a->sale_price < $b->sale_price ) ? -1 : 1;
-    });
-
-    $variations = $variations_sort;
     $post_parent = $variations[0]->post_parent;
     $gc_parent_id = get_post_meta( $post_parent, 'gc_product_id', true );
     $post_id = $variations[0]->ID;
