@@ -91,7 +91,8 @@ const ImportModule = (($) => {
               const params = new URLSearchParams(location.search);
               $importMsg.text('All products have been imported. Cleaning up...');
               $progress.hide();
-              params.set('import-complete', true);
+              params.set('import_complete', true);
+              params.delete('post_status'); // Make sure it will be redirected to "All" instead of "Trash" tab
               window.location.search = params.toString();
             }, 3000);
           }
