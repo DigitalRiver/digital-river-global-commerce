@@ -30,9 +30,10 @@
     </table>
     <div class="locales-wrap">
         <nav class="nav-tab-wrapper">
-            <a href="?post=<?php echo get_the_ID() ?>&action=edit&locale=<?php echo $locales['default_locale'] ?>" class="nav-tab <?php if ( $active_tab === $locales['default_locale'] ):?>nav-tab-active<?php endif; ?>"><?php echo $locales['default_locale'] ?> (<?php echo __( 'Default', 'digital-river-global-commerce' ); ?>)</a>
-            <?php foreach ( $locales['locales'] as $locale => $currency ) : ?>
-                <?php if ( $locales['default_locale'] !== $locale ) : ?>
+            <a href="?post=<?php echo get_the_ID() ?>&action=edit&locale=<?php echo $default_locale ?>" class="nav-tab <?php if ( $active_tab === $default_locale ):?>nav-tab-active<?php endif; ?>"><?php echo $default_locale ?> (<?php echo __( 'Default', 'digital-river-global-commerce' ); ?>)</a>
+            <?php foreach ( $locale_options as $idx => $locale_option ) : ?>
+                <?php $locale = $locale_option['dr_locale']; ?>
+                <?php if ( $default_locale !== $locale ) : ?>
                     <a href="?post=<?php echo get_the_ID() ?>&action=edit&locale=<?php echo $locale ?>" class="nav-tab <?php if ( $active_tab === $locale ):?>nav-tab-active<?php endif; ?>"><?php echo $locale ?></a>
                 <?php endif; ?>
             <?php endforeach; ?>

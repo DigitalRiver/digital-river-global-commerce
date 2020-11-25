@@ -2,6 +2,10 @@ import DRCommerceApi from "./commerce-api";
 
 const CheckoutUtils = (($, params) => {
   const localizedText = drgc_params.translations;
+  const countryOptionsObj = { shipping: [], billing: [] };
+  const getFetchedCountryOptions = (addressType) => {
+    return countryOptionsObj[addressType] || [];
+  };
 
   const updateDeliverySection = (shippingOption) => {
     const $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
@@ -16,10 +20,11 @@ const CheckoutUtils = (($, params) => {
       `${addressObj.firstName} ${addressObj.lastName}`,
       addressObj.line1,
       addressObj.city,
+      addressObj.countrySubdivision,
       addressObj.country
     ];
 
-    $target.text(addressArr.join(', '));
+    $target.text(addressArr.filter(v => v).join(', '));
   };
 
   const updateSummaryLabels = () => {
@@ -288,11 +293,12 @@ const CheckoutUtils = (($, params) => {
           addressTypes.forEach((type) => {
             const savedCountryCode = $(`#${type}-field-country`).val();
             const $options = $(response).find(`select[name=${type.toUpperCase()}country] option`).not(':first');
-            const optionArr = $.map($options, (option) => { return option.value; });
+            countryOptionsObj[type] = $.map($options, (option) => { return option.value; });
+
             $(`#${type}-field-country option`).not(':first').remove();
             $(`#${type}-field-country`)
               .append($options)
-              .val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
+              .val(countryOptionsObj[type].indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
           });
           resolve();
         },
@@ -577,6 +583,7 @@ const CheckoutUtils = (($, params) => {
   };
 
   return {
+    getFetchedCountryOptions,
     updateDeliverySection,
     updateAddressSection,
     updateSummaryLabels,

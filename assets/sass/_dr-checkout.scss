@@ -237,6 +237,21 @@
     }
 }
 
+#dr-payment-info {
+  margin: 15px 0 30px;
+}
+
+.DR-card-header {
+  h5 {
+    margin: 0 !important;
+  }
+
+  button {
+    padding: 1.5rem 1rem !important;
+    background-color: transparent !important;
+  }
+}
+
 #DRPayment3ds {
     display: flex;
     justify-content: center;

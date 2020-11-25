@@ -2603,6 +2603,12 @@ body.dr-loading:after { position: fixed; }
 
 @media (max-width: 767.98px) { .dr-checkout .help-text { font-size: 10px; } }
 
+#dr-payment-info { margin: 15px 0 30px; }
+
+.DR-card-header h5 { margin: 0 !important; }
+
+.DR-card-header button { padding: 1.5rem 1rem !important; background-color: transparent !important; }
+
 #DRPayment3ds { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center; -webkit-box-align: center; -ms-flex-align: center; align-items: center; }
 
 #DRPayment3ds #dr3dsecure { left: 0 !important; }

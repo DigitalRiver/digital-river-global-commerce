@@ -12570,6 +12570,14 @@ var DRCommerceApi = function ($, params) {
 
 var CheckoutUtils = function ($, params) {
   var localizedText = drgc_params.translations;
+  var countryOptionsObj = {
+    shipping: [],
+    billing: []
+  };
+
+  var getFetchedCountryOptions = function getFetchedCountryOptions(addressType) {
+    return countryOptionsObj[addressType] || [];
+  };
 
   var updateDeliverySection = function updateDeliverySection(shippingOption) {
     var $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
@@ -12579,8 +12587,10 @@ var CheckoutUtils = function ($, params) {
   };
 
   var updateAddressSection = function updateAddressSection(addressObj, $target) {
-    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.country];
-    $target.text(addressArr.join(', '));
+    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.countrySubdivision, addressObj.country];
+    $target.text(addressArr.filter(function (v) {
+      return v;
+    }).join(', '));
   };
 
   var updateSummaryLabels = function updateSummaryLabels() {
@@ -12815,11 +12825,11 @@ var CheckoutUtils = function ($, params) {
           addressTypes.forEach(function (type) {
             var savedCountryCode = $("#".concat(type, "-field-country")).val();
             var $options = $(response).find("select[name=".concat(type.toUpperCase(), "country] option")).not(':first');
-            var optionArr = $.map($options, function (option) {
+            countryOptionsObj[type] = $.map($options, function (option) {
               return option.value;
             });
             $("#".concat(type, "-field-country option")).not(':first').remove();
-            $("#".concat(type, "-field-country")).append($options).val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
+            $("#".concat(type, "-field-country")).append($options).val(countryOptionsObj[type].indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
           });
           resolve();
         },
@@ -13080,6 +13090,7 @@ var CheckoutUtils = function ($, params) {
   };
 
   return {
+    getFetchedCountryOptions: getFetchedCountryOptions,
     updateDeliverySection: updateDeliverySection,
     updateAddressSection: updateAddressSection,
     updateSummaryLabels: updateSummaryLabels,
@@ -13465,12 +13476,9 @@ var CartModule = function ($) {
       }
     }).then(function (data) {
       if (lineItems && lineItems.length) {
-        if (checkout_utils.isSubsAddedToCart(lineItems)) {
-          var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-          var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
-          $('#dr-checkout-btn').prop('href', href);
-        }
-
+        var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
+        var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
+        $('#dr-checkout-btn').prop('href', href);
         renderOffers(lineItems);
         $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
       } else {
@@ -13830,6 +13838,10 @@ var CheckoutModule = function ($) {
       payload[addressType][key] = obj.value;
     });
     payload[addressType].emailAddress = email;
+
+    if (payload[addressType].country && payload[addressType].country !== 'US') {
+      payload[addressType].countrySubdivision = '';
+    }
 
     if (addressType === 'billing') {
       delete payload[addressType].business;
@@ -14810,6 +14822,8 @@ jQuery(document).ready( /*#__PURE__*/function () {
               $(document).on('click', '.address', function (e) {
                 var addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
                 var $address = $(e.target).closest('.address');
+                var countryOptions = checkout_utils.getFetchedCountryOptions(addressType);
+                var savedCountryCode = $address.data('country');
                 $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
                 $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
                 $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
@@ -14817,7 +14831,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 $('#' + addressType + '-field-city').val($address.data('city')).focus();
                 $('#' + addressType + '-field-state').val($address.data('state')).change();
                 $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
-                $('#' + addressType + '-field-country').val($address.data('country')).change();
+                $('#' + addressType + '-field-country').val(countryOptions.indexOf(savedCountryCode) > -1 ? savedCountryCode : '').change();
                 $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
                 $('.dr-address-book-btn.' + addressType).removeClass('active');
                 $('.dr-address-book.' + addressType).slideUp();
@@ -16446,7 +16460,8 @@ jquery_default()(function () {
   var localizedText = drgc_params.translations;
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');
-  $body.append($ordersModal); // Order detail click
+  var $orderIdModal = jquery_default()('#order-id-modal');
+  $body.append($ordersModal).append($orderIdModal); // Order detail click
 
   function fillOrderModal(_x3) {
     return _fillOrderModal.apply(this, arguments);
@@ -16595,14 +16610,17 @@ jquery_default()(function () {
     if (window.isSecureContext) {
       var id = $link.data('orderId');
       navigator.clipboard.writeText(id).then(function () {
-        alert(localizedText.copied_order_id_msg + ': ' + id);
-        window.open($link.prop('href'), '_blank');
+        $orderIdModal.find('.dr-modal-footer > button').data('rowUrl', $link.prop('href'));
+        $orderIdModal.drModal('show');
       }, function () {
         console.error('Unable to write to clipboard.');
       });
     } else {
       window.open($link.prop('href'), '_blank');
     }
+  });
+  $orderIdModal.on('hidden.dr.bs.modal', function (e) {
+    window.open(jquery_default()(e.target).find('.dr-modal-footer > button').data('rowUrl'), '_blank');
   });
   jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
     var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
