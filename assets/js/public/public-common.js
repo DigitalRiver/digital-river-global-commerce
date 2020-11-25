@@ -41,7 +41,7 @@ jQuery(document).ready(($) => {
     e.preventDefault();
   });
 
-  $('#dr-locale-selector .dr-other-locales a').click((e) => {
+  $('#dr-locale-selector .dr-other-locales a').click(async (e) => {
     e.preventDefault();
     const $this = $(e.target);
     const targetLocale = $this.data('dr-locale');
@@ -65,7 +65,7 @@ jQuery(document).ready(($) => {
 
     DRCommerceApi.updateShopper({ currency: targetCurrency })
       .then(() => {
-        window.location.reload(true);
+        window.location.reload();
       })
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);

@@ -119,6 +119,8 @@ jQuery(document).ready(($) => {
             const emptyMsg = `<p class="dr-minicart-empty-msg">${localizedText.empty_cart_msg}</p>`;
             $body.append(emptyMsg);
             $display.append($body);
+
+            if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
         } else {
             const params = (new URL(window.location)).searchParams;
             const locale = params.get('locale') || drgc_params.drLocale;
@@ -177,7 +179,7 @@ jQuery(document).ready(($) => {
         toggleMiniCartDisplay();
     });
 
-    $('body').on('click', '.dr-buy-btn', (e) => {
+    $('body').on('click', '.dr-buy-btn', async (e) => {
         e.preventDefault();
         const $this = $(e.target);
 
@@ -207,6 +209,17 @@ jQuery(document).ready(($) => {
                 }
             });
 
+            const locale = drgc_params.drLocale;
+            const currency = $('#dr-currency-selector > a.dr-selected-currency').data('drCurrency');
+            const shopperData = {
+                'shopper': {
+                  'locale': locale,
+                  'currency': currency
+                }
+            };
+
+            await DRCommerceApi.updateShopper({}, shopperData);
+
             const queryObj = {
                 productId: productID,
                 quantity,
@@ -225,11 +238,25 @@ jQuery(document).ready(($) => {
     $('.dr-minicart-display').on('click', '.dr-minicart-item-remove-btn', (e) => {
         e.preventDefault();
         const lineItemID = $(e.target).data('line-item-id');
+        const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
 
         $('.dr-minicart-display').addClass('dr-loading');
         DRCommerceApi.removeLineItem(lineItemID)
             .then(() => DRCommerceApi.getCart())
-            .then((res) => {
+            .then(async (res) => {
+                if ((res.cart.totalItemsInCart === 0) && !sessionStorage.getItem('drgcTokenRenewed') && taxRegs.customerType) {
+                    try {
+                        const tokenInfo = await CheckoutUtils.recreateAccessToken();
+                  
+                        if (tokenInfo && tokenInfo.access_token) {
+                            sessionStorage.setItem('drgcTokenRenewed', 'true');
+                            location.reload();
+                        }
+                    } catch (error) {
+                        console.error(error);
+                    }
+                }
+
                 $('.dr-minicart-display').removeClass('dr-loading');
                 displayMiniCart(res.cart);
             })
