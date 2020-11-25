@@ -13400,12 +13400,9 @@ var CartModule = function ($) {
       }
     }).then(function (data) {
       if (lineItems && lineItems.length) {
-        if (checkout_utils.isSubsAddedToCart(lineItems)) {
-          var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-          var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
-          $('#dr-checkout-btn').prop('href', href);
-        }
-
+        var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
+        var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
+        $('#dr-checkout-btn').prop('href', href);
         renderOffers(lineItems);
         $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
       } else {
