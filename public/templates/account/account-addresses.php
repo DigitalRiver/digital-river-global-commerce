@@ -204,8 +204,9 @@
                                 <?php echo __( 'Select Country *', 'digital-river-global-commerce' ); ?>
                             </option>
 
-                            <?php foreach ( $locales['locales'] as $locale => $currency ): ?>
+                            <?php foreach ( $locale_options as $idx => $locale_option ): ?>
                                 <?php
+                                    $locale = $locale_option['dr_locale'];
                                     $country = drgc_code_to_counry($locale);
                                     $abrvCountyName = drgc_code_to_counry($locale, true);
 
@@ -426,8 +427,9 @@
                         <option value="">
                             <?php echo __( 'Select Country *', 'digital-river-global-commerce' ); ?>
                         </option>
-                        <?php foreach ( $locales['locales'] as $locale => $currency ): ?>
+                        <?php foreach ( $locale_options as $idx => $locale_option ): ?>
                             <?php
+                                $locale = $locale_option['dr_locale'];
                                 $country = drgc_code_to_counry($locale);
                                 $abrvCountyName = drgc_code_to_counry($locale, true);
 
