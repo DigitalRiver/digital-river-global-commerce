@@ -104,8 +104,9 @@ $(() => {
     const localizedText = drgc_params.translations;
     const $body = $('body');
     const $ordersModal = $('#ordersModal');
+    const $orderIdModal = $('#order-id-modal');
 
-    $body.append($ordersModal);
+    $body.append($ordersModal).append($orderIdModal);
 
     // Order detail click
     async function fillOrderModal(e) {
@@ -260,14 +261,18 @@ $(() => {
             const id = $link.data('orderId');
 
             navigator.clipboard.writeText(id).then(() => {
-                alert(localizedText.copied_order_id_msg + ': ' + id);
-                window.open($link.prop('href'), '_blank');
+                $orderIdModal.find('.dr-modal-footer > button').data('rowUrl', $link.prop('href'));
+                $orderIdModal.drModal('show');
             }, () => {
                 console.error('Unable to write to clipboard.');
             });
         } else {
             window.open($link.prop('href'), '_blank');
         }
+    });
+
+    $orderIdModal.on('hidden.dr.bs.modal', (e) => {
+        window.open($(e.target).find('.dr-modal-footer > button').data('rowUrl'), '_blank');
     });
 
     $('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', async (e) => {
