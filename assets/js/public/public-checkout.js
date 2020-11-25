@@ -7,6 +7,7 @@ const CheckoutModule = (($) => {
 
     const moveToNextSection = ($section) => {
         const $nextSection = $section.next();
+        const $prevSection = $section.prev();
 
         $section.removeClass('active').addClass('closed');
         $nextSection.addClass('active').removeClass('closed');
@@ -38,8 +39,15 @@ const CheckoutModule = (($) => {
             $section.find('span.dr-accordion__edit').show();
         }
 
-        if ($nextSection.hasClass('dr-checkout__tax-id') && (sessionStorage.getItem('drgcTaxExempt') === 'true') && sessionStorage.getItem('drgcTaxRegs')) {
-            $('#checkout-tax-id-form').trigger('submit');
+        if ($nextSection.hasClass('dr-checkout__tax-id')) {
+            if (sessionStorage.getItem('drgcTaxExempt') === 'true' && sessionStorage.getItem('drgcTaxRegs')) {
+                $('#checkout-tax-id-form').trigger('submit');
+            }
+
+            if ($.trim($('#tax-id-error-msg').html()) !== '') {
+                $section.find('span.dr-accordion__edit').show();
+                $prevSection.find('span.dr-accordion__edit').show();
+            }
         }
 
         if ($section.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') !== 'true') {
@@ -105,6 +113,10 @@ const CheckoutModule = (($) => {
         });
 
         payload[addressType].emailAddress = email;
+
+        if (payload[addressType].country && payload[addressType].country !== 'US') {
+          payload[addressType].countrySubdivision = '';
+        }
 
         if (addressType === 'billing') {
             delete payload[addressType].business;
@@ -182,6 +194,53 @@ const CheckoutModule = (($) => {
         });
     };
 
+    const initTaxIdentifier = async (cart, address, selectedCountry) => {
+        const lineItems = cart.lineItems.lineItem;
+        const tax = cart.pricing.tax.value;
+        const isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && (tax === 0);
+
+        sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+
+        if (!isTaxExempt || (address.country !== selectedCountry) || ($.trim($('#tax-id-error-msg').html()) !== '')) {
+            try {
+                await CheckoutUtils.getTaxSchema(address);
+                FloatLabel.init();
+            } catch (error) {
+                throw new Error(error);
+            }
+        }
+
+        try {
+            const taxRegs = await CheckoutUtils.getTaxRegistration();
+
+            if (taxRegs.customerType) {
+                const shopperType = taxRegs.customerType;
+                const taxIds = taxRegs.taxRegistrations;
+
+                $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
+
+                for (const element of taxIds) {
+                    const $field = $('#tax-id-field-' + element.key);
+
+                    if (!$field.length) {
+                        taxRegs['country'] = 'NOT_SUPPORTED';
+                        break;
+                    } else {
+                        $field.val(element.value).parent().addClass('active').parent().removeClass('d-none');
+                    }
+                }
+
+                sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+            } else {
+                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+            }
+
+            return taxRegs;
+        } catch (error) {
+            throw new Error(error);
+        }
+    };
+
     const initShopperTypeRadio = () => {
         $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
 
@@ -220,7 +279,8 @@ const CheckoutModule = (($) => {
         preselectShippingOption,
         applyPaymentAndSubmitCart,
         initShopperTypeRadio,
-        isTaxExempt
+        isTaxExempt,
+        initTaxIdentifier
     };
 })(jQuery);
 
@@ -365,6 +425,7 @@ jQuery(document).ready(($) => {
         $('#checkout-billing-form').on('submit', async (e) => {
             e.preventDefault();
 
+            const $section = $('.dr-checkout__billing');
             const $form = $(e.target);
             const $button = $form.find('button[type="submit"]');
             const billingSameAsShipping = $('[name="checkbox-billing"]').is(':visible:checked');
@@ -425,63 +486,46 @@ jQuery(document).ready(($) => {
                     return DRCommerceApi.updateCart({}, companyMeta);
                 })
                 .then(() => DRCommerceApi.getCart({expand: 'all'}))
+                .then(async (data) => {
+                    if ($('#checkout-tax-id-form').length) {
+                        const address = requestShipping ? addressPayload.shipping : addressPayload.billing;
+                        const taxRegs = await CheckoutModule.initTaxIdentifier(data.cart, address, selectedCountry);
+
+                        if (taxRegs.country && taxRegs.country === 'NOT_SUPPORTED') {
+                            CheckoutUtils.updateAddressSection(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                            throw new Error(localizedText.unsupport_country_error_msg);
+                        }
+                    } else {
+                        if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+                    }
+
+                    return new Promise(resolve => resolve(data));
+                })
                 .then((data) => {
                     return requestShipping ?
                         CheckoutModule.preselectShippingOption(data) :
                         new Promise(resolve => resolve(data));
                 })
-                .catch((jqXHR) => {
+                .catch((error) => {
+                    console.error(error);
                     $button.removeClass('sending').blur();
-                    CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-                    console.error(jqXHR);
-                });
-            
-            if ($('#checkout-tax-id-form').length) {
-                const lineItems = updatedCart.cart.lineItems.lineItem;
-                const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
 
-                sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
-
-                if (!isTaxExempt) {
-                    const address = requestShipping ? addressPayload.shipping : addressPayload.billing;
-                    
-                    try {
-                        await CheckoutUtils.getTaxSchema(address);
-                        FloatLabel.init();
-                    } catch (error) {
-                        console.error(error);
-                    }
-
-                    if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                } else {
-                    try {
-                        const taxRegs = await CheckoutUtils.getTaxRegistration();
-
-                        if (Object.keys(taxRegs).length && taxRegs.customerType) {
-                            const taxIds = taxRegs.taxRegistrations;
-                            const shopperType = taxRegs.customerType;
-
-                            $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
-
-                            for (const element of taxIds) {
-                                const $field = $('#tax-id-field-' + element.key);
-
-                                if (!$field.length) {
-                                    break;
-                                } else {
-                                    $field.val(element.value).parent().addClass('active');
-                                }
-                            }
-
-                            sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+                    if (error.message === localizedText.unsupport_country_error_msg) {
+                        $('#tax-id-error-msg').text(error.message).show();
+        
+                        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                            finishedSectionIdx = $('.dr-checkout__el').index($section);
                         }
-                    } catch (error) {
-                        console.error(error);
+    
+                        CheckoutModule.moveToNextSection($section);
+                    } else {
+                        CheckoutModule.displayAddressErrMsg(error, $form.find('.dr-err-field'));
                     }
-                }
-            } else {
-                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-            }
+
+                    return false;
+                });
+
+            if (!updatedCart) return;
 
             const billingAddress = CheckoutUtils.getDropinBillingAddress(addressPayload);
             const lang = drLocale.split('_')[0];
@@ -530,8 +574,10 @@ jQuery(document).ready(($) => {
                     paymentResponse = res;
 
                     if (!res.paymentMethodTypes.length) {
-                        $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg).show();
+                        $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
                     }
+
+                    $('#tax-id-error-msg').text('').hide();
                 },
                 onCancel: (res) => {
                     paymentResponse = res;
@@ -576,6 +622,11 @@ jQuery(document).ready(($) => {
             const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
             let typeText = '';
             let taxIds = '';
+
+            if (taxRegs.country && taxRegs.country === 'NOT_SUPPORTED') {
+                $('#checkout-tax-id-form').hide();
+                return;
+            }
 
             if (isTaxExempt && Object.keys(taxRegs).length && taxRegs.customerType) {
                 const regs = taxRegs.taxRegistrations;
@@ -624,7 +675,7 @@ jQuery(document).ready(($) => {
                         .then((data) => {
                             const lineItems = data.cart.lineItems.lineItem;
                             const tax = data.cart.pricing.tax.value;
-                            const isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+                            const isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && (tax === 0);
 
                             sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                             CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
@@ -640,6 +691,8 @@ jQuery(document).ready(($) => {
                             $error.text(localizedText.invalid_tax_id_error_msg).show();
                             $button.removeClass('sending').blur();
                             console.error(error);
+
+                            if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
                         });
                 } else {
                     $button.removeClass('sending').blur();
@@ -813,6 +866,8 @@ jQuery(document).ready(($) => {
         $(document).on('click', '.address', (e) => {
             const addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
             const $address = $(e.target).closest('.address');
+            const countryOptions = CheckoutUtils.getFetchedCountryOptions(addressType);
+            const savedCountryCode = $address.data('country');
 
             $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
             $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
@@ -821,7 +876,7 @@ jQuery(document).ready(($) => {
             $('#' + addressType + '-field-city').val($address.data('city')).focus();
             $('#' + addressType + '-field-state').val($address.data('state')).change();
             $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
-            $('#' + addressType + '-field-country').val($address.data('country')).change();
+            $('#' + addressType + '-field-country').val(countryOptions.indexOf(savedCountryCode) > -1 ? savedCountryCode : '').change();
             $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
 
             $('.dr-address-book-btn.' + addressType).removeClass('active');

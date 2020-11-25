@@ -209,7 +209,8 @@ class DRGC_Post_Types {
     }
 
     $active_tab = isset( $_GET['locale'] ) ? $_GET['locale'] : 'en_US';
-    $locales = get_option( 'drgc_store_locales' );
+    $default_locale = get_option( 'drgc_default_locale' ) ?: 'en_US';
+    $locale_options = get_option( 'drgc_locale_options' ) ?: array();
     $price = $product_details['pricing']['formattedListPrice'];
 
     echo '<h2 id="drcc-link"><a href="https://gc.digitalriver.com/gc/ent/site/selectSite.do?siteID=' . get_option( 'drgc_site_id' ) . '" target="_blank">Manage Products</a></h2>';

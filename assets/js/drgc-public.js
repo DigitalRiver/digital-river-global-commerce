@@ -12047,6 +12047,14 @@ var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
 var CheckoutUtils = function ($, params) {
   var localizedText = drgc_params.translations;
+  var countryOptionsObj = {
+    shipping: [],
+    billing: []
+  };
+
+  var getFetchedCountryOptions = function getFetchedCountryOptions(addressType) {
+    return countryOptionsObj[addressType] || [];
+  };
 
   var updateDeliverySection = function updateDeliverySection(shippingOption) {
     var $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
@@ -12056,8 +12064,10 @@ var CheckoutUtils = function ($, params) {
   };
 
   var updateAddressSection = function updateAddressSection(addressObj, $target) {
-    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.country];
-    $target.text(addressArr.join(', '));
+    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.countrySubdivision, addressObj.country];
+    $target.text(addressArr.filter(function (v) {
+      return v;
+    }).join(', '));
   };
 
   var updateSummaryLabels = function updateSummaryLabels() {
@@ -12276,11 +12286,11 @@ var CheckoutUtils = function ($, params) {
           addressTypes.forEach(function (type) {
             var savedCountryCode = $("#".concat(type, "-field-country")).val();
             var $options = $(response).find("select[name=".concat(type.toUpperCase(), "country] option")).not(':first');
-            var optionArr = $.map($options, function (option) {
+            countryOptionsObj[type] = $.map($options, function (option) {
               return option.value;
             });
             $("#".concat(type, "-field-country option")).not(':first').remove();
-            $("#".concat(type, "-field-country")).append($options).val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
+            $("#".concat(type, "-field-country")).append($options).val(countryOptionsObj[type].indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
           });
           resolve();
         },
@@ -12456,7 +12466,36 @@ var CheckoutUtils = function ($, params) {
     });
   };
 
+  var recreateAccessToken = function recreateAccessToken() {
+    var data = {
+      action: 'drgc_recreate_access_token',
+      nonce: drgc_params.ajaxNonce
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.hasOwnProperty('error_description')) {
+            error = response.data.error_description;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          if (sessionStorage.getItem('drgcTaxExempt')) sessionStorage.removeItem('drgcTaxExempt');
+          if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
   return {
+    getFetchedCountryOptions: getFetchedCountryOptions,
     updateDeliverySection: updateDeliverySection,
     updateAddressSection: updateAddressSection,
     updateSummaryLabels: updateSummaryLabels,
@@ -12485,7 +12524,8 @@ var CheckoutUtils = function ($, params) {
     validateVatNumber: validateVatNumber,
     createTaxIdElement: createTaxIdElement,
     applyTaxRegistration: applyTaxRegistration,
-    getTaxRegistration: getTaxRegistration
+    getTaxRegistration: getTaxRegistration,
+    recreateAccessToken: recreateAccessToken
   };
 }(jQuery, drgc_params);
 
@@ -12500,6 +12540,7 @@ var DRCommerceApi = function ($, params) {
 
   var updateShopper = function updateShopper() {
     var queryStrings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var requestPayload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var queryStr = $.param(queryStrings);
     return new Promise(function (resolve, reject) {
       $.ajax({
@@ -12510,6 +12551,7 @@ var DRCommerceApi = function ($, params) {
           Authorization: "Bearer ".concat(params.accessToken)
         },
         url: "".concat(apiBaseUrl, "/me?").concat(queryStr),
+        data: !$.isEmptyObject(requestPayload) ? JSON.stringify(requestPayload) : null,
         success: function success(data) {
           resolve(data);
         },
@@ -13339,19 +13381,38 @@ var CartModule = function ($) {
         $('#dr-checkout-btn').remove();
         $('#cart-estimate').remove();
         $('.dr-cart-wrapper__content > .order-number').remove();
-        return new Promise(function (resolve) {
-          return resolve();
-        });
+        var taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+
+        if (taxRegs.customerType) {
+          if (sessionStorage.getItem('drgcTokenRenewed')) {
+            sessionStorage.removeItem('drgcTokenRenewed');
+            return new Promise(function (resolve) {
+              return resolve();
+            });
+          } else {
+            return checkout_utils.recreateAccessToken();
+          }
+        } else {
+          return new Promise(function (resolve) {
+            return resolve();
+          });
+        }
       }
-    }).then(function () {
+    }).then(function (data) {
       if (lineItems && lineItems.length) {
         var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
         var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
         $('#dr-checkout-btn').prop('href', href);
         renderOffers(lineItems);
+        $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
+      } else {
+        if (data && data.access_token) {
+          sessionStorage.setItem('drgcTokenRenewed', 'true');
+          location.reload();
+        } else {
+          $('.dr-cart__content').removeClass('dr-loading');
+        }
       }
-
-      $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
     })["catch"](function (jqXHR) {
       checkout_utils.apiErrorHandler(jqXHR);
       $('.dr-cart__content').removeClass('dr-loading');
@@ -13466,7 +13527,7 @@ jQuery(document).ready(function ($) {
     };
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');else $('body').addClass('dr-loading');
     commerce_api.updateShopper(queryParams).then(function () {
-      return location.reload(true);
+      return location.reload();
     })["catch"](function (jqXHR) {
       checkout_utils.apiErrorHandler(jqXHR);
       $('.dr-cart__content, body').removeClass('dr-loading');
@@ -13597,6 +13658,7 @@ var CheckoutModule = function ($) {
 
   var moveToNextSection = function moveToNextSection($section) {
     var $nextSection = $section.next();
+    var $prevSection = $section.prev();
     $section.removeClass('active').addClass('closed');
     $nextSection.addClass('active').removeClass('closed');
 
@@ -13627,8 +13689,15 @@ var CheckoutModule = function ($) {
       $section.find('span.dr-accordion__edit').show();
     }
 
-    if ($nextSection.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') === 'true' && sessionStorage.getItem('drgcTaxRegs')) {
-      $('#checkout-tax-id-form').trigger('submit');
+    if ($nextSection.hasClass('dr-checkout__tax-id')) {
+      if (sessionStorage.getItem('drgcTaxExempt') === 'true' && sessionStorage.getItem('drgcTaxRegs')) {
+        $('#checkout-tax-id-form').trigger('submit');
+      }
+
+      if ($.trim($('#tax-id-error-msg').html()) !== '') {
+        $section.find('span.dr-accordion__edit').show();
+        $prevSection.find('span.dr-accordion__edit').show();
+      }
     }
 
     if ($section.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') !== 'true') {
@@ -13693,6 +13762,10 @@ var CheckoutModule = function ($) {
       payload[addressType][key] = obj.value;
     });
     payload[addressType].emailAddress = email;
+
+    if (payload[addressType].country && payload[addressType].country !== 'US') {
+      payload[addressType].countrySubdivision = '';
+    }
 
     if (addressType === 'billing') {
       delete payload[addressType].business;
@@ -13816,6 +13889,129 @@ var CheckoutModule = function ($) {
     });
   };
 
+  var initTaxIdentifier = /*#__PURE__*/function () {
+    var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(cart, address, selectedCountry) {
+      var lineItems, tax, isTaxExempt, taxRegs, shopperType, taxIds, _iterator, _step, element, $field;
+
+      return regenerator_default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              lineItems = cart.lineItems.lineItem;
+              tax = cart.pricing.tax.value;
+              isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && tax === 0;
+              sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+
+              if (!(!isTaxExempt || address.country !== selectedCountry || $.trim($('#tax-id-error-msg').html()) !== '')) {
+                _context2.next = 14;
+                break;
+              }
+
+              _context2.prev = 5;
+              _context2.next = 8;
+              return checkout_utils.getTaxSchema(address);
+
+            case 8:
+              float_label.init();
+              _context2.next = 14;
+              break;
+
+            case 11:
+              _context2.prev = 11;
+              _context2.t0 = _context2["catch"](5);
+              throw new Error(_context2.t0);
+
+            case 14:
+              _context2.prev = 14;
+              _context2.next = 17;
+              return checkout_utils.getTaxRegistration();
+
+            case 17:
+              taxRegs = _context2.sent;
+
+              if (!taxRegs.customerType) {
+                _context2.next = 47;
+                break;
+              }
+
+              shopperType = taxRegs.customerType;
+              taxIds = taxRegs.taxRegistrations;
+              $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
+              _iterator = public_checkout_createForOfIteratorHelper(taxIds);
+              _context2.prev = 23;
+
+              _iterator.s();
+
+            case 25:
+              if ((_step = _iterator.n()).done) {
+                _context2.next = 36;
+                break;
+              }
+
+              element = _step.value;
+              $field = $('#tax-id-field-' + element.key);
+
+              if ($field.length) {
+                _context2.next = 33;
+                break;
+              }
+
+              taxRegs['country'] = 'NOT_SUPPORTED';
+              return _context2.abrupt("break", 36);
+
+            case 33:
+              $field.val(element.value).parent().addClass('active').parent().removeClass('d-none');
+
+            case 34:
+              _context2.next = 25;
+              break;
+
+            case 36:
+              _context2.next = 41;
+              break;
+
+            case 38:
+              _context2.prev = 38;
+              _context2.t1 = _context2["catch"](23);
+
+              _iterator.e(_context2.t1);
+
+            case 41:
+              _context2.prev = 41;
+
+              _iterator.f();
+
+              return _context2.finish(41);
+
+            case 44:
+              sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+              _context2.next = 48;
+              break;
+
+            case 47:
+              if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+
+            case 48:
+              return _context2.abrupt("return", taxRegs);
+
+            case 51:
+              _context2.prev = 51;
+              _context2.t2 = _context2["catch"](14);
+              throw new Error(_context2.t2);
+
+            case 54:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[5, 11], [14, 51], [23, 38, 41, 44]]);
+    }));
+
+    return function initTaxIdentifier(_x2, _x3, _x4) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
   var initShopperTypeRadio = function initShopperTypeRadio() {
     $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
 
@@ -13856,7 +14052,8 @@ var CheckoutModule = function ($) {
     preselectShippingOption: preselectShippingOption,
     applyPaymentAndSubmitCart: applyPaymentAndSubmitCart,
     initShopperTypeRadio: initShopperTypeRadio,
-    isTaxExempt: isTaxExempt
+    isTaxExempt: isTaxExempt,
+    initTaxIdentifier: initTaxIdentifier
   };
 }(jQuery);
 
@@ -13990,27 +14187,27 @@ jQuery(document).ready(function ($) {
       }
     });
     $('#checkout-billing-form').on('submit', /*#__PURE__*/function () {
-      var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
-        var $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, lineItems, isTaxExempt, _address, taxRegs, taxIds, shopperType, _iterator, _step, element, $field, billingAddress, lang, config;
-
-        return regenerator_default.a.wrap(function _callee2$(_context2) {
+      var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
+        var $section, $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, billingAddress, lang, config;
+        return regenerator_default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
                 e.preventDefault();
+                $section = $('.dr-checkout__billing');
                 $form = $(e.target);
                 $button = $form.find('button[type="submit"]');
                 billingSameAsShipping = $('[name="checkbox-billing"]').is(':visible:checked');
                 isFormValid = CheckoutModule.validateAddress($form);
 
                 if (isFormValid) {
-                  _context2.next = 7;
+                  _context4.next = 8;
                   break;
                 }
 
-                return _context2.abrupt("return");
+                return _context4.abrupt("return");
 
-              case 7:
+              case 8:
                 addressPayload.billing = billingSameAsShipping ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
                 if ($('#billing-field-company-name').length) addressPayload.billing.companyName = $('#billing-field-company-name').val();
                 cartRequest = {
@@ -14028,7 +14225,7 @@ jQuery(document).ready(function ($) {
                   }
                 }
 
-                _context2.next = 14;
+                _context4.next = 15;
                 return commerce_api.updateCartBillingAddress({
                   expand: 'all'
                 }, cartRequest).then(function () {
@@ -14066,134 +14263,91 @@ jQuery(document).ready(function ($) {
                   return commerce_api.getCart({
                     expand: 'all'
                   });
-                }).then(function (data) {
+                }).then( /*#__PURE__*/function () {
+                  var _ref4 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(data) {
+                    var _address, taxRegs;
+
+                    return regenerator_default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            if (!$('#checkout-tax-id-form').length) {
+                              _context3.next = 10;
+                              break;
+                            }
+
+                            _address = requestShipping ? addressPayload.shipping : addressPayload.billing;
+                            _context3.next = 4;
+                            return CheckoutModule.initTaxIdentifier(data.cart, _address, selectedCountry);
+
+                          case 4:
+                            taxRegs = _context3.sent;
+
+                            if (!(taxRegs.country && taxRegs.country === 'NOT_SUPPORTED')) {
+                              _context3.next = 8;
+                              break;
+                            }
+
+                            checkout_utils.updateAddressSection(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                            throw new Error(localizedText.unsupport_country_error_msg);
+
+                          case 8:
+                            _context3.next = 11;
+                            break;
+
+                          case 10:
+                            if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+
+                          case 11:
+                            return _context3.abrupt("return", new Promise(function (resolve) {
+                              return resolve(data);
+                            }));
+
+                          case 12:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
+
+                  return function (_x6) {
+                    return _ref4.apply(this, arguments);
+                  };
+                }()).then(function (data) {
                   return requestShipping ? CheckoutModule.preselectShippingOption(data) : new Promise(function (resolve) {
                     return resolve(data);
                   });
-                })["catch"](function (jqXHR) {
+                })["catch"](function (error) {
+                  console.error(error);
                   $button.removeClass('sending').blur();
-                  CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-                  console.error(jqXHR);
+
+                  if (error.message === localizedText.unsupport_country_error_msg) {
+                    $('#tax-id-error-msg').text(error.message).show();
+
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                      finishedSectionIdx = $('.dr-checkout__el').index($section);
+                    }
+
+                    CheckoutModule.moveToNextSection($section);
+                  } else {
+                    CheckoutModule.displayAddressErrMsg(error, $form.find('.dr-err-field'));
+                  }
+
+                  return false;
                 });
 
-              case 14:
-                updatedCart = _context2.sent;
+              case 15:
+                updatedCart = _context4.sent;
 
-                if (!$('#checkout-tax-id-form').length) {
-                  _context2.next = 70;
+                if (updatedCart) {
+                  _context4.next = 18;
                   break;
                 }
 
-                lineItems = updatedCart.cart.lineItems.lineItem;
-                isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
-                sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+                return _context4.abrupt("return");
 
-                if (isTaxExempt) {
-                  _context2.next = 33;
-                  break;
-                }
-
-                _address = requestShipping ? addressPayload.shipping : addressPayload.billing;
-                _context2.prev = 21;
-                _context2.next = 24;
-                return checkout_utils.getTaxSchema(_address);
-
-              case 24:
-                float_label.init();
-                _context2.next = 30;
-                break;
-
-              case 27:
-                _context2.prev = 27;
-                _context2.t0 = _context2["catch"](21);
-                console.error(_context2.t0);
-
-              case 30:
-                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                _context2.next = 68;
-                break;
-
-              case 33:
-                _context2.prev = 33;
-                _context2.next = 36;
-                return checkout_utils.getTaxRegistration();
-
-              case 36:
-                taxRegs = _context2.sent;
-
-                if (!(Object.keys(taxRegs).length && taxRegs.customerType)) {
-                  _context2.next = 63;
-                  break;
-                }
-
-                taxIds = taxRegs.taxRegistrations;
-                shopperType = taxRegs.customerType;
-                $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
-                _iterator = public_checkout_createForOfIteratorHelper(taxIds);
-                _context2.prev = 42;
-
-                _iterator.s();
-
-              case 44:
-                if ((_step = _iterator.n()).done) {
-                  _context2.next = 54;
-                  break;
-                }
-
-                element = _step.value;
-                $field = $('#tax-id-field-' + element.key);
-
-                if ($field.length) {
-                  _context2.next = 51;
-                  break;
-                }
-
-                return _context2.abrupt("break", 54);
-
-              case 51:
-                $field.val(element.value).parent().addClass('active');
-
-              case 52:
-                _context2.next = 44;
-                break;
-
-              case 54:
-                _context2.next = 59;
-                break;
-
-              case 56:
-                _context2.prev = 56;
-                _context2.t1 = _context2["catch"](42);
-
-                _iterator.e(_context2.t1);
-
-              case 59:
-                _context2.prev = 59;
-
-                _iterator.f();
-
-                return _context2.finish(59);
-
-              case 62:
-                sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
-
-              case 63:
-                _context2.next = 68;
-                break;
-
-              case 65:
-                _context2.prev = 65;
-                _context2.t2 = _context2["catch"](33);
-                console.error(_context2.t2);
-
-              case 68:
-                _context2.next = 71;
-                break;
-
-              case 70:
-                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-
-              case 71:
+              case 18:
                 billingAddress = checkout_utils.getDropinBillingAddress(addressPayload);
                 lang = drLocale.split('_')[0];
 
@@ -14239,8 +14393,10 @@ jQuery(document).ready(function ($) {
                     paymentResponse = res;
 
                     if (!res.paymentMethodTypes.length) {
-                      $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg).show();
+                      $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
                     }
+
+                    $('#tax-id-error-msg').text('').hide();
                   },
                   onCancel: function onCancel(res) {
                     paymentResponse = res;
@@ -14254,16 +14410,16 @@ jQuery(document).ready(function ($) {
                   console.error(error.message);
                 }
 
-              case 78:
+              case 25:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, null, [[21, 27], [33, 65], [42, 56, 59, 62]]);
+        }, _callee4);
       }));
 
-      return function (_x2) {
-        return _ref2.apply(this, arguments);
+      return function (_x5) {
+        return _ref3.apply(this, arguments);
       };
     }());
     $(document).on('click', 'input[name="shopper-type"]', function () {
@@ -14284,12 +14440,12 @@ jQuery(document).ready(function ($) {
       checkout_utils.validateVatNumber(e);
     });
     $('#checkout-tax-id-form').on('submit', /*#__PURE__*/function () {
-      var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
+      var _ref5 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee5(e) {
         var $button, $section, $error, isTaxExempt, taxRegs, typeText, taxIds, regs, shopperType, $taxFields, _regs;
 
-        return regenerator_default.a.wrap(function _callee3$(_context3) {
+        return regenerator_default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 e.preventDefault();
                 $button = $(e.target).find('button[type="submit"]');
@@ -14300,8 +14456,17 @@ jQuery(document).ready(function ($) {
                 typeText = '';
                 taxIds = '';
 
+                if (!(taxRegs.country && taxRegs.country === 'NOT_SUPPORTED')) {
+                  _context5.next = 11;
+                  break;
+                }
+
+                $('#checkout-tax-id-form').hide();
+                return _context5.abrupt("return");
+
+              case 11:
                 if (!(isTaxExempt && Object.keys(taxRegs).length && taxRegs.customerType)) {
-                  _context3.next = 15;
+                  _context5.next = 18;
                   break;
                 }
 
@@ -14312,10 +14477,10 @@ jQuery(document).ready(function ($) {
                 });
                 typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
                 $error.text('').hide();
-                _context3.next = 28;
+                _context5.next = 31;
                 break;
 
-              case 15:
+              case 18:
                 $button.addClass('sending').blur();
                 shopperType = $('input[name="shopper-type"]:checked').val();
                 $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
@@ -14345,11 +14510,11 @@ jQuery(document).ready(function ($) {
                 typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
 
                 if (!_regs.length) {
-                  _context3.next = 26;
+                  _context5.next = 29;
                   break;
                 }
 
-                _context3.next = 24;
+                _context5.next = 27;
                 return checkout_utils.applyTaxRegistration(shopperType, _regs).then(function (data) {
                   sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
                   return commerce_api.getCart({
@@ -14358,7 +14523,7 @@ jQuery(document).ready(function ($) {
                 }).then(function (data) {
                   var lineItems = data.cart.lineItems.lineItem;
                   var tax = data.cart.pricing.tax.value;
-                  var isTaxExempt = CheckoutModule.isTaxExempt(lineItems);
+                  var isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && tax === 0;
                   sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                   checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                   $button.removeClass('sending').blur();
@@ -14372,17 +14537,18 @@ jQuery(document).ready(function ($) {
                   $error.text(localizedText.invalid_tax_id_error_msg).show();
                   $button.removeClass('sending').blur();
                   console.error(error);
+                  if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
                 });
 
-              case 24:
-                _context3.next = 28;
+              case 27:
+                _context5.next = 31;
                 break;
 
-              case 26:
+              case 29:
                 $button.removeClass('sending').blur();
                 $error.text('').hide();
 
-              case 28:
+              case 31:
                 $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
 
                 if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -14391,16 +14557,16 @@ jQuery(document).ready(function ($) {
 
                 CheckoutModule.moveToNextSection($section);
 
-              case 31:
+              case 34:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3);
+        }, _callee5);
       }));
 
-      return function (_x3) {
-        return _ref3.apply(this, arguments);
+      return function (_x7) {
+        return _ref5.apply(this, arguments);
       };
     }()); // Submit delivery form
 
@@ -14539,6 +14705,8 @@ jQuery(document).ready(function ($) {
     $(document).on('click', '.address', function (e) {
       var addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
       var $address = $(e.target).closest('.address');
+      var countryOptions = checkout_utils.getFetchedCountryOptions(addressType);
+      var savedCountryCode = $address.data('country');
       $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
       $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
       $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
@@ -14546,7 +14714,7 @@ jQuery(document).ready(function ($) {
       $('#' + addressType + '-field-city').val($address.data('city')).focus();
       $('#' + addressType + '-field-state').val($address.data('state')).change();
       $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
-      $('#' + addressType + '-field-country').val($address.data('country')).change();
+      $('#' + addressType + '-field-country').val(countryOptions.indexOf(savedCountryCode) > -1 ? savedCountryCode : '').change();
       $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
       $('.dr-address-book-btn.' + addressType).removeClass('active');
       $('.dr-address-book.' + addressType).slideUp();
@@ -14593,6 +14761,8 @@ jQuery(document).ready(function ($) {
 // CONCATENATED MODULE: ./assets/js/public/public-common.js
 
 
+
+
 var CommonModule = {};
 
 (function (w) {
@@ -14632,16 +14802,34 @@ jQuery(document).ready(function ($) {
   $('#dr-locale-selector .dr-current-locale, #dr-currency-selector, .dr-selected-currency').click(function (e) {
     e.preventDefault();
   });
-  $('#dr-locale-selector .dr-other-locales a').click(function (e) {
-    e.preventDefault();
-    var $this = $(e.target);
-    var targetLocale = $this.data('dr-locale');
-    var params = new URLSearchParams(location.search);
-    $('body').addClass('dr-loading');
-    $('ul.dr-other-locales').hide();
-    params.set('locale', targetLocale);
-    window.location.search = params.toString();
-  });
+  $('#dr-locale-selector .dr-other-locales a').click( /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(e) {
+      var $this, targetLocale, params;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              $this = $(e.target);
+              targetLocale = $this.data('dr-locale');
+              params = new URLSearchParams(location.search);
+              $('body').addClass('dr-loading');
+              $('ul.dr-other-locales').hide();
+              params.set('locale', targetLocale);
+              window.location.search = params.toString();
+
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
   $('#dr-currency-selector .dr-other-currencies a').click(function (e) {
     e.preventDefault();
     var $this = $(e.target);
@@ -14651,7 +14839,7 @@ jQuery(document).ready(function ($) {
     commerce_api.updateShopper({
       currency: targetCurrency
     }).then(function () {
-      window.location.reload(true);
+      window.location.reload();
     })["catch"](function (jqXHR) {
       checkout_utils.apiErrorHandler(jqXHR);
     });
@@ -15025,6 +15213,8 @@ var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableA
 // CONCATENATED MODULE: ./assets/js/public/public-pdp.js
 
 
+
+
 /* global drgc_params, iFrameResize */
 
 /* eslint-disable no-alert, no-console */
@@ -15139,6 +15329,7 @@ jQuery(document).ready(function ($) {
       var emptyMsg = "<p class=\"dr-minicart-empty-msg\">".concat(localizedText.empty_cart_msg, "</p>");
       $body.append(emptyMsg);
       $display.append($body);
+      if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
     } else {
       var params = new URL(window.location).searchParams;
       var locale = params.get('locale') || drgc_params.drLocale;
@@ -15182,58 +15373,139 @@ jQuery(document).ready(function ($) {
     e.preventDefault();
     toggleMiniCartDisplay();
   });
-  $('body').on('click', '.dr-buy-btn', function (e) {
-    e.preventDefault();
-    var $this = $(e.target);
+  $('body').on('click', '.dr-buy-btn', /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(e) {
+      var $this, pdLink, productID, existingProducts, quantity, locale, currency, shopperData, queryObj;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              $this = $(e.target);
 
-    if ($this.hasClass('dr-redirect-buy-btn')) {
-      var pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
-      window.location.href = pdLink;
-    } else {
-      var productID = $this.attr('data-product-id') ? $this.attr('data-product-id').toString() : '';
-      var existingProducts = lineItems.map(function (li) {
-        var uri = li.product.uri;
-        var id = uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
-        return {
-          id: id,
-          quantity: li.quantity
-        };
-      });
-      var quantity = 1; // PD page
+              if (!$this.hasClass('dr-redirect-buy-btn')) {
+                _context.next = 7;
+                break;
+              }
 
-      if ($('#dr-pd-offers').length) {
-        quantity = parseInt($('#dr-pd-qty').val(), 10);
-      }
+              pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
+              window.location.href = pdLink;
+              _context.next = 19;
+              break;
 
-      existingProducts.forEach(function (pd) {
-        if (pd.id === productID) {
-          quantity += pd.quantity;
+            case 7:
+              productID = $this.attr('data-product-id') ? $this.attr('data-product-id').toString() : '';
+              existingProducts = lineItems.map(function (li) {
+                var uri = li.product.uri;
+                var id = uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
+                return {
+                  id: id,
+                  quantity: li.quantity
+                };
+              });
+              quantity = 1; // PD page
+
+              if ($('#dr-pd-offers').length) {
+                quantity = parseInt($('#dr-pd-qty').val(), 10);
+              }
+
+              existingProducts.forEach(function (pd) {
+                if (pd.id === productID) {
+                  quantity += pd.quantity;
+                }
+              });
+              locale = drgc_params.drLocale;
+              currency = $('#dr-currency-selector > a.dr-selected-currency').data('drCurrency');
+              shopperData = {
+                'shopper': {
+                  'locale': locale,
+                  'currency': currency
+                }
+              };
+              _context.next = 17;
+              return commerce_api.updateShopper({}, shopperData);
+
+            case 17:
+              queryObj = {
+                productId: productID,
+                quantity: quantity,
+                testOrder: drgc_params.testOrder,
+                expand: 'all'
+              };
+              commerce_api.updateCart(queryObj).then(function (res) {
+                displayMiniCart(res.cart);
+                openMiniCartDisplay();
+              })["catch"](function (jqXHR) {
+                return checkout_utils.apiErrorHandler(jqXHR);
+              });
+
+            case 19:
+            case "end":
+              return _context.stop();
+          }
         }
-      });
-      var queryObj = {
-        productId: productID,
-        quantity: quantity,
-        testOrder: drgc_params.testOrder,
-        expand: 'all'
-      };
-      commerce_api.updateCart(queryObj).then(function (res) {
-        displayMiniCart(res.cart);
-        openMiniCartDisplay();
-      })["catch"](function (jqXHR) {
-        return checkout_utils.apiErrorHandler(jqXHR);
-      });
-    }
-  });
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
   $('.dr-minicart-display').on('click', '.dr-minicart-item-remove-btn', function (e) {
     e.preventDefault();
     var lineItemID = $(e.target).data('line-item-id');
+    var taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
     $('.dr-minicart-display').addClass('dr-loading');
     commerce_api.removeLineItem(lineItemID).then(function () {
       return commerce_api.getCart();
-    }).then(function (res) {
-      $('.dr-minicart-display').removeClass('dr-loading');
-      displayMiniCart(res.cart);
-    })["catch"](function (jqXHR) {
+    }).then( /*#__PURE__*/function () {
+      var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(res) {
+        var tokenInfo;
+        return regenerator_default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(res.cart.totalItemsInCart === 0 && !sessionStorage.getItem('drgcTokenRenewed') && taxRegs.customerType)) {
+                  _context2.next = 11;
+                  break;
+                }
+
+                _context2.prev = 1;
+                _context2.next = 4;
+                return checkout_utils.recreateAccessToken();
+
+              case 4:
+                tokenInfo = _context2.sent;
+
+                if (tokenInfo && tokenInfo.access_token) {
+                  sessionStorage.setItem('drgcTokenRenewed', 'true');
+                  location.reload();
+                }
+
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                console.error(_context2.t0);
+
+              case 11:
+                $('.dr-minicart-display').removeClass('dr-loading');
+                displayMiniCart(res.cart);
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }())["catch"](function (jqXHR) {
       return checkout_utils.apiErrorHandler(jqXHR);
     });
   });
@@ -15643,7 +15915,7 @@ jQuery(document).ready(function ($) {
           }
         }
 
-        location.reload(true);
+        location.reload();
       });
     });
     $(document).on('click', '#subs-change-qty-btn', function () {
@@ -15676,7 +15948,7 @@ jQuery(document).ready(function ($) {
             }
           }
 
-          location.reload(true);
+          location.reload();
         });
       }
     });
@@ -15831,7 +16103,8 @@ jquery_default()(function () {
   var localizedText = drgc_params.translations;
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');
-  $body.append($ordersModal); // Order detail click
+  var $orderIdModal = jquery_default()('#order-id-modal');
+  $body.append($ordersModal).append($orderIdModal); // Order detail click
 
   function fillOrderModal(_x) {
     return _fillOrderModal.apply(this, arguments);
@@ -15980,14 +16253,17 @@ jquery_default()(function () {
     if (window.isSecureContext) {
       var id = $link.data('orderId');
       navigator.clipboard.writeText(id).then(function () {
-        alert(localizedText.copied_order_id_msg + ': ' + id);
-        window.open($link.prop('href'), '_blank');
+        $orderIdModal.find('.dr-modal-footer > button').data('rowUrl', $link.prop('href'));
+        $orderIdModal.drModal('show');
       }, function () {
         console.error('Unable to write to clipboard.');
       });
     } else {
       window.open($link.prop('href'), '_blank');
     }
+  });
+  $orderIdModal.on('hidden.dr.bs.modal', function (e) {
+    window.open(jquery_default()(e.target).find('.dr-modal-footer > button').data('rowUrl'), '_blank');
   });
   jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
     var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(e) {
