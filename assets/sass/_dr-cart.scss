@@ -5,6 +5,12 @@
         padding: 0;
     }
 
+    > .order-number > p > span {
+        &:first-child {
+            font-weight: 700;
+        }
+    }
+
     &__actions,
     &__actions-bottom {
 

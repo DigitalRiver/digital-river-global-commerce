@@ -193,7 +193,9 @@ class DRGC_Public {
       'amount_label'                   => __('Amount', 'digital-river-global-commerce'),
       'status_label'                   => __('Status', 'digital-river-global-commerce'),
       'order_details_label'            => __('Order Details', 'digital-river-global-commerce'),
-      'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce')
+      'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce'),
+      'product_added_to_cart_msg'      => __('has been added to your cart.', 'digital-river-global-commerce'),
+      'general_product_name'           => __('The product', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
@@ -296,71 +298,70 @@ class DRGC_Public {
 		return $error_msgs;
 	}
 
-	public function dr_signup_ajax() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
+  public function dr_signup_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
 
-		$plugin = DRGC();
+    $plugin = DRGC();
 
-		if ( isset( $_POST['first_name'] ) && isset( $_POST['last_name'] ) &&
-			   isset( $_POST['username'] ) && isset( $_POST['password'] ) ) {
-			$first_name = sanitize_text_field( $_POST['first_name'] );
-			$last_name = sanitize_text_field( $_POST['last_name'] );
-			$email = sanitize_text_field( $_POST['username'] );
-			$password = sanitize_text_field( $_POST['password'] );
-			$confirm_password = sanitize_text_field( $_POST['confirm_password'] );
+    if ( isset( $_POST['first_name'] ) && isset( $_POST['last_name'] ) &&
+          isset( $_POST['username'] ) && isset( $_POST['password'] ) ) {
+      $first_name = sanitize_text_field( $_POST['first_name'] );
+      $last_name = sanitize_text_field( $_POST['last_name'] );
+      $email = sanitize_text_field( $_POST['username'] );
+      $password = sanitize_text_field( $_POST['password'] );
+      $confirm_password = sanitize_text_field( $_POST['confirm_password'] );
 
-			$error_msgs = array();
+      $error_msgs = array();
 
-			if ( ! is_email( $email ) ) {
-				array_push( $error_msgs, __( 'Please enter a valid email address.', 'digital-river-global-commerce' ) );
-			}
+      if ( ! is_email( $email ) ) {
+        array_push( $error_msgs, __( 'Please enter a valid email address.', 'digital-river-global-commerce' ) );
+      }
 
-			$error_msgs = array_merge( $error_msgs, $this->get_password_error_msgs( $password, $confirm_password ) );
+      $error_msgs = array_merge( $error_msgs, $this->get_password_error_msgs( $password, $confirm_password ) );
 
-			if ( !empty( $error_msgs ) ) {
-				wp_send_json_error( join( ' ', $error_msgs) );
-				return;
-			}
+      if ( !empty( $error_msgs ) ) {
+        wp_send_json_error( join( ' ', $error_msgs) );
+        return;
+      }
 
-			// Attemp WP user store
-			$userdata = array(
-				'user_login'  => $email,
-				'user_pass'   => $password,
-				'user_email'  => $email,
-				'first_name'  => $first_name,
-				'last_name'   => $last_name,
-				'role'        => 'subscriber'
-			);
+      // Attemp WP user store
+      $userdata = array(
+        'user_login'  => $email,
+        'user_pass'   => $password,
+        'user_email'  => $email,
+        'first_name'  => $first_name,
+        'last_name'   => $last_name,
+        'role'        => 'subscriber'
+      );
 
-			$user_id = wp_insert_user( $userdata ) ;
-			$externalReferenceId = hash( 'sha256', uniqid( $user_id, true ) );
+      $user_id = wp_insert_user( $userdata ) ;
+      $externalReferenceId = hash( 'sha256', uniqid( $user_id, true ) );
 
-			add_user_meta( $user_id, '_external_reference_id', $externalReferenceId);
+      add_user_meta( $user_id, '_external_reference_id', $externalReferenceId);
 
-			if ( is_wp_error( $user_id ) ) {
-				wp_send_json_error( $user_id->get_error_message() );
-				return;
-			}
+      if ( is_wp_error( $user_id ) ) {
+        wp_send_json_error( $user_id->get_error_message() );
+        return;
+      }
 
-			$attempt = $plugin->shopper->create_shopper( $email, $password, $first_name, $last_name, $email, $externalReferenceId );
+      $attempt = $plugin->shopper->create_shopper( $email, $password, $first_name, $last_name, $email, $externalReferenceId );
 
-			if ( ! is_null( $attempt ) && array_key_exists( 'errors', $attempt ) ) {
-				wp_delete_user( $user_id );
-				wp_send_json_error( $attempt );
-			} else {
-				$user = wp_authenticate( $email, $password );
+      if ( ! is_null( $attempt ) && array_key_exists( 'errors', $attempt ) ) {
+        wp_delete_user( $user_id );
+        wp_send_json_error( $attempt );
+      } else {
+        $user = wp_authenticate( $email, $password );
 
-				if ( is_wp_error( $user ) ) {
-					wp_send_json_error( $user );
-				}
+        if ( is_wp_error( $user ) ) {
+          wp_send_json_error( $user );
+        }
 
-				$attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
         wp_send_json_success( $attempt );
-			}
-		} else {
-			wp_send_json_error();
-		}
-	}
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
 
   public function checkout_as_guest_ajax() {
     check_ajax_referer( 'drgc_ajax', 'nonce' );

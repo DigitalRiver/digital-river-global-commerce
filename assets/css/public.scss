@@ -162,7 +162,7 @@ html {
 }
 /* Minicart
 ------------------------------------------------------------------------*/
-#dr-minicart, #dr-mobile-mini-cart {
+#dr-minicart, #dr-mobile-mini-cart, #sticky-mini-cart {
     .dr-minicart {
         &-display {
             display: flex;
@@ -490,6 +490,59 @@ input[type=radio] {
             padding-left: 15px;
         }
     }
+}
+
+#floating-cart {
+    display: inline-block;
+    background: transparent url(../images/floating-cart.svg) center/contain no-repeat;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+
+    @media only screen and (max-width: map-get($bs-breakpoints, sm)) {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    > .qty {
+        position: absolute;
+        border: #e74833;
+        border-radius: 15px;
+        background-color: #e74833;
+        color: #fff;
+        text-align: center;
+        top: 0;
+        left: 25px;
+        min-width: 25px;
+        height: 25px;
+        line-height: 25px;
+        cursor: pointer;
+        padding: 0 3px;
+        font-size: 14px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+}
+  
+#floating-cart:hover {
+    cursor: pointer;
+}
+
+#floating-cart.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#sticky-mini-cart > .dr-minicart-display {
+    top: 0;
 }
 
 /* Cart

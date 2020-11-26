@@ -177,6 +177,7 @@ jQuery(document).ready(($) => {
     $('.dr-minicart-toggle, .dr-minicart-close-btn').click((e) => {
         e.preventDefault();
         toggleMiniCartDisplay();
+        $('.dr-minicart-display').css('position', 'absolute');
     });
 
     $('body').on('click', '.dr-buy-btn', async (e) => {
@@ -187,7 +188,10 @@ jQuery(document).ready(($) => {
             const pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
             window.location.href = pdLink;
         } else {
-            const productID = $this.attr('data-product-id') ? $this.attr('data-product-id').toString() : '';
+            if (!$this.attr('data-product-id')) return;
+
+            const productID = $this.attr('data-product-id');
+            const productName = $this.attr('data-product-name') || localizedText.general_product_name;
             const existingProducts = lineItems.map((li) => {
                 const { uri } = li.product;
                 const id = uri.replace(`${DRCommerceApi.apiBaseUrl}/me/products/`, '');
@@ -218,7 +222,13 @@ jQuery(document).ready(($) => {
                 }
             };
 
-            await DRCommerceApi.updateShopper({}, shopperData);
+            $('body').addClass('dr-loading');
+
+            try {
+                await DRCommerceApi.updateShopper({}, shopperData);
+            } catch (error) {
+                console.error(error);
+            }
 
             const queryObj = {
                 productId: productID,
@@ -228,10 +238,11 @@ jQuery(document).ready(($) => {
             };
             DRCommerceApi.updateCart(queryObj)
                 .then(res => {
-                  displayMiniCart(res.cart);
-                  openMiniCartDisplay();
+                    drToast.displayMessage(`"${productName}" ${localizedText.product_added_to_cart_msg}`, 'success');
+                    displayMiniCart(res.cart);
                 })
-                .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
+                .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR))
+                .finally(() => $('body').removeClass('dr-loading'));
         }
     });
 
@@ -487,6 +498,42 @@ jQuery(document).ready(($) => {
 
             $buyBtn.attr('data-product-id', productId).prop('disabled', false);
         }
+    });
+
+    const $floatingCart = $('#floating-cart');
+    const $miniCart = $('.dr-minicart-display');
+
+    $(window).on('scroll', () => {      
+        if (($(window).scrollTop() > 150)) {
+            if ($miniCart.is(':visible')) {
+                if ($miniCart.css('top') === 0) {
+                    $floatingCart.removeClass('show');
+                    if (!$('#dr-minicart > .dr-minicart-display').lenght) $('#dr-minicart').append($miniCart);
+                } else {
+                    $miniCart.hide();
+                    $floatingCart.addClass('show');
+                }
+            } else {
+                $floatingCart.addClass('show');
+            }
+        } else {
+            $floatingCart.removeClass('show');
+            if (!$('#dr-minicart > .dr-minicart-display').lenght) $('#dr-minicart').append($miniCart);
+        }
+    });
+
+    $floatingCart.on('click', (e) => {
+        e.preventDefault();
+        $miniCart.css('position', 'fixed');
+        $floatingCart.removeClass('show');
+        if (!$('#sticky-mini-cart > .dr-minicart-display').lenght) $('#sticky-mini-cart').append($miniCart);
+        openMiniCartDisplay();
+    });
+
+    $('body').on('click', '#dr-minicart-view-cart-btn', (e) => {
+        e.preventDefault();
+        $('body').addClass('dr-loading');
+        window.location.href = $(e.target).attr('href');
     });
 });
 

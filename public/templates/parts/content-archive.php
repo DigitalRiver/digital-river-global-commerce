@@ -39,7 +39,7 @@ $gc_id = get_post_meta( $post_id, 'gc_product_id', true );
         <div class="dr-pd-info" style="display: none;">
             <?php the_title( '<h3 class="dr-pd-item-title">', '</h3>' ); ?>
             <p class="dr-pd-price dr-pd-item-price"></p>
-            <button type="button" class="dr-btn dr-buy-btn" data-parent-id="<?php echo $gc_parent_id; ?>" data-product-id="<?php echo $gc_id; ?>">
+            <button type="button" class="dr-btn dr-buy-btn" data-parent-id="<?php echo $gc_parent_id; ?>" data-product-id="<?php echo $gc_id; ?>" data-product-name="<?php echo the_title(); ?>">
                 <?php echo __( 'Add to Cart', 'digital-river-global-commerce'); ?>
             </button>
         </div>
