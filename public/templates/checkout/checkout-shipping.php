@@ -6,6 +6,7 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 }
 ?>
 <div class="dr-checkout__shipping dr-checkout__el">
+
     <div class="dr-accordion">
 
         <span class="dr-accordion__name">
@@ -27,24 +28,22 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
         <span class="dr-accordion__edit"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
     </div>
-
-    <?php if ( $is_logged_in ): ?>
-
-        <button class="dr-btn dr-btn-black dr-address-book-btn shipping" type="button"><?php echo __( 'My Address Book', 'digital-river-global-commerce' ); ?></button>
-
-        <div class="dr-address-book shipping" style="display: none;">
-        
-            <h4><?php echo __( 'Choose shipping address', 'digital-river-global-commerce' ); ?></h4>
-
-        </div>
-
-    <?php endif; ?>
     
     <form id="checkout-shipping-form" class="dr-panel-edit dr-panel-edit--shipping needs-validation" novalidate>
 
-         <div class="required-text">
-            <?php echo __( 'Fields marked with * are mandatory', 'digital-river-global-commerce' ); ?>
-         </div>
+        <?php if ( $is_logged_in ): ?>
+
+            <button class="dr-btn dr-btn-black dr-address-book-btn shipping" type="button"><?php echo __( 'My Address Book', 'digital-river-global-commerce' ); ?></button>
+
+            <div class="dr-address-book shipping" style="display: none;">
+
+                <h4><?php echo __( 'Choose shipping address', 'digital-river-global-commerce' ); ?></h4>
+
+            </div>
+
+        <?php endif; ?>
+        
+        <div class="required-text"><?php echo __( 'Fields marked with * are mandatory', 'digital-river-global-commerce' ); ?></div>
 
         <div class="form-group dr-panel-edit__el">
 

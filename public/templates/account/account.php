@@ -159,7 +159,7 @@ $account_company_name = ( $cert_count > 0 ) ? $customer_tax_regs['taxCertificate
             <div class="dr-tab-pane fade" id="list-certificates" role="tabpanel" aria-labelledby="list-certificates-list">
                 <div class="dr-h4">
                     <span class="back">&lsaquo;</span><?php _e( 'My Tax Certificates', 'digital-river-global-commerce' ); ?><span class="back close">&times;</span>
-                    <button class="certificate-add-btn" role="img" aria-label="Add New Certificate" title="Add New Certificate"></button>
+                    <button class="certificate-add-btn" id="add-new-cert" role="img" aria-label="Add New Certificate" title="Add New Certificate"></button>
                 </div>
                 <input type="hidden" id="account-company-name" name="account-company-name" value="<?php echo $account_company_name; ?>">
                 <div class="overflowContainer">
@@ -229,7 +229,7 @@ $account_company_name = ( $cert_count > 0 ) ? $customer_tax_regs['taxCertificate
                                         <?php endforeach; ?>
                                     </select>
                                     <div class="help-text row">
-                                        <p>*<?php _e( 'This should be the State or official entity authorizing your business as tax exempt. Note that your purchase may still be subject to taxes if yor exemption does not cover your Shipping/Billing State.', 'digital-river-global-commerce' ) ?></p>
+                                        <p>*<?php _e( 'This should be the State or official entity authorizing your business as tax exempt. Note that your purchase may still be subject to taxes if your exemption does not cover your Shipping/Billing State.', 'digital-river-global-commerce' ) ?></p>
                                     </div>
                                     <div class="invalid-feedback row">
                                         <?php _e( 'This field is required.', 'digital-river-global-commerce' ); ?>

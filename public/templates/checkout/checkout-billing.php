@@ -1,24 +1,7 @@
 <?php
-$billingAddress = $cart['cart']['billingAddress'];
-
 if ( ! ( isset( $billingAddress['firstName'] ) && isset( $billingAddress['lastName'] ) ) && $is_logged_in ) {
     $billingAddress = $default_address;
 }
-
-$companyEIN = '';
-$custom_attributes = $cart['cart']['customAttributes']['attribute'] ?? [];
-
-if ( count( $custom_attributes ) > 0 ) {
-    foreach( $custom_attributes as $attr ) {
-        if ( 'companyEIN' === $attr['name'] ) {
-            $companyEIN = $attr['value'];
-            break;
-        }
-    }
-}
-
-$company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty( $customer_tax_regs['eligibleCertificate'] ) ) ?
-    $customer_tax_regs['eligibleCertificate']['companyName'] : $billingAddress['companyName'];
 ?>
 <div class="dr-checkout__billing dr-checkout__el">
     <div class="dr-accordion">
@@ -39,7 +22,7 @@ $company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty(
 
         </span>
 
-        <span class="dr-accordion__edit"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+        <span class="dr-accordion__edit billing"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
     </div>
 
@@ -55,7 +38,7 @@ $company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty(
 
             <div class="field-checkbox">
 
-                <input type="checkbox" name="checkbox-billing" id="checkbox-billing" <?php echo ( $companyEIN === '' ) && $cart['cart']['hasPhysicalProduct'] ? 'checked="checked"' : '' ?>>
+                <input type="checkbox" name="checkbox-billing" id="checkbox-billing" <?php echo ( $cart['cart']['hasPhysicalProduct'] ) ? 'checked="checked"' : '' ?>>
 
                 <label for="checkbox-billing" class="checkbox-label">
 
@@ -66,26 +49,6 @@ $company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty(
             </div>
 
         </div>
-
-        <?php if ( 'en_US' === $current_locale ) : ?>
-
-            <div class="form-group dr-panel-edit__el">
-
-                <div class="field-checkbox">
-
-                    <input type="checkbox" name="checkbox-business" id="checkbox-business" <?php echo ( $companyEIN !== '' ) ? 'checked="checked"' : '' ?>>
-
-                    <label for="checkbox-business" class="checkbox-label">
-
-                        <?php echo __( 'Business Checkout', 'digital-river-global-commerce' ); ?>
-
-                    </label>
-
-                </div>
-
-            </div>
-
-        <?php endif; ?>
 
         <?php if ( $is_logged_in ): ?>
 
@@ -101,43 +64,11 @@ $company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty(
 
         <?php endif; ?>
 
-        <?php if ( 'en_US' === $current_locale ) : ?>
-
-            <div class="form-group dr-panel-edit__el form-group-business<?php echo ( $companyEIN === '' ) ? ' hide' : '' ?>">
-
-                <div class="float-container float-container--company-name">
-
-                    <label for="billing-field-company-name" class="float-label">
-
-                        <?php echo __( 'Company Name', 'digital-river-global-commerce' ); ?>
-
-                    </label>
-
-                    <input id="billing-field-company-name" type="text" name="billing-companyName" value="<?php echo ( $tems_us_status === 'ELIGIBLE_NOT_EXEMPTED' ) ? '' : $company_name; ?>" class="form-control float-field float-field--company-name" <?php echo ( $tems_us_status === 'ELIGIBLE_EXEMPTED' ) ? 'readonly' : '';?>>
-
-                </div>
-
-            </div>
-
-            <div class="form-group dr-panel-edit__el form-group-business<?php echo ( $companyEIN === '' ) ? ' hide' : '' ?>">
-
-                <div class="float-container float-container--company-ein">
-
-                    <label for="billing-field-company-ein" class="float-label">
-
-                        <?php echo __( 'Company EIN', 'digital-river-global-commerce' ); ?>
-
-                    </label>
-
-                    <input id="billing-field-company-ein" type="text" name="billing-companyEIN" value="<?php echo $companyEIN; ?>" class="form-control float-field float-field--company-ein">
-
-                </div>
-
-            </div>
-
-        <?php endif; ?>
-
         <div class="billing-section" <?php echo !$cart['cart']['hasPhysicalProduct'] ? 'style="display: block;"' : '' ?>>
+
+            <div class="required-text"><?php echo __( 'Fields marked with * are mandatory', 'digital-river-global-commerce' ); ?></div>
+
+            <input id="billing-field-company-name" type="hidden" name="billing-companyName" value="<?php echo $company_name; ?>">
 
             <div class="form-group dr-panel-edit__el">
 

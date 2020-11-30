@@ -328,19 +328,19 @@ const CheckoutUtils = (($, params) => {
     };
   };
 
-  const getDropinBillingAddress = (addressPayload) => {
+  const getDropinBillingAddress = (billingAddress) => {
     return {
-      firstName: addressPayload.billing.firstName,
-      lastName: addressPayload.billing.lastName,
-      email: addressPayload.billing.emailAddress,
-      phoneNumber: addressPayload.billing.phoneNumber,
+      firstName: billingAddress.firstName,
+      lastName: billingAddress.lastName,
+      email: billingAddress.emailAddress,
+      phoneNumber: billingAddress.phoneNumber,
       address: {
-        line1: addressPayload.billing.line1,
-        line2: addressPayload.billing.line2,
-        city: addressPayload.billing.city,
-        state: addressPayload.billing.countrySubdivision,
-        postalCode: addressPayload.billing.postalCode,
-        country: addressPayload.billing.country
+        line1: billingAddress.line1,
+        line2: billingAddress.line2,
+        city: billingAddress.city,
+        state: billingAddress.countrySubdivision,
+        postalCode: billingAddress.postalCode,
+        country: billingAddress.country
       }
     };
   };

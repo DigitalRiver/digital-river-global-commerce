@@ -39,13 +39,13 @@ class DR_Shortcode_Checkout {
     $customer_tax_regs = ( $is_logged_in && $current_locale === 'en_US' ) ? $plugin->shopper->get_shopper_tax_registration() : '';
     $usa_states = retrieve_usa_states();
     $steps_titles = apply_filters( 'drgc_checkout_titles', array(
-      'email'    => __( 'Email', 'digital-river-global-commerce' ),
-      'tems_us'  => __( 'Tax Exemption Application', 'digital-river-global-commerce' ),
-      'shipping' => __( 'Shipping information', 'digital-river-global-commerce' ),
-      'billing'  => __( 'Billing information', 'digital-river-global-commerce' ),
-      'tax_id'   => __( 'Tax Identifier', 'digital-river-global-commerce' ),
-      'delivery' => __( 'Delivery options', 'digital-river-global-commerce' ),
-      'payment'  => __( 'Payment', 'digital-river-global-commerce' ),
+      'email'      => __( 'Email', 'digital-river-global-commerce' ),
+      'tax_exempt' => __( 'Tax Exemption', 'digital-river-global-commerce' ),
+      'shipping'   => __( 'Shipping information', 'digital-river-global-commerce' ),
+      'billing'    => __( 'Billing information', 'digital-river-global-commerce' ),
+      'tax_id'     => __( 'Tax Identifier', 'digital-river-global-commerce' ),
+      'delivery'   => __( 'Delivery options', 'digital-river-global-commerce' ),
+      'payment'    => __( 'Payment', 'digital-river-global-commerce' ),
     ) );
 
     drgc_get_template(

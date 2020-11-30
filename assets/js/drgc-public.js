@@ -12859,19 +12859,19 @@ var CheckoutUtils = function ($, params) {
     };
   };
 
-  var getDropinBillingAddress = function getDropinBillingAddress(addressPayload) {
+  var getDropinBillingAddress = function getDropinBillingAddress(billingAddress) {
     return {
-      firstName: addressPayload.billing.firstName,
-      lastName: addressPayload.billing.lastName,
-      email: addressPayload.billing.emailAddress,
-      phoneNumber: addressPayload.billing.phoneNumber,
+      firstName: billingAddress.firstName,
+      lastName: billingAddress.lastName,
+      email: billingAddress.emailAddress,
+      phoneNumber: billingAddress.phoneNumber,
       address: {
-        line1: addressPayload.billing.line1,
-        line2: addressPayload.billing.line2,
-        city: addressPayload.billing.city,
-        state: addressPayload.billing.countrySubdivision,
-        postalCode: addressPayload.billing.postalCode,
-        country: addressPayload.billing.country
+        line1: billingAddress.line1,
+        line2: billingAddress.line2,
+        city: billingAddress.city,
+        state: billingAddress.countrySubdivision,
+        postalCode: billingAddress.postalCode,
+        country: billingAddress.country
       }
     };
   };
@@ -13731,21 +13731,33 @@ function public_checkout_arrayLikeToArray(arr, len) { if (len == null || len > a
 
 var CheckoutModule = function ($) {
   var localizedText = drgc_params.translations;
+  var requestShipping = drgc_params.cart.cart.shippingOptions.shippingOption ? true : false;
 
-  var moveToNextSection = function moveToNextSection($section) {
-    var $nextSection = $section.next().hasClass('dr-checkout__tems-us') ? $section.next().next() : $section.next();
-    var $prevSection = $section.prev();
-    $section.removeClass('active').addClass('closed');
-    $nextSection.addClass('active').removeClass('closed');
+  var moveToNextSection = function moveToNextSection(prevIndex, $section, dropInParams, addressObj) {
+    var $nextSection = $section.next();
 
-    if ($nextSection.hasClass('small-closed-left')) {
-      $nextSection.removeClass('small-closed-left');
-      $nextSection.next().removeClass('small-closed-right');
+    if (!$nextSection.find('div.dr-panel-result > p.dr-panel-result__text').is(':empty') && !$section.hasClass('dr-checkout__tax-exempt')) {
+      $nextSection = $('.dr-checkout__el').eq(prevIndex);
     }
+
+    if ($nextSection.hasClass('dr-checkout__payment')) {
+      if ($('#dr-payment-info').is(':empty')) createDropin(dropInParams, addressObj);
+    }
+
+    $section.prevAll().andSelf().find('.dr-accordion__edit').removeClass('d-none');
+    $section.removeClass('active').addClass('closed');
 
     if ($section.find('.dr-address-book').length) {
       $section.find('.dr-address-book-btn').removeClass('active');
       $section.find('.dr-address-book-btn, .dr-address-book').hide();
+    }
+
+    $nextSection.addClass('active').removeClass('closed');
+    $nextSection.prevAll().find('.dr-accordion > .dr-accordion__edit').removeClass('d-none');
+
+    if ($nextSection.hasClass('small-closed-left')) {
+      $nextSection.removeClass('small-closed-left');
+      $nextSection.next().removeClass('small-closed-right');
     }
 
     if ($nextSection.find('.dr-address-book').length) {
@@ -13756,28 +13768,13 @@ var CheckoutModule = function ($) {
       }
     }
 
-    if ($section.hasClass('dr-checkout__billing') || $section.hasClass('dr-checkout__tax-id')) {
-      $('.dr-accordion__edit').hide();
-      $('.edit-link').show();
-    }
-
-    if ($nextSection.hasClass('dr-checkout__confirmation') || $section.hasClass('dr-checkout__delivery')) {
-      $section.find('span.dr-accordion__edit').show();
-    }
-
-    if ($nextSection.hasClass('dr-checkout__tax-id')) {
-      if (sessionStorage.getItem('drgcTaxExempt') === 'true' && sessionStorage.getItem('drgcTaxRegs')) {
+    if (sessionStorage.getItem('drgcTaxExempt') === 'true' && sessionStorage.getItem('drgcTaxRegs')) {
+      if ($nextSection.hasClass('dr-checkout__tax-id')) {
+        $nextSection.find('span.dr-accordion__edit').addClass('d-none');
         $('#checkout-tax-id-form').trigger('submit');
+      } else if ($section.hasClass('dr-checkout__tax-id')) {
+        $section.find('span.dr-accordion__edit').addClass('d-none');
       }
-
-      if ($.trim($('#tax-id-error-msg').html()) !== '') {
-        $section.find('span.dr-accordion__edit').show();
-        $prevSection.find('span.dr-accordion__edit').show();
-      }
-    }
-
-    if ($section.hasClass('dr-checkout__tax-id') && sessionStorage.getItem('drgcTaxExempt') !== 'true') {
-      $section.find('span.dr-accordion__edit').show();
     }
 
     adjustColumns($section);
@@ -14120,27 +14117,91 @@ var CheckoutModule = function ($) {
   };
 
   var displayTemsUsResult = function displayTemsUsResult(tax, status) {
-    $('#tems-us-purchase-link').addClass('d-none');
-
     switch (status) {
       case 'ELIGIBLE_EXEMPTED':
-        $('#cert-uploaded-msg').addClass('d-none');
+        $('.dr-checkout__tax-exempt > .dr-panel-result > p.uploaded').addClass('d-none');
 
         if (tax === 0) {
-          $('#tax-certificate-status').addClass('d-none');
-          $('#tems-us-result > p.cert-good').removeClass('d-none');
-          $('#tems-us-result > p.cert-error').addClass('d-none');
+          $('#tems-us-result > p.taxable').hide();
+          $('#tems-us-result > p.tax-exempt').fadeIn();
         } else {
-          $('#tax-certificate-status, #tax-certificate-status > p.cert-not-valid, #tems-us-result > p.cert-error').removeClass('d-none');
-          $('#tax-certificate-status > p.cert-note, p.cert-good').addClass('d-none');
+          $('#tems-us-result > p.tax-exempt').hide();
+          $('#tems-us-result > p.taxable').fadeIn();
         }
 
         break;
 
       case 'ELIGIBLE_NOT_EXEMPTED':
       case 'NOT_ELIGIBLE':
-        $('#tax-certificate-status, #tems-us-result').addClass('d-none');
+        $('#tems-us-result > p.alert').hide();
         break;
+    }
+  };
+
+  var createDropin = function createDropin(dropInParams, addressObj) {
+    var _ref3 = dropInParams || {},
+        _ref3$digitalriverJs = _ref3.digitalriverJs,
+        digitalriverJs = _ref3$digitalriverJs === void 0 ? {} : _ref3$digitalriverJs,
+        _ref3$sessionId = _ref3.sessionId,
+        sessionId = _ref3$sessionId === void 0 ? '' : _ref3$sessionId,
+        _ref3$currency = _ref3.currency,
+        currency = _ref3$currency === void 0 ? '' : _ref3$currency,
+        _ref3$dropInConfig = _ref3.dropInConfig,
+        dropInConfig = _ref3$dropInConfig === void 0 ? {} : _ref3$dropInConfig;
+
+    var billingAddress = checkout_utils.getDropinBillingAddress(addressObj);
+    var lang = drgc_params.drLocale.split('_')[0];
+
+    if ('onlineBanking' in dropInConfig) {
+      dropInConfig.onlineBanking.onlineBanking = {
+        currency: currency,
+        country: billingAddress.address.country
+      };
+    }
+
+    if ('googlePay' in dropInConfig) {
+      dropInConfig.googlePay.style.buttonLanguage = lang;
+    }
+
+    if ('applePay' in dropInConfig) {
+      dropInConfig.applePay.style.buttonLanguage = lang;
+    }
+
+    var config = {
+      sessionId: sessionId,
+      billingAddress: billingAddress,
+      paymentMethodConfiguration: dropInConfig,
+      onSuccess: function onSuccess(res) {
+        sessionStorage.setItem('drgcPaymentSource', JSON.stringify(res.source));
+        $('#dr-payment-failed-msg, #dr-checkout-err-field').text('').hide();
+        $('#checkout-payment-form').trigger('submit');
+      },
+      onError: function onError(res) {
+        console.error(res.errors);
+        $('#dr-payment-failed-msg').text(res.errors[0].message).show();
+        $('#checkout-payment-form').removeClass('dr-loading');
+      },
+      onReady: function onReady(res) {
+        $('#checkout-payment-form').removeClass('dr-loading');
+
+        if (!res.paymentMethodTypes.length) {
+          $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
+        }
+
+        var reloadSection = requestShipping ? 'span.dr-accordion__edit.email, span.dr-accordion__edit.billing' : 'span.dr-accordion__edit.email, span.dr-accordion__edit.billing, span.dr-accordion__edit.tax-exempt';
+        $(reloadSection).on('click', function () {
+          $('body').addClass('dr-loading');
+          location.reload();
+        });
+      },
+      onCancel: function onCancel(res) {}
+    };
+    $('#checkout-payment-form').addClass('dr-loading');
+
+    try {
+      digitalriverJs.createDropin(config).mount('dr-payment-info');
+    } catch (error) {
+      console.error(error.message);
     }
   };
 
@@ -14155,16 +14216,17 @@ var CheckoutModule = function ($) {
     initShopperTypeRadio: initShopperTypeRadio,
     isTaxExempt: isTaxExempt,
     initTaxIdentifier: initTaxIdentifier,
-    displayTemsUsResult: displayTemsUsResult
+    displayTemsUsResult: displayTemsUsResult,
+    createDropin: createDropin
   };
 }(jQuery);
 
 jQuery(document).ready( /*#__PURE__*/function () {
-  var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee8($) {
-    var localizedText, isLoggedIn, drLocale, selectedCountry, cartData, requestShipping, digitalriverjs, addressPayload, paymentSourceId, currency, dropInConfig, paymentResponse, finishedSectionIdx, temsUsStauts, $section;
-    return regenerator_default.a.wrap(function _callee8$(_context8) {
+  var _ref4 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee7($) {
+    var localizedText, isLoggedIn, drLocale, selectedCountry, cartData, requestShipping, digitalriverjs, addressPayload, paymentSourceId, currency, dropInConfig, sessionId, dropInParams, finishedSectionIdx, activeSectionIdx, $section;
+    return regenerator_default.a.wrap(function _callee7$(_context7) {
       while (1) {
-        switch (_context8.prev = _context8.next) {
+        switch (_context7.prev = _context7.next) {
           case 0:
             if ($('#checkout-payment-form').length) {
               // Globals
@@ -14182,12 +14244,18 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 billing: {}
               };
               paymentSourceId = null;
-              currency = drgc_params.cart.cart.pricing.orderTotal.currency;
+              currency = cartData.pricing.orderTotal.currency;
               dropInConfig = JSON.parse(drgc_params.dropInConfig);
-              paymentResponse = null; // Section progress
+              sessionId = cartData.paymentSession ? cartData.paymentSession.id : '';
+              dropInParams = {
+                digitalriverJs: digitalriverjs,
+                sessionId: sessionId,
+                currency: currency,
+                dropInConfig: dropInConfig
+              }; // Section progress
 
               finishedSectionIdx = -1;
-              temsUsStauts = checkout_utils.getTemsUsStatus(cartData.customAttributes.attribute); // Break down tax and update summary on page load
+              activeSectionIdx = -1; // Break down tax and update summary on page load
 
               checkout_utils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
               $('#checkout-email-form').on('submit', function (e) {
@@ -14209,7 +14277,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   finishedSectionIdx = $('.dr-checkout__el').index($section);
                 }
 
-                CheckoutModule.moveToNextSection($section);
+                CheckoutModule.moveToNextSection(activeSectionIdx, $section);
               }); // Submit shipping info form
 
               $('#checkout-shipping-form').on('submit', function (e) {
@@ -14249,62 +14317,27 @@ jQuery(document).ready( /*#__PURE__*/function () {
                     finishedSectionIdx = $('.dr-checkout__el').index($section);
                   }
 
-                  CheckoutModule.moveToNextSection($section);
+                  CheckoutModule.moveToNextSection(activeSectionIdx, $section);
                   checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-                  if ($('#tems-us-result').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, temsUsStauts);
+                  if ($('#tems-us-result').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
                 })["catch"](function (jqXHR) {
                   $button.removeClass('sending').blur();
                   CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
                 });
               });
-              $('#checkbox-billing, #checkbox-business').on('change', function (e) {
-                var id = $(e.target).attr('id');
-
-                switch (id) {
-                  case 'checkbox-billing':
-                    if (!$(e.target).is(':checked')) {
-                      var billingMeta = {
-                        cart: {
-                          customAttributes: {
-                            attribute: [{
-                              name: 'SHIPPING_ADDRESS_SAME_AS_BILLING',
-                              value: false
-                            }]
-                          }
-                        }
-                      };
-                      commerce_api.updateCart({}, billingMeta);
-                      $('.dr-address-book-btn.billing').show();
-                      $('.billing-section').slideDown();
-                    } else {
-                      $('.billing-section').slideUp();
-                      $('#checkbox-business').prop('checked', false).change();
-                      $('.dr-address-book-btn.billing').hide();
-                    }
-
-                    break;
-
-                  case 'checkbox-business':
-                    if (!$(e.target).is(':checked')) {
-                      if ($('#billing-field-company-name').prop('readonly')) {
-                        $('#billing-field-company-ein').val('');
-                      } else {
-                        $('#billing-field-company-name, #billing-field-company-ein').val('');
-                      }
-
-                      $('.form-group-business').slideUp();
-                    } else {
-                      $('#checkbox-billing').prop('checked', false).change();
-                      $('.form-group-business').slideDown();
-                      if (!$('#billing-field-company-name').prop('readonly')) $('#billing-field-company-name').trigger('focus');
-                    }
-
-                    break;
+              $('#checkbox-billing').on('change', function (e) {
+                if ($(e.target).prop('checked')) {
+                  $('.billing-section').slideUp();
+                  $('.dr-address-book-btn.billing').removeClass('active').hide();
+                  $('.dr-address-book.billing').hide();
+                } else {
+                  $('.dr-address-book-btn.billing').show();
+                  $('.billing-section').slideDown();
                 }
               });
               $('#checkout-billing-form').on('submit', /*#__PURE__*/function () {
-                var _ref4 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
-                  var $section, $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart, billingAddress, lang, config;
+                var _ref5 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
+                  var $section, $form, $button, billingSameAsShipping, isFormValid, cartRequest, setAsDefault, address, updatedCart;
                   return regenerator_default.a.wrap(function _callee4$(_context4) {
                     while (1) {
                       switch (_context4.prev = _context4.next) {
@@ -14360,27 +14393,23 @@ jQuery(document).ready( /*#__PURE__*/function () {
                               expand: 'all'
                             }, patchCartRequest);
                           }).then(function () {
-                            var $companyEin = $('#billing-field-company-ein');
-                            if (!$companyEin.length) return new Promise(function (resolve) {
-                              return resolve();
-                            });
-                            var companyMeta = {
+                            var billingMeta = {
                               cart: {
                                 customAttributes: {
                                   attribute: [{
-                                    name: 'companyEIN',
-                                    value: $companyEin.val()
+                                    name: 'SHIPPING_ADDRESS_SAME_AS_BILLING',
+                                    value: billingSameAsShipping
                                   }]
                                 }
                               }
                             };
-                            return commerce_api.updateCart({}, companyMeta);
+                            return commerce_api.updateCart({}, billingMeta);
                           }).then(function () {
                             return commerce_api.getCart({
                               expand: 'all'
                             });
                           }).then( /*#__PURE__*/function () {
-                            var _ref5 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(data) {
+                            var _ref6 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(data) {
                               var _address, taxRegs;
 
                               return regenerator_default.a.wrap(function _callee3$(_context3) {
@@ -14428,7 +14457,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                             }));
 
                             return function (_x7) {
-                              return _ref5.apply(this, arguments);
+                              return _ref6.apply(this, arguments);
                             };
                           }()).then(function (data) {
                             return requestShipping ? CheckoutModule.preselectShippingOption(data) : new Promise(function (resolve) {
@@ -14445,7 +14474,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                                 finishedSectionIdx = $('.dr-checkout__el').index($section);
                               }
 
-                              CheckoutModule.moveToNextSection($section);
+                              CheckoutModule.moveToNextSection(activeSectionIdx, $section);
                             } else {
                               CheckoutModule.displayAddressErrMsg(error, $form.find('.dr-err-field'));
                             }
@@ -14464,68 +14493,17 @@ jQuery(document).ready( /*#__PURE__*/function () {
                           return _context4.abrupt("return");
 
                         case 18:
-                          billingAddress = checkout_utils.getDropinBillingAddress(addressPayload);
-                          lang = drLocale.split('_')[0];
+                          if ($('#tems-us-result').length && !requestShipping) CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value, $('#tems-us-status').val());
+                          checkout_utils.updateAddressSection(updatedCart.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                          checkout_utils.updateSummaryPricing(updatedCart.cart, drgc_params.isTaxInclusive === 'true');
+                          $('#tax-id-error-msg').text('').hide();
 
-                          if ('onlineBanking' in dropInConfig) {
-                            dropInConfig.onlineBanking.onlineBanking = {
-                              currency: currency,
-                              country: billingAddress.address.country
-                            };
+                          if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                            finishedSectionIdx = $('.dr-checkout__el').index($section);
                           }
 
-                          if ('googlePay' in dropInConfig) {
-                            dropInConfig.googlePay.style.buttonLanguage = lang;
-                          }
-
-                          if ('applePay' in dropInConfig) {
-                            dropInConfig.applePay.style.buttonLanguage = lang;
-                          }
-
-                          config = {
-                            sessionId: updatedCart.cart.paymentSession ? updatedCart.cart.paymentSession.id : '',
-                            billingAddress: billingAddress,
-                            paymentMethodConfiguration: dropInConfig,
-                            onSuccess: function onSuccess(res) {
-                              sessionStorage.setItem('drgcPaymentSource', JSON.stringify(res.source));
-                              paymentResponse = res;
-                              $('#checkout-payment-form').submit();
-                            },
-                            onError: function onError(res) {
-                              console.error(res.errors);
-                              paymentResponse = res;
-                            },
-                            onReady: function onReady(res) {
-                              $button.removeClass('sending').blur();
-                              var $section = $('.dr-checkout__billing');
-                              checkout_utils.updateAddressSection(updatedCart.cart.billingAddress, $section.find('.dr-panel-result__text'));
-
-                              if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                                finishedSectionIdx = $('.dr-checkout__el').index($section);
-                              }
-
-                              CheckoutModule.moveToNextSection($section);
-                              checkout_utils.updateSummaryPricing(updatedCart.cart, drgc_params.isTaxInclusive === 'true');
-                              paymentResponse = res;
-
-                              if (!res.paymentMethodTypes.length) {
-                                $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
-                              }
-
-                              $('#tax-id-error-msg').text('').hide();
-                              if ($('#tems-us-result').length && !requestShipping) CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value, temsUsStauts);
-                            },
-                            onCancel: function onCancel(res) {
-                              paymentResponse = res;
-                            }
-                          };
-
-                          try {
-                            digitalriverjs.createDropin(config).mount('dr-payment-info');
-                          } catch (error) {
-                            $button.removeClass('sending').blur();
-                            console.error(error.message);
-                          }
+                          CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
+                          $button.removeClass('sending').blur();
 
                         case 25:
                         case "end":
@@ -14536,7 +14514,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 }));
 
                 return function (_x6) {
-                  return _ref4.apply(this, arguments);
+                  return _ref5.apply(this, arguments);
                 };
               }());
               $(document).on('click', 'input[name="shopper-type"]', function () {
@@ -14557,7 +14535,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 checkout_utils.validateVatNumber(e);
               });
               $('#checkout-tax-id-form').on('submit', /*#__PURE__*/function () {
-                var _ref6 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee5(e) {
+                var _ref7 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee5(e) {
                   var $button, $section, $error, isTaxExempt, taxRegs, typeText, taxIds, regs, shopperType, $taxFields, _regs;
 
                   return regenerator_default.a.wrap(function _callee5$(_context5) {
@@ -14672,7 +14650,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                             finishedSectionIdx = $('.dr-checkout__el').index($section);
                           }
 
-                          CheckoutModule.moveToNextSection($section);
+                          CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
 
                         case 34:
                         case "end":
@@ -14683,11 +14661,11 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 }));
 
                 return function (_x8) {
-                  return _ref6.apply(this, arguments);
+                  return _ref7.apply(this, arguments);
                 };
               }()); // Submit delivery form
 
-              $('form#checkout-delivery-form').on('submit', function (e) {
+              $('#checkout-delivery-form').on('submit', function (e) {
                 e.preventDefault();
                 var $form = $(e.target);
                 var $input = $(this).children().find('input:radio:checked').first();
@@ -14704,14 +14682,14 @@ jQuery(document).ready( /*#__PURE__*/function () {
                     finishedSectionIdx = $('.dr-checkout__el').index($section);
                   }
 
-                  CheckoutModule.moveToNextSection($section);
+                  CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
                   checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                 })["catch"](function (jqXHR) {
                   $button.removeClass('sending').blur();
                   CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
                 });
               });
-              $('form#checkout-delivery-form').on('change', 'input[type="radio"]', function () {
+              $('#checkout-delivery-form').on('change', 'input[type="radio"]', function () {
                 var $form = $('form#checkout-delivery-form');
                 var shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
                 $('.dr-summary').addClass('dr-loading');
@@ -14722,37 +14700,21 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   $('.dr-summary').removeClass('dr-loading');
                 });
               });
-              $('form#checkout-payment-form').on('submit', function (e) {
+              $('#checkout-payment-form').on('submit', function (e) {
                 e.preventDefault();
-                var $form = $('form#checkout-payment-form');
-                $form.addClass('was-validated');
+                var paymentSource = JSON.parse(sessionStorage.getItem('drgcPaymentSource'));
 
-                if ($form[0].checkValidity() === false) {
-                  return false;
-                }
+                if (paymentSource.state === 'chargeable' || paymentSource.state === 'pending_funds') {
+                  var $section = $('.dr-checkout__payment');
+                  var label = paymentSource.type === 'creditCard' ? "".concat(drgc_params.translations.credit_card_ending_label, " ").concat(paymentSource.creditCard.lastFourDigits) : paymentSource.type;
+                  paymentSourceId = paymentSource.id;
+                  $section.find('.dr-panel-result__text').text(label);
 
-                var formdata = $(this).serializeArray();
-                var paymentPayload = {};
-                $(formdata).each(function (index, obj) {
-                  paymentPayload[obj.name] = obj.value;
-                });
-                $('#dr-payment-failed-msg, #dr-checkout-err-field').text('').hide();
-
-                if (paymentResponse.errors) {
-                  $('#dr-payment-failed-msg').text(paymentResponse.errors[0].message).show();
-                } else {
-                  if (paymentResponse.source.state === 'chargeable' || paymentResponse.source.state === 'pending_funds') {
-                    var $section = $('.dr-checkout__payment');
-                    var label = paymentResponse.source.type === 'creditCard' ? "".concat(drgc_params.translations.credit_card_ending_label, " ").concat(paymentResponse.source.creditCard.lastFourDigits) : paymentResponse.source.type;
-                    paymentSourceId = paymentResponse.source.id;
-                    $section.find('.dr-panel-result__text').text(label);
-
-                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                      finishedSectionIdx = $('.dr-checkout__el').index($section);
-                    }
-
-                    CheckoutModule.moveToNextSection($section);
+                  if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                    finishedSectionIdx = $('.dr-checkout__el').index($section);
                   }
+
+                  CheckoutModule.moveToNextSection(activeSectionIdx, $section);
                 }
               });
               $('#checkout-confirmation-form button[type="submit"]').on('click', function (e) {
@@ -14769,10 +14731,12 @@ jQuery(document).ready( /*#__PURE__*/function () {
 
               $('.dr-accordion__edit').on('click', function (e) {
                 e.preventDefault();
-                var $section = $(e.target).hasClass('tems-us') ? $(e.target).parent().parent().parent() : $(e.target).parent().parent();
+                var $section = $(e.target).parent().parent();
                 var $allSections = $section.siblings().andSelf();
                 var $finishedSections = $allSections.eq(finishedSectionIdx).prevAll().andSelf();
                 var $activeSection = $allSections.filter($('.active'));
+                activeSectionIdx = $allSections.index($activeSection);
+                $allSections.find('.dr-accordion > .dr-accordion__edit').addClass('d-none');
 
                 if ($allSections.index($section) > $allSections.index($activeSection)) {
                   return;
@@ -14788,6 +14752,11 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   } else {
                     $section.find('.dr-address-book-btn').show();
                   }
+                }
+
+                if ($('.dr-address-book').length) {
+                  $('.dr-address-book-btn').removeClass('active');
+                  $('.dr-address-book').hide();
                 }
 
                 CheckoutModule.adjustColumns($section);
@@ -14847,83 +14816,6 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   window.location.href = drgc_params.cartUrl;
                 }
               });
-              $('.edit-link > span').on('click', function () {
-                location.reload();
-              });
-              $('#tems-us-purchase-link > p > a').on('click', /*#__PURE__*/function () {
-                var _ref7 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee6(e) {
-                  var $link, status;
-                  return regenerator_default.a.wrap(function _callee6$(_context6) {
-                    while (1) {
-                      switch (_context6.prev = _context6.next) {
-                        case 0:
-                          e.preventDefault();
-                          $link = $(e.target);
-                          status = '';
-
-                          if ($link.hasClass('tax-exempt')) {
-                            $link.parent().hide();
-                            $('.dr-checkout__tems-us').removeClass('closed').addClass('active');
-
-                            if (!$('#checkout-tem-us-wrapper').length) {
-                              $('#tax-certificate-status > p.cert-good').removeClass('d-none');
-                              $('#billing-field-company-name').val($('#tems-us-company-name').val()).prop('readonly', true);
-                              status = 'ELIGIBLE_EXEMPTED';
-                            } else {
-                              $('#checkout-tem-us-wrapper').slideDown();
-                            }
-
-                            $link.parent().next().show().removeClass('d-none');
-                          } else if ($link.hasClass('taxable')) {
-                            $link.parent().hide();
-                            $('.dr-checkout__tems-us').removeClass('active');
-
-                            if (!$('#checkout-tem-us-wrapper').length) {
-                              $('#tax-certificate-status > p.cert-good, #tems-us-result > p.cert-error').addClass('d-none');
-                              $('#billing-field-company-name').val('').prop('readonly', false);
-                              status = 'ELIGIBLE_NOT_EXEMPTED';
-                            } else {
-                              $('#checkout-tem-us-wrapper').slideUp();
-                              $('#checkout-tem-us-form').removeClass('was-validated');
-                              $('#tems-us-error-msg').text('').hide();
-                            }
-
-                            $link.parent().prev().show().removeClass('d-none');
-                          }
-
-                          if (!status) {
-                            _context6.next = 16;
-                            break;
-                          }
-
-                          $('body').addClass('dr-loading');
-                          _context6.prev = 6;
-                          _context6.next = 9;
-                          return checkout_utils.updateTemsUsStatus(status);
-
-                        case 9:
-                          location.reload();
-                          _context6.next = 16;
-                          break;
-
-                        case 12:
-                          _context6.prev = 12;
-                          _context6.t0 = _context6["catch"](6);
-                          console.error(_context6.t0);
-                          $('body').removeClass('dr-loading');
-
-                        case 16:
-                        case "end":
-                          return _context6.stop();
-                      }
-                    }
-                  }, _callee6, null, [[6, 12]]);
-                }));
-
-                return function (_x9) {
-                  return _ref7.apply(this, arguments);
-                };
-              }());
               $('#tems-us-start-date, #tems-us-end-date').on('blur', function (e) {
                 var date = $(e.target).val();
 
@@ -14935,94 +14827,174 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   $(e.target).val(dateArr.join('/'));
                 }
               });
-              $('#checkout-tem-us-form').on('submit', /*#__PURE__*/function () {
-                var _ref9 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee7(e) {
-                  var $form, $button, $section, customerId, res;
-                  return regenerator_default.a.wrap(function _callee7$(_context7) {
+              $('#checkout-tax-exempt-form').on('submit', /*#__PURE__*/function () {
+                var _ref9 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee6(e) {
+                  var $form, $button, $section, companyName, companyEin, isGood, status, customerId, res, companyMeta;
+                  return regenerator_default.a.wrap(function _callee6$(_context6) {
                     while (1) {
-                      switch (_context7.prev = _context7.next) {
+                      switch (_context6.prev = _context6.next) {
                         case 0:
                           e.preventDefault();
                           $form = $(e.target);
                           $button = $form.find('button[type="submit"]');
-                          $section = $('.dr-checkout__tems-us');
+                          $section = $('.dr-checkout__tax-exempt');
+                          companyName = $('#business-company-name').val();
+                          companyEin = $('#business-ein').val();
+                          isGood = $('#tax-certificate-status > p').hasClass('cert-good') || $('#tems-us-status').val() === 'ELIGIBLE_EXEMPTED';
+                          status = 'NOT_ELIGIBLE';
+                          $button.addClass('sending').blur();
+                          $('#tems-us-result > p.alert').hide();
+                          $('#billing-field-company-name').val(companyName);
+
+                          if (!$('#tax-exempt-checkbox').prop('checked')) {
+                            _context6.next = 38;
+                            break;
+                          }
+
                           customerId = drgc_params.customerId;
                           $form.addClass('was-validated');
 
                           if (!($form[0].checkValidity() === false)) {
-                            _context7.next = 8;
+                            _context6.next = 17;
                             break;
                           }
 
-                          return _context7.abrupt("return", false);
+                          $button.removeClass('sending').blur();
+                          return _context6.abrupt("return", false);
 
-                        case 8:
-                          $button.addClass('sending').blur();
-                          _context7.prev = 9;
-                          _context7.t0 = JSON;
-                          _context7.next = 13;
+                        case 17:
+                          if (!$('#checkout-tax-exempt-app').length) {
+                            _context6.next = 33;
+                            break;
+                          }
+
+                          _context6.prev = 18;
+                          _context6.t0 = JSON;
+                          _context6.next = 22;
                           return checkout_utils.createTaxProfile(customerId);
 
-                        case 13:
-                          _context7.t1 = _context7.sent;
-                          res = _context7.t0.parse.call(_context7.t0, _context7.t1);
+                        case 22:
+                          _context6.t1 = _context6.sent;
+                          res = _context6.t0.parse.call(_context6.t0, _context6.t1);
 
-                          if (!res.companyName) {
-                            _context7.next = 29;
-                            break;
+                          if (res.companyName) {
+                            status = 'ELIGIBLE_EXEMPTED';
+                            $('#billing-field-company-name').val(res.companyName);
+                            $('#tax-certificate-status > p.alert-danger, #tax-certificate-status > p.alert-info').remove();
+                            $('#tems-us-error-msg').text('').hide();
+                            $('.dr-checkout__tax-exempt > .dr-accordion > .dr-accordion__edit').addClass('d-none');
+                            $('.dr-checkout__tax-exempt > .dr-panel-result > p.uploaded').removeClass('d-none');
+                          } else {
+                            $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
                           }
 
-                          $('#billing-field-company-name').val(res.companyName).prop('readonly', true);
-                          $('#tax-certificate-status > p.cert-error').remove();
-                          $('#tems-us-error-msg').text('').hide();
-                          $('#checkout-tem-us-wrapper > .dr-panel-result > .dr-panel-result__text').html("<span>".concat(res.companyName, "</span>, <span>").concat(res.taxAuthority, "</span>, <span>").concat(res.startDate, "</span> - <span>").concat(res.endDate, "</span>, <span>").concat(res.fileName, "</span>"));
+                          _context6.next = 31;
+                          break;
 
-                          if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                            finishedSectionIdx = $('.dr-checkout__el').index($section);
+                        case 27:
+                          _context6.prev = 27;
+                          _context6.t2 = _context6["catch"](18);
+                          console.error(_context6.t2);
+                          $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context6.t2.responseText))).show();
+
+                        case 31:
+                          _context6.next = 34;
+                          break;
+
+                        case 33:
+                          if (isGood) status = 'ELIGIBLE_EXEMPTED';
+
+                        case 34:
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.taxable').addClass('d-none');
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.tax-exempt').removeClass('d-none');
+                          _context6.next = 41;
+                          break;
+
+                        case 38:
+                          if (isGood) status = 'ELIGIBLE_NOT_EXEMPTED';
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.tax-exempt').addClass('d-none');
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.taxable').removeClass('d-none');
+
+                        case 41:
+                          companyMeta = {
+                            cart: {
+                              customAttributes: {
+                                attribute: [{
+                                  name: 'companyEIN',
+                                  value: companyEin
+                                }]
+                              }
+                            }
+                          };
+                          _context6.prev = 42;
+                          _context6.next = 45;
+                          return commerce_api.updateCart({}, companyMeta);
+
+                        case 45:
+                          _context6.next = 50;
+                          break;
+
+                        case 47:
+                          _context6.prev = 47;
+                          _context6.t3 = _context6["catch"](42);
+                          console.error(_context6.t3);
+
+                        case 50:
+                          $('#tems-us-status').val(status);
+                          _context6.next = 53;
+                          return checkout_utils.updateTemsUsStatus(status);
+
+                        case 53:
+                          if (!$('#tems-us-error-msg:visible').length) {
+                            if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                              finishedSectionIdx = $('.dr-checkout__el').index($section);
+                            }
+
+                            CheckoutModule.moveToNextSection(activeSectionIdx, $section);
                           }
 
-                          _context7.next = 23;
-                          return checkout_utils.updateTemsUsStatus('ELIGIBLE_EXEMPTED', true);
-
-                        case 23:
-                          temsUsStauts = 'ELIGIBLE_EXEMPTED';
-                          $('#tems-us-purchase-link').addClass('d-none');
-                          $('#cert-uploaded-msg').removeClass('d-none');
-                          CheckoutModule.moveToNextSection($section);
-                          _context7.next = 30;
-                          break;
-
-                        case 29:
-                          $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
-
-                        case 30:
-                          _context7.next = 36;
-                          break;
-
-                        case 32:
-                          _context7.prev = 32;
-                          _context7.t2 = _context7["catch"](9);
-                          console.error(_context7.t2);
-                          $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context7.t2.responseText))).show();
-
-                        case 36:
                           $button.removeClass('sending').blur();
 
-                        case 37:
+                        case 55:
                         case "end":
-                          return _context7.stop();
+                          return _context6.stop();
                       }
                     }
-                  }, _callee7, null, [[9, 32]]);
+                  }, _callee6, null, [[18, 27], [42, 47]]);
                 }));
 
-                return function (_x10) {
+                return function (_x9) {
                   return _ref9.apply(this, arguments);
                 };
               }());
-              $('#tax-certificate-status a.cert-details').on('click', function (e) {
+              $('#tax-exempt-note > span > a.cert-details').on('click', function (e) {
                 e.preventDefault();
                 $('#certificate-modal').modal('show');
+              });
+              $('#tax-exempt-checkbox').on('change', function (e) {
+                var isChecked = $(e.target).prop('checked');
+                $('#business-company-name').prop('readonly', isChecked);
+
+                if (isChecked) {
+                  var $certStatus = $('#tax-certificate-status > p');
+                  var temsUsStauts = $('#tems-us-status').val();
+                  var companyName = $('#billing-field-company-name').val();
+                  if (companyName) $('#business-company-name').val(companyName).trigger('focus').trigger('blur');
+                  if (!$certStatus.hasClass('cert-good')) $('#tax-certificate-status').slideDown();
+
+                  if (temsUsStauts === 'NOT_ELIGIBLE') {
+                    $('#checkout-tax-exempt-form > .form-group-business.company-name').addClass('d-none');
+                    $('#checkout-tax-exempt-app').slideDown();
+                  }
+
+                  $('#tax-exempt-note').removeClass('d-none');
+                } else {
+                  $('#checkout-tax-exempt-form > .form-group-business.company-name').removeClass('d-none');
+                  $('#tax-certificate-status, #checkout-tax-exempt-app').slideUp();
+                  $('#checkout-tax-exempt-form').removeClass('was-validated');
+                  $('#tems-us-error-msg').text('').hide();
+                  $('#tax-exempt-note').addClass('d-none');
+                }
               });
 
               if (!$('#checkout-email-form').length) {
@@ -15032,7 +15004,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   finishedSectionIdx = $('.dr-checkout__el').index($section);
                 }
 
-                CheckoutModule.moveToNextSection($section);
+                CheckoutModule.moveToNextSection(activeSectionIdx, $section);
               } else {
                 $('#checkout-email-form button[type=submit]').prop('disabled', false);
               }
@@ -15053,18 +15025,19 @@ jQuery(document).ready( /*#__PURE__*/function () {
               if ($('#checkout-tax-id-form').length) CheckoutModule.initShopperTypeRadio();
               if ($('#certificate-modal').length) $('body').append($('#certificate-modal'));
               if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
+              if ($('#tems-us-status').length && $('#tems-us-status').val() === 'ELIGIBLE_EXEMPTED') $('#tax-exempt-checkbox').prop('checked', true).trigger('change');
             }
 
           case 1:
           case "end":
-            return _context8.stop();
+            return _context7.stop();
         }
       }
-    }, _callee8);
+    }, _callee7);
   }));
 
   return function (_x5) {
-    return _ref3.apply(this, arguments);
+    return _ref4.apply(this, arguments);
   };
 }());
 /* harmony default export */ var public_checkout = (CheckoutModule);
@@ -16755,7 +16728,7 @@ jquery_default()(function () {
   var $certificateModal = jquery_default()('#certificate-modal');
   var $companyNameConfirmModal = jquery_default()('#company-name-confirm');
   $body.append($certificateModal).append($companyNameConfirmModal);
-  jquery_default()('#list-certificates > div.dr-h4 > button.certificate-add-btn').on('click', function (e) {
+  jquery_default()('#add-new-cert').on('click', function (e) {
     e.preventDefault();
     $certificateModal.drModal({
       backdrop: 'static',

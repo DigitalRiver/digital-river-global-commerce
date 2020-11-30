@@ -409,7 +409,7 @@ $(() => {
 
     $body.append($certificateModal).append($companyNameConfirmModal);
 
-    $('#list-certificates > div.dr-h4 > button.certificate-add-btn').on('click', (e) => {
+    $('#add-new-cert').on('click', (e) => {
         e.preventDefault();
 
         $certificateModal.drModal({

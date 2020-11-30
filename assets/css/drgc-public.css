@@ -167,6 +167,46 @@ input[type=radio] { position: relative; opacity: 1; width: auto; height: auto; }
 @media only screen and (min-width: 768px) { .single-dr_product .entry-thumbnail { float: left; width: 50%; padding: 0 15px 50px 50px; }
   .single-dr_product .entry-summary { float: right; width: 50%; padding-left: 15px; } }
 
+/* Bootstrap Alert CSS
+------------------------------------------------------------------------*/
+.alert { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; }
+
+.alert h4 { margin-top: 0; color: inherit; }
+
+.alert .alert-link { font-weight: bold; }
+
+.alert > p, .alert > ul { margin-bottom: 0; }
+
+.alert > p + p { margin-top: 5px; }
+
+.alert-dismissable, .alert-dismissible { padding-right: 35px; }
+
+.alert-dismissable .close, .alert-dismissible .close { position: relative; top: -2px; right: -21px; color: inherit; }
+
+.alert-success { background-color: #dff0d8; border-color: #d6e9c6; color: #3c763d; }
+
+.alert-success hr { border-top-color: #c9e2b3; }
+
+.alert-success .alert-link { color: #2b542c; }
+
+.alert-info { background-color: #d9edf7; border-color: #bce8f1; color: #31708f; }
+
+.alert-info hr { border-top-color: #a6e1ec; }
+
+.alert-info .alert-link { color: #245269; }
+
+.alert-warning { background-color: #fcf8e3; border-color: #faebcc; color: #8a6d3b; }
+
+.alert-warning hr { border-top-color: #f7e1b5; }
+
+.alert-warning .alert-link { color: #66512c; }
+
+.alert-danger { background-color: #f2dede; border-color: #ebccd1; color: #a94442; }
+
+.alert-danger hr { border-top-color: #e4b9c0; }
+
+.alert-danger .alert-link { color: #843534; }
+
 /* Cart
 ------------------------------------------------------------------------*/
 .drgc-wrapper .btn { display: inline-block; font-weight: 400; color: #212529; text-align: center; vertical-align: middle; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; background-color: transparent; border: 1px solid transparent; padding: 0.375em 0.75em; font-size: 1em; line-height: 1.5; border-radius: 0; -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out; }
@@ -2369,44 +2409,6 @@ body.dr-loading:after { position: fixed; }
 
 .dr-account-wrapper .addresses .address .firstName:empty, .dr-account-wrapper .addresses .address .lastName:empty, .dr-account-wrapper .addresses .address .companyName:empty, .dr-account-wrapper .addresses .address .line1:empty, .dr-account-wrapper .addresses .address .line2:empty, .dr-account-wrapper .addresses .address .city:empty, .dr-account-wrapper .addresses .address .countrySubdivision:empty, .dr-account-wrapper .addresses .address .postalCode:empty, .dr-account-wrapper .addresses .address .phoneNumber:empty { display: none; }
 
-.dr-account-wrapper .certificate { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 13px; padding: 18px 4px; border-top: 1px solid rgba(0, 0, 0, 0.125); }
-
-.dr-account-wrapper .certificate-add-btn { background: transparent url(../images/product-plus.svg) center/contain no-repeat; margin: 0; position: absolute; top: 50%; left: 96%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); font-size: 16px; border: none; }
-
-.dr-account-wrapper .certificate-add-btn:hover { cursor: pointer; }
-
-@media (max-width: 767.98px) { .dr-account-wrapper .certificate-add-btn { left: 90%; } }
-
-.dr-account-wrapper .certificate-headings { margin-top: 20px; padding-top: 18px; font-size: 14px; font-weight: bold; border-top-width: 2px; }
-
-.dr-account-wrapper .certificate-headings + .certificate { border-top-width: 2px; }
-
-.dr-account-wrapper .certificate-company-name { width: 19%; }
-
-.dr-account-wrapper .certificate-tax-cert { width: 15%; }
-
-.dr-account-wrapper .certificate-tax-authority { width: 22%; }
-
-.dr-account-wrapper .certificate-status { width: 14%; }
-
-.dr-account-wrapper .certificate-start-date { width: 15%; }
-
-.dr-account-wrapper .certificate-end-date { width: 15%; }
-
-.dr-account-wrapper .certificate .eligible { color: #28a745; }
-
-.dr-account-wrapper .certificate .not-eligible, .dr-account-wrapper .certificate .not-available { color: #dc3545; }
-
-@media (min-width: 768px) and (max-width: 991.98px) { .dr-account-wrapper .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
-  .dr-account-wrapper .certificate-headings { display: none; }
-  .dr-account-wrapper .certificate-company-name, .dr-account-wrapper .certificate-tax-cert, .dr-account-wrapper .certificate-tax-authority, .dr-account-wrapper .certificate-status, .dr-account-wrapper .certificate-start-date, .dr-account-wrapper .certificate-end-date { width: 100%; margin-bottom: 1px; }
-  .dr-account-wrapper .certificate-company-name::before, .dr-account-wrapper .certificate-tax-cert::before, .dr-account-wrapper .certificate-tax-authority::before, .dr-account-wrapper .certificate-status::before, .dr-account-wrapper .certificate-start-date::before, .dr-account-wrapper .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }
-
-@media (max-width: 575.98px) { .dr-account-wrapper .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
-  .dr-account-wrapper .certificate-headings { display: none; }
-  .dr-account-wrapper .certificate-company-name, .dr-account-wrapper .certificate-tax-cert, .dr-account-wrapper .certificate-tax-authority, .dr-account-wrapper .certificate-status, .dr-account-wrapper .certificate-start-date, .dr-account-wrapper .certificate-end-date { width: 100%; margin-bottom: 1px; }
-  .dr-account-wrapper .certificate-company-name::before, .dr-account-wrapper .certificate-tax-cert::before, .dr-account-wrapper .certificate-tax-authority::before, .dr-account-wrapper .certificate-status::before, .dr-account-wrapper .certificate-start-date::before, .dr-account-wrapper .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }
-
 .dr-account-wrapper .payments { margin-top: 15px; }
 
 .dr-account-wrapper .payments .payment { background-color: #f8f9fa; height: 100%; padding: 15px 45px 15px 15px; margin: 0; font-size: 14px; position: relative; border: 1px solid #e9ecef; -webkit-transform: border-color 200ms, background-color 200ms, padding 200ms; transform: border-color 200ms, background-color 200ms, padding 200ms; }
@@ -2511,6 +2513,8 @@ body.dr-loading:after { position: fixed; }
 
 #certificate-modal .invalid-feedback.row { margin: 0; }
 
+#add-new-cert { font-size: 16px; }
+
 .dr-check-account { font-family: "Open Sans", sans-serif; color: #000000; margin-bottom: 16px; }
 
 .dr-check-account__text { font-size: 14px; font-weight: 300; }
@@ -2523,7 +2527,7 @@ body.dr-loading:after { position: fixed; }
 
 @media (min-width: 1200px) { .dr-checkout { width: 50%; } }
 
-.dr-checkout__cloudpay, .dr-checkout__email, .dr-checkout__tems-us, .dr-checkout__shipping, .dr-checkout__billing, .dr-checkout__tax-id, .dr-checkout__delivery, .dr-checkout__payment, .dr-checkout__confirmation { background: #ffffff; margin-bottom: 20px; padding: 0 10px; }
+.dr-checkout__cloudpay, .dr-checkout__email, .dr-checkout__tems-us, .dr-checkout__shipping, .dr-checkout__billing, .dr-checkout__tax-exempt, .dr-checkout__tax-id, .dr-checkout__delivery, .dr-checkout__payment, .dr-checkout__confirmation { background: #ffffff; margin-bottom: 20px; padding: 0 10px; }
 
 .dr-checkout__email { clear: both; }
 
@@ -2591,14 +2595,6 @@ body.dr-loading:after { position: fixed; }
 
 .dr-checkout input[type="date"], .dr-checkout input[type="file"] { height: 48px; padding-top: 10px; }
 
-.dr-checkout .cert-good { color: #28a745; }
-
-.dr-checkout .cert-good.dr-panel-result__text > span { color: #333; }
-
-.dr-checkout .cert-error, .dr-checkout .cert-not-valid { color: #dc3545; }
-
-.dr-checkout .cert-error.dr-panel-result__text > span, .dr-checkout .cert-not-valid.dr-panel-result__text > span { color: #333; }
-
 .dr-checkout .help-text { color: darkgray; font-size: 12px; }
 
 @media (max-width: 767.98px) { .dr-checkout .help-text { font-size: 10px; } }
@@ -2615,49 +2611,9 @@ body.dr-loading:after { position: fixed; }
 
 #tems-us-error-msg { margin-bottom: 10px; }
 
-#tax-certificate-status > .cert-msg { padding: 0; margin-bottom: 0; }
+#tax-certificate-status { margin-bottom: 10px; }
 
-#tems-us-result > .cert-good { color: #28a745; }
-
-#tems-us-result > .cert-error { color: #dc3545; }
-
-.certificate { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 13px; padding: 18px 4px; border-top: 1px solid rgba(0, 0, 0, 0.125); }
-
-.certificate-add-btn { background: transparent url(../images/product-plus.svg) center/contain no-repeat; margin: 0; position: absolute; top: 50%; left: 96%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); font-size: 16px; border: none; }
-
-.certificate-add-btn:hover { cursor: pointer; }
-
-@media (max-width: 767.98px) { .certificate-add-btn { left: 90%; } }
-
-.certificate-headings { margin-top: 20px; padding-top: 18px; font-size: 14px; font-weight: bold; border-top-width: 2px; }
-
-.certificate-headings + .certificate { border-top-width: 2px; }
-
-.certificate-company-name { width: 19%; }
-
-.certificate-tax-cert { width: 15%; }
-
-.certificate-tax-authority { width: 22%; }
-
-.certificate-status { width: 14%; }
-
-.certificate-start-date { width: 15%; }
-
-.certificate-end-date { width: 15%; }
-
-.certificate .eligible { color: #28a745; }
-
-.certificate .not-eligible, .certificate .not-available { color: #dc3545; }
-
-@media (min-width: 768px) and (max-width: 991.98px) { .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
-  .certificate-headings { display: none; }
-  .certificate-company-name, .certificate-tax-cert, .certificate-tax-authority, .certificate-status, .certificate-start-date, .certificate-end-date { width: 100%; margin-bottom: 1px; }
-  .certificate-company-name::before, .certificate-tax-cert::before, .certificate-tax-authority::before, .certificate-status::before, .certificate-start-date::before, .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }
-
-@media (max-width: 575.98px) { .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
-  .certificate-headings { display: none; }
-  .certificate-company-name, .certificate-tax-cert, .certificate-tax-authority, .certificate-status, .certificate-start-date, .certificate-end-date { width: 100%; margin-bottom: 1px; }
-  .certificate-company-name::before, .certificate-tax-cert::before, .certificate-tax-authority::before, .certificate-status::before, .certificate-start-date::before, .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }
+#tax-exempt-note { color: darkgray; font-size: 14px; }
 
 .dr-accordion { width: 100%; height: 60px; display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; -webkit-box-pack: justify; -ms-flex-pack: justify; justify-content: space-between; font-family: Open Sans; font-size: 16px; font-weight: 600; line-height: 16px; text-transform: uppercase; color: #333333; background-color: #ffffff; background-size: cover; border: none; outline: none; }
 
@@ -2988,3 +2944,41 @@ li.dr-dropdown.menu-item.menu-item-has-children > ul.dr-dropdown-menu > li.nav-i
 .dr-mobile-mini-cart .dr-widget-title { vertical-align: top; }
 
 @media (max-width: 991px) { #dr-minicart { display: none; } }
+
+.certificate { display: -webkit-box; display: -ms-flexbox; display: flex; -webkit-box-align: center; -ms-flex-align: center; align-items: center; font-size: 13px; padding: 18px 4px; border-top: 1px solid rgba(0, 0, 0, 0.125); }
+
+.certificate-add-btn { background: transparent url(../images/product-plus.svg) center/contain no-repeat; margin: 0; position: absolute; top: 50%; left: 96%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); font-size: 16px; border: none; }
+
+.certificate-add-btn:hover { cursor: pointer; }
+
+@media (max-width: 767.98px) { .certificate-add-btn { left: 90%; } }
+
+.certificate-headings { margin-top: 20px; padding-top: 18px; font-size: 14px; font-weight: bold; border-top-width: 2px; }
+
+.certificate-headings + .certificate { border-top-width: 2px; }
+
+.certificate-company-name { width: 19%; }
+
+.certificate-tax-cert { width: 15%; }
+
+.certificate-tax-authority { width: 22%; }
+
+.certificate-status { width: 14%; }
+
+.certificate-start-date { width: 15%; }
+
+.certificate-end-date { width: 15%; }
+
+.certificate .eligible { color: #28a745; }
+
+.certificate .not-eligible, .certificate .not-available { color: #dc3545; }
+
+@media (min-width: 768px) and (max-width: 991.98px) { .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
+  .certificate-headings { display: none; }
+  .certificate-company-name, .certificate-tax-cert, .certificate-tax-authority, .certificate-status, .certificate-start-date, .certificate-end-date { width: 100%; margin-bottom: 1px; }
+  .certificate-company-name::before, .certificate-tax-cert::before, .certificate-tax-authority::before, .certificate-status::before, .certificate-start-date::before, .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }
+
+@media (max-width: 575.98px) { .certificate { -webkit-box-orient: vertical; -webkit-box-direction: normal; -ms-flex-direction: column; flex-direction: column; }
+  .certificate-headings { display: none; }
+  .certificate-company-name, .certificate-tax-cert, .certificate-tax-authority, .certificate-status, .certificate-start-date, .certificate-end-date { width: 100%; margin-bottom: 1px; }
+  .certificate-company-name::before, .certificate-tax-cert::before, .certificate-tax-authority::before, .certificate-status::before, .certificate-start-date::before, .certificate-end-date::before { content: attr(data-heading) ":"; width: 50%; min-width: 50px; display: inline-block; color: #495057; background-color: #f8f9fa; } }

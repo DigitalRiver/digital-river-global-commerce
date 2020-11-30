@@ -66,9 +66,15 @@ if ( $is_tems_us_enabled ) {
         if ( DRGC()->cart->update_tems_us_status( 'NOT_ELIGIBLE' ) ) $tems_us_status = 'NOT_ELIGIBLE';
     }
 }
+
+$billingAddress = $cart['cart']['billingAddress'];
+$company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty( $customer_tax_regs['eligibleCertificate'] ) ) ?
+    $customer_tax_regs['eligibleCertificate']['companyName'] : $billingAddress['companyName'];
 ?>
 <div class="dr-checkout-wrapper" id="dr-checkout-page-wrapper">
+
     <div class="dr-checkout-wrapper__actions">
+
         <div class="back-link">
 
             <a href="javascript:void(0)">&#60; <?php _e( 'Back', 'digital-river-global-commerce' ); ?></a>
@@ -81,11 +87,9 @@ if ( $is_tems_us_enabled ) {
 
         <div id="tems-us-result">
 
-            <input type="hidden" id="tems-us-status" name="tems-us-status" value="<?php echo $tems_us_status; ?>">
+            <p class="alert alert-success tax-exempt" style="display: none;"><?php _e( 'This order is tax exempt.', 'digital-river-global-commerce' )?></p>
 
-            <p class="cert-msg cert-good d-none"><?php _e( 'This order is tax exempt.', 'digital-river-global-commerce' )?></p>
-
-            <p class="cert-msg cert-error d-none"><?php _e( 'Your tax exempt certificate on file is not valid for this order. Please update your address or continue with a taxable order.', 'digital-river-global-commerce' )?></p>
+            <p class="alert alert-danger taxable" style="display: none;"><?php _e( 'Your tax exempt certificate on file is not valid for this order. Please update your address or continue with a taxable order.', 'digital-river-global-commerce' )?></p>
 
         </div>
 
@@ -95,27 +99,11 @@ if ( $is_tems_us_enabled ) {
 
         <div class="dr-checkout">
 
-            <div class="edit-link dr-accordion__edit">
-
-                <span>
-
-                    <?php if ( $cart['cart']['hasPhysicalProduct'] ): ?>
-                        <?php _e( 'Edit Shipping/Billing', 'digital-river-global-commerce' ); ?>>
-                    <?php else: ?>
-                        <?php _e( 'Edit Billing', 'digital-river-global-commerce' ); ?>>
-                    <?php endif; ?>
-
-                </span>
-
-            </div>
-
             <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-email.php'; ?>
 
-            <?php if ( $is_tems_us_enabled ): ?>
-
-                <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-tems-us.php'; ?>
-
-            <?php endif; ?>
+            <?php if ( $is_tems_us_enabled ):
+                include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-tax-exemption.php';
+            endif; ?>
 
             <?php if ( $cart['cart']['hasPhysicalProduct'] ) :
                 include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-shipping.php';
