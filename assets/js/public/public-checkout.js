@@ -151,10 +151,7 @@ const CheckoutModule = (($) => {
 
                 if ($('#shipping-option-' + option.id).length) continue;
 
-                const res = await DRCommerceApi.applyShippingOption(option.id);
-                const freeShipping = res.cart.pricing.shippingAndHandling.value === 0;
-
-                CheckoutUtils.setShippingOption(option, freeShipping);
+                CheckoutUtils.setShippingOption(option);
             }
 
             // If default shipping option is not in the list, then pre-select the 1st one
@@ -197,7 +194,7 @@ const CheckoutModule = (($) => {
 
         sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
 
-        if (!isTaxExempt || (address.country !== selectedCountry) || ($.trim($('#tax-id-error-msg').html()) !== '')) {
+        if (!isTaxExempt || (address.country !== selectedCountry) || ($.trim($('#tax-id-error-msg').html()) !== '') || !$('.tax-id-field').length) {
             try {
                 await CheckoutUtils.getTaxSchema(address);
                 FloatLabel.init();
@@ -446,12 +443,11 @@ jQuery(document).ready(async ($) => {
                 });
             }
 
+            $('.dr-summary__pricing').addClass('dr-loading');
             DRCommerceApi.updateCartShippingAddress({expand: 'all'}, cartRequest)
                 .then(() => DRCommerceApi.getCart({expand: 'all'}))
                 .then(data => CheckoutModule.preselectShippingOption(data))
                 .then((data) => {
-                    $button.removeClass('sending').blur();
-
                     const $section = $('.dr-checkout__shipping');
                     CheckoutUtils.updateAddressSection(data.cart.shippingAddress, $section.find('.dr-panel-result__text'));
 
@@ -465,8 +461,11 @@ jQuery(document).ready(async ($) => {
                     if ($('#tems-us-result').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
                 })
                 .catch((jqXHR) => {
-                    $button.removeClass('sending').blur();
                     CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                })
+                .finally(() => {
+                    $button.removeClass('sending').blur();
+                    $('.dr-summary__pricing').removeClass('dr-loading');
                 });
         });
 
@@ -481,7 +480,7 @@ jQuery(document).ready(async ($) => {
             }
         });
 
-        $('#checkout-billing-form').on('submit', async (e) => {
+        $('#checkout-billing-form').on('submit', (e) => {
             e.preventDefault();
 
             const $section = $('.dr-checkout__billing');
@@ -513,7 +512,8 @@ jQuery(document).ready(async ($) => {
                 }
             }
 
-            const updatedCart = await DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest)
+            $('.dr-summary__pricing').addClass('dr-loading');
+            DRCommerceApi.updateCartBillingAddress({expand: 'all'}, cartRequest)
                 .then(() => {
                     // Digital product still need to update some of shippingAddress attributes for tax calculating
                     if (requestShipping) return new Promise(resolve => resolve());
@@ -559,13 +559,19 @@ jQuery(document).ready(async ($) => {
                     return new Promise(resolve => resolve(data));
                 })
                 .then((data) => {
-                    return requestShipping ?
-                        CheckoutModule.preselectShippingOption(data) :
-                        new Promise(resolve => resolve(data));
+                    if ($('#tems-us-result').length && !requestShipping) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
+                    CheckoutUtils.updateAddressSection(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                    $('#tax-id-error-msg').text('').hide();
+
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                        finishedSectionIdx = $('.dr-checkout__el').index($section);
+                    }
+
+                    CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
                 })
                 .catch((error) => {
                     console.error(error);
-                    $button.removeClass('sending').blur();
 
                     if (error.message === localizedText.unsupport_country_error_msg) {
                         $('#tax-id-error-msg').text(error.message).show();
@@ -578,23 +584,11 @@ jQuery(document).ready(async ($) => {
                     } else {
                         CheckoutModule.displayAddressErrMsg(error, $form.find('.dr-err-field'));
                     }
-
-                    return false;
-                });
-
-            if (!updatedCart) return;
-
-            if ($('#tems-us-result').length && !requestShipping) CheckoutModule.displayTemsUsResult(updatedCart.cart.pricing.tax.value, $('#tems-us-status').val());
-            CheckoutUtils.updateAddressSection(updatedCart.cart.billingAddress, $section.find('.dr-panel-result__text'));
-            CheckoutUtils.updateSummaryPricing(updatedCart.cart, drgc_params.isTaxInclusive === 'true');
-            $('#tax-id-error-msg').text('').hide();
-
-            if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                finishedSectionIdx = $('.dr-checkout__el').index($section);
-            }
-
-            CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
-            $button.removeClass('sending').blur();
+                })
+                .finally(() => {
+                    $button.removeClass('sending').blur();
+                    $('.dr-summary__pricing').removeClass('dr-loading');
+                });       
         });
 
         $(document).on('click', 'input[name="shopper-type"]', () => {
@@ -672,6 +666,7 @@ jQuery(document).ready(async ($) => {
                 typeText = ($('input[name="shopper-type"]:checked').val() === 'I') ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
 
                 if (regs.length) {
+                    $('.dr-summary__pricing').addClass('dr-loading');
                     await CheckoutUtils.applyTaxRegistration(shopperType, regs)
                         .then((data) => {
                             sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
@@ -684,7 +679,6 @@ jQuery(document).ready(async ($) => {
 
                             sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
                             CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-                            $button.removeClass('sending').blur();
 
                             if (tax > 0) {
                                 $error.text(localizedText.invalid_tax_id_error_msg).show();
@@ -694,10 +688,13 @@ jQuery(document).ready(async ($) => {
                         })
                         .catch((error) => {
                             $error.text(localizedText.invalid_tax_id_error_msg).show();
-                            $button.removeClass('sending').blur();
                             console.error(error);
 
                             if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+                        })
+                        .finally(() => {
+                            $button.removeClass('sending').blur();
+                            $('.dr-summary__pricing').removeClass('dr-loading');
                         });
                 } else {
                     $button.removeClass('sending').blur();
@@ -725,12 +722,12 @@ jQuery(document).ready(async ($) => {
 
             $form.find('.dr-err-field').hide();
 
+            $('.dr-summary__pricing').addClass('dr-loading');
             DRCommerceApi.applyShippingOption(shippingOptionId)
                 .then((data) => {
                     const $section = $('.dr-checkout__delivery');
                     const resultText = `${$input.data('desc')}`;
 
-                    $button.removeClass('sending').blur();
                     $section.find('.dr-panel-result__text').text(resultText);
 
                     if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -741,8 +738,11 @@ jQuery(document).ready(async ($) => {
                     CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                 })
                 .catch((jqXHR) => {
-                    $button.removeClass('sending').blur();
                     CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                })
+                .finally(() => {
+                    $button.removeClass('sending').blur();
+                    $('.dr-summary__pricing').removeClass('dr-loading');
                 });
         });
 
@@ -750,16 +750,15 @@ jQuery(document).ready(async ($) => {
             const $form = $('form#checkout-delivery-form');
             const shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
 
-            $('.dr-summary').addClass('dr-loading');
-
+            $('.dr-summary__pricing').addClass('dr-loading');
             DRCommerceApi.applyShippingOption(shippingOptionId)
                 .then((data) => {
                     CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
                 })
                 .catch((jqXHR) => {
                     CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-                    $('.dr-summary').removeClass('dr-loading');
-                });
+                })
+                .finally(() => $('.dr-summary__pricing').removeClass('dr-loading'));
         });
 
         $('#checkout-payment-form').on('submit', (e) => {

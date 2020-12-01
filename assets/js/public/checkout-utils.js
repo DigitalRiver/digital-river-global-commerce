@@ -86,7 +86,6 @@ const CheckoutUtils = (($, params) => {
     $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
     $('div.dr-summary__subtotal > .subtotal-value').text(newPricing.formattedSubtotal);
     $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
-    $('.dr-summary').removeClass('dr-loading');
   };
 
   const getEntityCode = () => {
@@ -196,7 +195,7 @@ const CheckoutUtils = (($, params) => {
     return errMsg;
   };
 
-  const setShippingOption = (option, freeShipping) => {
+  const setShippingOption = (option) => {
     const html = `
       <div class="field-radio">
         <input type="radio"
@@ -205,7 +204,6 @@ const CheckoutUtils = (($, params) => {
           data-cost="${option.formattedCost}"
           data-id="${option.id}"
           data-desc="${option.description}"
-          data-free="${freeShipping}"
         >
         <label for="shipping-option-${option.id}">
           <span>${option.description}</span>

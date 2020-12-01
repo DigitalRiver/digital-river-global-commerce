@@ -137,7 +137,11 @@ $company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty(
 
             </div>
 
-            <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-summary.php'; ?>
+            <div class="dr-summary__pricing">
+
+                <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-summary.php'; ?>
+
+            </div>
 
         </div>
 
