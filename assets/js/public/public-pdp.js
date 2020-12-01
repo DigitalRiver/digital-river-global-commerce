@@ -508,7 +508,7 @@ jQuery(document).ready(($) => {
             if ($miniCart.is(':visible')) {
                 if ($miniCart.css('top') === 0) {
                     $floatingCart.removeClass('show');
-                    if (!$('#dr-minicart > .dr-minicart-display').lenght) $('#dr-minicart').append($miniCart);
+                    if (!$('#dr-minicart > .dr-minicart-display').length) $('#dr-minicart').append($miniCart);
                 } else {
                     $miniCart.hide();
                     $floatingCart.addClass('show');
@@ -518,7 +518,7 @@ jQuery(document).ready(($) => {
             }
         } else {
             $floatingCart.removeClass('show');
-            if (!$('#dr-minicart > .dr-minicart-display').lenght) $('#dr-minicart').append($miniCart);
+            if (!$('#dr-minicart > .dr-minicart-display').length) $('#dr-minicart').append($miniCart);
         }
     });
 
@@ -526,7 +526,7 @@ jQuery(document).ready(($) => {
         e.preventDefault();
         $miniCart.css('position', 'fixed');
         $floatingCart.removeClass('show');
-        if (!$('#sticky-mini-cart > .dr-minicart-display').lenght) $('#sticky-mini-cart').append($miniCart);
+        if (!$('#sticky-mini-cart > .dr-minicart-display').length) $('#sticky-mini-cart').append($miniCart);
         openMiniCartDisplay();
     });
 
