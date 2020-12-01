@@ -239,12 +239,9 @@ class DRGC_Authenticator extends AbstractHttpService {
   public function generate_access_token_by_ref_id( $external_reference_id, $session_token = '' ) {
     $data = array (
       'dr_external_reference_id' => $external_reference_id,
-      'grant_type'               => 'client_credentials'
+      'grant_type'               => 'client_credentials',
+      'dr_session_token'         => empty( $session_token ) ? $this->dr_session_token : $session_token
     );
-    
-    if ( ! empty( $session_token ) ) {
-      $data['dr_session_token'] = $session_token;
-    } 
 
     $this->setFormContentType();
 

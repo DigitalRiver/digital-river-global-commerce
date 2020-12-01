@@ -136,6 +136,10 @@
             @include for-tablet-portrait-up {
                 font-size: 14px;
             }
+
+            @include for-phone-portrait-only {
+                display: none;
+            }
         }
     }
 
@@ -143,6 +147,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        white-space: nowrap;
 
         .regular-price {
             font-family: $font-family-base;

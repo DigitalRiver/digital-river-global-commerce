@@ -13380,7 +13380,6 @@ var CartModule = function ($) {
         $('.dr-cart__products').text(localizedText.empty_cart_msg);
         $('#dr-checkout-btn').remove();
         $('#cart-estimate').remove();
-        $('.dr-cart-wrapper__content > .order-number').remove();
         var taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
 
         if (taxRegs.customerType) {
@@ -15372,10 +15371,11 @@ jQuery(document).ready(function ($) {
   $('.dr-minicart-toggle, .dr-minicart-close-btn').click(function (e) {
     e.preventDefault();
     toggleMiniCartDisplay();
+    $('.dr-minicart-display').css('position', 'absolute');
   });
   $('body').on('click', '.dr-buy-btn', /*#__PURE__*/function () {
     var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(e) {
-      var $this, pdLink, productID, existingProducts, quantity, locale, currency, shopperData, queryObj;
+      var $this, pdLink, productID, productName, existingProducts, quantity, locale, currency, shopperData, queryObj;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -15390,11 +15390,20 @@ jQuery(document).ready(function ($) {
 
               pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
               window.location.href = pdLink;
-              _context.next = 19;
+              _context.next = 29;
               break;
 
             case 7:
-              productID = $this.attr('data-product-id') ? $this.attr('data-product-id').toString() : '';
+              if ($this.attr('data-product-id')) {
+                _context.next = 9;
+                break;
+              }
+
+              return _context.abrupt("return");
+
+            case 9:
+              productID = $this.attr('data-product-id');
+              productName = $this.attr('data-product-name') || localizedText.general_product_name;
               existingProducts = lineItems.map(function (li) {
                 var uri = li.product.uri;
                 var id = uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
@@ -15422,10 +15431,21 @@ jQuery(document).ready(function ($) {
                   'currency': currency
                 }
               };
-              _context.next = 17;
+              $('body').addClass('dr-loading');
+              _context.prev = 19;
+              _context.next = 22;
               return commerce_api.updateShopper({}, shopperData);
 
-            case 17:
+            case 22:
+              _context.next = 27;
+              break;
+
+            case 24:
+              _context.prev = 24;
+              _context.t0 = _context["catch"](19);
+              console.error(_context.t0);
+
+            case 27:
               queryObj = {
                 productId: productID,
                 quantity: quantity,
@@ -15433,18 +15453,20 @@ jQuery(document).ready(function ($) {
                 expand: 'all'
               };
               commerce_api.updateCart(queryObj).then(function (res) {
+                drToast.displayMessage("\"".concat(productName, "\" ").concat(localizedText.product_added_to_cart_msg), 'success');
                 displayMiniCart(res.cart);
-                openMiniCartDisplay();
               })["catch"](function (jqXHR) {
                 return checkout_utils.apiErrorHandler(jqXHR);
+              })["finally"](function () {
+                return $('body').removeClass('dr-loading');
               });
 
-            case 19:
+            case 29:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee);
+      }, _callee, null, [[19, 24]]);
     }));
 
     return function (_x) {
@@ -15761,6 +15783,38 @@ jQuery(document).ready(function ($) {
       });
       $buyBtn.attr('data-product-id', productId).prop('disabled', false);
     }
+  });
+  var $floatingCart = $('#floating-cart');
+  var $miniCart = $('.dr-minicart-display');
+  $(window).on('scroll', function () {
+    if ($(window).scrollTop() > 150) {
+      if ($miniCart.is(':visible')) {
+        if ($miniCart.css('top') === 0) {
+          $floatingCart.removeClass('show');
+          if (!$('#dr-minicart > .dr-minicart-display').length) $('#dr-minicart').append($miniCart);
+        } else {
+          $miniCart.hide();
+          $floatingCart.addClass('show');
+        }
+      } else {
+        $floatingCart.addClass('show');
+      }
+    } else {
+      $floatingCart.removeClass('show');
+      if (!$('#dr-minicart > .dr-minicart-display').length) $('#dr-minicart').append($miniCart);
+    }
+  });
+  $floatingCart.on('click', function (e) {
+    e.preventDefault();
+    $miniCart.css('position', 'fixed');
+    $floatingCart.removeClass('show');
+    if (!$('#sticky-mini-cart > .dr-minicart-display').length) $('#sticky-mini-cart').append($miniCart);
+    openMiniCartDisplay();
+  });
+  $('body').on('click', '#dr-minicart-view-cart-btn', function (e) {
+    e.preventDefault();
+    $('body').addClass('dr-loading');
+    window.location.href = $(e.target).attr('href');
   });
 });
 /* harmony default export */ var public_pdp = (PdpModule);
