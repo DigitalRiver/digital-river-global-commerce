@@ -14980,14 +14980,18 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   var temsUsStauts = $('#tems-us-status').val();
                   var companyName = $('#billing-field-company-name').val();
                   if (companyName) $('#business-company-name').val(companyName).trigger('focus').trigger('blur');
-                  if (!$certStatus.hasClass('cert-good')) $('#tax-certificate-status').slideDown();
+
+                  if ($certStatus.hasClass('cert-good')) {
+                    $('#tax-exempt-note').removeClass('d-none');
+                  } else {
+                    $('#tax-exempt-note').addClass('d-none');
+                    $('#tax-certificate-status').slideDown();
+                  }
 
                   if (temsUsStauts === 'NOT_ELIGIBLE') {
                     $('#checkout-tax-exempt-form > .form-group-business.company-name').addClass('d-none');
                     $('#checkout-tax-exempt-app').slideDown();
                   }
-
-                  $('#tax-exempt-note').removeClass('d-none');
                 } else {
                   $('#checkout-tax-exempt-form > .form-group-business.company-name').removeClass('d-none');
                   $('#tax-certificate-status, #checkout-tax-exempt-app').slideUp();
