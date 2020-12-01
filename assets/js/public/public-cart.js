@@ -373,7 +373,6 @@ const CartModule = (($) => {
           $('.dr-cart__products').text(localizedText.empty_cart_msg);
           $('#dr-checkout-btn').remove();
           $('#cart-estimate').remove();
-          $('.dr-cart-wrapper__content > .order-number').remove();
 
           const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
 

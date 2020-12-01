@@ -13,18 +13,18 @@
 
 $is_auto_renewal = false;
 $is_empty_cart = $cart['cart']['totalItemsInCart'] === 0;
-$order_number = $cart['cart']['id'] ?? '';
+$order_number = ( isset( $cart['cart']['id'] ) && ( $cart['cart']['id'] !== 'active' ) ) ? $cart['cart']['id'] : '';
 ?>
 
 <div class="dr-cart-wrapper" id="dr-cart-page-wrapper">
 
     <form class="dr-cart-wrapper__content dr-cart">
 
-        <?php if ( ! $is_empty_cart ): ?>
+        <?php if ( ! empty( $order_number ) ): ?>
 
             <div class="order-number">
 
-                <span><?php echo __( 'Order Number:', 'digital-river-global-commerce' ) ?></span> <span><?php echo $order_number ?></span>
+                <p><span><?php echo __( 'Order Number:', 'digital-river-global-commerce' ) ?></span> <span><?php echo $order_number ?></span></p>
 
             </div>
 
@@ -51,7 +51,7 @@ $order_number = $cart['cart']['id'] ?? '';
                         <?php include DRGC_PLUGIN_DIR . 'public/templates/cart/cart-product.php'; ?>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <?php echo __( 'Your cart is empty.', 'digital-river-global-commerce' ); ?>
+                    <p><?php echo __( 'Your cart is empty.', 'digital-river-global-commerce' ); ?></p>
                 <?php endif; ?>
 
             </div>

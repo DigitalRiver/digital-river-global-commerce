@@ -67,12 +67,12 @@ if ( $variations && isset( $variations[0] ) ) {
           <?php } ?>
         </div>
         <div class="col-12 col-md-6">
-		    <h1 class="entry-title dr-pd-title"><?php echo $product_name; ?></h1>
+            <h1 class="entry-title dr-pd-title"><?php echo $product_name; ?></h1>
             <div class="dr-pd-content">
-			    <?php if ( $short_description ) { ?>
+                <?php if ( $short_description ) { ?>
                     <p class="dr-pd-short-desc"><?php echo $short_description; ?></p>
-			    <?php } ?>
-			    <?php the_content(); ?>
+                <?php } ?>
+                <?php the_content(); ?>
 
                 <?php if ( $variations ): ?>
 
@@ -105,7 +105,7 @@ if ( $variations && isset( $variations[0] ) ) {
 
                     <?php endif; ?>
 
-			    <?php endif; ?>
+                <?php endif; ?>
 
                 <form id="dr-pd-form">
                     <div class="dr-pd-price-wrapper" id="dr-pd-price-wrapper">
@@ -117,8 +117,8 @@ if ( $variations && isset( $variations[0] ) ) {
                         <span class="dr-pd-qty-plus"  style="background-image: url('<?php echo DRGC_PLUGIN_URL; ?>assets/images/icons-plus.svg');"></span>
                     </div>
                     <p>
-                        <button type="button" class="dr-btn dr-buy-btn" data-product-id="<?php echo $gc_id; ?>">
-						    <?php echo __( 'Add to Cart', 'digital-river-global-commerce'); ?>
+                        <button type="button" class="dr-btn dr-buy-btn" data-product-id="<?php echo $gc_id; ?>" data-product-name="<?php echo $product_name; ?>">
+                            <?php echo __( 'Add to Cart', 'digital-river-global-commerce'); ?>
                         </button>
                     </p>
                 </form>
@@ -128,13 +128,13 @@ if ( $variations && isset( $variations[0] ) ) {
 
     <div class="row">
         <div class="col">
-	        <?php if ( $long_description ) { ?>
+            <?php if ( $long_description ) { ?>
                 <section class="dr-pd-info">
                     <div class="dr-pd-long-desc">
-				        <?php echo $long_description; ?>
+                        <?php echo $long_description; ?>
                     </div>
                 </section>
-	        <?php } ?>
+            <?php } ?>
         </div>
         <section id="dr-pd-offers"></section>
     </div>
