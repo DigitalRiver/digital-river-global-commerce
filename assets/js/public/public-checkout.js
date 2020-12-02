@@ -9,7 +9,7 @@ const CheckoutModule = (($) => {
         let $nextSection = $section.next();
 
         if (!$nextSection.find('div.dr-panel-result > p.dr-panel-result__text').is(':empty') && 
-            !$section.hasClass('dr-checkout__tax-exempt') && !$section.hasClass('dr-checkout__shipping')) {
+            !$section.hasClass('dr-checkout__tax-exempt') && !$section.hasClass('dr-checkout__shipping') && !$section.hasClass('dr-checkout__billing')) {
             $nextSection = $('.dr-checkout__el').eq(prevIndex - 1);
         }
 
