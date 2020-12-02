@@ -14765,6 +14765,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
               $('.back-link a').click(function () {
                 var loginUrl = new URL(drgc_params.loginUrl);
                 var checkoutUrl = new URL(drgc_params.checkoutUrl);
+                $('body').addClass('dr-loading');
 
                 if (document.referrer && document.referrer.indexOf(loginUrl.pathname) === -1 && document.referrer.indexOf(checkoutUrl.pathname) === -1) {
                   window.location.href = document.referrer;

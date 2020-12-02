@@ -880,6 +880,7 @@ jQuery(document).ready(async ($) => {
             const loginUrl = new URL(drgc_params.loginUrl);
             const checkoutUrl = new URL(drgc_params.checkoutUrl);
 
+            $('body').addClass('dr-loading');
             if (document.referrer && (document.referrer.indexOf(loginUrl.pathname) === -1) && (document.referrer.indexOf(checkoutUrl.pathname) === -1)) {
                 window.location.href = document.referrer;
             } else {
