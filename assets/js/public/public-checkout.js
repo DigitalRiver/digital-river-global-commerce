@@ -914,6 +914,7 @@ jQuery(document).ready(async ($) => {
             const companyEin = $('#business-ein').val();
             const isGood = $('#tax-certificate-status > p').hasClass('cert-good') || ($('#tems-us-status').val() === 'ELIGIBLE_EXEMPTED');
             let status = 'NOT_ELIGIBLE';
+            let adminSabrixCall = false;
 
             $button.addClass('sending').blur();
             $('#tems-us-result > p.alert').hide();
@@ -935,6 +936,7 @@ jQuery(document).ready(async ($) => {
     
                         if (res.companyName) {
                             status = 'ELIGIBLE_EXEMPTED';
+                            adminSabrixCall = true;
                             $('#billing-field-company-name').val(res.companyName);
                             $('#tax-certificate-status > p.alert-danger, #tax-certificate-status > p.alert-info').remove();
                             $('#tems-us-error-msg').text('').hide(); 
@@ -979,7 +981,7 @@ jQuery(document).ready(async ($) => {
             }
 
             $('#tems-us-status').val(status);
-            await CheckoutUtils.updateTemsUsStatus(status);
+            await CheckoutUtils.updateTemsUsStatus(status, adminSabrixCall);
 
             if (!$('#tems-us-error-msg:visible').length) {
                 if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
