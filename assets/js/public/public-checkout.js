@@ -50,7 +50,7 @@ const CheckoutModule = (($) => {
             }
         }
 
-        adjustColumns($section);
+        adjustColumns($section, $nextSection);
         CheckoutUtils.updateSummaryLabels();
 
         $('html, body').animate({
@@ -58,7 +58,7 @@ const CheckoutModule = (($) => {
         }, 500);
     };
 
-    const adjustColumns = ($section) => {
+    const adjustColumns = ($section, $nextSection = null) => {
         const $shippingSection = $('.dr-checkout__shipping');
         const $billingSection = $('.dr-checkout__billing');
         const $paymentSection = $('.dr-checkout__payment');
@@ -72,12 +72,17 @@ const CheckoutModule = (($) => {
             $billingSection.removeClass('small-closed-right');
         }
 
-        if ($section && $section.hasClass('dr-checkout__payment')) {
+        if ($section && $section.hasClass('dr-checkout__payment') && $nextSection) {
             $paymentSection.addClass('small-closed-left');
             $confirmSection.addClass('small-closed-right').removeClass('d-none');
         } else {
             $paymentSection.removeClass('small-closed-left');
             $confirmSection.removeClass('small-closed-right').addClass('d-none');
+        }
+
+        if ($nextSection && $nextSection.hasClass('dr-checkout__confirmation')) {
+            $paymentSection.addClass('small-closed-left');
+            $confirmSection.addClass('small-closed-right').removeClass('d-none');
         }
     };
 

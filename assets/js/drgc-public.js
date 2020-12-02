@@ -13775,7 +13775,7 @@ var CheckoutModule = function ($) {
       }
     }
 
-    adjustColumns($section);
+    adjustColumns($section, $nextSection);
     checkout_utils.updateSummaryLabels();
     $('html, body').animate({
       scrollTop: $nextSection.first().offset().top - 80
@@ -13783,6 +13783,7 @@ var CheckoutModule = function ($) {
   };
 
   var adjustColumns = function adjustColumns($section) {
+    var $nextSection = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
     var $shippingSection = $('.dr-checkout__shipping');
     var $billingSection = $('.dr-checkout__billing');
     var $paymentSection = $('.dr-checkout__payment');
@@ -13796,12 +13797,17 @@ var CheckoutModule = function ($) {
       $billingSection.removeClass('small-closed-right');
     }
 
-    if ($section && $section.hasClass('dr-checkout__payment')) {
+    if ($section && $section.hasClass('dr-checkout__payment') && $nextSection) {
       $paymentSection.addClass('small-closed-left');
       $confirmSection.addClass('small-closed-right').removeClass('d-none');
     } else {
       $paymentSection.removeClass('small-closed-left');
       $confirmSection.removeClass('small-closed-right').addClass('d-none');
+    }
+
+    if ($nextSection && $nextSection.hasClass('dr-checkout__confirmation')) {
+      $paymentSection.addClass('small-closed-left');
+      $confirmSection.addClass('small-closed-right').removeClass('d-none');
     }
   };
 

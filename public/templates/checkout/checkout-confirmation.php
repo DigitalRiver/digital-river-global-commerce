@@ -1,4 +1,4 @@
-<div class="dr-checkout__confirmation dr-checkout__el d-none">
+<div class="dr-checkout__confirmation dr-checkout__el">
 
     <p>
         <?php echo __( 'Please review your order details and place your order below.', 'digital-river-global-commerce' ); ?>
@@ -26,6 +26,12 @@
         </button>
     </form>
 
-    <div id="dr-checkout-err-field" class="invalid-feedback" >Specifed method not supported for the card</div>
+    <div class="dr-panel-result">
+
+        <p class="dr-panel-result__text"></p>
+
+    </div>
+
+    <div id="dr-checkout-err-field" class="invalid-feedback" ></div>
 
 </div>
