@@ -25,7 +25,7 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
         </span>
 
-        <span class="dr-accordion__edit"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+        <span class="dr-accordion__edit shipping"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
     </div>
     

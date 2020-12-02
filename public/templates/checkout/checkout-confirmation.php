@@ -1,4 +1,4 @@
-<div class="dr-checkout__confirmation dr-checkout__el">
+<div class="dr-checkout__confirmation dr-checkout__el d-none">
 
     <p>
         <?php echo __( 'Please review your order details and place your order below.', 'digital-river-global-commerce' ); ?>

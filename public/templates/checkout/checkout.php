@@ -99,6 +99,12 @@ $company_name = ( isset( $customer_tax_regs['eligibleCertificate'] ) && ! empty(
 
         <div class="dr-checkout">
 
+            <div class="d-none" id="edit-info-link">
+
+                <span><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+
+            </div>
+
             <?php include_once DRGC_PLUGIN_DIR . 'public/templates/checkout/checkout-email.php'; ?>
 
             <?php if ( $is_tems_us_enabled ):

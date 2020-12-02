@@ -165,13 +165,6 @@
         }
     }
 
-    .edit-link {
-        text-transform: uppercase;
-        display: none;
-        float: right;
-        opacity: 0.5;
-    }
-
     .DR-logo-button {
         font-size: 16px;
         font-weight: bold;
@@ -259,3 +252,14 @@
     font-size: 14px;
 }
 
+#edit-info-link {
+    font-family: Open Sans;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    line-height: 16px;
+    cursor: pointer;
+    opacity: 0.5;
+    text-transform: uppercase;
+    float: right;
+}
