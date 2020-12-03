@@ -201,7 +201,7 @@ if ( count( $custom_attributes ) > 0 ) {
 
                 <label for="business-company-name" class="float-label">
 
-                    <?php echo __( 'Company Name', 'digital-river-global-commerce' ); ?>
+                    <?php echo __( 'Company Name (optional)', 'digital-river-global-commerce' ); ?>
 
                 </label>
 
@@ -217,7 +217,7 @@ if ( count( $custom_attributes ) > 0 ) {
 
                 <label for="business-ein" class="float-label">
 
-                    <?php _e( 'EIN', 'digital-river-global-commerce' ); ?>
+                    <?php _e( 'EIN (optional)', 'digital-river-global-commerce' ); ?>
 
                 </label>
 
