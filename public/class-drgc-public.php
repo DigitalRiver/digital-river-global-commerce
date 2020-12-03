@@ -112,12 +112,6 @@ class DRGC_Public {
     $short_description_option = get_option( 'drgc_display_short_description_handler' );
     $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
 
-    $applepay_option = get_option( 'drgc_applepay_handler' );
-    $applepay_enabled = ( is_array( $applepay_option ) && '1' == $applepay_option['checkbox'] )  ? 'true' : 'false';
-
-    $googlepay_option = get_option( 'drgc_googlepay_handler' );
-    $googlepay_enabled = ( is_array( $googlepay_option ) && '1' == $googlepay_option['checkbox'] )  ? 'true' : 'false';
-
     $translation_array = array(
       'upgrade_label'               => __('Upgrade', 'digital-river-global-commerce'),
       'add_label'                   => __('Add', 'digital-river-global-commerce'),
@@ -225,7 +219,8 @@ class DRGC_Public {
       'translations'      => $translation_array,
       'client_ip'         => $_SERVER['REMOTE_ADDR'],
       'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT ),
-      'displayShortDescription' => $short_description_enabled
+      'displayShortDescription' => $short_description_enabled,
+      'customerId'              => $customer['id'] ?? ''
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );

@@ -1,15 +1,3 @@
-<?php
-$standart_price = '$0.00';
-$standart_estimated_arrival = 'Apr 08 - Apr 11';
-$express_price = '$10.00';
-$express_estimated_arrival = 'Apr 09, 2019';
-$overnight_price = '$20.00';
-$overnight_estimated_arrival = 'Apr 08, 2019';
-
-$result = 'Standard $0.00';
-
-?>
-
 <div class="dr-checkout__delivery dr-checkout__el">
 
     <div class="dr-accordion">
@@ -31,7 +19,7 @@ $result = 'Standard $0.00';
 
         </span>
 
-       <span class="dr-accordion__edit"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+       <span class="dr-accordion__edit delivery"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
 
     </div>
@@ -52,11 +40,7 @@ $result = 'Standard $0.00';
 
     <div class="dr-panel-result">
 
-        <p class="dr-panel-result__text">
-
-            <?php echo $result ?>
-
-        </p>
+        <p class="dr-panel-result__text"></p>
 
     </div>
 

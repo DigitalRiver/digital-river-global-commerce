@@ -88,12 +88,31 @@ const AccountModule = (($) => {
         $('#list-orders > .overflowContainer > .dr-pagination > .prev > .btn').prop('disabled', !orders.hasOwnProperty('previousPage'));
     };
 
+    const submitTaxCertificate = async ($form, customerId) => {
+        $form.addClass('dr-loading');
+
+        try {
+            const res = JSON.parse(await CheckoutUtils.createTaxProfile(customerId));
+
+            if (res.companyName) {
+                location.reload();
+            } else {
+                $('#tems-us-error-msg').text(CheckoutUtils.getAjaxErrorMessage()).show();
+            }
+        } catch (error) {
+            console.error(error);
+            $form.removeClass('dr-loading');
+            $('#tems-us-error-msg').text(CheckoutUtils.getAjaxErrorMessage(JSON.parse(error.responseText))).show();
+        }
+    };
+
     return {
         appendAutoRenewalTerms,
         getRightOfWithdrawalLink,
         initRightOfWithdrawalLink,
         createOrderList,
-        updateListAndPagination
+        updateListAndPagination,
+        submitTaxCertificate
     };
 })(jQuery);
 
@@ -382,6 +401,81 @@ $(() => {
                 $('body').removeClass('dr-loading');
                 CheckoutUtils.apiErrorHandler(jqXHR);
             });
+    });
+
+    // Certificate
+    const $certificateModal = $('#certificate-modal');
+    const $companyNameConfirmModal = $('#company-name-confirm');
+
+    $body.append($certificateModal).append($companyNameConfirmModal);
+
+    $('#add-new-cert').on('click', (e) => {
+        e.preventDefault();
+
+        $certificateModal.drModal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+
+    $('#certificate-modal .dr-modal-footer > button.submit').on('click', (e) => {
+        e.preventDefault();
+        const $form = $('#account-tem-us-form');
+        const accountCompanyName = $('#account-company-name').val();
+
+        $form.addClass('was-validated');
+
+        if ($form[0].checkValidity() === false) {
+            return false;
+        }
+
+        if (accountCompanyName !== '' && accountCompanyName !== $('#tems-us-company-name').val()) {
+            $certificateModal.drModal('hide');
+            $companyNameConfirmModal.drModal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        } else {
+            AccountModule.submitTaxCertificate($form, drgc_params.customerId, $certificateModal);
+        }
+    });
+
+    $('#certificate-modal .dr-modal-footer > button.cancel, #certificate-modal .dr-modal-header > button.close').on('click', (e) => {
+        $('#account-tem-us-form').removeClass('was-validated');
+        $('#account-tem-us-form input, #certificate-tax-authority').val('');
+        $('#tems-us-error-msg').text('').hide();
+    });
+
+    $('#company-name-confirm .dr-modal-footer > button.confirm').on('click', (e) => {
+        e.preventDefault();
+
+        $certificateModal.drModal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        $companyNameConfirmModal.drModal('hide');
+
+        AccountModule.submitTaxCertificate($('#account-tem-us-form'), drgc_params.customerId, $certificateModal);
+    });
+
+    $('#company-name-confirm .dr-modal-footer > button.cancel').on('click', (e) => {
+        e.preventDefault();
+
+        $certificateModal.drModal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        $companyNameConfirmModal.drModal('hide');
+    });
+
+    $('#tems-us-start-date, #tems-us-end-date').on('blur', (e) => {
+        const date = $(e.target).val();
+
+        if (date) {
+            const dateArr = date.split('-').reverse();
+            [dateArr[0], dateArr[1]] = [dateArr[1], dateArr[0]];
+            $(e.target).val(dateArr.join('/'));
+        }
     });
 
     // Payment

@@ -139,6 +139,7 @@ jQuery(document).ready(($) => {
                 const salePrice = Number(li.pricing.salePriceWithQuantity.value);
                 const formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
                 const formattedListPrice = li.pricing.formattedListPriceWithQuantity;
+                const thumbnailImage = li.product.thumbnailImage || ((li.product.parentProduct) ? (li.product.parentProduct.thumbnailImage || '') : '');
                 let priceContent = '';
 
                 if (listPrice > salePrice) {
@@ -150,7 +151,7 @@ jQuery(document).ready(($) => {
                 const miniCartLineItem = `
                 <li class="dr-minicart-item clearfix">
                     <div class="dr-minicart-item-thumbnail">
-                        <img src="${li.product.thumbnailImage}" alt="${li.product.displayName}" />
+                        <img src="${thumbnailImage}" alt="${li.product.displayName}" />
                     </div>
                     <div class="dr-minicart-item-info" data-product-id="${productId}">
                         <span class="dr-minicart-item-title">${li.product.displayName}</span>

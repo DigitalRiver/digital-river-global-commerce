@@ -22,7 +22,7 @@ $personal_type_checked = array_key_exists( 'Individual', $tax_schema );
 
         </span>
 
-        <span class="dr-accordion__edit"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+        <span class="dr-accordion__edit tax-id"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
     </div>
 
