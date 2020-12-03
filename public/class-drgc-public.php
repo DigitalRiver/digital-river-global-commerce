@@ -188,7 +188,6 @@ class DRGC_Public {
       'status_label'                   => __('Status', 'digital-river-global-commerce'),
       'order_details_label'            => __('Order Details', 'digital-river-global-commerce'),
       'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce'),
-      'end_date_error_msg'             => __('Tax certificate expiration date must be after start date.', 'digital-river-global-commerce'),
       'product_added_to_cart_msg'      => __('has been added to your cart.', 'digital-river-global-commerce'),
       'general_product_name'           => __('The product', 'digital-river-global-commerce')
     );

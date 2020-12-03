@@ -178,18 +178,7 @@ const CheckoutUtils = (($, params) => {
       }
     } else if (Array.isArray(error.errors)) {
       const err = error.errors[0];
-      const errorCode = err.code || '';
-      const errorParam = err.parameter || '';
-
-      if (errorCode === 'invalid_parameter') {
-        switch (errorParam) {
-          case 'endDate':
-            errMsg = localizedText.end_date_error_msg;
-            break;
-          default:
-            errMsg = err.description;
-        }
-      }
+      if (err.description) errMsg = err.description;
     }
 
     return errMsg;

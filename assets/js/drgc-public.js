@@ -12724,19 +12724,7 @@ var CheckoutUtils = function ($, params) {
       }
     } else if (Array.isArray(error.errors)) {
       var _err = error.errors[0];
-      var errorCode = _err.code || '';
-      var errorParam = _err.parameter || '';
-
-      if (errorCode === 'invalid_parameter') {
-        switch (errorParam) {
-          case 'endDate':
-            errMsg = localizedText.end_date_error_msg;
-            break;
-
-          default:
-            errMsg = _err.description;
-        }
-      }
+      if (_err.description) errMsg = _err.description;
     }
 
     return errMsg;
