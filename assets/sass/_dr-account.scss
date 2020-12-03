@@ -888,3 +888,32 @@
         }
     }
 }
+
+#list-certificates > .dr-h4 {
+    position: relative;
+}
+
+#certificate-modal {
+    .help-text {
+        color: darkgray;
+        font-size: 12px;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 10px;
+        }
+
+        &.row {
+            margin: 0;
+        }
+    }
+
+    .invalid-feedback {
+        &.row {
+            margin: 0;
+        }
+    }
+}
+
+#add-new-cert {
+    font-size: 16px;
+}

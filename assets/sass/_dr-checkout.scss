@@ -13,8 +13,10 @@
 
     &__cloudpay,
     &__email,
+    &__tems-us,
     &__shipping,
     &__billing,
+    &__tax-exempt,
     &__tax-id,
     &__delivery,
     &__payment,
@@ -163,13 +165,6 @@
         }
     }
 
-    .edit-link {
-        text-transform: uppercase;
-        display: none;
-        float: right;
-        opacity: 0.5;
-    }
-
     .DR-logo-button {
         font-size: 16px;
         font-weight: bold;
@@ -203,6 +198,20 @@
     .DR-Card-Brand {
         display: initial;
     }
+
+    input[type="date"], input[type="file"] {
+        height: 48px;
+        padding-top: 10px;
+    }
+
+    .help-text {
+        color: darkgray;
+        font-size: 12px;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 10px;
+        }
+    }
 }
 
 #dr-payment-info {
@@ -228,4 +237,29 @@
     #dr3dsecure {
         left: 0 !important;
     }
+}
+
+#tems-us-error-msg {
+    margin-bottom: 10px;
+}
+
+#tax-certificate-status {
+    margin-bottom: 10px;
+}
+
+#tax-exempt-note {
+    color: darkgray;
+    font-size: 14px;
+}
+
+#edit-info-link {
+    font-family: Open Sans;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    line-height: 16px;
+    cursor: pointer;
+    opacity: 0.5;
+    text-transform: uppercase;
+    float: right;
 }

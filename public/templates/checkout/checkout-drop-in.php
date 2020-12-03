@@ -8,7 +8,7 @@
 
         </span>
 
-        <span class="dr-accordion__edit"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+        <span class="dr-accordion__edit payment"><?php _e( 'Edit', 'digital-river-global-commerce' ); ?>></span>
         
     </div>
 

@@ -339,6 +339,60 @@ body.page-checkout #dr-minicart,
 body.page-thank-you #dr-minicart {
     display: none;
 }
+
+#floating-cart {
+    display: inline-block;
+    background: transparent url(../images/floating-cart.svg) center/contain no-repeat;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    border-radius: 4px;
+    position: fixed;
+    bottom: 20px;
+    right: 25px;
+    transition: background-color .3s, opacity .5s, visibility .5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+
+    @media only screen and (max-width: map-get($bs-breakpoints, sm)) {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    > .qty {
+        position: absolute;
+        border: #e74833;
+        border-radius: 15px;
+        background-color: #e74833;
+        color: #fff;
+        text-align: center;
+        top: 0;
+        left: 25px;
+        min-width: 25px;
+        height: 25px;
+        line-height: 25px;
+        cursor: pointer;
+        padding: 0 3px;
+        font-size: 14px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+}
+
+#floating-cart:hover {
+    cursor: pointer;
+}
+
+#floating-cart.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+#sticky-mini-cart > .dr-minicart-display {
+    top: 0;
+}
+
 /* PD Items
 ------------------------------------------------------------------------*/
 .dr-pd-price {
@@ -492,57 +546,100 @@ input[type=radio] {
     }
 }
 
-#floating-cart {
-    display: inline-block;
-    background: transparent url(../images/floating-cart.svg) center/contain no-repeat;
-    width: 50px;
-    height: 50px;
-    text-align: center;
+/* Bootstrap Alert CSS
+------------------------------------------------------------------------*/
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
     border-radius: 4px;
-    position: fixed;
-    bottom: 20px;
-    right: 25px;
-    transition: background-color .3s, opacity .5s, visibility .5s;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
-
-    @media only screen and (max-width: map-get($bs-breakpoints, sm)) {
-        opacity: 1;
-        visibility: visible;
-    }
-
-    > .qty {
-        position: absolute;
-        border: #e74833;
-        border-radius: 15px;
-        background-color: #e74833;
-        color: #fff;
-        text-align: center;
-        top: 0;
-        left: 25px;
-        min-width: 25px;
-        height: 25px;
-        line-height: 25px;
-        cursor: pointer;
-        padding: 0 3px;
-        font-size: 14px;
-        font-weight: bold;
-        white-space: nowrap;
-    }
-}
-  
-#floating-cart:hover {
-    cursor: pointer;
 }
 
-#floating-cart.show {
-    opacity: 1;
-    visibility: visible;
+.alert h4 {
+    margin-top: 0;
+    color: inherit;
 }
 
-#sticky-mini-cart > .dr-minicart-display {
-    top: 0;
+.alert .alert-link {
+    font-weight: bold;
+}
+
+.alert > p,
+.alert > ul {
+    margin-bottom: 0;
+}
+
+.alert > p + p {
+    margin-top: 5px;
+}
+
+.alert-dismissable,
+.alert-dismissible {
+    padding-right: 35px;
+}
+
+.alert-dismissable .close,
+.alert-dismissible .close {
+    position: relative;
+    top: -2px;
+    right: -21px;
+    color: inherit;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-color: #d6e9c6;
+    color: #3c763d;
+}
+
+.alert-success hr {
+    border-top-color: #c9e2b3;
+}
+
+.alert-success .alert-link {
+    color: #2b542c;
+}
+
+.alert-info {
+    background-color: #d9edf7;
+    border-color: #bce8f1;
+    color: #31708f;
+}
+
+.alert-info hr {
+    border-top-color: #a6e1ec;
+}
+
+.alert-info .alert-link {
+    color: #245269;
+}
+
+.alert-warning {
+    background-color: #fcf8e3;
+    border-color: #faebcc;
+    color: #8a6d3b;
+}
+
+.alert-warning hr {
+    border-top-color: #f7e1b5;
+}
+
+.alert-warning .alert-link {
+    color: #66512c;
+}
+
+.alert-danger {
+    background-color: #f2dede;
+    border-color: #ebccd1;
+    color: #a94442;
+}
+
+.alert-danger hr {
+    border-top-color: #e4b9c0;
+}
+
+.alert-danger .alert-link {
+    color: #843534;
 }
 
 /* Cart
