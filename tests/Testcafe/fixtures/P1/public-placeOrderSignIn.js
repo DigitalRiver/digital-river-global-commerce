@@ -26,7 +26,9 @@ const checkoutPage = new CheckoutPage();
 const loginPage = new LoginPage();
 const utils = new GenericUtils();
 const newUser = utils.getNewUser();
-
+const isPhysical = true;
+const isGuest = false;
+const isLocalUs = true;
 test('Place order as a new customer: Checkout first then Sigin', async t => {
   console.log('Test Case: Place Order as a New Customer: Checkout First then Signin');
 
@@ -49,7 +51,7 @@ test('Place order as a new customer: Checkout first then Sigin', async t => {
   await t.expect(autoFirstName.toUpperCase()).eql(newUser.firstName);
   await t.expect(autoLastName.toUpperCase()).eql(newUser.lastName);
 
-  await utils.fillOrderInfoAndSubmitOrder(true);
+  await utils.fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocalUs);
 });
 
 test('Place order as a new customer: Regiser as a new customer when checkout', async t => {
@@ -68,7 +70,7 @@ test('Place order as a new customer: Regiser as a new customer when checkout', a
   await t.expect(autoFirstName.toUpperCase()).eql(newUser.firstName);
   await t.expect(autoLastName.toUpperCase()).eql(newUser.lastName);
 
-  await utils.fillOrderInfoAndSubmitOrder(true);
+  await utils.fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocalUs);
 });
 /*
 test('Place order as a new customer: Signin first then checkout', async t => {

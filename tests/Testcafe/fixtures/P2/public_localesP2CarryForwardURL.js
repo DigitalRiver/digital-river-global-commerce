@@ -27,6 +27,7 @@ const productMenu = Selector('a').withText(expectProductMenu);
 
 test('Localization - ', async t => {
   console.log('Test Case: Localization: Currency change in product list menu');
+  const miniCartToggle = Selector('.dr-minicart-toggle');
   const viewCartBtn = Selector('#dr-minicart-view-cart-btn');
   const proceedToCheckoutBtn = Selector('a').withText('進行結帳');
   const continueAsGuestBtn = Selector('#dr-guest-btn');
@@ -57,6 +58,8 @@ test('Localization - ', async t => {
   await t
     .hover(homePage.addLocaleProduct)
     .click(homePage.addLocaleProduct)
+    .hover(miniCartToggle)
+    .click(miniCartToggle)
     .hover(viewCartBtn)
     .click(viewCartBtn);
   await checkUrl();

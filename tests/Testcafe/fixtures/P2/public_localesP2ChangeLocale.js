@@ -82,6 +82,7 @@ test('Localization - ', async t => {
   const productNameMinicart = Selector('.dr-minicart-item-title')
   const currency = Selector('.dr-pd-price.dr-minicart-item-price')
   const subtotalCurrency = Selector('.dr-minicart-subtotal').find('span');
+  const miniCartToggle = Selector('.dr-minicart-toggle');
   const viewCartBtn = Selector('#dr-minicart-view-cart-btn');
   const expectedViewCartBtn = '查看購物車' ;
   const minicartProdTitle = Selector('.dr-minicart-item-title');
@@ -117,7 +118,9 @@ test('Localization - ', async t => {
   const prodName = Selector('.product-name');
 
   console.log(' >> Click view cart button');
-  await t.click(viewCartBtn);
+  await t
+    .click(miniCartToggle)
+    .click(viewCartBtn);
   console.log('  Expect subtotal, tax, shipping, shipping tax, and total currency in view cart page contains ' + expectCurrencyTW);
   await t
     .expect(subtotalCurrencyCheckout.innerText).contains(expectCurrencyTW)
