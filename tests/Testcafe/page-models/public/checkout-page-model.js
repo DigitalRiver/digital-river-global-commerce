@@ -10,7 +10,8 @@ export default class CheckoutPage {
     this.emailTexts = Selector('#dr-panel-email-result');
 
     this.emailBtn = Selector('#checkout-email-form > button');
-    this.shippingBtn = Selector('#checkout-shipping-form > button');
+    this.guestShippingBtn = Selector('#checkout-shipping-form > button');
+    this.longinShippingBtn = Selector('#checkout-shipping-form > button').nth(1);
     this.longinBillingInfoSubmitBtn = Selector('#checkout-billing-form').find('button').nth(1);
     this.guestBillingInfoSubmitBtn = Selector('#checkout-billing-form > button');
     this.deliverByExpress = Selector('#shipping-option-8196700');
@@ -59,15 +60,15 @@ export default class CheckoutPage {
   async completeFormEmail(testEmail) {
     await t
       .typeText(this.email, testEmail)
+      .hover(this.emailBtn)
       .click(this.emailBtn)
       .wait(1000);
   }
 
-  async completeFormShippingInfo(isLocaleUS = true) {
+  async completeFormShippingInfo(isGuest, isLocaleUS) {
     const shippingInfo = this.utils.getShippingUserData();
     const shippingStateOption = this.shippingState.find('option');
     const shippingCountryOption = this.shippingCountry.find('option');
-
     await t
       .typeText(this.shippingFirstName, shippingInfo.firstName, { replace: true })
       .typeText(this.shippingLastName, shippingInfo.lastName, { replace: true })
@@ -87,8 +88,15 @@ export default class CheckoutPage {
     await t
       .typeText(this.shippingPostalCode, shippingInfo.postCode)
       .typeText(this.shippingPhoneNumber, shippingInfo.phoneNo)
-      .hover(this.shippingBtn)
-      .click(this.shippingBtn);
+    if (isGuest) {
+      await t
+        .hover(this.guestShippingBtn)
+        .click(this.guestShippingBtn);
+    } else {
+      await t
+        .hover(this.longinShippingBtn)
+        .click(this.longinShippingBtn);
+    }
   }
 
   async completeFormBillingInfo(isGuest, isLocaleUS = true) {

@@ -19,7 +19,7 @@ const utils = new GenericUtils();
 const baseURL = Config.baseUrl[Config.env];
 const localeTW = 'zh_TW';
 const expectCurrency = {TWD: 'TWD', USD: 'USD'};
-const defaultCurrency = Selector('.dr-dropdown-toggle.nav-link.dr-selected-currency');
+const defaultCurrency = Selector('.nav-link.dr-selected-currency');
 const expectDefaultCurrency = 'TWD';
 
 test('Localization - ', async t => {

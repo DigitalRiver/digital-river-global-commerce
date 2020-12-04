@@ -10,7 +10,7 @@ const homePage = new HomePage();
 const POSTSPERPAGE = 10;
 const utils = new GeneralUtils();
 
-fixture `===== DRGC P2 Automation Test - Pagination on Product Category, Product List & Search Page =====`
+fixture `===== DRGC P2 Automation Test - Pagination on Product Category =====`
   .httpAuth({
     username: Config.websiteAuth['username'],
     password: Config.websiteAuth['password'],

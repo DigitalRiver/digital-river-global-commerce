@@ -1,4 +1,4 @@
-import { Selector, t } from 'testcafe';
+import { Selector, t, ClientFunction} from 'testcafe';
 import HomePage from '../page-models/public/home-page-model';
 import CartPage from '../page-models/public/cart-page-model';
 import CheckoutPage from '../page-models/public/checkout-page-model';
@@ -25,7 +25,7 @@ export default class GenericUtils {
 
   async clickItem(target) {
     await t
-      .expect(target.visible).ok({timeout:20000})
+      .expect(target.exists).ok({timeout:20000})
       .hover(target)
       .wait(500)
       .click(target)
@@ -134,6 +134,8 @@ export default class GenericUtils {
     const estimatedShipping = 'Estimated Shipping';
     const testEmail = "qa@test.com";
     const fixedShipping = 'Shipping';
+    const isGuest = true;
+    const isLocaeUS = true;
     // Click Proceed to Checkout in View Cart page to proceed checkout
     console.log('>> Direct to checkout page, still show Estimated Shipping');
     await this.clickItem(cartPage.proceedToCheckoutBtn);
@@ -147,8 +149,8 @@ export default class GenericUtils {
 
     // Enter shipping info
     console.log('>> Checkout page - Entering shipping info, still show Estimated Shipping');
-    await t.expect(checkoutPage.shippingBtn.exists).ok();
-    await checkoutPage.completeFormShippingInfo();
+    await t.expect(checkoutPage.guestShippingBtn.exists).ok();
+    await checkoutPage.completeFormShippingInfo(isGuest, isLocaeUS);
     await this.checkShippingSummaryInfo(estimatedShipping, estShippingFee);
 
     // Skip Billing info
@@ -167,10 +169,19 @@ export default class GenericUtils {
     const tyPage = new TYPage();
     const checkoutPage = new CheckoutPage();
     let finishOrderMsg = "Your order was completed successfully.";
+
+    if (isLocaleUS && !isGuest) {
+      const taxSubmitBtn = Selector('#checkout-tax-exempt-form').find('button');
+      await t
+        .hover(taxSubmitBtn)
+        .click(taxSubmitBtn)
+        .wait(2000);
+    }
+
     if (isPhysical) {
       // Enter shipping info
       console.log('>> Checkout page - Entering Shipping Info.');
-      await checkoutPage.completeFormShippingInfo(isLocaleUS);
+      await checkoutPage.completeFormShippingInfo(isGuest, isLocaleUS);
       await t.expect(checkoutPage.useSameAddrCheckbox.exists).ok();
 
       // Set billing info as diff from shipping info
@@ -206,8 +217,11 @@ export default class GenericUtils {
     console.log('>> Checkout page - Place order');
     await t
       .takeScreenshot('BWC/payment_s.jpg')
-      .click(checkoutPage.submitOrderBtn)
-      .wait(8000)
+      .click(checkoutPage.submitOrderBtn);
+
+    const getURL = ClientFunction(() => window.location.href);
+    await t
+      .expect(getURL()).contains('thank-you', {timeout: 15000})
       .expect(tyPage.tyMsg.innerText).eql(finishOrderMsg)
       .takeScreenshot('BWC/TY_s.jpg');
 
