@@ -53,7 +53,7 @@ export default class AdminUtils {
     const sel2 = this.adminPage.importProgress;
     await t
       .expect(sel2.visible).notOk({timeout:600000})
-      .expect(this.getLocation()).contains('&import-complete=true');
+      .expect(this.getLocation()).contains('&import_complete=true');
 
     await this.utils.clickItem(this.adminPage.drProductsLink);
     console.log(' >>', await this.adminPage.displayNum.textContent + ' have been successfully imported!');
@@ -72,7 +72,7 @@ export default class AdminUtils {
       await this.utils.clickItem(this.adminPage.applyBtn);
 
       numOfProduct = await Selector('.subsubsub').find('span').innerText;
-      await t.expect(this.adminPage.returnMsg.textContent).contains('posts moved to the Trash');
+      await t.expect(this.adminPage.returnMsg.textContent).match(/posts? moved to the Trash/);
     }
     console.log('>> Empty Trash');
 
