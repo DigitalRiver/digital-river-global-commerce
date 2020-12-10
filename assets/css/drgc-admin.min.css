@@ -377,6 +377,7 @@ input:checked+.slider:before{-webkit-transform:translateX(26px);transform:transl
 [data-tooltip-location="bottom"]:before{-webkit-transform:translate(-50%,5px) scale(0.5);transform:translate(-50%,5px) scale(0.5)}
 [data-tooltip-location="bottom"]:hover:before{-webkit-transform:translate(-50%,5px) scale(1);transform:translate(-50%,5px) scale(1)}
 [data-tooltip-location="bottom"]:after{border-width:0 6px 6px 6px;border-color:transparent transparent rgba(50,50,50,0.9) transparent;-webkit-transform-origin:bottom;transform-origin:bottom}
+.visible-toggle{position:absolute;top:1px;right:2px;padding:4px 5px;background:#eee;border-top-right-radius:4px;border-bottom-right-radius:4px;cursor:pointer}
 @-webkit-keyframes bar-animation{0%{background-position:0 0}
 100%{background-position:50px 50px}
 }@keyframes bar-animation{0%{background-position:0 0}

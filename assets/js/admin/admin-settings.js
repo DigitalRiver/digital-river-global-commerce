@@ -45,6 +45,16 @@ jQuery(document).ready(($) => {
 
   $('#drgc_cron_local_hours').val(SettingsModule.convertToLocalHours(utcHours));
   $('#drgc_cron_handler').trigger('change');
+
+  $('.visible-toggle').click((e) => {
+    const $this = $(e.target);
+    if ($this.hasClass('dashicons-hidden')) {
+      $this.prev('input').attr('type', 'text');
+    } else {
+      $this.prev('input').attr('type', 'password');
+    }
+    $this.toggleClass('dashicons-hidden dashicons-visibility');
+  });
 });
 
 export default SettingsModule;
