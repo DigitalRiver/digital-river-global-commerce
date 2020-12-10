@@ -406,7 +406,10 @@ class DRGC_Admin {
 	 */
 	public function drgc_api_key_cb() {
 		$api_key = get_option( $this->option_name . '_api_key' );
-		echo '<div data-tooltip="Required to access your Global Commerce catalog data" data-tooltip-location="right"><input type="text" class="regular-text" name="' . $this->option_name . '_api_key' . '" id="' . $this->option_name . '_api_key' . '" value="' . $api_key . '"></div>';
+		echo '<div data-tooltip="Required to access your Global Commerce catalog data" data-tooltip-location="right">';
+		echo '<input type="password" class="regular-text" name="' . $this->option_name . '_api_key' . '" id="' . $this->option_name . '_api_key' . '" value="' . $api_key . '">';
+		echo '<span class="dashicons dashicons-hidden visible-toggle"></span>';
+		echo '</div>';
 	}
 
 	/**
@@ -416,7 +419,10 @@ class DRGC_Admin {
 	 */
 	public function drgc_api_secret_cb() {
 		$api_secret = get_option( $this->option_name . '_api_secret' );
-		echo '<div data-tooltip="Required to support saved accounts for returning users" data-tooltip-location="right"><input type="text" class="regular-text" name="' . $this->option_name . '_api_secret' . '" id="' . $this->option_name . '_api_secret' . '" value="' . $api_secret . '"></div>';
+		echo '<div data-tooltip="Required to support saved accounts for returning users" data-tooltip-location="right">';
+		echo '<input type="password" class="regular-text" name="' . $this->option_name . '_api_secret' . '" id="' . $this->option_name . '_api_secret' . '" value="' . $api_secret . '">';
+		echo '<span class="dashicons dashicons-hidden visible-toggle"></span>';
+		echo '</div>';
 	}
 
 	/**
@@ -436,7 +442,10 @@ class DRGC_Admin {
 	 */
 	public function drgc_digitalRiver_key_cb() {
 		$digitalRiver_key = get_option( $this->option_name . '_digitalRiver_key' );
-		echo '<div data-tooltip="Required to process payments via DigitalRiver.js" data-tooltip-location="right"><input type="text" class="regular-text" name="' . $this->option_name . '_digitalRiver_key' . '" id="' . $this->option_name . '_digitalRiver_key' . '" value="' . $digitalRiver_key . '"></div>';
+		echo '<div data-tooltip="Required to process payments via DigitalRiver.js" data-tooltip-location="right">';
+		echo '<input type="password" class="regular-text" name="' . $this->option_name . '_digitalRiver_key' . '" id="' . $this->option_name . '_digitalRiver_key' . '" value="' . $digitalRiver_key . '">';
+		echo '<span class="dashicons dashicons-hidden visible-toggle"></span>';
+		echo '</div>';
 	}
 
 	/**
@@ -594,7 +603,10 @@ class DRGC_Admin {
 	 */
 	public function drgc_big_blue_password_cb() {
 		$password = password_hash( get_option( $this->option_name . '_big_blue_password' ), PASSWORD_DEFAULT );
-		echo '<div data-tooltip="Required to manage and retrieve subscriptions via User Management Service" data-tooltip-location="right"><input type="password" class="regular-text" name="' . $this->option_name . '_big_blue_password' . '" id="' . $this->option_name . '_big_blue_password' . '" value="' . $password . '"></div>';
+		echo '<div data-tooltip="Required to manage and retrieve subscriptions via User Management Service" data-tooltip-location="right">';
+		echo '<input type="password" class="regular-text" name="' . $this->option_name . '_big_blue_password' . '" id="' . $this->option_name . '_big_blue_password' . '" value="' . $password . '">';
+		echo '<span class="dashicons dashicons-hidden visible-toggle"></span>';
+		echo '</div>';
 	}
 
 	/**
