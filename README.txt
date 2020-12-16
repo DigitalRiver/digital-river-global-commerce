@@ -94,6 +94,19 @@ No, you are responsible for hosting your own site.
 
 
 == Changelog ==
+= [2.0] - 2020-12-16 =
+* Added build-in localizaction features with translations
+* Support different display types of tax inclusive/exclusive price in checkout page
+* Support build-in Currency and locale selector
+* Enhance the compatibility of hosting service by removing custom cookies
+* Refactor product import. Now the plugin support one product with 300+ variations
+* Support Global Tax ID Management and Tax exemption(US)
+* Added GDPR/Compliance
+* Added new payment module:Drop-in. You don't need to add extra code in order to make payment work on WordPress
+
+
+
+
 = [1.3.1] - 2020-08-05 =
 * Added new display for Tax inclusive/exclusive price
 * Added Change Password feature in Profile management
