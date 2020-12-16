@@ -10,8 +10,9 @@ describe('DrgcUserWatcher', () => {
     expect(DrgcUserWatcher.watcher.tick).not.toHaveBeenCalled();
   });
 
-  test('without setting redirectPath', () => {
+  test('without setting redirectUrl', () => {
     drgc_params.isLogin = 'true';
+    DrgcUserWatcher.watcher.redirectUrl = null;
     DrgcUserWatcher.watcher.initPathname = jest.fn();
     DrgcUserWatcher.watcher.tick = jest.fn();
 
@@ -24,9 +25,9 @@ describe('DrgcUserWatcher', () => {
     expect(DrgcUserWatcher.watcher.tick).not.toHaveBeenCalled();
   });
 
-  test('set redirectPath to /login/ and the current page is the login page', () => {
-    DrgcUserWatcher.watcher.pathname = '/login/';
-    DrgcUserWatcher.watcher.redirectPath = '/login/';
+  test('set redirectUrl same as the current page and it is not the login page', () => {
+    DrgcUserWatcher.watcher.pathname = '/cart/';
+    DrgcUserWatcher.watcher.redirectUrl = drgc_params.cartUrl;
     DrgcUserWatcher.watcher.tick = jest.fn();
 
     const watcher = DrgcUserWatcher.watcher.init();

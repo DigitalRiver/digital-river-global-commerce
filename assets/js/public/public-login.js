@@ -54,7 +54,7 @@ const LoginModule = (($) => {
             url: drgc_params.ajaxUrl,
             data,
             success: () => {
-                LoginModule.redirectAfterAuth(false);
+                LoginModule.redirectAfterAuth(false, LoginModule.getLocaleParam());
             }
         });
     };
@@ -72,20 +72,30 @@ const LoginModule = (($) => {
         };
         $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, function(response) {
+            if (sessionStorage.getItem('drgc_upsell_decline')) {
+                sessionStorage.removeItem('drgc_upsell_decline');
+            }
+
             location.reload();
         });
     };
 
-    const redirectAfterAuth = (isLoggedIn) => {
-        if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
-            window.location.href = drgc_params.checkoutUrl;
+    const redirectAfterAuth = (isLoggedIn, locale) => {
+        const cartUrl = new URL(drgc_params.cartUrl);
+        const checkoutUrl = new URL(drgc_params.checkoutUrl);
+        let targetHref = '';
+
+        if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
+            targetHref = drgc_params.checkoutUrl;
         } else if (isLoggedIn) {
-            window.location.href = drgc_params.accountUrl;
-        } else if (!document.referrer) {
-            window.location.href = drgc_params.homeUrl;
+            targetHref = drgc_params.accountUrl;
         } else {
-            window.location.href = document.referrer;
+            targetHref = drgc_params.homeUrl;
         }
+
+        const targetUrl = new URL(targetHref);
+        if (locale) targetUrl.searchParams.set('locale', locale);
+        window.location.href = targetUrl.toString();
     };
 
     const autoLogout = (url) => {
@@ -96,19 +106,17 @@ const LoginModule = (($) => {
 
         $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, () => {
+            if (sessionStorage.getItem('drgc_upsell_decline')) {
+                sessionStorage.removeItem('drgc_upsell_decline');
+            }
+
             window.location.href = url;
         });
     };
 
-    const resetCookie = () => {
-        const data = {
-            action: 'drgc_reset_cookie',
-            nonce: drgc_params.ajaxNonce
-        };
-
-        $.post(drgc_params.ajaxUrl, data, (res) => {
-            if (!res.success) throw new Error('Cookie reset failed.');
-        });
+    const getLocaleParam = () => {
+      const params = (new URL(window.location)).searchParams;
+      return params.get('locale');
     };
 
     return {
@@ -117,7 +125,7 @@ const LoginModule = (($) => {
         logout,
         redirectAfterAuth,
         autoLogout,
-        resetCookie
+        getLocaleParam
     };
 })(jQuery);
 
@@ -147,17 +155,18 @@ jQuery(document).ready(($) => {
             action  : 'drgc_login',
             nonce   : drgc_params.ajaxNonce,
             username: $('.dr-login-form input[name=username]').val(),
-            password: $('.dr-login-form input[name=password]').val()
+            password: $('.dr-login-form input[name=password]').val(),
+            locale: LoginModule.getLocaleParam() || drgc_params.drLocale
         };
 
         $.post(ajaxUrl, data, function(response) {
             if ( response.success ) {
-                LoginModule.redirectAfterAuth(true);
+                LoginModule.redirectAfterAuth(true, response.data.locale);
             } else {
                 $form.data('processing', false);
                 but.removeClass('sending').blur();
 
-                if ( response.data.hasOwnProperty('error_description') ) {
+                if ( response.data && response.data.hasOwnProperty('error_description') ) {
                     $('.dr-form-error-msg').text(response.data.error_description);
                 }
 
@@ -239,7 +248,7 @@ jQuery(document).ready(($) => {
 
         $.post(ajaxUrl, data, function(response) {
             if (response.success) {
-                LoginModule.redirectAfterAuth(true);
+                LoginModule.redirectAfterAuth(true, LoginModule.getLocaleParam());
             } else {
                 $form.data('processing', false);
                 $button.removeClass('sending').blur();

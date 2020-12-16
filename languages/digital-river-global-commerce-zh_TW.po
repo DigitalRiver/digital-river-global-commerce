@@ -1,0 +1,2518 @@
+# Copyright (C) 2020 Digital_River_Global_Commerce
+# This file is distributed under the same license as the Digital_River_Global_Commerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Digital_River_Global_Commerce\n"
+"Report-Msgid-Bugs-To: https://github.com/DigitalRiver/digital-river-global-"
+"commerce\n"
+"POT-Creation-Date: 2020-12-16 11:43+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: GCTemplates <gcTemplates@digitalriver.com>\n"
+"Language: zh_TW\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
+"_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;"
+"esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-drgc-admin.php:165 admin/class-drgc-admin.php:166
+msgid "Settings"
+msgstr "設定"
+
+#: admin/class-drgc-admin.php:198 admin/partials/drgc-admin-display.php:21
+msgid "General"
+msgstr "一般"
+
+#: admin/class-drgc-admin.php:205
+msgid "Site ID"
+msgstr "網站 ID"
+
+#: admin/class-drgc-admin.php:214
+msgid "Commerce API Key"
+msgstr "商務 API 金鑰"
+
+#: admin/class-drgc-admin.php:223
+msgid "Commerce API Secret"
+msgstr "商務 API 金鑰"
+
+#: admin/class-drgc-admin.php:232
+msgid "Domain"
+msgstr "網域"
+
+#: admin/class-drgc-admin.php:241
+msgid "Payments Service API Key"
+msgstr "支付服務 API 金鑰"
+
+#: admin/class-drgc-admin.php:250
+msgid "UMS Username"
+msgstr "使用者名稱：%s"
+
+#: admin/class-drgc-admin.php:259
+msgid "UMS Password"
+msgstr "重設密碼"
+
+#: admin/class-drgc-admin.php:268
+msgid "Scheduled Products Import"
+msgstr "計劃產品匯入"
+
+#: admin/class-drgc-admin.php:277 admin/partials/drgc-admin-display.php:27
+#: includes/class-drgc-activator.php:39 public/class-drgc-public.php:135
+#: public/templates/login/login.php:28
+msgid "Checkout"
+msgstr "結帳"
+
+#: admin/class-drgc-admin.php:284
+msgid "Test Order"
+msgstr "測試訂單"
+
+#: admin/class-drgc-admin.php:293
+msgid "Display As Excl. Tax"
+msgstr "顯示為不含稅"
+
+#: admin/class-drgc-admin.php:302
+msgid "Product Short Description"
+msgstr "商品簡短說明"
+
+#: admin/class-drgc-admin.php:311
+msgid "Drop-in"
+msgstr "Drop-in"
+
+#: admin/class-drgc-admin.php:318
+msgid "Payment Method Configuration"
+msgstr "付款方式配置"
+
+#: admin/class-drgc-admin.php:389
+msgid ""
+"Please contact your account representative for assistance with these "
+"settings."
+msgstr "有關這些設置的説明,請聯絡您的客戶代表。"
+
+#: admin/class-drgc-admin.php:466
+msgid "Enable Test Order."
+msgstr "啟用測試順序。"
+
+#: admin/class-drgc-admin.php:478
+msgid "Display pricing as tax exclusive on checkout flow"
+msgstr "將價格顯示為結帳流程的不含稅價格"
+
+#: admin/class-drgc-admin.php:493
+msgid "Display Short Description along with the product name"
+msgstr "顯示簡短說明以及產品名稱"
+
+#: admin/class-drgc-admin.php:510
+msgid "Twice daily product synchronization with GC."
+msgstr "每天與 GC 進行兩次產品同步。"
+
+#: admin/class-drgc-admin.php:511
+msgid "Will be triggered at your"
+msgstr "將在您的位置觸發"
+
+#: admin/class-drgc-admin.php:683 admin/class-drgc-admin.php:736
+msgid "Failed to create file"
+msgstr "無法建立檔案"
+
+#: admin/class-drgc-admin.php:691 admin/class-drgc-admin.php:749
+msgid "Could not write to file"
+msgstr "無法寫入檔案"
+
+#: admin/class-drgc-admin.php:821, php-format
+msgid ""
+"Please refer to the sample code of <code>paymentMethodConfiguration</code> "
+"from <a target=\"_blank\" href=\"%s\">Drop-in integration guide</a> to "
+"customize the look and feel of payment elements."
+msgstr ""
+"請參閱《 <a target=\"_blank\" href=\"%s\">Drop-in集成指南》中</a>的"
+"<code>paymentMethodConfiguration</code>的示例代碼，以自定義付款元素的外觀。"
+
+#: admin/class-drgc-admin.php:851
+msgid ""
+"To make sure Digital River Global Commerce plugin is working as expected, "
+"please set 1 to session.use_cookies in php.ini."
+msgstr ""
+"為確保Digital River Global Commerce插件按預期工作，請在php.ini中將1設置為"
+"session.use_cookies。"
+
+#: admin/class-drgc-admin.php:867
+msgid "Sync Complete!"
+msgstr "匯入完成!"
+
+#: admin/class-drgc-admin.php:882
+msgid "DRGC Mobile Mini-cart Area"
+msgstr "DRGC移動微型購物車區域"
+
+#: admin/class-drgc-admin.php:884
+msgid ""
+"Add mini-cart widget here to appear beneath the header and above the main "
+"content on mobile devices."
+msgstr "在此處添加微型購物車小部件，以顯示在標題和移動設備主要內容的上方。"
+
+#: admin/class-drgc-post-types.php:43 admin/class-drgc-post-types.php:45
+msgid "Products"
+msgstr "產品"
+
+#: admin/class-drgc-post-types.php:44 public/class-drgc-public.php:142
+#: public/templates/cart/cart-product.php:48
+msgid "Product"
+msgstr "產品"
+
+#: admin/class-drgc-post-types.php:46
+msgid "Digital River"
+msgstr "Digital River"
+
+#: admin/class-drgc-post-types.php:47
+msgid "Add New"
+msgstr "新增"
+
+#: admin/class-drgc-post-types.php:48
+msgid "Add new product"
+msgstr "新增商品"
+
+#: admin/class-drgc-post-types.php:49
+#: public/templates/checkout/checkout-billing.php:25
+#: public/templates/checkout/checkout-delivery.php:22
+#: public/templates/checkout/checkout-drop-in.php:11
+#: public/templates/checkout/checkout-email.php:13
+#: public/templates/checkout/checkout-shipping.php:28
+#: public/templates/checkout/checkout-tax-exemption.php:24
+#: public/templates/checkout/checkout-tax-identifier.php:25
+#: public/templates/checkout/checkout.php:104
+msgid "Edit"
+msgstr "編輯"
+
+#: admin/class-drgc-post-types.php:50
+msgid "Edit product"
+msgstr "編輯商品"
+
+#: admin/class-drgc-post-types.php:51
+msgid "New product"
+msgstr "新產品"
+
+#: admin/class-drgc-post-types.php:52
+msgid "View product"
+msgstr "查看產品"
+
+#: admin/class-drgc-post-types.php:53
+msgid "View products"
+msgstr "查看產品"
+
+#: admin/class-drgc-post-types.php:54
+msgid "Search products"
+msgstr "搜索產品"
+
+#: admin/class-drgc-post-types.php:55
+msgid "No products found"
+msgstr "沒有找到商品"
+
+#: admin/class-drgc-post-types.php:56
+msgid "No products found in trash"
+msgstr "垃圾桶里找不到商品"
+
+#: admin/class-drgc-post-types.php:83
+msgid "DR Variations"
+msgstr "DR Variations"
+
+#: admin/class-drgc-post-types.php:84
+msgid "DR Variation"
+msgstr "DR Variations"
+
+#: admin/class-drgc-post-types.php:85
+#: admin/partials/drgc-product-details-meta-box.php:44
+msgid "Variations"
+msgstr "變化"
+
+#: admin/class-drgc-post-types.php:115
+msgid "Product Categories"
+msgstr "商品分類"
+
+#: admin/class-drgc-post-types.php:116
+msgid "Category"
+msgstr "分類"
+
+#: admin/class-drgc-post-types.php:117
+msgid "Categories"
+msgstr "分類"
+
+#: admin/class-drgc-post-types.php:118
+msgid "Search categories"
+msgstr "搜尋分類"
+
+#: admin/class-drgc-post-types.php:119
+msgid "All categories"
+msgstr "所有分類"
+
+#: admin/class-drgc-post-types.php:120
+msgid "Parent category"
+msgstr "上層分類"
+
+#: admin/class-drgc-post-types.php:121
+msgid "Parent category:"
+msgstr "父類別："
+
+#: admin/class-drgc-post-types.php:122
+msgid "Edit category"
+msgstr "編輯分類"
+
+#: admin/class-drgc-post-types.php:123
+msgid "Update category"
+msgstr "更新分類"
+
+#: admin/class-drgc-post-types.php:124
+msgid "Add new category"
+msgstr "新增分類"
+
+#: admin/class-drgc-post-types.php:125
+msgid "New category name"
+msgstr "分類名稱"
+
+#: admin/class-drgc-post-types.php:126
+msgid "No categories found"
+msgstr "找不到分类"
+
+#: admin/class-drgc-post-types.php:162
+msgid "Product Details"
+msgstr "商品詳情"
+
+#: admin/class-drgc-post-types.php:255
+msgid "Product ID"
+msgstr "產品ID"
+
+#: admin/class-drgc-post-types.php:256
+#: admin/partials/drgc-product-details-meta-box.php:26
+msgid "SKU"
+msgstr "SKU"
+
+#: admin/partials/drgc-admin-display.php:24
+#: admin/partials/drgc-admin-locales.php:20
+msgid "Locales"
+msgstr "地區語言"
+
+#: admin/partials/drgc-admin-display.php:30
+msgid "Payments"
+msgstr "付款"
+
+#: admin/partials/drgc-admin-locales.php:21
+msgid "Sync Locales and Currencies"
+msgstr "同步區域設定和貨幣"
+
+#: admin/partials/drgc-admin-locales.php:24
+msgid "No locale, please sync it up by clicking button above."
+msgstr "如果沒有區域設置,請點擊上面的按鈕將其同步。"
+
+#: admin/partials/drgc-admin-locales.php:29
+msgid "Site Locales"
+msgstr "站台區設定"
+
+#: admin/partials/drgc-admin-locales.php:34
+msgid "DR Locale"
+msgstr "DR 區域設定"
+
+#: admin/partials/drgc-admin-locales.php:35
+msgid "WP Language"
+msgstr "WP語言"
+
+#: admin/partials/drgc-admin-locales.php:36
+msgid "Currencies"
+msgstr "貨幣"
+
+#: admin/partials/drgc-admin-locales.php:44
+msgid "(Default)"
+msgstr "(預設)"
+
+#: admin/partials/drgc-product-details-meta-box.php:18
+msgid "GC Product ID"
+msgstr "GC 產品識別碼"
+
+#: admin/partials/drgc-product-details-meta-box.php:22
+msgid "External Reference ID"
+msgstr "外部參考識別碼"
+
+#: admin/partials/drgc-product-details-meta-box.php:33
+msgid "Default"
+msgstr "預設"
+
+#: admin/partials/drgc-product-details-meta-box.php:48
+msgid "ID"
+msgstr "ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:49
+msgid "Internal Variation Name"
+msgstr "內部變體名稱"
+
+#: admin/partials/drgc-product-details-meta-box.php:50
+#: admin/partials/drgc-product-details-meta-box.php:84
+msgid "Variation Attributes"
+msgstr "可變屬性"
+
+#: admin/partials/drgc-product-details-meta-box.php:100
+#: public/templates/my-subscriptions/my-subscriptions.php:38
+msgid "Price"
+msgstr "價格"
+
+#: admin/partials/drgc-product-details-meta-box.php:104
+msgid "Display Name"
+msgstr "顯示名稱"
+
+#: admin/partials/drgc-product-details-meta-box.php:108
+msgid "Short Description"
+msgstr "簡短說明"
+
+#: admin/partials/drgc-product-details-meta-box.php:112
+msgid "Long Description"
+msgstr "詳細描述"
+
+#: admin/partials/drgc-product-details-meta-box.php:116
+msgid "Thumbnail"
+msgstr "縮圖"
+
+#: admin/partials/drgc-product-details-meta-box.php:121
+#: admin/partials/drgc-product-details-meta-box.php:131
+msgid "(No image)"
+msgstr "（沒有圖像）"
+
+#: admin/partials/drgc-product-details-meta-box.php:126
+msgid "Product Image"
+msgstr "商品圖片"
+
+#: admin/partials/drgc-products-import-btn.php:16
+msgid "Import Complete!"
+msgstr "匯入完成!"
+
+#: admin/partials/drgc-products-import-btn.php:20
+msgid "You must enable Javascript in order to proceed!"
+msgstr "為了進行相關處理，請務必啟用瀏覽器中的 Javascript 功能!"
+
+#: admin/partials/drgc-products-import-btn.php:21
+msgid "Import Products"
+msgstr "導入產品"
+
+#: includes/class-drgc-activator.php:30
+msgid "cart"
+msgstr "cart"
+
+#: includes/class-drgc-activator.php:31 public/templates/login/login.php:27
+msgid "Cart"
+msgstr "購物車"
+
+#: includes/class-drgc-activator.php:38
+msgid "checkout"
+msgstr "checkout"
+
+#: includes/class-drgc-activator.php:46
+msgid "login"
+msgstr "login"
+
+#: includes/class-drgc-activator.php:47 public/class-drgc-public.php:598
+#: public/templates/login/login.php:93
+msgid "Login"
+msgstr "登入"
+
+#: includes/class-drgc-activator.php:54
+msgid "account"
+msgstr "賬戶"
+
+#: includes/class-drgc-activator.php:55 public/class-drgc-public.php:612
+#: public/templates/login/login.php:29
+msgid "My Account"
+msgstr "我的帳戶"
+
+#: includes/class-drgc-activator.php:62
+msgid "thank-you"
+msgstr "thank-you"
+
+#: includes/class-drgc-activator.php:63
+msgid "Thank You"
+msgstr "謝謝您"
+
+#: includes/class-drgc-product-importer.php:87
+msgid "No products found."
+msgstr "找不到商品。"
+
+#: includes/class-drgc-product-importer.php:112
+msgid "Something went wrong when getting product "
+msgstr "出現錯誤。請再試一次。"
+
+#: includes/drgc-core-functions.php:124
+#, php-format
+msgid "Showing %s out of %s"
+msgstr "顯示 %s 的 %s"
+
+#: includes/drgc-locale-mapping.php:136
+msgid "Albania"
+msgstr "阿爾巴尼亞"
+
+#: includes/drgc-locale-mapping.php:137
+msgid "Algeria"
+msgstr "阿爾及利亞"
+
+#: includes/drgc-locale-mapping.php:138
+msgid "Bahrain"
+msgstr "巴林"
+
+#: includes/drgc-locale-mapping.php:139
+msgid "Egypt"
+msgstr "埃及"
+
+#: includes/drgc-locale-mapping.php:140
+msgid "Iraq"
+msgstr "伊拉克"
+
+#: includes/drgc-locale-mapping.php:141
+msgid "Jordan"
+msgstr "約旦"
+
+#: includes/drgc-locale-mapping.php:142
+msgid "Kuwait"
+msgstr "科威特"
+
+#: includes/drgc-locale-mapping.php:143
+msgid "Lebanon"
+msgstr "黎巴嫩"
+
+#: includes/drgc-locale-mapping.php:144
+msgid "Libya"
+msgstr "利比亞"
+
+#: includes/drgc-locale-mapping.php:145
+msgid "Morocco"
+msgstr "摩洛哥"
+
+#: includes/drgc-locale-mapping.php:146
+msgid "Oman"
+msgstr "阿曼"
+
+#: includes/drgc-locale-mapping.php:147
+msgid "Qatar"
+msgstr "卡塔爾"
+
+#: includes/drgc-locale-mapping.php:148
+msgid "Saudi Arabia"
+msgstr "沙烏地阿拉伯"
+
+#: includes/drgc-locale-mapping.php:149
+msgid "Sudan"
+msgstr "蘇丹"
+
+#: includes/drgc-locale-mapping.php:150
+msgid "Syria"
+msgstr "敘利亞"
+
+#: includes/drgc-locale-mapping.php:151
+msgid "Tunisia"
+msgstr "突尼西亞"
+
+#: includes/drgc-locale-mapping.php:152
+msgid "United Arab Emirates"
+msgstr "阿拉伯聯合大公國"
+
+#: includes/drgc-locale-mapping.php:153
+msgid "Yemen"
+msgstr "葉門"
+
+#: includes/drgc-locale-mapping.php:154
+msgid "Belarus"
+msgstr "白俄羅斯"
+
+#: includes/drgc-locale-mapping.php:155
+msgid "Bulgaria"
+msgstr "保加利亞"
+
+#: includes/drgc-locale-mapping.php:156 includes/drgc-locale-mapping.php:246
+msgid "Spain"
+msgstr "西班牙"
+
+#: includes/drgc-locale-mapping.php:157
+msgid "China"
+msgstr "中國"
+
+#: includes/drgc-locale-mapping.php:158 includes/drgc-locale-mapping.php:172
+msgid "Hong Kong SAR China"
+msgstr "中國香港特別行政區"
+
+#: includes/drgc-locale-mapping.php:159
+msgid "Macau SAR China"
+msgstr "中國澳門特別行政區"
+
+#: includes/drgc-locale-mapping.php:160
+msgid "Taiwan"
+msgstr "台灣"
+
+#: includes/drgc-locale-mapping.php:161
+msgid "Bosnia & Herzegovina"
+msgstr "波斯尼亞和黑塞哥維那"
+
+#: includes/drgc-locale-mapping.php:162
+msgid "Croatia"
+msgstr "克羅地亞"
+
+#: includes/drgc-locale-mapping.php:163
+msgid "Czechia"
+msgstr "捷克亞"
+
+#: includes/drgc-locale-mapping.php:164 includes/drgc-locale-mapping.php:170
+msgid "Denmark"
+msgstr "丹麥"
+
+#: includes/drgc-locale-mapping.php:165 includes/drgc-locale-mapping.php:168
+#: includes/drgc-locale-mapping.php:193
+msgid "Belgium"
+msgstr "比利時"
+
+#: includes/drgc-locale-mapping.php:166 includes/drgc-locale-mapping.php:179
+msgid "Netherlands"
+msgstr "荷蘭"
+
+#: includes/drgc-locale-mapping.php:167
+msgid "Australia"
+msgstr "澳大利亞"
+
+#: includes/drgc-locale-mapping.php:169 includes/drgc-locale-mapping.php:194
+msgid "Canada"
+msgstr "加拿大"
+
+#: includes/drgc-locale-mapping.php:171 includes/drgc-locale-mapping.php:192
+msgid "Finland"
+msgstr "芬蘭"
+
+#: includes/drgc-locale-mapping.php:173 includes/drgc-locale-mapping.php:208
+msgid "Iceland"
+msgstr "冰島"
+
+#: includes/drgc-locale-mapping.php:174 includes/drgc-locale-mapping.php:206
+msgid "India"
+msgstr "印度"
+
+#: includes/drgc-locale-mapping.php:175 includes/drgc-locale-mapping.php:209
+msgid "Indonesia"
+msgstr "印尼"
+
+#: includes/drgc-locale-mapping.php:176
+msgid "Ireland"
+msgstr "愛爾蘭"
+
+#: includes/drgc-locale-mapping.php:177 includes/drgc-locale-mapping.php:218
+msgid "Malaysia"
+msgstr "馬來西亞"
+
+#: includes/drgc-locale-mapping.php:178
+msgid "Malta"
+msgstr "馬爾他"
+
+#: includes/drgc-locale-mapping.php:180
+msgid "New Zealand"
+msgstr "紐西蘭"
+
+#: includes/drgc-locale-mapping.php:181 includes/drgc-locale-mapping.php:219
+msgid "Norway"
+msgstr "挪威"
+
+#: includes/drgc-locale-mapping.php:182
+msgid "Philippines"
+msgstr "菲律賓"
+
+#: includes/drgc-locale-mapping.php:183 includes/drgc-locale-mapping.php:245
+msgid "Puerto Rico"
+msgstr "波多黎各"
+
+#: includes/drgc-locale-mapping.php:184
+msgid "Singapore"
+msgstr "新加坡"
+
+#: includes/drgc-locale-mapping.php:185
+msgid "South Africa"
+msgstr "南非"
+
+#: includes/drgc-locale-mapping.php:186 includes/drgc-locale-mapping.php:249
+msgid "Sweden"
+msgstr "瑞典"
+
+#: includes/drgc-locale-mapping.php:187 includes/drgc-locale-mapping.php:198
+#: includes/drgc-locale-mapping.php:203 includes/drgc-locale-mapping.php:211
+msgid "Switzerland"
+msgstr "瑞士"
+
+#: includes/drgc-locale-mapping.php:188 includes/drgc-locale-mapping.php:250
+msgid "Thailand"
+msgstr "泰國"
+
+#: includes/drgc-locale-mapping.php:189
+msgid "United Kingdom"
+msgstr "英國"
+
+#: includes/drgc-locale-mapping.php:190
+msgid "United States"
+msgstr "美國"
+
+#: includes/drgc-locale-mapping.php:191
+msgid "Estonia"
+msgstr "愛沙尼亞"
+
+#: includes/drgc-locale-mapping.php:195
+msgid "France"
+msgstr "法國"
+
+#: includes/drgc-locale-mapping.php:196 includes/drgc-locale-mapping.php:202
+msgid "Luxembourg"
+msgstr "盧森堡"
+
+#: includes/drgc-locale-mapping.php:197
+msgid "St. Pierre & Miquelon"
+msgstr "聖皮埃爾和密克隆群島"
+
+#: includes/drgc-locale-mapping.php:199
+msgid "Austria"
+msgstr "奧地利"
+
+#: includes/drgc-locale-mapping.php:200
+msgid "Germany"
+msgstr "德國"
+
+#: includes/drgc-locale-mapping.php:201
+msgid "Liechtenstein"
+msgstr "列支敦士登"
+
+#: includes/drgc-locale-mapping.php:204
+msgid "Greece"
+msgstr "希臘"
+
+#: includes/drgc-locale-mapping.php:205
+msgid "Israel"
+msgstr "以色列"
+
+#: includes/drgc-locale-mapping.php:207
+msgid "Hungary"
+msgstr "匈牙利"
+
+#: includes/drgc-locale-mapping.php:210
+msgid "Italy"
+msgstr "義大利"
+
+#: includes/drgc-locale-mapping.php:212
+msgid "Japan"
+msgstr "日本"
+
+#: includes/drgc-locale-mapping.php:213
+msgid "Kazakhstan"
+msgstr "哈薩克斯坦"
+
+#: includes/drgc-locale-mapping.php:214
+msgid "South Korea"
+msgstr "南韓"
+
+#: includes/drgc-locale-mapping.php:215
+msgid "Latvia"
+msgstr "拉脫維亞"
+
+#: includes/drgc-locale-mapping.php:216
+msgid "Lithuania"
+msgstr "立陶宛"
+
+#: includes/drgc-locale-mapping.php:217
+msgid "Macedonia"
+msgstr "馬其頓"
+
+#: includes/drgc-locale-mapping.php:220
+msgid "Norway, Nynorsk"
+msgstr "挪威，尼諾斯克"
+
+#: includes/drgc-locale-mapping.php:221
+msgid "Poland"
+msgstr "波蘭"
+
+#: includes/drgc-locale-mapping.php:222
+msgid "Brazil"
+msgstr "巴西"
+
+#: includes/drgc-locale-mapping.php:223
+msgid "Portugal"
+msgstr "葡萄牙"
+
+#: includes/drgc-locale-mapping.php:224
+msgid "Romania"
+msgstr "羅馬尼亞"
+
+#: includes/drgc-locale-mapping.php:225
+msgid "Russia"
+msgstr "俄羅斯"
+
+#: includes/drgc-locale-mapping.php:226
+msgid "Serbia"
+msgstr "塞爾維亞"
+
+#: includes/drgc-locale-mapping.php:227
+msgid "YU"
+msgstr "YU"
+
+#: includes/drgc-locale-mapping.php:228
+msgid "Slovakia"
+msgstr "斯洛伐克"
+
+#: includes/drgc-locale-mapping.php:229
+msgid "Slovenia"
+msgstr "斯洛文尼亞"
+
+#: includes/drgc-locale-mapping.php:230
+msgid "Argentina"
+msgstr "阿根廷"
+
+#: includes/drgc-locale-mapping.php:231
+msgid "Bolivia"
+msgstr "玻利維亞"
+
+#: includes/drgc-locale-mapping.php:232
+msgid "Chile"
+msgstr "智利"
+
+#: includes/drgc-locale-mapping.php:233
+msgid "Colombia"
+msgstr "哥倫比亞"
+
+#: includes/drgc-locale-mapping.php:234
+msgid "Costa Rica"
+msgstr "哥斯大黎加"
+
+#: includes/drgc-locale-mapping.php:235
+msgid "Dominican Republic"
+msgstr "多明尼加共和國"
+
+#: includes/drgc-locale-mapping.php:236
+msgid "Ecuador"
+msgstr "厄瓜多爾"
+
+#: includes/drgc-locale-mapping.php:237
+msgid "El Salvador"
+msgstr "薩爾瓦多"
+
+#: includes/drgc-locale-mapping.php:238
+msgid "Guatemala"
+msgstr "瓜地馬拉"
+
+#: includes/drgc-locale-mapping.php:239
+msgid "Honduras"
+msgstr "宏都拉斯"
+
+#: includes/drgc-locale-mapping.php:240
+msgid "Mexico"
+msgstr "墨西哥"
+
+#: includes/drgc-locale-mapping.php:241
+msgid "Nicaragua"
+msgstr "尼加拉瓜"
+
+#: includes/drgc-locale-mapping.php:242
+msgid "Panama"
+msgstr "巴拿馬"
+
+#: includes/drgc-locale-mapping.php:243
+msgid "Paraguay"
+msgstr "巴拉圭"
+
+#: includes/drgc-locale-mapping.php:244
+msgid "Peru"
+msgstr "秘 魯"
+
+#: includes/drgc-locale-mapping.php:247
+msgid "Uruguay"
+msgstr "烏拉圭"
+
+#: includes/drgc-locale-mapping.php:248
+msgid "Venezuela"
+msgstr "委內瑞拉"
+
+#: includes/drgc-locale-mapping.php:251
+msgid "Thailand, TH, Thai Digits"
+msgstr "泰國，TH，泰國數字"
+
+#: includes/drgc-locale-mapping.php:252
+msgid "Turkey"
+msgstr "土耳其"
+
+#: includes/drgc-locale-mapping.php:253
+msgid "Ukraine"
+msgstr "烏克蘭"
+
+#: includes/drgc-locale-mapping.php:254
+msgid "Vietnam"
+msgstr "越南"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:42
+msgid "Email"
+msgstr "電子郵件"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:43
+msgid "Tax Exemption"
+msgstr "免稅"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:44
+msgid "Shipping information"
+msgstr "配送信息"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:45
+msgid "Billing information"
+msgstr "账单信息"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:46
+msgid "Tax Identifier"
+msgstr "稅號"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:47
+msgid "Delivery options"
+msgstr "交付選項"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:48
+msgid "Payment"
+msgstr "付款"
+
+#: includes/widgets/class-dr-widget-mini-cart.php:24
+msgid "DRGC Mini-cart for mobile viewing."
+msgstr "DRGC微型購物車，用於移動觀看。"
+
+#: includes/widgets/class-dr-widget-mini-cart.php:28
+msgid "DRGC Mobile Mini-cart"
+msgstr "DRGC移動迷你車"
+
+#: includes/widgets/class-dr-widget-mini-cart.php:52
+#: public/partials/drgc-minicart.php:19
+msgid "Shopping Cart"
+msgstr "購物車"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:35
+msgid "Archives"
+msgstr "彙整"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:53
+msgid "Select Year"
+msgstr "選擇年份"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:56
+msgid "Select Month"
+msgstr "選取月份"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:59
+msgid "Select Day"
+msgstr "選取日期"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:62
+msgid "Select Week"
+msgstr "選取週次"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:65
+msgid "Select Post"
+msgstr "選取文章"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:104
+msgid "No archives to show."
+msgstr "尚無彙整可供顯示。"
+
+#: node_modules/@wordpress/block-library/src/categories/index.php:30
+msgid "Select Category"
+msgstr "選擇類別"
+
+#: node_modules/@wordpress/block-library/src/latest-comments/index.php:31
+#: node_modules/@wordpress/block-library/src/latest-posts/index.php:93
+#: node_modules/@wordpress/block-library/src/rss/index.php:31
+msgid "(no title)"
+msgstr "(無標題)"
+
+#: node_modules/@wordpress/block-library/src/latest-comments/index.php:99
+#, php-format
+msgid "%1$s on %2$s"
+msgstr "%1$s 在 %2$s"
+
+#: node_modules/@wordpress/block-library/src/latest-comments/index.php:147
+msgid "No comments to show."
+msgstr "尚無留言可供顯示。"
+
+#: node_modules/@wordpress/block-library/src/latest-posts/index.php:105
+#: node_modules/@wordpress/block-library/src/rss/index.php:60
+#, php-format
+msgid "by %s"
+msgstr "由 %s"
+
+#: node_modules/@wordpress/block-library/src/query-pagination/index.php:26
+msgid "Previous"
+msgstr "上一頁"
+
+#: node_modules/@wordpress/block-library/src/query-pagination/index.php:33
+msgid "Next"
+msgstr "下一個"
+
+#: node_modules/@wordpress/block-library/src/rss/index.php:19
+msgid "RSS Error:"
+msgstr "RSS 錯誤:"
+
+#: node_modules/@wordpress/block-library/src/rss/index.php:23
+msgid ""
+"An error has occurred, which probably means the feed is down. Try again "
+"later."
+msgstr "發生錯誤。這項錯誤代表這個資訊提供已失效，請稍後再試。"
+
+#: node_modules/@wordpress/block-library/src/search/index.php:25
+#: node_modules/@wordpress/block-library/src/search/index.php:26
+#: node_modules/@wordpress/block-library/src/search/index.php:44
+msgid "Search"
+msgstr "搜尋"
+
+#: node_modules/@wordpress/block-library/src/tag-cloud/index.php:37
+#, php-format
+msgid ""
+"Your site doesn&#8217;t have any %s, so there&#8217;s nothing to display "
+"here at the moment."
+msgstr "您的網站沒有任何%s，因此目前無任何顯示。"
+
+#: public/class-drgc-public.php:116
+msgid "Upgrade"
+msgstr "升級"
+
+#: public/class-drgc-public.php:117
+#: public/templates/account/account-addresses.php:493
+msgid "Add"
+msgstr "新增"
+
+#: public/class-drgc-public.php:118
+#: public/templates/checkout/checkout-summary.php:20
+#: public/templates/thank-you/thank-you-summary.php:28
+msgid "FREE"
+msgstr "免費"
+
+#: public/class-drgc-public.php:119 public/templates/cart/cart-summary.php:28
+#: public/templates/checkout/checkout-summary.php:28
+#: public/templates/thank-you/thank-you-summary.php:36
+msgid "Incl. VAT"
+msgstr "包括增值稅總額"
+
+#: public/class-drgc-public.php:120 public/templates/cart/cart-summary.php:28
+#: public/templates/checkout/checkout-summary.php:28
+#: public/templates/thank-you/thank-you-summary.php:36
+msgid "Excl. VAT"
+msgstr "不含增值稅"
+
+#: public/class-drgc-public.php:121
+#: public/templates/thank-you/thank-you-summary.php:49
+msgid "VAT"
+msgstr "附加稅 (VAT)"
+
+#: public/class-drgc-public.php:122 public/templates/cart/cart-summary.php:54
+#: public/templates/checkout/checkout-summary.php:41
+msgid "Estimated VAT"
+msgstr "估計加值稅"
+
+#: public/class-drgc-public.php:123
+#: public/templates/thank-you/thank-you-summary.php:65
+msgid "Shipping VAT"
+msgstr "運送方式"
+
+#: public/class-drgc-public.php:124 public/templates/cart/cart-summary.php:70
+#: public/templates/checkout/checkout-summary.php:58
+msgid "Estimated Shipping VAT"
+msgstr "預計配送方式"
+
+#: public/class-drgc-public.php:125
+#: public/templates/account/account-orders.php:136
+#: public/templates/thank-you/thank-you-summary.php:49
+msgid "Tax"
+msgstr "稅金"
+
+#: public/class-drgc-public.php:126 public/templates/cart/cart-summary.php:54
+#: public/templates/checkout/checkout-summary.php:41
+msgid "Estimated Tax"
+msgstr "估計稅"
+
+#: public/class-drgc-public.php:127
+#: public/templates/account/account-orders.php:145
+#: public/templates/thank-you/thank-you-summary.php:65
+msgid "Shipping Tax"
+msgstr "運費稅"
+
+#: public/class-drgc-public.php:128 public/templates/cart/cart-summary.php:70
+#: public/templates/checkout/checkout-summary.php:58
+msgid "Estimated Shipping Tax"
+msgstr "預計配送方式"
+
+#: public/class-drgc-public.php:129
+#: public/templates/account/account-orders.php:141
+#: public/templates/checkout/checkout-shipping.php:22
+#: public/templates/thank-you/thank-you-summary.php:57
+msgid "Shipping"
+msgstr "運送方式"
+
+#: public/class-drgc-public.php:130 public/templates/cart/cart-summary.php:62
+#: public/templates/checkout/checkout-summary.php:50
+msgid "Estimated Shipping"
+msgstr "預計配送方式"
+
+#: public/class-drgc-public.php:131
+msgid "Credit card ending in"
+msgstr "信用卡結束"
+
+#: public/class-drgc-public.php:132
+msgid "pay with card"
+msgstr "信用卡支付"
+
+#: public/class-drgc-public.php:133
+msgid "pay with paypal"
+msgstr "與貝寶一起支付"
+
+#: public/class-drgc-public.php:134
+msgid "View Cart"
+msgstr "查看購物車"
+
+#: public/class-drgc-public.php:136
+msgid "Remove"
+msgstr "移除"
+
+#: public/class-drgc-public.php:137
+#: public/templates/account/account-orders.php:132
+#: public/templates/cart/cart-summary.php:38
+#: public/templates/cart/cart-summary.php:46
+#: public/templates/checkout/checkout-summary.php:34
+#: public/templates/thank-you/thank-you-summary.php:42
+msgid "Subtotal"
+msgstr "小計"
+
+#: public/class-drgc-public.php:138 public/templates/cart/cart-product.php:56
+msgid "Qty"
+msgstr "數量"
+
+#: public/class-drgc-public.php:139
+msgid "Shipping and Handling"
+msgstr "運費和手續費"
+
+#: public/class-drgc-public.php:140
+#: public/templates/account/account-orders.php:150
+#: public/templates/cart/cart-summary.php:78
+#: public/templates/checkout/checkout-summary.php:67
+#: public/templates/thank-you/thank-you-summary.php:73
+msgid "Discount"
+msgstr "折扣"
+
+#: public/class-drgc-public.php:141
+msgid "Order Total"
+msgstr "訂單總計"
+
+#: public/class-drgc-public.php:143
+msgid "Password reset email sent"
+msgstr "傳送的密碼重置電子郵件"
+
+#: public/class-drgc-public.php:144
+msgid "Password saved"
+msgstr "密碼儲存"
+
+#: public/class-drgc-public.php:145
+msgid ""
+"You will be receiving an email soon with instructions on resetting your "
+"login password."
+msgstr "您將很快收到一封電子郵件,其中包含有關重置登錄密碼的說明。"
+
+#: public/class-drgc-public.php:146
+msgid "You can now log in with your new password."
+msgstr "您現在可以使用新密碼登錄。"
+
+#: public/class-drgc-public.php:147 public/templates/cart/cart.php:54
+msgid "Your cart is empty."
+msgstr "您的購物車是空的"
+
+#: public/class-drgc-public.php:148
+msgid "Please enter a valid promo code."
+msgstr "請輸入有效的促銷代碼。"
+
+#: public/class-drgc-public.php:149 public/class-drgc-public.php:312
+msgid "Please enter a valid email address."
+msgstr "請輸入有效的電子郵件位址."
+
+#: public/class-drgc-public.php:150
+msgid "Address not accepted for current currency."
+msgstr "當前貨幣不接受的位址。"
+
+#: public/class-drgc-public.php:151
+msgid "Failed payment for specified credit card."
+msgstr "指定信用卡的付款失敗。"
+
+#: public/class-drgc-public.php:152
+#: public/templates/account/account-addresses.php:66
+#: public/templates/account/account-addresses.php:88
+#: public/templates/account/account-addresses.php:110
+#: public/templates/account/account-addresses.php:132
+#: public/templates/account/account-addresses.php:154
+#: public/templates/account/account-addresses.php:192
+#: public/templates/account/account-addresses.php:223
+#: public/templates/account/account-addresses.php:262
+#: public/templates/account/account-addresses.php:284
+#: public/templates/account/account-addresses.php:356
+#: public/templates/account/account-addresses.php:367
+#: public/templates/account/account-addresses.php:378
+#: public/templates/account/account-addresses.php:390
+#: public/templates/account/account-addresses.php:401
+#: public/templates/account/account-addresses.php:421
+#: public/templates/account/account-addresses.php:443
+#: public/templates/account/account-addresses.php:467
+#: public/templates/account/account-addresses.php:478
+#: public/templates/account/account-password.php:21
+#: public/templates/account/account-password.php:43
+#: public/templates/account/account-password.php:65
+#: public/templates/account/account-payments.php:52
+#: public/templates/account/account.php:216
+#: public/templates/account/account.php:235
+#: public/templates/account/account.php:246
+#: public/templates/account/account.php:257
+#: public/templates/account/account.php:269
+#: public/templates/checkout/checkout-billing.php:87
+#: public/templates/checkout/checkout-billing.php:109
+#: public/templates/checkout/checkout-billing.php:131
+#: public/templates/checkout/checkout-billing.php:169
+#: public/templates/checkout/checkout-billing.php:199
+#: public/templates/checkout/checkout-billing.php:226
+#: public/templates/checkout/checkout-billing.php:246
+#: public/templates/checkout/checkout-billing.php:268
+#: public/templates/checkout/checkout-email.php:29
+#: public/templates/checkout/checkout-shipping.php:62
+#: public/templates/checkout/checkout-shipping.php:84
+#: public/templates/checkout/checkout-shipping.php:106
+#: public/templates/checkout/checkout-shipping.php:144
+#: public/templates/checkout/checkout-shipping.php:173
+#: public/templates/checkout/checkout-shipping.php:201
+#: public/templates/checkout/checkout-shipping.php:221
+#: public/templates/checkout/checkout-shipping.php:243
+#: public/templates/checkout/checkout-tax-exemption.php:88
+#: public/templates/checkout/checkout-tax-exemption.php:120
+#: public/templates/checkout/checkout-tax-exemption.php:140
+#: public/templates/checkout/checkout-tax-exemption.php:162
+#: public/templates/checkout/checkout-tax-exemption.php:186
+#: public/templates/login/login.php:49 public/templates/login/login.php:57
+#: public/templates/login/login.php:81 public/templates/login/login.php:89
+#: public/templates/login/login.php:124 public/templates/login/login.php:134
+#: public/templates/login/login.php:144 public/templates/login/login.php:152
+#: public/templates/login/login.php:160
+msgid "This field is required."
+msgstr "欄位是必須的。"
+
+#: public/class-drgc-public.php:153
+msgid "Emails do not match."
+msgstr "電子郵件不匹配。"
+
+#: public/class-drgc-public.php:154 public/class-drgc-public.php:270
+msgid "Password must be between 8 - 32 characters."
+msgstr "密碼必須介於 8 - 32 個字元之間。"
+
+#: public/class-drgc-public.php:155 public/class-drgc-public.php:274
+msgid "Must use at least one upper case letter."
+msgstr "必須至少使用一個大寫字母。"
+
+#: public/class-drgc-public.php:156 public/class-drgc-public.php:278
+msgid "Must use at least one lower case letter."
+msgstr "必須至少使用一個小寫字母。"
+
+#: public/class-drgc-public.php:157 public/class-drgc-public.php:282
+msgid "Must use at least one number."
+msgstr "必須至少使用一個數位。"
+
+#: public/class-drgc-public.php:158 public/class-drgc-public.php:286
+msgid "Must use at least one special character (! _ @)."
+msgstr "必須至少使用一個特殊字元 (! = *)。"
+
+#: public/class-drgc-public.php:159 public/class-drgc-public.php:290
+msgid "Contains non-allowable special characters (only ! _ @ are allowed)."
+msgstr "包含不允許的特殊字元(僅允許 ! _ @ )。"
+
+#: public/class-drgc-public.php:160 public/class-drgc-public.php:266
+msgid "Passwords do not match."
+msgstr "密碼不匹配。"
+
+#: public/class-drgc-public.php:161
+msgid ""
+"Please indicate you have read and accepted the privacy policy and terms of "
+"sale."
+msgstr "請表明您已閱讀並接受隱私政策和銷售條款。"
+
+#: public/class-drgc-public.php:162
+msgid "Something went wrong. Please try again."
+msgstr "出現錯誤。請再試一次。"
+
+#: public/class-drgc-public.php:163
+msgid "Loading..."
+msgstr "讀取中..."
+
+#: public/class-drgc-public.php:164 public/partials/drgc-product-details.php:22
+msgid "Buy Now"
+msgstr "立即購買"
+
+#: public/class-drgc-public.php:165 public/partials/drgc-buy-button.php:31
+#: public/templates/parts/content-archive.php:43
+#: public/templates/parts/content-single.php:121
+msgid "Add to Cart"
+msgstr "添加到購物車"
+
+#: public/class-drgc-public.php:166
+msgid "Out of Stock"
+msgstr "缺貨"
+
+#: public/class-drgc-public.php:167
+msgid "Are you sure you want to immediately unsubscribe this subscription?"
+msgstr "是否確實要立即取消訂閱?"
+
+#: public/class-drgc-public.php:168
+msgid "Please enter the required quantity:"
+msgstr "請輸入所需數量:"
+
+#: public/class-drgc-public.php:169
+msgid "There are no delivery options available for your cart or destination."
+msgstr "您的購物車或目的地沒有可用的送貨選項。"
+
+#: public/class-drgc-public.php:170
+msgid "MM/YY"
+msgstr "MM/YY"
+
+#: public/class-drgc-public.php:171
+msgid "CVV"
+msgstr "CVV"
+
+#: public/class-drgc-public.php:172
+msgid "Shipping country is not supported."
+msgstr "不支持運送國家。"
+
+#: public/class-drgc-public.php:173
+msgid "Billing country is not supported."
+msgstr "不支持帳單國家/地區。"
+
+#: public/class-drgc-public.php:174
+msgid "Your postal code is invalid."
+msgstr "您的郵政編碼無效。"
+
+#: public/class-drgc-public.php:175
+msgid "Your city is invalid."
+msgstr "您的購物車是空的"
+
+#: public/class-drgc-public.php:176
+msgid "Your region value is invalid. Please supply a different one."
+msgstr "您所在的地區值無效。請提供另一個。"
+
+#: public/class-drgc-public.php:177
+msgid "No, thanks"
+msgstr "謝謝，不用了"
+
+#: public/class-drgc-public.php:178
+msgid "Unable to place order"
+msgstr "啟用測試順序。"
+
+#: public/class-drgc-public.php:179
+msgid "The new password must be different from the current password."
+msgstr "新密碼必須與目前的密碼不同。"
+
+#: public/class-drgc-public.php:180
+msgid ""
+"Sorry, it seems that there are no available payment methods for your "
+"location."
+msgstr "抱歉，您所在的位置似乎沒有可用的付款方式。"
+
+#: public/class-drgc-public.php:181
+#: public/templates/checkout/checkout-tax-identifier.php:33
+msgid "Shopper Type"
+msgstr "購物者類型"
+
+#: public/class-drgc-public.php:182
+msgid "Personal"
+msgstr "個人"
+
+#: public/class-drgc-public.php:183
+msgid "Business"
+msgstr "商業"
+
+#: public/class-drgc-public.php:184
+msgid "Your tax ID could not be verified. Tax may apply."
+msgstr "您的稅號無法驗證。可能需要繳稅。"
+
+#: public/class-drgc-public.php:185
+#: public/templates/account/account-orders.php:15
+msgid "Order ID"
+msgstr "訂單編號"
+
+#: public/class-drgc-public.php:186
+#: public/templates/account/account-orders.php:16
+#: public/templates/account/account-subscriptions.php:57
+msgid "Date"
+msgstr "日期"
+
+#: public/class-drgc-public.php:187
+#: public/templates/account/account-orders.php:17
+msgid "Amount"
+msgstr "金額"
+
+#: public/class-drgc-public.php:188 public/partials/drgc-my-certificates.php:17
+#: public/templates/account/account-orders.php:18
+#: public/templates/account/account-subscriptions.php:89
+#: public/templates/my-subscriptions/my-subscriptions.php:34
+msgid "Status"
+msgstr "狀態"
+
+#: public/class-drgc-public.php:189
+#: public/templates/account/account-orders.php:70
+#: public/templates/account/account-orders.php:83
+msgid "Order Details"
+msgstr "訂單明細"
+
+#: public/class-drgc-public.php:190
+msgid ""
+"We are not able to process your order due to the unsupported location. "
+"Please update your address and try again."
+msgstr "由於位置不受支持，我們無法處理您的訂單。請更新您的地址，然後重試。"
+
+#: public/class-drgc-public.php:191
+msgid "has been added to your cart."
+msgstr "已添加到你的購物車。"
+
+#: public/class-drgc-public.php:192
+msgid "The product"
+msgstr "該產品"
+
+#: public/class-drgc-public.php:243
+msgid "Authorization failed for specified credentials"
+msgstr "指定認證的授權失敗"
+
+#: public/class-drgc-public.php:395
+msgid "The current password you entered is incorrect."
+msgstr "您輸入的當前密碼不正確。"
+
+#: public/class-drgc-public.php:399
+msgid "Your new password can not be the same as the current password."
+msgstr "您的新密碼不能與當前密碼相同。"
+
+#: public/class-drgc-public.php:436
+msgid "Enter a username or email address."
+msgstr "輸入用戶名或電子郵件地址。"
+
+#: public/class-drgc-public.php:440 public/class-drgc-public.php:454
+msgid "There is no account with that username or email address."
+msgstr "沒有帶有該使用者名或電子郵寄地址的帳戶。"
+
+#: public/class-drgc-public.php:476
+msgid "Someone has requested a password reset for the following account:"
+msgstr "有人要求為以下帳戶重設密碼："
+
+#: public/class-drgc-public.php:477
+#, php-format
+msgid "Site Name: %s"
+msgstr "網站名稱︰ %s"
+
+#: public/class-drgc-public.php:478
+#, php-format
+msgid "Username: %s"
+msgstr "使用者名稱：%s"
+
+#: public/class-drgc-public.php:479
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr "如果不是您那請忽略這封電子郵件."
+
+#: public/class-drgc-public.php:480
+msgid "To reset your password, visit the following address:"
+msgstr "要重置密碼，請訪問以下地址："
+
+#: public/class-drgc-public.php:482 public/class-drgc-public.php:943
+#: public/templates/login/login.php:61
+msgid "Reset Password"
+msgstr "重設密碼"
+
+#: public/class-drgc-public.php:484
+#, php-format
+msgid "[%s] Password Reset"
+msgstr "[%s] 重設密碼"
+
+#: public/class-drgc-public.php:499
+msgid ""
+"The email could not be sent. Possible reason: your host may have disabled "
+"the mail() function."
+msgstr "無法發送電子郵件。可能的原因:您的主機可能禁用了郵件()功能。"
+
+#: public/class-drgc-public.php:521
+msgid "Something went wrong."
+msgstr "程式出現問題."
+
+#: public/class-drgc-public.php:537
+msgid "Expired key"
+msgstr "過期金鑰"
+
+#: public/class-drgc-public.php:539
+msgid "Invalid key"
+msgstr "無效的金鑰"
+
+#: public/class-drgc-public.php:598
+msgid "Hi, "
+msgstr "你好"
+
+#: public/class-drgc-public.php:623 public/class-drgc-public.php:902
+#: public/templates/login/login.php:32
+msgid "Logout"
+msgstr "登出"
+
+#: public/class-drgc-public.php:889
+msgid "You're about to be logged out!"
+msgstr "你已被登出了!"
+
+#: public/class-drgc-public.php:894
+msgid ""
+"For security reasons, your connection times out after you've been inactive "
+"for a while. You will be logged out in <strong>n</strong> seconds.<br>Click "
+"Continue if you'd like to stay logged in."
+msgstr ""
+"出於安全原因,您的連接在非活動狀態一段時間后超時。您將在<strong>n</strong>秒內"
+"登出。<br>如果要保持登錄狀態,請單擊\"繼續\"。"
+
+#: public/class-drgc-public.php:899
+msgid "Continue"
+msgstr "繼續"
+
+#: public/class-drgc-public.php:915
+msgid "Forgot Password"
+msgstr "忘記密碼"
+
+#: public/class-drgc-public.php:923
+msgid ""
+"To reset your password, please enter your email address below and an email "
+"with instructions on resetting your password will be sent to you."
+msgstr ""
+"要重置密碼,請在下方輸入您的電子郵件位址,並將向您發送一封電子郵件,其中包含有關"
+"重置密碼的說明。"
+
+#: public/class-drgc-public.php:926
+msgid "Email Address:"
+msgstr "電子郵件地址:"
+
+#: public/class-drgc-public.php:929 public/class-drgc-public.php:936
+msgid "This field is required email."
+msgstr "此欄位為必發郵件。"
+
+#: public/class-drgc-public.php:933
+msgid "Verify Email Address:"
+msgstr "認證電子郵件地址:"
+
+#: public/class-drgc-public.php:957
+msgid "Password Updated!"
+msgstr "密碼儲存"
+
+#: public/class-drgc-public.php:958
+msgid ""
+"Your password has been changed successfully. Please log in to your account "
+"using your new password."
+msgstr "你已經成功更改密碼。請使用新密碼登錄到您的帳戶。"
+
+#: public/class-drgc-public.php:961
+#: public/templates/account/account-orders.php:179
+msgid "OK"
+msgstr "確定"
+
+#: public/class-drgc-public.php:976
+msgid "This is a test order"
+msgstr "啟用測試順序。"
+
+#: public/partials/drgc-legal-footer.php:17
+msgid ""
+" is the authorized reseller and merchant of the products and services "
+"offered within this store."
+msgstr "是本店內提供的產品和服務的授權轉銷商和商家。"
+
+#: public/partials/drgc-legal-footer.php:20
+#: public/templates/checkout/checkout-confirmation.php:17
+#: public/templates/checkout/checkout-pretandc.php:6
+msgid "Privacy Policy"
+msgstr "隱私權政策"
+
+#: public/partials/drgc-legal-footer.php:21
+#: public/templates/checkout/checkout-confirmation.php:16
+#: public/templates/checkout/checkout-pretandc.php:5
+msgid "Terms of Sale"
+msgstr "銷售條款"
+
+#: public/partials/drgc-legal-footer.php:22
+msgid "Cookies"
+msgstr "Cookies"
+
+#: public/partials/drgc-legal-footer.php:23
+msgid "Cancellation Right"
+msgstr "取消權"
+
+#: public/partials/drgc-legal-footer.php:24
+msgid "Legal Notice"
+msgstr "法律聲明"
+
+#: public/partials/drgc-minicart.php:16
+msgid "ITEM(S)"
+msgstr "ITEM(S)"
+
+#: public/partials/drgc-my-certificates.php:14
+#: public/templates/account/account-addresses.php:124
+#: public/templates/account/account-addresses.php:386
+#: public/templates/account/account.php:211
+#: public/templates/checkout/checkout-tax-exemption.php:80
+msgid "Company Name"
+msgstr "公司名稱"
+
+#: public/partials/drgc-my-certificates.php:15
+msgid "Certificate"
+msgstr "證書"
+
+#: public/partials/drgc-my-certificates.php:16
+msgid "Tax Authority"
+msgstr "稅務機關"
+
+#: public/partials/drgc-my-certificates.php:18
+msgid "Start Date"
+msgstr "開始日期"
+
+#: public/partials/drgc-my-certificates.php:19
+#: public/templates/my-subscriptions/my-subscriptions.php:40
+#: public/templates/subscription-details/subscription-details-account-info.php:57
+#: public/templates/subscription-details/subscription-details-status.php:61
+msgid "Expiration Date"
+msgstr "截止日期"
+
+#: public/templates/account/account-addresses.php:18
+msgid "Primary"
+msgstr "主要"
+
+#: public/templates/account/account-addresses.php:49
+#: public/templates/account/account-addresses.php:347
+#: public/templates/account/account-password.php:4
+#: public/templates/account/account-payments.php:35
+#: public/templates/checkout/checkout-billing.php:69
+#: public/templates/checkout/checkout-shipping.php:46
+#: public/templates/checkout/checkout-tax-exemption.php:72
+msgid "Fields marked with * are mandatory"
+msgstr "標記為 * 的欄位是必填欄位"
+
+#: public/templates/account/account-addresses.php:58
+#: public/templates/account/account-addresses.php:352
+msgid "Nickname *"
+msgstr "暱稱*"
+
+#: public/templates/account/account-addresses.php:80
+#: public/templates/account/account-addresses.php:363
+msgid "First Name *"
+msgstr "名字 *"
+
+#: public/templates/account/account-addresses.php:102
+#: public/templates/account/account-addresses.php:374
+msgid "Last Name *"
+msgstr "姓 *"
+
+#: public/templates/account/account-addresses.php:146
+#: public/templates/account/account-addresses.php:397
+msgid "Address line 1 *"
+msgstr "地址列 1"
+
+#: public/templates/account/account-addresses.php:168
+#: public/templates/account/account-addresses.php:408
+#: public/templates/checkout/checkout-billing.php:145
+#: public/templates/checkout/checkout-shipping.php:120
+msgid "Address line 2"
+msgstr "地址列 2"
+
+#: public/templates/account/account-addresses.php:184
+#: public/templates/account/account-addresses.php:417
+msgid "City *"
+msgstr "城市*"
+
+#: public/templates/account/account-addresses.php:204
+#: public/templates/account/account-addresses.php:428
+msgid "Select Country *"
+msgstr "選擇國家"
+
+#: public/templates/account/account-addresses.php:235
+#: public/templates/account/account-addresses.php:449
+msgid "State *"
+msgstr "狀態"
+
+#: public/templates/account/account-addresses.php:242
+#: public/templates/account/account-addresses.php:453
+msgid "Select State *"
+msgstr "選擇州/省"
+
+#: public/templates/account/account-addresses.php:246
+#: public/templates/account/account-addresses.php:456
+#: public/templates/my-subscriptions/my-subscriptions.php:61
+msgid "Not Applicable"
+msgstr "不適用"
+
+#: public/templates/account/account-addresses.php:276
+#: public/templates/account/account-addresses.php:474
+msgid "Zipcode *"
+msgstr "郵遞區號"
+
+#: public/templates/account/account-addresses.php:298
+#: public/templates/account/account-addresses.php:485
+#: public/templates/checkout/checkout-billing.php:260
+#: public/templates/checkout/checkout-shipping.php:235
+msgid "Phone"
+msgstr "電話"
+
+#: public/templates/account/account-addresses.php:314
+#: public/templates/account/account-payments.php:61
+msgid "Save"
+msgstr "儲存"
+
+#: public/templates/account/account-addresses.php:320
+#: public/templates/account/account-addresses.php:496
+#: public/templates/account/account-addresses.php:512
+#: public/templates/account/account-payments.php:83
+#: public/templates/account/account-subscriptions.php:150
+#: public/templates/account/account-subscriptions.php:162
+#: public/templates/account/account-tax-certificates.php:25
+#: public/templates/account/account.php:279
+msgid "Cancel"
+msgstr "取消"
+
+#: public/templates/account/account-addresses.php:342
+#: public/templates/account/account-addresses.php:344
+msgid "Add New Address"
+msgstr "新增"
+
+#: public/templates/account/account-addresses.php:508
+msgid ""
+"Are you sure you want to delete <strong>nickname</strong> from your address "
+"book?"
+msgstr "您確定要從通訊簿中刪除<strong>暱稱</strong>嗎？"
+
+#: public/templates/account/account-addresses.php:511
+msgid "Delete"
+msgstr "刪除"
+
+#: public/templates/account/account-orders.php:93
+msgid "Order number: "
+msgstr "訂單編號："
+
+#: public/templates/account/account-orders.php:97
+#: public/templates/thank-you/thank-you.php:133
+msgid "Print Receipt"
+msgstr "列印收據"
+
+#: public/templates/account/account-orders.php:111
+#: public/templates/thank-you/thank-you.php:164
+msgid "Shipping Address"
+msgstr "運送地址"
+
+#: public/templates/account/account-orders.php:121
+#: public/templates/subscription-details/subscription-details-account-info.php:63
+#: public/templates/thank-you/thank-you.php:178
+msgid "Billing Address"
+msgstr "帳單地址"
+
+#: public/templates/account/account-orders.php:154
+#: public/templates/cart/cart-summary.php:99
+#: public/templates/checkout/checkout-summary.php:75
+#: public/templates/thank-you/thank-you-summary.php:81
+msgid "Total"
+msgstr "總計"
+
+#: public/templates/account/account-orders.php:161
+msgid "Right of Withdrawal Request"
+msgstr "提款權"
+
+#: public/templates/account/account-orders.php:165
+#: public/templates/checkout/checkout.php:173
+msgid "Close"
+msgstr "關閉"
+
+#: public/templates/account/account-orders.php:166
+msgid "Print"
+msgstr "列印"
+
+#: public/templates/account/account-orders.php:176
+msgid ""
+"The order number has been copied. You can directly paste the number into the "
+"order number field on the Right of Withdrawal page for the request."
+msgstr ""
+"訂單號已復制。您可以將數字直接粘貼到該請求的“提款權”頁面上的訂單號字段中。"
+
+#: public/templates/account/account-password.php:13
+msgid "Current Password *"
+msgstr "重設密碼"
+
+#: public/templates/account/account-password.php:35
+msgid "New Password *"
+msgstr "新密碼＊"
+
+#: public/templates/account/account-password.php:57
+msgid "Confirm New Password *"
+msgstr "確認新密碼"
+
+#: public/templates/account/account-password.php:76
+#: public/templates/account/account.php:77
+#: public/templates/account/account.php:183
+msgid "Change Password"
+msgstr "更改密碼"
+
+#: public/templates/account/account-payments.php:44
+msgid "Card Name *"
+msgstr "產品名稱"
+
+#: public/templates/account/account-payments.php:79
+msgid "Are you sure you want to delete this payment?"
+msgstr "是否確實要刪除此付款？"
+
+#: public/templates/account/account-payments.php:82
+#: public/templates/account/account-subscriptions.php:149
+#: public/templates/account/account-subscriptions.php:161
+#: public/templates/account/account-tax-certificates.php:24
+msgid "Accept"
+msgstr "接受"
+
+#: public/templates/account/account-subscriptions.php:61
+msgid "Activated:"
+msgstr "活性："
+
+#: public/templates/account/account-subscriptions.php:66
+#: public/templates/account/account-subscriptions.php:70
+msgid "Renews on:"
+msgstr "立即續訂"
+
+#: public/templates/account/account-subscriptions.php:66
+#: public/templates/account/account-subscriptions.php:72
+msgid "Renewal Due:"
+msgstr "自動續訂日期"
+
+#: public/templates/account/account-subscriptions.php:81
+msgid "Cancels on:"
+msgstr "取消訂閱"
+
+#: public/templates/account/account-subscriptions.php:95
+msgid "Auto Renewal"
+msgstr "自動續訂日期"
+
+#: public/templates/account/account-subscriptions.php:99
+msgid "on"
+msgstr "開"
+
+#: public/templates/account/account-subscriptions.php:99
+msgid "off"
+msgstr "關"
+
+#: public/templates/account/account-subscriptions.php:103
+#: public/templates/account/account-subscriptions.php:109
+#: public/templates/subscription-details/subscription-details-status.php:63
+msgid "Renew Now"
+msgstr "現在續約"
+
+#: public/templates/account/account-subscriptions.php:107
+msgid "Manual Renewal"
+msgstr "自動續訂"
+
+#: public/templates/account/account-subscriptions.php:125
+msgid "Auto Renewal Update"
+msgstr "自動續訂日期"
+
+#: public/templates/account/account-subscriptions.php:131
+msgid ""
+"There was a problem changing your auto renew settings for this product. "
+"Please try again, or contact customer support."
+msgstr "更改此產品的自動續訂設置時出現問題。請重試，或與客戶支持聯繫。"
+
+#: public/templates/account/account-subscriptions.php:134
+msgid "Try again"
+msgstr "再試一次"
+
+#: public/templates/account/account-subscriptions.php:145
+msgid ""
+"If you stop automatic billing for your subscription it will remain active "
+"until the expiration date, however you will have to manually renew at that "
+"time or your subscription will be cancelled."
+msgstr ""
+"如果您停止訂閱的自動計費，它將一直有效直到到期日期，但是您此時必須手動續訂，"
+"否則您的訂閱將被取消。"
+
+#: public/templates/account/account-subscriptions.php:146
+msgid "Are you sure you want to stop automatic billing for this subscription?"
+msgstr "是否確實要立即取消訂閱?"
+
+#: public/templates/account/account-tax-certificates.php:21
+msgid ""
+"The system is going to update the company name for your previous tax "
+"profiles as well. Are you sure you want to change your company name?"
+msgstr "系統還將更新您以前的稅收資料的公司名稱。您確定要更改公司名稱嗎？"
+
+#: public/templates/account/account.php:37
+msgid "Hello"
+msgstr "您好"
+
+#: public/templates/account/account.php:43
+msgid "Orders"
+msgstr "訂單"
+
+#: public/templates/account/account.php:50
+msgid "Subscriptions"
+msgstr "訂閱"
+
+#: public/templates/account/account.php:57
+msgid "Addresses"
+msgstr "地址"
+
+#: public/templates/account/account.php:67
+#| msgid "Tax Identifier"
+msgid "Tax Certificates"
+msgstr "稅號"
+
+#: public/templates/account/account.php:84
+msgid "Sign out"
+msgstr "登出"
+
+#: public/templates/account/account.php:94
+msgid "My Orders"
+msgstr "我的訂單"
+
+#: public/templates/account/account.php:118
+msgid ""
+"You have no recorded orders. If you just place an order, please wait a few "
+"miniutes and reload the page. The order detail will be there."
+msgstr ""
+"您沒有記錄的訂單。如果您只是下訂單，請等待幾分鐘，然後重新加載頁面。訂單詳細"
+"信息將在此處。"
+
+#: public/templates/account/account.php:125
+#: public/templates/thank-you/thank-you-my-subs.php:32
+msgid "My Subscriptions"
+msgstr "我的訂閱"
+
+#: public/templates/account/account.php:132
+msgid "You have no subscription products."
+msgstr "您沒有訂閱產品。"
+
+#: public/templates/account/account.php:139
+msgid "My Addresses"
+msgstr "我的地址"
+
+#: public/templates/account/account.php:151
+#: public/templates/checkout/checkout-address-book.php:88
+msgid "You have no saved addresses."
+msgstr "您沒有保存的地址。"
+
+#: public/templates/account/account.php:161
+#| msgid "Tax Identifier"
+msgid "My Tax Certificates"
+msgstr "稅號"
+
+#: public/templates/account/account.php:173
+#| msgid "You have no saved payments."
+msgid "You have no tax exempt certificates."
+msgstr "您沒有保存的付款。"
+
+#: public/templates/account/account.php:201
+msgid "Please Submit Your Tax Exemption Details"
+msgstr "請提交您的免稅詳細信息"
+
+#: public/templates/account/account.php:222
+msgid "Exemption Certificate Tax Authority"
+msgstr "免稅證明書稅務機關"
+
+#: public/templates/account/account.php:226
+msgid "Select One"
+msgstr "請選擇一個"
+
+#: public/templates/account/account.php:232
+msgid ""
+"This should be the State or official entity authorizing your business as tax "
+"exempt. Note that your purchase may still be subject to taxes if your "
+"exemption does not cover your Shipping/Billing State."
+msgstr ""
+"這應該是授權您的企業免稅的州或官方實體。請注意，如果您的免稅範圍不涵蓋您的送"
+"貨/發貨狀態，則您的購買仍可能需要繳稅。"
+
+#: public/templates/account/account.php:241
+#: public/templates/checkout/checkout-tax-exemption.php:132
+#| msgid "Expiration Date"
+msgid "Exemption Start Date"
+msgstr "截止日期"
+
+#: public/templates/account/account.php:252
+#: public/templates/checkout/checkout-tax-exemption.php:154
+#| msgid "Expiration Date"
+msgid "Exemption Expiration Date"
+msgstr "截止日期"
+
+#: public/templates/account/account.php:263
+#: public/templates/checkout/checkout-tax-exemption.php:176
+msgid "Upload Your Certificate"
+msgstr "上傳您的證書"
+
+#: public/templates/account/account.php:267
+#: public/templates/checkout/checkout-tax-exemption.php:182
+msgid "Supported File Types: BMP, GIF, JPG, PNG, PDF"
+msgstr "支持的文件類型：BMP，GIF，JPG，PNG，PDF"
+
+#: public/templates/account/account.php:278
+msgid "Submit"
+msgstr "送出"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:23
+#: public/templates/cart/cart-auto-renewal-terms.php:29
+msgid "Auto-Renewal Plan Terms"
+msgstr "自動續訂計劃條款"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:47
+msgid "I have read and agree to the terms and charges above."
+msgstr "我已閱讀並同意上述條款和收費。"
+
+#: public/templates/cart/cart-summary.php:87
+msgid "Add Promo Code"
+msgstr "加入促銷代碼"
+
+#: public/templates/cart/cart-summary.php:89
+msgid "Promo Code"
+msgstr "加入促銷代碼"
+
+#: public/templates/cart/cart-summary.php:90
+msgid "Apply"
+msgstr "套用"
+
+#: public/templates/cart/cart-summary.php:107 public/templates/cart/cart.php:83
+msgid "Proceed to checkout"
+msgstr "進行結帳"
+
+#: public/templates/cart/cart.php:27
+msgid "Order Number:"
+msgstr "訂單編號："
+
+#: public/templates/cart/cart.php:79 public/templates/checkout/checkout.php:18
+#: public/templates/checkout/checkout.php:158
+msgid "Continue Shopping"
+msgstr "繼續購物"
+
+#: public/templates/checkout/checkout-billing.php:19
+msgid "Billing"
+msgstr "帳單"
+
+#: public/templates/checkout/checkout-billing.php:35
+msgid "What is your billing address?"
+msgstr "您的帳單位址是什麼?"
+
+#: public/templates/checkout/checkout-billing.php:45
+msgid "Billing address is the same as delivery address"
+msgstr "帳單位址與交貨位址相同"
+
+#: public/templates/checkout/checkout-billing.php:55
+#: public/templates/checkout/checkout-shipping.php:36
+msgid "My Address Book"
+msgstr "我的通訊錄"
+
+#: public/templates/checkout/checkout-billing.php:59
+msgid "Choose billing address"
+msgstr "您的帳單位址是什麼?"
+
+#: public/templates/checkout/checkout-billing.php:79
+#: public/templates/checkout/checkout-shipping.php:54
+#: public/templates/login/login.php:121
+msgid "First Name"
+msgstr "名字"
+
+#: public/templates/checkout/checkout-billing.php:101
+#: public/templates/checkout/checkout-shipping.php:76
+#: public/templates/login/login.php:131
+msgid "Last Name"
+msgstr "姓氏"
+
+#: public/templates/checkout/checkout-billing.php:123
+#: public/templates/checkout/checkout-shipping.php:98
+msgid "Address line 1"
+msgstr "地址列 1"
+
+#: public/templates/checkout/checkout-billing.php:161
+#: public/templates/checkout/checkout-shipping.php:136
+msgid "City"
+msgstr "城市"
+
+#: public/templates/checkout/checkout-billing.php:182
+#: public/templates/checkout/checkout-shipping.php:156
+msgid "Select Country"
+msgstr "選擇國家"
+
+#: public/templates/checkout/checkout-billing.php:210
+#: public/templates/checkout/checkout-shipping.php:185
+msgid "Select State"
+msgstr "選擇州/省"
+
+#: public/templates/checkout/checkout-billing.php:238
+#: public/templates/checkout/checkout-shipping.php:213
+msgid "Zipcode"
+msgstr "郵遞區號"
+
+#: public/templates/checkout/checkout-billing.php:286
+#: public/templates/checkout/checkout-shipping.php:259
+msgid "Save this address for future purchases"
+msgstr "保存此地址以備將來購買"
+
+#: public/templates/checkout/checkout-billing.php:300
+#: public/templates/checkout/checkout-delivery.php:33
+#: public/templates/checkout/checkout-email.php:38
+#: public/templates/checkout/checkout-shipping.php:271
+#: public/templates/checkout/checkout-tax-exemption.php:232
+#: public/templates/checkout/checkout-tax-identifier.php:83
+msgid "Save and continue"
+msgstr "儲存並繼續"
+
+#: public/templates/checkout/checkout-confirmation.php:4
+msgid "Please review your order details and place your order below."
+msgstr "請查看您的訂單詳情,並在下方下訂單。"
+
+#: public/templates/checkout/checkout-confirmation.php:19
+#, php-format
+msgid "By submitting the order, I agree to %s and %s of %s"
+msgstr "透過提交訂單,我同意 %s 與 %s 的 %s"
+
+#: public/templates/checkout/checkout-confirmation.php:25
+msgid "Place Order"
+msgstr "確認訂單"
+
+#: public/templates/checkout/checkout-delivery.php:15
+msgid "Delivery"
+msgstr "郵件傳送"
+
+#: public/templates/checkout/checkout-drop-in.php:21
+msgid "How would you like to pay?"
+msgstr "您想如何付款?"
+
+#: public/templates/checkout/checkout-email.php:25
+msgid "Please enter your email address"
+msgstr "請輸入你的電子郵件地址"
+
+#: public/templates/checkout/checkout-pretandc.php:8
+#, php-format
+msgid "I agree to %s and %s of %s"
+msgstr "我同意 %s 與 %s 的 %s"
+
+#: public/templates/checkout/checkout-shipping.php:40
+msgid "Choose shipping address"
+msgstr "運送地址"
+
+#: public/templates/checkout/checkout-summary.php:17
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "items"
+msgstr "項目"
+
+#: public/templates/checkout/checkout-summary.php:17
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "item"
+msgstr "項目"
+
+#: public/templates/checkout/checkout-tax-exemption.php:40
+msgid "Are you making a tax exempt purchase?"
+msgstr "您要購買免稅商品嗎？"
+
+#: public/templates/checkout/checkout-tax-exemption.php:56
+msgid ""
+"There is a problem with your tax exempt certificate on file. Please resubmit "
+"your info."
+msgstr "您的免稅證書存在問題。請重新提交您的信息。"
+
+#: public/templates/checkout/checkout-tax-exemption.php:60
+msgid "Please submit your tax exemption details."
+msgstr "請提交您的免稅詳細信息。"
+
+#: public/templates/checkout/checkout-tax-exemption.php:66
+msgid ""
+"Note that your purchase may still be subject to taxes if your exemption does "
+"not cover your Shipping/Billing State."
+msgstr ""
+"請注意，如果您的免稅範圍不涵蓋您的送貨/發貨狀態，則您的購買仍可能需要繳稅。"
+
+#: public/templates/checkout/checkout-tax-exemption.php:66
+msgid "View Your Certificate"
+msgstr "查看您的證書"
+
+#: public/templates/checkout/checkout-tax-exemption.php:101
+msgid "Select Certificate Tax Authority"
+msgstr "選擇證書稅務機關"
+
+#: public/templates/checkout/checkout-tax-exemption.php:114
+msgid ""
+"This should be the State or official entity authorizing your business as tax "
+"exempt. Note that your purchase may still be subject to taxes if yor "
+"exemption does not cover your Shipping/Billing State."
+msgstr ""
+"這應該是授權您的企業免稅的州或官方實體。請注意，如果您的免稅範圍不涵蓋您的運"
+"輸/付款狀態，則您的購買仍可能需要繳稅。"
+
+#: public/templates/checkout/checkout-tax-exemption.php:204
+#| msgid "Company Name"
+msgid "Company Name (optional)"
+msgstr "公司名稱"
+
+#: public/templates/checkout/checkout-tax-exemption.php:220
+msgid "EIN (optional)"
+msgstr "EIN（可選）"
+
+#: public/templates/checkout/checkout-tax-exemption.php:240
+msgid "You are claiming a tax exemption."
+msgstr "您要求免稅。"
+
+#: public/templates/checkout/checkout-tax-exemption.php:242
+msgid "You're making a taxable purchase."
+msgstr "您正在購買應稅商品。"
+
+#: public/templates/checkout/checkout-tax-exemption.php:246
+#| msgid "Your order has been successfully placed."
+msgid "Your tax exempt certificate has been uploaded successfully."
+msgstr "您的訂單已成功完成。"
+
+#: public/templates/checkout/checkout-tax-identifier.php:19
+msgid "Tax ID"
+msgstr "稅號"
+
+#: public/templates/checkout/checkout-tax-identifier.php:38
+msgid "Personal purchase"
+msgstr "個人購買"
+
+#: public/templates/checkout/checkout-tax-identifier.php:38
+msgid "Business purchase"
+msgstr "商業採購"
+
+#: public/templates/checkout/checkout.php:16
+msgid "Your cart is empty!"
+msgstr "您的購物車是空的！"
+
+#: public/templates/checkout/checkout.php:80
+msgid "Back"
+msgstr "返回"
+
+#: public/templates/checkout/checkout.php:90
+msgid "This order is tax exempt."
+msgstr "此訂單免稅。"
+
+#: public/templates/checkout/checkout.php:92
+msgid ""
+"Your tax exempt certificate on file is not valid for this order. Please "
+"update your address or continue with a taxable order."
+msgstr "您存檔的免稅證書對該訂單無效。請更新您的地址或繼續執行應稅訂單。"
+
+#: public/templates/login/login.php:24
+msgid "Welcome "
+msgstr "歡迎 "
+
+#: public/templates/login/login.php:39
+msgid "New password"
+msgstr "新密碼"
+
+#: public/templates/login/login.php:40
+msgid "Please enter secure password twice to continue"
+msgstr "請輸入安全密碼兩次以繼續"
+
+#: public/templates/login/login.php:46
+msgid "New Password"
+msgstr "新密碼"
+
+#: public/templates/login/login.php:54
+msgid "Confirm New Password"
+msgstr "確認新密碼"
+
+#: public/templates/login/login.php:71
+msgid "Returning Customer"
+msgstr "已註冊客戶"
+
+#: public/templates/login/login.php:72
+msgid "If you have an existing account, please sign in."
+msgstr "如果您已有帳戶，請登錄。"
+
+#: public/templates/login/login.php:78 public/templates/login/login.php:141
+msgid "Email Address"
+msgstr "電子郵件地址"
+
+#: public/templates/login/login.php:86 public/templates/login/login.php:149
+msgid "Password"
+msgstr "密碼"
+
+#: public/templates/login/login.php:99
+msgid "Forgot password?"
+msgstr "忘記密碼？"
+
+#: public/templates/login/login.php:109
+msgid "NEW CUSTOMER"
+msgstr "新客戶"
+
+#: public/templates/login/login.php:112
+msgid ""
+"You can checkout as a guest or become a member for faster checkout and great "
+"offers."
+msgstr "您可以作為客人結帳,或成為會員,以加快結帳和優惠。"
+
+#: public/templates/login/login.php:157
+msgid "Confirm Password"
+msgstr "確認密碼"
+
+#: public/templates/login/login.php:167
+msgid "Sign Up"
+msgstr "註冊"
+
+#: public/templates/login/login.php:170
+msgid "Continue As Guest"
+msgstr "繼續作為來賓"
+
+#: public/templates/login/login.php:181
+msgid "PAYPAL CUSTOMERS"
+msgstr "貝寶客戶"
+
+#: public/templates/login/login.php:183
+msgid "Make your payment with PayPal's secure services."
+msgstr "使用PayPal的安全服務進行付款。"
+
+#: public/templates/login/login.php:184
+msgid "You can still add promotion codes before you complete your order."
+msgstr "您仍然可以在完成訂單之前添加促銷代碼。"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:32
+msgid "Product Name"
+msgstr "產品名稱"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:36
+msgid "Auto Renewal Date"
+msgstr "自動續訂日期"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:58
+msgid "Renew Now!"
+msgstr "現在續約！"
+
+#: public/templates/parts/content-none.php:17
+msgid "Nothing Found"
+msgstr "什麼都沒找到"
+
+#: public/templates/parts/content-none.php:21
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "準備好發表你的第一篇文章嗎？<a href=\"%1$s\">由此開始</a>。"
+
+#: public/templates/parts/content-none.php:23
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr "對不起，沒有符合你的搜索條件。請換其它關鍵詞再試."
+
+#: public/templates/parts/content-none.php:26
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr "找不到你要的內容，也許搜尋功能能幫到你."
+
+#: public/templates/parts/content-single.php:81
+msgid "Select your product"
+msgstr "搜索產品"
+
+#: public/templates/subscription-details/subscription-details-account-info.php:49
+msgid "Account Information"
+msgstr "帳戶資訊"
+
+#: public/templates/subscription-details/subscription-details-account-info.php:53
+msgid "The following is the information currently being used for payment."
+msgstr "以下是當前用於付款的資訊。"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:20
+msgid "Order History"
+msgstr "訂購紀錄"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:24
+msgid "View the order history for your subscription."
+msgstr "查看訂閱的訂單歷史記錄。"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:30
+msgid "View Order History"
+msgstr "檢視訂單歷史記錄"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:39
+msgid "Order Number"
+msgstr "訂單編號"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:41
+msgid "Order Date"
+msgstr "訂單日期"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:43
+msgid "Order Amount"
+msgstr "訂單金額"
+
+#: public/templates/subscription-details/subscription-details-status.php:33
+msgid "Subscription Status"
+msgstr "訂閱狀態"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+msgid "Your subscription will automatically renew on"
+msgstr "您的訂閱將自動續訂"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+msgid ""
+"If you do not wish for it to automatically renew, update the setting below."
+msgstr "如果您不希望它自動續訂,請更新下面的設置。"
+
+#: public/templates/subscription-details/subscription-details-status.php:43
+#: public/templates/subscription-details/subscription-details-status.php:57
+msgid "Automatic Renewals"
+msgstr "自動續訂"
+
+#: public/templates/subscription-details/subscription-details-status.php:43
+#: public/templates/subscription-details/subscription-details-status.php:57
+msgid "Off"
+msgstr "關"
+
+#: public/templates/subscription-details/subscription-details-status.php:53
+msgid "On"
+msgstr "在"
+
+#: public/templates/subscription-details/subscription-details-status.php:67
+msgid "Cancel Subscription"
+msgstr "取消訂閱"
+
+#: public/templates/subscription-details/subscription-details.php:29
+msgid "Back to My Subscriptions Page"
+msgstr "傳回「我的訂閱」頁面"
+
+#: public/templates/subscription-details/subscription-details.php:37
+msgid "Subscription ID"
+msgstr "訂閱ID"
+
+#: public/templates/subscription-details/subscription-details.php:51
+msgid "Current Quantity"
+msgstr "目前數量"
+
+#: public/templates/subscription-details/subscription-details.php:53
+msgid "Next Renewal Quantity"
+msgstr "下一次續訂數量"
+
+#: public/templates/subscription-details/subscription-details.php:57
+msgid "Change Quantity"
+msgstr "變更數量"
+
+#: public/templates/thank-you/thank-you.php:94
+msgid "Thank you"
+msgstr "感謝您"
+
+#: public/templates/thank-you/thank-you.php:104
+msgid "Your order has been successfully placed."
+msgstr "您的訂單已成功完成。"
+
+#: public/templates/thank-you/thank-you.php:108
+msgid "Your order was completed successfully."
+msgstr "您的訂單已成功完成。"
+
+#: public/templates/thank-you/thank-you.php:114
+msgid "Order number is: "
+msgstr "訂單編號："
+
+#: public/templates/thank-you/thank-you.php:129
+#, php-format
+msgid "You will receive an email confirmation shortly at %s"
+msgstr "您將很快收到 %s 的電子郵件確認"
+
+#: public/templates/thank-you/thank-you.php:193
+msgid "VAT Information"
+msgstr "增值稅信息"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:6
+msgid "Your order has been entered and is awaiting payment."
+msgstr "您的訂單已輸入，正在等待付款。"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:8
+msgid ""
+"Please make your payment now to complete your order. All funds must be drawn "
+"in the currency shown below."
+msgstr "請立即付款以完成訂單。所有資金必須以如下所示的貨幣提取。"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:10
+msgid "Provide your bank with the following wire transfer instructions:"
+msgstr "向您的銀行提供以下電匯說明："
+
+#: public/templates/thank-you/wire-transfer-instructions.php:14
+msgid "Amount:"
+msgstr "金額:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:16
+msgid "Wire Transfer Reference Number:"
+msgstr "電匯參考編號："
+
+#: public/templates/thank-you/wire-transfer-instructions.php:18
+msgid "*Be sure to include this number or your payment may not be received."
+msgstr "*請務必提供此號碼，否則可能不會收到您的付款。"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:20
+msgid "Bank:"
+msgstr "銀行："
+
+#: public/templates/thank-you/wire-transfer-instructions.php:22
+msgid "Location:"
+msgstr "地點:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:24
+msgid "Account Holder:"
+msgstr "帳戶持有人："
+
+#: public/templates/thank-you/wire-transfer-instructions.php:26
+msgid "Account Number:"
+msgstr "帳戶號碼："
+
+#: public/templates/thank-you/wire-transfer-instructions.php:28
+msgid "Swift Code:"
+msgstr "SWIFT代碼："
+
+#: public/templates/thank-you/wire-transfer-instructions.php:32
+msgid "IBAN*:"
+msgstr "IBAN *："
+
+#: public/templates/thank-you/wire-transfer-instructions.php:38
+msgid ""
+"Please ensure you use your 'Reference Number' as your transaction reference "
+"when you electronically transfer the money for payment. If you do not use "
+"this reference number we will not be able to process your payment."
+msgstr ""
+"電子轉帳付款時，請確保使用“參考號”作為交易參考。如果您不使用此參考號，我們將"
+"無法處理您的付款。"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:40
+msgid ""
+"After we receive confirmation that our bank has received your funds, we will "
+"send you an email notification. If a payment is not received within 20 "
+"business days, your order will be cancelled."
+msgstr ""
+"在我們確認銀行已收到您的資金後，我們將向您發送電子郵件通知。如果在20個工作日"
+"內未收到付款，則您的訂單將被取消。"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:42
+msgid ""
+"Print this page for your records as all bank details are required to make "
+"your payment. You can use this information to make your payment to the fore "
+"mentioned bank account. Any orders placed without all of the above "
+"information may not be processed."
+msgstr ""
+"打印此頁作為記錄，因為需要所有銀行詳細信息來付款。您可以使用此信息向上述銀行"
+"帳戶付款。沒有以上所有信息的任何訂單都不會被處理。"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:44
+msgid ""
+"When we have finished processing your order, you will be sent a confirmation "
+"email at the address provided."
+msgstr "當我們完成您的訂單處理後，我們將在提供的地址向您發送確認電子郵件。"
+
+#~ msgid "Currency: "
+#~ msgstr "貨幣:"
+
+#~ msgid "My Payments"
+#~ msgstr "付款"
+
+#~ msgid "Business Checkout"
+#~ msgstr "結帳"
+
+#~ msgid "Company EIN"
+#~ msgstr "公司EIN"
+
+#~ msgid "Credit Card"
+#~ msgstr "信用卡"
+
+#~ msgid "PayPal"
+#~ msgstr "PayPal"
+
+#~ msgid "Pay with card"
+#~ msgstr "信用卡支付"
+
+#~ msgid "Edit Shipping/Billing"
+#~ msgstr "預計配送方式"
+
+#~ msgid "Edit Billing"
+#~ msgstr "帳單"

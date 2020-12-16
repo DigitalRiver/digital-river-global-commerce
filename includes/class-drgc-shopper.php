@@ -22,12 +22,12 @@ class DRGC_Shopper extends AbstractHttpService {
 	/**
 	 *  Current shopper locale
 	 */
-	private $locale;
+	public $locale;
 
 	/**
 	 *  Shopper currency
 	 */
-	private $currency;
+	public $currency;
 
 	/**
 	 * Refresh token for limited access only | string
@@ -115,8 +115,8 @@ class DRGC_Shopper extends AbstractHttpService {
 	 *
 	 * @return mixed $data
 	 */
-	public function generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token = true ) {
-		$data = $this->authenticator->generate_access_token_by_ref_id( $external_reference_id, $force_bearer_token );
+	public function generate_access_token_by_ref_id( $external_reference_id ) {
+		$data = $this->authenticator->generate_access_token_by_ref_id( $external_reference_id );
 
 		$this->refresh_token        = null;
 		$this->token                = isset( $data['access_token'] ) ? $data['access_token'] : null;
@@ -167,31 +167,21 @@ class DRGC_Shopper extends AbstractHttpService {
 		}
 	}
 
-	/**
-	 * Get access token data
-	 */
-	public function get_access_token_information() {
-		$params = array(
-			'token' => $this->token
-		);
+  /**
+   * Get access token data
+   */
+  public function get_access_token_information() {
+    $res = $this->authenticator->get_access_token_information( $this->token );
 
-		$url = "/oauth20/access-tokens?" . http_build_query( $params );
+    $this->locale            = $res['locale'];
+    $this->currency          = $res['currency'];
+    $this->cart_id           = $res['cartId'];
+    $this->user_id           = $res['userId'];
+    $this->authenticated     = $res['authenticated'] === 'true';
+    $this->client_ip_address = $res['clientIpAddress'];
 
-		try {
-			$res = $this->get( $url );
-
-			$this->locale            = $res['locale'];
-			$this->currency          = $res['currency'];
-			$this->cart_id           = $res['cartId'];
-			$this->user_id           = $res['userId'];
-			$this->authenticated     = (bool) $res['authenticated'];
-			$this->client_ip_address = $res['clientIpAddress'];
-
-			return $res;
-		} catch (\Exception $e) {
-			return "Error: # {$e->getMessage()}";
-		}
-	}
+    return $res;
+  }
 
 	/**
 	 * Retrieve the current (anonymous and
@@ -372,6 +362,9 @@ class DRGC_Shopper extends AbstractHttpService {
    * @return array|bool
    */
   public function retrieve_subscriptions( $params = array() ) {
+	  			
+	if(!$this->is_shopper_logged_in()) return false;
+
     $default = array(
       'expand' => 'all'
     );
@@ -441,7 +434,7 @@ class DRGC_Shopper extends AbstractHttpService {
    */
   public function retrieve_orders( $params = array() ) {
     $default = array(
-      'expand' => 'all'
+      'expand' => 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
     );
 
     $params = array_merge(
@@ -544,5 +537,62 @@ class DRGC_Shopper extends AbstractHttpService {
 		} catch (\Exception $e) {
 			return $e->getMessage();
 		}
-	}
+  }
+
+	/**
+	 * Update locale and currency for the current shopper
+	 *
+	 * @param string $locale locale
+	 * @param string $currency currency code
+	 *
+	 * @return bool
+	 */
+	public function update_locale_and_currency( $locale, $currency ) {
+		$data = array(
+			'shopper' => array(
+				'locale' => $locale,
+				'currency' => $currency
+			)
+		);
+		$this->setJsonContentType();
+
+		try {
+			$res = $this->post( '/v1/shoppers/me', $data );
+			$this->locale = $locale;
+			$this->currency = $currency;
+			return $res;
+		} catch (\Exception $e) {
+			return false;
+		}
+  }
+
+  /**
+   * Retrieve the tax registrations for a shopper.
+   *
+   * @param string $customer_id
+   *
+   * @return array|bool
+   */
+  public function get_shopper_tax_registration( $customer_id = '' ) {
+    if ( ! isset( $this->user_id ) && empty( $customer_id ) ) return;
+
+    if ( empty( $customer_id ) ) {
+      $customer_id = $this->user_id;
+    }
+
+    try {
+      $res = $this->get( "/user-api/customers/{$customer_id}/tax-registration" );
+
+      $res['US'] = array_key_exists( 'taxCertificates', $res ) ? 'ENABLED' : 'DISABLED';
+
+      if ( ( $res['US'] === 'ENABLED' ) && ! empty( $res['taxCertificates'] ) ) {
+        $found_key = array_search( 'ELIGIBLE', array_column( $res['taxCertificates'], 'status' ) );
+        $res['eligibleCertificate'] = ( $found_key !== false ) ? $res['taxCertificates'][ $found_key ] : [];
+			}
+
+      return $res;
+    } catch ( RequestException $e ) {
+      return false;
+    }
+  }
 }

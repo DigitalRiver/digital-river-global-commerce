@@ -3,7 +3,7 @@
  * Handle ajax calls for large amount of data, preventing timeouts
  *
  * action:  "drgc_ajx_action"
- * step:    "init", "process", or "end"
+ * step:    "import_categories", "fetch_and_cache_products", or "import_each_product"
  *
  * @link       https://www.digitalriver.com
  * @since      1.0.0
@@ -13,123 +13,69 @@
  */
 
 class DRGC_Ajx {
-	/**
-	 * Instance id of the current job
-	 */
-	public $instance_id;
+  /**
+   * Initialize the class and set its properties.
+   *
+   * @since    1.0.0
+   */
+  public function __construct() {
+    if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
+      add_action( 'wp_ajax_drgc_ajx_action', array( $this, 'ajax_action' )  );
+    }
+  }
 
-	/**
-	 * Initialize the class and set its properties.
-	 *
-	 * @since    1.0.0
-	 */
-	public function __construct( $args = array() ) {
-		$args = array_merge( self::default_args(), $args );
+  /**
+   * Execute the ajax action
+   */
+  public function ajax_action() {
+    check_ajax_referer( 'drgc_admin_ajax', 'nonce' );
+    $step_slug = self::get_post_value( 'step' );
 
-		$this->instance_id = $args['instance_id'];
+    $steps = new DRGC_Product_Importer( 'AJAX' );
 
-		if ( is_admin() && defined( 'DOING_AJAX' ) && DOING_AJAX ) {
-			add_action( "wp_ajax_drgc_ajx_action", array( $this, 'ajax_action' )  );
-		}
-	}
+    if ( method_exists( $steps, $step_slug ) ) {
+      echo json_encode( $steps->$step_slug() );
+    }
 
-	/**
-	 * Default args needed
-	 *
-	 * @return array
-	 */
-	public static function default_args() {
-		return array(
-			'instance_id'   => false,
-		);
-	}
+    die();
+  }
 
-	/**
-	 * Validate the instance_id arg
-	 *
-	 * @param $args
-	 * @return WP_Error
-	 */
-	public static function validate_args( $args ) {
-		if ( ! isset( $args['instance_id'] ) || ! $args['instance_id'] ) {
-			$error = isset( $error ) ? $error : new WP_Error;
-			$error->add( 'instance_id', 'instance_id is a required attribute for the importer ajax' );
+  /**
+   * Returns request POST value
+   *
+   * @param $key
+   * @param bool $default
+   *
+   * @return bool|mixed
+   */
+  public static function get_post_value( $key, $default = false ) {
+    if ( ! isset( $_POST[$key] ) ) {
+      return $default;
+    }
 
-			return $error;
-		}
-	}
+    if ( is_array( $_POST[$key] ) ) {
+      return self::recursive_sanitize_text_field( $_POST[$key] );
+    } else {
+      return sanitize_text_field( $_POST[$key] );
+    }
+  }
 
-	/**
-	 *  Create a slug version of the string
-	 *
-	 * @param $string
-	 * @return string
-	 */
-	public static function slugify( $string ) {
-		return str_replace(
-			'-', '_',
-			sanitize_title_with_dashes( $string, null, 'save' )
-		);
-	}
+  /**
+   * Recursive sanitation for an array
+   *
+   * @param $array
+   * @return mixed
+   */
+  private function recursive_sanitize_text_field( $array ) {
+    foreach ( $array as $key => &$value ) {
+      if ( is_array( $value ) ) {
+        $value = self::recursive_sanitize_text_field( $value );
+      } else {
+        $value = sanitize_text_field( $value );
+      }
+    }
 
-	/**
-	 * Execute the ajax action
-	 */
-	public function ajax_action() {
-		$instance_id = self::get_post_value( 'instance_id' );
-
-		if ( ! $instance_id || $instance_id !== $this->instance_id ) {
-			return;
-		}
-
-		check_ajax_referer( 'drgc_admin_ajax', 'nonce' );
-		$step_slug = self::get_post_value( 'step' );
-
-		$steps = new DRGC_Ajx_Importer( $instance_id );
-
-		if ( method_exists( $steps, $step_slug ) ) {
-			echo json_encode( $steps->$step_slug() );
-		}
-
-		die();
-	}
-
-	/**
-	 * Returns request POST value
-	 *
-	 * @param $key
-	 * @param bool $default
-	 *
-	 * @return bool|mixed
-	 */
-	public static function get_post_value( $key, $default = false ) {
-		if ( ! isset( $_POST[$key] ) ) {
-			return $default;
-		}
-
-		if ( is_array( $_POST[$key] ) ) {
-			return self::recursive_sanitize_text_field( $_POST[$key] );
-		} else {
-			return sanitize_text_field( $_POST[$key] );
-		}
-	}
-
-	/**
-	 * Recursive sanitation for an array
-	 *
-	 * @param $array
-	 * @return mixed
-	 */
-	private function recursive_sanitize_text_field( $array ) {
-		foreach ( $array as $key => &$value ) {
-			if ( is_array( $value ) ) {
-				$value = self::recursive_sanitize_text_field( $value );
-			} else {
-				$value = sanitize_text_field( $value );
-			}
-		}
-
-		return $array;
-	}
+    return $array;
+  }
 
 }

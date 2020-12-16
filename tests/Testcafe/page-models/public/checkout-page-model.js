@@ -10,13 +10,14 @@ export default class CheckoutPage {
     this.emailTexts = Selector('#dr-panel-email-result');
 
     this.emailBtn = Selector('#checkout-email-form > button');
-    this.shippingBtn = Selector('#checkout-shipping-form > button');
-    this.billingInfoSubmitBtn = Selector('#checkout-billing-form > button');
+    this.guestShippingBtn = Selector('#checkout-shipping-form > button');
+    this.longinShippingBtn = Selector('#checkout-shipping-form > button').nth(1);
+    this.longinBillingInfoSubmitBtn = Selector('#checkout-billing-form').find('button').nth(1);
+    this.guestBillingInfoSubmitBtn = Selector('#checkout-billing-form > button');
     this.deliverByExpress = Selector('#shipping-option-8196700');
     this.deliverByStandard = Selector('#shipping-option-167400');
     this.deliveryOptionSubmitBtn = Selector('#checkout-delivery-form > button');
     this.useSameAddrCheckbox = Selector('#checkbox-billing');
-    this.submitPaymentBtn = Selector('#dr-submit-payment');
     this.submitOrderBtn = Selector("#checkout-confirmation-form > button");
 
     this.shippingFirstName = Selector('#shipping-field-first-name');
@@ -39,13 +40,14 @@ export default class CheckoutPage {
     this.billingPhoneNumber = Selector('#billing-field-phone');
 
     // Payment Info.
-    this.creditCard = Selector('#radio-credit-card');
-    this.cardNumberIframe = Selector('#card-number > iframe');
+    this.creditCardDiv = Selector('.DR-card.DR-creditCard');
+    this.cardNumberIframe = this.creditCardDiv.find('iframe').nth(0);
     this.ccNumber = Selector('#ccNumber');
-    this.cardExpIframe = Selector('#card-expiration > iframe');
+    this.cardExpIframe = this.creditCardDiv.find('iframe').nth(1);
     this.ccExpiry = Selector('#ccExpiry');
-    this.cardCVVIframe = Selector('#card-cvv > iframe');
+    this.cardCVVIframe = this.creditCardDiv.find('iframe').nth(2);
     this.ccCVV = Selector('#ccCVV');
+    this.submitPaymentBtn = this.creditCardDiv.find('button[type="submit"]');
 
     // Shipping Summary
     this.shippingSummaryTitle = Selector('.dr-summary__shipping').find('p').nth(0);
@@ -58,32 +60,46 @@ export default class CheckoutPage {
   async completeFormEmail(testEmail) {
     await t
       .typeText(this.email, testEmail)
-      .click(this.emailBtn);
+      .hover(this.emailBtn)
+      .click(this.emailBtn)
+      .wait(1000);
   }
 
-  async completeFormShippingInfo() {
+  async completeFormShippingInfo(isGuest, isLocaleUS) {
     const shippingInfo = this.utils.getShippingUserData();
     const shippingStateOption = this.shippingState.find('option');
     const shippingCountryOption = this.shippingCountry.find('option');
-
     await t
       .typeText(this.shippingFirstName, shippingInfo.firstName, { replace: true })
       .typeText(this.shippingLastName, shippingInfo.lastName, { replace: true })
       .typeText(this.shippingAddress1, shippingInfo.addrLine1)
       .typeText(this.shippingCity, shippingInfo.city)
-      .click(this.shippingCountry)
-      .click(shippingCountryOption.withText(shippingInfo.country))
-      .expect(this.shippingCountry.value).eql(shippingInfo.countryValue)
-      .hover(this.shippingState)
-      .click(this.shippingState)
-      .click(shippingStateOption.withText(shippingInfo.state))
-      .expect(this.shippingState.value).eql(shippingInfo.stateValue)
+    if (isLocaleUS){
+      await t
+        .hover(this.shippingCountry)
+        .click(this.shippingCountry)
+        .click(shippingCountryOption.withText(shippingInfo.country))
+        .expect(this.shippingCountry.value).eql(shippingInfo.countryValue)
+        .hover(this.shippingState)
+        .click(this.shippingState)
+        .click(shippingStateOption.withText(shippingInfo.state))
+        .expect(this.shippingState.value).eql(shippingInfo.stateValue);
+    }
+    await t
       .typeText(this.shippingPostalCode, shippingInfo.postCode)
       .typeText(this.shippingPhoneNumber, shippingInfo.phoneNo)
-      .click(this.shippingBtn);
+    if (isGuest) {
+      await t
+        .hover(this.guestShippingBtn)
+        .click(this.guestShippingBtn);
+    } else {
+      await t
+        .hover(this.longinShippingBtn)
+        .click(this.longinShippingBtn);
+    }
   }
 
-  async completeFormBillingInfo() {
+  async completeFormBillingInfo(isGuest, isLocaleUS = true) {
     const billingInfo = this.utils.getBillingUserData();
     const billingStateOption = this.billingState.find('option');
     const billingCountryOption = this.billingCountry.find('option');
@@ -93,15 +109,30 @@ export default class CheckoutPage {
       .typeText(this.billingLastName, billingInfo.lastName, { replace: true })
       .typeText(this.billingAddress1, billingInfo.addrLine1)
       .typeText(this.billingCity, billingInfo.city)
-      .click(this.billingState)
-      .click(billingStateOption.withText(billingInfo.state))
-      .expect(this.billingState.value).eql(billingInfo.stateValue)
+    if (isLocaleUS){
+      await t
+        .hover(this.billingCountry)
+        .click(this.billingCountry)
+        .click(billingCountryOption.withText(billingInfo.country))
+        .expect(this.billingCountry.value).eql(billingInfo.countryValue)
+        .hover(this.billingState)
+        .click(this.billingState)
+        .click(billingStateOption.withText(billingInfo.state))
+        .expect(this.billingState.value).eql(billingInfo.stateValue);
+    }
+    await t
       .typeText(this.billingPostalCode, billingInfo.postCode)
-      .click(this.billingCountry)
-      .click(billingCountryOption.withText(billingInfo.country))
-      .expect(this.billingCountry.value).eql(billingInfo.countryValue)
-      .typeText(this.billingPhoneNumber, billingInfo.phoneNo)
-      .click(this.billingInfoSubmitBtn);
+      .typeText(this.billingPhoneNumber, billingInfo.phoneNo);
+
+    if (isGuest) {
+      await t
+        .hover(this.guestBillingInfoSubmitBtn)
+        .click(this.guestBillingInfoSubmitBtn);
+    } else {
+      await t
+        .hover(this.longinBillingInfoSubmitBtn)
+        .click(this.longinBillingInfoSubmitBtn);
+    }
   }
 
   async setDeliveryOption(deliveryOption) {
@@ -116,10 +147,15 @@ export default class CheckoutPage {
   }
 
   async completeFormCreditCardInfo() {
+    const creditCard = Selector('.DR-card.DR-creditCard').find('button');
     const creditCardInfo = this.utils.getCreditCardInfo();
 
+    if (await creditCard.getAttribute('aria-expanded') == 'false') {
+      await t.click(creditCard);
+    }
+
     await t
-      .click(this.creditCard)
+      .wait(5000)
       .switchToIframe(this.cardNumberIframe)
       .typeText(this.ccNumber, creditCardInfo.cardNo)
       .switchToMainWindow()
@@ -129,6 +165,7 @@ export default class CheckoutPage {
       .switchToIframe(this.cardCVVIframe)
       .typeText(this.ccCVV, creditCardInfo.cvv)
       .switchToMainWindow()
+      .hover(this.submitPaymentBtn)
       .click(this.submitPaymentBtn);
   }
 }

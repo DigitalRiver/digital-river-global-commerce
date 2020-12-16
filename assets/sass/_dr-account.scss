@@ -307,11 +307,13 @@
         &-ar {
             margin-right:0;
             margin-left:auto;
+            white-space: nowrap;
         }
         &-title {
             margin-bottom:15px;
         }
         &-status {
+            white-space: nowrap;
             .freetrial {
                 color:$orange;
             }
@@ -796,6 +798,9 @@
     .dr-modal-content {
         border:0;
     }
+    a.right-of-withdrawal-link {
+        color: #000;
+    }
 }
 
 #subscriptionError {
@@ -832,16 +837,83 @@
 #dr-passwordUpdated {
     .dr-modal-content {
         text-align: center;
-    }
-    .dr-modal-icon > img {
-        max-width: 25%;
-    }
 
-    .dr-modal-footer > button {
-        width: 100%;
+        > .dr-modal-body {
+            p {
+                text-align: left;
+            }
+
+            > .dr-modal-icon > img {
+                max-width: 25%;
+                display: inline-block !important;
+            }
+        }
+    
+        > .dr-modal-footer > button {
+            width: 100%;
+        }
     }
 }
 
 .drgc-wrapper #dr-account-page-wrapper .dr-panel-edit label {
     cursor:text;
+}
+
+#nav-tabContent {
+    min-height: 381px;
+}
+
+#list-orders > .overflowContainer > .dr-pagination {
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 5px;
+
+    > .page-link {
+        color: black;
+        text-decoration: none;
+        transition: background-color .3s;
+        float: left;
+
+        &:not(.prev):not(.next) {
+            padding: 8px 16px;
+        }
+
+        &.active {
+            background-color: #00a7e1;
+            color: white;
+        }
+
+        &:hover:not(.active) {
+            background-color: #ddd;
+        }
+    }
+}
+
+#list-certificates > .dr-h4 {
+    position: relative;
+}
+
+#certificate-modal {
+    .help-text {
+        color: darkgray;
+        font-size: 12px;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 10px;
+        }
+
+        &.row {
+            margin: 0;
+        }
+    }
+
+    .invalid-feedback {
+        &.row {
+            margin: 0;
+        }
+    }
+}
+
+#add-new-cert {
+    font-size: 16px;
 }

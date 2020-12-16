@@ -9,8 +9,8 @@ const baseURL = Config.baseUrl[env];
 const homePage = new HomePage();
 const minicartPage = new MinicartPage();
 const utils = new GeneralUtils();
-const standardFee = '5.00USD';
-const expressFee = '7.49USD';
+const standardFee = '$5.00';
+const expressFee = '$7.49';
 
 fixture `===== DRGC P2 Automation Test - Physical Product Shipping =====`
   .httpAuth({
@@ -21,9 +21,7 @@ fixture `===== DRGC P2 Automation Test - Physical Product Shipping =====`
     console.log('Before Each: Click Menu -> Product to Enter Product Page');
     await t
       .navigateTo(baseURL)
-      .maximizeWindow()
-      .click(homePage.productsMenu)
-      .expect(Selector('body').hasClass('hfeed')).ok()
+      .maximizeWindow();
 });
 
 test('Estimated Shipping Fee - Standard free Shipping', async t => {
@@ -47,6 +45,10 @@ async function addPhysicalProduct() {
   console.log('>> Add physical product into cart');
   await t
     .setTestSpeed(0.9)
+    .click(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addPhyProduct);
+  await t
+    .hover(homePage.addPhyProduct)
     .click(homePage.addPhyProduct)
     .takeScreenshot('BWC/minicart.jpg');
 

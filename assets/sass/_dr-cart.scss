@@ -1,6 +1,16 @@
 .dr-cart {
     margin-bottom: 40px;
 
+    section {
+        padding: 0;
+    }
+
+    > .order-number > p > span {
+        &:first-child {
+            font-weight: 700;
+        }
+    }
+
     &__actions,
     &__actions-bottom {
 
@@ -10,16 +20,6 @@
             color: $color-text-base;
             text-decoration: underline;
             line-height: 16px;
-
-            &:visited {
-
-            }
-
-            &:hover,
-            &:active,
-            &:focus {
-
-            }
         }
     }
 
@@ -35,6 +35,14 @@
         & .continue-shopping {
             @include for-phone-landscape-down {
                 display: none;
+            }
+        }
+
+        > .proceed-checkout.dr-btn {
+            width: 30%;
+        
+            @include for-phone-landscape-down {
+                width: 100%;
             }
         }
     }

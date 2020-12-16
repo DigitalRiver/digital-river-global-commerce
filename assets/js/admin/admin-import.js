@@ -1,165 +1,166 @@
-const ImportModule = {};
+const ImportModule = (($) => {
+  let currentIdx = 0;
+  let total = 0;
+  let $importNotice;
+  let $importBtn;
+  let $importMsg;
+  let $progress;
+  let $progressBar;
+  let $progressCount;
+  let $progressTotal;
+
+  $(() => {
+    $importNotice = $('.products-import-notice');
+    $importBtn = $('#products-import-btn');
+    $importMsg = $('#products-import-msg');
+    $progress = $('#products-import-progress');
+    $progressBar = $('#products-import-progress-bar');
+    $progressCount = $('#products-import-progress-count');
+    $progressTotal = $('#products-import-progress-total');
+  });
+
+  const importCategories = () => {
+    $importBtn.prop('disabled', true);
+    $importNotice.hide();
+    $importMsg.text('Fetching and importing categories...').show();
+
+    $.ajax({
+      type: 'POST',
+      url: drgc_admin_params.ajax_url,
+      data: {
+        action: 'drgc_ajx_action',
+        nonce: drgc_admin_params.ajax_nonce,
+        step: 'import_categories',
+      },
+      success: (res) => {
+        colorLog('[Import Categories]', res.success ? 'success' : 'error', res);
+        if (res.success) {
+          $importMsg.text('All categories have been imported. Fetching products...');
+          fetchAndCacheProducts();
+        } else {
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
+        }
+      }
+    });
+  };
+
+  const fetchAndCacheProducts = () => {
+    $.ajax({
+      type: 'POST',
+      url: drgc_admin_params.ajax_url,
+      data: {
+        action: 'drgc_ajx_action',
+        nonce: drgc_admin_params.ajax_nonce,
+        step: 'fetch_and_cache_products',
+      },
+      success: (res) => {
+        colorLog('[Fetch and Cache Products]', res.success ? 'success' : 'error', res);
+        if (res.success) {
+          total = res.data ? Object.keys(res.data).length : 0;
+          if (total) {
+            $importMsg.text('Importing products...');
+            initProgressBar(currentIdx, total);
+            importEachProduct(currentIdx);
+          }
+        } else {
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
+        }
+      }
+    });
+  };
+
+  const importEachProduct = (idx) => {
+    $.ajax({
+      type: 'POST',
+      url: drgc_admin_params.ajax_url,
+      data: {
+        action: 'drgc_ajx_action',
+        nonce: drgc_admin_params.ajax_nonce,
+        step: 'import_each_product',
+        idx
+      },
+      success: (res) => {
+        colorLog('[Import Each Product]', res.success ? 'success' : 'error', res);
+        if (res.success) {
+          currentIdx++;
+          updateProgressBar(currentIdx, total);
+          if (currentIdx < total) {
+            importEachProduct(currentIdx);
+          } else if (currentIdx === total) {
+            setTimeout(() => {
+              const params = new URLSearchParams(location.search);
+              $importMsg.text('All products have been imported. Cleaning up...');
+              $progress.hide();
+              params.set('import_complete', true);
+              params.delete('post_status'); // Make sure it will be redirected to "All" instead of "Trash" tab
+              window.location.search = params.toString();
+            }, 3000);
+          }
+        } else {
+          if (res.data && res.data.error) displayImportNotice('error', res.data.error);
+        }
+      }
+    });
+  };
+
+  const initProgressBar = (count, total) => {
+    $progress.show();
+    $progressTotal.text(total);
+    updateProgressBar(count, total);
+  };
+
+  const updateProgressBar = (count, total) => {
+    const percent = (count / total).toFixed(2) * 100;
+    $progressBar.css('width', `${percent}%`);
+    $progressCount.text(count);
+  };
+
+  const displayImportNotice = (type = 'success', msg) => {
+    $importNotice.remove();
+    const $notice = $(`<div class="notice notice-${type} is-dismissible products-import-notice"><p>${msg}</p></div>`);
+    $notice.insertBefore('.products-import-wrapper');
+  };
+
+  const colorLog = (msg, color, anotherMsg) => {
+    color = color || 'black';
+
+    switch (color) {
+      case 'success':
+        color = 'Green';
+        break;
+      case 'info':
+        color = 'DodgerBlue';
+        break;
+      case 'error':
+        color = 'Red';
+        break;
+      case 'warning':
+        color = 'Orange';
+        break;
+      default:
+        color = color;
+    }
+    console.log('%c' + msg, 'color:' + color, anotherMsg);
+  };
+
+  return {
+    importCategories,
+    fetchAndCacheProducts,
+    importEachProduct,
+    initProgressBar,
+    updateProgressBar,
+    displayImportNotice,
+    colorLog
+  };
+})(jQuery);
 
 jQuery(document).ready(($) => {
-
-	var itemTotal,
-		itemIndex = 0,
-		batchSize = 1,
-		persist,
-		itemsBeingProcessed = [],
-		itemsCompleted = [],
-		itemsFailed = [],
-		$domStatusCounter,
-		ajaxUrl = drgc_admin_params.ajax_url,
-		ajax_nonce = drgc_admin_params.ajax_nonce,
-		instance_id = drgc_admin_params.drgc_ajx_instance_id,
-		siteID = drgc_admin_params.site_id,
-		apiKey = drgc_admin_params.api_key,
-		$progressBar = $('#dr-data-process-progressbar'),
-		$fecounter = $('.wrapImportControls p'),
-		$importButton = $('#products-import-btn');
-
-	$('#products-import-btn').on( 'click', function( e ) {
-		e.preventDefault();
-
-		if ( ! siteID || ! apiKey ) {
-			return alert( 'Please provide siteID & apiKey!' );
-		}
-
-		$importButton.attr( 'disabled', 'disabled' );
-		if ($('.notice').is(':visible')) {
-			$('.notice').hide();
-		}
-
-		$('.wrapImportControls').append("<h4> <b>Fetching products, locales and currencies...</b> </h4>");
-
-		var data = {
-			action      : 'drgc_ajx_action',
-			nonce       : ajax_nonce,
-			instance_id : instance_id,
-			step        : 'init',
-		};
-
-		$.ajax( {
-			dataType    : 'json',
-			data        : data,
-			type        : 'post',
-			url         : ajaxUrl,
-			context     : this,
-			nonce       : ajax_nonce,
-			success     : ajaxInitSuccess
-		} );
-	});
-
-	function ajaxInitSuccess( data, textStatus, jqXHR ) {
-		itemTotal = data.entries_count;
-		batchSize = data.batch_size;
-		itemIndex = data.index_start;
-
-		$('.wrapImportControls').find('h4').remove();
-
-		$progressBar.show();
-		$progressBar.progressbar({ max: itemTotal, value: 0 });
-		$fecounter.show();
-		$importButton.hide();
-		updateTotal( itemTotal );
-		processNext();
-	}
-
-	function processNext() {
-		var counter = 0,
-			data;
-
-		while ( counter < batchSize && itemIndex < itemTotal ) {
-			itemsBeingProcessed.push( itemIndex );
-			itemIndex++;
-			counter++;
-		}
-
-		if ( !itemsBeingProcessed.length ) {
-			complete();
-			return;
-		}
-
-		data = {
-			action              : 'drgc_ajx_action',
-			step                : 'batchprocess',
-			persist             : persist,
-			nonce               : ajax_nonce,
-			instance_id         : instance_id,
-			itemsBeingProcessed : itemsBeingProcessed
-		};
-
-		$.ajax( {
-			dataType    : 'json',
-			data        : data,
-			type        : 'post',
-			url         : ajaxUrl,
-			context     : this,
-			nonce       : ajax_nonce,
-			success     : ajaxBatchSuccess
-		} );
-	}
-
-	function ajaxBatchSuccess( data, textStatus, jqXHR ) {
-		var lastIndex;
-
-		$.each( data.results, function( key, value ) {
-			if ( value.success ) {
-				itemsCompleted.push( key );
-			} else if ( 'failure' === value ) {
-				itemsFailed.push( key );
-			}
-			lastIndex = key;
-		});
-
-		updateStatus( itemIndex );
-		itemsBeingProcessed = [];
-
-		persist = data.results[ lastIndex ]['persist'];
-
-		processNext();
-	}
-
-	function updateStatus( numberProcessed ) {
-		if ( !$domStatusCounter ) {
-			$domStatusCounter = $('#dr-data-process-counter' );
-		}
-
-		$progressBar.progressbar( "option", "value", numberProcessed );
-		$domStatusCounter.text( numberProcessed );
-	}
-
-	function updateTotal( numberTotal ) {
-		$('#dr-data-process-total').text( numberTotal );
-	}
-
-	function complete() {
-		$progressBar.hide();
-		$('.wrapImportControls').html("<h3><b>Cleaning up...</b></h3>");
-
-		var data = {
-			action      : 'drgc_ajx_action',
-			step        : 'end',
-			persist     : persist,
-			nonce       : ajax_nonce,
-			instance_id : instance_id
-		};
-
-		$.ajax( {
-			dataType    : 'json',
-			data        : data,
-			type        : 'post',
-			url         : ajaxUrl,
-			context     : this,
-			success     : ajaxCompleteSuccess
-		} );
-	}
-
-	function ajaxCompleteSuccess( data, textStatus, jqXHR ) {
-		window.location.href = data.url;
-	}
-
+  $('#products-import-btn').click((e) => {
+    if (!drgc_admin_params.site_id || !drgc_admin_params.api_key) {
+      return alert('Please provide siteID & apiKey!');
+    }
+    ImportModule.importCategories();
+  });
 });
 
 export default ImportModule;

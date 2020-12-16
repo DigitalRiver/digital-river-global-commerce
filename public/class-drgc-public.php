@@ -64,6 +64,9 @@ class DRGC_Public {
 
 		wp_enqueue_style( $this->drgc, plugin_dir_url( __FILE__ ) . '../assets/css/drgc-public.min.css', array(), $this->version, 'all' );
 
+    if ( is_page( 'checkout' ) ) {
+      wp_enqueue_style( 'digital-river-css', 'https://js.digitalriverws.com/v1/css/DigitalRiver.css', array(), $this->version, 'all' );
+    }
 	}
 
   /**
@@ -81,9 +84,6 @@ class DRGC_Public {
     if ( is_page( 'cart' ) || is_page( 'checkout' ) || is_page( 'thank-you' ) || is_page( 'account' ) ) {
       wp_enqueue_script( 'digital-river-js', 'https://js.digitalriverws.com/v1/DigitalRiver.js', array( $this->drgc ), null, true );
     }
-    if ( is_page( 'checkout' ) ) {
-      wp_enqueue_script( 'paypal-checkout-js', 'https://www.paypalobjects.com/api/checkout.js', array( $this->drgc ), null, true );
-    }
 
     $access_token = '';
     if ( DRGC()->authenticator ) {
@@ -97,10 +97,10 @@ class DRGC_Public {
       if ( is_page( 'thank-you' ) ) $order_obj = DRGC()->cart->retrieve_order();
     }
 
-		$customer = array();
-		if ( DRGC()->shopper ) {
-			$customer = DRGC()->shopper->retrieve_shopper();
-		}
+    $customer = array();
+    if ( DRGC()->shopper ) {
+      $customer = DRGC()->shopper->retrieve_shopper();
+    }
 
     //test Order Handler
     $testOrder_option = get_option( 'drgc_testOrder_handler' );
@@ -109,11 +109,8 @@ class DRGC_Public {
     $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
     $force_excl_tax_enable = ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? "true" : "false";
 
-    $applepay_option = get_option( 'drgc_applepay_handler' );
-    $applepay_enabled = ( is_array( $applepay_option ) && '1' == $applepay_option['checkbox'] )  ? 'true' : 'false';
-
-    $googlepay_option = get_option( 'drgc_googlepay_handler' );
-    $googlepay_enabled = ( is_array( $googlepay_option ) && '1' == $googlepay_option['checkbox'] )  ? 'true' : 'false';
+    $short_description_option = get_option( 'drgc_display_short_description_handler' );
+    $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
 
     $translation_array = array(
       'upgrade_label'               => __('Upgrade', 'digital-river-global-commerce'),
@@ -137,7 +134,7 @@ class DRGC_Public {
       'view_cart_label'             => __('View Cart', 'digital-river-global-commerce'),
       'checkout_label'              => __('Checkout', 'digital-river-global-commerce'),
       'remove_label'                => __('Remove', 'digital-river-global-commerce'),
-      'subtotal_label'              => __('Sub-Total', 'digital-river-global-commerce'),
+      'subtotal_label'              => __('Subtotal', 'digital-river-global-commerce'),
       'qty_label'                   => __('Qty', 'digital-river-global-commerce'),
       'shipping_and_handling_label'	=> __('Shipping and Handling', 'digital-river-global-commerce'),
       'discount_label'		          => __('Discount', 'digital-river-global-commerce'),
@@ -179,81 +176,86 @@ class DRGC_Public {
       'invalid_region_msg'             => __('Your region value is invalid. Please supply a different one.', 'digital-river-global-commerce'),
       'upsell_decline_label'           => __('No, thanks', 'digital-river-global-commerce'),
       'unable_place_order_msg'         => __('Unable to place order', 'digital-river-global-commerce'),
-      'new_password_error_msg'         => __('The new password must be different from the current password.', 'digital-river-global-commerce')
+      'new_password_error_msg'         => __('The new password must be different from the current password.', 'digital-river-global-commerce'),
+      'payment_methods_error_msg'      => __('Sorry, it seems that there are no available payment methods for your location.', 'digital-river-global-commerce'),
+      'shopper_type'                   => __('Shopper Type', 'digital-river-global-commerce'),
+      'personal_shopper_type'          => __('Personal', 'digital-river-global-commerce'),
+      'business_shopper_type'          => __('Business', 'digital-river-global-commerce'),
+      'invalid_tax_id_error_msg'       => __('Your tax ID could not be verified. Tax may apply.', 'digital-river-global-commerce'),
+      'order_id_label'                 => __('Order ID', 'digital-river-global-commerce'),
+      'date_label'                     => __('Date', 'digital-river-global-commerce'),
+      'amount_label'                   => __('Amount', 'digital-river-global-commerce'),
+      'status_label'                   => __('Status', 'digital-river-global-commerce'),
+      'order_details_label'            => __('Order Details', 'digital-river-global-commerce'),
+      'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce'),
+      'product_added_to_cart_msg'      => __('has been added to your cart.', 'digital-river-global-commerce'),
+      'general_product_name'           => __('The product', 'digital-river-global-commerce')
     );
 
-		// transfer drgc options from PHP to JS
-		$options = array(
-			'wpLocale'          =>  get_locale(),
-			'drLocale'          =>  get_dr_locale( get_locale() ),
-			'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
-			'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
-			'homeUrl'           =>  get_home_url(),
-			'cartUrl'           =>  drgc_get_page_link( 'cart' ),
-			'checkoutUrl'       =>  drgc_get_page_link( 'checkout' ),
-			'accountUrl'        =>  drgc_get_page_link( 'account' ),
-			'mySubsUrl'         =>  drgc_get_page_link( 'my-subscriptions' ),
-			'loginUrl'          =>  drgc_get_page_link( 'login' ),
-			'loginPath'         =>  parse_url( drgc_get_page_link( 'login' ) )['path'],
-			'siteID'            =>  get_option( 'drgc_site_id' ),
-			'domain'            =>  get_option( 'drgc_domain' ),
-			'digitalRiverKey'   =>  get_option( 'drgc_digitalRiver_key' ),
-			'accessToken'       =>  $access_token,
-			'cart'              =>  $cart_obj,
-			'order'             =>  $order_obj,
-			'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
-			'isLogin'           =>  drgc_get_user_status(),
-			'payPal'            =>  array (
-				'sourceId' => isset( $_GET['sourceId'] ) ? $_GET['sourceId'] : false,
-				'failure'  => isset( $_GET['ppcancel'] ) ? $_GET['ppcancel'] : false,
-				'success'  => isset ( $_GET['ppsuccess'] ) ? $_GET['ppsuccess'] : false,
-      ),
-			'testOrder'          => $testOrder_enable,
-			'shouldDisplayVat'   => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
-			'isTaxInclusive'     => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
-			'forceExclTax'       => $force_excl_tax_enable,
-			'translations'       => $translation_array,
-			'isApplePayEnabled'  => $applepay_enabled,
-			'isGooglePayEnabled' => $googlepay_enabled,
-			'client_ip'          => $_SERVER['REMOTE_ADDR'],
-      'applePayButtonType'   => get_option( 'drgc_applepay_button_type' ),
-      'applePayButtonColor'  => get_option( 'drgc_applepay_button_color' ),
-      'googlePayButtonType'  => get_option( 'drgc_googlepay_button_type' ),
-      'googlePayButtonColor' => get_option( 'drgc_googlepay_button_color' )
+    // transfer drgc options from PHP to JS
+    $options = array(
+      'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
+      'drLocale'          =>  drgc_get_current_dr_locale(),
+      'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
+      'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
+      'homeUrl'           =>  $this->append_query_string( get_home_url() ),
+      'cartUrl'           =>  drgc_get_page_link( 'cart' ),
+      'checkoutUrl'       =>  drgc_get_page_link( 'checkout' ),
+      'accountUrl'        =>  drgc_get_page_link( 'account' ),
+      'mySubsUrl'         =>  drgc_get_page_link( 'my-subscriptions' ),
+      'loginUrl'          =>  drgc_get_page_link( 'login' ),
+      'siteID'            =>  get_option( 'drgc_site_id' ),
+      'domain'            =>  get_option( 'drgc_domain' ),
+      'digitalRiverKey'   =>  get_option( 'drgc_digitalRiver_key' ),
+      'accessToken'       =>  $access_token,
+      'cart'              =>  $cart_obj,
+      'order'             =>  $order_obj,
+      'thankYouEndpoint'  =>  esc_url( drgc_get_page_link( 'thank-you' ) ),
+      'isLogin'           =>  drgc_get_user_status(),
+      'testOrder'         => $testOrder_enable,
+      'shouldDisplayVat'  => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
+      'isTaxInclusive'    => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
+      'forceExclTax'      => $force_excl_tax_enable,
+      'translations'      => $translation_array,
+      'client_ip'         => $_SERVER['REMOTE_ADDR'],
+      'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT ),
+      'displayShortDescription' => $short_description_enabled,
+      'customerId'              => $customer['id'] ?? ''
     );
 
     wp_localize_script( $this->drgc, 'drgc_params', $options );
   }
 
-	public function ajax_attempt_auth() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
+  public function ajax_attempt_auth() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
 
-		$plugin = DRGC();
+    $plugin = DRGC();
+    $locale = $_POST['locale'] ?? 'en_US';
+    $primary_currency = drgc_get_primary_currency( $locale );
 
-		if ( (isset( $_POST['username'] ) && isset( $_POST['password'] )) ) {
-			$username = sanitize_text_field( $_POST['username'] );
-			$password = sanitize_text_field( $_POST['password'] );
+    if ( (isset( $_POST['username'] ) && isset( $_POST['password'] )) ) {
+      $username = sanitize_text_field( $_POST['username'] );
+      $password = sanitize_text_field( $_POST['password'] );
 
-			$user = wp_authenticate( $username, $password );
+      $user = wp_authenticate( $username, $password );
 
-			if ( is_wp_error( $user ) ) {
-				wp_send_json_error( __( 'Authorization failed for specified credentials', 'digital-river-global-commerce' ) );
-			}
+      if ( is_wp_error( $user ) ) {
+        wp_send_json_error( __( 'Authorization failed for specified credentials', 'digital-river-global-commerce' ) );
+      }
 
-			$current_user = get_user_by( 'login', $username );
-			$externalReferenceId = get_user_meta( $current_user->ID, '_external_reference_id', true );
-			$attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
-		}
+      $current_user = get_user_by( 'login', $username );
+      $externalReferenceId = get_user_meta( $current_user->ID, '_external_reference_id', true );
+      $attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
+    }
 
-		if ( array_key_exists( 'error', $attempt ) ) {
-			wp_send_json_error( $attempt );
-		}
+    if ( array_key_exists( 'error', $attempt ) ) {
+      wp_send_json_error( $attempt );
+    }
 
 		if ( array_key_exists( 'access_token', $attempt ) ) {
-			$plugin->session->set_guest_flag_cookie( 'false' );
-			$plugin->session->dirty_set_session( $_COOKIE['drgc_session'] );
-
-			wp_send_json_success( $attempt );
+      $plugin->shopper->update_locale_and_currency( $locale, $primary_currency );
+			$customer = $plugin->shopper->retrieve_shopper();
+			wp_send_json_success( $customer );
 		}
 	}
 
@@ -291,87 +293,82 @@ class DRGC_Public {
 		return $error_msgs;
 	}
 
-	public function dr_signup_ajax() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
+  public function dr_signup_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
 
-		$plugin = DRGC();
+    $plugin = DRGC();
 
-		if ( isset( $_POST['first_name'] ) && isset( $_POST['last_name'] ) &&
-			   isset( $_POST['username'] ) && isset( $_POST['password'] ) ) {
-			$first_name = sanitize_text_field( $_POST['first_name'] );
-			$last_name = sanitize_text_field( $_POST['last_name'] );
-			$email = sanitize_text_field( $_POST['username'] );
-			$password = sanitize_text_field( $_POST['password'] );
-			$confirm_password = sanitize_text_field( $_POST['confirm_password'] );
+    if ( isset( $_POST['first_name'] ) && isset( $_POST['last_name'] ) &&
+          isset( $_POST['username'] ) && isset( $_POST['password'] ) ) {
+      $first_name = sanitize_text_field( $_POST['first_name'] );
+      $last_name = sanitize_text_field( $_POST['last_name'] );
+      $email = sanitize_text_field( $_POST['username'] );
+      $password = sanitize_text_field( $_POST['password'] );
+      $confirm_password = sanitize_text_field( $_POST['confirm_password'] );
 
-			$plugin->session->dirty_set_session( $_COOKIE['drgc_session'] );
-			$error_msgs = array();
+      $error_msgs = array();
 
-			if ( ! is_email( $email ) ) {
-				array_push( $error_msgs, __( 'Please enter a valid email address.', 'digital-river-global-commerce' ) );
-			}
+      if ( ! is_email( $email ) ) {
+        array_push( $error_msgs, __( 'Please enter a valid email address.', 'digital-river-global-commerce' ) );
+      }
 
-			$error_msgs = array_merge( $error_msgs, $this->get_password_error_msgs( $password, $confirm_password ) );
+      $error_msgs = array_merge( $error_msgs, $this->get_password_error_msgs( $password, $confirm_password ) );
 
-			if ( !empty( $error_msgs ) ) {
-				wp_send_json_error( join( ' ', $error_msgs) );
-				return;
-			}
+      if ( !empty( $error_msgs ) ) {
+        wp_send_json_error( join( ' ', $error_msgs) );
+        return;
+      }
 
-			// Attemp WP user store
-			$userdata = array(
-				'user_login'  => $email,
-				'user_pass'   => $password,
-				'user_email'  => $email,
-				'first_name'  => $first_name,
-				'last_name'   => $last_name,
-				'role'        => 'subscriber'
-			);
+      // Attemp WP user store
+      $userdata = array(
+        'user_login'  => $email,
+        'user_pass'   => $password,
+        'user_email'  => $email,
+        'first_name'  => $first_name,
+        'last_name'   => $last_name,
+        'role'        => 'subscriber'
+      );
 
-			$user_id = wp_insert_user( $userdata ) ;
-			$externalReferenceId = hash( 'sha256', uniqid( $user_id, true ) );
+      $user_id = wp_insert_user( $userdata ) ;
+      $externalReferenceId = hash( 'sha256', uniqid( $user_id, true ) );
 
-			add_user_meta( $user_id, '_external_reference_id', $externalReferenceId);
+      add_user_meta( $user_id, '_external_reference_id', $externalReferenceId);
 
-			if ( is_wp_error( $user_id ) ) {
-				wp_send_json_error( $user_id->get_error_message() );
-				return;
-			}
+      if ( is_wp_error( $user_id ) ) {
+        wp_send_json_error( $user_id->get_error_message() );
+        return;
+      }
 
-			$attempt = $plugin->shopper->create_shopper( $email, $password, $first_name, $last_name, $email, $externalReferenceId );
+      $attempt = $plugin->shopper->create_shopper( $email, $password, $first_name, $last_name, $email, $externalReferenceId );
 
-			if ( ! is_null( $attempt ) && array_key_exists( 'errors', $attempt ) ) {
-				wp_delete_user( $user_id );
-				wp_send_json_error( $attempt );
-			} else {
-				$user = wp_authenticate( $email, $password );
+      if ( ! is_null( $attempt ) && array_key_exists( 'errors', $attempt ) ) {
+        wp_delete_user( $user_id );
+        wp_send_json_error( $attempt );
+      } else {
+        $user = wp_authenticate( $email, $password );
 
-				if ( is_wp_error( $user ) ) {
-					wp_send_json_error( $user );
-				}
+        if ( is_wp_error( $user ) ) {
+          wp_send_json_error( $user );
+        }
 
-				$plugin->session->set_guest_flag_cookie( 'false' );
-				$attempt = $plugin->shopper->generate_access_token_by_ref_id( $externalReferenceId );
-				wp_send_json_success( $attempt );
-			}
-		} else {
-			wp_send_json_error();
-		}
-	}
+        wp_send_json_success( $attempt );
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
 
-	public function checkout_as_guest_ajax() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
-		$plugin = DRGC();
-		$plugin->session->set_guest_flag_cookie( 'true' );
-		wp_send_json_success();
-	}
+  public function checkout_as_guest_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+    $plugin = DRGC();
+    $plugin->session->update_guest_checkout_flag( 'true' );
+    wp_send_json_success();
+  }
 
 	public function dr_logout_ajax() {
 		check_ajax_referer( 'drgc_ajax', 'nonce' );
 		$plugin = DRGC();
 		$plugin->shopper = null;
-		$plugin->session->set_guest_flag_cookie( 'false' );
-		$plugin->session->dirty_set_session( $_COOKIE['drgc_session'] );
 		$plugin->session->clear_session();
 		wp_send_json_success();
 	}
@@ -566,6 +563,7 @@ class DRGC_Public {
 
 			if ( ! empty( $products ) ) {
 				echo get_permalink( $products[0]->ID );
+				die();
 			}
 		}
 
@@ -601,7 +599,7 @@ class DRGC_Public {
 			'menu_item_parent' => 0,
 			'ID'               => 'login',
 			'db_id'            => 'login',
-			'url'              => get_site_url() . '/login',
+			'url'              => get_permalink( get_page_by_path( 'login' ) ),
 			'classes'          => $is_logged_in ? array( 'menu-item', 'menu-item-has-children' ) : array( 'menu-item' ),
 			'target'           => null,
 			'xfn'              => null,
@@ -615,7 +613,7 @@ class DRGC_Public {
 				'menu_item_parent' => 'login',
 				'ID'               => 'account',
 				'db_id'            => 'account',
-				'url'              => get_site_url() . '/account',
+				'url'              => get_permalink( get_page_by_path( 'account' ) ),
 				'classes'          => array( 'menu-item' ),
 				'target'           => null,
 				'xfn'              => null,
@@ -637,6 +635,36 @@ class DRGC_Public {
 		}
 
 		return $items;
+	}
+
+  /**
+   * Insert locale selector at menu.
+   *
+   * @since  2.0.0
+   */
+  public function insert_locale_selector( $content ) {
+    if ( ! is_page('cart') && ! is_page( 'checkout' ) && ! is_page( 'thank-you' ) ) {
+      ob_start();
+      include_once 'partials/drgc-locale-selector.php';
+      $append = ob_get_clean();
+      return $content . $append;
+    }
+    return $content;
+  }
+
+	/**
+	 * Insert currency selector at menu.
+	 *
+	 * @since  2.0.0
+	 */
+	public function insert_currency_selector( $content ) {
+		if ( ! is_page( 'checkout' ) && ! is_page( 'thank-you' ) ) {
+			ob_start();
+			include_once 'partials/drgc-currency-selector.php';
+			$append = ob_get_clean();
+			return $content . $append;
+		}
+		return $content;
 	}
 
 	/**
@@ -708,32 +736,61 @@ class DRGC_Public {
    * @since  1.1.0
    */
   public function redirect_on_page_load() {
-    if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
-      $customer = DRGC()->shopper->retrieve_shopper();
-      $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
-      $is_guest = 'true' === $_COOKIE['drgc_guest_flag'];
+    if ( ! is_admin() ) {
+      $plugin = DRGC();
+      $dr_locale = drgc_get_current_dr_locale();
+      $wp_locale = drgc_get_current_wp_locale( $dr_locale );
 
-      if ( is_page( 'checkout' ) ) {
-        $cart = DRGC()->cart->retrieve_cart();
-        $check_subs = drgc_is_subs_added_to_cart( $cart );
-        $terms_checked = drgc_is_auto_renewal_terms_checked( $cart );
+      // Update shopper's locale & currency
+      if ( $plugin->shopper->locale !== $dr_locale ) {
+        $primary_currency = drgc_get_primary_currency( $dr_locale );
+        $plugin->shopper->update_locale_and_currency( $dr_locale, $primary_currency );
 
-        if ( ! $is_logged_in && ( ! $is_guest || $check_subs['has_subs'] ) ) {
-          wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
-          exit;
-        } elseif ( $check_subs['is_auto'] && ! $terms_checked ) {
-          wp_redirect( get_permalink( get_page_by_path( 'cart' ) ) );
+        $tax_regs = $plugin->cart->get_tax_registration();
+
+        if ( is_array( $tax_regs ) && isset( $tax_regs['customerType'] ) ) {
+          $this->recreate_access_token();
+          wp_redirect( $_SERVER['REQUEST_URI'] );
           exit;
         }
-      } elseif ( is_page( 'account' ) ) {
-        if ( ! $is_logged_in ) {
-          wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
-          exit;
-        }
-      } elseif ( is_page( 'thank-you' ) ) {
-        if ( ! $is_logged_in && ! $is_guest ) {
-          wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
-          exit;
+      }
+
+      // Load plugin translated text strings
+      switch_to_locale( $wp_locale );
+      load_plugin_textdomain(
+        'digital-river-global-commerce',
+        false,
+        dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
+      );
+
+      if ( is_page( 'checkout' ) || is_page( 'account' ) || is_page( 'thank-you' ) ) {
+        $customer = $plugin->shopper->retrieve_shopper();
+        $is_logged_in = $customer && 'Anonymous' !== $customer['id'];
+        $session_data = $plugin->session->get_session_data();
+        $is_guest = 'true' === $session_data['checkout_as_guest'];
+
+        if ( is_page( 'checkout' ) ) {
+          $cart = $plugin->cart->retrieve_cart();
+          $check_subs = drgc_is_subs_added_to_cart( $cart );
+          $terms_checked = drgc_is_auto_renewal_terms_checked( $cart );
+
+          if ( ! $is_logged_in && ( ! $is_guest || $check_subs['has_subs'] ) ) {
+            wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
+            exit;
+          } elseif ( $check_subs['is_auto'] && ! $terms_checked ) {
+            wp_redirect( get_permalink( get_page_by_path( 'cart' ) ) );
+            exit;
+          }
+        } elseif ( is_page( 'account' ) ) {
+          if ( ! $is_logged_in ) {
+            wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
+            exit;
+          }
+        } elseif ( is_page( 'thank-you' ) ) {
+          if ( ! $is_logged_in && ! $is_guest ) {
+            wp_redirect( get_permalink( get_page_by_path( 'login' ) ) );
+            exit;
+          }
         }
       }
     }
@@ -898,7 +955,7 @@ class DRGC_Public {
             <div class="dr-modal-body">
               <div class="dr-modal-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/success-icon.svg' ?>" alt="success icon"></div>
               <h4><?php echo __( 'Password Updated!', 'digital-river-global-commerce' ); ?></h4>
-              <p><?php echo __( 'Your password has been changed successfully.', 'digital-river-global-commerce' ); ?></p>
+              <p><?php echo __( 'Your password has been changed successfully. Please log in to your account using your new password.', 'digital-river-global-commerce' ); ?></p>
             </div>
             <div class="dr-modal-footer">
               <button type="button" class="dr-btn dr-btn-blue" data-dismiss="dr-modal"><?php echo __( 'OK', 'digital-river-global-commerce' ); ?></button>
@@ -907,18 +964,20 @@ class DRGC_Public {
         </div>
       </div>
     <?php endif; ?>
-	<?php
-	}
+  <?php
+  }
 
-	public function reset_cookie_ajax() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
-
-		if ( DRGC()->session->reset_cookie() ) {
-			wp_send_json_success();
-		} else {
-			wp_send_json_error();
-		}
-	}
+  public function add_test_order_banner() {
+    $test_order_option = get_option( 'drgc_testOrder_handler' );
+    $is_test_order_enabled = is_array( $test_order_option ) && ( $test_order_option['checkbox'] === '1' );
+  ?>
+    <?php if ( $is_test_order_enabled && ( is_page( 'cart' ) || is_page( 'checkout' ) || is_page( 'thank-you' ) ) ): ?>
+      <div id="dr-test-order">
+        <p>*** <?php _e( 'This is a test order', 'digital-river-global-commerce' ); ?> ***</p>
+      </div>
+    <?php endif; ?>
+  <?php
+  }
 
   public function get_offers_by_pop_ajax() {
     check_ajax_referer( 'drgc_ajax', 'nonce' );
@@ -939,24 +998,250 @@ class DRGC_Public {
     }
   }
 
+  public function translate_archive_title( $title ) {
+    if ( is_tax( 'dr_product_category' ) ) {
+      return __( single_cat_title( '', false ), 'digital-river-global-commerce' );
+    }
+
+    return $title;
+  }
+
+  public function translate_menu_items( $item_output, $item ) {
+    if ( property_exists( $item, 'title' ) ) {
+      return preg_replace( '/(<.*?>).*(<\/.*?>)/s', '$1' . __( $item->title, 'digital-river-global-commerce' ) . '$2', $item_output, 1 );
+    }
+
+    return $item_output;
+  }
+
+  /**
+   * Append query string at URL.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function append_query_string( $url ) {
+    if ( isset( $_GET['locale'] ) ) {
+      $url = esc_url( add_query_arg( 'locale', $_GET['locale'], $url ) );
+    }
+    return $url;
+  }
+
+  public function append_query_string_to_menu( $items ) {
+    $output = array();
+    foreach ( $items as $item ) {
+      if ( isset ( $item->url ) ) {
+        $item->url = $this->append_query_string( $item->url );
+      }
+
+      $output[] = $item;
+    }
+    return $output;
+  }
+
+  /**
+   * Localize title at storefront.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function localize_title( $title, $post_id ) {
+    if( ! is_admin() && isset( $post_id ) ) {
+      $post = get_post( $post_id );
+      $post_type = get_post_type( $post_id );
+
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_title_' . $locale] ) ) {
+          return $meta['drgc_title_' . $locale][0] ?: $title;
+        }
+      }
+    }
+    return $title;
+  }
+
+  /**
+   * Localize content at storefront.
+   *
+   * @since  2.0.0
+   * @param  string
+   * @return string
+   */
+  public function localize_content( $content ) {
+    if( ! is_admin() ) {
+      global $post;
+      $post_id = $post->ID;
+      $post_type = $post->post_type;
+
+      if ( $post_type === 'post' || $post_type === 'page' ) {
+        $meta = get_post_meta( $post_id );
+        $locale = drgc_get_current_dr_locale();
+
+        if ( isset( $locale ) && isset( $meta['drgc_content_' . $locale] ) ) {
+          return $meta['drgc_content_' . $locale][0] ?: $content;
+        }
+      }
+    }
+    return $content;
+  }
+
+  /**
+   * Display the custom widget area on the page.
+   *
+   * @since  2.0.0
+   */
+  public function display_custom_widget_area() {
+    if ( ! function_exists( 'dynamic_sidebar' ) || ! dynamic_sidebar( 'drgc-header-sidebar' ) ): endif;
+  }
+
+  /**
+	 * Ajax handles getting the tax schema.
+   *
+   * @since  2.0.0
+   */
+  public function get_tax_schema_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    if ( isset( $_POST['address'] ) ) {
+      $address = $_POST['address'];
+      
+      if ( $address['country'] === 'US' ) {
+        wp_send_json_error();
+      }
+
+      $response = DRGC()->cart->get_tax_schema( $address );
+
+      if ( $response && is_array( $response ) ) {
+        wp_send_json_success( $response );
+      } else {
+        wp_send_json_error( $response );
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
+
+  /**
+   * Ajax handles applying the tax registrations to cart
+   *
+   * @since  2.0.0
+   */
+  public function apply_tax_registration_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    if ( isset( $_POST['customerType'] ) && isset( $_POST['taxRegs'] ) ) {
+      $customer_type = $_POST['customerType'];
+      $tax_regs = $_POST['taxRegs'];
+
+      $response = DRGC()->cart->apply_tax_registration( $customer_type, $tax_regs );
+
+      if ( $response && is_array( $response ) ) {
+        if ( isset( $response['customerType'] ) && isset( $response['taxRegistrations'] ) ) {
+          wp_send_json_success( $response );
+        } else {
+          wp_send_json_error( $response );
+        }
+      } else {
+        wp_send_json_error();
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
+	
+	/**
+   * Ajax handles getting the tax registrations from the current cart
+   *
+   * @since  2.0.0
+   */
+  public function get_tax_registration_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    $response = DRGC()->cart->get_tax_registration();
+
+    if ( $response && is_array( $response ) ) {
+      if ( array_key_exists( 'customerType', $response ) && array_key_exists( 'taxRegistrations', $response ) ) {
+        wp_send_json_success( $response );
+      } else {
+        wp_send_json_error( $response );
+      }
+    } else {
+      wp_send_json_error();
+    }
+  }
+
   /**
    * Renew access token
+   * 
+   * @since  2.0.0
    */
   public function renew_access_token() {
-    if ( ! is_page( 'thank-you' ) ) return;
-
     $plugin = DRGC();
     $customer = $plugin->shopper->retrieve_shopper();
-
-    $plugin->session->clear_session();
+    $token_info = '';
 
     if ( $customer && ( $customer['id'] !== 'Anonymous' ) ) {
       $current_user = get_user_by( 'login', $customer['username'] );
       $external_reference_id = get_user_meta( $current_user->ID, '_external_reference_id', true );
 
-      $plugin->shopper->generate_access_token_by_ref_id( $external_reference_id, false );
+      $token_info = $plugin->shopper->generate_access_token_by_ref_id( $external_reference_id, false );
     } else {
-      $plugin->authenticator->do_refresh_access_token();
+      $token_info = $plugin->authenticator->do_refresh_access_token();
+    }
+    
+    return $token_info;
+  }
+
+  /**
+   * Renew access token on the TY page
+   * 
+   * @since  2.0.0
+   */
+  public function renew_token_by_template_redirect() {
+    if ( ! is_page( 'thank-you' ) ) return;
+
+    $this->renew_access_token();
+  }
+
+  /**
+   * Regenerate limited/full access token to create a new cart
+   * 
+   * @since  2.0.0
+   */
+  public function recreate_access_token() {
+    $plugin = DRGC();
+    $customer = $plugin->shopper->retrieve_shopper();
+    $session_token = $plugin->authenticator->generate_dr_session_token();
+    $token_info = $plugin->authenticator->generate_access_token( '', array(), $session_token );
+
+    if ( $customer && ( $customer['id'] !== 'Anonymous' ) ) {
+      $plugin->cart->create_new_cart( $token_info['access_token'] );
+      $current_user = get_user_by( 'login', $customer['username'] );
+      $external_reference_id = get_user_meta( $current_user->ID, '_external_reference_id', true );
+      $token_info = $plugin->authenticator->generate_access_token_by_ref_id( $external_reference_id, $session_token );
+    }
+
+    return $token_info;
+  }
+
+  /**
+   * Ajax handles regenerating limited/full access token to create a new cart
+   * 
+   * @since  2.0.0
+   */
+  public function recreate_access_token_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
+
+    $token_info = $this->recreate_access_token();
+
+    if ( is_array( $token_info ) && isset( $token_info['access_token'] ) ) {
+      wp_send_json_success( $token_info );
+    } else {
+      wp_send_json_error( $token_info );
     }
   }
 }

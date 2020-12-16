@@ -43,7 +43,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                 <form class="dr-confirm-password-reset-form needs-validation" id="dr-confirm-password-reset-form" novalidate>
 
                     <div class="form-group">
-                        <input class="form-control" name="password" type="password" placeholder="New Password" required autocomplete="off">
+                        <input class="form-control" name="password" type="password" placeholder="<?php _e( 'New Password', 'digital-river-global-commerce' ) ?>" required autocomplete="off">
 
                         <div class="invalid-feedback">
                             <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -51,7 +51,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="confirm-password" type="password" placeholder="Confirm New Password" required autocomplete="off">
+                        <input class="form-control" name="confirm-password" type="password" placeholder="<?php _e( 'Confirm New Password', 'digital-river-global-commerce' ) ?>" required autocomplete="off">
 
                         <div class="invalid-feedback">
                             <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -75,7 +75,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                 <form id="dr_login_form" class="dr-login-form needs-validation" novalidate>
 
                     <div class="form-group">
-                        <input class="form-control" name="username" type="email" placeholder="Email/User Name" required>
+                        <input class="form-control" name="username" type="email" placeholder="<?php _e( 'Email Address', 'digital-river-global-commerce' ) ?>" required>
 
                         <div class="invalid-feedback">
 		                    <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -83,7 +83,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="password" type="password" placeholder="Password" required autocomplete="off">
+                        <input class="form-control" name="password" type="password" placeholder="<?php _e( 'Password', 'digital-river-global-commerce' ) ?>" required autocomplete="off">
 
                         <div class="invalid-feedback">
 		                    <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -118,7 +118,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input class="form-control" name="first_name" type="text" placeholder="First Name" required>
+                                <input class="form-control" name="first_name" type="text" placeholder="<?php _e( 'First Name', 'digital-river-global-commerce' ) ?>" required>
 
                                 <div class="invalid-feedback">
                                     <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -128,7 +128,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
 
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <input class="form-control" name="last_name" type="text" placeholder="Last Name" required>
+                                <input class="form-control" name="last_name" type="text" placeholder="<?php _e( 'Last Name', 'digital-river-global-commerce' ) ?>" required>
 
                                 <div class="invalid-feedback">
                                     <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -138,7 +138,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="uemail" type="email" placeholder="Email Address" required>
+                        <input class="form-control" name="uemail" type="email" placeholder="<?php _e( 'Email Address', 'digital-river-global-commerce' ) ?>" required>
 
                         <div class="invalid-feedback">
 			                <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -146,7 +146,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="upw" type="password" placeholder="Password" required autocomplete="off">
+                        <input class="form-control" name="upw" type="password" placeholder="<?php _e( 'Password', 'digital-river-global-commerce' ) ?>" required autocomplete="off">
 
                         <div class="invalid-feedback">
 			                <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
@@ -154,7 +154,7 @@ $check_subs = drgc_is_subs_added_to_cart( $cart );
                     </div>
 
                     <div class="form-group">
-                        <input class="form-control" name="upw2" type="password" placeholder="Confirm Password" required autocomplete="off">
+                        <input class="form-control" name="upw2" type="password" placeholder="<?php _e( 'Confirm Password', 'digital-river-global-commerce' ) ?>" required autocomplete="off">
 
                         <div class="invalid-feedback">
 			                <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>

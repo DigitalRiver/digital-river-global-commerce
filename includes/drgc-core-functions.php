@@ -135,44 +135,21 @@ function drgc_the_posts_pagination( $wp_query ) {
 }
 
 /**
- * Currency switcher
- */
-function drgc_currency_toggler( string $classes = '' ) {
-	$locales = get_option( 'drgc_store_locales' );
-	$current_locale = DRGC()->shopper->get_locale();
-
-	if ( ! empty( $locales['locales'] ) && count( $locales['locales'] ) > 1 ) {
-		$output = "<div class=\"dr-currency-toggler {$classes}\">";
-		$output .= sprintf("<span>%s</span>", __( 'Currency: ', 'digital-river-global-commerce' ) );
-		$output .= '<select class="custom-select dr-currency-select">';
-
-		foreach ( $locales['locales'] as $locale => $currency ) {
-			$output .= "<option ";
-			$output .= $current_locale === $locale ? 'selected ' : '';
-			$output .= "data-locale=\"{$locale}\" value=\"{$currency}\">";
-			$output .= "{$currency}</option>";
-		}
-
-		$output .= '</select></div>';
-		echo $output;
-	}
-}
-
-/**
  * Get product post by external meta ID
  *
  * @param int $gc_id external ID
  * @param boolean $variation
  * @return bool|object post
  */
-function drgc_get_product_by_gcid( $gc_id , $variation = false ) {
+function drgc_get_product_by_gc_id( $gc_id , $variation = false ) {
 	$args = array(
 		'posts_per_page'   => 1,
 		'post_type'        => $variation ? 'dr_product_variation' : 'dr_product',
+		'post_status'      => array( 'publish', 'pending', 'trash' ),
 		'meta_query' => array(
 			array(
 				'key' => 'gc_product_id',
-				'value' => absint( $gc_id )
+				'value' => $gc_id
 			)
 		),
 	);
@@ -340,38 +317,6 @@ function drgc_code_to_counry( $code, $abriviated = false ) {
 }
 
 /**
- * Get pricing info based on current locale and currency
- *
- * @param int $post_id
- * @return array|bool
- */
-function drgc_get_product_pricing( $post_id = 0 ) {
-	if ( ! $post_id ) return false;
-
-	$store_currencies = get_option( 'drgc_store_locales' );
-	$product_pricing = get_post_meta( absint( $post_id ), 'loc_pricing', true );
-	$current_locale = DRGC()->shopper->get_locale();
-	$current_currency = $store_currencies['locales'][ $current_locale ];
-	$cart = DRGC()->cart->cart;
-
-	if ( $cart ) {
-		$current_currency = isset( $cart['pricing']['orderTotal']['currency'] ) ? $cart['pricing']['orderTotal']['currency'] : '';
-	}
-
-	if ( isset( $product_pricing[ $current_currency ] ) ) {
-		return $product_pricing[ $current_currency ];
-	} else {
-		return array(
-			'currency'          => get_post_meta( absint( $post_id ), 'currency', true ),
-			'list_price_value'  => get_post_meta( absint( $post_id ), 'list_price_value', true ),
-			'sale_price_value'  => get_post_meta( absint( $post_id ), 'sale_price_value', true ),
-			'price'             => get_post_meta( absint( $post_id ), 'price', true ),
-			'regular_price'     => get_post_meta( absint( $post_id ), 'regular_price', true ),
-		);
-	}
-}
-
-/**
  * Code per Country list
  * @return array
  */
@@ -476,4 +421,90 @@ function drgc_is_auto_renewal_terms_checked( $cart ) {
   }
 
   return false;
+}
+
+/**
+ * Get current DR locale by query param
+ *
+ * @return string
+ */
+function drgc_get_current_dr_locale() {
+  $drgc_locale_options = get_option( 'drgc_locale_options' ) ?: array();
+  $is_valid_locale = isset( $_GET['locale'] ) && false !== array_search( $_GET['locale'], array_column( $drgc_locale_options, 'dr_locale' ) );
+  return $is_valid_locale ?
+    $_GET['locale'] :
+    get_option( 'drgc_default_locale' ) ?: 'en_US';
+}
+/**
+ * Get current WP locale by DR locale
+ *
+ * @param string $dr_locale
+ * @return string
+ */
+function drgc_get_current_wp_locale( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+  if ( empty( $drgc_locale_options ) ) {
+    return get_wp_locale_by_map( $dr_locale );
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['wp_locale'];
+  }
+}
+/**
+ * Get primary currency by current DR locale
+ *
+ * @param string $dr_locale
+ * @return string
+ */
+function drgc_get_primary_currency( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+  if ( empty( $drgc_locale_options ) ) {
+    return '';
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['primary_currency'];
+  }
+}
+/**
+ * Get supported currencies by current DR locale
+ *
+ * @param string $dr_locale
+ * @return array
+ */
+function drgc_get_supported_currencies( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+  if ( empty( $drgc_locale_options ) ) {
+    return array();
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['supported_currencies'];
+  }
+}
+
+/**
+ * Get the category URL for Continue Shopping link
+ *
+ * @return string
+ */
+function drgc_get_continue_shopping_link() {
+  $category_link = '';
+  $categories = get_terms( array( 
+    'taxonomy'   => 'dr_product_category',
+    'parent'     => 0,
+    'hide_empty' => false
+  ) );
+
+  if ( ! empty( $categories ) ) {
+    $max_category = array_reduce( $categories, function( $carry, $item ) {
+      return $carry ?
+        ( ( $item->slug !== 'uncategorized' && $item->count > $carry->count ) ? $item : $carry ) :
+        $item;
+    });
+
+    $category_link = esc_url( get_term_link( $max_category->slug, 'dr_product_category' ) );
+  } else {
+    $category_link = isset( $_GET['locale'] ) ? esc_url( add_query_arg( 'locale', $_GET['locale'], get_home_url() ) ) : esc_url( get_home_url() );
+  }
+
+  return $category_link;
 }

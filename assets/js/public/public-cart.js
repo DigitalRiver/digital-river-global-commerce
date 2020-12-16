@@ -12,7 +12,7 @@ const CartModule = (($) => {
   };
 
   const initAutoRenewalTerms = (digitalriverjs, locale) => {
-    const $checkoutBtn = $('a.dr-summary__proceed-checkout');
+    const $checkoutBtn = $('#dr-checkout-btn');
     const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
 
     $termsCheckbox.change((e) => {
@@ -149,7 +149,7 @@ const CartModule = (($) => {
     const offerType = offer.type;
     const productOffers = offer.productOffers.productOffer;
     const promoText = offer.salesPitch.length ? offer.salesPitch[0] : '';
-    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    const declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     const upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if (productOffers && productOffers.length) {
@@ -276,7 +276,10 @@ const CartModule = (($) => {
             <div class="dr-product-content">
               <div class="dr-product__img" style="background-image: url(${lineItem.product.thumbnailImage})"></div>
               <div class="dr-product__info">
-                <a class="product-name" href="${permalink}">${lineItem.product.displayName}</a>
+                <a class="product-name" href="${permalink}?locale=${drgc_params.drLocale}">${lineItem.product.displayName}</a>
+                <div class="product-short-description">
+                  <span>${drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : ''}</span>
+                </div>
                 <div class="product-sku">
                   <span>${localizedText.product_label} </span>
                   <span>#${lineItem.product.id}</span>
@@ -365,27 +368,43 @@ const CartModule = (($) => {
             renderSummary(res.cart, hasPhysicalProduct)
           ]);
         } else {
-          if (typeof $.cookie('drgc_upsell_decline') !== 'undefined') $.removeCookie('drgc_upsell_decline', {path: '/'});
+          if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
           $('.dr-cart__auto-renewal-terms').remove();
           $('.dr-cart__products').text(localizedText.empty_cart_msg);
+          $('#dr-checkout-btn').remove();
           $('#cart-estimate').remove();
-          return new Promise(resolve => resolve());
+
+          const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+
+          if (taxRegs.customerType) {
+            if (sessionStorage.getItem('drgcTokenRenewed')) {
+              sessionStorage.removeItem('drgcTokenRenewed');
+              return new Promise(resolve => resolve());
+            } else {
+              return CheckoutUtils.recreateAccessToken();
+            }
+          } else {
+            return new Promise(resolve => resolve());
+          }
         }
       })
-      .then(() => {
+      .then((data) => {
         if (lineItems && lineItems.length) {
-          if (CheckoutUtils.isSubsAddedToCart(lineItems)) {
-            const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-            const href = (drgc_params.isLogin !== 'true') ? drgc_params.loginPath : 
-              ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
+          const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
+          const href = ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : 
+            (drgc_params.isLogin !== 'true') ? drgc_params.loginUrl : drgc_params.checkoutUrl;
 
-            $('a.dr-summary__proceed-checkout').prop('href', href);
-          }
-
+          $('#dr-checkout-btn').prop('href', href);
           renderOffers(lineItems);
+          $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
+        } else {
+          if (data && data.access_token) {
+            sessionStorage.setItem('drgcTokenRenewed', 'true');
+            location.reload();
+          } else {
+            $('.dr-cart__content').removeClass('dr-loading');
+          }
         }
-
-        $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
       })
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
@@ -395,7 +414,7 @@ const CartModule = (($) => {
 
   const updateUpsellCookie = (id, isDeclined = false) => {
     const productId = id.toString();
-    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    const declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     let upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if ((upsellDeclineArr.indexOf(productId) === -1) && isDeclined) {
@@ -404,7 +423,7 @@ const CartModule = (($) => {
       upsellDeclineArr = upsellDeclineArr.filter(item => item !== productId);
     }
 
-    $.cookie('drgc_upsell_decline', upsellDeclineArr.join(','), {path: '/'});
+    sessionStorage.setItem('drgc_upsell_decline', upsellDeclineArr.join(','));
   };
 
   return {
@@ -496,6 +515,7 @@ jQuery(document).ready(($) => {
       });
   });
 
+  // Old currency selector, will be deprecated after it's not used by any theme
   $('body').on('change', '.dr-currency-select', (e) => {
     e.preventDefault();
     const $this = $(e.target);
@@ -507,7 +527,7 @@ jQuery(document).ready(($) => {
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
     else $('body').addClass('dr-loading');
     DRCommerceApi.updateShopper(queryParams)
-      .then(() => location.reload(true))
+      .then(() => location.reload())
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
         $('.dr-cart__content, body').removeClass('dr-loading');

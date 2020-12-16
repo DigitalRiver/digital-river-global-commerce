@@ -1,7 +1,7 @@
 const DRCommerceApi = (($, params) => {
   const apiBaseUrl = `https://${params.domain}/v1/shoppers`;
 
-  const updateShopper = (queryStrings = {}) => {
+  const updateShopper = (queryStrings = {}, requestPayload = {}) => {
     const queryStr = $.param(queryStrings);
 
     return new Promise((resolve, reject) => {
@@ -13,6 +13,7 @@ const DRCommerceApi = (($, params) => {
           Authorization: `Bearer ${params.accessToken}`
         },
         url: `${apiBaseUrl}/me?${queryStr}`,
+        data: !$.isEmptyObject(requestPayload) ? JSON.stringify(requestPayload) : null,
         success: (data) => {
           resolve(data);
         },
@@ -463,6 +464,26 @@ const DRCommerceApi = (($, params) => {
     });
   };
 
+  const getOrders = (queryObj = {}) => {
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        type: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${params.accessToken}`
+        },
+        url: `${apiBaseUrl}/me/orders?${$.param(queryObj)}`,
+        success: (data) => {
+          resolve(data);
+        },
+        error: (jqXHR) => {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
   return {
     apiBaseUrl,
     updateShopper,
@@ -486,7 +507,8 @@ const DRCommerceApi = (($, params) => {
     deleteShopperAddress,
     submitCart,
     getSubsDetails,
-    getOrderDetails
+    getOrderDetails,
+    getOrders
   };
 
 })(jQuery, drgc_params);

@@ -1,0 +1,2571 @@
+# Copyright (C) 2020 Digital_River_Global_Commerce
+# This file is distributed under the same license as the Digital_River_Global_Commerce package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Digital_River_Global_Commerce\n"
+"Report-Msgid-Bugs-To: https://github.com/DigitalRiver/digital-river-global-"
+"commerce\n"
+"POT-Creation-Date: 2020-12-16 11:41+0800\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: GCTemplates <gcTemplates@digitalriver.com>\n"
+"Language: sv_SE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-KeywordsList: __;_e;_ex:1,2c;_n:1,2;_n_noop:1,2;_nx:1,2,4c;"
+"_nx_noop:1,2,3c;_x:1,2c;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;"
+"esc_html_e;esc_html_x:1,2c\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 2.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: *.js\n"
+
+#: admin/class-drgc-admin.php:165 admin/class-drgc-admin.php:166
+msgid "Settings"
+msgstr "Inställningar"
+
+#: admin/class-drgc-admin.php:198 admin/partials/drgc-admin-display.php:21
+msgid "General"
+msgstr "Allmänt"
+
+#: admin/class-drgc-admin.php:205
+msgid "Site ID"
+msgstr "Webbplats-ID"
+
+#: admin/class-drgc-admin.php:214
+msgid "Commerce API Key"
+msgstr "Commerce API Key"
+
+#: admin/class-drgc-admin.php:223
+msgid "Commerce API Secret"
+msgstr "Commerce API Secret"
+
+#: admin/class-drgc-admin.php:232
+msgid "Domain"
+msgstr "Domän"
+
+#: admin/class-drgc-admin.php:241
+msgid "Payments Service API Key"
+msgstr "API-nyckel för betalningsservice"
+
+#: admin/class-drgc-admin.php:250
+msgid "UMS Username"
+msgstr "UMS-användarnamn"
+
+#: admin/class-drgc-admin.php:259
+msgid "UMS Password"
+msgstr "UMS-lösenord"
+
+#: admin/class-drgc-admin.php:268
+msgid "Scheduled Products Import"
+msgstr "Import av schemalagda produkter"
+
+#: admin/class-drgc-admin.php:277 admin/partials/drgc-admin-display.php:27
+#: includes/class-drgc-activator.php:39 public/class-drgc-public.php:135
+#: public/templates/login/login.php:28
+msgid "Checkout"
+msgstr "Kassa"
+
+#: admin/class-drgc-admin.php:284
+msgid "Test Order"
+msgstr "Testorder"
+
+#: admin/class-drgc-admin.php:293
+msgid "Display As Excl. Tax"
+msgstr "Visa som exkl. Beskatta"
+
+#: admin/class-drgc-admin.php:302
+msgid "Product Short Description"
+msgstr "Kort produktbeskrivning"
+
+#: admin/class-drgc-admin.php:311
+msgid "Drop-in"
+msgstr "Drop-in"
+
+#: admin/class-drgc-admin.php:318
+msgid "Payment Method Configuration"
+msgstr "Konfiguration av betalningsmetod"
+
+#: admin/class-drgc-admin.php:389
+msgid ""
+"Please contact your account representative for assistance with these "
+"settings."
+msgstr "Kontakta din kontorepresentant för hjälp med dessa inställningar."
+
+#: admin/class-drgc-admin.php:466
+msgid "Enable Test Order."
+msgstr "Aktivera testorder."
+
+#: admin/class-drgc-admin.php:478
+msgid "Display pricing as tax exclusive on checkout flow"
+msgstr "Visa prissättning som exklusiv skatt vid kassaflöde"
+
+#: admin/class-drgc-admin.php:493
+msgid "Display Short Description along with the product name"
+msgstr "Display Kort beskrivning tillsammans med produktnamnet"
+
+#: admin/class-drgc-admin.php:510
+msgid "Twice daily product synchronization with GC."
+msgstr "Produktsynkronisering två gånger dagligen med GC."
+
+#: admin/class-drgc-admin.php:511
+msgid "Will be triggered at your"
+msgstr "Kommer att utlösas vid din"
+
+#: admin/class-drgc-admin.php:683 admin/class-drgc-admin.php:736
+msgid "Failed to create file"
+msgstr "Misslyckades att skapa fil"
+
+#: admin/class-drgc-admin.php:691 admin/class-drgc-admin.php:749
+msgid "Could not write to file"
+msgstr "Det gick inte att skriva till filen"
+
+#: admin/class-drgc-admin.php:821, php-format
+msgid ""
+"Please refer to the sample code of <code>paymentMethodConfiguration</code> "
+"from <a target=\"_blank\" href=\"%s\">Drop-in integration guide</a> to "
+"customize the look and feel of payment elements."
+msgstr ""
+"Se exempelkod för <code>paymentMethodConfiguration</code> från <a target="
+"\"_blank\" href=\"%s\">Drop-in-integrationsguiden för</a> att anpassa "
+"utseendet och känslan för betalningselement."
+
+#: admin/class-drgc-admin.php:851
+msgid ""
+"To make sure Digital River Global Commerce plugin is working as expected, "
+"please set 1 to session.use_cookies in php.ini."
+msgstr ""
+"För att säkerställa att Digital River Global Commerce-plugin fungerar som "
+"förväntat, ställ in 1 till session.use_cookies i php.ini."
+
+#: admin/class-drgc-admin.php:867
+msgid "Sync Complete!"
+msgstr "Synkronisering klar!"
+
+#: admin/class-drgc-admin.php:882
+msgid "DRGC Mobile Mini-cart Area"
+msgstr "DRGC Mobile Mini-cart Area"
+
+#: admin/class-drgc-admin.php:884
+msgid ""
+"Add mini-cart widget here to appear beneath the header and above the main "
+"content on mobile devices."
+msgstr ""
+"Lägg till minivagnwidget här för att visas under rubriken och ovanför "
+"huvudinnehållet på mobila enheter."
+
+#: admin/class-drgc-post-types.php:43 admin/class-drgc-post-types.php:45
+msgid "Products"
+msgstr "Produkter"
+
+#: admin/class-drgc-post-types.php:44 public/class-drgc-public.php:142
+#: public/templates/cart/cart-product.php:48
+msgid "Product"
+msgstr "Produkt"
+
+#: admin/class-drgc-post-types.php:46
+msgid "Digital River"
+msgstr "Digital River"
+
+#: admin/class-drgc-post-types.php:47
+msgid "Add New"
+msgstr "Lägg till ny"
+
+#: admin/class-drgc-post-types.php:48
+msgid "Add new product"
+msgstr "Lägg till ny produkt"
+
+#: admin/class-drgc-post-types.php:49
+#: public/templates/checkout/checkout-billing.php:25
+#: public/templates/checkout/checkout-delivery.php:22
+#: public/templates/checkout/checkout-drop-in.php:11
+#: public/templates/checkout/checkout-email.php:13
+#: public/templates/checkout/checkout-shipping.php:28
+#: public/templates/checkout/checkout-tax-exemption.php:24
+#: public/templates/checkout/checkout-tax-identifier.php:25
+#: public/templates/checkout/checkout.php:104
+msgid "Edit"
+msgstr "Redigera"
+
+#: admin/class-drgc-post-types.php:50
+msgid "Edit product"
+msgstr "Redigera produkt"
+
+#: admin/class-drgc-post-types.php:51
+msgid "New product"
+msgstr "Ny produkt"
+
+#: admin/class-drgc-post-types.php:52
+msgid "View product"
+msgstr "Visa produkt"
+
+#: admin/class-drgc-post-types.php:53
+msgid "View products"
+msgstr "Visa produkter"
+
+#: admin/class-drgc-post-types.php:54
+msgid "Search products"
+msgstr "Sök produkter"
+
+#: admin/class-drgc-post-types.php:55
+msgid "No products found"
+msgstr "Inga produkter hittades"
+
+#: admin/class-drgc-post-types.php:56
+msgid "No products found in trash"
+msgstr "Inga produkter hittades i papperskorgen"
+
+#: admin/class-drgc-post-types.php:83
+msgid "DR Variations"
+msgstr "DR-variationer"
+
+#: admin/class-drgc-post-types.php:84
+msgid "DR Variation"
+msgstr "DR-variation"
+
+#: admin/class-drgc-post-types.php:85
+#: admin/partials/drgc-product-details-meta-box.php:44
+msgid "Variations"
+msgstr "Variationer"
+
+#: admin/class-drgc-post-types.php:115
+msgid "Product Categories"
+msgstr "Produktkategorier"
+
+#: admin/class-drgc-post-types.php:116
+msgid "Category"
+msgstr "Kategori"
+
+#: admin/class-drgc-post-types.php:117
+msgid "Categories"
+msgstr "Kategorier"
+
+#: admin/class-drgc-post-types.php:118
+msgid "Search categories"
+msgstr "Sök kategorier"
+
+#: admin/class-drgc-post-types.php:119
+msgid "All categories"
+msgstr "Alla kategorier"
+
+#: admin/class-drgc-post-types.php:120
+msgid "Parent category"
+msgstr "Överordnad kategori"
+
+#: admin/class-drgc-post-types.php:121
+msgid "Parent category:"
+msgstr "Överordnad kategori:"
+
+#: admin/class-drgc-post-types.php:122
+msgid "Edit category"
+msgstr "Redigera kategori"
+
+#: admin/class-drgc-post-types.php:123
+msgid "Update category"
+msgstr "Uppdatera kategori"
+
+#: admin/class-drgc-post-types.php:124
+msgid "Add new category"
+msgstr "Lägg till kategori"
+
+#: admin/class-drgc-post-types.php:125
+msgid "New category name"
+msgstr "Namn på ny kategori"
+
+#: admin/class-drgc-post-types.php:126
+msgid "No categories found"
+msgstr "Inga kategorier hittades"
+
+#: admin/class-drgc-post-types.php:162
+msgid "Product Details"
+msgstr "Produktdetaljer"
+
+#: admin/class-drgc-post-types.php:255
+msgid "Product ID"
+msgstr "Produkt-ID"
+
+#: admin/class-drgc-post-types.php:256
+#: admin/partials/drgc-product-details-meta-box.php:26
+msgid "SKU"
+msgstr "SKU"
+
+#: admin/partials/drgc-admin-display.php:24
+#: admin/partials/drgc-admin-locales.php:20
+msgid "Locales"
+msgstr "Lokaliteter"
+
+#: admin/partials/drgc-admin-display.php:30
+msgid "Payments"
+msgstr "Betalningar"
+
+#: admin/partials/drgc-admin-locales.php:21
+msgid "Sync Locales and Currencies"
+msgstr "Synkronisera språk och valutor"
+
+#: admin/partials/drgc-admin-locales.php:24
+msgid "No locale, please sync it up by clicking button above."
+msgstr "Inget språk, synkronisera det genom att klicka på knappen ovan."
+
+#: admin/partials/drgc-admin-locales.php:29
+msgid "Site Locales"
+msgstr "Webbplatser"
+
+#: admin/partials/drgc-admin-locales.php:34
+msgid "DR Locale"
+msgstr "DR Lokal"
+
+#: admin/partials/drgc-admin-locales.php:35
+msgid "WP Language"
+msgstr "WP-språk"
+
+#: admin/partials/drgc-admin-locales.php:36
+msgid "Currencies"
+msgstr "Valutor"
+
+#: admin/partials/drgc-admin-locales.php:44
+msgid "(Default)"
+msgstr "Standard"
+
+#: admin/partials/drgc-product-details-meta-box.php:18
+msgid "GC Product ID"
+msgstr "GC-produkt-ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:22
+msgid "External Reference ID"
+msgstr "Externt referens-ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:33
+msgid "Default"
+msgstr "Standard"
+
+#: admin/partials/drgc-product-details-meta-box.php:48
+msgid "ID"
+msgstr "ID"
+
+#: admin/partials/drgc-product-details-meta-box.php:49
+msgid "Internal Variation Name"
+msgstr "Internt variantnamn"
+
+#: admin/partials/drgc-product-details-meta-box.php:50
+#: admin/partials/drgc-product-details-meta-box.php:84
+msgid "Variation Attributes"
+msgstr "Variationsattribut"
+
+#: admin/partials/drgc-product-details-meta-box.php:100
+#: public/templates/my-subscriptions/my-subscriptions.php:38
+msgid "Price"
+msgstr "Pris"
+
+#: admin/partials/drgc-product-details-meta-box.php:104
+msgid "Display Name"
+msgstr "Visningsnamn"
+
+#: admin/partials/drgc-product-details-meta-box.php:108
+msgid "Short Description"
+msgstr "Kort beskrivning"
+
+#: admin/partials/drgc-product-details-meta-box.php:112
+msgid "Long Description"
+msgstr "lång beskrivning"
+
+#: admin/partials/drgc-product-details-meta-box.php:116
+msgid "Thumbnail"
+msgstr "Miniatyr"
+
+#: admin/partials/drgc-product-details-meta-box.php:121
+#: admin/partials/drgc-product-details-meta-box.php:131
+msgid "(No image)"
+msgstr "Produktbild"
+
+#: admin/partials/drgc-product-details-meta-box.php:126
+msgid "Product Image"
+msgstr "Produktbild"
+
+#: admin/partials/drgc-products-import-btn.php:16
+msgid "Import Complete!"
+msgstr "Importen är klar!"
+
+#: admin/partials/drgc-products-import-btn.php:20
+msgid "You must enable Javascript in order to proceed!"
+msgstr "Du måste aktivera Javascript för att kunna fortsätta!"
+
+#: admin/partials/drgc-products-import-btn.php:21
+msgid "Import Products"
+msgstr "Importera År-månad"
+
+#: includes/class-drgc-activator.php:30
+msgid "cart"
+msgstr "varukorg"
+
+#: includes/class-drgc-activator.php:31 public/templates/login/login.php:27
+msgid "Cart"
+msgstr "Varukorg"
+
+#: includes/class-drgc-activator.php:38
+msgid "checkout"
+msgstr "kassa"
+
+#: includes/class-drgc-activator.php:46
+msgid "login"
+msgstr "logga in"
+
+#: includes/class-drgc-activator.php:47 public/class-drgc-public.php:598
+#: public/templates/login/login.php:93
+msgid "Login"
+msgstr "Logga in"
+
+#: includes/class-drgc-activator.php:54
+msgid "account"
+msgstr "konto"
+
+#: includes/class-drgc-activator.php:55 public/class-drgc-public.php:612
+#: public/templates/login/login.php:29
+msgid "My Account"
+msgstr "Mitt konto"
+
+#: includes/class-drgc-activator.php:62
+msgid "thank-you"
+msgstr "tack"
+
+#: includes/class-drgc-activator.php:63
+msgid "Thank You"
+msgstr "Tack"
+
+#: includes/class-drgc-product-importer.php:87
+msgid "No products found."
+msgstr "Hittade inga produkter."
+
+#: includes/class-drgc-product-importer.php:112
+#| msgid "Something went wrong. Please try again."
+msgid "Something went wrong when getting product "
+msgstr "Något gick fel. Vänligen försök igen."
+
+#: includes/drgc-core-functions.php:124, php-format
+msgid "Showing %s out of %s"
+msgstr "Visar %s av %s"
+
+#: includes/drgc-locale-mapping.php:136
+msgid "Albania"
+msgstr "Albanien"
+
+#: includes/drgc-locale-mapping.php:137
+msgid "Algeria"
+msgstr "Algeriet"
+
+#: includes/drgc-locale-mapping.php:138
+msgid "Bahrain"
+msgstr "Bahrain"
+
+#: includes/drgc-locale-mapping.php:139
+msgid "Egypt"
+msgstr "Egypten"
+
+#: includes/drgc-locale-mapping.php:140
+msgid "Iraq"
+msgstr "Irak"
+
+#: includes/drgc-locale-mapping.php:141
+msgid "Jordan"
+msgstr "Jordanien"
+
+#: includes/drgc-locale-mapping.php:142
+msgid "Kuwait"
+msgstr "Kuwait"
+
+#: includes/drgc-locale-mapping.php:143
+msgid "Lebanon"
+msgstr "Libanon"
+
+#: includes/drgc-locale-mapping.php:144
+msgid "Libya"
+msgstr "Libyen"
+
+#: includes/drgc-locale-mapping.php:145
+msgid "Morocco"
+msgstr "Marocko"
+
+#: includes/drgc-locale-mapping.php:146
+msgid "Oman"
+msgstr "Oman"
+
+#: includes/drgc-locale-mapping.php:147
+msgid "Qatar"
+msgstr "Qatar"
+
+#: includes/drgc-locale-mapping.php:148
+msgid "Saudi Arabia"
+msgstr "Saudiarabien"
+
+#: includes/drgc-locale-mapping.php:149
+msgid "Sudan"
+msgstr "Sudan"
+
+#: includes/drgc-locale-mapping.php:150
+msgid "Syria"
+msgstr "Syrien"
+
+#: includes/drgc-locale-mapping.php:151
+msgid "Tunisia"
+msgstr "Tunisien"
+
+#: includes/drgc-locale-mapping.php:152
+msgid "United Arab Emirates"
+msgstr "Förenade Arabemiraten"
+
+#: includes/drgc-locale-mapping.php:153
+msgid "Yemen"
+msgstr "Jemen"
+
+#: includes/drgc-locale-mapping.php:154
+msgid "Belarus"
+msgstr "Vitryssland"
+
+#: includes/drgc-locale-mapping.php:155
+msgid "Bulgaria"
+msgstr "Bulgarien"
+
+#: includes/drgc-locale-mapping.php:156 includes/drgc-locale-mapping.php:246
+msgid "Spain"
+msgstr "Spanien"
+
+#: includes/drgc-locale-mapping.php:157
+msgid "China"
+msgstr "Kina"
+
+#: includes/drgc-locale-mapping.php:158 includes/drgc-locale-mapping.php:172
+msgid "Hong Kong SAR China"
+msgstr "Hongkong"
+
+#: includes/drgc-locale-mapping.php:159
+msgid "Macau SAR China"
+msgstr "Macao SAR Kina"
+
+#: includes/drgc-locale-mapping.php:160
+msgid "Taiwan"
+msgstr "Taiwan"
+
+#: includes/drgc-locale-mapping.php:161
+msgid "Bosnia & Herzegovina"
+msgstr "Bosnien och Hercegovina"
+
+#: includes/drgc-locale-mapping.php:162
+msgid "Croatia"
+msgstr "Kroatien"
+
+#: includes/drgc-locale-mapping.php:163
+msgid "Czechia"
+msgstr "Tjeckien"
+
+#: includes/drgc-locale-mapping.php:164 includes/drgc-locale-mapping.php:170
+msgid "Denmark"
+msgstr "Danmark"
+
+#: includes/drgc-locale-mapping.php:165 includes/drgc-locale-mapping.php:168
+#: includes/drgc-locale-mapping.php:193
+msgid "Belgium"
+msgstr "Belgien"
+
+#: includes/drgc-locale-mapping.php:166 includes/drgc-locale-mapping.php:179
+msgid "Netherlands"
+msgstr "Nederländerna"
+
+#: includes/drgc-locale-mapping.php:167
+msgid "Australia"
+msgstr "Australien"
+
+#: includes/drgc-locale-mapping.php:169 includes/drgc-locale-mapping.php:194
+msgid "Canada"
+msgstr "Kanada"
+
+#: includes/drgc-locale-mapping.php:171 includes/drgc-locale-mapping.php:192
+msgid "Finland"
+msgstr "Finland"
+
+#: includes/drgc-locale-mapping.php:173 includes/drgc-locale-mapping.php:208
+msgid "Iceland"
+msgstr "Island"
+
+#: includes/drgc-locale-mapping.php:174 includes/drgc-locale-mapping.php:206
+msgid "India"
+msgstr "Indien"
+
+#: includes/drgc-locale-mapping.php:175 includes/drgc-locale-mapping.php:209
+msgid "Indonesia"
+msgstr "Indonesien"
+
+#: includes/drgc-locale-mapping.php:176
+msgid "Ireland"
+msgstr "Irland"
+
+#: includes/drgc-locale-mapping.php:177 includes/drgc-locale-mapping.php:218
+msgid "Malaysia"
+msgstr "Malaysia"
+
+#: includes/drgc-locale-mapping.php:178
+msgid "Malta"
+msgstr "Malta"
+
+#: includes/drgc-locale-mapping.php:180
+msgid "New Zealand"
+msgstr "Nya Zeeland"
+
+#: includes/drgc-locale-mapping.php:181 includes/drgc-locale-mapping.php:219
+msgid "Norway"
+msgstr "Norge"
+
+#: includes/drgc-locale-mapping.php:182
+msgid "Philippines"
+msgstr "Filippinerna"
+
+#: includes/drgc-locale-mapping.php:183 includes/drgc-locale-mapping.php:245
+msgid "Puerto Rico"
+msgstr "Puerto Rico"
+
+#: includes/drgc-locale-mapping.php:184
+msgid "Singapore"
+msgstr "Singapore"
+
+#: includes/drgc-locale-mapping.php:185
+msgid "South Africa"
+msgstr "Sydafrika"
+
+#: includes/drgc-locale-mapping.php:186 includes/drgc-locale-mapping.php:249
+msgid "Sweden"
+msgstr "Sverige"
+
+#: includes/drgc-locale-mapping.php:187 includes/drgc-locale-mapping.php:198
+#: includes/drgc-locale-mapping.php:203 includes/drgc-locale-mapping.php:211
+msgid "Switzerland"
+msgstr "Schweiz"
+
+#: includes/drgc-locale-mapping.php:188 includes/drgc-locale-mapping.php:250
+msgid "Thailand"
+msgstr "Thailand"
+
+#: includes/drgc-locale-mapping.php:189
+msgid "United Kingdom"
+msgstr "Storbritannien"
+
+#: includes/drgc-locale-mapping.php:190
+msgid "United States"
+msgstr "USA"
+
+#: includes/drgc-locale-mapping.php:191
+msgid "Estonia"
+msgstr "Estland"
+
+#: includes/drgc-locale-mapping.php:195
+msgid "France"
+msgstr "Frankrike"
+
+#: includes/drgc-locale-mapping.php:196 includes/drgc-locale-mapping.php:202
+msgid "Luxembourg"
+msgstr "Luxemburg"
+
+#: includes/drgc-locale-mapping.php:197
+msgid "St. Pierre & Miquelon"
+msgstr "St. Pierre & Miquelon"
+
+#: includes/drgc-locale-mapping.php:199
+msgid "Austria"
+msgstr "Österrike"
+
+#: includes/drgc-locale-mapping.php:200
+msgid "Germany"
+msgstr "Tyskland"
+
+#: includes/drgc-locale-mapping.php:201
+msgid "Liechtenstein"
+msgstr "Liechtenstein"
+
+#: includes/drgc-locale-mapping.php:204
+msgid "Greece"
+msgstr "Grekland"
+
+#: includes/drgc-locale-mapping.php:205
+msgid "Israel"
+msgstr "Israel"
+
+#: includes/drgc-locale-mapping.php:207
+msgid "Hungary"
+msgstr "Ungern"
+
+#: includes/drgc-locale-mapping.php:210
+msgid "Italy"
+msgstr "Italien"
+
+#: includes/drgc-locale-mapping.php:212
+msgid "Japan"
+msgstr "Japan"
+
+#: includes/drgc-locale-mapping.php:213
+msgid "Kazakhstan"
+msgstr "Kazakstan"
+
+#: includes/drgc-locale-mapping.php:214
+msgid "South Korea"
+msgstr "Sydkorea"
+
+#: includes/drgc-locale-mapping.php:215
+msgid "Latvia"
+msgstr "Lettland"
+
+#: includes/drgc-locale-mapping.php:216
+msgid "Lithuania"
+msgstr "Litauen"
+
+#: includes/drgc-locale-mapping.php:217
+msgid "Macedonia"
+msgstr "Makedonien"
+
+#: includes/drgc-locale-mapping.php:220
+msgid "Norway, Nynorsk"
+msgstr "Norge, nynorsk"
+
+#: includes/drgc-locale-mapping.php:221
+msgid "Poland"
+msgstr "Polen"
+
+#: includes/drgc-locale-mapping.php:222
+msgid "Brazil"
+msgstr "Brasilien"
+
+#: includes/drgc-locale-mapping.php:223
+msgid "Portugal"
+msgstr "Portugal"
+
+#: includes/drgc-locale-mapping.php:224
+msgid "Romania"
+msgstr "Rumänien"
+
+#: includes/drgc-locale-mapping.php:225
+msgid "Russia"
+msgstr "Ryssland"
+
+#: includes/drgc-locale-mapping.php:226
+msgid "Serbia"
+msgstr "Serbien"
+
+#: includes/drgc-locale-mapping.php:227
+msgid "YU"
+msgstr "YU"
+
+#: includes/drgc-locale-mapping.php:228
+msgid "Slovakia"
+msgstr "Slovakien"
+
+#: includes/drgc-locale-mapping.php:229
+msgid "Slovenia"
+msgstr "Slovenien"
+
+#: includes/drgc-locale-mapping.php:230
+msgid "Argentina"
+msgstr "Argentina"
+
+#: includes/drgc-locale-mapping.php:231
+msgid "Bolivia"
+msgstr "Bolivia"
+
+#: includes/drgc-locale-mapping.php:232
+msgid "Chile"
+msgstr "Chile"
+
+#: includes/drgc-locale-mapping.php:233
+msgid "Colombia"
+msgstr "Colombia"
+
+#: includes/drgc-locale-mapping.php:234
+msgid "Costa Rica"
+msgstr "Costa Rica"
+
+#: includes/drgc-locale-mapping.php:235
+msgid "Dominican Republic"
+msgstr "Dominikanska republiken"
+
+#: includes/drgc-locale-mapping.php:236
+msgid "Ecuador"
+msgstr "Ecuador"
+
+#: includes/drgc-locale-mapping.php:237
+msgid "El Salvador"
+msgstr "El Salvador"
+
+#: includes/drgc-locale-mapping.php:238
+msgid "Guatemala"
+msgstr "Guatemala"
+
+#: includes/drgc-locale-mapping.php:239
+msgid "Honduras"
+msgstr "Honduras"
+
+#: includes/drgc-locale-mapping.php:240
+msgid "Mexico"
+msgstr "Mexiko"
+
+#: includes/drgc-locale-mapping.php:241
+msgid "Nicaragua"
+msgstr "Nicaragua"
+
+#: includes/drgc-locale-mapping.php:242
+msgid "Panama"
+msgstr "Panama"
+
+#: includes/drgc-locale-mapping.php:243
+msgid "Paraguay"
+msgstr "Paraguay"
+
+#: includes/drgc-locale-mapping.php:244
+msgid "Peru"
+msgstr "Peru"
+
+#: includes/drgc-locale-mapping.php:247
+msgid "Uruguay"
+msgstr "Uruguay"
+
+#: includes/drgc-locale-mapping.php:248
+msgid "Venezuela"
+msgstr "Venezuela"
+
+#: includes/drgc-locale-mapping.php:251
+msgid "Thailand, TH, Thai Digits"
+msgstr "Thailand, TH, Thai siffror"
+
+#: includes/drgc-locale-mapping.php:252
+msgid "Turkey"
+msgstr "Turkiet"
+
+#: includes/drgc-locale-mapping.php:253
+msgid "Ukraine"
+msgstr "Ukraina"
+
+#: includes/drgc-locale-mapping.php:254
+msgid "Vietnam"
+msgstr "Vietnam"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:42
+msgid "Email"
+msgstr "E-post"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:43
+msgid "Tax Exemption"
+msgstr "Momsbefriad"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:44
+msgid "Shipping information"
+msgstr "Leveransuppgifter"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:45
+msgid "Billing information"
+msgstr "﻿Faktureringsuppgifter"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:46
+msgid "Tax Identifier"
+msgstr "Skatteidentifierare"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:47
+msgid "Delivery options"
+msgstr "Leveransalternativ"
+
+#: includes/shortcodes/class-dr-shortcode-checkout.php:48
+msgid "Payment"
+msgstr "Betalning"
+
+#: includes/widgets/class-dr-widget-mini-cart.php:24
+msgid "DRGC Mini-cart for mobile viewing."
+msgstr "DRGC Mini-vagn för mobil visning."
+
+#: includes/widgets/class-dr-widget-mini-cart.php:28
+msgid "DRGC Mobile Mini-cart"
+msgstr "DRGC mobil minivagn"
+
+#: includes/widgets/class-dr-widget-mini-cart.php:52
+#: public/partials/drgc-minicart.php:19
+msgid "Shopping Cart"
+msgstr "Varukorg"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:35
+msgid "Archives"
+msgstr "Arkiv"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:53
+msgid "Select Year"
+msgstr "Välj år"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:56
+msgid "Select Month"
+msgstr "Välj månad"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:59
+msgid "Select Day"
+msgstr "Välj dag"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:62
+#| msgid "Select State"
+msgid "Select Week"
+msgstr "Välj län"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:65
+msgid "Select Post"
+msgstr "Välj inlägg"
+
+#: node_modules/@wordpress/block-library/src/archives/index.php:104
+msgid "No archives to show."
+msgstr "Inga arkiv att visa."
+
+#: node_modules/@wordpress/block-library/src/categories/index.php:30
+msgid "Select Category"
+msgstr "Välj kategori"
+
+#: node_modules/@wordpress/block-library/src/latest-comments/index.php:31
+#: node_modules/@wordpress/block-library/src/latest-posts/index.php:93
+#: node_modules/@wordpress/block-library/src/rss/index.php:31
+msgid "(no title)"
+msgstr "(ingen titel)"
+
+#: node_modules/@wordpress/block-library/src/latest-comments/index.php:99
+#, php-format
+msgid "%1$s on %2$s"
+msgstr "%1$s, %2$s"
+
+#: node_modules/@wordpress/block-library/src/latest-comments/index.php:147
+msgid "No comments to show."
+msgstr "Inga kommentarer att visa."
+
+#: node_modules/@wordpress/block-library/src/latest-posts/index.php:105
+#: node_modules/@wordpress/block-library/src/rss/index.php:60
+#, php-format
+msgid "by %s"
+msgstr "av %s"
+
+#: node_modules/@wordpress/block-library/src/query-pagination/index.php:26
+msgid "Previous"
+msgstr "Föregående"
+
+#: node_modules/@wordpress/block-library/src/query-pagination/index.php:33
+msgid "Next"
+msgstr "Nästa"
+
+#: node_modules/@wordpress/block-library/src/rss/index.php:19
+msgid "RSS Error:"
+msgstr "RSS-fel:"
+
+#: node_modules/@wordpress/block-library/src/rss/index.php:23
+msgid ""
+"An error has occurred, which probably means the feed is down. Try again "
+"later."
+msgstr ""
+"Ett fel har inträffat, vilket förmodligen betyder att feed är nere. Försök "
+"igen senare."
+
+#: node_modules/@wordpress/block-library/src/search/index.php:25
+#: node_modules/@wordpress/block-library/src/search/index.php:26
+#: node_modules/@wordpress/block-library/src/search/index.php:44
+msgid "Search"
+msgstr "Sök"
+
+#: node_modules/@wordpress/block-library/src/tag-cloud/index.php:37, php-format
+msgid ""
+"Your site doesn&#8217;t have any %s, so there&#8217;s nothing to display "
+"here at the moment."
+msgstr "Din webbplats har ingen %s, så det finns inget att visa här just nu."
+
+#: public/class-drgc-public.php:116
+msgid "Upgrade"
+msgstr "Uppgradera"
+
+#: public/class-drgc-public.php:117
+#: public/templates/account/account-addresses.php:493
+msgid "Add"
+msgstr "Lägg till"
+
+#: public/class-drgc-public.php:118
+#: public/templates/checkout/checkout-summary.php:20
+#: public/templates/thank-you/thank-you-summary.php:28
+msgid "FREE"
+msgstr "GRATIS"
+
+#: public/class-drgc-public.php:119 public/templates/cart/cart-summary.php:28
+#: public/templates/checkout/checkout-summary.php:28
+#: public/templates/thank-you/thank-you-summary.php:36
+msgid "Incl. VAT"
+msgstr "Inkl. moms"
+
+#: public/class-drgc-public.php:120 public/templates/cart/cart-summary.php:28
+#: public/templates/checkout/checkout-summary.php:28
+#: public/templates/thank-you/thank-you-summary.php:36
+msgid "Excl. VAT"
+msgstr "Exkl. moms"
+
+#: public/class-drgc-public.php:121
+#: public/templates/thank-you/thank-you-summary.php:49
+msgid "VAT"
+msgstr "Moms"
+
+#: public/class-drgc-public.php:122 public/templates/cart/cart-summary.php:54
+#: public/templates/checkout/checkout-summary.php:41
+msgid "Estimated VAT"
+msgstr "Beräknad moms"
+
+#: public/class-drgc-public.php:123
+#: public/templates/thank-you/thank-you-summary.php:65
+msgid "Shipping VAT"
+msgstr "Frakt moms"
+
+#: public/class-drgc-public.php:124 public/templates/cart/cart-summary.php:70
+#: public/templates/checkout/checkout-summary.php:58
+msgid "Estimated Shipping VAT"
+msgstr "Beräknad moms"
+
+#: public/class-drgc-public.php:125
+#: public/templates/account/account-orders.php:136
+#: public/templates/thank-you/thank-you-summary.php:49
+msgid "Tax"
+msgstr "Moms"
+
+#: public/class-drgc-public.php:126 public/templates/cart/cart-summary.php:54
+#: public/templates/checkout/checkout-summary.php:41
+msgid "Estimated Tax"
+msgstr "Beräknad skatt"
+
+#: public/class-drgc-public.php:127
+#: public/templates/account/account-orders.php:145
+#: public/templates/thank-you/thank-you-summary.php:65
+msgid "Shipping Tax"
+msgstr "Moms på frakt"
+
+#: public/class-drgc-public.php:128 public/templates/cart/cart-summary.php:70
+#: public/templates/checkout/checkout-summary.php:58
+msgid "Estimated Shipping Tax"
+msgstr "Beräknad fraktavgift"
+
+#: public/class-drgc-public.php:129
+#: public/templates/account/account-orders.php:141
+#: public/templates/checkout/checkout-shipping.php:22
+#: public/templates/thank-you/thank-you-summary.php:57
+msgid "Shipping"
+msgstr "Frakt"
+
+#: public/class-drgc-public.php:130 public/templates/cart/cart-summary.php:62
+#: public/templates/checkout/checkout-summary.php:50
+msgid "Estimated Shipping"
+msgstr "Beräknad Frakt"
+
+#: public/class-drgc-public.php:131
+msgid "Credit card ending in"
+msgstr "Kreditkort som slutar på"
+
+#: public/class-drgc-public.php:132
+msgid "pay with card"
+msgstr "betala med kort"
+
+#: public/class-drgc-public.php:133
+msgid "pay with paypal"
+msgstr "Betala med PayPal"
+
+#: public/class-drgc-public.php:134
+msgid "View Cart"
+msgstr "Visa varukorg"
+
+#: public/class-drgc-public.php:136
+msgid "Remove"
+msgstr "Ta bort"
+
+#: public/class-drgc-public.php:137
+#: public/templates/account/account-orders.php:132
+#: public/templates/cart/cart-summary.php:38
+#: public/templates/cart/cart-summary.php:46
+#: public/templates/checkout/checkout-summary.php:34
+#: public/templates/thank-you/thank-you-summary.php:42
+msgid "Subtotal"
+msgstr "Delsumma"
+
+#: public/class-drgc-public.php:138 public/templates/cart/cart-product.php:56
+msgid "Qty"
+msgstr "Antal"
+
+#: public/class-drgc-public.php:139
+msgid "Shipping and Handling"
+msgstr "Frakt och hantering"
+
+#: public/class-drgc-public.php:140
+#: public/templates/account/account-orders.php:150
+#: public/templates/cart/cart-summary.php:78
+#: public/templates/checkout/checkout-summary.php:67
+#: public/templates/thank-you/thank-you-summary.php:73
+msgid "Discount"
+msgstr "Rabatt"
+
+#: public/class-drgc-public.php:141
+msgid "Order Total"
+msgstr "Totalsumma"
+
+#: public/class-drgc-public.php:143
+msgid "Password reset email sent"
+msgstr "E-postmeddelandet om återställning av lösenord har skickats"
+
+#: public/class-drgc-public.php:144
+msgid "Password saved"
+msgstr "Lösenordet har sparats"
+
+#: public/class-drgc-public.php:145
+msgid ""
+"You will be receiving an email soon with instructions on resetting your "
+"login password."
+msgstr ""
+"Du kommer snart att få ett mejl med instruktioner om hur du återställer ditt "
+"inloggningslösenord."
+
+#: public/class-drgc-public.php:146
+msgid "You can now log in with your new password."
+msgstr "Du kan nu logga in med ditt nya lösenord."
+
+#: public/class-drgc-public.php:147 public/templates/cart/cart.php:54
+msgid "Your cart is empty."
+msgstr "Din varukorg är tom."
+
+#: public/class-drgc-public.php:148
+msgid "Please enter a valid promo code."
+msgstr "Ange en giltig kampanjkod."
+
+#: public/class-drgc-public.php:149 public/class-drgc-public.php:312
+msgid "Please enter a valid email address."
+msgstr "Ange en giltig e-postadress."
+
+#: public/class-drgc-public.php:150
+msgid "Address not accepted for current currency."
+msgstr "Adress accepteras inte för aktuell valuta."
+
+#: public/class-drgc-public.php:151
+msgid "Failed payment for specified credit card."
+msgstr "Misslyckad betalning för angivet kreditkort."
+
+#: public/class-drgc-public.php:152
+#: public/templates/account/account-addresses.php:66
+#: public/templates/account/account-addresses.php:88
+#: public/templates/account/account-addresses.php:110
+#: public/templates/account/account-addresses.php:132
+#: public/templates/account/account-addresses.php:154
+#: public/templates/account/account-addresses.php:192
+#: public/templates/account/account-addresses.php:223
+#: public/templates/account/account-addresses.php:262
+#: public/templates/account/account-addresses.php:284
+#: public/templates/account/account-addresses.php:356
+#: public/templates/account/account-addresses.php:367
+#: public/templates/account/account-addresses.php:378
+#: public/templates/account/account-addresses.php:390
+#: public/templates/account/account-addresses.php:401
+#: public/templates/account/account-addresses.php:421
+#: public/templates/account/account-addresses.php:443
+#: public/templates/account/account-addresses.php:467
+#: public/templates/account/account-addresses.php:478
+#: public/templates/account/account-password.php:21
+#: public/templates/account/account-password.php:43
+#: public/templates/account/account-password.php:65
+#: public/templates/account/account-payments.php:52
+#: public/templates/account/account.php:216
+#: public/templates/account/account.php:235
+#: public/templates/account/account.php:246
+#: public/templates/account/account.php:257
+#: public/templates/account/account.php:269
+#: public/templates/checkout/checkout-billing.php:87
+#: public/templates/checkout/checkout-billing.php:109
+#: public/templates/checkout/checkout-billing.php:131
+#: public/templates/checkout/checkout-billing.php:169
+#: public/templates/checkout/checkout-billing.php:199
+#: public/templates/checkout/checkout-billing.php:226
+#: public/templates/checkout/checkout-billing.php:246
+#: public/templates/checkout/checkout-billing.php:268
+#: public/templates/checkout/checkout-email.php:29
+#: public/templates/checkout/checkout-shipping.php:62
+#: public/templates/checkout/checkout-shipping.php:84
+#: public/templates/checkout/checkout-shipping.php:106
+#: public/templates/checkout/checkout-shipping.php:144
+#: public/templates/checkout/checkout-shipping.php:173
+#: public/templates/checkout/checkout-shipping.php:201
+#: public/templates/checkout/checkout-shipping.php:221
+#: public/templates/checkout/checkout-shipping.php:243
+#: public/templates/checkout/checkout-tax-exemption.php:88
+#: public/templates/checkout/checkout-tax-exemption.php:120
+#: public/templates/checkout/checkout-tax-exemption.php:140
+#: public/templates/checkout/checkout-tax-exemption.php:162
+#: public/templates/checkout/checkout-tax-exemption.php:186
+#: public/templates/login/login.php:49 public/templates/login/login.php:57
+#: public/templates/login/login.php:81 public/templates/login/login.php:89
+#: public/templates/login/login.php:124 public/templates/login/login.php:134
+#: public/templates/login/login.php:144 public/templates/login/login.php:152
+#: public/templates/login/login.php:160
+msgid "This field is required."
+msgstr "Detta fält är obligatoriskt."
+
+#: public/class-drgc-public.php:153
+msgid "Emails do not match."
+msgstr "E-postmeddelanden matchar inte."
+
+#: public/class-drgc-public.php:154 public/class-drgc-public.php:270
+msgid "Password must be between 8 - 32 characters."
+msgstr "Lösenordet måste vara mellan 8-32 tecken."
+
+#: public/class-drgc-public.php:155 public/class-drgc-public.php:274
+msgid "Must use at least one upper case letter."
+msgstr "Måste använda minst en stor bokstav."
+
+#: public/class-drgc-public.php:156 public/class-drgc-public.php:278
+msgid "Must use at least one lower case letter."
+msgstr "Måste använda minst en gemener."
+
+#: public/class-drgc-public.php:157 public/class-drgc-public.php:282
+msgid "Must use at least one number."
+msgstr "Måste använda minst ett nummer."
+
+#: public/class-drgc-public.php:158 public/class-drgc-public.php:286
+msgid "Must use at least one special character (! _ @)."
+msgstr "Måste använda minst ett specialtecken (! _ @)."
+
+#: public/class-drgc-public.php:159 public/class-drgc-public.php:290
+msgid "Contains non-allowable special characters (only ! _ @ are allowed)."
+msgstr ""
+"Innehåller specialtecken som inte är tillåtna (endast! _ @ Är tillåtna)."
+
+#: public/class-drgc-public.php:160 public/class-drgc-public.php:266
+msgid "Passwords do not match."
+msgstr "Lösenorden stämmer inte överens."
+
+#: public/class-drgc-public.php:161
+msgid ""
+"Please indicate you have read and accepted the privacy policy and terms of "
+"sale."
+msgstr ""
+"Ange att du har läst och accepterat sekretesspolicyn och "
+"försäljningsvillkoren."
+
+#: public/class-drgc-public.php:162
+msgid "Something went wrong. Please try again."
+msgstr "Något gick fel. Vänligen försök igen."
+
+#: public/class-drgc-public.php:163
+msgid "Loading..."
+msgstr "Laddar..."
+
+#: public/class-drgc-public.php:164 public/partials/drgc-product-details.php:22
+msgid "Buy Now"
+msgstr "Köp nu"
+
+#: public/class-drgc-public.php:165 public/partials/drgc-buy-button.php:31
+#: public/templates/parts/content-archive.php:43
+#: public/templates/parts/content-single.php:121
+msgid "Add to Cart"
+msgstr "Lägg i varukorgen"
+
+#: public/class-drgc-public.php:166
+msgid "Out of Stock"
+msgstr "Slut i lager"
+
+#: public/class-drgc-public.php:167
+msgid "Are you sure you want to immediately unsubscribe this subscription?"
+msgstr "Är du säker på att du vill avsluta prenumerationen omedelbart?"
+
+#: public/class-drgc-public.php:168
+msgid "Please enter the required quantity:"
+msgstr "Ange önskat antal:"
+
+#: public/class-drgc-public.php:169
+msgid "There are no delivery options available for your cart or destination."
+msgstr ""
+"Det finns inga leveransalternativ tillgängliga för din kundvagn eller "
+"destination."
+
+#: public/class-drgc-public.php:170
+msgid "MM/YY"
+msgstr "MMÅÅ"
+
+#: public/class-drgc-public.php:171
+msgid "CVV"
+msgstr "CVV"
+
+#: public/class-drgc-public.php:172
+msgid "Shipping country is not supported."
+msgstr "Fraktland stöds inte."
+
+#: public/class-drgc-public.php:173
+msgid "Billing country is not supported."
+msgstr "Faktureringsland stöds inte."
+
+#: public/class-drgc-public.php:174
+msgid "Your postal code is invalid."
+msgstr "Ditt postnummer är ogiltigt."
+
+#: public/class-drgc-public.php:175
+msgid "Your city is invalid."
+msgstr "Din stad är ogiltig."
+
+#: public/class-drgc-public.php:176
+msgid "Your region value is invalid. Please supply a different one."
+msgstr "Ditt regionvärde är ogiltigt. Vänligen ange en annan."
+
+#: public/class-drgc-public.php:177
+msgid "No, thanks"
+msgstr "Nej tack"
+
+#: public/class-drgc-public.php:178
+msgid "Unable to place order"
+msgstr "Det gick inte att göra en beställning"
+
+#: public/class-drgc-public.php:179
+msgid "The new password must be different from the current password."
+msgstr "Det nya lösenordet måste skilja sig från nuvarande."
+
+#: public/class-drgc-public.php:180
+msgid ""
+"Sorry, it seems that there are no available payment methods for your "
+"location."
+msgstr ""
+"Tyvärr verkar det inte finnas några tillgängliga betalningsmetoder för din "
+"plats."
+
+#: public/class-drgc-public.php:181
+#: public/templates/checkout/checkout-tax-identifier.php:33
+msgid "Shopper Type"
+msgstr "Shoppartyp"
+
+#: public/class-drgc-public.php:182
+msgid "Personal"
+msgstr "Personlig"
+
+#: public/class-drgc-public.php:183
+msgid "Business"
+msgstr "Företag"
+
+#: public/class-drgc-public.php:184
+msgid "Your tax ID could not be verified. Tax may apply."
+msgstr "Ditt skatte-ID kunde inte verifieras. Skatt kan tillkomma."
+
+#: public/class-drgc-public.php:185
+#: public/templates/account/account-orders.php:15
+msgid "Order ID"
+msgstr "Order ID"
+
+#: public/class-drgc-public.php:186
+#: public/templates/account/account-orders.php:16
+#: public/templates/account/account-subscriptions.php:57
+msgid "Date"
+msgstr "Datum"
+
+#: public/class-drgc-public.php:187
+#: public/templates/account/account-orders.php:17
+msgid "Amount"
+msgstr "Belopp"
+
+#: public/class-drgc-public.php:188 public/partials/drgc-my-certificates.php:17
+#: public/templates/account/account-orders.php:18
+#: public/templates/account/account-subscriptions.php:89
+#: public/templates/my-subscriptions/my-subscriptions.php:34
+msgid "Status"
+msgstr "Status"
+
+#: public/class-drgc-public.php:189
+#: public/templates/account/account-orders.php:70
+#: public/templates/account/account-orders.php:83
+msgid "Order Details"
+msgstr "Orderdetaljer"
+
+#: public/class-drgc-public.php:190
+msgid ""
+"We are not able to process your order due to the unsupported location. "
+"Please update your address and try again."
+msgstr ""
+"Vi kan inte behandla din beställning på grund av den plats som inte stöds. "
+"Uppdatera din adress och försök igen."
+
+#: public/class-drgc-public.php:191
+msgid "has been added to your cart."
+msgstr "har lagts till i din varukorg."
+
+#: public/class-drgc-public.php:192
+#| msgid "New product"
+msgid "The product"
+msgstr "Produkt"
+
+#: public/class-drgc-public.php:243
+msgid "Authorization failed for specified credentials"
+msgstr "Auktoriseringen misslyckades för angivna referenser"
+
+#: public/class-drgc-public.php:395
+msgid "The current password you entered is incorrect."
+msgstr "Det aktuella lösenordet du angav är felaktigt."
+
+#: public/class-drgc-public.php:399
+msgid "Your new password can not be the same as the current password."
+msgstr "Ditt nya lösenord kan inte vara detsamma som det aktuella lösenordet."
+
+#: public/class-drgc-public.php:436
+msgid "Enter a username or email address."
+msgstr "Fyll i e-postadress."
+
+#: public/class-drgc-public.php:440 public/class-drgc-public.php:454
+msgid "There is no account with that username or email address."
+msgstr "Det finns inget konto med det användarnamnet eller e-postadressen."
+
+#: public/class-drgc-public.php:476
+msgid "Someone has requested a password reset for the following account:"
+msgstr "Någon har bett om en återställning av lösenord för kontot:"
+
+#: public/class-drgc-public.php:477
+#, php-format
+msgid "Site Name: %s"
+msgstr "Webbplatsnamn: %s"
+
+#: public/class-drgc-public.php:478
+#, php-format
+msgid "Username: %s"
+msgstr "Användarnamn: %s"
+
+#: public/class-drgc-public.php:479
+msgid "If this was a mistake, just ignore this email and nothing will happen."
+msgstr ""
+"Om detta var ett misstag, ignorera detta mail och inget kommer att hända."
+
+#: public/class-drgc-public.php:480
+msgid "To reset your password, visit the following address:"
+msgstr "För att återställa ditt lösenord, besök följande adress:"
+
+#: public/class-drgc-public.php:482 public/class-drgc-public.php:943
+#: public/templates/login/login.php:61
+msgid "Reset Password"
+msgstr "Återställ lösenord"
+
+#: public/class-drgc-public.php:484
+#, php-format
+msgid "[%s] Password Reset"
+msgstr "[%s] Lösenordsåterställning"
+
+#: public/class-drgc-public.php:499
+msgid ""
+"The email could not be sent. Possible reason: your host may have disabled "
+"the mail() function."
+msgstr ""
+"E-postmeddelandet kunde inte skickas. Möjlig orsak: värden kan ha "
+"inaktiverat funktionen e-post()."
+
+#: public/class-drgc-public.php:521
+msgid "Something went wrong."
+msgstr "Något gick fel."
+
+#: public/class-drgc-public.php:537
+msgid "Expired key"
+msgstr "Utgången nyckel"
+
+#: public/class-drgc-public.php:539
+msgid "Invalid key"
+msgstr "Ogiltigt knapptryck"
+
+#: public/class-drgc-public.php:598
+msgid "Hi, "
+msgstr "Hej, "
+
+#: public/class-drgc-public.php:623 public/class-drgc-public.php:902
+#: public/templates/login/login.php:32
+msgid "Logout"
+msgstr "Logga ut"
+
+#: public/class-drgc-public.php:889
+msgid "You're about to be logged out!"
+msgstr "Du är på väg att loggas ut!"
+
+#: public/class-drgc-public.php:894
+msgid ""
+"For security reasons, your connection times out after you've been inactive "
+"for a while. You will be logged out in <strong>n</strong> seconds.<br>Click "
+"Continue if you'd like to stay logged in."
+msgstr ""
+"Av säkerhetsskäl avbryts din anslutning efter att du har varit inaktiv ett "
+"tag. Du loggas ut på <strong>n</strong> sekunder.<br> Klicka på Fortsätt om "
+"du vill vara inloggad."
+
+#: public/class-drgc-public.php:899
+msgid "Continue"
+msgstr "Fortsätt"
+
+#: public/class-drgc-public.php:915
+msgid "Forgot Password"
+msgstr "Glömt lösenord"
+
+#: public/class-drgc-public.php:923
+msgid ""
+"To reset your password, please enter your email address below and an email "
+"with instructions on resetting your password will be sent to you."
+msgstr ""
+"För att återställa ditt lösenord, ange din e-postadress nedan och ett e-"
+"postmeddelande med instruktioner om hur du återställer ditt lösenord kommer "
+"att skickas till dig."
+
+#: public/class-drgc-public.php:926
+msgid "Email Address:"
+msgstr "E-postadress:"
+
+#: public/class-drgc-public.php:929 public/class-drgc-public.php:936
+msgid "This field is required email."
+msgstr "Detta fält krävs e-post."
+
+#: public/class-drgc-public.php:933
+msgid "Verify Email Address:"
+msgstr "Verifiera e-postadressen:"
+
+#: public/class-drgc-public.php:957
+msgid "Password Updated!"
+msgstr "Lösenord uppdaterat!"
+
+#: public/class-drgc-public.php:958
+msgid ""
+"Your password has been changed successfully. Please log in to your account "
+"using your new password."
+msgstr ""
+"Ditt lösenord har ändrats. Logga in på ditt konto med ditt nya lösenord."
+
+#: public/class-drgc-public.php:961
+#: public/templates/account/account-orders.php:179
+msgid "OK"
+msgstr "OK"
+
+#: public/class-drgc-public.php:976
+msgid "This is a test order"
+msgstr "Detta är en testorder"
+
+#: public/partials/drgc-legal-footer.php:17
+msgid ""
+" is the authorized reseller and merchant of the products and services "
+"offered within this store."
+msgstr ""
+" är auktoriserad återförsäljare och säljare av de produkter och tjänster som "
+"erbjuds i denna butik."
+
+#: public/partials/drgc-legal-footer.php:20
+#: public/templates/checkout/checkout-confirmation.php:17
+#: public/templates/checkout/checkout-pretandc.php:6
+msgid "Privacy Policy"
+msgstr "Integritetspolicy"
+
+#: public/partials/drgc-legal-footer.php:21
+#: public/templates/checkout/checkout-confirmation.php:16
+#: public/templates/checkout/checkout-pretandc.php:5
+msgid "Terms of Sale"
+msgstr "Försäljningsvillkor"
+
+#: public/partials/drgc-legal-footer.php:22
+msgid "Cookies"
+msgstr "Cookies"
+
+#: public/partials/drgc-legal-footer.php:23
+msgid "Cancellation Right"
+msgstr "Avbeställningsrätt"
+
+#: public/partials/drgc-legal-footer.php:24
+msgid "Legal Notice"
+msgstr "Rättsligt meddelande"
+
+#: public/partials/drgc-minicart.php:16
+msgid "ITEM(S)"
+msgstr "ITEM (S)"
+
+#: public/partials/drgc-my-certificates.php:14
+#: public/templates/account/account-addresses.php:124
+#: public/templates/account/account-addresses.php:386
+#: public/templates/account/account.php:211
+#: public/templates/checkout/checkout-tax-exemption.php:80
+msgid "Company Name"
+msgstr "Företagsnamn"
+
+#: public/partials/drgc-my-certificates.php:15
+msgid "Certificate"
+msgstr "Diplom"
+
+#: public/partials/drgc-my-certificates.php:16
+msgid "Tax Authority"
+msgstr "Skattemyndighet"
+
+#: public/partials/drgc-my-certificates.php:18
+msgid "Start Date"
+msgstr "Startdatum"
+
+#: public/partials/drgc-my-certificates.php:19
+#: public/templates/my-subscriptions/my-subscriptions.php:40
+#: public/templates/subscription-details/subscription-details-account-info.php:57
+#: public/templates/subscription-details/subscription-details-status.php:61
+msgid "Expiration Date"
+msgstr "Utgångsdatum"
+
+#: public/templates/account/account-addresses.php:18
+msgid "Primary"
+msgstr "Primär"
+
+#: public/templates/account/account-addresses.php:49
+#: public/templates/account/account-addresses.php:347
+#: public/templates/account/account-password.php:4
+#: public/templates/account/account-payments.php:35
+#: public/templates/checkout/checkout-billing.php:69
+#: public/templates/checkout/checkout-shipping.php:46
+#: public/templates/checkout/checkout-tax-exemption.php:72
+msgid "Fields marked with * are mandatory"
+msgstr "Fält markerade med * är obligatoriska"
+
+#: public/templates/account/account-addresses.php:58
+#: public/templates/account/account-addresses.php:352
+msgid "Nickname *"
+msgstr "Smeknamn *"
+
+#: public/templates/account/account-addresses.php:80
+#: public/templates/account/account-addresses.php:363
+msgid "First Name *"
+msgstr "Förnamn *"
+
+#: public/templates/account/account-addresses.php:102
+#: public/templates/account/account-addresses.php:374
+msgid "Last Name *"
+msgstr "Efternamn *"
+
+#: public/templates/account/account-addresses.php:146
+#: public/templates/account/account-addresses.php:397
+msgid "Address line 1 *"
+msgstr "Adressrad 1"
+
+#: public/templates/account/account-addresses.php:168
+#: public/templates/account/account-addresses.php:408
+#: public/templates/checkout/checkout-billing.php:145
+#: public/templates/checkout/checkout-shipping.php:120
+msgid "Address line 2"
+msgstr "Adressrad 2"
+
+#: public/templates/account/account-addresses.php:184
+#: public/templates/account/account-addresses.php:417
+msgid "City *"
+msgstr "Stad"
+
+#: public/templates/account/account-addresses.php:204
+#: public/templates/account/account-addresses.php:428
+msgid "Select Country *"
+msgstr "Välj land"
+
+#: public/templates/account/account-addresses.php:235
+#: public/templates/account/account-addresses.php:449
+msgid "State *"
+msgstr "Stat *"
+
+#: public/templates/account/account-addresses.php:242
+#: public/templates/account/account-addresses.php:453
+msgid "Select State *"
+msgstr "Välj län"
+
+#: public/templates/account/account-addresses.php:246
+#: public/templates/account/account-addresses.php:456
+#: public/templates/my-subscriptions/my-subscriptions.php:61
+msgid "Not Applicable"
+msgstr "Ej tillämpligt"
+
+#: public/templates/account/account-addresses.php:276
+#: public/templates/account/account-addresses.php:474
+msgid "Zipcode *"
+msgstr "Postnummer"
+
+#: public/templates/account/account-addresses.php:298
+#: public/templates/account/account-addresses.php:485
+#: public/templates/checkout/checkout-billing.php:260
+#: public/templates/checkout/checkout-shipping.php:235
+msgid "Phone"
+msgstr "Telefon"
+
+#: public/templates/account/account-addresses.php:314
+#: public/templates/account/account-payments.php:61
+msgid "Save"
+msgstr "Spara"
+
+#: public/templates/account/account-addresses.php:320
+#: public/templates/account/account-addresses.php:496
+#: public/templates/account/account-addresses.php:512
+#: public/templates/account/account-payments.php:83
+#: public/templates/account/account-subscriptions.php:150
+#: public/templates/account/account-subscriptions.php:162
+#: public/templates/account/account-tax-certificates.php:25
+#: public/templates/account/account.php:279
+msgid "Cancel"
+msgstr "Avbryt"
+
+#: public/templates/account/account-addresses.php:342
+#: public/templates/account/account-addresses.php:344
+msgid "Add New Address"
+msgstr "Lägg till ny adress"
+
+#: public/templates/account/account-addresses.php:508
+msgid ""
+"Are you sure you want to delete <strong>nickname</strong> from your address "
+"book?"
+msgstr ""
+"Är du säker på att du vill ta bort <strong>smeknamn</strong> från din "
+"adressbok?"
+
+#: public/templates/account/account-addresses.php:511
+msgid "Delete"
+msgstr "Radera"
+
+#: public/templates/account/account-orders.php:93
+msgid "Order number: "
+msgstr "Ordernummer:"
+
+#: public/templates/account/account-orders.php:97
+#: public/templates/thank-you/thank-you.php:133
+msgid "Print Receipt"
+msgstr "Skriv ut Kvitto"
+
+#: public/templates/account/account-orders.php:111
+#: public/templates/thank-you/thank-you.php:164
+msgid "Shipping Address"
+msgstr "Leveransadress"
+
+#: public/templates/account/account-orders.php:121
+#: public/templates/subscription-details/subscription-details-account-info.php:63
+#: public/templates/thank-you/thank-you.php:178
+msgid "Billing Address"
+msgstr "Fakturaadress"
+
+#: public/templates/account/account-orders.php:154
+#: public/templates/cart/cart-summary.php:99
+#: public/templates/checkout/checkout-summary.php:75
+#: public/templates/thank-you/thank-you-summary.php:81
+msgid "Total"
+msgstr "Totalt"
+
+#: public/templates/account/account-orders.php:161
+msgid "Right of Withdrawal Request"
+msgstr "Rätt till ångerrätt"
+
+#: public/templates/account/account-orders.php:165
+#: public/templates/checkout/checkout.php:173
+msgid "Close"
+msgstr "Stäng"
+
+#: public/templates/account/account-orders.php:166
+msgid "Print"
+msgstr "Skriv ut"
+
+#: public/templates/account/account-orders.php:176
+msgid ""
+"The order number has been copied. You can directly paste the number into the "
+"order number field on the Right of Withdrawal page for the request."
+msgstr ""
+"Ordernumret har kopierats. Du kan klistra in numret direkt i "
+"ordernummerfältet på sidan för ångerrätt för begäran."
+
+#: public/templates/account/account-password.php:13
+msgid "Current Password *"
+msgstr "Nuvarande lösenord *"
+
+#: public/templates/account/account-password.php:35
+msgid "New Password *"
+msgstr "Nytt lösenord *"
+
+#: public/templates/account/account-password.php:57
+msgid "Confirm New Password *"
+msgstr "Bekräfta nytt lösenord *"
+
+#: public/templates/account/account-password.php:76
+#: public/templates/account/account.php:77
+#: public/templates/account/account.php:183
+msgid "Change Password"
+msgstr "Ändra lösenord"
+
+#: public/templates/account/account-payments.php:44
+msgid "Card Name *"
+msgstr "Kortnamn *"
+
+#: public/templates/account/account-payments.php:79
+msgid "Are you sure you want to delete this payment?"
+msgstr "Är du säker att du vill ta bort denna betalning?"
+
+#: public/templates/account/account-payments.php:82
+#: public/templates/account/account-subscriptions.php:149
+#: public/templates/account/account-subscriptions.php:161
+#: public/templates/account/account-tax-certificates.php:24
+msgid "Accept"
+msgstr "Acceptera"
+
+#: public/templates/account/account-subscriptions.php:61
+msgid "Activated:"
+msgstr "Aktiverad:"
+
+#: public/templates/account/account-subscriptions.php:66
+#: public/templates/account/account-subscriptions.php:70
+msgid "Renews on:"
+msgstr "Förnyas den:"
+
+#: public/templates/account/account-subscriptions.php:66
+#: public/templates/account/account-subscriptions.php:72
+msgid "Renewal Due:"
+msgstr "Förnyelse på grund av:"
+
+#: public/templates/account/account-subscriptions.php:81
+msgid "Cancels on:"
+msgstr "Avbryter:"
+
+#: public/templates/account/account-subscriptions.php:95
+msgid "Auto Renewal"
+msgstr "Automatisk förnyelse"
+
+#: public/templates/account/account-subscriptions.php:99
+msgid "on"
+msgstr "på"
+
+#: public/templates/account/account-subscriptions.php:99
+msgid "off"
+msgstr "av"
+
+#: public/templates/account/account-subscriptions.php:103
+#: public/templates/account/account-subscriptions.php:109
+#: public/templates/subscription-details/subscription-details-status.php:63
+msgid "Renew Now"
+msgstr "Förnya nu"
+
+#: public/templates/account/account-subscriptions.php:107
+msgid "Manual Renewal"
+msgstr "Manuell förnyelse"
+
+#: public/templates/account/account-subscriptions.php:125
+msgid "Auto Renewal Update"
+msgstr "Uppdatering av automatisk förnyelse"
+
+#: public/templates/account/account-subscriptions.php:131
+msgid ""
+"There was a problem changing your auto renew settings for this product. "
+"Please try again, or contact customer support."
+msgstr ""
+"Det gick inte att ändra inställningarna för automatisk förnyelse av den här "
+"produkten. Försök igen eller kontakta kundsupport."
+
+#: public/templates/account/account-subscriptions.php:134
+msgid "Try again"
+msgstr "Försök igen"
+
+#: public/templates/account/account-subscriptions.php:145
+msgid ""
+"If you stop automatic billing for your subscription it will remain active "
+"until the expiration date, however you will have to manually renew at that "
+"time or your subscription will be cancelled."
+msgstr ""
+"Om du avbryter den automatiska faktureringen för din prenumeration förblir "
+"den aktiv tills utgångsdatumet, men du måste förnya manuellt vid den "
+"tidpunkten annars annulleras din prenumeration."
+
+#: public/templates/account/account-subscriptions.php:146
+msgid "Are you sure you want to stop automatic billing for this subscription?"
+msgstr ""
+"Är du säker på att du vill stoppa automatisk fakturering för den här "
+"prenumerationen?"
+
+#: public/templates/account/account-tax-certificates.php:21
+msgid ""
+"The system is going to update the company name for your previous tax "
+"profiles as well. Are you sure you want to change your company name?"
+msgstr ""
+"Systemet kommer också att uppdatera företagsnamnet för dina tidigare "
+"skatteprofiler. Är du säker på att du vill ändra ditt företagsnamn?"
+
+#: public/templates/account/account.php:37
+msgid "Hello"
+msgstr "Hej"
+
+#: public/templates/account/account.php:43
+msgid "Orders"
+msgstr "Beställningar"
+
+#: public/templates/account/account.php:50
+msgid "Subscriptions"
+msgstr "Prenumerationer"
+
+#: public/templates/account/account.php:57
+msgid "Addresses"
+msgstr "Adresser"
+
+#: public/templates/account/account.php:67
+msgid "Tax Certificates"
+msgstr "Skattcertifikat"
+
+#: public/templates/account/account.php:84
+msgid "Sign out"
+msgstr "Logga ut"
+
+#: public/templates/account/account.php:94
+msgid "My Orders"
+msgstr "Mina beställningar"
+
+#: public/templates/account/account.php:118
+msgid ""
+"You have no recorded orders. If you just place an order, please wait a few "
+"miniutes and reload the page. The order detail will be there."
+msgstr ""
+"Du har inga inspelade beställningar. Vänta några minuter och ladda om sidan "
+"om du bara gör en beställning. Beställningsdetaljen kommer att finnas där."
+
+#: public/templates/account/account.php:125
+#: public/templates/thank-you/thank-you-my-subs.php:32
+msgid "My Subscriptions"
+msgstr "Mina prenumerationer"
+
+#: public/templates/account/account.php:132
+msgid "You have no subscription products."
+msgstr "Du har inga prenumerationsprodukter."
+
+#: public/templates/account/account.php:139
+msgid "My Addresses"
+msgstr "Mina adresser"
+
+#: public/templates/account/account.php:151
+#: public/templates/checkout/checkout-address-book.php:88
+msgid "You have no saved addresses."
+msgstr "Du har inga sparade adresser."
+
+#: public/templates/account/account.php:161
+msgid "My Tax Certificates"
+msgstr "Mina skatteintyg"
+
+#: public/templates/account/account.php:173
+msgid "You have no tax exempt certificates."
+msgstr "Du har inga sparade betalningar."
+
+#: public/templates/account/account.php:201
+msgid "Please Submit Your Tax Exemption Details"
+msgstr "Vänligen skicka in dina skattebefrielser"
+
+#: public/templates/account/account.php:222
+msgid "Exemption Certificate Tax Authority"
+msgstr "Skattemyndighet för undantagsintyg"
+
+#: public/templates/account/account.php:226
+#| msgid "Select State"
+msgid "Select One"
+msgstr "Välj län"
+
+#: public/templates/account/account.php:232
+msgid ""
+"This should be the State or official entity authorizing your business as tax "
+"exempt. Note that your purchase may still be subject to taxes if your "
+"exemption does not cover your Shipping/Billing State."
+msgstr ""
+"Detta bör vara staten eller den officiella enheten som godkänner ditt "
+"företag som skattebefriat. Observera att ditt köp fortfarande kan vara "
+"skattepliktig om ditt undantag inte täcker din leverans / faktureringsstat."
+
+#: public/templates/account/account.php:241
+#: public/templates/checkout/checkout-tax-exemption.php:132
+#| msgid "Expiration Date"
+msgid "Exemption Start Date"
+msgstr "Utgångsdatum"
+
+#: public/templates/account/account.php:252
+#: public/templates/checkout/checkout-tax-exemption.php:154
+#| msgid "Expiration Date"
+msgid "Exemption Expiration Date"
+msgstr "Utgångsdatum"
+
+#: public/templates/account/account.php:263
+#: public/templates/checkout/checkout-tax-exemption.php:176
+msgid "Upload Your Certificate"
+msgstr "Ladda upp ditt certifikat"
+
+#: public/templates/account/account.php:267
+#: public/templates/checkout/checkout-tax-exemption.php:182
+msgid "Supported File Types: BMP, GIF, JPG, PNG, PDF"
+msgstr "Filtyper som stöds: BMP, GIF, JPG, PNG, PDF"
+
+#: public/templates/account/account.php:278
+msgid "Submit"
+msgstr "Skicka"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:23
+#: public/templates/cart/cart-auto-renewal-terms.php:29
+msgid "Auto-Renewal Plan Terms"
+msgstr "Villkor för automatisk förnyelseplan"
+
+#: public/templates/cart/cart-auto-renewal-terms.php:47
+msgid "I have read and agree to the terms and charges above."
+msgstr "Jag har läst och godkänner villkoren ovan."
+
+#: public/templates/cart/cart-summary.php:87
+msgid "Add Promo Code"
+msgstr "Lägg till kampanjkod"
+
+#: public/templates/cart/cart-summary.php:89
+msgid "Promo Code"
+msgstr "Rabattkod"
+
+#: public/templates/cart/cart-summary.php:90
+msgid "Apply"
+msgstr "Tillämpa"
+
+#: public/templates/cart/cart-summary.php:107 public/templates/cart/cart.php:83
+msgid "Proceed to checkout"
+msgstr "Fortsätt till kassan"
+
+#: public/templates/cart/cart.php:27
+msgid "Order Number:"
+msgstr "Ordernummer:"
+
+#: public/templates/cart/cart.php:79 public/templates/checkout/checkout.php:18
+#: public/templates/checkout/checkout.php:158
+msgid "Continue Shopping"
+msgstr "Fortsätt handla"
+
+#: public/templates/checkout/checkout-billing.php:19
+msgid "Billing"
+msgstr "Fakturering"
+
+#: public/templates/checkout/checkout-billing.php:35
+msgid "What is your billing address?"
+msgstr "Vad är din faktureringsadress?"
+
+#: public/templates/checkout/checkout-billing.php:45
+msgid "Billing address is the same as delivery address"
+msgstr "Faktureringsadress är samma som leveransadress"
+
+#: public/templates/checkout/checkout-billing.php:55
+#: public/templates/checkout/checkout-shipping.php:36
+msgid "My Address Book"
+msgstr "Min adressbok"
+
+#: public/templates/checkout/checkout-billing.php:59
+msgid "Choose billing address"
+msgstr "Välj faktureringsadress"
+
+#: public/templates/checkout/checkout-billing.php:79
+#: public/templates/checkout/checkout-shipping.php:54
+#: public/templates/login/login.php:121
+msgid "First Name"
+msgstr "Förnamn"
+
+#: public/templates/checkout/checkout-billing.php:101
+#: public/templates/checkout/checkout-shipping.php:76
+#: public/templates/login/login.php:131
+msgid "Last Name"
+msgstr "Efternamn"
+
+#: public/templates/checkout/checkout-billing.php:123
+#: public/templates/checkout/checkout-shipping.php:98
+msgid "Address line 1"
+msgstr "Adressrad 1"
+
+#: public/templates/checkout/checkout-billing.php:161
+#: public/templates/checkout/checkout-shipping.php:136
+msgid "City"
+msgstr "Stad"
+
+#: public/templates/checkout/checkout-billing.php:182
+#: public/templates/checkout/checkout-shipping.php:156
+msgid "Select Country"
+msgstr "Välj land"
+
+#: public/templates/checkout/checkout-billing.php:210
+#: public/templates/checkout/checkout-shipping.php:185
+msgid "Select State"
+msgstr "Välj län"
+
+#: public/templates/checkout/checkout-billing.php:238
+#: public/templates/checkout/checkout-shipping.php:213
+msgid "Zipcode"
+msgstr "Postnummer"
+
+#: public/templates/checkout/checkout-billing.php:286
+#: public/templates/checkout/checkout-shipping.php:259
+msgid "Save this address for future purchases"
+msgstr "Spara den här adressen för framtida köp"
+
+#: public/templates/checkout/checkout-billing.php:300
+#: public/templates/checkout/checkout-delivery.php:33
+#: public/templates/checkout/checkout-email.php:38
+#: public/templates/checkout/checkout-shipping.php:271
+#: public/templates/checkout/checkout-tax-exemption.php:232
+#: public/templates/checkout/checkout-tax-identifier.php:83
+msgid "Save and continue"
+msgstr "Spara och fortsätt"
+
+#: public/templates/checkout/checkout-confirmation.php:4
+msgid "Please review your order details and place your order below."
+msgstr "Granska dina beställningsuppgifter och placera din beställning nedan."
+
+#: public/templates/checkout/checkout-confirmation.php:19, php-format
+msgid "By submitting the order, I agree to %s and %s of %s"
+msgstr "Genom att skicka beställningen godkänner jag %s och %s av %s"
+
+#: public/templates/checkout/checkout-confirmation.php:25
+msgid "Place Order"
+msgstr "Placera beställning"
+
+#: public/templates/checkout/checkout-delivery.php:15
+msgid "Delivery"
+msgstr "Leverans"
+
+#: public/templates/checkout/checkout-drop-in.php:21
+msgid "How would you like to pay?"
+msgstr "Hur vill du betala?"
+
+#: public/templates/checkout/checkout-email.php:25
+msgid "Please enter your email address"
+msgstr "Ange din e-postadress"
+
+#: public/templates/checkout/checkout-pretandc.php:8, php-format
+msgid "I agree to %s and %s of %s"
+msgstr "Jag godkänner %s och %s av %s"
+
+#: public/templates/checkout/checkout-shipping.php:40
+msgid "Choose shipping address"
+msgstr "Välj leveransadress"
+
+#: public/templates/checkout/checkout-summary.php:17
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "items"
+msgstr "objekt"
+
+#: public/templates/checkout/checkout-summary.php:17
+#: public/templates/thank-you/thank-you-summary.php:25
+msgid "item"
+msgstr "objekt"
+
+#: public/templates/checkout/checkout-tax-exemption.php:40
+msgid "Are you making a tax exempt purchase?"
+msgstr "Gör du ett skattebefriat köp?"
+
+#: public/templates/checkout/checkout-tax-exemption.php:56
+msgid ""
+"There is a problem with your tax exempt certificate on file. Please resubmit "
+"your info."
+msgstr ""
+"Det finns ett problem med ditt skattebefriade certifikat. Skicka din "
+"information igen."
+
+#: public/templates/checkout/checkout-tax-exemption.php:60
+msgid "Please submit your tax exemption details."
+msgstr "Vänligen skicka in dina skattebefrielser."
+
+#: public/templates/checkout/checkout-tax-exemption.php:66
+msgid ""
+"Note that your purchase may still be subject to taxes if your exemption does "
+"not cover your Shipping/Billing State."
+msgstr ""
+"Observera att ditt köp fortfarande kan vara skattepliktig om ditt undantag "
+"inte täcker din leverans / faktureringsstat."
+
+#: public/templates/checkout/checkout-tax-exemption.php:66
+msgid "View Your Certificate"
+msgstr "Visa ditt certifikat"
+
+#: public/templates/checkout/checkout-tax-exemption.php:101
+msgid "Select Certificate Tax Authority"
+msgstr "Välj Certificate Tax Authority"
+
+#: public/templates/checkout/checkout-tax-exemption.php:114
+msgid ""
+"This should be the State or official entity authorizing your business as tax "
+"exempt. Note that your purchase may still be subject to taxes if yor "
+"exemption does not cover your Shipping/Billing State."
+msgstr ""
+"Detta bör vara staten eller den officiella enheten som godkänner ditt "
+"företag som skattebefriat. Observera att ditt köp fortfarande kan vara "
+"skattepliktig om ditt undantag inte täcker din leverans / faktureringsstat."
+
+#: public/templates/checkout/checkout-tax-exemption.php:204
+#| msgid "Company Name"
+msgid "Company Name (optional)"
+msgstr "Företagsnamn"
+
+#: public/templates/checkout/checkout-tax-exemption.php:220
+msgid "EIN (optional)"
+msgstr "EIN (valfritt)"
+
+#: public/templates/checkout/checkout-tax-exemption.php:240
+msgid "You are claiming a tax exemption."
+msgstr "Du gör anspråk på skattebefrielse."
+
+#: public/templates/checkout/checkout-tax-exemption.php:242
+msgid "You're making a taxable purchase."
+msgstr "Du gör ett skattepliktigt köp."
+
+#: public/templates/checkout/checkout-tax-exemption.php:246
+msgid "Your tax exempt certificate has been uploaded successfully."
+msgstr "Din beställning har gjorts."
+
+#: public/templates/checkout/checkout-tax-identifier.php:19
+msgid "Tax ID"
+msgstr "Momsregistrerings ID"
+
+#: public/templates/checkout/checkout-tax-identifier.php:38
+msgid "Personal purchase"
+msgstr "Personligt köp"
+
+#: public/templates/checkout/checkout-tax-identifier.php:38
+msgid "Business purchase"
+msgstr "Affärsutcheckning"
+
+#: public/templates/checkout/checkout.php:16
+msgid "Your cart is empty!"
+msgstr "Din varukorg är tom!"
+
+#: public/templates/checkout/checkout.php:80
+msgid "Back"
+msgstr "Tillbaka"
+
+#: public/templates/checkout/checkout.php:90
+msgid "This order is tax exempt."
+msgstr "Denna order är skattebefriad."
+
+#: public/templates/checkout/checkout.php:92
+msgid ""
+"Your tax exempt certificate on file is not valid for this order. Please "
+"update your address or continue with a taxable order."
+msgstr ""
+"Ditt skattebefriade certifikat är inte giltigt för denna order. Uppdatera "
+"din adress eller fortsätt med en skattepliktig beställning."
+
+#: public/templates/login/login.php:24
+msgid "Welcome "
+msgstr "Välkommen "
+
+#: public/templates/login/login.php:39
+msgid "New password"
+msgstr "Nytt lösenord"
+
+#: public/templates/login/login.php:40
+msgid "Please enter secure password twice to continue"
+msgstr "Ange säkert lösenord två gånger för att fortsätta"
+
+#: public/templates/login/login.php:46
+msgid "New Password"
+msgstr "Nytt lösenord"
+
+#: public/templates/login/login.php:54
+msgid "Confirm New Password"
+msgstr "Bekräfta nytt lösenord"
+
+#: public/templates/login/login.php:71
+msgid "Returning Customer"
+msgstr "återvändande kund"
+
+#: public/templates/login/login.php:72
+msgid "If you have an existing account, please sign in."
+msgstr "Logga in om du har ett befintligt konto."
+
+#: public/templates/login/login.php:78 public/templates/login/login.php:141
+msgid "Email Address"
+msgstr "E-postadress"
+
+#: public/templates/login/login.php:86 public/templates/login/login.php:149
+msgid "Password"
+msgstr "Lösenord"
+
+#: public/templates/login/login.php:99
+msgid "Forgot password?"
+msgstr "Glömt lösenord?"
+
+#: public/templates/login/login.php:109
+msgid "NEW CUSTOMER"
+msgstr "Ny kontakt"
+
+#: public/templates/login/login.php:112
+msgid ""
+"You can checkout as a guest or become a member for faster checkout and great "
+"offers."
+msgstr ""
+"Du kan checka ut som gäst eller bli medlem för snabbare utcheckning och bra "
+"erbjudanden."
+
+#: public/templates/login/login.php:157
+msgid "Confirm Password"
+msgstr "Bekräfta lösenord"
+
+#: public/templates/login/login.php:167
+msgid "Sign Up"
+msgstr "Registrera dig"
+
+#: public/templates/login/login.php:170
+msgid "Continue As Guest"
+msgstr "Fortsätt som gäst"
+
+#: public/templates/login/login.php:181
+msgid "PAYPAL CUSTOMERS"
+msgstr "PAYPAL KUNDER"
+
+#: public/templates/login/login.php:183
+msgid "Make your payment with PayPal's secure services."
+msgstr "Gör din betalning med PayPals säkra tjänster."
+
+#: public/templates/login/login.php:184
+msgid "You can still add promotion codes before you complete your order."
+msgstr ""
+"Du kan fortfarande lägga till kampanjkoder innan du slutför din beställning."
+
+#: public/templates/my-subscriptions/my-subscriptions.php:32
+msgid "Product Name"
+msgstr "Produktnamn"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:36
+msgid "Auto Renewal Date"
+msgstr "Datum för automatisk förnyelse"
+
+#: public/templates/my-subscriptions/my-subscriptions.php:58
+msgid "Renew Now!"
+msgstr "Förnya nu!"
+
+#: public/templates/parts/content-none.php:17
+msgid "Nothing Found"
+msgstr "Inget hittades"
+
+#: public/templates/parts/content-none.php:21
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr "Redo att publicera ditt första inlägg? <a href=\"%1$s\">Börja här</a>."
+
+#: public/templates/parts/content-none.php:23
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+"Tyvärr, men det finns inget som matchar din sökning. Försök igen med en "
+"annan sökning."
+
+#: public/templates/parts/content-none.php:26
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+"Det verkar som vi inte kan hitta det du letar efter. Du kanske ska testa "
+"sökfunktionen."
+
+#: public/templates/parts/content-single.php:81
+msgid "Select your product"
+msgstr "Välj din produkt"
+
+#: public/templates/subscription-details/subscription-details-account-info.php:49
+msgid "Account Information"
+msgstr "Kontoinformation"
+
+#: public/templates/subscription-details/subscription-details-account-info.php:53
+msgid "The following is the information currently being used for payment."
+msgstr "Följande är den information som för närvarande används för betalning."
+
+#: public/templates/subscription-details/subscription-details-order-history.php:20
+msgid "Order History"
+msgstr "Orderhistorik"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:24
+msgid "View the order history for your subscription."
+msgstr "Visa orderhistoriken för din prenumeration."
+
+#: public/templates/subscription-details/subscription-details-order-history.php:30
+msgid "View Order History"
+msgstr "Visa orderhistorik"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:39
+msgid "Order Number"
+msgstr "Ordernummer"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:41
+msgid "Order Date"
+msgstr "Orderdatum"
+
+#: public/templates/subscription-details/subscription-details-order-history.php:43
+msgid "Order Amount"
+msgstr "Ordersumma"
+
+#: public/templates/subscription-details/subscription-details-status.php:33
+msgid "Subscription Status"
+msgstr "Status på givandet"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+msgid "Your subscription will automatically renew on"
+msgstr "Din prenumeration förnyas automatiskt den"
+
+#: public/templates/subscription-details/subscription-details-status.php:39
+msgid ""
+"If you do not wish for it to automatically renew, update the setting below."
+msgstr ""
+"Om du inte vill att den ska förnyas automatiskt, uppdatera inställningen "
+"nedan."
+
+#: public/templates/subscription-details/subscription-details-status.php:43
+#: public/templates/subscription-details/subscription-details-status.php:57
+msgid "Automatic Renewals"
+msgstr "Automatiska förnyelser"
+
+#: public/templates/subscription-details/subscription-details-status.php:43
+#: public/templates/subscription-details/subscription-details-status.php:57
+msgid "Off"
+msgstr "Av"
+
+#: public/templates/subscription-details/subscription-details-status.php:53
+msgid "On"
+msgstr "På"
+
+#: public/templates/subscription-details/subscription-details-status.php:67
+msgid "Cancel Subscription"
+msgstr "Avbryt Prenumeration"
+
+#: public/templates/subscription-details/subscription-details.php:29
+msgid "Back to My Subscriptions Page"
+msgstr "Tillbaka till Mina prenumerationssida"
+
+#: public/templates/subscription-details/subscription-details.php:37
+msgid "Subscription ID"
+msgstr "Prenumerations-ID"
+
+#: public/templates/subscription-details/subscription-details.php:51
+msgid "Current Quantity"
+msgstr "Nuvarande kvantitet"
+
+#: public/templates/subscription-details/subscription-details.php:53
+msgid "Next Renewal Quantity"
+msgstr "Nästa förnyelsemängd"
+
+#: public/templates/subscription-details/subscription-details.php:57
+msgid "Change Quantity"
+msgstr "Ändra kvantitet"
+
+#: public/templates/thank-you/thank-you.php:94
+msgid "Thank you"
+msgstr "Tack"
+
+#: public/templates/thank-you/thank-you.php:104
+msgid "Your order has been successfully placed."
+msgstr "Din beställning har gjorts."
+
+#: public/templates/thank-you/thank-you.php:108
+msgid "Your order was completed successfully."
+msgstr "Din beställning slutfördes."
+
+#: public/templates/thank-you/thank-you.php:114
+msgid "Order number is: "
+msgstr "Ordernummer:"
+
+#: public/templates/thank-you/thank-you.php:129, php-format
+msgid "You will receive an email confirmation shortly at %s"
+msgstr "Du kommer snart att få en e-postbekräftelse på %s"
+
+#: public/templates/thank-you/thank-you.php:193
+#| msgid "Account Information"
+msgid "VAT Information"
+msgstr "Kontoinformation"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:6
+msgid "Your order has been entered and is awaiting payment."
+msgstr "Din beställning har angetts och väntar på betalning."
+
+#: public/templates/thank-you/wire-transfer-instructions.php:8
+msgid ""
+"Please make your payment now to complete your order. All funds must be drawn "
+"in the currency shown below."
+msgstr ""
+"Vänligen gör din betalning nu för att slutföra din beställning. Alla medel "
+"måste dras i den valuta som visas nedan."
+
+#: public/templates/thank-you/wire-transfer-instructions.php:10
+msgid "Provide your bank with the following wire transfer instructions:"
+msgstr "Ge din bank följande instruktioner för banköverföring:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:14
+msgid "Amount:"
+msgstr "Belopp:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:16
+msgid "Wire Transfer Reference Number:"
+msgstr "Banköverföringsreferensnummer:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:18
+msgid "*Be sure to include this number or your payment may not be received."
+msgstr ""
+"* Var noga med att ange detta nummer, annars kommer din betalning kanske "
+"inte att tas emot."
+
+#: public/templates/thank-you/wire-transfer-instructions.php:20
+msgid "Bank:"
+msgstr "Bank:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:22
+msgid "Location:"
+msgstr "Plats:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:24
+msgid "Account Holder:"
+msgstr "Kontoinnehavare:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:26
+msgid "Account Number:"
+msgstr "Kontonummer: "
+
+#: public/templates/thank-you/wire-transfer-instructions.php:28
+msgid "Swift Code:"
+msgstr "Snabb kod:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:32
+msgid "IBAN*:"
+msgstr "IBAN *:"
+
+#: public/templates/thank-you/wire-transfer-instructions.php:38
+msgid ""
+"Please ensure you use your 'Reference Number' as your transaction reference "
+"when you electronically transfer the money for payment. If you do not use "
+"this reference number we will not be able to process your payment."
+msgstr ""
+"Se till att du använder ditt \"referensnummer\" som transaktionsreferens när "
+"du elektroniskt överför pengarna för betalning. Om du inte använder detta "
+"referensnummer kommer vi inte att kunna behandla din betalning."
+
+#: public/templates/thank-you/wire-transfer-instructions.php:40
+msgid ""
+"After we receive confirmation that our bank has received your funds, we will "
+"send you an email notification. If a payment is not received within 20 "
+"business days, your order will be cancelled."
+msgstr ""
+"När vi har fått en bekräftelse på att vår bank har fått dina medel kommer vi "
+"att skicka ett e-postmeddelande till dig. Om en betalning inte tas emot inom "
+"20 arbetsdagar kommer din beställning att annulleras."
+
+#: public/templates/thank-you/wire-transfer-instructions.php:42
+msgid ""
+"Print this page for your records as all bank details are required to make "
+"your payment. You can use this information to make your payment to the fore "
+"mentioned bank account. Any orders placed without all of the above "
+"information may not be processed."
+msgstr ""
+"Skriv ut den här sidan för dina register eftersom alla bankuppgifter krävs "
+"för att göra din betalning. Du kan använda denna information för att göra "
+"din betalning till det tidigare nämnda bankkontot. Beställningar som görs "
+"utan all ovanstående information kan inte behandlas."
+
+#: public/templates/thank-you/wire-transfer-instructions.php:44
+msgid ""
+"When we have finished processing your order, you will be sent a confirmation "
+"email at the address provided."
+msgstr ""
+"När vi har bearbetat din beställning kommer du att få ett "
+"bekräftelsemeddelande till den angivna adressen."
+
+#~ msgid "Currency: "
+#~ msgstr "Valuta: "
+
+#~ msgid "My Payments"
+#~ msgstr "Mina Betalningar"
+
+#~ msgid "Company EIN"
+#~ msgstr "Företag EIN"
+
+#~ msgid "Credit Card"
+#~ msgstr "Kreditkort"
+
+#~ msgid "PayPal"
+#~ msgstr "PayPal"
+
+#~ msgid "Pay with card"
+#~ msgstr "Betala med kort"
+
+#~ msgid "Edit Shipping/Billing"
+#~ msgstr "Redigera frakt / fakturering"
+
+#~ msgid "Edit Billing"
+#~ msgstr "Redigera fakturering"

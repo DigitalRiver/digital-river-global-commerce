@@ -5,6 +5,8 @@ import CheckoutUtils from './checkout-utils';
 import LoginModule from './public-login';
 
 const AccountModule = (($) => {
+    const localizedText = drgc_params.translations;
+
     const appendAutoRenewalTerms = (digitalriverjs, entityCode, locale) => {
         const terms = CheckoutUtils.getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale);
 
@@ -13,75 +15,184 @@ const AccountModule = (($) => {
         }
     };
 
+    const getRightOfWithdrawalLink = (locale) => {
+        const gcFontsDomain = 'drh-fonts.img.digitalrivercontent.net';
+
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: 'GET',
+                url: `https://${gcFontsDomain}/store/${drgc_params.siteID}/${locale}/DisplayHelpPage`,
+                success: (response) => {
+                    const $rightOfWithdrawal = $(response).find('#dr_rightOfWithdrawalFAQ');
+                    let url = '';
+
+                    if ($rightOfWithdrawal.length) {
+                        url = $rightOfWithdrawal.find('a.dr_rightOfWithdrawal').prop('href').split('?')[1];
+                        url = `https://gc.digitalriver.com/store?${url}`;
+                    }
+
+                    resolve(url);
+                },
+                error: (jqXHR) => {
+                    reject(jqXHR);
+                }
+            });
+        });
+    };
+
+    const initRightOfWithdrawalLink = async () => {
+        try {
+            const rightOfWithdrawalLink = await AccountModule.getRightOfWithdrawalLink(drgc_params.drLocale);
+
+            if (rightOfWithdrawalLink) {
+                $('a.right-of-withdrawal-link').prop('href', rightOfWithdrawalLink);
+                $('.dr-right-of-withdrawal').show();
+            } else {
+                $('.dr-right-of-withdrawal').hide();
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const createOrderList = (orders) => {
+        let listHtml = '';
+
+        orders.forEach((element) => {
+            const submissionDate = new Date(element.submissionDate).toLocaleDateString();
+            const status = element.orderState.toLowerCase().split(' ').join('');
+
+            listHtml = `
+                ${listHtml}
+                <div class="order">
+                    <div class="order-id" data-heading="${localizedText.order_id_label}">${element.id}</div>
+                    <div class="order-date" data-heading="${localizedText.date_label}">${submissionDate}</div>
+                    <div class="order-amount" data-heading="${localizedText.amount_label}">${element.pricing.formattedTotal}</div>
+                    <div class="order-status ${status}" data-heading="${localizedText.status_label}">${element.orderState}</div>
+                    <div class="order-details">
+                        <button type="button" class="btn btn-transparent" data-order="${element.id}">${localizedText.order_details_label}</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        return listHtml;
+    };
+
+    const updateListAndPagination = (list, $selectedNum, orders) => {
+        $('#list-orders > .overflowContainer > .order:not(.order-headings)').remove();
+        $('#list-orders > .overflowContainer > .order-headings').after(list);
+        $('#list-orders > .overflowContainer > .dr-pagination > .page-link').not($selectedNum).removeClass('active');
+        $selectedNum.addClass('active');
+        $('#list-orders > .overflowContainer > .dr-pagination > .next > .btn').prop('disabled', !orders.hasOwnProperty('nextPage'));
+        $('#list-orders > .overflowContainer > .dr-pagination > .prev > .btn').prop('disabled', !orders.hasOwnProperty('previousPage'));
+    };
+
+    const submitTaxCertificate = async ($form, customerId) => {
+        $form.addClass('dr-loading');
+
+        try {
+            const res = JSON.parse(await CheckoutUtils.createTaxProfile(customerId));
+
+            if (res.companyName) {
+                location.reload();
+            } else {
+                $('#tems-us-error-msg').text(CheckoutUtils.getAjaxErrorMessage()).show();
+            }
+        } catch (error) {
+            console.error(error);
+            $form.removeClass('dr-loading');
+            $('#tems-us-error-msg').text(CheckoutUtils.getAjaxErrorMessage(JSON.parse(error.responseText))).show();
+        }
+    };
+
     return {
-        appendAutoRenewalTerms
+        appendAutoRenewalTerms,
+        getRightOfWithdrawalLink,
+        initRightOfWithdrawalLink,
+        createOrderList,
+        updateListAndPagination,
+        submitTaxCertificate
     };
 })(jQuery);
 
 $(() => {
-    const localizedText = drgc_params.translations;
-
     if ($('#dr-account-page-wrapper').length < 1) return;
 
     window.drActiveOrderId = '';
+    const localizedText = drgc_params.translations;
+    const $body = $('body');
+    const $ordersModal = $('#ordersModal');
+    const $orderIdModal = $('#order-id-modal');
 
-    var $body = $('body');
-
-    var $ordersModal = $('#ordersModal');
-
-    $body.append($ordersModal);
+    $body.append($ordersModal).append($orderIdModal);
 
     // Order detail click
-    function fillOrderModal(e) {
-        var orderID = $(this).attr('data-order');
+    async function fillOrderModal(e) {
+        const orderId = $(this).attr('data-order');
 
-        if (!drOrders[orderID]) alert('order details not available');
+        $('a.right-of-withdrawal-link').data('orderId', orderId);
 
-        const requestShipping = drOrders[orderID].shippingMethodCode !== '';
-
-        if (orderID === drActiveOrderId) {
+        if (orderId === drActiveOrderId) {
             $ordersModal.drModal('show');
         } else {
+            let selectedOrder = '';
+
+            try {
+                const orderDetails = await DRCommerceApi.getOrderDetails(orderId, {expand: 'all'});
+                selectedOrder = orderDetails.order;
+            } catch (error) {
+                console.error(error);
+                return false;
+            }
+
+            if (!selectedOrder) {
+                drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+                return false;
+            }
+
+            const requestShipping = 'code' in selectedOrder.shippingMethod;
+
             // orderID
-            $('.dr-modal-orderNumber').text(orderID);
+            $('.dr-modal-orderNumber').text(orderId);
             // Order Pricing
-            drOrders[orderID].pricing = $.parseJSON(drOrders[orderID].encodedPricing);
-            $('.dr-modal-subtotal').text(drOrders[orderID].formattedSubtotal);
-            $('.dr-modal-tax').text(drOrders[orderID].formattedTax);
-            $('.dr-modal-shipping').text(drOrders[orderID].formattedShipping);
-            var isDiscount = parseInt(drOrders[orderID].formattedIncentive.replace(/\D/g, ''));
+            $('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
+            $('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
+            $('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
+            var isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
             if (isDiscount) {
-                $('.dr-modal-discount').text(drOrders[orderID].formattedIncentive);
+                $('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
                 $('.dr-summary__discount').show();
             } else {
                 $('.dr-summary__discount').hide();
             }
-            $('.dr-modal-total').text(drOrders[orderID].formattedTotal);
+            $('.dr-modal-total').text(selectedOrder.pricing.formattedTotal);
             // Billing
-            $('.dr-modal-billingName').text(drOrders[orderID].billingAddress.firstName + ' ' + drOrders[orderID].billingAddress.lastName);
-            var billingAddress1 = drOrders[orderID].billingAddress.line1;
-            billingAddress1 += (drOrders[orderID].billingAddress.line2) ? '<br>' + drOrders[orderID].billingAddress.line2 : '';
+            $('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
+            var billingAddress1 = selectedOrder.billingAddress.line1;
+            billingAddress1 += (selectedOrder.billingAddress.line2) ? '<br>' + selectedOrder.billingAddress.line2 : '';
             $('.dr-modal-billingAddress1').html(billingAddress1);
-            var billingAddress2 = (drOrders[orderID].billingAddress.city) ? drOrders[orderID].billingAddress.city : '';
-            billingAddress2 += (drOrders[orderID].billingAddress.state) ? ', ' + drOrders[orderID].billingAddress.state : '';
-            billingAddress2 += (drOrders[orderID].billingAddress.zip) ? ' ' + drOrders[orderID].billingAddress.zip : '';
+            var billingAddress2 = (selectedOrder.billingAddress.city) ? selectedOrder.billingAddress.city : '';
+            billingAddress2 += (selectedOrder.billingAddress.countrySubdivision) ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
+            billingAddress2 += (selectedOrder.billingAddress.postalCode) ? ' ' + selectedOrder.billingAddress.postalCode : '';
             $('.dr-modal-billingAddress2').text(billingAddress2);
-            $('.dr-modal-billingCountry').text(drOrders[orderID].billingAddress.country);
+            $('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country);
             // Shipping
-            $('.dr-modal-shippingName').text(drOrders[orderID].shippingAddress.firstName + ' ' + drOrders[orderID].shippingAddress.lastName);
-            var shippingAddress1 = drOrders[orderID].shippingAddress.line1;
-            shippingAddress1 += (drOrders[orderID].shippingAddress.line2) ? '<br>' + drOrders[orderID].shippingAddress.line2 : '';
+            $('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
+            var shippingAddress1 = selectedOrder.shippingAddress.line1;
+            shippingAddress1 += (selectedOrder.shippingAddress.line2) ? '<br>' + selectedOrder.shippingAddress.line2 : '';
             $('.dr-modal-shippingAddress1').html(shippingAddress1);
-            var shippingAddress2 = (drOrders[orderID].shippingAddress.city) ? drOrders[orderID].shippingAddress.city : '';
-            shippingAddress2 += (drOrders[orderID].shippingAddress.state) ? ', ' + drOrders[orderID].shippingAddress.state : '';
-            shippingAddress2 += (drOrders[orderID].shippingAddress.zip) ? ' ' + drOrders[orderID].shippingAddress.zip : '';
+            var shippingAddress2 = (selectedOrder.shippingAddress.city) ? selectedOrder.shippingAddress.city : '';
+            shippingAddress2 += (selectedOrder.shippingAddress.countrySubdivision) ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
+            shippingAddress2 += (selectedOrder.shippingAddress.postalCode) ? ' ' + selectedOrder.shippingAddress.postalCode : '';
             $('.dr-modal-shippingAddress2').text(shippingAddress2);
-            $('.dr-modal-shippingCountry').text(drOrders[orderID].shippingAddress.country);
+            $('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country);
 
             // Summary Labels
-            const isTaxInclusive = drOrders[orderID].isTaxInclusive === 'true';
+            const isTaxInclusive = selectedOrder.locale !== 'en_US';
             const forceExclTax = drgc_params.forceExclTax === 'true';
-            const shouldDisplayVat = drOrders[orderID].shouldDisplayVat === 'true';
+            const orderCurrency = selectedOrder.pricing.total.currency;
+            const shouldDisplayVat = (orderCurrency === 'GBP' || orderCurrency === 'EUR');
             const taxSuffixLabel = isTaxInclusive ?
                 forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label :
                 '';
@@ -103,21 +214,22 @@ $(() => {
 
             // Products
             var html = '';
-            for (var i = 0; i < drOrders[orderID].products.length; i++) {
-                var prod = drOrders[orderID].products[i];
-                prod.pricing = $.parseJSON(prod.encodedPricing);
+            const count = selectedOrder.lineItems.lineItem.length;
+
+            for (var i = 0; i < count; i++) {
+                const lineItem = selectedOrder.lineItems.lineItem[i];
 
                 html += `<div class="dr-product">
                 <div class="dr-product-content">
-                    <div class="dr-product__img dr-modal-productImgBG" style="background-image:url(${prod.image});"></div>
+                    <div class="dr-product__img dr-modal-productImgBG" style="background-image:url(${lineItem.product.thumbnailImage});"></div>
                     <div class="dr-product__info">
-                        <a class="product-name dr-modal-productName">${prod.name}</a>
+                        <a class="product-name dr-modal-productName">${lineItem.product.displayName}</a>
                         <div class="product-sku">
                             <span>Product </span>
-                            <span class="dr-modal-productSku">${prod.sku}</span>
+                            <span class="dr-modal-productSku">${lineItem.product.sku}</span>
                         </div>
                         <div class="product-qty">
-                            <span class="qty-text">Qty <span class="dr-modal-productQty">${prod.qty}</span></span>
+                            <span class="qty-text">Qty <span class="dr-modal-productQty">${lineItem.quantity}</span></span>
                             <span class="dr-pd-cart-qty-minus value-button-decrease"></span>
                             <input
                                 type="number"
@@ -125,7 +237,7 @@ $(() => {
                                 step="1"
                                 min="1"
                                 max="999"
-                                value="${prod.qty}"
+                                value="${lineItem.quantity}"
                                 maxlength="5"
                                 size="2"
                                 pattern="[0-9]*"
@@ -136,15 +248,15 @@ $(() => {
                     </div>
                 </div>
                 <div class="dr-product__price">
-                    <span class="sale-price dr-modal-salePrice">${prod.salePrice}</span>
-                    <span class="regular-price dr-modal-strikePrice" ${prod.salePrice === prod.strikePrice ? 'style="display:none"' : ''}>${prod.strikePrice}</span>
+                    <span class="sale-price dr-modal-salePrice">${lineItem.pricing.formattedSalePriceWithQuantity}</span>
+                    <span class="regular-price dr-modal-strikePrice" ${lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : ''}>${lineItem.pricing.formattedListPriceWithQuantity}</span>
                 </div>
             </div>`;
             }
 
             $('.dr-summary__products').html(html);
 
-            CheckoutUtils.updateSummaryPricing(drOrders[orderID], isTaxInclusive);
+            CheckoutUtils.updateSummaryPricing(selectedOrder, isTaxInclusive);
 
             if (!requestShipping) {
                 $('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
@@ -153,11 +265,66 @@ $(() => {
             }
 
             // set this last
-            drActiveOrderId = orderID;
+            drActiveOrderId = orderId;
             $ordersModal.drModal('show');
         }
     }
-    $('.order-details .btn').on('click', fillOrderModal);
+
+    $(document).on('click', '.order-details > .btn', fillOrderModal);
+
+    $('a.right-of-withdrawal-link').on('click', (e) => {
+        e.preventDefault();
+        const $link = $(e.target);
+
+        if (window.isSecureContext) {
+            const id = $link.data('orderId');
+
+            navigator.clipboard.writeText(id).then(() => {
+                $orderIdModal.find('.dr-modal-footer > button').data('rowUrl', $link.prop('href'));
+                $orderIdModal.drModal('show');
+            }, () => {
+                console.error('Unable to write to clipboard.');
+            });
+        } else {
+            window.open($link.prop('href'), '_blank');
+        }
+    });
+
+    $orderIdModal.on('hidden.dr.bs.modal', (e) => {
+        window.open($(e.target).find('.dr-modal-footer > button').data('rowUrl'), '_blank');
+    });
+
+    $('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', async (e) => {
+        const $list = $('#list-orders > .overflowContainer');
+        let $selectedNum = $(e.target);
+        let pageNumber = $selectedNum.data('pageNumber');
+        let isNextBtn = false;
+
+        if (!pageNumber) {
+            const currentNum = $('#list-orders > .overflowContainer > .dr-pagination').find('.page-link.active').data('pageNumber');
+            isNextBtn = $selectedNum.parent('a.page-link').hasClass('next');
+            pageNumber = isNextBtn ? currentNum + 1 : ((currentNum - 1) < 1) ? 1 : currentNum - 1;
+            $selectedNum = $('#list-orders > .overflowContainer > .dr-pagination > .page-link[data-page-number=' + pageNumber + ']');
+        }
+
+        if ($selectedNum.hasClass('active')) return false;
+
+        $list.addClass('dr-loading');
+
+        try {
+            const ordersByPage = await DRCommerceApi.getOrders({
+                pageNumber: pageNumber,
+                expand: 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
+            });
+            const list = AccountModule.createOrderList(ordersByPage.orders.order);
+
+            AccountModule.updateListAndPagination(list, $selectedNum, ordersByPage.orders);
+        } catch (error) {
+            console.error(error);
+        }
+
+        $list.removeClass('dr-loading');
+    });
 
     // modal print click
     $ordersModal.find('.dr-modal-footer .print-button').on('click', function() {
@@ -234,6 +401,81 @@ $(() => {
                 $('body').removeClass('dr-loading');
                 CheckoutUtils.apiErrorHandler(jqXHR);
             });
+    });
+
+    // Certificate
+    const $certificateModal = $('#certificate-modal');
+    const $companyNameConfirmModal = $('#company-name-confirm');
+
+    $body.append($certificateModal).append($companyNameConfirmModal);
+
+    $('#add-new-cert').on('click', (e) => {
+        e.preventDefault();
+
+        $certificateModal.drModal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+
+    $('#certificate-modal .dr-modal-footer > button.submit').on('click', (e) => {
+        e.preventDefault();
+        const $form = $('#account-tem-us-form');
+        const accountCompanyName = $('#account-company-name').val();
+
+        $form.addClass('was-validated');
+
+        if ($form[0].checkValidity() === false) {
+            return false;
+        }
+
+        if (accountCompanyName !== '' && accountCompanyName !== $('#tems-us-company-name').val()) {
+            $certificateModal.drModal('hide');
+            $companyNameConfirmModal.drModal({
+                backdrop: 'static',
+                keyboard: false
+            });
+        } else {
+            AccountModule.submitTaxCertificate($form, drgc_params.customerId, $certificateModal);
+        }
+    });
+
+    $('#certificate-modal .dr-modal-footer > button.cancel, #certificate-modal .dr-modal-header > button.close').on('click', (e) => {
+        $('#account-tem-us-form').removeClass('was-validated');
+        $('#account-tem-us-form input, #certificate-tax-authority').val('');
+        $('#tems-us-error-msg').text('').hide();
+    });
+
+    $('#company-name-confirm .dr-modal-footer > button.confirm').on('click', (e) => {
+        e.preventDefault();
+
+        $certificateModal.drModal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        $companyNameConfirmModal.drModal('hide');
+
+        AccountModule.submitTaxCertificate($('#account-tem-us-form'), drgc_params.customerId, $certificateModal);
+    });
+
+    $('#company-name-confirm .dr-modal-footer > button.cancel').on('click', (e) => {
+        e.preventDefault();
+
+        $certificateModal.drModal({
+            backdrop: 'static',
+            keyboard: false
+        });
+        $companyNameConfirmModal.drModal('hide');
+    });
+
+    $('#tems-us-start-date, #tems-us-end-date').on('blur', (e) => {
+        const date = $(e.target).val();
+
+        if (date) {
+            const dateArr = date.split('-').reverse();
+            [dateArr[0], dateArr[1]] = [dateArr[1], dateArr[0]];
+            $(e.target).val(dateArr.join('/'));
+        }
     });
 
     // Payment
@@ -521,7 +763,10 @@ $(() => {
             DRCommerceApi.getSubsDetails(subsId)
                 .then((data) => {
                     const orderId = data.subscription.orders.order[0].uri.split('orders/')[1];
-                    entityCode = drOrders[orderId].entityCode;
+                    return DRCommerceApi.getOrderDetails(orderId);
+                })
+                .then((data) => {
+                    entityCode = data.order.businessEntityCode;
                     AccountModule.appendAutoRenewalTerms(digitalriverjs, entityCode, locale);
                 })
                 .catch((jqXHR) => {
@@ -605,10 +850,10 @@ $(() => {
                 }
 
                 $error.css('color', 'red');
-                sessionStorage.setItem('drgc-pw-changed', 'false');
+                sessionStorage.setItem('drgcPwChanged', 'false');
                 $('body').removeClass('dr-loading');
             } else {
-                sessionStorage.setItem('drgc-pw-changed', 'true');
+                sessionStorage.setItem('drgcPwChanged', 'true');
                 location.reload();
             }
 
@@ -621,20 +866,45 @@ $(() => {
     $('#dr-account-page-wrapper a[data-toggle="dr-list"]').on('shown.dr.bs.tab', function(e) {
         sessionStorage.drAccountTab = $(e.target).attr('href');
 
-        if ((e.target.id === 'list-password-list') && (sessionStorage.getItem('drgc-pw-changed') === 'true')) {
-            sessionStorage.setItem('drgc-pw-changed', 'false');
-            $('#dr-passwordUpdated').drModal('show');
+        if ((e.target.id === 'list-password-list') && (sessionStorage.getItem('drgcPwChanged') === 'true')) {
+            sessionStorage.setItem('drgcPwChanged', 'false');
+
+            const data = {
+                action: 'drgc_logout',
+                nonce: drgc_params.ajaxNonce
+            };
+
+            $('body').addClass('dr-loading');
+            $.post(drgc_params.ajaxUrl, data, (response) => {
+                if (response.success) {
+                    $('body').removeClass('dr-loading');
+                    $('#dr-passwordUpdated').drModal({
+                        backdrop: 'static',
+                        keyboard: false
+                    });
+                } else {
+                    location.reload();
+                }
+            });
         }
+    });
+
+    $('#dr-passwordUpdated button').on('click', () => {
+        $('body').addClass('dr-loading');
+        window.location.href = drgc_params.loginUrl;
     });
 
     if (sessionStorage.drAccountTab && $('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {
         $('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').drTab('show');
+        $('#nav-tabContent').removeClass('dr-loading');
     } else if (window.matchMedia && window.matchMedia('(min-width:768px)').matches) {
         $('#dr-account-page-wrapper a[data-toggle="dr-list"]').eq(0).drTab('show');
+        $('#nav-tabContent').removeClass('dr-loading');
     }
 
     //floating labels
     FloatLabel.init();
+    AccountModule.initRightOfWithdrawalLink();
 });
 
 export default AccountModule;

@@ -3,7 +3,7 @@ import Config from '../../config';
 import GenericUtils from '../../utils/genericUtils';
 import LoginPage from '../../page-models/public/login-page-model';
 
-fixture `===== DRGC P1 Automation Test - Place Order Sign In =====`
+fixture `===== DRGC P1 Automation Test - Register With Inavlid Data =====`
   .httpAuth({
     username: Config.websiteAuth['username'],
     password: Config.websiteAuth['password'],

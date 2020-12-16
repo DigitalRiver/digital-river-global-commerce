@@ -2,11 +2,11 @@ import LoginModule from './public-login';
 
 const DrgcUserWatcher = ((w, d, p, $) => {
   const watcher = {
-    interval: 3510,
+    interval: 900,
     debug: false,
     eventTypes: ['mousedown', 'mousemove', 'click', 'keydown', 'scroll', 'touchstart'],
     pathname: null,
-    redirectPath: p.loginPath,
+    redirectUrl: p.loginUrl,
     escapeUrls: [],
     timerId: null,
     callback: null,
@@ -23,12 +23,14 @@ const DrgcUserWatcher = ((w, d, p, $) => {
       this.initPathname();
 
       if (!this.callback) {
-        if (!this.redirectPath) {
+        if (!this.redirectUrl) {
           this.log('The redirect url is undefined.');
           return false;
         }
 
-        if ((this.redirectPath === this.pathname) && (this.pathname !== p.loginPath)) {
+        const redirectPath = new URL(this.redirectUrl).pathname;
+        const loginPath = new URL(drgc_params.loginUrl).pathname;
+        if ((this.pathname === redirectPath) && (this.pathname !== loginPath)) {
           this.log('The redirect page is the same as the current page and it is not the login page.');
           return false;
         }
@@ -79,7 +81,7 @@ const DrgcUserWatcher = ((w, d, p, $) => {
     },
     redirect() {
       w.clearInterval(this.countDowninterval);
-      LoginModule.autoLogout(this.redirectPath);
+      LoginModule.autoLogout(this.redirectUrl);
     },
     initPathname() {
       const parser = d.createElement('a');
@@ -121,7 +123,6 @@ const DrgcUserWatcher = ((w, d, p, $) => {
           watcher.closeModal();
           watcher.eventTypes.forEach(watcher.listen);
           watcher.tick();
-          LoginModule.resetCookie();
           break;
         case 'dr-modalLogoutBtn':
           watcher.closeModal();

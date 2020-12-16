@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 12);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -9562,34 +9562,12 @@
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
+module.exports = __webpack_require__(15);
 
 /***/ }),
 /* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(11);
-
-/***/ }),
-/* 3 */
 /***/ (function(module, exports) {
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
@@ -9631,7 +9609,7 @@ function _asyncToGenerator(fn) {
 module.exports = _asyncToGenerator;
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports) {
 
 function _defineProperty(obj, key, value) {
@@ -9650,6 +9628,28 @@ function _defineProperty(obj, key, value) {
 }
 
 module.exports = _defineProperty;
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports) {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
 
 /***/ }),
 /* 5 */
@@ -9716,10 +9716,79 @@ module.exports = function (module) {
 
 /***/ }),
 /* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeToArray = __webpack_require__(9);
+
+function _unsupportedIterableToArray(o, minLen) {
+  if (!o) return;
+  if (typeof o === "string") return arrayLikeToArray(o, minLen);
+  var n = Object.prototype.toString.call(o).slice(8, -1);
+  if (n === "Object" && o.constructor) n = o.constructor.name;
+  if (n === "Map" || n === "Set") return Array.from(o);
+  if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return arrayLikeToArray(o, minLen);
+}
+
+module.exports = _unsupportedIterableToArray;
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+function _arrayLikeToArray(arr, len) {
+  if (len == null || len > arr.length) len = arr.length;
+
+  for (var i = 0, arr2 = new Array(len); i < len; i++) {
+    arr2[i] = arr[i];
+  }
+
+  return arr2;
+}
+
+module.exports = _arrayLikeToArray;
+
+/***/ }),
+/* 10 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithHoles = __webpack_require__(16);
+
+var iterableToArrayLimit = __webpack_require__(17);
+
+var unsupportedIterableToArray = __webpack_require__(8);
+
+var nonIterableRest = __webpack_require__(18);
+
+function _slicedToArray(arr, i) {
+  return arrayWithHoles(arr) || iterableToArrayLimit(arr, i) || unsupportedIterableToArray(arr, i) || nonIterableRest();
+}
+
+module.exports = _slicedToArray;
+
+/***/ }),
+/* 11 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayWithoutHoles = __webpack_require__(19);
+
+var iterableToArray = __webpack_require__(20);
+
+var unsupportedIterableToArray = __webpack_require__(8);
+
+var nonIterableSpread = __webpack_require__(21);
+
+function _toConsumableArray(arr) {
+  return arrayWithoutHoles(arr) || iterableToArray(arr) || unsupportedIterableToArray(arr) || nonIterableSpread();
+}
+
+module.exports = _toConsumableArray;
+
+/***/ }),
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(4);
 /* harmony import */ var _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0__);
 
 
@@ -9731,7 +9800,7 @@ module.exports = function (module) {
  * Released under the MIT license
  */
 (function (factory) {
-  if (typeof define === 'function' && __webpack_require__(10)) {
+  if (typeof define === 'function' && __webpack_require__(14)) {
     // AMD (Register as an anonymous module)
     define(['jquery'], factory);
   } else if ((typeof exports === "undefined" ? "undefined" : _babel_runtime_helpers_typeof__WEBPACK_IMPORTED_MODULE_0___default()(exports)) === 'object') {
@@ -9830,10 +9899,10 @@ module.exports = function (module) {
     return !$.cookie(key);
   };
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(9)(module)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(13)(module)))
 
 /***/ }),
-/* 9 */
+/* 13 */
 /***/ (function(module, exports) {
 
 module.exports = function (originalModule) {
@@ -9863,7 +9932,7 @@ module.exports = function (originalModule) {
 };
 
 /***/ }),
-/* 10 */
+/* 14 */
 /***/ (function(module, exports) {
 
 /* WEBPACK VAR INJECTION */(function(__webpack_amd_options__) {/* globals __webpack_amd_options__ */
@@ -9872,7 +9941,7 @@ module.exports = __webpack_amd_options__;
 /* WEBPACK VAR INJECTION */}.call(this, {}))
 
 /***/ }),
-/* 11 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(module) {function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -10586,7 +10655,92 @@ try {
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(7)(module)))
 
 /***/ }),
-/* 12 */
+/* 16 */
+/***/ (function(module, exports) {
+
+function _arrayWithHoles(arr) {
+  if (Array.isArray(arr)) return arr;
+}
+
+module.exports = _arrayWithHoles;
+
+/***/ }),
+/* 17 */
+/***/ (function(module, exports) {
+
+function _iterableToArrayLimit(arr, i) {
+  if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+  var _arr = [];
+  var _n = true;
+  var _d = false;
+  var _e = undefined;
+
+  try {
+    for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+      _arr.push(_s.value);
+
+      if (i && _arr.length === i) break;
+    }
+  } catch (err) {
+    _d = true;
+    _e = err;
+  } finally {
+    try {
+      if (!_n && _i["return"] != null) _i["return"]();
+    } finally {
+      if (_d) throw _e;
+    }
+  }
+
+  return _arr;
+}
+
+module.exports = _iterableToArrayLimit;
+
+/***/ }),
+/* 18 */
+/***/ (function(module, exports) {
+
+function _nonIterableRest() {
+  throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+module.exports = _nonIterableRest;
+
+/***/ }),
+/* 19 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var arrayLikeToArray = __webpack_require__(9);
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) return arrayLikeToArray(arr);
+}
+
+module.exports = _arrayWithoutHoles;
+
+/***/ }),
+/* 20 */
+/***/ (function(module, exports) {
+
+function _iterableToArray(iter) {
+  if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+}
+
+module.exports = _iterableToArray;
+
+/***/ }),
+/* 21 */
+/***/ (function(module, exports) {
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+}
+
+module.exports = _nonIterableSpread;
+
+/***/ }),
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10594,7 +10748,7 @@ try {
 __webpack_require__.r(__webpack_exports__);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/typeof.js
-var helpers_typeof = __webpack_require__(1);
+var helpers_typeof = __webpack_require__(4);
 var typeof_default = /*#__PURE__*/__webpack_require__.n(helpers_typeof);
 
 // CONCATENATED MODULE: ./assets/js/public/modal.js
@@ -10814,7 +10968,7 @@ jQuery(document).ready(function ($) {
   }
 });
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/defineProperty.js
-var defineProperty = __webpack_require__(4);
+var defineProperty = __webpack_require__(3);
 var defineProperty_default = /*#__PURE__*/__webpack_require__.n(defineProperty);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/classCallCheck.js
@@ -11855,7 +12009,7 @@ jquery_default.a.fn[dr_tab_NAME].noConflict = function () {
 
 /* harmony default export */ var dr_tab = (dr_tab_Tab);
 // EXTERNAL MODULE: ./assets/js/public/jquery-cookie.js
-var jquery_cookie = __webpack_require__(8);
+var jquery_cookie = __webpack_require__(12);
 
 // CONCATENATED MODULE: ./assets/js/public/dr-toast.js
 // Reference: https://www.w3schools.com/howto/howto_js_snackbar.asp
@@ -11877,355 +12031,17 @@ var dr_toast_drToast = function ($) {
 
 /* harmony default export */ var dr_toast = (dr_toast_drToast);
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/regenerator/index.js
-var regenerator = __webpack_require__(2);
+var regenerator = __webpack_require__(1);
 var regenerator_default = /*#__PURE__*/__webpack_require__.n(regenerator);
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/asyncToGenerator.js
-var asyncToGenerator = __webpack_require__(3);
+var asyncToGenerator = __webpack_require__(2);
 var asyncToGenerator_default = /*#__PURE__*/__webpack_require__.n(asyncToGenerator);
 
-// CONCATENATED MODULE: ./assets/js/public/checkout-utils.js
-var CheckoutUtils = function ($, params) {
-  var localizedText = drgc_params.translations;
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
+var slicedToArray = __webpack_require__(10);
+var slicedToArray_default = /*#__PURE__*/__webpack_require__.n(slicedToArray);
 
-  var createDisplayItems = function createDisplayItems(cartData) {
-    var displayItems = [{
-      label: params.translations.subtotal_label,
-      amount: cartData.pricing.subtotal.value
-    }, {
-      label: params.translations.tax_label,
-      amount: cartData.pricing.tax.value
-    }];
-
-    if (cartData.shippingOptions.shippingOption) {
-      displayItems.push({
-        label: params.translations.shipping_and_handling_label,
-        amount: cartData.pricing.shippingAndHandling.value
-      });
-    }
-
-    if (cartData.pricing.discount) {
-      if (parseFloat(cartData.pricing.discount.value) > 0) {
-        displayItems.push({
-          label: params.translations.discount_label,
-          amount: cartData.pricing.discount.value
-        });
-      }
-    }
-
-    return displayItems;
-  };
-
-  var createShippingOptions = function createShippingOptions(cartData) {
-    var isFreeShipping = cartData.pricing.shippingAndHandling.value === 0;
-    var shippingOptions = [];
-    cartData.shippingOptions.shippingOption.forEach(function (option) {
-      var shippingOption = {
-        id: option.id.toString(),
-        label: option.description,
-        amount: isFreeShipping ? 0 : option.cost.value,
-        detail: ''
-      };
-      shippingOptions.push(shippingOption);
-    });
-    return shippingOptions;
-  };
-
-  var updateShippingOptions = function updateShippingOptions(shippingOptions, selectedId) {
-    shippingOptions.forEach(function (option, index) {
-      if (option.id === selectedId.toString()) {
-        shippingOptions[index].selected = true;
-      } else {
-        if (shippingOptions[index].selected) {
-          delete shippingOptions[index].selected;
-        }
-      }
-    });
-  };
-
-  var getBaseRequestData = function getBaseRequestData(cartData, requestShipping, buttonStyle) {
-    var displayItems = createDisplayItems(cartData);
-    var shippingOptions = [];
-
-    if (requestShipping) {
-      shippingOptions = createShippingOptions(cartData);
-      updateShippingOptions(shippingOptions, cartData.shippingMethod.code);
-    }
-
-    var requestData = {
-      country: params.drLocale.split('_')[1],
-      currency: cartData.pricing.orderTotal.currency,
-      total: {
-        label: params.translations.order_total_label,
-        amount: cartData.pricing.orderTotal.value
-      },
-      displayItems: displayItems,
-      shippingOptions: shippingOptions,
-      requestShipping: requestShipping,
-      style: buttonStyle,
-      waitOnClick: false
-    };
-    return requestData;
-  };
-
-  var updateDeliverySection = function updateDeliverySection(shippingOption) {
-    var $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
-    var resultText = "".concat(shippingOption.label, " ").concat(shippingOption.amount === 0 ? params.translations.free_label : $selectedOption.attr('data-cost'));
-    $selectedOption.prop('checked', true);
-    $('.dr-checkout__delivery').find('.dr-panel-result__text').text(resultText);
-  };
-
-  var updateAddressSection = function updateAddressSection(addressObj, $target) {
-    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.country];
-    $target.text(addressArr.join(', '));
-  };
-
-  var updateSummaryPricing = function updateSummaryPricing(order, isTaxInclusive) {
-    var lineItems = order.lineItems ? order.lineItems.lineItem : order.products || [];
-    var pricing = order.pricing;
-    var newPricing = getSeparatedPricing(lineItems, pricing, isTaxInclusive);
-    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
-
-    $('div.dr-summary__shipping > .item-value').text(shippingVal === 0 ? params.translations.free_label : newPricing.formattedShippingAndHandling);
-    $('div.dr-summary__tax > .item-value').text(newPricing.formattedProductTax);
-    $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
-    $('div.dr-summary__subtotal > .subtotal-value').text(newPricing.formattedSubtotal);
-    $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
-    $('.dr-summary').removeClass('dr-loading');
-  };
-
-  var getEntityCode = function getEntityCode() {
-    return drgc_params.order && drgc_params.order.order ? drgc_params.order.order.businessEntityCode : drgc_params.cart && drgc_params.cart.cart ? drgc_params.cart.cart.businessEntityCode : '';
-  };
-
-  var getCompliance = function getCompliance(digitalriverjs, entityCode, locale) {
-    return entityCode && locale ? digitalriverjs.Compliance.getDetails(entityCode, locale).disclosure : {};
-  };
-
-  var applyLegalLinks = function applyLegalLinks(digitalriverjs) {
-    var entityCode = getEntityCode();
-    var locale = drgc_params.drLocale;
-    var complianceData = getCompliance(digitalriverjs, entityCode, locale);
-
-    if (Object.keys(complianceData).length) {
-      $('.dr-resellerDisclosure').prop('href', complianceData.resellerDisclosure.url);
-      $('.dr-termsOfSale').prop('href', complianceData.termsOfSale.url);
-      $('.dr-privacyPolicy').prop('href', complianceData.privacyPolicy.url);
-      $('.dr-cookiePolicy').prop('href', complianceData.cookiePolicy.url);
-      $('.dr-cancellationRights').prop('href', complianceData.cancellationRights.url);
-      $('.dr-legalNotice').prop('href', complianceData.legalNotice.url);
-    }
-  };
-
-  var displayPreTAndC = function displayPreTAndC() {
-    if (drgc_params.googlePayBtnStatus && drgc_params.googlePayBtnStatus === 'LOADING') return;
-    if (drgc_params.applePayBtnStatus && drgc_params.applePayBtnStatus === 'LOADING') return;
-    $('.dr-preTAndC-wrapper').show();
-  };
-
-  var displayAlertMessage = function displayAlertMessage(message) {
-    alert('ERROR! ' + message);
-  };
-
-  var apiErrorHandler = function apiErrorHandler(jqXHR) {
-    drToast.displayMessage(getAjaxErrorMessage(jqXHR), 'error');
-  };
-
-  var resetBodyOpacity = function resetBodyOpacity() {
-    $('body').css({
-      'pointer-events': 'auto',
-      'opacity': 1
-    });
-  };
-
-  var getPermalink = function getPermalink(productID) {
-    return new Promise(function (resolve, reject) {
-      $.ajax({
-        type: 'POST',
-        url: drgc_params.ajaxUrl,
-        data: {
-          action: 'get_permalink',
-          productID: productID
-        },
-        success: function success(data) {
-          resolve(data);
-        },
-        error: function error(jqXHR) {
-          reject(jqXHR);
-        }
-      });
-    });
-  };
-
-  var resetFormSubmitButton = function resetFormSubmitButton($form) {
-    $form.find('button[type="submit"]').removeClass('sending').blur();
-  };
-
-  var getAjaxErrorMessage = function getAjaxErrorMessage(jqXHR) {
-    var errMsg = localizedText.undefined_error_msg;
-
-    if (jqXHR && jqXHR.responseJSON && jqXHR.responseJSON.errors) {
-      var err = jqXHR.responseJSON.errors.error[0];
-
-      switch (err.code) {
-        case 'restricted-bill-to-country':
-        case 'restricted-ship-to-country':
-          errMsg = localizedText.address_error_msg;
-          break;
-
-        case 'cart-fraud-failure':
-        case 'order-fraud-failure':
-          errMsg = localizedText.unable_place_order_msg;
-          break;
-
-        default:
-          errMsg = err.description;
-      }
-    }
-
-    return errMsg;
-  };
-
-  var setShippingOption = function setShippingOption(option, freeShipping) {
-    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n          <span class=\"black\">").concat(freeShipping ? localizedText.free_label : option.formattedCost, "</span>\n        </label>\n      </div>\n    ");
-    $('#checkout-delivery-form .dr-panel-edit__el').append(html);
-  };
-
-  var getSupportedCountries = function getSupportedCountries(addressType) {
-    var countryCodes = $('#' + addressType + '-field-country > option').map(function (index, element) {
-      return element.value;
-    }).get();
-    countryCodes.shift();
-    return countryCodes;
-  };
-
-  var createCartRequest = function createCartRequest(event, requestShipping) {
-    var cartRequest = {
-      cart: {}
-    };
-    var billingAddressObj = {
-      id: 'billingAddress',
-      firstName: event.billingAddress.firstName,
-      lastName: event.billingAddress.lastName,
-      line1: event.billingAddress.address.line1,
-      line2: event.billingAddress.address.line2,
-      city: event.billingAddress.address.city,
-      countrySubdivision: event.billingAddress.address.state || 'NA',
-      postalCode: event.billingAddress.address.postalCode,
-      country: event.billingAddress.address.country,
-      phoneNumber: event.billingAddress.phone,
-      emailAddress: event.billingAddress.email
-    };
-    cartRequest.cart.billingAddress = billingAddressObj;
-
-    if (requestShipping) {
-      var shippingAddressObj = {
-        id: 'shippingAddress',
-        firstName: event.shippingAddress.firstName,
-        lastName: event.shippingAddress.lastName,
-        line1: event.shippingAddress.address.line1,
-        line2: event.shippingAddress.address.line2,
-        city: event.shippingAddress.address.city,
-        countrySubdivision: event.shippingAddress.address.state || 'NA',
-        postalCode: event.shippingAddress.address.postalCode,
-        country: event.shippingAddress.address.country,
-        phoneNumber: event.shippingAddress.phone,
-        emailAddress: event.shippingAddress.email
-      };
-      cartRequest.cart.shippingAddress = shippingAddressObj;
-    }
-
-    return cartRequest;
-  };
-
-  var isSubsAddedToCart = function isSubsAddedToCart(lineItems) {
-    if (!lineItems.length) return false;
-
-    for (var i = 0; i < lineItems.length; i++) {
-      var lineItem = lineItems[i];
-      var customAttributes = lineItem.product.customAttributes.attribute || [];
-      if (customAttributes.some(function (attr) {
-        return attr.name === 'subscriptionType';
-      })) return true;
-    }
-
-    return false;
-  };
-
-  var getLocalizedAutoRenewalTerms = function getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale) {
-    var compliance = getCompliance(digitalriverjs, entityCode, locale);
-    return Object.keys(compliance).length ? compliance.autorenewalPlanTerms.localizedText : '';
-  };
-
-  var formatPrice = function formatPrice(val, pricing) {
-    var localeCode = ($('.dr-currency-select').find('option:selected').data('locale') || drgc_params.drLocale).replace('_', '-');
-    var currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
-    var symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
-    var formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');
-    var decimalSymbol = 0 .toLocaleString(localeCode, {
-      minimumFractionDigits: 1
-    })[1];
-    var digits = formattedPriceWithoutSymbol.indexOf(decimalSymbol) > -1 ? formattedPriceWithoutSymbol.split(decimalSymbol).pop().length : 0;
-    val = val.toLocaleString(localeCode, {
-      minimumFractionDigits: digits
-    });
-    val = symbolAsPrefix ? currencySymbol + val : val + currencySymbol;
-    return val;
-  };
-
-  var getCorrectSubtotalWithDiscount = function getCorrectSubtotalWithDiscount(pricing) {
-    var val = pricing.subtotal.value - pricing.discount.value;
-    return formatPrice(val, pricing);
-  };
-
-  var getSeparatedPricing = function getSeparatedPricing(lineItems, pricing, isTaxInclusive) {
-    var productTax = 0;
-    var shippingTax = 0;
-    var forceExclTax = drgc_params.forceExclTax === 'true';
-    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
-
-    lineItems.forEach(function (lineItem) {
-      productTax += lineItem.pricing.productTax.value;
-      shippingTax += lineItem.pricing.shippingTax.value;
-    });
-    return {
-      formattedProductTax: formatPrice(productTax, pricing),
-      formattedShippingTax: formatPrice(shippingTax, pricing),
-      formattedSubtotal: isTaxInclusive && forceExclTax ? formatPrice(pricing.subtotal.value - productTax, pricing) : pricing.formattedSubtotal,
-      formattedShippingAndHandling: isTaxInclusive && forceExclTax ? formatPrice(shippingVal - shippingTax, pricing) : pricing.formattedShippingAndHandling || pricing.formattedShipping
-    };
-  };
-
-  return {
-    createDisplayItems: createDisplayItems,
-    createShippingOptions: createShippingOptions,
-    updateShippingOptions: updateShippingOptions,
-    getBaseRequestData: getBaseRequestData,
-    updateDeliverySection: updateDeliverySection,
-    updateAddressSection: updateAddressSection,
-    updateSummaryPricing: updateSummaryPricing,
-    applyLegalLinks: applyLegalLinks,
-    displayPreTAndC: displayPreTAndC,
-    displayAlertMessage: displayAlertMessage,
-    apiErrorHandler: apiErrorHandler,
-    resetBodyOpacity: resetBodyOpacity,
-    getPermalink: getPermalink,
-    getEntityCode: getEntityCode,
-    getCompliance: getCompliance,
-    resetFormSubmitButton: resetFormSubmitButton,
-    getAjaxErrorMessage: getAjaxErrorMessage,
-    setShippingOption: setShippingOption,
-    getSupportedCountries: getSupportedCountries,
-    createCartRequest: createCartRequest,
-    isSubsAddedToCart: isSubsAddedToCart,
-    getLocalizedAutoRenewalTerms: getLocalizedAutoRenewalTerms,
-    formatPrice: formatPrice,
-    getCorrectSubtotalWithDiscount: getCorrectSubtotalWithDiscount,
-    getSeparatedPricing: getSeparatedPricing
-  };
-}(jQuery, drgc_params);
-
-/* harmony default export */ var checkout_utils = (CheckoutUtils);
 // CONCATENATED MODULE: ./assets/js/public/commerce-api.js
 
 
@@ -12236,6 +12052,7 @@ var DRCommerceApi = function ($, params) {
 
   var updateShopper = function updateShopper() {
     var queryStrings = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    var requestPayload = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     var queryStr = $.param(queryStrings);
     return new Promise(function (resolve, reject) {
       $.ajax({
@@ -12246,6 +12063,7 @@ var DRCommerceApi = function ($, params) {
           Authorization: "Bearer ".concat(params.accessToken)
         },
         url: "".concat(apiBaseUrl, "/me?").concat(queryStr),
+        data: !$.isEmptyObject(requestPayload) ? JSON.stringify(requestPayload) : null,
         success: function success(data) {
           resolve(data);
         },
@@ -12700,6 +12518,27 @@ var DRCommerceApi = function ($, params) {
     });
   };
 
+  var getOrders = function getOrders() {
+    var queryObj = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer ".concat(params.accessToken)
+        },
+        url: "".concat(apiBaseUrl, "/me/orders?").concat($.param(queryObj)),
+        success: function success(data) {
+          resolve(data);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
   return _ref = {
     apiBaseUrl: apiBaseUrl,
     updateShopper: updateShopper,
@@ -12721,10 +12560,561 @@ var DRCommerceApi = function ($, params) {
     saveShopperAddress: saveShopperAddress,
     updateShopperAddress: updateShopperAddress,
     deleteShopperAddress: deleteShopperAddress
-  }, defineProperty_default()(_ref, "submitCart", submitCart), defineProperty_default()(_ref, "getSubsDetails", getSubsDetails), defineProperty_default()(_ref, "getOrderDetails", getOrderDetails), _ref;
+  }, defineProperty_default()(_ref, "submitCart", submitCart), defineProperty_default()(_ref, "getSubsDetails", getSubsDetails), defineProperty_default()(_ref, "getOrderDetails", getOrderDetails), defineProperty_default()(_ref, "getOrders", getOrders), _ref;
 }(jQuery, drgc_params);
 
 /* harmony default export */ var commerce_api = (DRCommerceApi);
+// CONCATENATED MODULE: ./assets/js/public/checkout-utils.js
+
+
+
+var CheckoutUtils = function ($, params) {
+  var localizedText = drgc_params.translations;
+  var countryOptionsObj = {
+    shipping: [],
+    billing: []
+  };
+
+  var getFetchedCountryOptions = function getFetchedCountryOptions(addressType) {
+    return countryOptionsObj[addressType] || [];
+  };
+
+  var updateDeliverySection = function updateDeliverySection(shippingOption) {
+    var $selectedOption = $('form#checkout-delivery-form').children().find('input:radio[data-id="' + shippingOption.id + '"]');
+    var resultText = "".concat(shippingOption.label, " ").concat(shippingOption.amount === 0 ? params.translations.free_label : $selectedOption.attr('data-cost'));
+    $selectedOption.prop('checked', true);
+    $('.dr-checkout__delivery').find('.dr-panel-result__text').text(resultText);
+  };
+
+  var updateAddressSection = function updateAddressSection(addressObj, $target) {
+    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.countrySubdivision, addressObj.country];
+    $target.text(addressArr.filter(function (v) {
+      return v;
+    }).join(', '));
+  };
+
+  var updateSummaryLabels = function updateSummaryLabels() {
+    var isTaxInclusive = drgc_params.isTaxInclusive === 'true';
+    var forceExclTax = drgc_params.forceExclTax === 'true';
+    var shouldDisplayVat = drgc_params.shouldDisplayVat === 'true';
+    var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
+
+    if ($('.dr-checkout__payment').hasClass('active') || $('.dr-checkout__confirmation').hasClass('active')) {
+      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
+      $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
+    } else {
+      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.estimated_vat_label : localizedText.estimated_tax_label);
+      $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label + taxSuffixLabel);
+      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.estimated_shipping_vat_label : localizedText.estimated_shipping_tax_label);
+    }
+  };
+
+  var updateSummaryPricing = function updateSummaryPricing(order, isTaxInclusive) {
+    var lineItems = order.lineItems ? order.lineItems.lineItem : order.products || [];
+    var pricing = order.pricing;
+    var newPricing = getSeparatedPricing(lineItems, pricing, isTaxInclusive);
+    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
+
+    if (order.lineItems) {
+      lineItems.forEach(function (item) {
+        var $item = $('div.dr-summary__products > div[data-line-item-id=' + item.id + ']');
+        var $salePrice = $item.find('span.sale-price');
+        var $regularPrice = $item.find('span.regular-price');
+        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
+        $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
+      });
+    }
+
+    $('div.dr-summary__shipping > .item-value').text(shippingVal === 0 ? params.translations.free_label : newPricing.formattedShippingAndHandling);
+    $('div.dr-summary__tax > .item-value').text(newPricing.formattedProductTax);
+    $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
+    $('div.dr-summary__subtotal > .subtotal-value').text(newPricing.formattedSubtotal);
+    $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
+  };
+
+  var getEntityCode = function getEntityCode() {
+    return drgc_params.order && drgc_params.order.order ? drgc_params.order.order.businessEntityCode : drgc_params.cart && drgc_params.cart.cart ? drgc_params.cart.cart.businessEntityCode : '';
+  };
+
+  var getCompliance = function getCompliance(digitalriverjs, entityCode, locale) {
+    return entityCode && locale ? digitalriverjs.Compliance.getDetails(entityCode, locale).disclosure : {};
+  };
+
+  var applyLegalLinks = function applyLegalLinks(digitalriverjs) {
+    var entityCode = getEntityCode();
+    var locale = drgc_params.drLocale;
+    var complianceData = getCompliance(digitalriverjs, entityCode, locale);
+
+    if (Object.keys(complianceData).length) {
+      $('.dr-resellerDisclosure').prop('href', complianceData.resellerDisclosure.url);
+      $('.dr-termsOfSale').prop('href', complianceData.termsOfSale.url);
+      $('.dr-privacyPolicy').prop('href', complianceData.privacyPolicy.url);
+      $('.dr-cookiePolicy').prop('href', complianceData.cookiePolicy.url);
+      $('.dr-cancellationRights').prop('href', complianceData.cancellationRights.url);
+      $('.dr-legalNotice').prop('href', complianceData.legalNotice.url);
+    }
+  };
+
+  var displayPreTAndC = function displayPreTAndC() {
+    if (drgc_params.googlePayBtnStatus && drgc_params.googlePayBtnStatus === 'LOADING') return;
+    if (drgc_params.applePayBtnStatus && drgc_params.applePayBtnStatus === 'LOADING') return;
+    $('.dr-preTAndC-wrapper').show();
+  };
+
+  var displayAlertMessage = function displayAlertMessage(message) {
+    alert('ERROR! ' + message);
+  };
+
+  var apiErrorHandler = function apiErrorHandler(jqXHR) {
+    $('.dr-loading').removeClass('dr-loading');
+    drToast.displayMessage(getAjaxErrorMessage(jqXHR), 'error');
+  };
+
+  var resetBodyOpacity = function resetBodyOpacity() {
+    $('body').css({
+      'pointer-events': 'auto',
+      'opacity': 1
+    });
+  };
+
+  var getPermalink = function getPermalink(productID) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'POST',
+        url: drgc_params.ajaxUrl,
+        data: {
+          action: 'get_permalink',
+          productID: productID
+        },
+        success: function success(data) {
+          resolve(data);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var resetFormSubmitButton = function resetFormSubmitButton($form) {
+    $form.find('button[type="submit"]').removeClass('sending').blur();
+  };
+
+  var getAjaxErrorMessage = function getAjaxErrorMessage(error) {
+    var errMsg = localizedText.undefined_error_msg;
+    if (!error) return errMsg;
+
+    if (error.responseJSON && error.responseJSON.errors && Array.isArray(error.responseJSON.errors.error)) {
+      var err = error.responseJSON.errors.error[0];
+
+      switch (err.code) {
+        case 'restricted-bill-to-country':
+        case 'restricted-ship-to-country':
+          errMsg = localizedText.address_error_msg;
+          break;
+
+        case 'cart-fraud-failure':
+        case 'order-fraud-failure':
+          errMsg = localizedText.unable_place_order_msg;
+          break;
+
+        default:
+          errMsg = err.description;
+      }
+    } else if (Array.isArray(error.errors)) {
+      var _err = error.errors[0];
+      if (_err.description) errMsg = _err.description;
+    }
+
+    return errMsg;
+  };
+
+  var setShippingOption = function setShippingOption(option) {
+    var html = "\n      <div class=\"field-radio\">\n        <input type=\"radio\"\n          name=\"selector\"\n          id=\"shipping-option-".concat(option.id, "\"\n          data-cost=\"").concat(option.formattedCost, "\"\n          data-id=\"").concat(option.id, "\"\n          data-desc=\"").concat(option.description, "\"\n        >\n        <label for=\"shipping-option-").concat(option.id, "\">\n          <span>").concat(option.description, "</span>\n        </label>\n      </div>\n    ");
+    $('#checkout-delivery-form .dr-panel-edit__el').append(html);
+  };
+
+  var getSupportedCountries = function getSupportedCountries(addressType) {
+    var countryCodes = $('#' + addressType + '-field-country > option').map(function (index, element) {
+      return element.value;
+    }).get();
+    countryCodes.shift();
+    return countryCodes;
+  };
+
+  var isSubsAddedToCart = function isSubsAddedToCart(lineItems) {
+    if (!lineItems.length) return false;
+
+    for (var i = 0; i < lineItems.length; i++) {
+      var lineItem = lineItems[i];
+      var customAttributes = lineItem.product.customAttributes.attribute || [];
+      if (customAttributes.some(function (attr) {
+        return attr.name === 'subscriptionType';
+      })) return true;
+    }
+
+    return false;
+  };
+
+  var getLocalizedAutoRenewalTerms = function getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale) {
+    var compliance = getCompliance(digitalriverjs, entityCode, locale);
+    return Object.keys(compliance).length ? compliance.autorenewalPlanTerms.localizedText : '';
+  };
+
+  var formatPrice = function formatPrice(val, pricing) {
+    var localeCode = drgc_params.drLocale.replace('_', '-');
+    var currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
+    var symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
+    var formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');
+    var decimalSymbol = 0 .toLocaleString(localeCode, {
+      minimumFractionDigits: 1
+    })[1];
+    var digits = formattedPriceWithoutSymbol.indexOf(decimalSymbol) > -1 ? formattedPriceWithoutSymbol.split(decimalSymbol).pop().length : 0;
+    val = val.toLocaleString(localeCode, {
+      minimumFractionDigits: digits
+    });
+    val = symbolAsPrefix ? currencySymbol + val : val + currencySymbol;
+    return val;
+  };
+
+  var getCorrectSubtotalWithDiscount = function getCorrectSubtotalWithDiscount(pricing) {
+    var val = pricing.subtotal.value - pricing.discount.value;
+    return formatPrice(val, pricing);
+  };
+
+  var getSeparatedPricing = function getSeparatedPricing(lineItems, pricing, isTaxInclusive) {
+    var productTax = 0;
+    var shippingTax = 0;
+    var forceExclTax = drgc_params.forceExclTax === 'true';
+    var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
+
+    lineItems.forEach(function (lineItem) {
+      productTax += lineItem.pricing.productTax.value;
+      shippingTax += lineItem.pricing.shippingTax.value;
+    });
+    return {
+      formattedProductTax: formatPrice(productTax, pricing),
+      formattedShippingTax: formatPrice(shippingTax, pricing),
+      formattedSubtotal: isTaxInclusive && forceExclTax ? formatPrice(pricing.subtotal.value - productTax, pricing) : pricing.formattedSubtotal,
+      formattedShippingAndHandling: isTaxInclusive && forceExclTax ? formatPrice(shippingVal - shippingTax, pricing) : pricing.formattedShippingAndHandling || pricing.formattedShipping
+    };
+  };
+
+  var getCountryOptionsFromGC = function getCountryOptionsFromGC(requestShipping) {
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(drgc_params.drLocale, "/DisplayPage/id.SimpleRegistrationPage"),
+        cache: false,
+        success: function success(response) {
+          var addressTypes = requestShipping ? ['shipping', 'billing'] : ['billing'];
+          addressTypes.forEach(function (type) {
+            var savedCountryCode = $("#".concat(type, "-field-country")).val();
+            var $options = $(response).find("select[name=".concat(type.toUpperCase(), "country] option")).not(':first');
+            countryOptionsObj[type] = $.map($options, function (option) {
+              return option.value;
+            });
+            $("#".concat(type, "-field-country option")).not(':first').remove();
+            $("#".concat(type, "-field-country")).append($options).val(countryOptionsObj[type].indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
+          });
+          resolve();
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var getAddress = function getAddress(addressType, isDefault) {
+    return {
+      address: {
+        nickName: $('#' + addressType + '-field-address1').val(),
+        isDefault: isDefault,
+        firstName: $('#' + addressType + '-field-first-name').val(),
+        lastName: $('#' + addressType + '-field-last-name').val(),
+        line1: $('#' + addressType + '-field-address1').val(),
+        line2: $('#' + addressType + '-field-address2').val(),
+        city: $('#' + addressType + '-field-city').val(),
+        countrySubdivision: $('#' + addressType + '-field-state').val(),
+        postalCode: $('#' + addressType + '-field-zip').val(),
+        countryName: $('#' + addressType + '-field-country :selected').text(),
+        country: $('#' + addressType + '-field-country :selected').val(),
+        phoneNumber: $('#' + addressType + '-field-phone').val()
+      }
+    };
+  };
+
+  var getDropinBillingAddress = function getDropinBillingAddress(billingAddress) {
+    return {
+      firstName: billingAddress.firstName,
+      lastName: billingAddress.lastName,
+      email: billingAddress.emailAddress,
+      phoneNumber: billingAddress.phoneNumber,
+      address: {
+        line1: billingAddress.line1,
+        line2: billingAddress.line2,
+        city: billingAddress.city,
+        state: billingAddress.countrySubdivision,
+        postalCode: billingAddress.postalCode,
+        country: billingAddress.country
+      }
+    };
+  };
+
+  var getTaxSchema = function getTaxSchema(address) {
+    var data = {
+      action: 'drgc_get_tax_schema',
+      nonce: drgc_params.ajaxNonce,
+      address: address
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          $('.shopper-type-radio, .tax-id-field').remove();
+          var taxSchema = response.data;
+
+          for (var _i = 0, _Object$entries = Object.entries(taxSchema); _i < _Object$entries.length; _i++) {
+            var _Object$entries$_i = slicedToArray_default()(_Object$entries[_i], 2),
+                key = _Object$entries$_i[0],
+                value = _Object$entries$_i[1];
+
+            createTaxIdElement(key, value);
+          }
+
+          $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
+          $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+          resolve(taxSchema);
+        }
+      });
+    });
+  };
+
+  var validateVatNumber = function validateVatNumber(e) {
+    var elem = e.target;
+    var value = elem.value;
+    var pattern = elem.dataset.pattern;
+    if (pattern.indexOf('$,') > 0) pattern = pattern.split('$,').join('$|');
+    var re = new RegExp(pattern);
+    var customErrorMsg = re.test(value) || value.trim() === '' ? '' : 'Invalid ' + elem.dataset.title;
+    elem.setCustomValidity(customErrorMsg);
+
+    if (elem.validity.customError) {
+      $(elem).nextAll('.invalid-feedback').text(elem.validationMessage);
+    } else {
+      $(elem).nextAll('.invalid-feedback').text('');
+    }
+
+    $('#checkout-tax-id-form').addClass('was-validated');
+  };
+
+  var createTaxIdElement = function createTaxIdElement(shopperType, taxRegs) {
+    var typeText = shopperType === 'Individual' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+    var radiosHtml = "\n      <div class=\"form-check form-check-inline shopper-type-radio\">      \n        <input class=\"form-check-input\" type=\"radio\" name=\"shopper-type\" id=\"shopper-type-".concat(shopperType, "\" value=\"").concat(taxRegs.customerType, "\">\n        <label class=\"form-check-label\" for=\"shopper-type-").concat(shopperType, "\">").concat(typeText, "</label>\n      </div>\n    ");
+    var fieldsHtml = '';
+
+    if (taxRegs.taxRegistrations.length) {
+      var taxFields = taxRegs.taxRegistrations;
+      taxFields.forEach(function (element) {
+        var key = Object.keys(element)[0];
+        var taxReg = element[key];
+        fieldsHtml = "\n          ".concat(fieldsHtml, "\n          <div class=\"form-group dr-panel-edit__el tax-id-field ").concat(shopperType, "\">\n            <div class=\"float-container float-container--").concat(key, "\">\n              <label for=\"tax-id-field-").concat(key, "\" class=\"float-label\">").concat(taxReg.title, "</label>\n              <input id=\"tax-id-field-").concat(key, "\" type=\"text\" name=\"tax-id-").concat(key, "\" value=\"\" class=\"form-control float-field float-field--").concat(key, "\" data-key=\"").concat(key, "\" data-title=\"").concat(taxReg.title, "\" data-description=\"").concat(taxReg.description, "\" data-pattern=\"").concat(taxReg.pattern, "\">\n              <span class=\"tax-id-field-info\">*").concat(taxReg.description, "</span>\n              <div class=\"invalid-feedback\"></div>\n            </div>\n          </div>\n        ");
+      });
+    }
+
+    $('#checkout-tax-id-form > button[type="submit"]').before("".concat(radiosHtml).concat(fieldsHtml));
+  };
+
+  var applyTaxRegistration = function applyTaxRegistration(customerType, taxRegs) {
+    var data = {
+      action: 'drgc_apply_tax_registration',
+      nonce: drgc_params.ajaxNonce,
+      customerType: customerType,
+      taxRegs: taxRegs
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
+  var getTaxRegistration = function getTaxRegistration() {
+    var data = {
+      action: 'drgc_get_tax_registration',
+      nonce: drgc_params.ajaxNonce
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.errors && response.data.errors[0].hasOwnProperty('message')) {
+            error = response.data.errors[0].message;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
+  var createTaxProfile = function createTaxProfile(customerId) {
+    var formData = new FormData();
+    formData.append('companyName', $('#tems-us-company-name').val());
+    formData.append('taxAuthority', $('#certificate-tax-authority').val());
+    formData.append('startDate', $('#tems-us-start-date').val());
+    formData.append('endDate', $('#tems-us-end-date').val());
+    formData.append('certificate', $('#tems-us-certificate').get(0).files[0]);
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'POST',
+        headers: {
+          Accept: 'application/json',
+          Authorization: "Bearer ".concat(params.accessToken)
+        },
+        url: "https://".concat(drgc_params.domain, "/user-api/customers/").concat(customerId, "/tax-registration"),
+        cache: false,
+        processData: false,
+        contentType: false,
+        mimeType: 'multipart/form-data',
+        data: formData,
+        success: function success(data) {
+          resolve(data);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var recreateAccessToken = function recreateAccessToken() {
+    var data = {
+      action: 'drgc_recreate_access_token',
+      nonce: drgc_params.ajaxNonce
+    };
+    return new Promise(function (resolve, reject) {
+      $.post(drgc_params.ajaxUrl, data, function (response) {
+        if (!response.success) {
+          var error = '';
+
+          if (response.data && response.data.hasOwnProperty('error_description')) {
+            error = response.data.error_description;
+          } else if (Object.prototype.toString.call(response.data) === '[object String]') {
+            error = response.data;
+          } else {
+            error = localizedText.undefined_error_msg;
+          }
+
+          reject(error);
+        } else {
+          if (sessionStorage.getItem('drgcTaxExempt')) sessionStorage.removeItem('drgcTaxExempt');
+          if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+          resolve(response.data);
+        }
+      });
+    });
+  };
+
+  var updateTemsUsStatus = function updateTemsUsStatus(temsUsStatus) {
+    var adminSabrixCall = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    var statusCustomAttr = {
+      cart: {
+        customAttributes: {
+          attribute: [{
+            name: 'TAX_EXEMPTION_US_STATUS',
+            value: temsUsStatus
+          }, {
+            name: 'TAX_PROFILE_CREATED_STATUS',
+            value: adminSabrixCall
+          }]
+        }
+      }
+    };
+    return commerce_api.updateCart({}, statusCustomAttr);
+  };
+
+  var getTemsUsStatus = function getTemsUsStatus(customAttrs) {
+    return customAttrs.find(function (attr) {
+      return attr.name === 'TAX_EXEMPTION_US_STATUS';
+    }) ? customAttrs.find(function (attr) {
+      return attr.name === 'TAX_EXEMPTION_US_STATUS';
+    }).value : '';
+  };
+
+  return {
+    getFetchedCountryOptions: getFetchedCountryOptions,
+    updateDeliverySection: updateDeliverySection,
+    updateAddressSection: updateAddressSection,
+    updateSummaryLabels: updateSummaryLabels,
+    updateSummaryPricing: updateSummaryPricing,
+    applyLegalLinks: applyLegalLinks,
+    displayPreTAndC: displayPreTAndC,
+    displayAlertMessage: displayAlertMessage,
+    apiErrorHandler: apiErrorHandler,
+    resetBodyOpacity: resetBodyOpacity,
+    getPermalink: getPermalink,
+    getEntityCode: getEntityCode,
+    getCompliance: getCompliance,
+    resetFormSubmitButton: resetFormSubmitButton,
+    getAjaxErrorMessage: getAjaxErrorMessage,
+    setShippingOption: setShippingOption,
+    getSupportedCountries: getSupportedCountries,
+    isSubsAddedToCart: isSubsAddedToCart,
+    getLocalizedAutoRenewalTerms: getLocalizedAutoRenewalTerms,
+    formatPrice: formatPrice,
+    getCorrectSubtotalWithDiscount: getCorrectSubtotalWithDiscount,
+    getSeparatedPricing: getSeparatedPricing,
+    getCountryOptionsFromGC: getCountryOptionsFromGC,
+    getAddress: getAddress,
+    getDropinBillingAddress: getDropinBillingAddress,
+    getTaxSchema: getTaxSchema,
+    validateVatNumber: validateVatNumber,
+    createTaxIdElement: createTaxIdElement,
+    applyTaxRegistration: applyTaxRegistration,
+    getTaxRegistration: getTaxRegistration,
+    createTaxProfile: createTaxProfile,
+    recreateAccessToken: recreateAccessToken,
+    updateTemsUsStatus: updateTemsUsStatus,
+    getTemsUsStatus: getTemsUsStatus
+  };
+}(jQuery, drgc_params);
+
+/* harmony default export */ var checkout_utils = (CheckoutUtils);
 // CONCATENATED MODULE: ./assets/js/public/public-cart.js
 
 
@@ -12752,7 +13142,7 @@ var CartModule = function ($) {
   };
 
   var initAutoRenewalTerms = function initAutoRenewalTerms(digitalriverjs, locale) {
-    var $checkoutBtn = $('a.dr-summary__proceed-checkout');
+    var $checkoutBtn = $('#dr-checkout-btn');
     var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
     $termsCheckbox.change(function (e) {
       var isChecked = $(e.target).is(':checked');
@@ -12885,7 +13275,7 @@ var CartModule = function ($) {
     var offerType = offer.type;
     var productOffers = offer.productOffers.productOffer;
     var promoText = offer.salesPitch.length ? offer.salesPitch[0] : '';
-    var declinedProductIds = typeof $.cookie('drgc_upsell_decline') === 'undefined' ? '' : $.cookie('drgc_upsell_decline');
+    var declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     var upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if (productOffers && productOffers.length) {
@@ -12964,7 +13354,7 @@ var CartModule = function ($) {
                 var salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
                 var listPrice = lineItem.pricing.formattedListPriceWithQuantity;
                 var promise = checkout_utils.getPermalink(parentProductID).then(function (permalink) {
-                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n              <span class=\"regular-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n            </div>\n          </div>");
+                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-short-description\">\n                  <span>").concat(drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : '', "</span>\n                </div>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n              <span class=\"regular-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n            </div>\n          </div>");
                   lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
                 });
                 promises.push(promise);
@@ -13048,28 +13438,43 @@ var CartModule = function ($) {
         hasPhysicalProduct = hasPhysicalProductInLineItems(lineItems);
         return Promise.all([renderLineItems(lineItems), renderSummary(res.cart, hasPhysicalProduct)]);
       } else {
-        if (typeof $.cookie('drgc_upsell_decline') !== 'undefined') $.removeCookie('drgc_upsell_decline', {
-          path: '/'
-        });
+        if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
         $('.dr-cart__auto-renewal-terms').remove();
         $('.dr-cart__products').text(localizedText.empty_cart_msg);
+        $('#dr-checkout-btn').remove();
         $('#cart-estimate').remove();
-        return new Promise(function (resolve) {
-          return resolve();
-        });
-      }
-    }).then(function () {
-      if (lineItems && lineItems.length) {
-        if (checkout_utils.isSubsAddedToCart(lineItems)) {
-          var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-          var href = drgc_params.isLogin !== 'true' ? drgc_params.loginPath : $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
-          $('a.dr-summary__proceed-checkout').prop('href', href);
+        var taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+
+        if (taxRegs.customerType) {
+          if (sessionStorage.getItem('drgcTokenRenewed')) {
+            sessionStorage.removeItem('drgcTokenRenewed');
+            return new Promise(function (resolve) {
+              return resolve();
+            });
+          } else {
+            return checkout_utils.recreateAccessToken();
+          }
+        } else {
+          return new Promise(function (resolve) {
+            return resolve();
+          });
         }
-
-        renderOffers(lineItems);
       }
-
-      $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
+    }).then(function (data) {
+      if (lineItems && lineItems.length) {
+        var $termsCheckbox = $('#autoRenewOptedInOnCheckout');
+        var href = $termsCheckbox.length && !$termsCheckbox.prop('checked') ? '#dr-autoRenewTermsContainer' : drgc_params.isLogin !== 'true' ? drgc_params.loginUrl : drgc_params.checkoutUrl;
+        $('#dr-checkout-btn').prop('href', href);
+        renderOffers(lineItems);
+        $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
+      } else {
+        if (data && data.access_token) {
+          sessionStorage.setItem('drgcTokenRenewed', 'true');
+          location.reload();
+        } else {
+          $('.dr-cart__content').removeClass('dr-loading');
+        }
+      }
     })["catch"](function (jqXHR) {
       checkout_utils.apiErrorHandler(jqXHR);
       $('.dr-cart__content').removeClass('dr-loading');
@@ -13079,7 +13484,7 @@ var CartModule = function ($) {
   var updateUpsellCookie = function updateUpsellCookie(id) {
     var isDeclined = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var productId = id.toString();
-    var declinedProductIds = typeof $.cookie('drgc_upsell_decline') === 'undefined' ? '' : $.cookie('drgc_upsell_decline');
+    var declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     var upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if (upsellDeclineArr.indexOf(productId) === -1 && isDeclined) {
@@ -13090,9 +13495,7 @@ var CartModule = function ($) {
       });
     }
 
-    $.cookie('drgc_upsell_decline', upsellDeclineArr.join(','), {
-      path: '/'
-    });
+    sessionStorage.setItem('drgc_upsell_decline', upsellDeclineArr.join(','));
   };
 
   return {
@@ -13175,7 +13578,8 @@ jQuery(document).ready(function ($) {
       checkout_utils.apiErrorHandler(jqXHR);
       $('.dr-cart__content').removeClass('dr-loading');
     });
-  });
+  }); // Old currency selector, will be deprecated after it's not used by any theme
+
   $('body').on('change', '.dr-currency-select', function (e) {
     e.preventDefault();
     var $this = $(e.target);
@@ -13185,7 +13589,7 @@ jQuery(document).ready(function ($) {
     };
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');else $('body').addClass('dr-loading');
     commerce_api.updateShopper(queryParams).then(function () {
-      return location.reload(true);
+      return location.reload();
     })["catch"](function (jqXHR) {
       checkout_utils.apiErrorHandler(jqXHR);
       $('.dr-cart__content, body').removeClass('dr-loading');
@@ -13296,532 +13700,53 @@ var FloatLabel = function () {
 }();
 
 /* harmony default export */ var float_label = (FloatLabel);
-// CONCATENATED MODULE: ./assets/js/public/payment-googlepay.js
-
-
-
-
-
-
-var DRGooglePay = function ($, translations) {
-  var isConnectionSecure = /*#__PURE__*/function () {
-    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
-      var canPay, details;
-      return regenerator_default.a.wrap(function _callee$(_context) {
-        while (1) {
-          switch (_context.prev = _context.next) {
-            case 0:
-              canPay = false;
-              details = {
-                total: {
-                  label: 'Total',
-                  amount: {
-                    currency: 'USD',
-                    value: '0.00'
-                  }
-                }
-              };
-
-              if (!window.PaymentRequest) {
-                _context.next = 6;
-                break;
-              }
-
-              _context.next = 5;
-              return new PaymentRequest([{
-                supportedMethods: 'basic-card'
-              }], details).canMakePayment();
-
-            case 5:
-              canPay = _context.sent;
-
-            case 6:
-              ;
-              return _context.abrupt("return", canPay);
-
-            case 8:
-            case "end":
-              return _context.stop();
-          }
-        }
-      }, _callee);
-    }));
-
-    return function isConnectionSecure() {
-      return _ref.apply(this, arguments);
-    };
-  }();
-
-  var initGooglePayEvents = function initGooglePayEvents(googlepay, requestShipping) {
-    googlepay.on('ready', function () {
-      drgc_params.googlePayBtnStatus = 'READY';
-      checkout_utils.displayPreTAndC();
-    });
-    googlepay.on('click', function () {
-      $('#dr-preTAndC-err-msg').text('').hide();
-    });
-    googlepay.on('shippingaddresschange', function (event) {
-      var shippingAddress = event.shippingAddress;
-      var supportedCountries = checkout_utils.getSupportedCountries('shipping');
-
-      if (supportedCountries.indexOf(shippingAddress.address.country) > -1) {
-        var cartRequest = {
-          shippingAddress: {
-            id: 'shippingAddress',
-            city: shippingAddress.address.city,
-            countrySubdivision: shippingAddress.address.state || 'NA',
-            postalCode: shippingAddress.address.postalCode,
-            country: shippingAddress.address.country
-          }
-        };
-        commerce_api.updateCart({
-          expand: 'all'
-        }, cartRequest).then(function (data) {
-          var displayItems = checkout_utils.createDisplayItems(data.cart);
-          var shippingOptions = checkout_utils.createShippingOptions(data.cart);
-          checkout_utils.updateShippingOptions(shippingOptions, data.cart.shippingMethod.code);
-          var requestUpdateObject = {
-            total: {
-              label: translations.order_total_label,
-              amount: data.cart.pricing.orderTotal.value
-            },
-            displayItems: displayItems,
-            shippingOptions: shippingOptions
-          };
-          requestUpdateObject.status = 'success';
-          event.updateWith(requestUpdateObject);
-        })["catch"](function (jqXHR) {
-          event.updateWith({
-            status: 'failure',
-            error: {
-              message: checkout_utils.getAjaxErrorMessage(jqXHR)
-            }
-          });
-        });
-      } else {
-        event.updateWith({
-          status: 'failure',
-          error: {
-            message: translations.shipping_country_error_msg
-          }
-        });
-      }
-    });
-    googlepay.on('shippingoptionchange', function (event) {
-      var shippingOption = event.shippingOption;
-      commerce_api.applyShippingOption(shippingOption.id).then(function (data) {
-        var displayItems = checkout_utils.createDisplayItems(data.cart);
-        var shippingOptions = checkout_utils.createShippingOptions(data.cart);
-        checkout_utils.updateShippingOptions(shippingOptions, shippingOption.id);
-        var requestUpdateObject = {
-          status: 'success',
-          total: {
-            label: ranslations.order_total_label,
-            amount: data.cart.pricing.orderTotal.value
-          },
-          displayItems: displayItems,
-          shippingOptions: shippingOptions
-        };
-        event.updateWith(requestUpdateObject);
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        event.updateWith({
-          status: 'failure',
-          error: {
-            message: checkout_utils.getAjaxErrorMessage(jqXHR)
-          }
-        });
-      });
-    });
-    googlepay.on('source', function (event) {
-      var $errorMsg = $('#dr-preTAndC-err-msg');
-      var shippingNotSupported = false;
-      var billingNotSupported = false;
-      var billingCountries = checkout_utils.getSupportedCountries('billing');
-      billingNotSupported = billingCountries.indexOf(event.billingAddress.address.country) === -1 ? true : false;
-
-      if (requestShipping) {
-        var shippingCountries = checkout_utils.getSupportedCountries('shipping');
-        shippingNotSupported = shippingCountries.indexOf(event.shippingAddress.address.country) === -1 ? true : false;
-      }
-
-      if (shippingNotSupported) {
-        $errorMsg.text(translations.shipping_country_error_msg).show();
-        event.complete('fail');
-      } else if (billingNotSupported) {
-        $errorMsg.text(translations.billing_country_error_msg).show();
-        event.complete('fail');
-      } else {
-        $errorMsg.text('').hide();
-        var sourceId = event.source.id;
-        var cartRequest = checkout_utils.createCartRequest(event, requestShipping);
-        sessionStorage.setItem('paymentSourceId', sourceId);
-        $('body').addClass('dr-loading');
-        commerce_api.updateCart({
-          expand: 'all'
-        }, cartRequest).then(function () {
-          return commerce_api.applyPaymentMethod(sourceId);
-        }).then(function () {
-          return commerce_api.submitCart({
-            ipAddress: drgc_params.client_ip
-          });
-        }).then(function (data) {
-          $('#checkout-confirmation-form > input[name="order_id"]').val(data.submitCart.order.id);
-          $('#checkout-confirmation-form').submit();
-        })["catch"](function (jqXHR) {
-          checkout_utils.displayAlertMessage(checkout_utils.getAjaxErrorMessage(jqXHR));
-          $('body').removeClass('dr-loading');
-        });
-        event.complete('success');
-      }
-    });
-  };
-
-  var init = function init(params) {
-    var _ref2 = params || {},
-        digitalriverJs = _ref2.digitalriverJs,
-        paymentDataRequest = _ref2.paymentDataRequest,
-        _ref2$requestShipping = _ref2.requestShipping,
-        requestShipping = _ref2$requestShipping === void 0 ? false : _ref2$requestShipping;
-
-    if (typeof_default()(digitalriverJs) !== 'object') {
-      throw new Error('Please pass an instance of the DigitalRiver object.');
-    }
-
-    if (typeof_default()(paymentDataRequest) !== 'object') {
-      throw new Error('Please pass a PaymentDataRequest object.');
-    }
-
-    var googlepay = digitalriverJs.createElement('googlepay', paymentDataRequest);
-
-    if (googlepay.canMakePayment() && isConnectionSecure()) {
-      drgc_params.googlePayBtnStatus = 'LOADING';
-      initGooglePayEvents(googlepay, requestShipping);
-      googlepay.mount('dr-googlepay-button');
-      document.getElementById('dr-googlepay-button').style.border = 'none';
-      return googlepay;
-    } else {
-      drgc_params.googlePayBtnStatus = 'UNAVAILABLE';
-      $('.dr-checkout__googlepay').hide();
-      return false;
-    }
-  };
-
-  return {
-    init: init
-  };
-}(jQuery, drgc_params.translations);
-
-/* harmony default export */ var payment_googlepay = (DRGooglePay);
-// CONCATENATED MODULE: ./assets/js/public/payment-applepay.js
-
-
-
-
-var DRApplePay = function ($, translations) {
-  var initApplePayEvents = function initApplePayEvents(applepay, requestShipping) {
-    applepay.on('ready', function () {
-      drgc_params.applePayBtnStatus = 'READY';
-      checkout_utils.displayPreTAndC();
-    });
-    applepay.on('click', function () {
-      $('#dr-preTAndC-err-msg').text('').hide();
-    });
-    applepay.on('shippingaddresschange', function (event) {
-      var shippingAddress = event.shippingAddress;
-      var supportedCountries = checkout_utils.getSupportedCountries('shipping');
-
-      if (shippingAddress.address.postalCode === '') {
-        event.updateWith({
-          status: 'failure',
-          error: {
-            fields: {
-              postalCode: translations.invalid_postal_code_msg
-            }
-          }
-        });
-      } else if (shippingAddress.address.city === '') {
-        event.updateWith({
-          status: 'failure',
-          error: {
-            fields: {
-              city: translations.invalid_city_msg
-            }
-          }
-        });
-      } else if (shippingAddress.address.country === 'US' && shippingAddress.address.state === '') {
-        event.updateWith({
-          status: 'failure',
-          error: {
-            fields: {
-              region: translations.invalid_region_msg
-            }
-          }
-        });
-      } else if (supportedCountries.indexOf(shippingAddress.address.country) === -1) {
-        event.updateWith({
-          status: 'failure',
-          error: {
-            message: translations.shipping_country_error_msg
-          }
-        });
-      } else {
-        if (requestShipping) {
-          var cartRequest = {
-            cart: {
-              shippingAddress: {
-                id: 'shippingAddress',
-                city: shippingAddress.address.city,
-                countrySubdivision: shippingAddress.address.state || 'NA',
-                postalCode: shippingAddress.address.postalCode,
-                country: shippingAddress.address.country
-              }
-            }
-          };
-          commerce_api.updateCart({
-            expand: 'all'
-          }, cartRequest).then(function (data) {
-            var displayItems = checkout_utils.createDisplayItems(data.cart);
-            var shippingOptions = checkout_utils.createShippingOptions(data.cart);
-            checkout_utils.updateShippingOptions(shippingOptions, data.cart.shippingMethod.code);
-            var requestUpdateObject = {
-              total: {
-                label: translations.order_total_label,
-                amount: data.cart.pricing.orderTotal.value
-              },
-              displayItems: displayItems,
-              shippingOptions: shippingOptions
-            };
-            requestUpdateObject.status = 'success';
-            event.updateWith(requestUpdateObject);
-          })["catch"](function (jqXHR) {
-            event.updateWith({
-              status: 'failure',
-              error: {
-                message: checkout_utils.getAjaxErrorMessage(jqXHR)
-              }
-            });
-          });
-        } else {
-          commerce_api.getCart({
-            expand: 'all'
-          }).then(function (data) {
-            var displayItems = checkout_utils.createDisplayItems(data.cart);
-            var requestUpdateObject = {
-              total: {
-                label: translations.order_total_label,
-                amount: data.cart.pricing.orderTotal.value
-              },
-              displayItems: displayItems
-            };
-            requestUpdateObject.status = 'success';
-            event.updateWith(requestUpdateObject);
-          })["catch"](function (jqXHR) {
-            event.updateWith({
-              status: 'failure',
-              error: {
-                message: checkout_utils.getAjaxErrorMessage(jqXHR)
-              }
-            });
-          });
-        }
-      }
-    });
-    applepay.on('shippingoptionchange', function (event) {
-      var shippingOption = event.shippingOption;
-      commerce_api.applyShippingOption(shippingOption.id).then(function (data) {
-        var displayItems = checkout_utils.createDisplayItems(data.cart);
-        var shippingOptions = checkout_utils.createShippingOptions(data.cart);
-        checkout_utils.updateShippingOptions(shippingOptions, shippingOption.id);
-        var requestUpdateObject = {
-          status: 'success',
-          total: {
-            label: translations.order_total_label,
-            amount: data.cart.pricing.orderTotal.value
-          },
-          displayItems: displayItems,
-          shippingOptions: shippingOptions
-        };
-        event.updateWith(requestUpdateObject);
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        event.updateWith({
-          status: 'failure',
-          error: {
-            message: checkout_utils.getAjaxErrorMessage(jqXHR)
-          }
-        });
-      });
-    });
-    applepay.on('source', function (event) {
-      var $errorMsg = $('#dr-preTAndC-err-msg');
-      var shippingNotSupported = false;
-      var billingNotSupported = false;
-      var billingCountries = checkout_utils.getSupportedCountries('billing');
-      billingNotSupported = billingCountries.indexOf(event.billingAddress.address.country) === -1 ? true : false;
-
-      if (requestShipping) {
-        var shippingCountries = checkout_utils.getSupportedCountries('shipping');
-        shippingNotSupported = shippingCountries.indexOf(event.shippingAddress.address.country) === -1 ? true : false;
-      }
-
-      if (shippingNotSupported) {
-        $errorMsg.text(translations.shipping_country_error_msg).show();
-        event.complete('fail');
-      } else if (billingNotSupported) {
-        $errorMsg.text(translations.billing_country_error_msg).show();
-        event.complete('fail');
-      } else {
-        $errorMsg.text('').hide();
-        var sourceId = event.source.id;
-        var cartRequest = checkout_utils.createCartRequest(event, requestShipping);
-        sessionStorage.setItem('paymentSourceId', sourceId);
-        $('body').addClass('dr-loading');
-        commerce_api.updateCart({
-          expand: 'all'
-        }, cartRequest).then(function () {
-          return commerce_api.applyPaymentMethod(sourceId);
-        }).then(function () {
-          return commerce_api.submitCart({
-            ipAddress: drgc_params.client_ip
-          });
-        })["catch"](function (jqXHR) {
-          checkout_utils.displayAlertMessage(checkout_utils.getAjaxErrorMessage(jqXHR));
-          $('body').removeClass('dr-loading');
-        });
-        event.complete('success');
-      }
-    });
-  };
-
-  var init = function init(params) {
-    var _ref = params || {},
-        digitalriverJs = _ref.digitalriverJs,
-        paymentDataRequest = _ref.paymentDataRequest,
-        _ref$requestShipping = _ref.requestShipping,
-        requestShipping = _ref$requestShipping === void 0 ? false : _ref$requestShipping;
-
-    if (typeof_default()(digitalriverJs) !== 'object') {
-      throw new Error('Please pass an instance of the DigitalRiver object.');
-    }
-
-    if (typeof_default()(paymentDataRequest) !== 'object') {
-      throw new Error('Please pass a PaymentDataRequest object.');
-    }
-
-    var applepay = digitalriverJs.createElement('applepay', paymentDataRequest);
-
-    if (applepay.canMakePayment()) {
-      drgc_params.applePayBtnStatus = 'LOADING';
-      initApplePayEvents(applepay, requestShipping);
-      applepay.mount('dr-applepay-button');
-      document.getElementById('dr-applepay-button').style.border = 'none';
-      return applepay;
-    } else {
-      drgc_params.applePayBtnStatus = 'UNAVAILABLE';
-      $('.dr-checkout__applepay').hide();
-      return false;
-    }
-  };
-
-  return {
-    init: init
-  };
-}(jQuery, drgc_params.translations);
-
-/* harmony default export */ var payment_applepay = (DRApplePay);
 // CONCATENATED MODULE: ./assets/js/public/public-checkout.js
 
+
+
+function public_checkout_createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = public_checkout_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function public_checkout_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return public_checkout_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return public_checkout_arrayLikeToArray(o, minLen); }
+
+function public_checkout_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
  // 3rd-party plugin
 
 
 
 
-
-
 var CheckoutModule = function ($) {
   var localizedText = drgc_params.translations;
-  var requestShipping = drgc_params.cart.cart.shippingOptions.shippingOption ? true : false;
 
-  var initPreTAndC = function initPreTAndC() {
-    $('#dr-preTAndC').change(function (e) {
-      if ($(e.target).is(':checked')) {
-        $('#dr-preTAndC-err-msg').text('').hide();
-        $('.dr-cloudpay-btn').css({
-          'pointer-events': 'auto'
-        });
-      } else {
-        $('.dr-cloudpay-btn').css({
-          'pointer-events': 'none'
-        });
-      }
-    });
-    $('.dr-cloudpay-btn-wrapper').click(function () {
-      if (!$('#dr-preTAndC').is(':checked')) {
-        $('#dr-preTAndC-err-msg').text(localizedText.required_tandc_msg).show();
-      }
-    });
-    $('#dr-preTAndC').trigger('change');
-  };
-
-  var updateSummaryLabels = function updateSummaryLabels() {
-    var isTaxInclusive = drgc_params.isTaxInclusive === 'true';
-    var forceExclTax = drgc_params.forceExclTax === 'true';
-    var shouldDisplayVat = drgc_params.shouldDisplayVat === 'true';
-    var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
-
-    if ($('.dr-checkout__payment').hasClass('active') || $('.dr-checkout__confirmation').hasClass('active')) {
-      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
-      $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
-      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
-    } else {
-      $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.estimated_vat_label : localizedText.estimated_tax_label);
-      $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label + taxSuffixLabel);
-      $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.estimated_shipping_vat_label : localizedText.estimated_shipping_tax_label);
-    }
-  };
-
-  var getCountryOptionsFromGC = function getCountryOptionsFromGC() {
-    var selectedLocale = $('.dr-currency-select option:selected').data('locale') || drgc_params.drLocale;
-    return new Promise(function (resolve, reject) {
-      $.ajax({
-        type: 'GET',
-        url: "https://drh-fonts.img.digitalrivercontent.net/store/".concat(drgc_params.siteID, "/").concat(selectedLocale, "/DisplayPage/id.SimpleRegistrationPage"),
-        cache: false,
-        success: function success(response) {
-          var addressTypes = requestShipping ? ['shipping', 'billing'] : ['billing'];
-          addressTypes.forEach(function (type) {
-            var savedCountryCode = $("#".concat(type, "-field-country")).val();
-            var $options = $(response).find("select[name=".concat(type.toUpperCase(), "country] option")).not(':first');
-            var optionArr = $.map($options, function (option) {
-              return option.value;
-            });
-            $("#".concat(type, "-field-country option")).not(':first').remove();
-            $("#".concat(type, "-field-country")).append($options).val(optionArr.indexOf(savedCountryCode) > -1 ? savedCountryCode : '');
-          });
-          resolve();
-        },
-        error: function error(jqXHR) {
-          reject(jqXHR);
-        }
-      });
-    });
-  };
-
-  var moveToNextSection = function moveToNextSection($section) {
+  var moveToNextSection = function moveToNextSection(prevIndex, $section, dropInParams, addressObj) {
     var $nextSection = $section.next();
+
+    if (!$nextSection.find('div.dr-panel-result > p.dr-panel-result__text').is(':empty') && !$section.hasClass('dr-checkout__tax-exempt') && !$section.hasClass('dr-checkout__shipping') && !$section.hasClass('dr-checkout__billing')) {
+      $nextSection = $('.dr-checkout__el').eq(prevIndex - 1);
+    }
+
+    $('.dr-accordion__edit').removeClass('d-none');
+
+    if ($nextSection.hasClass('dr-checkout__payment')) {
+      $('span.dr-accordion__edit:not(.tax-id):not(.delivery)').addClass('d-none');
+      $('#edit-info-link').removeClass('d-none');
+      if ($('#dr-payment-info').is(':empty')) createDropin(dropInParams, addressObj);
+    } else if ($nextSection.hasClass('dr-checkout__confirmation')) {
+      $('span.dr-accordion__edit:not(.tax-id):not(.delivery):not(.payment)').addClass('d-none');
+    }
+
     $section.removeClass('active').addClass('closed');
+
+    if ($section.find('.dr-address-book').length) {
+      $section.find('.dr-address-book-btn').removeClass('active');
+      $section.find('.dr-address-book-btn, .dr-address-book').hide();
+    }
+
     $nextSection.addClass('active').removeClass('closed');
 
     if ($nextSection.hasClass('small-closed-left')) {
       $nextSection.removeClass('small-closed-left');
       $nextSection.next().removeClass('small-closed-right');
-    }
-
-    if ($section.find('.dr-address-book').length) {
-      $section.find('.dr-address-book-btn').removeClass('active');
-      $section.find('.dr-address-book-btn, .dr-address-book').hide();
     }
 
     if ($nextSection.find('.dr-address-book').length) {
@@ -13832,14 +13757,24 @@ var CheckoutModule = function ($) {
       }
     }
 
-    adjustColumns($section);
-    updateSummaryLabels();
+    if (sessionStorage.getItem('drgcTaxExempt') === 'true' && sessionStorage.getItem('drgcTaxRegs')) {
+      if ($nextSection.hasClass('dr-checkout__tax-id')) {
+        $nextSection.find('span.dr-accordion__edit').addClass('d-none');
+        $('#checkout-tax-id-form').trigger('submit');
+      } else if ($section.hasClass('dr-checkout__tax-id')) {
+        $section.find('span.dr-accordion__edit').addClass('d-none');
+      }
+    }
+
+    adjustColumns($nextSection);
+    checkout_utils.updateSummaryLabels();
     $('html, body').animate({
       scrollTop: $nextSection.first().offset().top - 80
     }, 500);
   };
 
-  var adjustColumns = function adjustColumns($section) {
+  var adjustColumns = function adjustColumns($nextSection) {
+    var editClicked = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
     var $shippingSection = $('.dr-checkout__shipping');
     var $billingSection = $('.dr-checkout__billing');
     var $paymentSection = $('.dr-checkout__payment');
@@ -13853,7 +13788,7 @@ var CheckoutModule = function ($) {
       $billingSection.removeClass('small-closed-right');
     }
 
-    if ($section && $section.hasClass('dr-checkout__payment')) {
+    if ($nextSection && $nextSection.hasClass('dr-checkout__confirmation') && !editClicked) {
       $paymentSection.addClass('small-closed-left');
       $confirmSection.addClass('small-closed-right').removeClass('d-none');
     } else {
@@ -13880,7 +13815,7 @@ var CheckoutModule = function ($) {
 
   var buildAddressPayload = function buildAddressPayload($form) {
     var addressType = $form.attr('id') === 'checkout-shipping-form' ? 'shipping' : 'billing';
-    var email = $('#checkout-email-form > div.form-group > input[name=email]').val().trim();
+    var email = $('#customer-email').val().trim();
     var payload = {
       shipping: {},
       billing: {}
@@ -13891,8 +13826,8 @@ var CheckoutModule = function ($) {
     });
     payload[addressType].emailAddress = email;
 
-    if (payload[addressType].country !== 'US') {
-      payload[addressType].countrySubdivision = 'NA';
+    if (payload[addressType].country && payload[addressType].country !== 'US') {
+      payload[addressType].countrySubdivision = '';
     }
 
     if (addressType === 'billing') {
@@ -13902,25 +13837,6 @@ var CheckoutModule = function ($) {
     }
 
     return payload[addressType];
-  };
-
-  var getAddress = function getAddress(addressType, isDefault) {
-    return {
-      address: {
-        nickName: $('#' + addressType + '-field-address1').val(),
-        isDefault: isDefault,
-        firstName: $('#' + addressType + '-field-first-name').val(),
-        lastName: $('#' + addressType + '-field-last-name').val(),
-        line1: $('#' + addressType + '-field-address1').val(),
-        line2: $('#' + addressType + '-field-address2').val(),
-        city: $('#' + addressType + '-field-city').val(),
-        countrySubdivision: $('#' + addressType + '-field-state').val(),
-        postalCode: $('#' + addressType + '-field-zip').val(),
-        countryName: $('#' + addressType + '-field-country :selected').text(),
-        country: $('#' + addressType + '-field-country :selected').val(),
-        phoneNumber: $('#' + addressType + '-field-phone').val()
-      }
-    };
   };
 
   var displayAddressErrMsg = function displayAddressErrMsg() {
@@ -13934,14 +13850,9 @@ var CheckoutModule = function ($) {
     }
   };
 
-  var displayCartAddress = function displayCartAddress(addressObj, $target) {
-    var addressArr = ["".concat(addressObj.firstName, " ").concat(addressObj.lastName), addressObj.line1, addressObj.city, addressObj.country];
-    $target.text(addressArr.join(', '));
-  };
-
   var preselectShippingOption = /*#__PURE__*/function () {
     var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(data) {
-      var $errorMsgElem, defaultShippingOption, shippingOptions, defaultExists, index, option, res, freeShipping;
+      var $errorMsgElem, defaultShippingOption, shippingOptions, defaultExists, index, option;
       return regenerator_default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
@@ -13953,7 +13864,7 @@ var CheckoutModule = function ($) {
               $('#checkout-delivery-form > button[type="submit"]').prop('disabled', shippingOptions.length === 0);
 
               if (!shippingOptions.length) {
-                _context.next = 26;
+                _context.next = 22;
                 break;
               }
 
@@ -13962,7 +13873,7 @@ var CheckoutModule = function ($) {
 
             case 8:
               if (!(index < shippingOptions.length)) {
-                _context.next = 21;
+                _context.next = 17;
                 break;
               }
 
@@ -13977,23 +13888,17 @@ var CheckoutModule = function ($) {
                 break;
               }
 
-              return _context.abrupt("continue", 18);
+              return _context.abrupt("continue", 14);
 
             case 13:
-              _context.next = 15;
-              return commerce_api.applyShippingOption(option.id);
+              checkout_utils.setShippingOption(option);
 
-            case 15:
-              res = _context.sent;
-              freeShipping = res.cart.pricing.shippingAndHandling.value === 0;
-              checkout_utils.setShippingOption(option, freeShipping);
-
-            case 18:
+            case 14:
               index++;
               _context.next = 8;
               break;
 
-            case 21:
+            case 17:
               // If default shipping option is not in the list, then pre-select the 1st one
               if (!defaultExists) {
                 defaultShippingOption = shippingOptions[0].id;
@@ -14002,14 +13907,14 @@ var CheckoutModule = function ($) {
               $('#checkout-delivery-form').children().find('input:radio[data-id="' + defaultShippingOption + '"]').prop("checked", true);
               return _context.abrupt("return", commerce_api.applyShippingOption(defaultShippingOption));
 
-            case 26:
+            case 22:
               $('#checkout-delivery-form .dr-panel-edit__el').empty();
               displayAddressErrMsg({}, $errorMsgElem);
               return _context.abrupt("return", new Promise(function (resolve) {
                 return resolve(data);
               }));
 
-            case 29:
+            case 25:
             case "end":
               return _context.stop();
           }
@@ -14041,658 +13946,1062 @@ var CheckoutModule = function ($) {
     });
   };
 
+  var initTaxIdentifier = /*#__PURE__*/function () {
+    var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(cart, address, selectedCountry) {
+      var lineItems, tax, isTaxExempt, taxRegs, shopperType, taxIds, _iterator, _step, element, $field;
+
+      return regenerator_default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              lineItems = cart.lineItems.lineItem;
+              tax = cart.pricing.tax.value;
+              isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && tax === 0;
+              sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+
+              if (!(!isTaxExempt || address.country !== selectedCountry || $.trim($('#tax-id-error-msg').html()) !== '' || !$('.tax-id-field').length)) {
+                _context2.next = 14;
+                break;
+              }
+
+              _context2.prev = 5;
+              _context2.next = 8;
+              return checkout_utils.getTaxSchema(address);
+
+            case 8:
+              float_label.init();
+              _context2.next = 14;
+              break;
+
+            case 11:
+              _context2.prev = 11;
+              _context2.t0 = _context2["catch"](5);
+              throw new Error(_context2.t0);
+
+            case 14:
+              _context2.prev = 14;
+              _context2.next = 17;
+              return checkout_utils.getTaxRegistration();
+
+            case 17:
+              taxRegs = _context2.sent;
+
+              if (!taxRegs.customerType) {
+                _context2.next = 47;
+                break;
+              }
+
+              shopperType = taxRegs.customerType;
+              taxIds = taxRegs.taxRegistrations;
+              $('input[name="shopper-type"][value="' + shopperType + '"]').prop('checked', true);
+              _iterator = public_checkout_createForOfIteratorHelper(taxIds);
+              _context2.prev = 23;
+
+              _iterator.s();
+
+            case 25:
+              if ((_step = _iterator.n()).done) {
+                _context2.next = 36;
+                break;
+              }
+
+              element = _step.value;
+              $field = $('#tax-id-field-' + element.key);
+
+              if ($field.length) {
+                _context2.next = 33;
+                break;
+              }
+
+              taxRegs['country'] = 'NOT_SUPPORTED';
+              return _context2.abrupt("break", 36);
+
+            case 33:
+              $field.val(element.value).parent().addClass('active').parent().removeClass('d-none');
+
+            case 34:
+              _context2.next = 25;
+              break;
+
+            case 36:
+              _context2.next = 41;
+              break;
+
+            case 38:
+              _context2.prev = 38;
+              _context2.t1 = _context2["catch"](23);
+
+              _iterator.e(_context2.t1);
+
+            case 41:
+              _context2.prev = 41;
+
+              _iterator.f();
+
+              return _context2.finish(41);
+
+            case 44:
+              sessionStorage.setItem('drgcTaxRegs', JSON.stringify(taxRegs));
+              _context2.next = 48;
+              break;
+
+            case 47:
+              if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+
+            case 48:
+              return _context2.abrupt("return", taxRegs);
+
+            case 51:
+              _context2.prev = 51;
+              _context2.t2 = _context2["catch"](14);
+              throw new Error(_context2.t2);
+
+            case 54:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[5, 11], [14, 51], [23, 38, 41, 44]]);
+    }));
+
+    return function initTaxIdentifier(_x2, _x3, _x4) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
+  var initShopperTypeRadio = function initShopperTypeRadio() {
+    $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
+
+    if (sessionStorage.getItem('drgcTaxRegs')) {
+      var taxRegs = JSON.parse(sessionStorage.getItem('drgcTaxRegs'));
+      var shopperType = taxRegs.customerType;
+      var $checkedRadio = $('input[name="shopper-type"][value="' + shopperType + '"]');
+
+      if ($checkedRadio.length) {
+        $checkedRadio.prop('checked', true).trigger('click');
+      } else {
+        $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+      }
+    } else {
+      $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+    }
+  };
+
+  var isTaxExempt = function isTaxExempt(lineItems) {
+    var lineItemCustomAttrs = lineItems[0].customAttributes.attribute;
+    var attr = lineItemCustomAttrs.find(function (item) {
+      return item.name === 'isTaxExempt';
+    });
+
+    if (attr !== undefined) {
+      return attr.value === 'true';
+    } else {
+      return false;
+    }
+  };
+
+  var displayTemsUsResult = function displayTemsUsResult(tax, status) {
+    switch (status) {
+      case 'ELIGIBLE_EXEMPTED':
+        $('.dr-checkout__tax-exempt > .dr-panel-result > p.uploaded').addClass('d-none');
+
+        if (tax === 0) {
+          $('#tems-us-result > p.taxable').hide();
+          $('#tems-us-result > p.tax-exempt').fadeIn();
+        } else {
+          $('#tems-us-result > p.tax-exempt').hide();
+          $('#tems-us-result > p.taxable').fadeIn();
+        }
+
+        break;
+
+      case 'ELIGIBLE_NOT_EXEMPTED':
+      case 'NOT_ELIGIBLE':
+        $('#tems-us-result > p.alert').hide();
+        break;
+    }
+  };
+
+  var createDropin = function createDropin(dropInParams, addressObj) {
+    var _ref3 = dropInParams || {},
+        _ref3$digitalriverJs = _ref3.digitalriverJs,
+        digitalriverJs = _ref3$digitalriverJs === void 0 ? {} : _ref3$digitalriverJs,
+        _ref3$sessionId = _ref3.sessionId,
+        sessionId = _ref3$sessionId === void 0 ? '' : _ref3$sessionId,
+        _ref3$currency = _ref3.currency,
+        currency = _ref3$currency === void 0 ? '' : _ref3$currency,
+        _ref3$dropInConfig = _ref3.dropInConfig,
+        dropInConfig = _ref3$dropInConfig === void 0 ? {} : _ref3$dropInConfig;
+
+    var billingAddress = checkout_utils.getDropinBillingAddress(addressObj);
+    var lang = drgc_params.drLocale.split('_')[0];
+
+    if ('onlineBanking' in dropInConfig) {
+      dropInConfig.onlineBanking.onlineBanking = {
+        currency: currency,
+        country: billingAddress.address.country
+      };
+    }
+
+    if ('googlePay' in dropInConfig) {
+      dropInConfig.googlePay.style.buttonLanguage = lang;
+    }
+
+    if ('applePay' in dropInConfig) {
+      dropInConfig.applePay.style.buttonLanguage = lang;
+    }
+
+    var config = {
+      sessionId: sessionId,
+      billingAddress: billingAddress,
+      paymentMethodConfiguration: dropInConfig,
+      onSuccess: function onSuccess(res) {
+        sessionStorage.setItem('drgcPaymentSource', JSON.stringify(res.source));
+        $('#dr-payment-failed-msg, #dr-checkout-err-field').text('').hide();
+        $('#checkout-payment-form').trigger('submit');
+      },
+      onError: function onError(res) {
+        console.error(res.errors);
+        $('#dr-payment-failed-msg').text(res.errors[0].message).show();
+        $('#checkout-payment-form').removeClass('dr-loading');
+      },
+      onReady: function onReady(res) {
+        $('#checkout-payment-form').removeClass('dr-loading');
+
+        if (!res.paymentMethodTypes.length) {
+          $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
+        }
+      },
+      onCancel: function onCancel(res) {}
+    };
+    $('#checkout-payment-form').addClass('dr-loading');
+
+    try {
+      digitalriverJs.createDropin(config).mount('dr-payment-info');
+    } catch (error) {
+      console.error(error.message);
+    }
+  };
+
   return {
-    initPreTAndC: initPreTAndC,
-    updateSummaryLabels: updateSummaryLabels,
-    getCountryOptionsFromGC: getCountryOptionsFromGC,
     moveToNextSection: moveToNextSection,
     adjustColumns: adjustColumns,
     validateAddress: validateAddress,
     buildAddressPayload: buildAddressPayload,
-    getAddress: getAddress,
     displayAddressErrMsg: displayAddressErrMsg,
-    displayCartAddress: displayCartAddress,
     preselectShippingOption: preselectShippingOption,
-    applyPaymentAndSubmitCart: applyPaymentAndSubmitCart
+    applyPaymentAndSubmitCart: applyPaymentAndSubmitCart,
+    initShopperTypeRadio: initShopperTypeRadio,
+    isTaxExempt: isTaxExempt,
+    initTaxIdentifier: initTaxIdentifier,
+    displayTemsUsResult: displayTemsUsResult,
+    createDropin: createDropin
   };
 }(jQuery);
 
-jQuery(document).ready(function ($) {
-  if ($('#checkout-payment-form').length) {
-    // Globals
-    var localizedText = drgc_params.translations;
-    var domain = drgc_params.domain;
-    var isLoggedIn = drgc_params.isLogin === 'true';
-    var drLocale = drgc_params.drLocale || 'en_US';
-    var cartData = drgc_params.cart.cart;
-    var requestShipping = cartData.shippingOptions.shippingOption ? true : false;
-    var isGooglePayEnabled = drgc_params.isGooglePayEnabled === 'true';
-    var isApplePayEnabled = drgc_params.isApplePayEnabled === 'true';
-    var digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey, {
-      'locale': drLocale.split('_').join('-')
-    });
-    var addressPayload = {
-      shipping: {},
-      billing: {}
-    };
-    var paymentSourceId = null; // Section progress
+jQuery(document).ready( /*#__PURE__*/function () {
+  var _ref4 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee6($) {
+    var localizedText, isLoggedIn, drLocale, selectedCountry, cartData, requestShipping, digitalriverjs, addressPayload, paymentSourceId, currency, dropInConfig, sessionId, dropInParams, finishedSectionIdx, activeSectionIdx, $section;
+    return regenerator_default.a.wrap(function _callee6$(_context6) {
+      while (1) {
+        switch (_context6.prev = _context6.next) {
+          case 0:
+            if ($('#checkout-payment-form').length) {
+              // Globals
+              localizedText = drgc_params.translations;
+              isLoggedIn = drgc_params.isLogin === 'true';
+              drLocale = drgc_params.drLocale || 'en_US';
+              selectedCountry = drLocale.split('_')[1];
+              cartData = drgc_params.cart.cart;
+              requestShipping = cartData.shippingOptions.shippingOption ? true : false;
+              digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey, {
+                'locale': drLocale.split('_').join('-')
+              });
+              addressPayload = {
+                shipping: {},
+                billing: {}
+              };
+              paymentSourceId = null;
+              currency = cartData.pricing.orderTotal.currency;
+              dropInConfig = JSON.parse(drgc_params.dropInConfig);
+              sessionId = cartData.paymentSession ? cartData.paymentSession.id : '';
+              dropInParams = {
+                digitalriverJs: digitalriverjs,
+                sessionId: sessionId,
+                currency: currency,
+                dropInConfig: dropInConfig
+              }; // Section progress
 
-    var finishedSectionIdx = -1; // Break down tax and update summary on page load
+              finishedSectionIdx = -1;
+              activeSectionIdx = -1; // Break down tax and update summary on page load
 
-    checkout_utils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true'); // Create elements through DR.js
+              checkout_utils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
+              $('#checkout-email-form').on('submit', function (e) {
+                e.preventDefault(); // If no items are in cart, do not even continue, maybe give feedback
 
-    if ($('.credit-card-section').length) {
-      var getStyleOptionsFromClass = function getStyleOptionsFromClass(className) {
-        var tempDiv = document.createElement('div');
-        tempDiv.setAttribute('id', 'tempDiv' + className);
-        tempDiv.className = className;
-        document.body.appendChild(tempDiv);
-        var tempDivEl = document.getElementById('tempDiv' + className);
-        var tempStyle = window.getComputedStyle(tempDivEl);
-        var styles = {
-          color: tempStyle.color,
-          fontFamily: tempStyle.fontFamily.replace(new RegExp('"', 'g'), ''),
-          fontSize: tempStyle.fontSize,
-          height: tempStyle.height
-        };
-        document.body.removeChild(tempDivEl);
-        return styles;
-      };
+                if (!drgc_params.cart.cart.lineItems.hasOwnProperty('lineItem')) return;
+                var $form = $('#checkout-email-form');
+                var email = $form.find('input[name=email]').val().trim();
+                $form.addClass('was-validated');
 
-      var activeCardLogo = function activeCardLogo(evt) {
-        $('.cards .active').removeClass('active');
+                if ($form[0].checkValidity() === false) {
+                  return false;
+                }
 
-        if (evt.brand && evt.brand !== 'unknown') {
-          $(".cards .".concat(evt.brand, "-icon")).addClass('active');
-        }
-      };
+                var $section = $('.dr-checkout__email');
+                $('#dr-panel-email-result').text(email);
 
-      var displayDRElementError = function displayDRElementError(evt, $target) {
-        if (evt.error) {
-          $target.text(evt.error.message).show();
-        } else {
-          $target.text('').hide();
-        }
-      };
+                if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                  finishedSectionIdx = $('.dr-checkout__el').index($section);
+                }
 
-      var options = {
-        classes: {
-          base: 'DRElement',
-          complete: 'DRElement--complete',
-          empty: 'DRElement--empty',
-          invalid: 'DRElement--invalid'
-        },
-        style: {
-          base: getStyleOptionsFromClass('DRElement'),
-          complete: getStyleOptionsFromClass('DRElement--complete'),
-          empty: getStyleOptionsFromClass('DRElement--empty'),
-          invalid: getStyleOptionsFromClass('DRElement--invalid')
-        }
-      };
-      var cardNumber = digitalriverjs.createElement('cardnumber', options);
-      var cardExpiration = digitalriverjs.createElement('cardexpiration', Object.assign({}, options, {
-        placeholderText: localizedText.card_expiration_placeholder
-      }));
-      var cardCVV = digitalriverjs.createElement('cardcvv', Object.assign({}, options, {
-        placeholderText: localizedText.card_cvv_placeholder
-      }));
-      cardNumber.mount('card-number');
-      cardExpiration.mount('card-expiration');
-      cardCVV.mount('card-cvv');
-      cardNumber.on('change', function (evt) {
-        activeCardLogo(evt);
-        displayDRElementError(evt, $('#card-number-error'));
-      });
-      cardExpiration.on('change', function (evt) {
-        displayDRElementError(evt, $('#card-expiration-error'));
-      });
-      cardCVV.on('change', function (evt) {
-        displayDRElementError(evt, $('#card-cvv-error'));
-      });
-    }
+                CheckoutModule.moveToNextSection(activeSectionIdx, $section);
+              }); // Submit shipping info form
 
-    $('#checkout-email-form').on('submit', function (e) {
-      e.preventDefault(); // If no items are in cart, do not even continue, maybe give feedback
+              $('#checkout-shipping-form').on('submit', function (e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                var $button = $form.find('button[type="submit"]');
+                var isFormValid = CheckoutModule.validateAddress($form);
+                if (!isFormValid) return;
+                addressPayload.shipping = CheckoutModule.buildAddressPayload($form);
+                var cartRequest = {
+                  address: addressPayload.shipping
+                };
+                $button.addClass('sending').blur();
 
-      if (!drgc_params.cart.cart.lineItems.hasOwnProperty('lineItem')) return;
-      var $form = $('#checkout-email-form');
-      var email = $form.find('input[name=email]').val().trim();
-      $form.addClass('was-validated');
+                if (isLoggedIn && $('#checkbox-save-shipping').prop('checked')) {
+                  var setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true';
+                  var address = checkout_utils.getAddress('shipping', setAsDefault);
+                  commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
+                    checkout_utils.apiErrorHandler(jqXHR);
+                  });
+                }
 
-      if ($form[0].checkValidity() === false) {
-        return false;
-      }
+                $('.dr-summary__pricing').addClass('dr-loading');
+                commerce_api.updateCartShippingAddress({
+                  expand: 'all'
+                }, cartRequest).then(function () {
+                  return commerce_api.getCart({
+                    expand: 'all'
+                  });
+                }).then(function (data) {
+                  return CheckoutModule.preselectShippingOption(data);
+                }).then(function (data) {
+                  var $section = $('.dr-checkout__shipping');
+                  checkout_utils.updateAddressSection(data.cart.shippingAddress, $section.find('.dr-panel-result__text'));
 
-      var $section = $('.dr-checkout__email');
-      $section.find('.dr-panel-result__text').text(email);
+                  if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                    finishedSectionIdx = $('.dr-checkout__el').index($section);
+                  }
 
-      if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-        finishedSectionIdx = $('.dr-checkout__el').index($section);
-      }
+                  CheckoutModule.moveToNextSection(activeSectionIdx, $section);
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                  if ($('#tems-us-result').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
+                })["catch"](function (jqXHR) {
+                  CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                })["finally"](function () {
+                  $button.removeClass('sending').blur();
+                  $('.dr-summary__pricing').removeClass('dr-loading');
+                });
+              });
+              $('#checkbox-billing').on('change', function (e) {
+                if ($(e.target).prop('checked')) {
+                  $('.billing-section').slideUp();
+                  $('.dr-address-book-btn.billing').removeClass('active').hide();
+                  $('.dr-address-book.billing').hide();
+                } else {
+                  $('.dr-address-book-btn.billing').show();
+                  $('.billing-section').slideDown();
+                }
+              });
+              $('#checkout-billing-form').on('submit', function (e) {
+                e.preventDefault();
+                var $section = $('.dr-checkout__billing');
+                var $form = $(e.target);
+                var $button = $form.find('button[type="submit"]');
+                var billingSameAsShipping = $('[name="checkbox-billing"]').is(':visible:checked');
+                var isFormValid = CheckoutModule.validateAddress($form);
+                if (!isFormValid) return;
+                addressPayload.billing = billingSameAsShipping ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
+                if ($('#billing-field-company-name').length) addressPayload.billing.companyName = $('#billing-field-company-name').val();
+                var cartRequest = {
+                  address: addressPayload.billing
+                };
+                $button.addClass('sending').blur();
 
-      CheckoutModule.moveToNextSection($section);
-    }); // Submit shipping info form
+                if (isLoggedIn && $('#checkbox-save-billing').prop('checked')) {
+                  if (requestShipping && !billingSameAsShipping || !requestShipping) {
+                    var setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true' && !requestShipping;
+                    var address = checkout_utils.getAddress('billing', setAsDefault);
+                    commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
+                      checkout_utils.apiErrorHandler(jqXHR);
+                    });
+                  }
+                }
 
-    $('#checkout-shipping-form').on('submit', function (e) {
-      e.preventDefault();
-      var $form = $(e.target);
-      var $button = $form.find('button[type="submit"]');
-      var isFormValid = CheckoutModule.validateAddress($form);
-      if (!isFormValid) return;
-      addressPayload.shipping = CheckoutModule.buildAddressPayload($form);
-      var cartRequest = {
-        address: addressPayload.shipping
-      };
-      $button.addClass('sending').blur();
+                $('.dr-summary__pricing').addClass('dr-loading');
+                commerce_api.updateCartBillingAddress({
+                  expand: 'all'
+                }, cartRequest).then(function () {
+                  // Digital product still need to update some of shippingAddress attributes for tax calculating
+                  if (requestShipping) return new Promise(function (resolve) {
+                    return resolve();
+                  });
+                  var patchCartRequest = {
+                    address: {
+                      country: cartRequest.address.country,
+                      countrySubdivision: cartRequest.address.countrySubdivision,
+                      postalCode: cartRequest.address.postalCode
+                    }
+                  };
+                  return commerce_api.updateCartShippingAddress({
+                    expand: 'all'
+                  }, patchCartRequest);
+                }).then(function () {
+                  var billingMeta = {
+                    cart: {
+                      customAttributes: {
+                        attribute: [{
+                          name: 'SHIPPING_ADDRESS_SAME_AS_BILLING',
+                          value: billingSameAsShipping
+                        }]
+                      }
+                    }
+                  };
+                  return commerce_api.updateCart({}, billingMeta);
+                }).then(function () {
+                  return commerce_api.getCart({
+                    expand: 'all'
+                  });
+                }).then( /*#__PURE__*/function () {
+                  var _ref5 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(data) {
+                    var _address, taxRegs;
 
-      if (isLoggedIn && $('#checkbox-save-shipping').prop('checked')) {
-        var setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true';
-        var address = CheckoutModule.getAddress('shipping', setAsDefault);
-        commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
-          checkout_utils.apiErrorHandler(jqXHR);
-        });
-      }
+                    return regenerator_default.a.wrap(function _callee3$(_context3) {
+                      while (1) {
+                        switch (_context3.prev = _context3.next) {
+                          case 0:
+                            if (!$('#checkout-tax-id-form').length) {
+                              _context3.next = 10;
+                              break;
+                            }
 
-      commerce_api.updateCartShippingAddress({
-        expand: 'all'
-      }, cartRequest).then(function () {
-        return commerce_api.getCart({
-          expand: 'all'
-        });
-      }).then(function (data) {
-        return CheckoutModule.preselectShippingOption(data);
-      }).then(function (data) {
-        $button.removeClass('sending').blur();
-        var $section = $('.dr-checkout__shipping');
-        CheckoutModule.displayCartAddress(data.cart.shippingAddress, $section.find('.dr-panel-result__text'));
+                            _address = requestShipping ? addressPayload.shipping : addressPayload.billing;
+                            _context3.next = 4;
+                            return CheckoutModule.initTaxIdentifier(data.cart, _address, selectedCountry);
 
-        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-          finishedSectionIdx = $('.dr-checkout__el').index($section);
-        }
+                          case 4:
+                            taxRegs = _context3.sent;
 
-        CheckoutModule.moveToNextSection($section);
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        $button.removeClass('sending').blur();
-        CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-      });
-    });
-    $('#checkbox-billing, #checkbox-business').on('change', function (e) {
-      var id = $(e.target).attr('id');
+                            if (!(taxRegs.country && taxRegs.country === 'NOT_SUPPORTED')) {
+                              _context3.next = 8;
+                              break;
+                            }
 
-      switch (id) {
-        case 'checkbox-billing':
-          if (!$(e.target).is(':checked')) {
-            $('.dr-address-book-btn.billing').show();
-            $('.billing-section').slideDown();
-          } else {
-            $('.billing-section').slideUp();
-            $('#checkbox-business').prop('checked', false).change();
-            $('.dr-address-book-btn.billing').hide();
-          }
+                            checkout_utils.updateAddressSection(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                            throw new Error(localizedText.unsupport_country_error_msg);
 
-          break;
+                          case 8:
+                            _context3.next = 11;
+                            break;
 
-        case 'checkbox-business':
-          if (!$(e.target).is(':checked')) {
-            $('#billing-field-company-name, #billing-field-company-ein').val('');
-            $('.form-group-business').slideUp();
-          } else {
-            $('#checkbox-billing').prop('checked', false).change();
-            $('.form-group-business').slideDown();
-          }
+                          case 10:
+                            if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
 
-          break;
-      }
-    });
-    $('#checkout-billing-form').on('submit', function (e) {
-      e.preventDefault();
-      var $form = $(e.target);
-      var $button = $form.find('button[type="submit"]');
-      var billingSameAsShipping = $('[name="checkbox-billing"]').is(':visible:checked');
-      var isFormValid = CheckoutModule.validateAddress($form);
-      if (!isFormValid) return;
-      addressPayload.billing = billingSameAsShipping ? Object.assign({}, addressPayload.shipping) : CheckoutModule.buildAddressPayload($form);
-      if ($('#billing-field-company-name').length) addressPayload.billing.companyName = $('#billing-field-company-name').val();
-      var cartRequest = {
-        address: addressPayload.billing
-      };
-      $button.addClass('sending').blur();
+                          case 11:
+                            return _context3.abrupt("return", new Promise(function (resolve) {
+                              return resolve(data);
+                            }));
 
-      if (isLoggedIn && $('#checkbox-save-billing').prop('checked')) {
-        if (requestShipping && !billingSameAsShipping || !requestShipping) {
-          var setAsDefault = $('input:hidden[name="addresses-no-default"]').val() === 'true' && !requestShipping;
-          var address = CheckoutModule.getAddress('billing', setAsDefault);
-          commerce_api.saveShopperAddress(address)["catch"](function (jqXHR) {
-            checkout_utils.apiErrorHandler(jqXHR);
-          });
-        }
-      }
+                          case 12:
+                          case "end":
+                            return _context3.stop();
+                        }
+                      }
+                    }, _callee3);
+                  }));
 
-      commerce_api.updateCartBillingAddress({
-        expand: 'all'
-      }, cartRequest).then(function () {
-        // Digital product still need to update some of shippingAddress attributes for tax calculating
-        if (requestShipping) return new Promise(function (resolve) {
-          return resolve();
-        });
-        var patchCartRequest = {
-          address: {
-            country: cartRequest.address.country,
-            countrySubdivision: cartRequest.address.countrySubdivision,
-            postalCode: cartRequest.address.postalCode
-          }
-        };
-        return commerce_api.updateCartShippingAddress({
-          expand: 'all'
-        }, patchCartRequest);
-      }).then(function () {
-        var $companyEin = $('#billing-field-company-ein');
-        if (!$companyEin.length) return new Promise(function (resolve) {
-          return resolve();
-        });
-        var companyMeta = {
-          cart: {
-            customAttributes: {
-              attribute: [{
-                name: 'companyEIN',
-                value: $companyEin.val()
-              }]
-            }
-          }
-        };
-        return commerce_api.updateCart({}, companyMeta);
-      }).then(function () {
-        return commerce_api.getCart({
-          expand: 'all'
-        });
-      }) // Still needs to apply shipping option once again or the value will be rolled back after updateCart (API's bug)
-      .then(function (data) {
-        return requestShipping ? CheckoutModule.preselectShippingOption(data) : new Promise(function (resolve) {
-          return resolve(data);
-        });
-      }).then(function (data) {
-        $button.removeClass('sending').blur();
-        var $section = $('.dr-checkout__billing');
-        CheckoutModule.displayCartAddress(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                  return function (_x6) {
+                    return _ref5.apply(this, arguments);
+                  };
+                }()).then(function (data) {
+                  if ($('#tems-us-result').length && !requestShipping) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
+                  checkout_utils.updateAddressSection(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                  $('#tax-id-error-msg').text('').hide();
 
-        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-          finishedSectionIdx = $('.dr-checkout__el').index($section);
-        }
+                  if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                    finishedSectionIdx = $('.dr-checkout__el').index($section);
+                  }
 
-        CheckoutModule.moveToNextSection($section);
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        $button.removeClass('sending').blur();
-        CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-      });
-    }); // Submit delivery form
+                  CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
+                })["catch"](function (error) {
+                  console.error(error);
 
-    $('form#checkout-delivery-form').on('submit', function (e) {
-      e.preventDefault();
-      var $form = $(e.target);
-      var $input = $(this).children().find('input:radio:checked').first();
-      var $button = $(this).find('button[type="submit"]').toggleClass('sending').blur();
-      var shippingOptionId = $input.data('id');
-      $form.find('.dr-err-field').hide();
-      commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
-        var $section = $('.dr-checkout__delivery');
-        var freeShipping = data.cart.pricing.shippingAndHandling.value === 0;
-        var resultText = "".concat($input.data('desc'), " ").concat(freeShipping ? localizedText.free_label : $input.data('cost'));
-        $button.removeClass('sending').blur();
-        $section.find('.dr-panel-result__text').text(resultText);
+                  if (error.message === localizedText.unsupport_country_error_msg) {
+                    $('#tax-id-error-msg').text(error.message).show();
 
-        if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-          finishedSectionIdx = $('.dr-checkout__el').index($section);
-        }
+                    if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                      finishedSectionIdx = $('.dr-checkout__el').index($section);
+                    }
 
-        CheckoutModule.moveToNextSection($section);
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        $button.removeClass('sending').blur();
-        CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-      });
-    });
-    $('form#checkout-delivery-form').on('change', 'input[type="radio"]', function () {
-      var $form = $('form#checkout-delivery-form');
-      var shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
-      $('.dr-summary').addClass('dr-loading');
-      commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
-        checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-      })["catch"](function (jqXHR) {
-        CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
-        $('.dr-summary').removeClass('dr-loading');
-      });
-    });
-    $('form#checkout-payment-form').on('submit', function (e) {
-      e.preventDefault();
-      var $form = $('form#checkout-payment-form');
-      var $button = $form.find('button[type="submit"]');
-      $form.addClass('was-validated');
+                    CheckoutModule.moveToNextSection(activeSectionIdx, $section);
+                  } else {
+                    CheckoutModule.displayAddressErrMsg(error, $form.find('.dr-err-field'));
+                  }
+                })["finally"](function () {
+                  $button.removeClass('sending').blur();
+                  $('.dr-summary__pricing').removeClass('dr-loading');
+                });
+              });
+              $(document).on('click', 'input[name="shopper-type"]', function () {
+                var $taxIdFields = $('#checkout-tax-id-form .tax-id-field');
+                $taxIdFields.each(function (index, element) {
+                  var $element = $(element);
 
-      if ($form[0].checkValidity() === false) {
-        return false;
-      }
+                  if ($('input[name="shopper-type"]:checked').val() === 'B') {
+                    if ($element.hasClass('Individual')) $element.addClass('d-none');
+                    if ($element.hasClass('Business')) $element.removeClass('d-none');
+                  } else {
+                    if ($element.hasClass('Individual')) $element.removeClass('d-none');
+                    if ($element.hasClass('Business')) $element.addClass('d-none');
+                  }
+                });
+              });
+              $(document).on('input', '#checkout-tax-id-form > .tax-id-field input[type="text"]', function (e) {
+                checkout_utils.validateVatNumber(e);
+              });
+              $('#checkout-tax-id-form').on('submit', /*#__PURE__*/function () {
+                var _ref6 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
+                  var $button, $section, $error, isTaxExempt, taxRegs, typeText, taxIds, regs, shopperType, $taxFields, _regs;
 
-      var formdata = $(this).serializeArray();
-      var paymentPayload = {};
-      $(formdata).each(function (index, obj) {
-        paymentPayload[obj.name] = obj.value;
-      });
-      $('#dr-payment-failed-msg, #dr-checkout-err-field').text('').hide();
-      var $section = $('.dr-checkout__payment');
+                  return regenerator_default.a.wrap(function _callee4$(_context4) {
+                    while (1) {
+                      switch (_context4.prev = _context4.next) {
+                        case 0:
+                          e.preventDefault();
+                          $button = $(e.target).find('button[type="submit"]');
+                          $section = $('.dr-checkout__tax-id');
+                          $error = $section.find('.dr-err-field');
+                          isTaxExempt = sessionStorage.getItem('drgcTaxExempt') === 'true';
+                          taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+                          typeText = '';
+                          taxIds = '';
 
-      if (paymentPayload.selector === 'credit-card') {
-        var cart = drgc_params.cart.cart;
-        var creditCardPayload = {
-          type: 'creditCard',
-          owner: {
-            firstName: addressPayload.billing.firstName,
-            lastName: addressPayload.billing.lastName,
-            email: addressPayload.billing.emailAddress,
-            address: {
-              line1: addressPayload.billing.line1,
-              line2: addressPayload.billing.line2,
-              city: addressPayload.billing.city,
-              state: addressPayload.billing.countrySubdivision,
-              country: addressPayload.billing.country,
-              postalCode: addressPayload.billing.postalCode
-            }
-          },
-          amount: cart.pricing.orderTotal.value,
-          currency: cart.pricing.orderTotal.currency
-        };
-        $button.addClass('sending').blur();
-        digitalriverjs.createSource(cardNumber, creditCardPayload).then(function (result) {
-          $button.removeClass('sending').blur();
+                          if (!(taxRegs.country && taxRegs.country === 'NOT_SUPPORTED')) {
+                            _context4.next = 11;
+                            break;
+                          }
 
-          if (result.error) {
-            if (result.error.state === 'failed') {
-              $('#dr-payment-failed-msg').text(localizedText.credit_card_error_msg).show();
-            }
+                          $('#checkout-tax-id-form').hide();
+                          return _context4.abrupt("return");
 
-            if (result.error.errors) {
-              $('#dr-payment-failed-msg').text(result.error.errors[0].message).show();
-            }
-          } else {
-            if (result.source.state === 'chargeable') {
-              paymentSourceId = result.source.id;
-              $section.find('.dr-panel-result__text').text("".concat(localizedText.credit_card_ending_label, " ").concat(result.source.creditCard.lastFourDigits));
+                        case 11:
+                          if (!(isTaxExempt && Object.keys(taxRegs).length && taxRegs.customerType)) {
+                            _context4.next = 18;
+                            break;
+                          }
 
-              if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
-                finishedSectionIdx = $('.dr-checkout__el').index($section);
+                          regs = taxRegs.taxRegistrations;
+                          regs.forEach(function (element) {
+                            taxIds = "".concat(taxIds, "<br>").concat(element.value);
+                            ;
+                          });
+                          typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+                          $error.text('').hide();
+                          _context4.next = 32;
+                          break;
+
+                        case 18:
+                          $button.addClass('sending').blur();
+                          shopperType = $('input[name="shopper-type"]:checked').val();
+                          $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
+                          _regs = [];
+
+                          if ($taxFields.length) {
+                            $taxFields.each(function (index, element) {
+                              var $element = $(element);
+
+                              if (!$element.hasClass('d-none')) {
+                                var key = $element.data('key');
+                                var value = $element.val();
+                                var taxRegObj = {};
+
+                                if (value) {
+                                  taxRegObj['key'] = key;
+                                  taxRegObj['value'] = value;
+
+                                  _regs.push(taxRegObj);
+                                }
+
+                                taxIds = "".concat(taxIds, "<br>").concat(value);
+                              }
+                            });
+                          }
+
+                          typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+
+                          if (!_regs.length) {
+                            _context4.next = 30;
+                            break;
+                          }
+
+                          $('.dr-summary__pricing').addClass('dr-loading');
+                          _context4.next = 28;
+                          return checkout_utils.applyTaxRegistration(shopperType, _regs).then(function (data) {
+                            sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
+                            return commerce_api.getCart({
+                              expand: 'all'
+                            });
+                          }).then(function (data) {
+                            var lineItems = data.cart.lineItems.lineItem;
+                            var tax = data.cart.pricing.tax.value;
+                            var isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && tax === 0;
+                            sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+                            checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+
+                            if (tax > 0) {
+                              $error.text(localizedText.invalid_tax_id_error_msg).show();
+                            } else {
+                              $error.text('').hide();
+                            }
+                          })["catch"](function (error) {
+                            $error.text(localizedText.invalid_tax_id_error_msg).show();
+                            console.error(error);
+                            if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+                          })["finally"](function () {
+                            $button.removeClass('sending').blur();
+                            $('.dr-summary__pricing').removeClass('dr-loading');
+                          });
+
+                        case 28:
+                          _context4.next = 32;
+                          break;
+
+                        case 30:
+                          $button.removeClass('sending').blur();
+                          $error.text('').hide();
+
+                        case 32:
+                          $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
+
+                          if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                            finishedSectionIdx = $('.dr-checkout__el').index($section);
+                          }
+
+                          CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
+
+                        case 35:
+                        case "end":
+                          return _context4.stop();
+                      }
+                    }
+                  }, _callee4);
+                }));
+
+                return function (_x7) {
+                  return _ref6.apply(this, arguments);
+                };
+              }()); // Submit delivery form
+
+              $('#checkout-delivery-form').on('submit', function (e) {
+                e.preventDefault();
+                var $form = $(e.target);
+                var $input = $(this).children().find('input:radio:checked').first();
+                var $button = $(this).find('button[type="submit"]').toggleClass('sending').blur();
+                var shippingOptionId = $input.data('id');
+                $form.find('.dr-err-field').hide();
+                $('.dr-summary__pricing').addClass('dr-loading');
+                commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
+                  var $section = $('.dr-checkout__delivery');
+                  var resultText = "".concat($input.data('desc'));
+                  $section.find('.dr-panel-result__text').text(resultText);
+
+                  if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                    finishedSectionIdx = $('.dr-checkout__el').index($section);
+                  }
+
+                  CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                })["catch"](function (jqXHR) {
+                  CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                })["finally"](function () {
+                  $button.removeClass('sending').blur();
+                  $('.dr-summary__pricing').removeClass('dr-loading');
+                });
+              });
+              $('#checkout-delivery-form').on('change', 'input[type="radio"]', function () {
+                var $form = $('form#checkout-delivery-form');
+                var shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
+                $('.dr-summary__pricing').addClass('dr-loading');
+                commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                })["catch"](function (jqXHR) {
+                  CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
+                })["finally"](function () {
+                  return $('.dr-summary__pricing').removeClass('dr-loading');
+                });
+              });
+              $('#checkout-payment-form').on('submit', function (e) {
+                e.preventDefault();
+                var paymentSource = JSON.parse(sessionStorage.getItem('drgcPaymentSource'));
+
+                if (paymentSource.state === 'chargeable' || paymentSource.state === 'pending_funds') {
+                  var $section = $('.dr-checkout__payment');
+                  var label = paymentSource.type === 'creditCard' ? "".concat(drgc_params.translations.credit_card_ending_label, " ").concat(paymentSource.creditCard.lastFourDigits) : paymentSource.type;
+                  paymentSourceId = paymentSource.id;
+                  $section.find('.dr-panel-result__text').text(label);
+
+                  if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                    finishedSectionIdx = $('.dr-checkout__el').index($section);
+                  }
+
+                  CheckoutModule.moveToNextSection(activeSectionIdx, $section);
+                }
+              });
+              $('#checkout-confirmation-form button[type="submit"]').on('click', function (e) {
+                e.preventDefault();
+
+                if (!$('#dr-tAndC').prop('checked')) {
+                  $('#dr-checkout-err-field').text(localizedText.required_tandc_msg).show();
+                } else {
+                  $('#dr-checkout-err-field').text('').hide();
+                  $('#dr-payment-failed-msg').hide();
+                  CheckoutModule.applyPaymentAndSubmitCart(paymentSourceId);
+                }
+              }); // show and hide sections
+
+              $('.dr-accordion__edit').on('click', function (e) {
+                e.preventDefault();
+                var $section = $(e.target).parent().parent();
+                var $allSections = $section.siblings().andSelf();
+                var $finishedSections = $allSections.eq(finishedSectionIdx).prevAll().andSelf();
+                var $activeSection = $allSections.filter($('.active'));
+                activeSectionIdx = $allSections.index($activeSection);
+                var $nextSection = $('.dr-checkout__el').eq(activeSectionIdx - 1);
+                $allSections.find('.dr-accordion__edit').addClass('d-none');
+
+                if ($allSections.index($section) > $allSections.index($activeSection)) {
+                  return;
+                }
+
+                $finishedSections.addClass('closed');
+                $activeSection.removeClass('active');
+                $section.removeClass('closed').addClass('active');
+
+                if ($section.find('.dr-address-book').length) {
+                  if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
+                    $section.find('.dr-address-book-btn').hide();
+                  } else {
+                    $section.find('.dr-address-book-btn').show();
+                  }
+                }
+
+                if ($('.dr-address-book').length) {
+                  $('.dr-address-book-btn').removeClass('active');
+                  $('.dr-address-book').hide();
+                }
+
+                CheckoutModule.adjustColumns($nextSection, true);
+                checkout_utils.updateSummaryLabels();
+              });
+              $('#shipping-field-country').on('change', function () {
+                if (this.value === 'US') {
+                  $('#shipping-field-state').parent('.form-group').removeClass('d-none');
+                } else {
+                  $('#shipping-field-state').parent('.form-group').addClass('d-none');
+                }
+              });
+              $('#billing-field-country').on('change', function () {
+                if (this.value === 'US') {
+                  $('#billing-field-state').parent('.form-group').removeClass('d-none');
+                } else {
+                  $('#billing-field-state').parent('.form-group').addClass('d-none');
+                }
+              });
+              $('.dr-address-book-btn').on('click', function (e) {
+                var addressType = $(e.target).hasClass('shipping') ? 'shipping' : 'billing';
+                var $addressBook = $('.dr-address-book.' + addressType);
+
+                if ($addressBook.is(':hidden')) {
+                  $(e.target).addClass('active');
+                  $addressBook.slideDown();
+                } else {
+                  $(e.target).removeClass('active');
+                  $addressBook.slideUp();
+                }
+              });
+              $(document).on('click', '.address', function (e) {
+                var addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
+                var $address = $(e.target).closest('.address');
+                var countryOptions = checkout_utils.getFetchedCountryOptions(addressType);
+                var savedCountryCode = $address.data('country');
+                $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
+                $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
+                $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
+                $('#' + addressType + '-field-address2').val($address.data('lineTwo')).focus();
+                $('#' + addressType + '-field-city').val($address.data('city')).focus();
+                $('#' + addressType + '-field-state').val($address.data('state')).change();
+                $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
+                $('#' + addressType + '-field-country').val(countryOptions.indexOf(savedCountryCode) > -1 ? savedCountryCode : '').change();
+                $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
+                $('.dr-address-book-btn.' + addressType).removeClass('active');
+                $('.dr-address-book.' + addressType).slideUp();
+                $('#checkbox-save-' + addressType).prop('checked', false);
+              });
+              $('.back-link a').click(function () {
+                var loginUrl = new URL(drgc_params.loginUrl);
+                var checkoutUrl = new URL(drgc_params.checkoutUrl);
+                $('body').addClass('dr-loading');
+
+                if (document.referrer && document.referrer.indexOf(loginUrl.pathname) === -1 && document.referrer.indexOf(checkoutUrl.pathname) === -1) {
+                  window.location.href = document.referrer;
+                } else {
+                  window.location.href = drgc_params.cartUrl;
+                }
+              });
+              $('#tems-us-start-date, #tems-us-end-date').on('blur', function (e) {
+                var date = $(e.target).val();
+
+                if (date) {
+                  var dateArr = date.split('-').reverse();
+                  var _ref7 = [dateArr[1], dateArr[0]];
+                  dateArr[0] = _ref7[0];
+                  dateArr[1] = _ref7[1];
+                  $(e.target).val(dateArr.join('/'));
+                }
+              });
+              $('#checkout-tax-exempt-form').on('submit', /*#__PURE__*/function () {
+                var _ref8 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee5(e) {
+                  var $form, $button, $section, companyName, companyEin, isGood, status, adminSabrixCall, customerId, res, companyMeta;
+                  return regenerator_default.a.wrap(function _callee5$(_context5) {
+                    while (1) {
+                      switch (_context5.prev = _context5.next) {
+                        case 0:
+                          e.preventDefault();
+                          $form = $(e.target);
+                          $button = $form.find('button[type="submit"]');
+                          $section = $('.dr-checkout__tax-exempt');
+                          companyName = $('#business-company-name').val();
+                          companyEin = $('#business-ein').val();
+                          isGood = $('#tax-certificate-status > p').hasClass('cert-good') || $('#tems-us-status').val() === 'ELIGIBLE_EXEMPTED';
+                          status = 'NOT_ELIGIBLE';
+                          adminSabrixCall = false;
+                          $button.addClass('sending').blur();
+                          $('#tems-us-result > p.alert').hide();
+                          $('#billing-field-company-name').val(companyName);
+
+                          if (!$('#tax-exempt-checkbox').prop('checked')) {
+                            _context5.next = 39;
+                            break;
+                          }
+
+                          customerId = drgc_params.customerId;
+                          $form.addClass('was-validated');
+
+                          if (!($form[0].checkValidity() === false)) {
+                            _context5.next = 18;
+                            break;
+                          }
+
+                          $button.removeClass('sending').blur();
+                          return _context5.abrupt("return", false);
+
+                        case 18:
+                          if (!$('#checkout-tax-exempt-app').length) {
+                            _context5.next = 34;
+                            break;
+                          }
+
+                          _context5.prev = 19;
+                          _context5.t0 = JSON;
+                          _context5.next = 23;
+                          return checkout_utils.createTaxProfile(customerId);
+
+                        case 23:
+                          _context5.t1 = _context5.sent;
+                          res = _context5.t0.parse.call(_context5.t0, _context5.t1);
+
+                          if (res.companyName) {
+                            status = 'ELIGIBLE_EXEMPTED';
+                            adminSabrixCall = true;
+                            $('#billing-field-company-name').val(res.companyName);
+                            $('#tax-certificate-status > p.alert-danger, #tax-certificate-status > p.alert-info').remove();
+                            $('#tems-us-error-msg').text('').hide();
+                            $('.dr-checkout__tax-exempt > .dr-accordion > .dr-accordion__edit').addClass('d-none');
+                            $('.dr-checkout__tax-exempt > .dr-panel-result > p.uploaded').removeClass('d-none');
+                          } else {
+                            $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
+                          }
+
+                          _context5.next = 32;
+                          break;
+
+                        case 28:
+                          _context5.prev = 28;
+                          _context5.t2 = _context5["catch"](19);
+                          console.error(_context5.t2);
+                          $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context5.t2.responseText))).show();
+
+                        case 32:
+                          _context5.next = 35;
+                          break;
+
+                        case 34:
+                          if (isGood) status = 'ELIGIBLE_EXEMPTED';
+
+                        case 35:
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.taxable').addClass('d-none');
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.tax-exempt').removeClass('d-none');
+                          _context5.next = 42;
+                          break;
+
+                        case 39:
+                          if (isGood) status = 'ELIGIBLE_NOT_EXEMPTED';
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.tax-exempt').addClass('d-none');
+                          $('.dr-checkout__tax-exempt > .dr-panel-result > p.taxable').removeClass('d-none');
+
+                        case 42:
+                          companyMeta = {
+                            cart: {
+                              customAttributes: {
+                                attribute: [{
+                                  name: 'companyEIN',
+                                  value: companyEin
+                                }]
+                              }
+                            }
+                          };
+                          _context5.prev = 43;
+                          _context5.next = 46;
+                          return commerce_api.updateCart({}, companyMeta);
+
+                        case 46:
+                          _context5.next = 51;
+                          break;
+
+                        case 48:
+                          _context5.prev = 48;
+                          _context5.t3 = _context5["catch"](43);
+                          console.error(_context5.t3);
+
+                        case 51:
+                          $('#tems-us-status').val(status);
+                          _context5.next = 54;
+                          return checkout_utils.updateTemsUsStatus(status, adminSabrixCall);
+
+                        case 54:
+                          if (!$('#tems-us-error-msg:visible').length) {
+                            if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                              finishedSectionIdx = $('.dr-checkout__el').index($section);
+                            }
+
+                            CheckoutModule.moveToNextSection(activeSectionIdx, $section);
+                          }
+
+                          $button.removeClass('sending').blur();
+
+                        case 56:
+                        case "end":
+                          return _context5.stop();
+                      }
+                    }
+                  }, _callee5, null, [[19, 28], [43, 48]]);
+                }));
+
+                return function (_x8) {
+                  return _ref8.apply(this, arguments);
+                };
+              }());
+              $('#tax-exempt-note > span > a.cert-details').on('click', function (e) {
+                e.preventDefault();
+                $('#certificate-modal').modal('show');
+              });
+              $('#tax-exempt-checkbox').on('change', function (e) {
+                var isChecked = $(e.target).prop('checked');
+                $('#business-company-name').prop('readonly', isChecked);
+
+                if (isChecked) {
+                  var $certStatus = $('#tax-certificate-status > p');
+                  var temsUsStauts = $('#tems-us-status').val();
+                  var companyName = $('#billing-field-company-name').val();
+                  if (companyName) $('#business-company-name').val(companyName).trigger('focus').trigger('blur');
+
+                  if ($certStatus.hasClass('cert-good')) {
+                    $('#tax-exempt-note').removeClass('d-none');
+                  } else {
+                    $('#tax-exempt-note').addClass('d-none');
+                    $('#tax-certificate-status').slideDown();
+                  }
+
+                  if (temsUsStauts === 'NOT_ELIGIBLE') {
+                    $('#checkout-tax-exempt-form > .form-group-business.company-name').addClass('d-none');
+                    $('#checkout-tax-exempt-app').slideDown();
+                  }
+                } else {
+                  $('#checkout-tax-exempt-form > .form-group-business.company-name').removeClass('d-none');
+                  $('#tax-certificate-status, #checkout-tax-exempt-app').slideUp();
+                  $('#checkout-tax-exempt-form').removeClass('was-validated');
+                  $('#tems-us-error-msg').text('').hide();
+                  $('#tax-exempt-note').addClass('d-none');
+                }
+              });
+              $('#edit-info-link > span').on('click', function (e) {
+                e.preventDefault();
+                $('body').addClass('dr-loading');
+                location.reload();
+              });
+
+              if (!$('#checkout-email-form').length) {
+                $section = $('.dr-checkout__email');
+
+                if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
+                  finishedSectionIdx = $('.dr-checkout__el').index($section);
+                }
+
+                CheckoutModule.moveToNextSection(activeSectionIdx, $section);
+              } else {
+                $('#checkout-email-form button[type=submit]').prop('disabled', false);
               }
 
-              CheckoutModule.moveToNextSection($section);
-            }
-          }
-        });
-      }
-    });
-    $('#checkout-confirmation-form button[type="submit"]').on('click', function (e) {
-      e.preventDefault();
-
-      if (!$('#dr-tAndC').prop('checked')) {
-        $('#dr-checkout-err-field').text(localizedText.required_tandc_msg).show();
-      } else {
-        $('#dr-checkout-err-field').text('').hide();
-        $(e.target).toggleClass('sending').blur();
-        $('#dr-payment-failed-msg').hide();
-        CheckoutModule.applyPaymentAndSubmitCart(paymentSourceId);
-      }
-    }); // show and hide sections
-
-    $('.dr-accordion__edit').on('click', function (e) {
-      e.preventDefault();
-      var $section = $(e.target).parent().parent();
-      var $allSections = $section.siblings().andSelf();
-      var $finishedSections = $allSections.eq(finishedSectionIdx).prevAll().andSelf();
-      var $activeSection = $allSections.filter($('.active'));
-
-      if ($allSections.index($section) > $allSections.index($activeSection)) {
-        return;
-      }
-
-      $finishedSections.addClass('closed');
-      $activeSection.removeClass('active');
-      $section.removeClass('closed').addClass('active');
-
-      if ($section.find('.dr-address-book').length) {
-        if ($section.hasClass('dr-checkout__billing') && $('#checkbox-billing').prop('checked')) {
-          $section.find('.dr-address-book-btn').hide();
-        } else {
-          $section.find('.dr-address-book-btn').show();
-        }
-      }
-
-      CheckoutModule.adjustColumns($section);
-      CheckoutModule.updateSummaryLabels();
-    });
-    $('input:radio[name="selector"]').on('change', function () {
-      switch ($(this).val()) {
-        case 'credit-card':
-          $('#dr-paypal-button').hide();
-          $('.credit-card-info').show();
-          $('#dr-submit-payment').text(localizedText.pay_with_card_label.toUpperCase()).show();
-          break;
-
-        case 'paypal':
-          $('#dr-submit-payment').hide();
-          $('.credit-card-info').hide();
-          $('#dr-paypal-button').show();
-          $('#dr-submit-payment').text(localizedText.pay_with_paypal_label.toUpperCase());
-          break;
-      }
-    });
-    $('#shipping-field-country').on('change', function () {
-      if (this.value === 'US') {
-        $('#shipping-field-state').parent('.form-group').removeClass('d-none');
-      } else {
-        $('#shipping-field-state').parent('.form-group').addClass('d-none');
-      }
-    });
-    $('#billing-field-country').on('change', function () {
-      if (this.value === 'US') {
-        $('#billing-field-state').parent('.form-group').removeClass('d-none');
-      } else {
-        $('#billing-field-state').parent('.form-group').addClass('d-none');
-      }
-    });
-    $('.dr-address-book-btn').on('click', function (e) {
-      var addressType = $(e.target).hasClass('shipping') ? 'shipping' : 'billing';
-      var $addressBook = $('.dr-address-book.' + addressType);
-
-      if ($addressBook.is(':hidden')) {
-        $(e.target).addClass('active');
-        $addressBook.slideDown();
-      } else {
-        $(e.target).removeClass('active');
-        $addressBook.slideUp();
-      }
-    });
-    $(document).on('click', '.address', function (e) {
-      var addressType = $('.dr-address-book-btn.shipping').hasClass('active') ? 'shipping' : 'billing';
-      var $address = $(e.target).closest('.address');
-      $('#' + addressType + '-field-first-name').val($address.data('firstName')).focus();
-      $('#' + addressType + '-field-last-name').val($address.data('lastName')).focus();
-      $('#' + addressType + '-field-address1').val($address.data('lineOne')).focus();
-      $('#' + addressType + '-field-address2').val($address.data('lineTwo')).focus();
-      $('#' + addressType + '-field-city').val($address.data('city')).focus();
-      $('#' + addressType + '-field-state').val($address.data('state')).change();
-      $('#' + addressType + '-field-zip').val($address.data('postalCode')).focus();
-      $('#' + addressType + '-field-country').val($address.data('country')).change();
-      $('#' + addressType + '-field-phone').val($address.data('phoneNumber')).focus().blur();
-      $('.dr-address-book-btn.' + addressType).removeClass('active');
-      $('.dr-address-book.' + addressType).slideUp();
-      $('#checkbox-save-' + addressType).prop('checked', false);
-    }); //floating labels
-
-    float_label.init();
-
-    if (isLoggedIn && requestShipping) {
-      $('.dr-address-book.billing > .overflowContainer').clone().appendTo('.dr-address-book.shipping');
-    }
-
-    if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
-    $('#checkout-email-form button[type=submit]').prop('disabled', false);
-
-    if ($('input[name=email]').val() && $('#checkout-email-form').length && $('#dr-panel-email-result').is(':empty')) {
-      $('#checkout-email-form').submit();
-    }
-
-    if (cartData.totalItemsInCart) {
-      CheckoutModule.getCountryOptionsFromGC().then(function () {
-        $('#shipping-field-country, #billing-field-country').trigger('change');
-      });
-    }
-
-    checkout_utils.applyLegalLinks(digitalriverjs);
-    CheckoutModule.initPreTAndC();
-
-    if ($('#radio-credit-card').is(':checked')) {
-      $('.credit-card-info').show();
-    } // Initial state for payPal
-
-
-    if (drgc_params.payPal.sourceId) {
-      $('.dr-checkout').children().addClass('closed');
-      $('.dr-checkout').children().removeClass('active');
-      $('.dr-checkout__payment').removeClass('closed').addClass('active');
-
-      if (drgc_params.payPal.failure == 'true') {// TODO: Display Error on paypal form maybe
-      }
-
-      if (drgc_params.payPal.success == 'true') {
-        CheckoutModule.applyPaymentAndSubmitCart(drgc_params.payPal.sourceId);
-      }
-    }
-
-    if ($('#dr-paypal-button').length) {
-      // need to get the actual height of the wrapper for rendering the PayPal button
-      $('#checkout-payment-form').removeClass('dr-panel-edit').css('visibility', 'hidden');
-      paypal.Button.render({
-        env: domain.indexOf('test') === -1 ? 'production' : 'sandbox',
-        locale: drLocale,
-        style: {
-          label: 'checkout',
-          size: 'responsive',
-          height: 40,
-          color: 'gold',
-          shape: 'rect',
-          layout: 'horizontal',
-          fundingicons: 'false',
-          tagline: 'false'
-        },
-        onEnter: function onEnter() {
-          $('#checkout-payment-form').addClass('dr-panel-edit').css('visibility', 'visible');
-          $('#dr-paypal-button').hide();
-        },
-        payment: function payment() {
-          var cart = drgc_params.cart.cart;
-          var payPalItems = [];
-          $.each(cart.lineItems.lineItem, function (index, item) {
-            payPalItems.push({
-              'name': item.product.name,
-              'quantity': item.quantity,
-              'unitAmount': item.pricing.listPrice.value
-            });
-          });
-          var payPalPayload = {
-            'type': 'payPal',
-            'amount': cart.pricing.orderTotal.value,
-            'currency': cart.pricing.orderTotal.currency,
-            'payPal': {
-              'returnUrl': window.location.href + '?ppsuccess=true',
-              'cancelUrl': window.location.href + '?ppcancel=true',
-              'items': payPalItems,
-              'taxAmount': cart.pricing.tax.value,
-              'shippingAmount': cart.pricing.shippingAndHandling.value,
-              'amountsEstimated': true,
-              'requestShipping': requestShipping
-            }
-          };
-
-          if (requestShipping) {
-            payPalPayload['shipping'] = {
-              'recipient': "".concat(addressPayload.shipping.firstName, " ").concat(addressPayload.shipping.lastName),
-              'phoneNumber': addressPayload.shipping.phoneNumber,
-              'address': {
-                'line1': addressPayload.shipping.line1,
-                'line2': addressPayload.shipping.line2,
-                'city': addressPayload.shipping.city,
-                'state': addressPayload.shipping.countrySubdivision,
-                'country': addressPayload.shipping.country,
-                'postalCode': addressPayload.shipping.postalCode
+              if (isLoggedIn && requestShipping) {
+                $('.dr-address-book.billing > .overflowContainer').clone().appendTo('.dr-address-book.shipping');
               }
-            };
-          }
 
-          return digitalriverjs.createSource(payPalPayload).then(function (result) {
-            if (result.error) {
-              $('#dr-payment-failed-msg').text(result.error.errors[0].message).show();
-            } else {
-              sessionStorage.setItem('paymentSourceId', result.source.id);
-              return result.source.payPal.token;
+              if (cartData.totalItemsInCart) {
+                checkout_utils.getCountryOptionsFromGC(requestShipping).then(function () {
+                  $('#shipping-field-country, #billing-field-country').trigger('change');
+                });
+              } //floating labels
+
+
+              float_label.init();
+              checkout_utils.applyLegalLinks(digitalriverjs);
+              if ($('#checkout-tax-id-form').length) CheckoutModule.initShopperTypeRadio();
+              if ($('#certificate-modal').length) $('body').append($('#certificate-modal'));
+              if (!$('#checkbox-billing').prop('checked')) $('#checkbox-billing').prop('checked', false).change();
+              if ($('#tems-us-status').length && $('#tems-us-status').val() === 'ELIGIBLE_EXEMPTED') $('#tax-exempt-checkbox').prop('checked', true).trigger('change');
             }
-          });
-        },
-        onShippingChange: function onShippingChange(data, actions) {
-          var supportedCountries = checkout_utils.getSupportedCountries('shipping');
 
-          if (supportedCountries.indexOf(data.shipping_address.country_code) === -1) {
-            return actions.reject();
-          }
-
-          return actions.resolve();
-        },
-        onAuthorize: function onAuthorize() {
-          var sourceId = sessionStorage.getItem('paymentSourceId');
-          CheckoutModule.applyPaymentAndSubmitCart(sourceId, true);
+          case 1:
+          case "end":
+            return _context6.stop();
         }
-      }, '#dr-paypal-button');
-    }
-
-    if ($('#dr-googlepay-button').length && isGooglePayEnabled) {
-      var googlePaybuttonStyle = {
-        buttonType: drgc_params.googlePayButtonType,
-        buttonColor: drgc_params.googlePayButtonColor,
-        buttonLanguage: drLocale.split('_')[0]
-      };
-      var googlePayBaseRequest = checkout_utils.getBaseRequestData(cartData, requestShipping, googlePaybuttonStyle);
-      var googlePayPaymentDataRequest = digitalriverjs.paymentRequest(googlePayBaseRequest);
-      payment_googlepay.init({
-        digitalriverJs: digitalriverjs,
-        paymentDataRequest: googlePayPaymentDataRequest,
-        requestShipping: requestShipping
-      });
-    }
-
-    if ($('#dr-applepay-button').length && isApplePayEnabled) {
-      var applePaybuttonStyle = {
-        buttonType: drgc_params.applePayButtonType,
-        buttonColor: drgc_params.applePayButtonColor,
-        buttonLanguage: drLocale.split('_')[0]
-      };
-      var applePayBaseRequest = checkout_utils.getBaseRequestData(cartData, requestShipping, applePaybuttonStyle);
-      var applePayPaymentDataRequest = digitalriverjs.paymentRequest(applePayBaseRequest);
-      payment_applepay.init({
-        digitalriverJs: digitalriverjs,
-        paymentDataRequest: applePayPaymentDataRequest,
-        requestShipping: requestShipping
-      });
-    }
-
-    $('.back-link a').click(function () {
-      if (document.referrer && document.referrer !== drgc_params.loginUrl) {
-        window.location.href = document.referrer;
-      } else {
-        window.location.href = drgc_params.cartUrl;
       }
-    });
-  }
-});
+    }, _callee6);
+  }));
+
+  return function (_x5) {
+    return _ref4.apply(this, arguments);
+  };
+}());
 /* harmony default export */ var public_checkout = (CheckoutModule);
 // CONCATENATED MODULE: ./assets/js/public/public-common.js
+
+
+
+
 var CommonModule = {};
 
 (function (w) {
@@ -14729,6 +15038,69 @@ jQuery(document).ready(function ($) {
       $(elem).next('.invalid-feedback').text(elem.validationMessage);
     }
   });
+  $('#dr-locale-selector .dr-current-locale, #dr-currency-selector, .dr-selected-currency').click(function (e) {
+    e.preventDefault();
+  });
+  $('#dr-locale-selector .dr-other-locales a').click( /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(e) {
+      var $this, targetLocale, params;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              $this = $(e.target);
+              targetLocale = $this.data('dr-locale');
+              params = new URLSearchParams(location.search);
+              $('body').addClass('dr-loading');
+              $('ul.dr-other-locales').hide();
+              params.set('locale', targetLocale);
+              window.location.search = params.toString();
+
+            case 8:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
+  $('#dr-currency-selector .dr-other-currencies a').click(function (e) {
+    e.preventDefault();
+    var $this = $(e.target);
+    var targetCurrency = $this.data('dr-currency');
+    if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');else $('body').addClass('dr-loading');
+    $('ul.dr-other-currencies').hide();
+    commerce_api.updateShopper({
+      currency: targetCurrency
+    }).then(function () {
+      window.location.reload();
+    })["catch"](function (jqXHR) {
+      checkout_utils.apiErrorHandler(jqXHR);
+    });
+  });
+
+  if ($('.dr-widget-wrapper > #dr-mobile-mini-cart').length) {
+    var $mobileMiniCart = $('#dr-mobile-mini-cart');
+    var selectors = ['body > header', 'div > header', 'div > div > header'];
+    var targetSelector = selectors.find(function (element) {
+      return $(element).length > 0;
+    });
+
+    if (targetSelector !== undefined) {
+      $(targetSelector).after($mobileMiniCart);
+    } else {
+      $('#dr-minicart').show();
+    }
+  }
+
+  if (!$('#dr-mobile-mini-cart').length) {
+    $('#dr-minicart').show();
+  }
 });
 /* harmony default export */ var public_common = (CommonModule);
 // CONCATENATED MODULE: ./assets/js/public/public-login.js
@@ -14791,7 +15163,7 @@ var LoginModule = function ($) {
       url: drgc_params.ajaxUrl,
       data: data,
       success: function success() {
-        LoginModule.redirectAfterAuth(false);
+        LoginModule.redirectAfterAuth(false, LoginModule.getLocaleParam());
       }
     });
   };
@@ -14806,20 +15178,30 @@ var LoginModule = function ($) {
     };
     $('body').addClass('dr-loading');
     $.post(drgc_params.ajaxUrl, data, function (response) {
+      if (sessionStorage.getItem('drgc_upsell_decline')) {
+        sessionStorage.removeItem('drgc_upsell_decline');
+      }
+
       location.reload();
     });
   };
 
-  var redirectAfterAuth = function redirectAfterAuth(isLoggedIn) {
-    if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
-      window.location.href = drgc_params.checkoutUrl;
+  var redirectAfterAuth = function redirectAfterAuth(isLoggedIn, locale) {
+    var cartUrl = new URL(drgc_params.cartUrl);
+    var checkoutUrl = new URL(drgc_params.checkoutUrl);
+    var targetHref = '';
+
+    if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
+      targetHref = drgc_params.checkoutUrl;
     } else if (isLoggedIn) {
-      window.location.href = drgc_params.accountUrl;
-    } else if (!document.referrer) {
-      window.location.href = drgc_params.homeUrl;
+      targetHref = drgc_params.accountUrl;
     } else {
-      window.location.href = document.referrer;
+      targetHref = drgc_params.homeUrl;
     }
+
+    var targetUrl = new URL(targetHref);
+    if (locale) targetUrl.searchParams.set('locale', locale);
+    window.location.href = targetUrl.toString();
   };
 
   var autoLogout = function autoLogout(url) {
@@ -14829,18 +15211,17 @@ var LoginModule = function ($) {
     };
     $('body').addClass('dr-loading');
     $.post(drgc_params.ajaxUrl, data, function () {
+      if (sessionStorage.getItem('drgc_upsell_decline')) {
+        sessionStorage.removeItem('drgc_upsell_decline');
+      }
+
       window.location.href = url;
     });
   };
 
-  var resetCookie = function resetCookie() {
-    var data = {
-      action: 'drgc_reset_cookie',
-      nonce: drgc_params.ajaxNonce
-    };
-    $.post(drgc_params.ajaxUrl, data, function (res) {
-      if (!res.success) throw new Error('Cookie reset failed.');
-    });
+  var getLocaleParam = function getLocaleParam() {
+    var params = new URL(window.location).searchParams;
+    return params.get('locale');
   };
 
   return {
@@ -14849,7 +15230,7 @@ var LoginModule = function ($) {
     logout: logout,
     redirectAfterAuth: redirectAfterAuth,
     autoLogout: autoLogout,
-    resetCookie: resetCookie
+    getLocaleParam: getLocaleParam
   };
 }(jQuery);
 
@@ -14875,16 +15256,17 @@ jQuery(document).ready(function ($) {
       action: 'drgc_login',
       nonce: drgc_params.ajaxNonce,
       username: $('.dr-login-form input[name=username]').val(),
-      password: $('.dr-login-form input[name=password]').val()
+      password: $('.dr-login-form input[name=password]').val(),
+      locale: LoginModule.getLocaleParam() || drgc_params.drLocale
     };
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
-        LoginModule.redirectAfterAuth(true);
+        LoginModule.redirectAfterAuth(true, response.data.locale);
       } else {
         $form.data('processing', false);
         but.removeClass('sending').blur();
 
-        if (response.data.hasOwnProperty('error_description')) {
+        if (response.data && response.data.hasOwnProperty('error_description')) {
           $('.dr-form-error-msg').text(response.data.error_description);
         }
 
@@ -14955,7 +15337,7 @@ jQuery(document).ready(function ($) {
     };
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
-        LoginModule.redirectAfterAuth(true);
+        LoginModule.redirectAfterAuth(true, LoginModule.getLocaleParam());
       } else {
         $form.data('processing', false);
         $button.removeClass('sending').blur();
@@ -15063,7 +15445,15 @@ jQuery(document).ready(function ($) {
   }
 });
 /* harmony default export */ var public_login = (LoginModule);
+// EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/toConsumableArray.js
+var toConsumableArray = __webpack_require__(11);
+var toConsumableArray_default = /*#__PURE__*/__webpack_require__.n(toConsumableArray);
+
 // CONCATENATED MODULE: ./assets/js/public/public-pdp.js
+
+
+
+
 /* global drgc_params, iFrameResize */
 
 /* eslint-disable no-alert, no-console */
@@ -15071,11 +15461,13 @@ jQuery(document).ready(function ($) {
 
 
 var PdpModule = function ($) {
+  var localizedText = drgc_params.translations;
+
   var bindVariationPrice = function bindVariationPrice(pricing, $target) {
     if (!pricing.listPrice || !pricing.salePriceWithQuantity) return;
 
     if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-      $target.data('old-price', pricing.listPrice.value);
+      $target.data('old-price', pricing.formattedListPrice);
       $target.data('price', pricing.formattedSalePriceWithQuantity);
     } else {
       $target.data('price', pricing.formattedSalePriceWithQuantity);
@@ -15098,7 +15490,7 @@ var PdpModule = function ($) {
     }
 
     if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.listPrice.value, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.salePriceDiv, ">\n            "));
+      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.formattedListPrice, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.salePriceDiv, ">\n            "));
     } else {
       $target.html("\n                <".concat(option.priceDiv, " class=\"").concat(option.priceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.priceDiv, ">\n            "));
     }
@@ -15106,7 +15498,25 @@ var PdpModule = function ($) {
 
   var displayRealTimeBuyBtn = function displayRealTimeBuyBtn(purchasable, isRedirectBuyBtn, $target) {
     var isOutOfStock = purchasable === 'false';
-    $target.prop('disabled', isOutOfStock).text(isOutOfStock ? drgc_params.translations.out_of_stock : isRedirectBuyBtn ? drgc_params.translations.buy_now : drgc_params.translations.add_to_cart).addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
+    $target.prop('disabled', isOutOfStock).text(isOutOfStock ? localizedText.out_of_stock : isRedirectBuyBtn ? localizedText.buy_now : localizedText.add_to_cart).addClass(isRedirectBuyBtn ? 'dr-redirect-buy-btn' : '');
+  };
+
+  var displayVarProductInfo = function displayVarProductInfo(product) {
+    $('.dr-pd-title').text(product.displayName);
+    $('.dr-pd-short-desc').html(product.shortDescription);
+    $('.dr-pd-long-desc').html(product.longDescription);
+  };
+
+  var updateProductItem = function updateProductItem($target, product) {
+    var $loadingIcon = $target.find('.dr-loading');
+    var $productInfo = $target.find('.dr-pd-info');
+    var $title = $target.find('.dr-pd-item-title');
+    var $thumbnail = $target.find('.dr-pd-item-thumbnail > img');
+    var thumbnail = product.thumbnailImage || '';
+    $title.text(product.displayName);
+    $thumbnail.attr('src', thumbnail).attr('alt', product.displayName);
+    $loadingIcon.hide();
+    $productInfo.show();
   };
 
   return {
@@ -15114,11 +15524,14 @@ var PdpModule = function ($) {
     bindVariationInventoryStatus: bindVariationInventoryStatus,
     selectVariation: selectVariation,
     displayRealTimePricing: displayRealTimePricing,
-    displayRealTimeBuyBtn: displayRealTimeBuyBtn
+    displayRealTimeBuyBtn: displayRealTimeBuyBtn,
+    displayVarProductInfo: displayVarProductInfo,
+    updateProductItem: updateProductItem
   };
 }(jQuery);
 
 jQuery(document).ready(function ($) {
+  var localizedText = drgc_params.translations;
   var lineItems = [];
 
   function toggleMiniCartDisplay() {
@@ -15152,27 +15565,35 @@ jQuery(document).ready(function ($) {
     }
 
     if (!lineItems.length) {
-      var emptyMsg = "<p class=\"dr-minicart-empty-msg\">".concat(drgc_params.translations.empty_cart_msg, "</p>");
+      var emptyMsg = "<p class=\"dr-minicart-empty-msg\">".concat(localizedText.empty_cart_msg, "</p>");
       $body.append(emptyMsg);
       $display.append($body);
+      if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
     } else {
+      var params = new URL(window.location).searchParams;
+      var locale = params.get('locale') || drgc_params.drLocale;
+      var isTaxInclusive = locale !== 'en_US';
+      var forceExclTax = drgc_params.forceExclTax === 'true';
+      var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
       var miniCartLineItems = '<ul class="dr-minicart-list">';
-      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(drgc_params.translations.subtotal_label, "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
-      var miniCartViewCartBtn = "<a class=\"dr-btn\" id=\"dr-minicart-view-cart-btn\" href=\"".concat(drgc_params.cartUrl, "\">").concat(drgc_params.translations.view_cart_label, "</a>");
+      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(localizedText.subtotal_label + taxSuffixLabel, "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
+      var miniCartViewCartBtn = "<a class=\"dr-btn\" id=\"dr-minicart-view-cart-btn\" href=\"".concat(drgc_params.cartUrl, "\">").concat(localizedText.view_cart_label, "</a>");
       lineItems.forEach(function (li) {
         var productId = li.product.uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
         var listPrice = Number(li.pricing.listPriceWithQuantity.value);
         var salePrice = Number(li.pricing.salePriceWithQuantity.value);
         var formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
+        var formattedListPrice = li.pricing.formattedListPriceWithQuantity;
+        var thumbnailImage = li.product.thumbnailImage || (li.product.parentProduct ? li.product.parentProduct.thumbnailImage || '' : '');
         var priceContent = '';
 
         if (listPrice > salePrice) {
-          priceContent = "<del class=\"dr-strike-price\">".concat(listPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
+          priceContent = "<del class=\"dr-strike-price\">".concat(formattedListPrice, "</del><span class=\"dr-sale-price\">").concat(formattedSalePrice, "</span>");
         } else {
           priceContent = formattedSalePrice;
         }
 
-        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(li.product.thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(drgc_params.translations.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(priceContent, "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(drgc_params.translations.remove_label, "</a>\n                </li>");
+        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(localizedText.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(priceContent, "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(localizedText.remove_label, "</a>\n                </li>");
         miniCartLineItems += miniCartLineItem;
       });
       miniCartLineItems += '</ul>';
@@ -15183,7 +15604,7 @@ jQuery(document).ready(function ($) {
   }
 
   (function () {
-    if ($('#dr-minicart'.length)) {
+    if ($('#dr-minicart').length) {
       displayMiniCart(drgc_params.cart.cart);
     }
   })();
@@ -15191,57 +15612,163 @@ jQuery(document).ready(function ($) {
   $('.dr-minicart-toggle, .dr-minicart-close-btn').click(function (e) {
     e.preventDefault();
     toggleMiniCartDisplay();
+    $('.dr-minicart-display').css('position', 'absolute');
   });
-  $('body').on('click', '.dr-buy-btn', function (e) {
-    e.preventDefault();
-    var $this = $(e.target);
+  $('body').on('click', '.dr-buy-btn', /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee(e) {
+      var $this, pdLink, productID, productName, existingProducts, quantity, locale, currency, shopperData, queryObj;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              e.preventDefault();
+              $this = $(e.target);
 
-    if ($this.hasClass('dr-redirect-buy-btn')) {
-      var pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
-      window.location.href = pdLink;
-    } else {
-      var productID = $this.attr('data-product-id') ? $this.attr('data-product-id').toString() : '';
-      var existingProducts = lineItems.map(function (li) {
-        var uri = li.product.uri;
-        var id = uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
-        return {
-          id: id,
-          quantity: li.quantity
-        };
-      });
-      var quantity = 1; // PD page
+              if (!$this.hasClass('dr-redirect-buy-btn')) {
+                _context.next = 7;
+                break;
+              }
 
-      if ($('#dr-pd-offers').length) {
-        quantity = parseInt($('#dr-pd-qty').val(), 10);
-      }
+              pdLink = $this.closest('.dr-pd-item, .c-product-card').find('a').attr('href');
+              window.location.href = pdLink;
+              _context.next = 29;
+              break;
 
-      existingProducts.forEach(function (pd) {
-        if (pd.id === productID) {
-          quantity += pd.quantity;
+            case 7:
+              if ($this.attr('data-product-id')) {
+                _context.next = 9;
+                break;
+              }
+
+              return _context.abrupt("return");
+
+            case 9:
+              productID = $this.attr('data-product-id');
+              productName = $this.attr('data-product-name') || localizedText.general_product_name;
+              existingProducts = lineItems.map(function (li) {
+                var uri = li.product.uri;
+                var id = uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
+                return {
+                  id: id,
+                  quantity: li.quantity
+                };
+              });
+              quantity = 1; // PD page
+
+              if ($('#dr-pd-offers').length) {
+                quantity = parseInt($('#dr-pd-qty').val(), 10);
+              }
+
+              existingProducts.forEach(function (pd) {
+                if (pd.id === productID) {
+                  quantity += pd.quantity;
+                }
+              });
+              locale = drgc_params.drLocale;
+              currency = $('#dr-currency-selector > a.dr-selected-currency').data('drCurrency');
+              shopperData = {
+                'shopper': {
+                  'locale': locale,
+                  'currency': currency
+                }
+              };
+              $('body').addClass('dr-loading');
+              _context.prev = 19;
+              _context.next = 22;
+              return commerce_api.updateShopper({}, shopperData);
+
+            case 22:
+              _context.next = 27;
+              break;
+
+            case 24:
+              _context.prev = 24;
+              _context.t0 = _context["catch"](19);
+              console.error(_context.t0);
+
+            case 27:
+              queryObj = {
+                productId: productID,
+                quantity: quantity,
+                testOrder: drgc_params.testOrder,
+                expand: 'all'
+              };
+              commerce_api.updateCart(queryObj).then(function (res) {
+                drToast.displayMessage("\"".concat(productName, "\" ").concat(localizedText.product_added_to_cart_msg), 'success');
+                displayMiniCart(res.cart);
+              })["catch"](function (jqXHR) {
+                return checkout_utils.apiErrorHandler(jqXHR);
+              })["finally"](function () {
+                return $('body').removeClass('dr-loading');
+              });
+
+            case 29:
+            case "end":
+              return _context.stop();
+          }
         }
-      });
-      var queryObj = {
-        productId: productID,
-        quantity: quantity,
-        testOrder: drgc_params.testOrder,
-        expand: 'all'
-      };
-      commerce_api.updateCart(queryObj).then(function (res) {
-        displayMiniCart(res.cart);
-        openMiniCartDisplay();
-      })["catch"](function (jqXHR) {
-        return checkout_utils.apiErrorHandler(jqXHR);
-      });
-    }
-  });
+      }, _callee, null, [[19, 24]]);
+    }));
+
+    return function (_x) {
+      return _ref.apply(this, arguments);
+    };
+  }());
   $('.dr-minicart-display').on('click', '.dr-minicart-item-remove-btn', function (e) {
     e.preventDefault();
     var lineItemID = $(e.target).data('line-item-id');
+    var taxRegs = sessionStorage.getItem('drgcTaxRegs') ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+    $('.dr-minicart-display').addClass('dr-loading');
     commerce_api.removeLineItem(lineItemID).then(function () {
       return commerce_api.getCart();
-    }).then(function (res) {
-      return displayMiniCart(res.cart);
-    })["catch"](function (jqXHR) {
+    }).then( /*#__PURE__*/function () {
+      var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2(res) {
+        var tokenInfo;
+        return regenerator_default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                if (!(res.cart.totalItemsInCart === 0 && !sessionStorage.getItem('drgcTokenRenewed') && taxRegs.customerType)) {
+                  _context2.next = 11;
+                  break;
+                }
+
+                _context2.prev = 1;
+                _context2.next = 4;
+                return checkout_utils.recreateAccessToken();
+
+              case 4:
+                tokenInfo = _context2.sent;
+
+                if (tokenInfo && tokenInfo.access_token) {
+                  sessionStorage.setItem('drgcTokenRenewed', 'true');
+                  location.reload();
+                }
+
+                _context2.next = 11;
+                break;
+
+              case 8:
+                _context2.prev = 8;
+                _context2.t0 = _context2["catch"](1);
+                console.error(_context2.t0);
+
+              case 11:
+                $('.dr-minicart-display').removeClass('dr-loading');
+                displayMiniCart(res.cart);
+
+              case 13:
+              case "end":
+                return _context2.stop();
+            }
+          }
+        }, _callee2, null, [[1, 8]]);
+      }));
+
+      return function (_x2) {
+        return _ref2.apply(this, arguments);
+      };
+    }())["catch"](function (jqXHR) {
       return checkout_utils.apiErrorHandler(jqXHR);
     });
   });
@@ -15271,28 +15798,6 @@ jQuery(document).ready(function ($) {
     } else {
       $qty.val('1');
     }
-  });
-  $('.dr_prod-variations select').on('change', function (e) {
-    e.preventDefault();
-    var $selectedOption = $(this).children('option:selected');
-    var varId = $(this).val();
-    var price = $selectedOption.data('price');
-    var listPriceValue = $selectedOption.data('old-price');
-    var purchasable = $selectedOption.data('purchasable');
-    var $prodPrice = $('.single-dr_product .dr-pd-content .dr-pd-price');
-    var $buyBtn = $('.dr-buy-btn');
-    var prodPriceHtml = '';
-    $buyBtn.attr('data-product-id', varId);
-    if (listPriceValue) prodPriceHtml = '<del class="dr-strike-price">' + listPriceValue + '</del>';
-    prodPriceHtml += '<strong class="dr-sale-price">' + price + '</strong>';
-    $prodPrice.html(prodPriceHtml);
-    PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
-    $('.dr-pd-img').attr('src', $selectedOption.data('thumbnail-url'));
-  });
-  $('input[type=radio][name=variation]').on('click', function (e) {
-    var purchasable = $(e.target).data('purchasable');
-    var $buyBtn = $('form.product-detail .dr-buy-btn');
-    PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
   });
   $("iframe[name^='controller-']").css('display', 'none'); // Real-time pricing & inventory status option (for DR child/non-DR child themes)
 
@@ -15346,10 +15851,10 @@ jQuery(document).ready(function ($) {
   } // Real-time pricing & inventory status for single PD page (including variation/base products)
 
 
-  if ($('.single-dr_product').length) {
+  if ($('.single-dr_product').length && !$('.dr-prod-variations select').length) {
     isPdCard = false;
-    $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-    pdDisplayOption.$singlePDBuyBtn.text(drgc_params.translations.loading_msg).prop('disabled', true);
+    $(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+    pdDisplayOption.$singlePDBuyBtn.text(localizedText.loading_msg).prop('disabled', true);
 
     if (pdDisplayOption.$variationOption && pdDisplayOption.$variationOption.length) {
       // variation product
@@ -15371,7 +15876,9 @@ jQuery(document).ready(function ($) {
     } else {
       // base product
       var productID = pdDisplayOption.$singlePDBuyBtn.data('product-id');
-      var $priceDiv = $(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
+
+      var _$priceDiv = $(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+
       if (!productID) return;
       commerce_api.getProduct(productID, {
         expand: 'inventoryStatus'
@@ -15379,7 +15886,7 @@ jQuery(document).ready(function ($) {
         var purchasable = res.product.inventoryStatus.productIsInStock;
         isPdCard = false; // to avoid being overwritten by concurrency
 
-        PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
+        PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, _$priceDiv);
         PdpModule.displayRealTimeBuyBtn(purchasable, false, pdDisplayOption.$singlePDBuyBtn);
       });
     }
@@ -15389,39 +15896,167 @@ jQuery(document).ready(function ($) {
   if (pdDisplayOption.$card && pdDisplayOption.$card.length) {
     isPdCard = true;
     pdDisplayOption.$card.each(function (idx, elem) {
-      var $priceDiv = $(elem).find(pdDisplayOption.priceDivSelector()).text(drgc_params.translations.loading_msg);
-      var $buyBtn = $(elem).find('.dr-buy-btn').text(drgc_params.translations.loading_msg).prop('disabled', true);
+      var $pdElem = $(elem);
+      var $priceDiv = $pdElem.find(pdDisplayOption.priceDivSelector()).text(localizedText.loading_msg);
+      var $buyBtn = $pdElem.find('.dr-buy-btn').text(localizedText.loading_msg).prop('disabled', true);
       var productID = $buyBtn.data('product-id');
       var parentId = $buyBtn.data('parent-id');
       if (!productID) return;
 
       if (parentId) {
         commerce_api.getProduct(parentId, {
-          fields: 'variations',
+          fields: 'displayName,thumbnailImage,pricing,inventoryStatus,variations',
           expand: 'all'
         }).then(function (res) {
-          var variations = res.product.variations.product;
-          var isInStock = variations.some(function (elem) {
-            return elem.inventoryStatus.availableQuantity > 0;
+          var baseProduct = res.product;
+          var variations = baseProduct.variations.product;
+          var isInStock = variations.some(function (v) {
+            return v.inventoryStatus.availableQuantity > 0;
           });
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(variations[0].pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(baseProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(isInStock.toString(), true, $buyBtn);
+          PdpModule.updateProductItem($pdElem, baseProduct);
         });
       } else {
         commerce_api.getProduct(productID, {
           expand: 'inventoryStatus'
         }).then(function (res) {
-          var purchasable = res.product.inventoryStatus.productIsInStock;
+          var baseProduct = res.product;
+          var purchasable = baseProduct.inventoryStatus.productIsInStock;
           isPdCard = true; // to avoid being overwritten by concurrency
 
-          PdpModule.displayRealTimePricing(res.product.pricing, pdDisplayOption, $priceDiv);
+          PdpModule.displayRealTimePricing(baseProduct.pricing, pdDisplayOption, $priceDiv);
           PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+          PdpModule.updateProductItem($pdElem, baseProduct);
         });
       }
     });
   }
+
+  var $varSelects = $('.dr-prod-variations select');
+  var varSelectCount = $varSelects.length;
+  var $priceDiv = $(pdDisplayOption.priceDivSelector());
+  var $buyBtn = $('.dr-buy-btn');
+  var $pdImgWrapper = $('.dr-pd-img-wrapper');
+  var $pdImg = $('.dr-pd-img');
+
+  if (varSelectCount) {
+    $varSelects.children('option:first').prop('selected', true);
+    $varSelects.first().prop('disabled', false);
+    $buyBtn.prop('disabled', true);
+  }
+
+  $('.dr-prod-variations select').on('change', function (e) {
+    e.preventDefault();
+    $priceDiv.text('');
+    $buyBtn.prop('disabled', true);
+    var selectedVal = $(e.target).val();
+    var index = $(e.target).data('index');
+    var selectedValues = [];
+    var allSelectedVal = {};
+    var filterObj = Object.assign({}, drgcVarAttrs);
+    var i = index;
+    var j = 0;
+
+    while (i < varSelectCount) {
+      var $next = $varSelects.eq(i + 1);
+
+      if ($next.length) {
+        $next.prop('disabled', true).children('option:first').prop('selected', true);
+      }
+
+      while (j < index) {
+        selectedValues[j] = $varSelects.eq(j).val();
+        j++;
+      }
+
+      selectedValues[index] = selectedVal;
+      selectedValues.forEach(function (element, i) {
+        var attr = $varSelects.eq(i).data('var-attribute');
+        var deleteItems = Object.keys(filterObj).filter(function (key) {
+          return filterObj[key][attr] !== element;
+        });
+        deleteItems.forEach(function (key) {
+          delete filterObj[key];
+        });
+      });
+      i++;
+    }
+
+    if (index < varSelectCount - 1 && selectedVal) {
+      var $nextSelect = $varSelects.eq(index + 1);
+      var nextAttr = $nextSelect.data('var-attribute');
+
+      var options = toConsumableArray_default()(new Set(Object.keys(filterObj).map(function (key) {
+        return filterObj[key][nextAttr];
+      })));
+
+      $nextSelect.children('option:not(:first-child)').remove();
+      $.each(options, function (key, value) {
+        $nextSelect.append($('<option></option>').attr('value', value).text(value));
+      });
+      $nextSelect.prop('disabled', false);
+    }
+
+    $varSelects.children('option:selected').each(function (index, element) {
+      allSelectedVal[$(element).parent().data('var-attribute')] = $(element).val();
+    });
+    var productId = Object.keys(drgcVarAttrs).find(function (key) {
+      return JSON.stringify(drgcVarAttrs[key]) === JSON.stringify(allSelectedVal);
+    });
+
+    if (productId) {
+      $priceDiv.text(localizedText.loading_msg);
+      $pdImgWrapper.addClass('dr-loading');
+      commerce_api.getProduct(productId, {
+        expand: 'inventoryStatus'
+      }).then(function (res) {
+        var currentProduct = res.product;
+        var purchasable = currentProduct.inventoryStatus.productIsInStock;
+        var productImage = currentProduct.productImage || currentProduct.thumbnailImage;
+        PdpModule.displayRealTimePricing(currentProduct.pricing, pdDisplayOption, $priceDiv);
+        PdpModule.displayRealTimeBuyBtn(purchasable, false, $buyBtn);
+        PdpModule.displayVarProductInfo(currentProduct);
+        if (productImage) $pdImg.attr('src', productImage);
+        $pdImgWrapper.removeClass('dr-loading');
+      });
+      $buyBtn.attr('data-product-id', productId).prop('disabled', false);
+    }
+  });
+  var $floatingCart = $('#floating-cart');
+  var $miniCart = $('.dr-minicart-display');
+  $(window).on('scroll', function () {
+    if ($(window).scrollTop() > 150) {
+      if ($miniCart.is(':visible')) {
+        if ($miniCart.css('top') === 0) {
+          $floatingCart.removeClass('show');
+          if (!$('#dr-minicart > .dr-minicart-display').length) $('#dr-minicart').append($miniCart);
+        } else {
+          $miniCart.hide();
+          $floatingCart.addClass('show');
+        }
+      } else {
+        $floatingCart.addClass('show');
+      }
+    } else {
+      $floatingCart.removeClass('show');
+      if (!$('#dr-minicart > .dr-minicart-display').length) $('#dr-minicart').append($miniCart);
+    }
+  });
+  $floatingCart.on('click', function (e) {
+    e.preventDefault();
+    $miniCart.css('position', 'fixed');
+    $floatingCart.removeClass('show');
+    if (!$('#sticky-mini-cart > .dr-minicart-display').length) $('#sticky-mini-cart').append($miniCart);
+    openMiniCartDisplay();
+  });
+  $('body').on('click', '#dr-minicart-view-cart-btn', function (e) {
+    e.preventDefault();
+    $('body').addClass('dr-loading');
+    window.location.href = $(e.target).attr('href');
+  });
 });
 /* harmony default export */ var public_pdp = (PdpModule);
 // CONCATENATED MODULE: ./assets/js/public/public-thank-you.js
@@ -15431,18 +16066,36 @@ var ThankYouModule = function ($) {}(jQuery);
 
 jQuery(document).ready(function ($) {
   if ($('.dr-thank-you-wrapper:visible').length) {
+    var localizedText = drgc_params.translations;
+    $(document).on('click', '#print-button', function () {
+      window.print();
+    });
+    $(document).on('click', '#my-subs-btn', function () {
+      window.location.href = drgc_params.mySubsUrl;
+    });
+    var digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey);
+    checkout_utils.applyLegalLinks(digitalriverjs);
+
     if (drgc_params.order && drgc_params.order.order) {
       checkout_utils.updateSummaryPricing(drgc_params.order.order, drgc_params.isTaxInclusive === 'true');
     }
 
-    $(document).on('click', '#print-button', function () {
-      window.print();
-    });
-    var digitalriverjs = new DigitalRiver(drgc_params.digitalRiverKey);
-    checkout_utils.applyLegalLinks(digitalriverjs);
-    $(document).on('click', '#my-subs-btn', function () {
-      window.location.href = drgc_params.mySubsUrl;
-    });
+    if ($('#dr-order-vat-info').length && sessionStorage.getItem('drgcTaxRegs')) {
+      var taxRegs = JSON.parse(sessionStorage.getItem('drgcTaxRegs'));
+      var shopperType = taxRegs.customerType === 'B' ? localizedText.business_shopper_type : localizedText.personal_shopper_type;
+      var taxIds = taxRegs.taxRegistrations;
+      var vatInfoHtml = '';
+      taxIds.forEach(function (element) {
+        vatInfoHtml = "".concat(vatInfoHtml, "<p>").concat(element.value, "</p>");
+      });
+      vatInfoHtml = "<p>".concat(shopperType, "</p>").concat(vatInfoHtml);
+      $('#dr-order-vat-info').append(vatInfoHtml);
+      sessionStorage.removeItem('drgcTaxRegs');
+    }
+
+    if (sessionStorage.getItem('drgcTaxExempt')) sessionStorage.removeItem('drgcTaxExempt');
+    if (sessionStorage.getItem('drgcPaymentSource')) sessionStorage.removeItem('drgcPaymentSource');
+    if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
   }
 });
 /* harmony default export */ var public_thank_you = (ThankYouModule);
@@ -15557,7 +16210,7 @@ jQuery(document).ready(function ($) {
           }
         }
 
-        location.reload(true);
+        location.reload();
       });
     });
     $(document).on('click', '#subs-change-qty-btn', function () {
@@ -15590,7 +16243,7 @@ jQuery(document).ready(function ($) {
             }
           }
 
-          location.reload(true);
+          location.reload();
         });
       }
     });
@@ -15632,7 +16285,11 @@ jQuery(document).ready(function ($) {
 
 
 
+
+
 var AccountModule = function ($) {
+  var localizedText = drgc_params.translations;
+
   var appendAutoRenewalTerms = function appendAutoRenewalTerms(digitalriverjs, entityCode, locale) {
     var terms = checkout_utils.getLocalizedAutoRenewalTerms(digitalriverjs, entityCode, locale);
 
@@ -15641,105 +16298,377 @@ var AccountModule = function ($) {
     }
   };
 
+  var getRightOfWithdrawalLink = function getRightOfWithdrawalLink(locale) {
+    var gcFontsDomain = 'drh-fonts.img.digitalrivercontent.net';
+    return new Promise(function (resolve, reject) {
+      $.ajax({
+        type: 'GET',
+        url: "https://".concat(gcFontsDomain, "/store/").concat(drgc_params.siteID, "/").concat(locale, "/DisplayHelpPage"),
+        success: function success(response) {
+          var $rightOfWithdrawal = $(response).find('#dr_rightOfWithdrawalFAQ');
+          var url = '';
+
+          if ($rightOfWithdrawal.length) {
+            url = $rightOfWithdrawal.find('a.dr_rightOfWithdrawal').prop('href').split('?')[1];
+            url = "https://gc.digitalriver.com/store?".concat(url);
+          }
+
+          resolve(url);
+        },
+        error: function error(jqXHR) {
+          reject(jqXHR);
+        }
+      });
+    });
+  };
+
+  var initRightOfWithdrawalLink = /*#__PURE__*/function () {
+    var _ref = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee() {
+      var rightOfWithdrawalLink;
+      return regenerator_default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.prev = 0;
+              _context.next = 3;
+              return AccountModule.getRightOfWithdrawalLink(drgc_params.drLocale);
+
+            case 3:
+              rightOfWithdrawalLink = _context.sent;
+
+              if (rightOfWithdrawalLink) {
+                $('a.right-of-withdrawal-link').prop('href', rightOfWithdrawalLink);
+                $('.dr-right-of-withdrawal').show();
+              } else {
+                $('.dr-right-of-withdrawal').hide();
+              }
+
+              _context.next = 10;
+              break;
+
+            case 7:
+              _context.prev = 7;
+              _context.t0 = _context["catch"](0);
+              console.error(_context.t0);
+
+            case 10:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee, null, [[0, 7]]);
+    }));
+
+    return function initRightOfWithdrawalLink() {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
+  var createOrderList = function createOrderList(orders) {
+    var listHtml = '';
+    orders.forEach(function (element) {
+      var submissionDate = new Date(element.submissionDate).toLocaleDateString();
+      var status = element.orderState.toLowerCase().split(' ').join('');
+      listHtml = "\n                ".concat(listHtml, "\n                <div class=\"order\">\n                    <div class=\"order-id\" data-heading=\"").concat(localizedText.order_id_label, "\">").concat(element.id, "</div>\n                    <div class=\"order-date\" data-heading=\"").concat(localizedText.date_label, "\">").concat(submissionDate, "</div>\n                    <div class=\"order-amount\" data-heading=\"").concat(localizedText.amount_label, "\">").concat(element.pricing.formattedTotal, "</div>\n                    <div class=\"order-status ").concat(status, "\" data-heading=\"").concat(localizedText.status_label, "\">").concat(element.orderState, "</div>\n                    <div class=\"order-details\">\n                        <button type=\"button\" class=\"btn btn-transparent\" data-order=\"").concat(element.id, "\">").concat(localizedText.order_details_label, "</button>\n                    </div>\n                </div>\n            ");
+    });
+    return listHtml;
+  };
+
+  var updateListAndPagination = function updateListAndPagination(list, $selectedNum, orders) {
+    $('#list-orders > .overflowContainer > .order:not(.order-headings)').remove();
+    $('#list-orders > .overflowContainer > .order-headings').after(list);
+    $('#list-orders > .overflowContainer > .dr-pagination > .page-link').not($selectedNum).removeClass('active');
+    $selectedNum.addClass('active');
+    $('#list-orders > .overflowContainer > .dr-pagination > .next > .btn').prop('disabled', !orders.hasOwnProperty('nextPage'));
+    $('#list-orders > .overflowContainer > .dr-pagination > .prev > .btn').prop('disabled', !orders.hasOwnProperty('previousPage'));
+  };
+
+  var submitTaxCertificate = /*#__PURE__*/function () {
+    var _ref2 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee2($form, customerId) {
+      var res;
+      return regenerator_default.a.wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              $form.addClass('dr-loading');
+              _context2.prev = 1;
+              _context2.t0 = JSON;
+              _context2.next = 5;
+              return checkout_utils.createTaxProfile(customerId);
+
+            case 5:
+              _context2.t1 = _context2.sent;
+              res = _context2.t0.parse.call(_context2.t0, _context2.t1);
+
+              if (res.companyName) {
+                location.reload();
+              } else {
+                $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage()).show();
+              }
+
+              _context2.next = 15;
+              break;
+
+            case 10:
+              _context2.prev = 10;
+              _context2.t2 = _context2["catch"](1);
+              console.error(_context2.t2);
+              $form.removeClass('dr-loading');
+              $('#tems-us-error-msg').text(checkout_utils.getAjaxErrorMessage(JSON.parse(_context2.t2.responseText))).show();
+
+            case 15:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2, null, [[1, 10]]);
+    }));
+
+    return function submitTaxCertificate(_x, _x2) {
+      return _ref2.apply(this, arguments);
+    };
+  }();
+
   return {
-    appendAutoRenewalTerms: appendAutoRenewalTerms
+    appendAutoRenewalTerms: appendAutoRenewalTerms,
+    getRightOfWithdrawalLink: getRightOfWithdrawalLink,
+    initRightOfWithdrawalLink: initRightOfWithdrawalLink,
+    createOrderList: createOrderList,
+    updateListAndPagination: updateListAndPagination,
+    submitTaxCertificate: submitTaxCertificate
   };
 }(jQuery);
 
 jquery_default()(function () {
-  var localizedText = drgc_params.translations;
   if (jquery_default()('#dr-account-page-wrapper').length < 1) return;
   window.drActiveOrderId = '';
+  var localizedText = drgc_params.translations;
   var $body = jquery_default()('body');
   var $ordersModal = jquery_default()('#ordersModal');
-  $body.append($ordersModal); // Order detail click
+  var $orderIdModal = jquery_default()('#order-id-modal');
+  $body.append($ordersModal).append($orderIdModal); // Order detail click
 
-  function fillOrderModal(e) {
-    var orderID = jquery_default()(this).attr('data-order');
-    if (!drOrders[orderID]) alert('order details not available');
-    var requestShipping = drOrders[orderID].shippingMethodCode !== '';
-
-    if (orderID === drActiveOrderId) {
-      $ordersModal.drModal('show');
-    } else {
-      // orderID
-      jquery_default()('.dr-modal-orderNumber').text(orderID); // Order Pricing
-
-      drOrders[orderID].pricing = jquery_default.a.parseJSON(drOrders[orderID].encodedPricing);
-      jquery_default()('.dr-modal-subtotal').text(drOrders[orderID].formattedSubtotal);
-      jquery_default()('.dr-modal-tax').text(drOrders[orderID].formattedTax);
-      jquery_default()('.dr-modal-shipping').text(drOrders[orderID].formattedShipping);
-      var isDiscount = parseInt(drOrders[orderID].formattedIncentive.replace(/\D/g, ''));
-
-      if (isDiscount) {
-        jquery_default()('.dr-modal-discount').text(drOrders[orderID].formattedIncentive);
-        jquery_default()('.dr-summary__discount').show();
-      } else {
-        jquery_default()('.dr-summary__discount').hide();
-      }
-
-      jquery_default()('.dr-modal-total').text(drOrders[orderID].formattedTotal); // Billing
-
-      jquery_default()('.dr-modal-billingName').text(drOrders[orderID].billingAddress.firstName + ' ' + drOrders[orderID].billingAddress.lastName);
-      var billingAddress1 = drOrders[orderID].billingAddress.line1;
-      billingAddress1 += drOrders[orderID].billingAddress.line2 ? '<br>' + drOrders[orderID].billingAddress.line2 : '';
-      jquery_default()('.dr-modal-billingAddress1').html(billingAddress1);
-      var billingAddress2 = drOrders[orderID].billingAddress.city ? drOrders[orderID].billingAddress.city : '';
-      billingAddress2 += drOrders[orderID].billingAddress.state ? ', ' + drOrders[orderID].billingAddress.state : '';
-      billingAddress2 += drOrders[orderID].billingAddress.zip ? ' ' + drOrders[orderID].billingAddress.zip : '';
-      jquery_default()('.dr-modal-billingAddress2').text(billingAddress2);
-      jquery_default()('.dr-modal-billingCountry').text(drOrders[orderID].billingAddress.country); // Shipping
-
-      jquery_default()('.dr-modal-shippingName').text(drOrders[orderID].shippingAddress.firstName + ' ' + drOrders[orderID].shippingAddress.lastName);
-      var shippingAddress1 = drOrders[orderID].shippingAddress.line1;
-      shippingAddress1 += drOrders[orderID].shippingAddress.line2 ? '<br>' + drOrders[orderID].shippingAddress.line2 : '';
-      jquery_default()('.dr-modal-shippingAddress1').html(shippingAddress1);
-      var shippingAddress2 = drOrders[orderID].shippingAddress.city ? drOrders[orderID].shippingAddress.city : '';
-      shippingAddress2 += drOrders[orderID].shippingAddress.state ? ', ' + drOrders[orderID].shippingAddress.state : '';
-      shippingAddress2 += drOrders[orderID].shippingAddress.zip ? ' ' + drOrders[orderID].shippingAddress.zip : '';
-      jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
-      jquery_default()('.dr-modal-shippingCountry').text(drOrders[orderID].shippingAddress.country); // Summary Labels
-
-      var isTaxInclusive = drOrders[orderID].isTaxInclusive === 'true';
-      var forceExclTax = drgc_params.forceExclTax === 'true';
-      var shouldDisplayVat = drOrders[orderID].shouldDisplayVat === 'true';
-      var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
-      jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
-      jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
-      jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
-      jquery_default()('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
-
-      if (isTaxInclusive && !forceExclTax) {
-        jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
-      } else {
-        jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
-      } // Products
-
-
-      var html = '';
-
-      for (var i = 0; i < drOrders[orderID].products.length; i++) {
-        var prod = drOrders[orderID].products[i];
-        prod.pricing = jquery_default.a.parseJSON(prod.encodedPricing);
-        html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(prod.image, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(prod.name, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(prod.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(prod.qty, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(prod.qty, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(prod.salePrice, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(prod.salePrice === prod.strikePrice ? 'style="display:none"' : '', ">").concat(prod.strikePrice, "</span>\n                </div>\n            </div>");
-      }
-
-      jquery_default()('.dr-summary__products').html(html);
-      checkout_utils.updateSummaryPricing(drOrders[orderID], isTaxInclusive);
-
-      if (!requestShipping) {
-        jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
-      } else {
-        jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').show();
-      } // set this last
-
-
-      drActiveOrderId = orderID;
-      $ordersModal.drModal('show');
-    }
+  function fillOrderModal(_x3) {
+    return _fillOrderModal.apply(this, arguments);
   }
 
-  jquery_default()('.order-details .btn').on('click', fillOrderModal); // modal print click
+  function _fillOrderModal() {
+    _fillOrderModal = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
+      var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, isTaxInclusive, forceExclTax, orderCurrency, shouldDisplayVat, taxSuffixLabel, html, count, i, lineItem;
+      return regenerator_default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              orderId = jquery_default()(this).attr('data-order');
+              jquery_default()('a.right-of-withdrawal-link').data('orderId', orderId);
+
+              if (!(orderId === drActiveOrderId)) {
+                _context4.next = 6;
+                break;
+              }
+
+              $ordersModal.drModal('show');
+              _context4.next = 65;
+              break;
+
+            case 6:
+              selectedOrder = '';
+              _context4.prev = 7;
+              _context4.next = 10;
+              return commerce_api.getOrderDetails(orderId, {
+                expand: 'all'
+              });
+
+            case 10:
+              orderDetails = _context4.sent;
+              selectedOrder = orderDetails.order;
+              _context4.next = 18;
+              break;
+
+            case 14:
+              _context4.prev = 14;
+              _context4.t0 = _context4["catch"](7);
+              console.error(_context4.t0);
+              return _context4.abrupt("return", false);
+
+            case 18:
+              if (selectedOrder) {
+                _context4.next = 21;
+                break;
+              }
+
+              drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+              return _context4.abrupt("return", false);
+
+            case 21:
+              requestShipping = 'code' in selectedOrder.shippingMethod; // orderID
+
+              jquery_default()('.dr-modal-orderNumber').text(orderId); // Order Pricing
+
+              jquery_default()('.dr-modal-subtotal').text(selectedOrder.pricing.formattedSubtotal);
+              jquery_default()('.dr-modal-tax').text(selectedOrder.pricing.formattedTax);
+              jquery_default()('.dr-modal-shipping').text(selectedOrder.pricing.formattedShipping);
+              isDiscount = parseInt(selectedOrder.pricing.formattedIncentive.replace(/\D/g, ''));
+
+              if (isDiscount) {
+                jquery_default()('.dr-modal-discount').text(selectedOrder.pricing.formattedIncentive);
+                jquery_default()('.dr-summary__discount').show();
+              } else {
+                jquery_default()('.dr-summary__discount').hide();
+              }
+
+              jquery_default()('.dr-modal-total').text(selectedOrder.pricing.formattedTotal); // Billing
+
+              jquery_default()('.dr-modal-billingName').text(selectedOrder.billingAddress.firstName + ' ' + selectedOrder.billingAddress.lastName);
+              billingAddress1 = selectedOrder.billingAddress.line1;
+              billingAddress1 += selectedOrder.billingAddress.line2 ? '<br>' + selectedOrder.billingAddress.line2 : '';
+              jquery_default()('.dr-modal-billingAddress1').html(billingAddress1);
+              billingAddress2 = selectedOrder.billingAddress.city ? selectedOrder.billingAddress.city : '';
+              billingAddress2 += selectedOrder.billingAddress.countrySubdivision ? ', ' + selectedOrder.billingAddress.countrySubdivision : '';
+              billingAddress2 += selectedOrder.billingAddress.postalCode ? ' ' + selectedOrder.billingAddress.postalCode : '';
+              jquery_default()('.dr-modal-billingAddress2').text(billingAddress2);
+              jquery_default()('.dr-modal-billingCountry').text(selectedOrder.billingAddress.country); // Shipping
+
+              jquery_default()('.dr-modal-shippingName').text(selectedOrder.shippingAddress.firstName + ' ' + selectedOrder.shippingAddress.lastName);
+              shippingAddress1 = selectedOrder.shippingAddress.line1;
+              shippingAddress1 += selectedOrder.shippingAddress.line2 ? '<br>' + selectedOrder.shippingAddress.line2 : '';
+              jquery_default()('.dr-modal-shippingAddress1').html(shippingAddress1);
+              shippingAddress2 = selectedOrder.shippingAddress.city ? selectedOrder.shippingAddress.city : '';
+              shippingAddress2 += selectedOrder.shippingAddress.countrySubdivision ? ', ' + selectedOrder.shippingAddress.countrySubdivision : '';
+              shippingAddress2 += selectedOrder.shippingAddress.postalCode ? ' ' + selectedOrder.shippingAddress.postalCode : '';
+              jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
+              jquery_default()('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country); // Summary Labels
+
+              isTaxInclusive = selectedOrder.locale !== 'en_US';
+              forceExclTax = drgc_params.forceExclTax === 'true';
+              orderCurrency = selectedOrder.pricing.total.currency;
+              shouldDisplayVat = orderCurrency === 'GBP' || orderCurrency === 'EUR';
+              taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
+              jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
+              jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
+              jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+              jquery_default()('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
+
+              if (isTaxInclusive && !forceExclTax) {
+                jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
+              } else {
+                jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
+              } // Products
+
+
+              html = '';
+              count = selectedOrder.lineItems.lineItem.length;
+
+              for (i = 0; i < count; i++) {
+                lineItem = selectedOrder.lineItems.lineItem[i];
+                html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
+              }
+
+              jquery_default()('.dr-summary__products').html(html);
+              checkout_utils.updateSummaryPricing(selectedOrder, isTaxInclusive);
+
+              if (!requestShipping) {
+                jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();
+              } else {
+                jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').show();
+              } // set this last
+
+
+              drActiveOrderId = orderId;
+              $ordersModal.drModal('show');
+
+            case 65:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, this, [[7, 14]]);
+    }));
+    return _fillOrderModal.apply(this, arguments);
+  }
+
+  jquery_default()(document).on('click', '.order-details > .btn', fillOrderModal);
+  jquery_default()('a.right-of-withdrawal-link').on('click', function (e) {
+    e.preventDefault();
+    var $link = jquery_default()(e.target);
+
+    if (window.isSecureContext) {
+      var id = $link.data('orderId');
+      navigator.clipboard.writeText(id).then(function () {
+        $orderIdModal.find('.dr-modal-footer > button').data('rowUrl', $link.prop('href'));
+        $orderIdModal.drModal('show');
+      }, function () {
+        console.error('Unable to write to clipboard.');
+      });
+    } else {
+      window.open($link.prop('href'), '_blank');
+    }
+  });
+  $orderIdModal.on('hidden.dr.bs.modal', function (e) {
+    window.open(jquery_default()(e.target).find('.dr-modal-footer > button').data('rowUrl'), '_blank');
+  });
+  jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link').on('click', /*#__PURE__*/function () {
+    var _ref3 = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee3(e) {
+      var $list, $selectedNum, pageNumber, isNextBtn, currentNum, ordersByPage, list;
+      return regenerator_default.a.wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              $list = jquery_default()('#list-orders > .overflowContainer');
+              $selectedNum = jquery_default()(e.target);
+              pageNumber = $selectedNum.data('pageNumber');
+              isNextBtn = false;
+
+              if (!pageNumber) {
+                currentNum = jquery_default()('#list-orders > .overflowContainer > .dr-pagination').find('.page-link.active').data('pageNumber');
+                isNextBtn = $selectedNum.parent('a.page-link').hasClass('next');
+                pageNumber = isNextBtn ? currentNum + 1 : currentNum - 1 < 1 ? 1 : currentNum - 1;
+                $selectedNum = jquery_default()('#list-orders > .overflowContainer > .dr-pagination > .page-link[data-page-number=' + pageNumber + ']');
+              }
+
+              if (!$selectedNum.hasClass('active')) {
+                _context3.next = 7;
+                break;
+              }
+
+              return _context3.abrupt("return", false);
+
+            case 7:
+              $list.addClass('dr-loading');
+              _context3.prev = 8;
+              _context3.next = 11;
+              return commerce_api.getOrders({
+                pageNumber: pageNumber,
+                expand: 'order.id,order.submissionDate,order.pricing.formattedTotal,order.orderState'
+              });
+
+            case 11:
+              ordersByPage = _context3.sent;
+              list = AccountModule.createOrderList(ordersByPage.orders.order);
+              AccountModule.updateListAndPagination(list, $selectedNum, ordersByPage.orders);
+              _context3.next = 19;
+              break;
+
+            case 16:
+              _context3.prev = 16;
+              _context3.t0 = _context3["catch"](8);
+              console.error(_context3.t0);
+
+            case 19:
+              $list.removeClass('dr-loading');
+
+            case 20:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3, null, [[8, 16]]);
+    }));
+
+    return function (_x4) {
+      return _ref3.apply(this, arguments);
+    };
+  }()); // modal print click
 
   $ordersModal.find('.dr-modal-footer .print-button').on('click', function () {
     var $dialog = $ordersModal.find('.dr-modal-dialog');
@@ -15806,6 +16735,70 @@ jquery_default()(function () {
       jquery_default()('body').removeClass('dr-loading');
       checkout_utils.apiErrorHandler(jqXHR);
     });
+  }); // Certificate
+
+  var $certificateModal = jquery_default()('#certificate-modal');
+  var $companyNameConfirmModal = jquery_default()('#company-name-confirm');
+  $body.append($certificateModal).append($companyNameConfirmModal);
+  jquery_default()('#add-new-cert').on('click', function (e) {
+    e.preventDefault();
+    $certificateModal.drModal({
+      backdrop: 'static',
+      keyboard: false
+    });
+  });
+  jquery_default()('#certificate-modal .dr-modal-footer > button.submit').on('click', function (e) {
+    e.preventDefault();
+    var $form = jquery_default()('#account-tem-us-form');
+    var accountCompanyName = jquery_default()('#account-company-name').val();
+    $form.addClass('was-validated');
+
+    if ($form[0].checkValidity() === false) {
+      return false;
+    }
+
+    if (accountCompanyName !== '' && accountCompanyName !== jquery_default()('#tems-us-company-name').val()) {
+      $certificateModal.drModal('hide');
+      $companyNameConfirmModal.drModal({
+        backdrop: 'static',
+        keyboard: false
+      });
+    } else {
+      AccountModule.submitTaxCertificate($form, drgc_params.customerId, $certificateModal);
+    }
+  });
+  jquery_default()('#certificate-modal .dr-modal-footer > button.cancel, #certificate-modal .dr-modal-header > button.close').on('click', function (e) {
+    jquery_default()('#account-tem-us-form').removeClass('was-validated');
+    jquery_default()('#account-tem-us-form input, #certificate-tax-authority').val('');
+    jquery_default()('#tems-us-error-msg').text('').hide();
+  });
+  jquery_default()('#company-name-confirm .dr-modal-footer > button.confirm').on('click', function (e) {
+    e.preventDefault();
+    $certificateModal.drModal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    $companyNameConfirmModal.drModal('hide');
+    AccountModule.submitTaxCertificate(jquery_default()('#account-tem-us-form'), drgc_params.customerId, $certificateModal);
+  });
+  jquery_default()('#company-name-confirm .dr-modal-footer > button.cancel').on('click', function (e) {
+    e.preventDefault();
+    $certificateModal.drModal({
+      backdrop: 'static',
+      keyboard: false
+    });
+    $companyNameConfirmModal.drModal('hide');
+  });
+  jquery_default()('#tems-us-start-date, #tems-us-end-date').on('blur', function (e) {
+    var date = jquery_default()(e.target).val();
+
+    if (date) {
+      var dateArr = date.split('-').reverse();
+      var _ref4 = [dateArr[1], dateArr[0]];
+      dateArr[0] = _ref4[0];
+      dateArr[1] = _ref4[1];
+      jquery_default()(e.target).val(dateArr.join('/'));
+    }
   }); // Payment
 
   jquery_default()('#dr-account-page-wrapper .payment').on('click', function (e) {
@@ -16069,7 +17062,9 @@ jquery_default()(function () {
       var subsId = jquery_default()('#list-subscriptions .subscription').first().data('id');
       commerce_api.getSubsDetails(subsId).then(function (data) {
         var orderId = data.subscription.orders.order[0].uri.split('orders/')[1];
-        entityCode = drOrders[orderId].entityCode;
+        return commerce_api.getOrderDetails(orderId);
+      }).then(function (data) {
+        entityCode = data.order.businessEntityCode;
         AccountModule.appendAutoRenewalTerms(digitalriverjs, entityCode, locale);
       })["catch"](function (jqXHR) {
         checkout_utils.apiErrorHandler(jqXHR);
@@ -16141,10 +17136,10 @@ jquery_default()(function () {
         }
 
         $error.css('color', 'red');
-        sessionStorage.setItem('drgc-pw-changed', 'false');
+        sessionStorage.setItem('drgcPwChanged', 'false');
         jquery_default()('body').removeClass('dr-loading');
       } else {
-        sessionStorage.setItem('drgc-pw-changed', 'true');
+        sessionStorage.setItem('drgcPwChanged', 'true');
         location.reload();
       }
 
@@ -16156,20 +17151,42 @@ jquery_default()(function () {
   jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"]').on('shown.dr.bs.tab', function (e) {
     sessionStorage.drAccountTab = jquery_default()(e.target).attr('href');
 
-    if (e.target.id === 'list-password-list' && sessionStorage.getItem('drgc-pw-changed') === 'true') {
-      sessionStorage.setItem('drgc-pw-changed', 'false');
-      jquery_default()('#dr-passwordUpdated').drModal('show');
+    if (e.target.id === 'list-password-list' && sessionStorage.getItem('drgcPwChanged') === 'true') {
+      sessionStorage.setItem('drgcPwChanged', 'false');
+      var data = {
+        action: 'drgc_logout',
+        nonce: drgc_params.ajaxNonce
+      };
+      jquery_default()('body').addClass('dr-loading');
+      jquery_default.a.post(drgc_params.ajaxUrl, data, function (response) {
+        if (response.success) {
+          jquery_default()('body').removeClass('dr-loading');
+          jquery_default()('#dr-passwordUpdated').drModal({
+            backdrop: 'static',
+            keyboard: false
+          });
+        } else {
+          location.reload();
+        }
+      });
     }
+  });
+  jquery_default()('#dr-passwordUpdated button').on('click', function () {
+    jquery_default()('body').addClass('dr-loading');
+    window.location.href = drgc_params.loginUrl;
   });
 
   if (sessionStorage.drAccountTab && jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').length) {
     jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"][href="' + sessionStorage.drAccountTab + '"]').drTab('show');
+    jquery_default()('#nav-tabContent').removeClass('dr-loading');
   } else if (window.matchMedia && window.matchMedia('(min-width:768px)').matches) {
     jquery_default()('#dr-account-page-wrapper a[data-toggle="dr-list"]').eq(0).drTab('show');
+    jquery_default()('#nav-tabContent').removeClass('dr-loading');
   } //floating labels
 
 
   float_label.init();
+  AccountModule.initRightOfWithdrawalLink();
 });
 /* harmony default export */ var public_account = (AccountModule);
 // CONCATENATED MODULE: ./assets/js/public/user-activity-watcher.js
@@ -16177,11 +17194,11 @@ jquery_default()(function () {
 
 var DrgcUserWatcher = function (w, d, p, $) {
   var watcher = {
-    interval: 3510,
+    interval: 900,
     debug: false,
     eventTypes: ['mousedown', 'mousemove', 'click', 'keydown', 'scroll', 'touchstart'],
     pathname: null,
-    redirectPath: p.loginPath,
+    redirectUrl: p.loginUrl,
     escapeUrls: [],
     timerId: null,
     callback: null,
@@ -16198,12 +17215,15 @@ var DrgcUserWatcher = function (w, d, p, $) {
       this.initPathname();
 
       if (!this.callback) {
-        if (!this.redirectPath) {
+        if (!this.redirectUrl) {
           this.log('The redirect url is undefined.');
           return false;
         }
 
-        if (this.redirectPath === this.pathname && this.pathname !== p.loginPath) {
+        var redirectPath = new URL(this.redirectUrl).pathname;
+        var loginPath = new URL(drgc_params.loginUrl).pathname;
+
+        if (this.pathname === redirectPath && this.pathname !== loginPath) {
           this.log('The redirect page is the same as the current page and it is not the login page.');
           return false;
         }
@@ -16251,7 +17271,7 @@ var DrgcUserWatcher = function (w, d, p, $) {
     },
     redirect: function redirect() {
       w.clearInterval(this.countDowninterval);
-      public_login.autoLogout(this.redirectPath);
+      public_login.autoLogout(this.redirectUrl);
     },
     initPathname: function initPathname() {
       var parser = d.createElement('a');
@@ -16290,7 +17310,6 @@ var DrgcUserWatcher = function (w, d, p, $) {
           watcher.closeModal();
           watcher.eventTypes.forEach(watcher.listen);
           watcher.tick();
-          public_login.resetCookie();
           break;
 
         case 'dr-modalLogoutBtn':
