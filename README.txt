@@ -20,12 +20,16 @@ Product/Pricing Management (product pages)
 * Product catalog management (physical, digital and subscription products)
 * Merchandising offers
 * Configurable shipping options
+* Configurable Product Import Schedule
 * Local transaction currencies
 
 Order Management /Shopping Experience (cart, checkout and confirmation pages)
 
+*	Localizable Content (Language, Currency, Tax Inclusive/Exclusion)
 * Tax calculation
 * Tax management (registration, collection, filing, and remittance)
+* Support for both US (Tax certificate) and Global Tax exemptions (Tax ID#)
+* Support for EIN (US only)
 * Fraud screening
 * Advanced fraud management
 * Fraud liability guarantee
@@ -34,14 +38,11 @@ Order Management /Shopping Experience (cart, checkout and confirmation pages)
 * Payment processing (credit cards and alternative payment methods)
 * Payment processing for Subscriptions (Registered Shoppers and credit card only)
 * Recurring Billing  (credit card only)
-* Payment
-* PCI compliance
+* Dropin (Digital River’s turnkey payment integration)
 * Tokenization
 * Acquirer redundancy
 * Billing optimization
-* Support for EIN (US only)
 * Chargeback mitigation and dispute management
-* Legal responsibility for fulfilling online orders
 * Terms of sale and legal disclosures
 
 Shopper Experience (registration/login and account pages)
@@ -49,6 +50,9 @@ Shopper Experience (registration/login and account pages)
 * Profile management (register, login and manage addresses)
 * Order history
 * Manage existing subscriptions
+* View Tax certificate eligibility (Registered Shopper - US only)
+* Right to Withdrawal Request (EU Consumer Rights Directive)
+
 
 Our flexible API architecture allows you to customize your ecommerce solution. Digital River can be your complete solution or we can easily plug into your existing systems.
 
@@ -102,7 +106,7 @@ No, you are responsible for hosting your own site.
 * Refactor product import. Now the plugin support one product with 300+ variations
 * Support Global Tax ID Management and Tax exemption(US)
 * Added GDPR/Compliance
-* Added new payment module:Drop-in. You don't need to add extra code in order to make payment work on WordPress
+* Added new payment module:Dropin. You don't need to add extra code in order to make payment work on WordPress
 
 
 
