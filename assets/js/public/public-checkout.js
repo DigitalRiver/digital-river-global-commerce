@@ -55,6 +55,14 @@ const CheckoutModule = (($) => {
             }
         }
 
+        if ($nextSection.hasClass('dr-checkout__tax-id') && !$('#checkout-tax-id-form > .tax-id-field').length) {
+            $('#checkout-tax-id-form').trigger('submit');
+        }
+
+        if ($('#checkout-tax-id-form > .shopper-type-radio').length && !$('#checkout-tax-id-form > .tax-id-field').length) {
+            $('span.dr-accordion__edit.tax-id').addClass('d-none');
+        }
+
         adjustColumns($nextSection);
         CheckoutUtils.updateSummaryLabels();
 
@@ -327,7 +335,7 @@ const CheckoutModule = (($) => {
                 $('#checkout-payment-form').removeClass('dr-loading');
 
                 if (!res.paymentMethodTypes.length) {
-                    $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
+                    $('#dr-payment-failed-msg').html(`<p>${localizedText.payment_methods_error_msg}</p>`).show();
                 }
             },
             onCancel: (res) => {
@@ -637,65 +645,71 @@ jQuery(document).ready(async ($) => {
                 $button.addClass('sending').blur();
 
                 const shopperType = $('input[name="shopper-type"]:checked').val();
-                const $taxFields = (shopperType === 'I') ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
-                const regs = [];
 
-                if ($taxFields.length) {
-                    $taxFields.each((index, element) => {
-                        const $element = $(element);
+                if (shopperType) {
+                    const $taxFields = (shopperType === 'I') ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
+                    const regs = [];
 
-                        if (!$element.hasClass('d-none')) {
-                            const key = $element.data('key');
-                            const value = $element.val();
-                            const taxRegObj = {};
+                    if ($taxFields.length) {
+                        $taxFields.each((index, element) => {
+                            const $element = $(element);
 
-                            if (value) {
-                                taxRegObj['key'] = key;
-                                taxRegObj['value'] = value;
-                                regs.push(taxRegObj);
+                            if (!$element.hasClass('d-none')) {
+                                const key = $element.data('key');
+                                const value = $element.val();
+                                const taxRegObj = {};
+
+                                if (value) {
+                                    taxRegObj['key'] = key;
+                                    taxRegObj['value'] = value;
+                                    regs.push(taxRegObj);
+                                }
+
+                                taxIds = `${taxIds}<br>${value}`;
                             }
-
-                            taxIds = `${taxIds}<br>${value}`;
-                        }
-                    });
-                }
-
-                typeText = ($('input[name="shopper-type"]:checked').val() === 'I') ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
-
-                if (regs.length) {
-                    $('.dr-summary__pricing').addClass('dr-loading');
-                    await CheckoutUtils.applyTaxRegistration(shopperType, regs)
-                        .then((data) => {
-                            sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
-                            return DRCommerceApi.getCart({expand: 'all'});
-                        })
-                        .then((data) => {
-                            const lineItems = data.cart.lineItems.lineItem;
-                            const tax = data.cart.pricing.tax.value;
-                            const isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && (tax === 0);
-
-                            sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
-                            CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
-
-                            if (tax > 0) {
-                                $error.text(localizedText.invalid_tax_id_error_msg).show();
-                            } else {
-                                $error.text('').hide();
-                            }
-                        })
-                        .catch((error) => {
-                            $error.text(localizedText.invalid_tax_id_error_msg).show();
-                            console.error(error);
-
-                            if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
-                        })
-                        .finally(() => {
-                            $button.removeClass('sending').blur();
-                            $('.dr-summary__pricing').removeClass('dr-loading');
                         });
+                    }
+
+                    if (regs.length) {
+                        $('.dr-summary__pricing').addClass('dr-loading');
+                        await CheckoutUtils.applyTaxRegistration(shopperType, regs)
+                            .then((data) => {
+                                sessionStorage.setItem('drgcTaxRegs', JSON.stringify(data));
+                                return DRCommerceApi.getCart({expand: 'all'});
+                            })
+                            .then((data) => {
+                                const lineItems = data.cart.lineItems.lineItem;
+                                const tax = data.cart.pricing.tax.value;
+                                const isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && (tax === 0);
+
+                                sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
+                                CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+
+                                if (tax > 0) {
+                                    $error.text(localizedText.invalid_tax_id_error_msg).show();
+                                } else {
+                                    $error.text('').hide();
+                                }
+                            })
+                            .catch((error) => {
+                                $error.text(localizedText.invalid_tax_id_error_msg).show();
+                                console.error(error);
+
+                                if (sessionStorage.getItem('drgcTaxRegs')) sessionStorage.removeItem('drgcTaxRegs');
+                            })
+                            .finally(() => {
+                                $button.removeClass('sending').blur();
+                                $('.dr-summary__pricing').removeClass('dr-loading');
+                            });
+                    } else {
+                        $button.removeClass('sending').blur();
+                        $error.text('').hide();
+                    }
+
+                    typeText = (shopperType === 'I') ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
                 } else {
                     $button.removeClass('sending').blur();
-                    $error.text('').hide();
+                    typeText = localizedText.tax_id_unavailable_msg;
                 }
             }
 
