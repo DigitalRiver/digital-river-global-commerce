@@ -18,7 +18,9 @@
 ?>
 
 <h2><?php _e( 'Locales', 'digital-river-global-commerce' ) ?></h2>
-<button type="button" class="button" id="dr-sync-locales-btn"><?php _e( 'Sync Locales and Currencies', 'digital-river-global-commerce' ) ?></button>
+<div data-tooltip="<?php _e( 'All of the locale attributes will be set to default value after synchronizing', 'digital-river-global-commerce' ) ?>" data-tooltip-location="right">
+  <button type="button" class="button" id="dr-sync-locales-btn"><?php _e( 'Sync Locales and Currencies', 'digital-river-global-commerce' ) ?></button>
+</div>
 
 <?php if ( empty( $drgc_locale_options ) ) { ?>
   <p><?php _e( 'No locale, please sync it up by clicking button above.', 'digital-river-global-commerce' ) ?></p>
@@ -34,6 +36,7 @@
                 <th><?php _e( 'DR Locale', 'digital-river-global-commerce' ) ?></th>
                 <th><?php _e( 'WP Language', 'digital-river-global-commerce' ) ?></th>
                 <th><?php _e( 'Currencies', 'digital-river-global-commerce' ) ?></th>
+                <th><?php _e( 'Tax Display', 'digital-river-global-commerce' ) ?></th>
               </tr>
             </thead>
             <tbody>
@@ -54,6 +57,12 @@
                   ) ?>
                 </td>
                 <td><?php echo join( ', ', $locale_option['supported_currencies'] ) ?></td>
+                <td>
+                  <select name="drgc_locale_options[<?php echo $idx ?>][tax_display]">
+                    <option value="EXCL" <?php if ( $locale_option['tax_display'] === 'EXCL' ) echo 'selected'; ?>><?php _e( 'Exclusive', 'digital-river-global-commerce' ) ?></option>
+                    <option value="INCL" <?php if ( $locale_option['tax_display'] === 'INCL' ) echo 'selected'; ?>><?php _e( 'Inclusive', 'digital-river-global-commerce' ) ?></option>
+                  </select>
+                </td>
               </tr>
             <?php } ?>
             </tbody>

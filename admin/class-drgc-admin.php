@@ -341,7 +341,6 @@ class DRGC_Admin {
     register_setting( $this->plugin_name . '_general', $this->option_name . '_cron_utc_time', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
 
     // Locales
-    register_setting( $this->plugin_name . '_locales', $this->option_name . '_default_locale', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
     register_setting( $this->plugin_name . '_locales', $this->option_name . '_locale_options', array( 'sanitize_callback' => array( $this, 'dr_sanitize_locale_options' ) ) );
 
     // Checkout
@@ -533,7 +532,7 @@ class DRGC_Admin {
   }
   
 	/**
-	 * Update wp_locale only and install needed language packs.
+	 * Update wp_locale and tax_display and install needed language packs.
 	 *
 	 * @since    2.0.0
 	 */
@@ -543,8 +542,12 @@ class DRGC_Admin {
 
 		foreach ( $new_input as $idx => $locale_option ) {
 			$input_wp_locale = $input[$idx]['wp_locale'];
+			$input_tax_display = $input[$idx]['tax_display'];
+
+			$new_input[$idx]['wp_locale'] = $input_wp_locale;
+			$new_input[$idx]['tax_display'] = $input_tax_display;
+
 			if ( $input_wp_locale && $locale_option['wp_locale'] !== $input_wp_locale ) {
-				$new_input[$idx]['wp_locale'] = $input_wp_locale;
 				array_push( $changed_wp_locales, $input_wp_locale );
 			}
 		}
@@ -619,7 +622,8 @@ class DRGC_Admin {
 			'dr_locale' => $localeOption['locale'],
 			'wp_locale' => get_wp_locale_by_map( $localeOption['locale'] ),
 			'primary_currency' => $localeOption['primaryCurrency'],
-			'supported_currencies' => $localeOption['supportedCurrencies']['currency']
+			'supported_currencies' => $localeOption['supportedCurrencies']['currency'],
+			'tax_display' => $localeOption['locale'] === 'en_US' ? 'EXCL' : 'INCL'
 		);
 	}
 

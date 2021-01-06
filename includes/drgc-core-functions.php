@@ -482,6 +482,22 @@ function drgc_get_supported_currencies( $dr_locale ) {
 }
 
 /**
+ * Get tax display by current DR locale
+ *
+ * @param string $dr_locale
+ * @return string
+ */
+function drgc_get_tax_display( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+  if ( empty( $drgc_locale_options ) ) {
+    return '';
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['tax_display'] ?? '';
+  }
+}
+
+/**
  * Get the category URL for Continue Shopping link
  *
  * @return string

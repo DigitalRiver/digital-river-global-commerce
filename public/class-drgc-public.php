@@ -196,6 +196,9 @@ class DRGC_Public {
     $options = array(
       'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
       'drLocale'          =>  drgc_get_current_dr_locale(),
+      'primaryCurrency'   =>  drgc_get_primary_currency( drgc_get_current_dr_locale() ),
+      'supportedCurrencies' => drgc_get_supported_currencies( drgc_get_current_dr_locale() ),
+      'taxDisplay'        => drgc_get_tax_display( drgc_get_current_dr_locale() ),
       'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
       'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
       'homeUrl'           =>  $this->append_query_string( get_home_url() ),
