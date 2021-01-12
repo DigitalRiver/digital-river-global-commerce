@@ -15259,6 +15259,11 @@ jQuery(document).ready(function ($) {
       password: $('.dr-login-form input[name=password]').val(),
       locale: LoginModule.getLocaleParam() || drgc_params.drLocale
     };
+
+    if ($('#drgc-login-recaptcha').length) {
+      data.g_recaptcha_response = $('#drgc-login-recaptcha').find('textarea.g-recaptcha-response').val();
+    }
+
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
         LoginModule.redirectAfterAuth(true, response.data.locale);
@@ -15270,7 +15275,7 @@ jQuery(document).ready(function ($) {
           $('.dr-form-error-msg').text(response.data.error_description);
         }
 
-        if (Object.prototype.toString.call(response.data) == '[object String]') {
+        if (Object.prototype.toString.call(response.data) === '[object String]') {
           $('.dr-form-error-msg').text(response.data);
         }
 
@@ -15335,6 +15340,11 @@ jQuery(document).ready(function ($) {
       password: $('.dr-signup-form input[name=upw]').val(),
       confirm_password: $('.dr-signup-form input[name=upw2]').val()
     };
+
+    if ($('#drgc-signup-recaptcha').length) {
+      data.g_recaptcha_response = $('#drgc-signup-recaptcha').find('textarea.g-recaptcha-response').val();
+    }
+
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
         LoginModule.redirectAfterAuth(true, LoginModule.getLocaleParam());
@@ -15344,7 +15354,7 @@ jQuery(document).ready(function ($) {
 
         if (response.data && response.data.errors && response.data.errors.error[0].hasOwnProperty('description')) {
           $('.dr-signin-form-error').text(response.data.errors.error[0].description);
-        } else if (Object.prototype.toString.call(response.data) == '[object String]') {
+        } else if (Object.prototype.toString.call(response.data) === '[object String]') {
           $('.dr-signin-form-error').text(response.data);
         } else {
           $('.dr-signin-form-error').text(drgc_params.translations.undefined_error_msg);
@@ -15372,6 +15382,11 @@ jQuery(document).ready(function ($) {
       action: 'drgc_pass_reset_request',
       nonce: drgc_params.ajaxNonce
     };
+
+    if ($('#drgc-reset-pass-recaptcha').length) {
+      data.g_recaptcha_response = $('#drgc-reset-pass-recaptcha').find('textarea.g-recaptcha-response').val();
+    }
+
     $.each($form.serializeArray(), function (index, obj) {
       data[obj.name] = obj.value;
     });
@@ -15384,7 +15399,15 @@ jQuery(document).ready(function ($) {
 
     $.post(ajaxUrl, data, function (response) {
       if (!response.success) {
-        $errMsg.text(response.data[0].message).show();
+        if (response.data && typeof response.data === 'string') {
+          $errMsg.text(response.data);
+        } else if (typeof response === 'string') {
+          $errMsg.text(response);
+        } else {
+          $errMsg.text(drgc_params.translations.undefined_error_msg);
+        }
+
+        $errMsg.show();
       } else {
         $('#drResetPasswordModalBody').html('').html("\n                    <h3>".concat(drgc_params.translations.password_reset_title, "</h3>\n                    <p>").concat(drgc_params.translations.password_reset_msg, "</p>\n                "));
         $button.hide();
