@@ -268,8 +268,8 @@ const CartModule = (($) => {
 
     lineItems.forEach((lineItem, idx) => {
       const parentProductID = lineItem.product.parentProduct ? lineItem.product.parentProduct.id : lineItem.product.id;
-      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
       const listPrice = lineItem.pricing.formattedListPriceWithQuantity;
+      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
       const promise = CheckoutUtils.getPermalink(parentProductID).then((permalink) => {
         const lineItemHTML = `
           <div data-line-item-id="${lineItem.id}" class="dr-product dr-product-line-item" data-product-id="${lineItem.product.id}" data-sort="${idx}">
@@ -294,8 +294,8 @@ const CartModule = (($) => {
             </div>
             <div class="dr-product__price">
               <button class="dr-prd-del remove-icon"></button>
+              <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
               <span class="sale-price">${salePrice}</span>
-              <span class="regular-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
             </div>
           </div>`;
           lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
@@ -326,7 +326,7 @@ const CartModule = (($) => {
     const $shippingRow = $('.dr-summary__shipping');
     const $subtotalRow = $('.dr-summary__subtotal');
     const $totalRow = $('.dr-summary__total');
-    const newPricing = CheckoutUtils.getSeparatedPricing(lineItems, pricing, drgc_params.isTaxInclusive === 'true');
+    const newPricing = CheckoutUtils.getOrderExactPricing(lineItems, pricing, cart.taxInclusive === 'true', drgc_params.taxDisplay === 'INCL');
 
     $discountRow.find('.discount-value').text(`-${pricing.formattedDiscount}`);
     $taxRow.find('.tax-value').text(newPricing.formattedProductTax);

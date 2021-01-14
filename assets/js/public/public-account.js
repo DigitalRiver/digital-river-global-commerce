@@ -189,24 +189,22 @@ $(() => {
             $('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country);
 
             // Summary Labels
-            const isTaxInclusive = selectedOrder.locale !== 'en_US';
-            const forceExclTax = drgc_params.forceExclTax === 'true';
             const orderCurrency = selectedOrder.pricing.total.currency;
             const shouldDisplayVat = (orderCurrency === 'GBP' || orderCurrency === 'EUR');
-            const taxSuffixLabel = isTaxInclusive ?
-                forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label :
-                '';
-            $('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
+            const orderLocaleOption = drgc_params.localeOptions.find(elem => elem.dr_locale === selectedOrder.locale);
+            const displayIncl = orderLocaleOption ? (orderLocaleOption.tax_display === 'INCL') : false;
+
+            $('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + CheckoutUtils.getTaxSuffixLabel(displayIncl));
             $('.dr-summary__tax .item-label').text(shouldDisplayVat ?
                 localizedText.vat_label :
                 localizedText.tax_label
             );
-            $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+            $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + CheckoutUtils.getTaxSuffixLabel(displayIncl));
             $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ?
                 localizedText.shipping_vat_label :
                 localizedText.shipping_tax_label
             );
-            if (isTaxInclusive && !forceExclTax) {
+            if (displayIncl) {
               $('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
             } else {
               $('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
@@ -256,7 +254,7 @@ $(() => {
 
             $('.dr-summary__products').html(html);
 
-            CheckoutUtils.updateSummaryPricing(selectedOrder, isTaxInclusive);
+            CheckoutUtils.updateSummaryPricing(selectedOrder, displayIncl);
 
             if (!requestShipping) {
                 $('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();

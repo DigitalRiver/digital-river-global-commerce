@@ -26,6 +26,7 @@ const PdpModule = (($) => {
     };
 
     const displayRealTimePricing = (pricing, option, $target) => {
+        const displayIncl = drgc_params.taxDisplay === 'INCL';
         if (!pricing.listPrice || !pricing.salePriceWithQuantity) {
             $target.text(''); // no pricing data
             return;
@@ -33,11 +34,11 @@ const PdpModule = (($) => {
         if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
             $target.html(`
                 <${option.listPriceDiv} class="${option.listPriceClass()}">${pricing.formattedListPrice}</${option.listPriceDiv}>
-                <${option.salePriceDiv} class="${option.salePriceClass()}">${pricing.formattedSalePriceWithQuantity}</${option.salePriceDiv}>
+                <${option.salePriceDiv} class="${option.salePriceClass()}">${pricing.formattedSalePriceWithQuantity + CheckoutUtils.getTaxSuffixLabel(displayIncl)}</${option.salePriceDiv}>
             `);
         } else {
             $target.html(`
-                <${option.priceDiv} class="${option.priceClass()}">${pricing.formattedSalePriceWithQuantity}</${option.priceDiv}>
+                <${option.priceDiv} class="${option.priceClass()}">${pricing.formattedSalePriceWithQuantity + CheckoutUtils.getTaxSuffixLabel(displayIncl)}</${option.priceDiv}>
             `);
         }
     };
@@ -106,6 +107,7 @@ jQuery(document).ready(($) => {
         const $display = $('.dr-minicart-display');
         const $body = $('<div class="dr-minicart-body"></div>');
         const $footer = $('<div class="dr-minicart-footer"></div>');
+        const taxInclusive = cart.taxInclusive === 'true';
 
         lineItems = (cart.lineItems && cart.lineItems.lineItem) ? cart.lineItems.lineItem : [];
 
@@ -122,15 +124,9 @@ jQuery(document).ready(($) => {
 
             if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
         } else {
-            const params = (new URL(window.location)).searchParams;
-            const locale = params.get('locale') || drgc_params.drLocale;
-            const isTaxInclusive = locale !== 'en_US';
-            const forceExclTax = drgc_params.forceExclTax === 'true';
-            const taxSuffixLabel = isTaxInclusive ?
-                forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label :
-                '';
             let miniCartLineItems = '<ul class="dr-minicart-list">';
-            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${localizedText.subtotal_label + taxSuffixLabel}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
+            const displayIncl = taxInclusive && drgc_params.taxDisplay === 'INCL'; // Display "Incl. VAT" label on mini-cart only when price list is set to tax-inclusive or the subtotal looks weird
+            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${localizedText.subtotal_label + CheckoutUtils.getTaxSuffixLabel(displayIncl)}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
             const miniCartViewCartBtn = `<a class="dr-btn" id="dr-minicart-view-cart-btn" href="${drgc_params.cartUrl}">${localizedText.view_cart_label}</a>`;
 
             lineItems.forEach((li) => {
@@ -325,7 +321,7 @@ jQuery(document).ready(($) => {
             $card: $('.dr-pd-item'),
             $variationOption: $('select[name=dr-variation] option'),
             $singlePDBuyBtn: $('form#dr-pd-form .dr-buy-btn'),
-            priceDivSelector: () => { return isPdCard ? '.dr-pd-item-price' : '.dr-pd-price'; },
+            priceDivSelector: () => { return isPdCard ? '.dr-pd-item-price' : 'form#dr-pd-form .dr-pd-price'; },
             listPriceDiv: 'del',
             listPriceClass: () => { return 'dr-strike-price'; },
             salePriceDiv: 'strong',

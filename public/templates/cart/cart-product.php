@@ -23,6 +23,8 @@ $is_variation = isset( $line_item['product']['parentProduct'] );
 $short_description = $line_item['product']['shortDescription'] ?? '';
 $short_description_option = get_option( 'drgc_display_short_description_handler' );
 $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' );
+$display_incl = drgc_get_tax_display( $customer['locale'] ) === 'INCL';
+$tax_suffix_label = $display_incl ? ' ' . __( 'Incl. VAT', 'digital-river-global-commerce' ) : '';
 ?>
 
 <div data-line-item-id="<?php echo $line_item['id']; ?>" class="dr-product">
@@ -82,8 +84,8 @@ $short_description_enabled = ( is_array( $short_description_option ) && $short_d
 
         <button class="dr-prd-del remove-icon"></button>
 
-        <span class="sale-price"><?php echo $sale_price; ?></span>
-        <span class="regular-price <?php echo $sale_price === $price ? 'd-none' : ''; ?>"><?php echo $price; ?></span>
+        <del class="regular-price dr-strike-price <?php echo $sale_price === $price ? 'd-none' : ''; ?>"><?php echo $price; ?></del>
+        <span class="sale-price"><?php echo $sale_price . $tax_suffix_label; ?></span>
 
     </div>
 

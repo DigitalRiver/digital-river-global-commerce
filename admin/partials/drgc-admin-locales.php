@@ -36,7 +36,12 @@
                 <th><?php _e( 'DR Locale', 'digital-river-global-commerce' ) ?></th>
                 <th><?php _e( 'WP Language', 'digital-river-global-commerce' ) ?></th>
                 <th><?php _e( 'Currencies', 'digital-river-global-commerce' ) ?></th>
-                <th><?php _e( 'Tax Display', 'digital-river-global-commerce' ) ?></th>
+                <th>
+                  <div data-tooltip="<?php _e( 'For the locales with tax-exclusive/inclusive price lists but still need to present tax-inclusive/exclusive prices at storefront. This config is just like VAT Display Method setting in BigBlue, we suggest setting them consistently.', 'digital-river-global-commerce' ) ?>" data-tooltip-location="top">
+                    <?php _e( 'Tax Display', 'digital-river-global-commerce' ) ?>
+                    <span class="dashicons dashicons-editor-help"></span>
+                  </div>
+                </th>
               </tr>
             </thead>
             <tbody>

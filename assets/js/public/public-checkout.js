@@ -387,7 +387,7 @@ jQuery(document).ready(async ($) => {
         let activeSectionIdx = -1;
 
         // Break down tax and update summary on page load
-        CheckoutUtils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
+        CheckoutUtils.updateSummaryPricing(cartData, drgc_params.taxDisplay === 'INCL');
 
         $('#checkout-email-form').on('submit', function(e) {
             e.preventDefault();
@@ -453,7 +453,7 @@ jQuery(document).ready(async ($) => {
                     }
 
                     CheckoutModule.moveToNextSection(activeSectionIdx, $section);
-                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
 
                     if ($('#tems-us-result').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
                 })
@@ -558,7 +558,7 @@ jQuery(document).ready(async ($) => {
                 .then((data) => {
                     if ($('#tems-us-result').length && !requestShipping) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
                     CheckoutUtils.updateAddressSection(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
-                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
                     $('#tax-id-error-msg').text('').hide();
 
                     if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -675,7 +675,7 @@ jQuery(document).ready(async ($) => {
                             const isTaxExempt = CheckoutModule.isTaxExempt(lineItems) && (tax === 0);
 
                             sessionStorage.setItem('drgcTaxExempt', isTaxExempt);
-                            CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                            CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
 
                             if (tax > 0) {
                                 $error.text(localizedText.invalid_tax_id_error_msg).show();
@@ -732,7 +732,7 @@ jQuery(document).ready(async ($) => {
                     }
 
                     CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
-                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
                 })
                 .catch((jqXHR) => {
                     CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
@@ -750,7 +750,7 @@ jQuery(document).ready(async ($) => {
             $('.dr-summary__pricing').addClass('dr-loading');
             DRCommerceApi.applyShippingOption(shippingOptionId)
                 .then((data) => {
-                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                    CheckoutUtils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
                 })
                 .catch((jqXHR) => {
                     CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
