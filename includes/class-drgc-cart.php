@@ -285,8 +285,6 @@ class DRGC_Cart extends AbstractHttpService {
      * Get the tax schema
      */
     public function get_tax_schema( $address ) {
-        if ( $address['country'] === 'US' ) return false;
-
         $data = array(
             'address' => $address
         );
@@ -296,8 +294,14 @@ class DRGC_Cart extends AbstractHttpService {
 
             $res = $this->get( "/carts/active/tax-registrations/schema" );
 
-            if ( isset( $res['errors'] ) && ( $res['errors'][0]['code'] === 'vat-exemption-failure' ) ) {
-                return false;
+            if ( isset( $res['errors'] ) ) {
+                if ( is_array( $res['errors'] ) && isset( $res['errors'][0]['message'] ) && ! empty( $res['errors'][0]['message'] ) ) {
+                    return $res['errors'][0]['message'];
+                } elseif ( isset( $res['errors']['error'] ) && is_array( $res['errors']['error'] ) && isset( $res['errors']['error'][0]['description'] ) && ! empty( $res['errors']['error'][0]['description'] ) ) {
+                    return $res['errors']['error'][0]['description'];
+                } else {
+                    return __( 'Something went wrong with TEMS ROW.', 'digital-river-global-commerce' );
+                }
             } elseif ( isset( $res['oneOf'] ) && is_array( $res['oneOf'] ) ) {
                 $enabled_types = [];
                 $shopper_types = $res['oneOf'];

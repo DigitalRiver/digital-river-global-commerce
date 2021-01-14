@@ -362,8 +362,13 @@ const CheckoutUtils = (($, params) => {
             createTaxIdElement(key, value);
           }
 
-          $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
-          $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+          if ($('#checkout-tax-id-form > .tax-id-field').length) {
+            $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
+            $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+            $('#checkout-tax-id-form > .tax-id-shopper-type, #checkout-tax-id-form > .shopper-type-radio').show();
+          } else {
+            $('#checkout-tax-id-form > .tax-id-shopper-type, #checkout-tax-id-form > .shopper-type-radio').hide();
+          }
 
           resolve(taxSchema);
         }
@@ -402,7 +407,7 @@ const CheckoutUtils = (($, params) => {
     `;
     let fieldsHtml = '';
 
-    if (taxRegs.taxRegistrations.length) {
+    if (taxRegs.taxRegistrations && taxRegs.taxRegistrations.length) {
       const taxFields = taxRegs.taxRegistrations;
 
       taxFields.forEach((element) => {

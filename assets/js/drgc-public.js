@@ -12895,8 +12895,14 @@ var CheckoutUtils = function ($, params) {
             createTaxIdElement(key, value);
           }
 
-          $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
-          $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+          if ($('#checkout-tax-id-form > .tax-id-field').length) {
+            $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
+            $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+            $('#checkout-tax-id-form > .tax-id-shopper-type, #checkout-tax-id-form > .shopper-type-radio').show();
+          } else {
+            $('#checkout-tax-id-form > .tax-id-shopper-type, #checkout-tax-id-form > .shopper-type-radio').hide();
+          }
+
           resolve(taxSchema);
         }
       });
@@ -12926,7 +12932,7 @@ var CheckoutUtils = function ($, params) {
     var radiosHtml = "\n      <div class=\"form-check form-check-inline shopper-type-radio\">      \n        <input class=\"form-check-input\" type=\"radio\" name=\"shopper-type\" id=\"shopper-type-".concat(shopperType, "\" value=\"").concat(taxRegs.customerType, "\">\n        <label class=\"form-check-label\" for=\"shopper-type-").concat(shopperType, "\">").concat(typeText, "</label>\n      </div>\n    ");
     var fieldsHtml = '';
 
-    if (taxRegs.taxRegistrations.length) {
+    if (taxRegs.taxRegistrations && taxRegs.taxRegistrations.length) {
       var taxFields = taxRegs.taxRegistrations;
       taxFields.forEach(function (element) {
         var key = Object.keys(element)[0];
@@ -13766,6 +13772,14 @@ var CheckoutModule = function ($) {
       }
     }
 
+    if ($nextSection.hasClass('dr-checkout__tax-id') && !$('#checkout-tax-id-form > .tax-id-field').length) {
+      $('#checkout-tax-id-form').trigger('submit');
+    }
+
+    if ($('#checkout-tax-id-form > .shopper-type-radio').length && !$('#checkout-tax-id-form > .tax-id-field').length) {
+      $('span.dr-accordion__edit.tax-id').addClass('d-none');
+    }
+
     adjustColumns($nextSection);
     checkout_utils.updateSummaryLabels();
     $('html, body').animate({
@@ -14169,7 +14183,7 @@ var CheckoutModule = function ($) {
         $('#checkout-payment-form').removeClass('dr-loading');
 
         if (!res.paymentMethodTypes.length) {
-          $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
+          $('#dr-payment-failed-msg').html("<p>".concat(localizedText.payment_methods_error_msg, "</p>")).show();
         }
       },
       onCancel: function onCancel(res) {}
@@ -14510,12 +14524,18 @@ jQuery(document).ready( /*#__PURE__*/function () {
                           });
                           typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
                           $error.text('').hide();
-                          _context4.next = 32;
+                          _context4.next = 37;
                           break;
 
                         case 18:
                           $button.addClass('sending').blur();
                           shopperType = $('input[name="shopper-type"]:checked').val();
+
+                          if (!shopperType) {
+                            _context4.next = 35;
+                            break;
+                          }
+
                           $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
                           _regs = [];
 
@@ -14539,8 +14559,6 @@ jQuery(document).ready( /*#__PURE__*/function () {
                               }
                             });
                           }
-
-                          typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
 
                           if (!_regs.length) {
                             _context4.next = 30;
@@ -14584,6 +14602,15 @@ jQuery(document).ready( /*#__PURE__*/function () {
                           $error.text('').hide();
 
                         case 32:
+                          typeText = shopperType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+                          _context4.next = 37;
+                          break;
+
+                        case 35:
+                          $button.removeClass('sending').blur();
+                          typeText = localizedText.tax_id_unavailable_msg;
+
+                        case 37:
                           $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
 
                           if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -14592,7 +14619,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
 
                           CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
 
-                        case 35:
+                        case 40:
                         case "end":
                           return _context4.stop();
                       }
