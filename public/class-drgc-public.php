@@ -186,7 +186,8 @@ class DRGC_Public {
       'order_details_label'            => __('Order Details', 'digital-river-global-commerce'),
       'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce'),
       'product_added_to_cart_msg'      => __('has been added to your cart.', 'digital-river-global-commerce'),
-      'general_product_name'           => __('The product', 'digital-river-global-commerce')
+      'general_product_name'           => __('The product', 'digital-river-global-commerce'),
+      'tax_id_unavailable_msg'         => __('Tax Identifier is not available to this order.', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
@@ -1106,13 +1107,7 @@ class DRGC_Public {
     check_ajax_referer( 'drgc_ajax', 'nonce' );
 
     if ( isset( $_POST['address'] ) ) {
-      $address = $_POST['address'];
-      
-      if ( $address['country'] === 'US' ) {
-        wp_send_json_error();
-      }
-
-      $response = DRGC()->cart->get_tax_schema( $address );
+      $response = DRGC()->cart->get_tax_schema( $_POST['address'] );
 
       if ( $response && is_array( $response ) ) {
         wp_send_json_success( $response );
