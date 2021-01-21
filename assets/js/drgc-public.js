@@ -12593,7 +12593,7 @@ var CheckoutUtils = function ($, params) {
         var $regularPrice = $item.find('.regular-price');
         var $salePrice = $item.find('.sale-price');
         $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
-        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
+        $salePrice.text(renderLineItemSalePrice(item.pricing.formattedSalePriceWithQuantity, taxInclusive, drgc_params.taxDisplay));
       });
     }
 
@@ -12604,8 +12604,15 @@ var CheckoutUtils = function ($, params) {
     $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
   };
 
-  var getTaxSuffixLabel = function getTaxSuffixLabel(displayIncl) {
-    return displayIncl ? " ".concat(localizedText.incl_vat_label) : '';
+  var getTaxSuffixLabel = function getTaxSuffixLabel(displayIncl, displayExcl) {
+    return displayIncl ? " ".concat(localizedText.incl_vat_label) : displayExcl ? " ".concat(localizedText.excl_vat_label) : '';
+  };
+
+  var renderLineItemSalePrice = function renderLineItemSalePrice(salePrice, taxInclusive, taxDisplay) {
+    // Line item price follows price list setting, we should indicate INCL/EXCL when the setting is the opposite of taxDisplay to avoid confusion
+    var displayLineItemIncl = taxInclusive && taxDisplay === 'EXCL';
+    var displayLineItemExcl = !taxInclusive && taxDisplay === 'INCL';
+    return salePrice + getTaxSuffixLabel(displayLineItemIncl, displayLineItemExcl);
   };
 
   var getEntityCode = function getEntityCode() {
@@ -13067,6 +13074,7 @@ var CheckoutUtils = function ($, params) {
     updateSummaryLabels: updateSummaryLabels,
     updateSummaryPricing: updateSummaryPricing,
     getTaxSuffixLabel: getTaxSuffixLabel,
+    renderLineItemSalePrice: renderLineItemSalePrice,
     applyLegalLinks: applyLegalLinks,
     displayPreTAndC: displayPreTAndC,
     displayAlertMessage: displayAlertMessage,
@@ -13112,6 +13120,7 @@ var CheckoutUtils = function ($, params) {
 
 var CartModule = function ($) {
   var localizedText = drgc_params.translations;
+  var taxInclusive = drgc_params.cart && drgc_params.cart.cart && drgc_params.cart.cart.taxInclusive === 'true';
   var hasPhysicalProduct = false;
 
   var hasPhysicalProductInLineItems = function hasPhysicalProductInLineItems(lineItems) {
@@ -13268,10 +13277,10 @@ var CartModule = function ($) {
 
         if (offerType === 'Up-sell' && upsellDeclineArr.indexOf(driverProductID.toString()) === -1) {
           var declineText = localizedText.upsell_decline_label;
-          var upsellProductHtml = "\n            <div class=\"modal dr-upsellProduct-modal\" data-product-id=\"".concat(productOffer.product.id, "\" data-parent-product-id=\"").concat(driverProductID, "\">\n              <div class=\" modal-dialog\">\n                <div class=\"dr-upsellProduct modal-content\">\n                  <button class=\"dr-modal-close dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\"></button>\n                  <div class=\"dr-product-content\">\n                    <div class=\"dr-product__info\">\n                      <div class=\"dr-offer-header\">").concat(promoText, "</div>\n                      <div class=\"dr-offer-content\">").concat(productSalesPitch, "</div>\n                      <button type=\"button\" class=\"dr-btn dr-buy-candyRack dr-buy-").concat(buyBtnText, "\" data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\">").concat(buyBtnText, "</button>\n                      <button type=\"button\" class=\"dr-nothanks dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\">").concat(declineText, "</button>\n                    </div>\n                  </div>\n                  <div class=\"dr-product__price\">\n                    <img src=\"").concat(productOffer.product.thumbnailImage, "\" class=\"dr-upsellProduct__img\"/>\n                    <div class=\"product-name\">").concat(productOffer.product.displayName, "</div>\n                    <div class=\"product-short-desc\">").concat(shortDiscription, "</div>\n                    <span class=\"sale-price\">").concat(salePrice, "</span>\n                    <span class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n                  </div>\n                </div>\n              </div>\n            </div>");
+          var upsellProductHtml = "\n            <div class=\"modal dr-upsellProduct-modal\" data-product-id=\"".concat(productOffer.product.id, "\" data-parent-product-id=\"").concat(driverProductID, "\">\n              <div class=\" modal-dialog\">\n                <div class=\"dr-upsellProduct modal-content\">\n                  <button class=\"dr-modal-close dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\"></button>\n                  <div class=\"dr-product-content\">\n                    <div class=\"dr-product__info\">\n                      <div class=\"dr-offer-header\">").concat(promoText, "</div>\n                      <div class=\"dr-offer-content\">").concat(productSalesPitch, "</div>\n                      <button type=\"button\" class=\"dr-btn dr-buy-candyRack dr-buy-").concat(buyBtnText, "\" data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\">").concat(buyBtnText, "</button>\n                      <button type=\"button\" class=\"dr-nothanks dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\">").concat(declineText, "</button>\n                    </div>\n                  </div>\n                  <div class=\"dr-product__price\">\n                    <img src=\"").concat(productOffer.product.thumbnailImage, "\" class=\"dr-upsellProduct__img\"/>\n                    <div class=\"product-name\">").concat(productOffer.product.displayName, "</div>\n                    <div class=\"product-short-desc\">").concat(shortDiscription, "</div>\n                    <del class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</del>\n                    <span class=\"sale-price\">").concat(checkout_utils.renderLineItemSalePrice(salePrice, taxInclusive), "</span>\n                  </div>\n                </div>\n              </div>\n            </div>");
           $('body').append(upsellProductHtml).addClass('modal-open').addClass('drgc-wrapper');
         } else if (offerType !== 'Up-sell') {
-          var html = "\n            <div class=\"dr-product dr-candyRackProduct\" data-product-id=\"".concat(productOffer.product.id, "\" data-driver-product-id=\"").concat(driverProductID, "\">\n              <div class=\"dr-product-content\">\n                <img src=\"").concat(productOffer.product.thumbnailImage, "\" class=\"dr-candyRackProduct__img\"/>\n                <div class=\"dr-product__info\">\n                  <div class=\"product-color\">\n                    <span style=\"background-color: yellow;\">").concat(promoText, "</span>\n                  </div>\n                  ").concat(productOffer.product.displayName, "\n                  <div class=\"product-sku\">\n                    <span>").concat(localizedText.product_label, " </span>\n                    <span>#").concat(productOffer.product.id, "</span>\n                  </div>\n                </div>\n              </div>\n              <div class=\"dr-product__price\">\n                <button type=\"button\" class=\"dr-btn dr-buy-candyRack\"\n                  data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\"\n                  ").concat(purchasable ? '' : 'disabled="disabled"', ">").concat(buyBtnText, "</button>\n                <span class=\"sale-price\">").concat(salePrice, "</span>\n                <span class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n              </div>\n            </div>");
+          var html = "\n            <div class=\"dr-product dr-candyRackProduct\" data-product-id=\"".concat(productOffer.product.id, "\" data-driver-product-id=\"").concat(driverProductID, "\">\n              <div class=\"dr-product-content\">\n                <img src=\"").concat(productOffer.product.thumbnailImage, "\" class=\"dr-candyRackProduct__img\"/>\n                <div class=\"dr-product__info\">\n                  <div class=\"product-color\">\n                    <span style=\"background-color: yellow;\">").concat(promoText, "</span>\n                  </div>\n                  ").concat(productOffer.product.displayName, "\n                  <div class=\"product-sku\">\n                    <span>").concat(localizedText.product_label, " </span>\n                    <span>#").concat(productOffer.product.id, "</span>\n                  </div>\n                </div>\n              </div>\n              <div class=\"dr-product__price\">\n                <button type=\"button\" class=\"dr-btn dr-buy-candyRack\"\n                  data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\"\n                  ").concat(purchasable ? '' : 'disabled="disabled"', ">").concat(buyBtnText, "</button>\n                <del class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</del>\n                <span class=\"sale-price\">").concat(checkout_utils.renderLineItemSalePrice(salePrice, taxInclusive), "</span>\n              </div>\n            </div>");
 
           if (!$(".dr-product-line-item[data-product-id=".concat(productOffer.product.id, "]")).length) {
             $(html).insertAfter(".dr-product-line-item[data-product-id=".concat(driverProductID, "]"));
@@ -13310,7 +13319,7 @@ var CartModule = function ($) {
     var qty = parseInt($qty.val(), 10);
     var max = parseInt($qty.attr('max'), 10);
     var min = parseInt($qty.attr('min'), 10);
-    $lineItem.find('.sale-price').text(formattedSalePriceWithQuantity);
+    $lineItem.find('.sale-price').text(checkout_utils.renderLineItemSalePrice(formattedSalePriceWithQuantity, taxInclusive));
     $lineItem.find('.regular-price').text(formattedListPriceWithQuantity);
     $lineItem.find('.dr-pd-cart-qty-minus').toggleClass('disabled', qty <= min);
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
@@ -13337,7 +13346,7 @@ var CartModule = function ($) {
                 var listPrice = lineItem.pricing.formattedListPriceWithQuantity;
                 var salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
                 var promise = checkout_utils.getPermalink(parentProductID).then(function (permalink) {
-                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-short-description\">\n                  <span>").concat(drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : '', "</span>\n                </div>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <del class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</del>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n            </div>\n          </div>");
+                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-short-description\">\n                  <span>").concat(drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : '', "</span>\n                </div>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <del class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</del>\n              <span class=\"sale-price\">").concat(checkout_utils.renderLineItemSalePrice(salePrice, taxInclusive), "</span>\n            </div>\n          </div>");
                   lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
                 });
                 promises.push(promise);
@@ -15627,9 +15636,9 @@ jQuery(document).ready(function ($) {
       if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
     } else {
       var miniCartLineItems = '<ul class="dr-minicart-list">';
-      var displayIncl = taxInclusive && drgc_params.taxDisplay === 'INCL'; // Display "Incl. VAT" label on mini-cart only when price list is set to tax-inclusive or the subtotal looks weird
-
-      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(localizedText.subtotal_label + checkout_utils.getTaxSuffixLabel(displayIncl), "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
+      var displayIncl = taxInclusive && drgc_params.taxDisplay === 'EXCL';
+      var displayExcl = !taxInclusive && drgc_params.taxDisplay === 'INCL';
+      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(localizedText.subtotal_label + checkout_utils.getTaxSuffixLabel(displayIncl, displayExcl), "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
       var miniCartViewCartBtn = "<a class=\"dr-btn\" id=\"dr-minicart-view-cart-btn\" href=\"".concat(drgc_params.cartUrl, "\">").concat(localizedText.view_cart_label, "</a>");
       lineItems.forEach(function (li) {
         var productId = li.product.uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
@@ -15646,7 +15655,7 @@ jQuery(document).ready(function ($) {
           priceContent = formattedSalePrice;
         }
 
-        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(localizedText.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(priceContent, "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(localizedText.remove_label, "</a>\n                </li>");
+        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(localizedText.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(checkout_utils.renderLineItemSalePrice(priceContent, taxInclusive, drgc_params.taxDisplay), "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(localizedText.remove_label, "</a>\n                </li>");
         miniCartLineItems += miniCartLineItem;
       });
       miniCartLineItems += '</ul>';
@@ -16525,7 +16534,7 @@ jquery_default()(function () {
     _fillOrderModal = asyncToGenerator_default()(
     /*#__PURE__*/
     regenerator_default.a.mark(function _callee4(e) {
-      var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, orderCurrency, shouldDisplayVat, orderLocaleOption, displayIncl, html, count, i, lineItem;
+      var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, orderCurrency, shouldDisplayVat, orderLocaleOption, taxInclusive, displayIncl, html, count, i, lineItem;
       return regenerator_default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
@@ -16539,7 +16548,7 @@ jquery_default()(function () {
               }
 
               $ordersModal.drModal('show');
-              _context4.next = 64;
+              _context4.next = 65;
               break;
 
             case 6:
@@ -16615,6 +16624,7 @@ jquery_default()(function () {
               orderLocaleOption = drgc_params.localeOptions.find(function (elem) {
                 return elem.dr_locale === selectedOrder.locale;
               });
+              taxInclusive = selectedOrder.taxInclusive === 'true';
               displayIncl = orderLocaleOption ? orderLocaleOption.tax_display === 'INCL' : false;
               jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + checkout_utils.getTaxSuffixLabel(displayIncl));
               jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
@@ -16633,7 +16643,7 @@ jquery_default()(function () {
 
               for (i = 0; i < count; i++) {
                 lineItem = selectedOrder.lineItems.lineItem[i];
-                html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
+                html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <del class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</del>\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(checkout_utils.renderLineItemSalePrice(lineItem.pricing.formattedSalePriceWithQuantity, taxInclusive, orderLocaleOption.tax_display), "</span>\n                </div>\n            </div>");
               }
 
               jquery_default()('.dr-summary__products').html(html);
@@ -16649,7 +16659,7 @@ jquery_default()(function () {
               drActiveOrderId = orderId;
               $ordersModal.drModal('show');
 
-            case 64:
+            case 65:
             case "end":
               return _context4.stop();
           }

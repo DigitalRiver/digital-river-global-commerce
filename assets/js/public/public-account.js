@@ -192,6 +192,7 @@ $(() => {
             const orderCurrency = selectedOrder.pricing.total.currency;
             const shouldDisplayVat = (orderCurrency === 'GBP' || orderCurrency === 'EUR');
             const orderLocaleOption = drgc_params.localeOptions.find(elem => elem.dr_locale === selectedOrder.locale);
+            const taxInclusive = selectedOrder.taxInclusive === 'true';
             const displayIncl = orderLocaleOption ? (orderLocaleOption.tax_display === 'INCL') : false;
 
             $('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + CheckoutUtils.getTaxSuffixLabel(displayIncl));
@@ -246,8 +247,8 @@ $(() => {
                     </div>
                 </div>
                 <div class="dr-product__price">
-                    <span class="sale-price dr-modal-salePrice">${lineItem.pricing.formattedSalePriceWithQuantity}</span>
-                    <span class="regular-price dr-modal-strikePrice" ${lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : ''}>${lineItem.pricing.formattedListPriceWithQuantity}</span>
+                    <del class="regular-price dr-modal-strikePrice" ${lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : ''}>${lineItem.pricing.formattedListPriceWithQuantity}</del>
+                    <span class="sale-price dr-modal-salePrice">${CheckoutUtils.renderLineItemSalePrice(lineItem.pricing.formattedSalePriceWithQuantity, taxInclusive, orderLocaleOption.tax_display)}</span>
                 </div>
             </div>`;
             }

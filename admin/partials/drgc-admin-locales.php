@@ -18,8 +18,9 @@
 ?>
 
 <h2><?php _e( 'Locales', 'digital-river-global-commerce' ) ?></h2>
-<div data-tooltip="<?php _e( 'All of the locale attributes will be set to default value after synchronizing', 'digital-river-global-commerce' ) ?>" data-tooltip-location="right">
+<div id="dr-sync-locales-hint">
   <button type="button" class="button" id="dr-sync-locales-btn"><?php _e( 'Sync Locales and Currencies', 'digital-river-global-commerce' ) ?></button>
+  <p><?php _e( 'Sync site locale and currency settings from BigBlue. Please notice that all of the locale attributes will be set to default value after synchronizing.', 'digital-river-global-commerce' ) ?></p>
 </div>
 
 <?php if ( empty( $drgc_locale_options ) ) { ?>

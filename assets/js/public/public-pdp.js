@@ -125,8 +125,9 @@ jQuery(document).ready(($) => {
             if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
         } else {
             let miniCartLineItems = '<ul class="dr-minicart-list">';
-            const displayIncl = taxInclusive && drgc_params.taxDisplay === 'INCL'; // Display "Incl. VAT" label on mini-cart only when price list is set to tax-inclusive or the subtotal looks weird
-            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${localizedText.subtotal_label + CheckoutUtils.getTaxSuffixLabel(displayIncl)}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
+            const displayIncl = taxInclusive && drgc_params.taxDisplay === 'EXCL';
+            const displayExcl = !taxInclusive && drgc_params.taxDisplay === 'INCL';
+            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${localizedText.subtotal_label + CheckoutUtils.getTaxSuffixLabel(displayIncl, displayExcl)}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
             const miniCartViewCartBtn = `<a class="dr-btn" id="dr-minicart-view-cart-btn" href="${drgc_params.cartUrl}">${localizedText.view_cart_label}</a>`;
 
             lineItems.forEach((li) => {
@@ -152,7 +153,7 @@ jQuery(document).ready(($) => {
                     <div class="dr-minicart-item-info" data-product-id="${productId}">
                         <span class="dr-minicart-item-title">${li.product.displayName}</span>
                         <span class="dr-minicart-item-qty">${localizedText.qty_label}.${li.quantity}</span>
-                        <p class="dr-pd-price dr-minicart-item-price">${priceContent}</p>
+                        <p class="dr-pd-price dr-minicart-item-price">${CheckoutUtils.renderLineItemSalePrice(priceContent, taxInclusive, drgc_params.taxDisplay)}</p>
                     </div>
                     <a href="#" class="dr-minicart-item-remove-btn" aria-label="Remove" data-line-item-id="${li.id}">${localizedText.remove_label}</a>
                 </li>`;

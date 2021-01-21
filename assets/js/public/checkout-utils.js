@@ -70,7 +70,7 @@ const CheckoutUtils = (($, params) => {
         const $salePrice = $item.find('.sale-price');
 
         $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
-        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
+        $salePrice.text(renderLineItemSalePrice(item.pricing.formattedSalePriceWithQuantity, taxInclusive, drgc_params.taxDisplay));
       });
     }
 
@@ -85,8 +85,17 @@ const CheckoutUtils = (($, params) => {
     $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
   };
 
-  const getTaxSuffixLabel = (displayIncl) => {
-    return displayIncl ? ` ${localizedText.incl_vat_label}` : '';
+  const getTaxSuffixLabel = (displayIncl, displayExcl) => {
+    return displayIncl ?
+      ` ${localizedText.incl_vat_label}` :
+      displayExcl ? ` ${localizedText.excl_vat_label}` : '';
+  };
+
+  const renderLineItemSalePrice = (salePrice, taxInclusive, taxDisplay) => {
+    // Line item price follows price list setting, we should indicate INCL/EXCL when the setting is the opposite of taxDisplay to avoid confusion
+    const displayLineItemIncl = taxInclusive && taxDisplay === 'EXCL';
+    const displayLineItemExcl = !taxInclusive && taxDisplay === 'INCL';
+    return salePrice + getTaxSuffixLabel(displayLineItemIncl, displayLineItemExcl);
   };
 
   const getEntityCode = () => {
@@ -586,6 +595,7 @@ const CheckoutUtils = (($, params) => {
     updateSummaryLabels,
     updateSummaryPricing,
     getTaxSuffixLabel,
+    renderLineItemSalePrice,
     applyLegalLinks,
     displayPreTAndC,
     displayAlertMessage,
