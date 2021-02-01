@@ -483,6 +483,20 @@ function drgc_get_tax_display( $dr_locale ) {
 }
 
 /**
+ * Append locale query param at home_url for theme usage
+ * (we cannot overwrite home_url() directly or category page links will be broken)
+ *
+ * @return string
+ */
+function drgc_get_home_url() {
+  $url = get_home_url();
+  if ( isset( $_GET['locale'] ) ) {
+    $url = esc_url( add_query_arg( 'locale', $_GET['locale'], $url ) );
+  }
+  return $url;
+}
+
+/**
  * Get the category URL for Continue Shopping link
  *
  * @return string

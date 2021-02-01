@@ -181,8 +181,6 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-account.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-checkout.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-thank-you.php';
-		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-my-subs.php';
-		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-subs-details.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shortcodes.php';
 
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-authenticator.php';
