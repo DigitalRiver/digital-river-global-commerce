@@ -106,9 +106,6 @@ class DRGC_Public {
     $testOrder_option = get_option( 'drgc_testOrder_handler' );
     $testOrder_enable = ( is_array( $testOrder_option ) && '1' == $testOrder_option['checkbox'] )  ? "true" : "false";
 
-    $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
-    $force_excl_tax_enable = ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? "true" : "false";
-
     $short_description_option = get_option( 'drgc_display_short_description_handler' );
     $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
 
@@ -197,6 +194,10 @@ class DRGC_Public {
     $options = array(
       'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
       'drLocale'          =>  drgc_get_current_dr_locale(),
+      'primaryCurrency'   =>  drgc_get_primary_currency( drgc_get_current_dr_locale() ),
+      'supportedCurrencies' => drgc_get_supported_currencies( drgc_get_current_dr_locale() ),
+      'taxDisplay'        => drgc_get_tax_display( drgc_get_current_dr_locale() ),
+      'localeOptions'     => get_option( 'drgc_locale_options' ) ?: array(),
       'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
       'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
       'homeUrl'           =>  $this->append_query_string( get_home_url() ),
@@ -215,8 +216,6 @@ class DRGC_Public {
       'isLogin'           =>  drgc_get_user_status(),
       'testOrder'         => $testOrder_enable,
       'shouldDisplayVat'  => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
-      'isTaxInclusive'    => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
-      'forceExclTax'      => $force_excl_tax_enable,
       'translations'      => $translation_array,
       'client_ip'         => $_SERVER['REMOTE_ADDR'],
       'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT ),

@@ -82,8 +82,8 @@ $short_description_enabled = ( is_array( $short_description_option ) && $short_d
 
         <button class="dr-prd-del remove-icon"></button>
 
+        <del class="regular-price dr-strike-price <?php echo $sale_price === $price ? 'd-none' : ''; ?>"><?php echo $price; ?></del>
         <span class="sale-price"><?php echo $sale_price; ?></span>
-        <span class="regular-price <?php echo $sale_price === $price ? 'd-none' : ''; ?>"><?php echo $price; ?></span>
 
     </div>
 

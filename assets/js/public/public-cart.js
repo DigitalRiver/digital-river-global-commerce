@@ -5,6 +5,7 @@ import DRCommerceApi from './commerce-api';
 
 const CartModule = (($) => {
   const localizedText = drgc_params.translations;
+  const taxInclusive = drgc_params.cart && drgc_params.cart.cart && drgc_params.cart.cart.taxInclusive === 'true';
   let hasPhysicalProduct = false;
 
   const hasPhysicalProductInLineItems = (lineItems) => {
@@ -182,8 +183,8 @@ const CartModule = (($) => {
                     <img src="${productOffer.product.thumbnailImage}" class="dr-upsellProduct__img"/>
                     <div class="product-name">${productOffer.product.displayName}</div>
                     <div class="product-short-desc">${shortDiscription}</div>
-                    <span class="sale-price">${salePrice}</span>
-                    <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+                    <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+                    <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
                   </div>
                 </div>
               </div>
@@ -210,8 +211,8 @@ const CartModule = (($) => {
                 <button type="button" class="dr-btn dr-buy-candyRack"
                   data-buy-uri="${productOffer.addProductToCart.uri}"
                   ${purchasable ? '' : 'disabled="disabled"'}>${buyBtnText}</button>
-                <span class="sale-price">${salePrice}</span>
-                <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+                <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+                <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
               </div>
             </div>`;
 
@@ -253,7 +254,7 @@ const CartModule = (($) => {
     const qty = parseInt($qty.val(), 10);
     const max = parseInt($qty.attr('max'), 10);
     const min = parseInt($qty.attr('min'), 10);
-    $lineItem.find('.sale-price').text(formattedSalePriceWithQuantity);
+    $lineItem.find('.sale-price').text(CheckoutUtils.renderLineItemSalePrice(formattedSalePriceWithQuantity, taxInclusive));
     $lineItem.find('.regular-price').text(formattedListPriceWithQuantity);
     $lineItem.find('.dr-pd-cart-qty-minus').toggleClass('disabled', qty <= min);
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
@@ -268,8 +269,8 @@ const CartModule = (($) => {
 
     lineItems.forEach((lineItem, idx) => {
       const parentProductID = lineItem.product.parentProduct ? lineItem.product.parentProduct.id : lineItem.product.id;
-      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
       const listPrice = lineItem.pricing.formattedListPriceWithQuantity;
+      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
       const promise = CheckoutUtils.getPermalink(parentProductID).then((permalink) => {
         const lineItemHTML = `
           <div data-line-item-id="${lineItem.id}" class="dr-product dr-product-line-item" data-product-id="${lineItem.product.id}" data-sort="${idx}">
@@ -294,8 +295,8 @@ const CartModule = (($) => {
             </div>
             <div class="dr-product__price">
               <button class="dr-prd-del remove-icon"></button>
-              <span class="sale-price">${salePrice}</span>
-              <span class="regular-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+              <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+              <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
             </div>
           </div>`;
           lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
@@ -326,7 +327,7 @@ const CartModule = (($) => {
     const $shippingRow = $('.dr-summary__shipping');
     const $subtotalRow = $('.dr-summary__subtotal');
     const $totalRow = $('.dr-summary__total');
-    const newPricing = CheckoutUtils.getSeparatedPricing(lineItems, pricing, drgc_params.isTaxInclusive === 'true');
+    const newPricing = CheckoutUtils.getOrderExactPricing(lineItems, pricing, cart.taxInclusive === 'true', drgc_params.taxDisplay === 'INCL');
 
     $discountRow.find('.discount-value').text(`-${pricing.formattedDiscount}`);
     $taxRow.find('.tax-value').text(newPricing.formattedProductTax);

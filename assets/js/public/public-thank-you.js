@@ -19,7 +19,7 @@ jQuery(document).ready(($) => {
         CheckoutUtils.applyLegalLinks(digitalriverjs);
 
         if (drgc_params.order && drgc_params.order.order) {
-            CheckoutUtils.updateSummaryPricing(drgc_params.order.order, drgc_params.isTaxInclusive === 'true');
+            CheckoutUtils.updateSummaryPricing(drgc_params.order.order, drgc_params.taxDisplay === 'INCL');
         }
 
         if ($('#dr-order-vat-info').length && sessionStorage.getItem('drgcTaxRegs')) {
