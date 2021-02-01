@@ -106,9 +106,6 @@ class DRGC_Public {
     $testOrder_option = get_option( 'drgc_testOrder_handler' );
     $testOrder_enable = ( is_array( $testOrder_option ) && '1' == $testOrder_option['checkbox'] )  ? "true" : "false";
 
-    $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
-    $force_excl_tax_enable = ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? "true" : "false";
-
     $short_description_option = get_option( 'drgc_display_short_description_handler' );
     $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
 
@@ -189,13 +186,18 @@ class DRGC_Public {
       'order_details_label'            => __('Order Details', 'digital-river-global-commerce'),
       'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce'),
       'product_added_to_cart_msg'      => __('has been added to your cart.', 'digital-river-global-commerce'),
-      'general_product_name'           => __('The product', 'digital-river-global-commerce')
+      'general_product_name'           => __('The product', 'digital-river-global-commerce'),
+      'tax_id_unavailable_msg'         => __('Tax Identifier is not available to this order.', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
     $options = array(
       'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
       'drLocale'          =>  drgc_get_current_dr_locale(),
+      'primaryCurrency'   =>  drgc_get_primary_currency( drgc_get_current_dr_locale() ),
+      'supportedCurrencies' => drgc_get_supported_currencies( drgc_get_current_dr_locale() ),
+      'taxDisplay'        => drgc_get_tax_display( drgc_get_current_dr_locale() ),
+      'localeOptions'     => get_option( 'drgc_locale_options' ) ?: array(),
       'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
       'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
       'homeUrl'           =>  $this->append_query_string( get_home_url() ),
@@ -214,8 +216,6 @@ class DRGC_Public {
       'isLogin'           =>  drgc_get_user_status(),
       'testOrder'         => $testOrder_enable,
       'shouldDisplayVat'  => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
-      'isTaxInclusive'    => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
-      'forceExclTax'      => $force_excl_tax_enable,
       'translations'      => $translation_array,
       'client_ip'         => $_SERVER['REMOTE_ADDR'],
       'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT ),
@@ -1134,13 +1134,7 @@ class DRGC_Public {
     check_ajax_referer( 'drgc_ajax', 'nonce' );
 
     if ( isset( $_POST['address'] ) ) {
-      $address = $_POST['address'];
-      
-      if ( $address['country'] === 'US' ) {
-        wp_send_json_error();
-      }
-
-      $response = DRGC()->cart->get_tax_schema( $address );
+      $response = DRGC()->cart->get_tax_schema( $_POST['address'] );
 
       if ( $response && is_array( $response ) ) {
         wp_send_json_success( $response );

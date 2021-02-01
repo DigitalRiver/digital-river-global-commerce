@@ -59,7 +59,6 @@ class DRGC_Session {
     }
 
     $this->session_id = session_id();
-    $this->set_cookie();
   }
 
   /**
@@ -83,16 +82,6 @@ class DRGC_Session {
 	 */
 	public function get_session_cookie_data() {
 		return $this->session_data;
-  }
-  
-  /**
-   * Create the cookie if headers are not already sent
-   */
-  public function set_cookie() {
-    if ( ! headers_sent() && did_action( 'wp_loaded' ) ) {
-      // WP Engine will exclude pages where a cookie containing wordpress_ has a value set from server caching
-      @setcookie( 'wordpress_wpe_page_cache', 'off', 0, '/' );
-    }
   }
 
 	/**

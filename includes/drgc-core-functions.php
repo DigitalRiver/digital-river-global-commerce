@@ -363,21 +363,6 @@ function drgc_should_display_vat( $currency = '' ) {
 }
 
 /**
- * Displaying tax inclusive label depends on locale (temp solution)
- *
- * @param string $locale
- * @return bool
- */
-function drgc_is_tax_inclusive( $locale = '' ) {
-	return $locale !== 'en_US';
-}
-
-function drgc_force_excl_tax() {
-  $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
-  return ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? true : false;
-}
-
-/**
  * Check if there is any subs in the cart
  *
  * @param array $cart
@@ -479,6 +464,36 @@ function drgc_get_supported_currencies( $dr_locale ) {
     $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
     return $drgc_locale_options[$key]['supported_currencies'];
   }
+}
+
+/**
+ * Get tax display by current DR locale
+ *
+ * @param string $dr_locale
+ * @return string
+ */
+function drgc_get_tax_display( $dr_locale ) {
+  $drgc_locale_options = get_option( 'drgc_locale_options' );
+  if ( empty( $drgc_locale_options ) ) {
+    return '';
+  } else {
+    $key = array_search( $dr_locale, array_column( $drgc_locale_options, 'dr_locale' ) );
+    return $drgc_locale_options[$key]['tax_display'] ?? '';
+  }
+}
+
+/**
+ * Append locale query param at home_url for theme usage
+ * (we cannot overwrite home_url() directly or category page links will be broken)
+ *
+ * @return string
+ */
+function drgc_get_home_url() {
+  $url = get_home_url();
+  if ( isset( $_GET['locale'] ) ) {
+    $url = esc_url( add_query_arg( 'locale', $_GET['locale'], $url ) );
+  }
+  return $url;
 }
 
 /**

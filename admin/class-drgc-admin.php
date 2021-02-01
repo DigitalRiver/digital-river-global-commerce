@@ -288,15 +288,6 @@ class DRGC_Admin {
 			array( 'label_for' => $this->option_name . '_testOrder_handler' )
 		);
 
-		add_settings_field(
-			$this->option_name . '_force_excl_tax_handler',
-			__( 'Display As Excl. Tax', 'digital-river-global-commerce' ),
-			array( $this, $this->option_name . '_force_excl_tax_handler_cb' ),
-			$this->plugin_name . '_checkout',
-			$this->option_name . '_checkout',
-			array( 'label_for' => $this->option_name . '_force_excl_tax_handler' )
-		);
-
     add_settings_field(
       $this->option_name . '_display_short_description_handler',
       __( 'Product Short Description', 'digital-river-global-commerce' ),
@@ -341,12 +332,10 @@ class DRGC_Admin {
     register_setting( $this->plugin_name . '_general', $this->option_name . '_cron_utc_time', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
 
     // Locales
-    register_setting( $this->plugin_name . '_locales', $this->option_name . '_default_locale', array( 'type' => 'string', 'sanitize_callback' => 'sanitize_text_field' ) );
     register_setting( $this->plugin_name . '_locales', $this->option_name . '_locale_options', array( 'sanitize_callback' => array( $this, 'dr_sanitize_locale_options' ) ) );
 
     // Checkout
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_testOrder_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
-    register_setting( $this->plugin_name . '_checkout', $this->option_name . '_force_excl_tax_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => '' ) );
     register_setting( $this->plugin_name . '_checkout', $this->option_name . '_display_short_description_handler', array( 'sanitize_callback' => array( $this, 'dr_sanitize_checkbox' ), 'default' => false ) );
 
     // Payments
@@ -466,18 +455,6 @@ class DRGC_Admin {
 		echo '<span class="description" id="test-order-description">' . __( 'Enable Test Order.', 'digital-river-global-commerce' ) . '</span>';
 	}
 
-	public function drgc_force_excl_tax_handler_cb() {
-		$option = get_option( $this->option_name . '_force_excl_tax_handler' );
-		$checked = '';
-
-		if ( is_array( $option ) && $option['checkbox'] === '1' ) {
-			$checked = 'checked="checked"';
-		}
-
-		echo '<input type="checkbox" class="regular-text" name="' . $this->option_name . '_force_excl_tax_handler[checkbox]" id="' . $this->option_name . '_force_excl_tax_handler" value="1" ' . $checked . ' />';
-		echo '<span class="description" id="force-excl-tax-description">' . __( 'Display pricing as tax exclusive on checkout flow', 'digital-river-global-commerce' ) . '</span>';
-	}
-
   public function drgc_display_short_description_handler_cb() {
     $option = get_option( $this->option_name . '_display_short_description_handler' );
     $checkbox = 0;
@@ -533,7 +510,7 @@ class DRGC_Admin {
   }
   
 	/**
-	 * Update wp_locale only and install needed language packs.
+	 * Update wp_locale and tax_display and install needed language packs.
 	 *
 	 * @since    2.0.0
 	 */
@@ -543,8 +520,12 @@ class DRGC_Admin {
 
 		foreach ( $new_input as $idx => $locale_option ) {
 			$input_wp_locale = $input[$idx]['wp_locale'];
+			$input_tax_display = $input[$idx]['tax_display'];
+
+			$new_input[$idx]['wp_locale'] = $input_wp_locale;
+			$new_input[$idx]['tax_display'] = $input_tax_display;
+
 			if ( $input_wp_locale && $locale_option['wp_locale'] !== $input_wp_locale ) {
-				$new_input[$idx]['wp_locale'] = $input_wp_locale;
 				array_push( $changed_wp_locales, $input_wp_locale );
 			}
 		}
@@ -619,7 +600,8 @@ class DRGC_Admin {
 			'dr_locale' => $localeOption['locale'],
 			'wp_locale' => get_wp_locale_by_map( $localeOption['locale'] ),
 			'primary_currency' => $localeOption['primaryCurrency'],
-			'supported_currencies' => $localeOption['supportedCurrencies']['currency']
+			'supported_currencies' => $localeOption['supportedCurrencies']['currency'],
+			'tax_display' => $localeOption['locale'] === 'en_US' ? 'EXCL' : 'INCL'
 		);
 	}
 
