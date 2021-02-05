@@ -1033,14 +1033,6 @@ class DRGC_Public {
     return $title;
   }
 
-  public function translate_menu_items( $item_output, $item ) {
-    if ( property_exists( $item, 'title' ) ) {
-      return preg_replace( '/(<.*?>).*(<\/.*?>)/s', '$1' . __( $item->title, 'digital-river-global-commerce' ) . '$2', $item_output, 1 );
-    }
-
-    return $item_output;
-  }
-
   /**
    * Append query string at URL.
    *
@@ -1055,9 +1047,12 @@ class DRGC_Public {
     return $url;
   }
 
-  public function append_query_string_to_menu( $items ) {
+  public function translate_and_append_query_string_to_menu( $items ) {
     $output = array();
     foreach ( $items as $item ) {
+      if ( isset ( $item->title ) ) {
+        $item->title = __( $item->title, 'digital-river-global-commerce' );
+      }
       if ( isset ( $item->url ) ) {
         $item->url = $this->append_query_string( $item->url );
       }
