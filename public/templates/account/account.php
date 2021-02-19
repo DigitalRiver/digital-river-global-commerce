@@ -37,22 +37,22 @@ $account_company_name = ( $cert_count > 0 ) ? $customer_tax_regs['taxCertificate
         <div class="dr-h6"><?php echo __( 'Hello', 'digital-river-global-commerce' ); ?><?php if ($full_name !== '') echo ', ' . $full_name ?></div>
 
         <ul class="dr-list-group" id="list-tab" role="tablist">
-            <li>
-                <a class="dr-list-group-item dr-list-group-item-action" id="list-orders-list" data-toggle="dr-list" href="#list-orders" role="tab" aria-controls="orders">
+            <li role="tab">
+                <a class="dr-list-group-item dr-list-group-item-action" id="list-orders-list" data-toggle="dr-list" href="#list-orders" aria-controls="list-orders">
                     <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/order-icon.svg' ?>" alt="orders icon"></div>
                     <span class="side-nav-label"><?php echo __( 'Orders', 'digital-river-global-commerce' ); ?></span>
                     <span class="side-nav-chev">&#8250;</span>
                 </a>
             </li>
-            <li>
-                <a class="dr-list-group-item dr-list-group-item-action" id="list-subscriptions-list" data-toggle="dr-list" href="#list-subscriptions" role="tab" aria-controls="subscriptions">
+            <li role="tab">
+                <a class="dr-list-group-item dr-list-group-item-action" id="list-subscriptions-list" data-toggle="dr-list" href="#list-subscriptions" aria-controls="list-subscriptions">
                     <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/subscription-icon.svg' ?>" alt="subscriptions icon"></div>
                     <span class="side-nav-label"><?php echo __( 'Subscriptions', 'digital-river-global-commerce' ); ?></span>
                     <span class="side-nav-chev">&#8250;</span>
                 </a>
             </li>
-            <li>
-                <a class="dr-list-group-item dr-list-group-item-action" id="list-addresses-list" data-toggle="dr-list" href="#list-addresses" role="tab" aria-controls="addresses">
+            <li role="tab">
+                <a class="dr-list-group-item dr-list-group-item-action" id="list-addresses-list" data-toggle="dr-list" href="#list-addresses" aria-controls="list-addresses">
                     <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/address-icon.svg' ?>" alt="address icon"></div>
                     <span class="side-nav-label"><?php echo __( 'Addresses', 'digital-river-global-commerce' ); ?></span>
                     <span class="side-nav-chev">&#8250;</span>
@@ -61,8 +61,8 @@ $account_company_name = ( $cert_count > 0 ) ? $customer_tax_regs['taxCertificate
 
             <?php if ( $is_tems_us_enabled ): ?>
 
-                <li>
-                    <a class="dr-list-group-item dr-list-group-item-action" id="list-certificates-list" data-toggle="dr-list" href="#list-certificates" role="tab" aria-controls="certificates">
+                <li role="tab">
+                    <a class="dr-list-group-item dr-list-group-item-action" id="list-certificates-list" data-toggle="dr-list" href="#list-certificates" aria-controls="list-certificates">
                         <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/certificate-icon.svg' ?>" alt="certificate icon"></div>
                         <span class="side-nav-label"><?php echo __( 'Tax Certificates', 'digital-river-global-commerce' ); ?></span>
                         <span class="side-nav-chev">&#8250;</span>
@@ -71,15 +71,15 @@ $account_company_name = ( $cert_count > 0 ) ? $customer_tax_regs['taxCertificate
 
             <?php endif; ?>
 
-            <li>
-                <a class="dr-list-group-item dr-list-group-item-action" id="list-password-list" data-toggle="dr-list" href="#list-password" role="tab" aria-controls="password">
+            <li role="tab">
+                <a class="dr-list-group-item dr-list-group-item-action" id="list-password-list" data-toggle="dr-list" href="#list-password" aria-controls="list-password">
                     <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/password-icon.svg' ?>" alt="password icon"></div>
                     <span class="side-nav-label"><?php echo __( 'Change Password', 'digital-river-global-commerce' ); ?></span>
                     <span class="side-nav-chev">&#8250;</span>
                 </a>
             </li>
-            <li>
-                <a class="dr-list-group-item dr-list-group-item-action dr-logout" id="list-logout-list" href="#" aria-controls="l">
+            <li role="tab">
+                <a class="dr-list-group-item dr-list-group-item-action dr-logout" id="list-logout-list" href="#">
                     <div class="side-nav-icon"><img src="<?php echo DRGC_PLUGIN_URL . 'assets/images/logout-icon.svg' ?>" alt="logout icon"></div>
                     <span class="side-nav-label"><?php echo __( 'Sign out', 'digital-river-global-commerce' ); ?></span>
                     <span class="side-nav-chev">&#8250;</span>

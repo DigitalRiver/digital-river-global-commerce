@@ -180,7 +180,7 @@ const CartModule = (($) => {
                     </div>
                   </div>
                   <div class="dr-product__price">
-                    <img src="${productOffer.product.thumbnailImage}" class="dr-upsellProduct__img"/>
+                    <img src="${productOffer.product.thumbnailImage}" alt="${productOffer.product.displayName}" class="dr-upsellProduct__img"/>
                     <div class="product-name">${productOffer.product.displayName}</div>
                     <div class="product-short-desc">${shortDiscription}</div>
                     <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
@@ -288,13 +288,13 @@ const CartModule = (($) => {
                 <div class="product-qty">
                   <span class="qty-text">Qty ${lineItem.quantity}</span>
                   <span class="dr-pd-cart-qty-minus value-button-decrease ${lineItem.quantity <= min ? 'disabled' : ''}"></span>
-                  <input type="number" class="product-qty-number" step="1" min="${min}" max="${max}" value="${lineItem.quantity}" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly="true">
+                  <input type="number" class="product-qty-number" aria-label="${localizedText.quantity_label}" step="1" min="${min}" max="${max}" value="${lineItem.quantity}" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly="true">
                   <span class="dr-pd-cart-qty-plus value-button-increase ${lineItem.quantity >= max ? 'disabled' : ''}"></span>
                 </div>
               </div>
             </div>
             <div class="dr-product__price">
-              <button class="dr-prd-del remove-icon"></button>
+              <button class="dr-prd-del remove-icon" aria-label="${localizedText.remove_label}"></button>
               <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
               <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
             </div>

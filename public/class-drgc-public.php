@@ -133,6 +133,8 @@ class DRGC_Public {
       'remove_label'                => __('Remove', 'digital-river-global-commerce'),
       'subtotal_label'              => __('Subtotal', 'digital-river-global-commerce'),
       'qty_label'                   => __('Qty', 'digital-river-global-commerce'),
+      'quantity_label'              => __('Quantity', 'digital-river-global-commerce'),
+      'remove_label'                => __('Remove', 'digital-river-global-commerce'),
       'shipping_and_handling_label'	=> __('Shipping and Handling', 'digital-river-global-commerce'),
       'discount_label'		          => __('Discount', 'digital-river-global-commerce'),
       'order_total_label'		        => __('Order Total', 'digital-river-global-commerce'),
