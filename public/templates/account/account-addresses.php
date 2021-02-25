@@ -326,9 +326,9 @@
                 </form>
                 
             </div>
-            <button class="address-edit-btn" role="img" aria-label="Edit Address" title="Edit Address"></button>
+            <button class="address-edit-btn" aria-label="Edit Address" title="Edit Address"></button>
             <?php if ($address['isDefault'] !== 'true'): ?>
-                <button class="address-delete-btn" role="img" aria-label="Delete Address" title="Delete Address" data-nickname="<?php echo $address['nickName']; ?>" data-id="<?php echo $address['id']; ?>"></button>
+                <button class="address-delete-btn" aria-label="Delete Address" title="Delete Address" data-nickname="<?php echo $address['nickName']; ?>" data-id="<?php echo $address['id']; ?>"></button>
             <?php endif; ?>
         </address>
 
@@ -338,7 +338,7 @@
 
 <div class="col-12 col-lg-6 address-col">
     <div class="address address-add-new">
-        <button class="address-add-btn" role="img" aria-label="Add New Address" title="Add New Address"></button>
+        <button class="address-add-btn" aria-label="Add New Address" title="Add New Address"></button>
         <div class="address-add-text"><span><?php echo __( 'Add New Address', 'digital-river-global-commerce' ); ?></span></div>
         <div class="address-edit" style="display:none;">
             <div class="address-add-title"><span><?php echo __( 'Add New Address', 'digital-river-global-commerce' ); ?></span></div>
