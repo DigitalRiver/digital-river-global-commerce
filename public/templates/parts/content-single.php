@@ -78,7 +78,7 @@ if ( $variations && isset( $variations[0] ) ) {
 
                     <?php if ( isset( $var_select_options ) && is_array( $var_select_options ) ): ?>
 
-                        <label for="dr-variations"><?php echo __( 'Select your product', 'digital-river-global-commerce'); ?>:</label>
+                        <span id="dr-variations-label"><?php echo __( 'Select your product', 'digital-river-global-commerce'); ?>:</span>
 
                         <?php
                             $index = 0;
@@ -88,7 +88,7 @@ if ( $variations && isset( $variations[0] ) ) {
 
                             <div class="dr-prod-variations">
 
-                                <select name="dr-variation-<?php echo $key; ?>" id="dr-variations" data-var-attribute="<?php echo $key; ?>" data-index="<?php echo $index; ?>" disabled>
+                                <select name="dr-variation-<?php echo $key; ?>" class="dr-variations" aria-label="<?php echo $label; ?>" data-var-attribute="<?php echo $key; ?>" data-index="<?php echo $index; ?>" disabled>
                                     <option value=""><?php echo ( $lang === 'en' ) ? ucwords( $label ) : $label; ?></option>
                                     <?php foreach ( $var_select_options[ $label ] as $value ): ?>
                                         <option value="<?php echo $value; ?>"><?php echo ( $lang === 'en' ) ? ucwords( $value ) : $value; ?></option>
