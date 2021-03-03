@@ -75,6 +75,7 @@ body.page-cart #dr-minicart,body.page-checkout #dr-minicart,body.page-thank-you 
 .dr-pd-qty-minus,.dr-pd-qty-plus{display:inline-block;width:20px;height:20px;vertical-align:middle;cursor:pointer;background-size:cover;background-position:center;background-repeat:no-repeat}
 input[type=radio]{position:relative;opacity:1;width:auto;height:auto}
 .dr-pd-info{margin-top:30px}
+#dr-variations-label{font-size:1.8rem;font-weight:600}
 .alert{padding:15px;margin-bottom:20px;border:1px solid transparent;border-radius:4px}
 .alert h4{margin-top:0;color:inherit}
 .alert .alert-link{font-weight:bold}

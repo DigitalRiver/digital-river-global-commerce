@@ -63,8 +63,8 @@
                 </form>
             </div>
 
-            <button class="payment-edit-btn" role="img" aria-label="Edit Payment" title="Edit Payment"></button>
-            <button class="payment-delete-btn" role="img" aria-label="Delete Payment" title="Delete Payment"></button>
+            <button class="payment-edit-btn" aria-label="Edit Payment" title="Edit Payment"></button>
+            <button class="payment-delete-btn" aria-label="Delete Payment" title="Delete Payment"></button>
         </address>
 
     </div>
