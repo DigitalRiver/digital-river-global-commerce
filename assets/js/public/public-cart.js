@@ -128,18 +128,6 @@ const CartModule = (($) => {
     lineItems.forEach((lineItem) => {
       // Candy Rack (should be inserted after specific line item)
       getOffersByPoP('CandyRack_ShoppingCart', lineItem.product.id);
-
-      // Bundle Tight (should disable edit buttons of specific line item)
-      DRCommerceApi.getOffersByProduct(lineItem.product.id, { expand: 'all' })
-        .then((res) => {
-          const offers = res.offers.offer;
-          if (offers && offers.length) {
-            offers.forEach((offer) => {
-              disableEditBtnsForBundle(offer, lineItem.product.id);
-            });
-          }
-        })
-        .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
     });
 
     // Banner (should be appended after all the line items)
@@ -233,21 +221,6 @@ const CartModule = (($) => {
     $('.dr-cart__products').append(html);
   };
 
-  const disableEditBtnsForBundle = (offer, productID) => {
-    const hasBundleTight = (offer.type === 'Bundling' && offer.policyName === 'Tight Bundle Policy');
-    const productOffers = offer.productOffers.productOffer;
-
-    if (hasBundleTight && productOffers && productOffers.length) {
-      productOffers.forEach((productOffer) => {
-        if (productOffer.product.id !== productID) { // Hide action buttons only when it's triggered by parent product
-          $(`.dr-product-line-item[data-product-id=${productOffer.product.id}]`)
-            .find('.remove-icon, .dr-pd-cart-qty-minus, .dr-pd-cart-qty-plus')
-            .css({ opacity: 0, 'pointer-events': 'none' });
-        }
-      });
-    }
-  };
-
   const renderSingleLineItem = (pricing, $lineItem) => {
     const { formattedListPriceWithQuantity, formattedSalePriceWithQuantity } = pricing;
     const $qty = $lineItem.find('.product-qty-number');
@@ -271,6 +244,8 @@ const CartModule = (($) => {
       const parentProductID = lineItem.product.parentProduct ? lineItem.product.parentProduct.id : lineItem.product.id;
       const listPrice = lineItem.pricing.formattedListPriceWithQuantity;
       const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
+      const isTightBundle = CheckoutUtils.isTightBundleChild(lineItem);
+
       const promise = CheckoutUtils.getPermalink(parentProductID).then((permalink) => {
         const lineItemHTML = `
           <div data-line-item-id="${lineItem.id}" class="dr-product dr-product-line-item" data-product-id="${lineItem.product.id}" data-sort="${idx}">
@@ -287,14 +262,14 @@ const CartModule = (($) => {
                 </div>
                 <div class="product-qty">
                   <span class="qty-text">Qty ${lineItem.quantity}</span>
-                  <span class="dr-pd-cart-qty-minus value-button-decrease ${lineItem.quantity <= min ? 'disabled' : ''}"></span>
+                  <span class="dr-pd-cart-qty-minus value-button-decrease${lineItem.quantity <= min ? ' disabled' : ''}${isTightBundle ? ' d-none' : ''}"></span>
                   <input type="number" class="product-qty-number" aria-label="${localizedText.quantity_label}" step="1" min="${min}" max="${max}" value="${lineItem.quantity}" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly="true">
-                  <span class="dr-pd-cart-qty-plus value-button-increase ${lineItem.quantity >= max ? 'disabled' : ''}"></span>
+                  <span class="dr-pd-cart-qty-plus value-button-increase${lineItem.quantity >= max ? ' disabled' : ''}${isTightBundle ? ' d-none' : ''}"></span>
                 </div>
               </div>
             </div>
             <div class="dr-product__price">
-              <button class="dr-prd-del remove-icon" aria-label="${localizedText.remove_label}"></button>
+              <button class="dr-prd-del remove-icon${isTightBundle ? ' d-none' : ''}" aria-label="${localizedText.remove_label}"></button>
               <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
               <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
             </div>
@@ -437,7 +412,6 @@ const CartModule = (($) => {
     renderOffers,
     renderCandyRackOffer,
     renderBannerOffer,
-    disableEditBtnsForBundle,
     renderSingleLineItem,
     renderLineItems,
     renderSummary,

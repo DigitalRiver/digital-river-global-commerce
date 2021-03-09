@@ -137,6 +137,7 @@ jQuery(document).ready(($) => {
                 const formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
                 const formattedListPrice = li.pricing.formattedListPriceWithQuantity;
                 const thumbnailImage = li.product.thumbnailImage || ((li.product.parentProduct) ? (li.product.parentProduct.thumbnailImage || '') : '');
+                const isTightBundle = CheckoutUtils.isTightBundleChild(li);
                 let priceContent = '';
 
                 if (listPrice > salePrice) {
@@ -155,7 +156,7 @@ jQuery(document).ready(($) => {
                         <span class="dr-minicart-item-qty">${localizedText.qty_label}.${li.quantity}</span>
                         <p class="dr-pd-price dr-minicart-item-price">${CheckoutUtils.renderLineItemSalePrice(priceContent, taxInclusive, drgc_params.taxDisplay)}</p>
                     </div>
-                    <a href="#" class="dr-minicart-item-remove-btn" aria-label="Remove" data-line-item-id="${li.id}">${localizedText.remove_label}</a>
+                    <a href="#" class="dr-minicart-item-remove-btn${isTightBundle ? ' d-none' : ''}" aria-label="Remove" data-line-item-id="${li.id}">${localizedText.remove_label}</a>
                 </li>`;
                 miniCartLineItems += miniCartLineItem;
             });

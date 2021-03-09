@@ -588,6 +588,28 @@ const CheckoutUtils = (($, params) => {
       customAttrs.find(attr => attr.name === 'TAX_EXEMPTION_US_STATUS').value : '';
   };
 
+  const isTightBundleChild = (lineItem) => {
+    const offerGroups = lineItem.groups || [];
+    let isTightBundle = false;
+
+    if (offerGroups.length) {
+      groupsLoop:
+      for (const group of offerGroups) {
+        if (Array.isArray(group.group) && group.group.length) {
+          const offers = group.group;
+          for (const offer of offers) {
+            if ((offer.relationType === 'child') && (offer.offer.policyName === 'Tight Bundle Policy') && (offer.offer.type === 'Bundling')) {
+              isTightBundle = true;
+              break groupsLoop;
+            }
+          }
+        }
+      }
+    }
+
+    return isTightBundle;
+  };
+
   return {
     getFetchedCountryOptions,
     updateDeliverySection,
@@ -624,7 +646,8 @@ const CheckoutUtils = (($, params) => {
     createTaxProfile,
     recreateAccessToken,
     updateTemsUsStatus,
-    getTemsUsStatus
+    getTemsUsStatus,
+    isTightBundleChild
   };
 })(jQuery, drgc_params);
 
