@@ -98,6 +98,16 @@ No, you are responsible for hosting your own site.
 
 
 == Changelog ==
+= [2.0.1] - 2021-03-30 =
+* Tax display logic changed and based on DR locale.
+* Unblock US billing/Shipping country for Global TAX ID Management.
+* Add hook function for home page URL. Developer could modify home page URL.
+* Add hook function for reCaptcha. Developer could add their own reCaptcha.
+* Remove unused Cookie
+
+
+
+
 = [2.0] - 2020-12-16 =
 * Added build-in localizaction features with translations
 * Support different display types of tax inclusive/exclusive price in checkout page
