@@ -60,7 +60,7 @@ Want a fast and easy way to sell into new markets? Activate the Digital River pl
 
 == INSTALLATION ==
 * A Digital River account is required for use of this plugin. To inquire contact <wordpress@digitalriver.com>.
-* Feature and Installation documentation can be found [here](https://docs.digitalriver.com/partner-integrations/wordpress-plugin).
+* Feature and Installation documentation can be found [here](https://docs.digitalriver.com/wordpress/v/2.0/).
 Follow these steps to setup Digital River Global Commerce:
 1. Activate the plugin through the ‘Plugins’ menu in WordPress
 2. Configure ‘Digital River > Settings’
