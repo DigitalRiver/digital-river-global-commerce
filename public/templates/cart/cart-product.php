@@ -14,15 +14,15 @@
 
 <?php
 $product_name = $line_item['product']['displayName'];
-$product_image_uri = $line_item['product']['thumbnailImage'];;
-$product_colors = ['Black', 'Red'];
+$product_image_uri = $line_item['product']['thumbnailImage'];
 $product_sku = $line_item['product']['id'];
 $sale_price = $line_item['pricing']['formattedSalePriceWithQuantity'];
 $price = $line_item['pricing']['formattedListPriceWithQuantity'];
 $product_qty = $line_item['quantity'];
 $is_variation = isset( $line_item['product']['parentProduct'] );
-
-
+$short_description = $line_item['product']['shortDescription'] ?? '';
+$short_description_option = get_option( 'drgc_display_short_description_handler' );
+$short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' );
 ?>
 
 <div data-line-item-id="<?php echo $line_item['id']; ?>" class="dr-product">
@@ -36,9 +36,16 @@ $is_variation = isset( $line_item['product']['parentProduct'] );
             <a class="product-name" href="<?php echo get_permalink( drgc_get_parent_product_by_gcid( $product_sku, $is_variation ) ); ?>" >
                 <?php echo $product_name; ?>
             </a>
+
+            <div class="product-short-description">
+                  
+                <span><?php echo $short_description_enabled ? $short_description : ''; ?></span>
+            
+            </div>
+
             <div class="product-sku">
 
-                <span>Product </span>
+                <span><?php _e( 'Product', 'digital-river-global-commerce' ); ?> </span>
 
                 <span>#<?php echo $product_sku; ?></span>
 
@@ -46,7 +53,7 @@ $is_variation = isset( $line_item['product']['parentProduct'] );
 
             <div class="product-qty">
 
-                <span class="qty-text">Qty <?php echo $product_qty; ?></span>
+                <span class="qty-text"><?php _e( 'Qty', 'digital-river-global-commerce' ); ?> <?php echo $product_qty; ?></span>
 
                 <span class="dr-pd-cart-qty-minus value-button-decrease"></span>
 
@@ -73,10 +80,10 @@ $is_variation = isset( $line_item['product']['parentProduct'] );
 
     <div class="dr-product__price">
 
-        <button class="dr-prd-del remove-icon"></button>
+        <button class="dr-prd-del remove-icon" aria-label="<?php _e( 'Remove', 'digital-river-global-commerce' ); ?>"></button>
 
+        <del class="regular-price dr-strike-price <?php echo $sale_price === $price ? 'd-none' : ''; ?>"><?php echo $price; ?></del>
         <span class="sale-price"><?php echo $sale_price; ?></span>
-        <span class="regular-price <?php echo $sale_price === $price ? 'd-none' : ''; ?>"><?php echo $price; ?></span>
 
     </div>
 

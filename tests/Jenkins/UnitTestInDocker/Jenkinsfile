@@ -1,0 +1,56 @@
+pipeline {
+  agent { label 'nprod-small' }
+
+    environment {
+        hostName = 'rising-star.c141.drcloud.zone'
+        userName = 'ubuntu'
+        shellScriptPath = "/home/ubuntu/DRWPAutoTest/UniTestInDocker/"
+        deployScriptName = 'deploy.sh'
+        runTestScriptName = 'runtest.sh'
+        cleanScripName = 'clean.sh'
+        reportRemote = "${shellScriptPath}junit.xml"
+        reportLocal = 'JestTestReport.xml'
+    }
+
+    stages {
+        stage('Deploy') {
+            steps {
+                script {
+                    env.sshCmd = "ssh -o StrictHostKeyChecking=no ${env.userName}@${env.hostName}"
+                }
+                sshagent(credentials:['happy-friday-cicd-cred']) {
+                    sh "${env.sshCmd} '(${shellScriptPath}${deployScriptName})'"
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sshagent(credentials:['happy-friday-cicd-cred']) {
+                    script {
+                        env.sshCmd = "ssh -o StrictHostKeyChecking=no ${env.userName}@${env.hostName}"
+                    }
+                    sh "${env.sshCmd} '(${shellScriptPath}${runTestScriptName} unit)'"
+                }
+            }
+        }
+    }
+    post {
+        always {
+            sshagent(credentials:['happy-friday-cicd-cred']) {
+                script {
+                    env.sshCmd = "ssh -o StrictHostKeyChecking=no ${env.userName}@${env.hostName}"
+                    env.sshCpy = "scp -o StrictHostKeyChecking=no ${env.userName}@${env.hostName}"
+                }
+                sh "scp -o StrictHostKeyChecking=no ${env.userName}@${env.hostName}:${env.reportRemote} ${env.reportLocal}"
+                junit "${env.reportLocal}"
+                sh "rm ${env.reportLocal}"
+                sh "${env.sshCmd} '(rm ${env.reportRemote})'"
+                sh "${env.sshCmd} '(${shellScriptPath}${cleanScripName})'"
+                emailext body: "${currentBuild.currentResult}: Job ${env.JOB_NAME} build ${env.BUILD_NUMBER}\n More info at: ${env.BUILD_URL}",
+                to: 'twang@digitalriver.com; ewu@digitalriver.com; jewang@digitalriver.com; alliu@digitalriver.com; cyu@digitalriver.com; tchang@digitalriver.com; tcannon@digitalriver.com',
+                subject: "Jenkins Build ${currentBuild.currentResult}: Job ${env.JOB_NAME}"
+            }
+        }
+    }
+}

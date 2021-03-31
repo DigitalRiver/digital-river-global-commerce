@@ -83,33 +83,39 @@ class DRGC_Authenticator extends AbstractHttpService {
 		return $this->dr_session_token ?: false;
 	}
 
-	/**
-	 * Initialize tokens
-	 */
-	public function init( $session ) {
-		$this->session = $session;
-		$session_data = $this->session->get_session_data();
+  /**
+   * Initialize tokens
+   */
+  public function init( $session ) {
+    $this->session = $session;
+    $session_data = $this->session->get_session_data();
 
-		if ( ! empty( $session_data['session_token'] ) && ! is_null( $session_data['session_token'] )
-			&& ! empty( $session_data['access_token'] ) && ! is_null( $session_data['access_token'] )
-		) {
-			$this->dr_session_token = $session_data['session_token'];
-			$this->token = $session_data['access_token'];
-			$this->refresh_token = $session_data['refresh_token'];
-		} else {
-			$this->generate_dr_session_token();
-			$this->generate_access_token( '' );
-		}
-		
-		$this->set_schedule_refresher();
-	}
+    if ( ! empty( $session_data['session_token'] ) && ! is_null( $session_data['session_token'] )
+      && ! empty( $session_data['access_token'] ) && ! is_null( $session_data['access_token'] )
+    ) {
+      $token_info = $this->get_access_token_information( $session_data['access_token'] );
+
+      if ( isset( $token_info['expiresIn'] ) && $token_info['expiresIn'] > 0 ) {
+        $this->dr_session_token = $session_data['session_token'];
+        $this->token = $session_data['access_token'];
+        $this->refresh_token = $session_data['refresh_token'];
+      } else {
+        $this->do_refresh_access_token();
+      }
+    } else {
+      $this->generate_dr_session_token();
+      $this->generate_access_token( '' );
+    }
+    
+    $this->set_schedule_refresher();
+  }
 
 	/**
 	 * Set Schedule Refresher
 	 */
 	public function set_schedule_refresher() {
-		if (! wp_next_scheduled ( 'refresh_access_token_event' )) {
-			wp_schedule_event( time(), 'hourly', 'refresh_access_token_event');
+		if ( ! wp_next_scheduled ( 'dr_refresh_access_token' ) ) {
+			wp_schedule_event( time(), 'hourly', 'dr_refresh_access_token');
 		}
 
 		add_action( 'dr_refresh_access_token', array( $this, 'do_refresh_access_token' ) );
@@ -127,55 +133,57 @@ class DRGC_Authenticator extends AbstractHttpService {
 		return $this->dr_session_token = $this->getNoAuth( $url )['session_token'];
 	}
 
-	/**
-	 * Generate session-aware access token
-	 *
-	 * @param string $key - public API key
-	 * @param array $data - post body
-	 * 
-	 * @return array $res
-	 */
-	public function generate_access_token( $key = '', $data = array() ) {
-		try {
-			if ( empty( $key ) ) {
-				// via Oauth 2.0
-				if ( ! $data ) {
-					$data = array(
-						"dr_session_token" => $this->dr_session_token,
-						"grant_type" => "password"
-					);
-				}
-	
-				$this->setFormContentType();
-				$res = $this->post( "/oauth20/token",  $this->prepareParams( $data ) );
-			} else {
-				// via a public API key
-				$params = array(
-					'apiKey' => $key
-				);
-		
-				$url = $this->authUrl() . '?' . http_build_query( $params );
-				$res = $this->getNoAuth( $url );
-			}
-			 
-			$this->token         = $res['access_token'] ?? null;
-			$this->tokenType     = $res['token_type'] ?? null;
-			$this->expires_in    = $res['expires_in'] ?? null;
-			$this->refresh_token = $res['refresh_token'] ?? null;
-	
-			if ( ! is_null( $this->session ) ) {
-				$this->session->generate_session_cookie_data( array(
-					'session_token' => $this->dr_session_token,
-					'refresh_token' => $this->refresh_token ?: null,
-					'access_token'  => $this->token,
-				));
-			}
-	
-			return $res;
-		} catch (\Exception $e) {
-			return "Error: # {$e->getMessage()}";
-		}
-	}
+  /**
+   * Generate session-aware access token
+   *
+   * @param string $key - public API key
+   * @param array  $data - post body
+   * @param string $session_token - dr_session_token
+   * 
+   * @return array $res
+   */
+  public function generate_access_token( $key = '', $data = array(), $session_token = '' ) {
+    try {
+      if ( empty( $key ) ) {
+        // via Oauth 2.0
+        if ( ! $data ) {
+          $data = array(
+            'dr_session_token' => empty( $session_token ) ? $this->dr_session_token : $session_token,
+            'grant_type'       => 'password'
+          );
+        }
+
+        $this->setFormContentType();
+        $this->token = '';
+        $res = $this->post( '/oauth20/token',  $this->prepareParams( $data ), false );
+      } else {
+        // via a public API key
+        $params = array(
+          'apiKey' => $key
+        );
+    
+        $url = $this->authUrl() . '?' . http_build_query( $params );
+        $res = $this->getNoAuth( $url );
+      }
+
+      $this->token         = $res['access_token'] ?? null;
+      $this->tokenType     = $res['token_type'] ?? null;
+      $this->expires_in    = $res['expires_in'] ?? null;
+      $this->refresh_token = $res['refresh_token'] ?? null;
+
+      if ( ! is_null( $this->session ) ) {
+        $this->session->generate_session_cookie_data( array(
+          'session_token' => $this->dr_session_token,
+          'refresh_token' => $this->refresh_token ?: null,
+          'access_token'  => $this->token,
+        ));
+      }
+
+      return $res;
+    } catch (\Exception $e) {
+      return "Error: # {$e->getMessage()}";
+    }
+  }
 
 	/**
 	 * Generate full access token
@@ -220,73 +228,100 @@ class DRGC_Authenticator extends AbstractHttpService {
 		}
 	}
 
-	/**
-	 * Generate full access token
-	 *
-	 * @param string $username
-	 * @param string $password
-	 *
-	 * @return mixed $data
-	 */
-	public function generate_access_token_by_ref_id( $external_reference_id ) {
-		$data = array (
-			'dr_external_reference_id' => $external_reference_id,
-			'grant_type'               => 'client_credentials'
-		);
+  /**
+   * Generate full access token
+   *
+   * @param string $external_reference_id
+   * @param string $session_token
+   *
+   * @return mixed $data
+   */
+  public function generate_access_token_by_ref_id( $external_reference_id, $session_token = '' ) {
+    $data = array (
+      'dr_external_reference_id' => $external_reference_id,
+      'grant_type'               => 'client_credentials',
+      'dr_session_token'         => empty( $session_token ) ? $this->dr_session_token : $session_token
+    );
 
     $this->setFormContentType();
 
-		try {
-			$res = $this->post( "/oauth20/token", $this->prepareParams( $data ) );
+    try {
+      $this->token = '';
+      $res = $this->post( '/oauth20/token', $this->prepareParams( $data ), false );
 
-			if ( isset( $res['error'] ) ) {
-				return $res;
-			}
+      if ( isset( $res['error'] ) ) {
+        return $res;
+      }
 
-			$this->refresh_token        = null;
-			$this->token                = $res['access_token'] ?? $res['access_token'];
-			$this->tokenType            = $res['token_type'] ?? $res['token_type'];
-			$this->expires_in           = $res['expires_in'] ?? $res['expires_in'];
+      $this->refresh_token        = null;
+      $this->token                = $res['access_token'] ?? $res['access_token'];
+      $this->tokenType            = $res['token_type'] ?? $res['token_type'];
+      $this->expires_in           = $res['expires_in'] ?? $res['expires_in'];
 
-			if ( ! is_null( $this->session ) ) {
-				$this->session->generate_session_cookie_data( array(
-					'session_token' => $this->dr_session_token,
-					'refresh_token' => $this->refresh_token,
-					'access_token'  => $this->token,
-				) );
-			}
+      if ( ! is_null( $this->session ) ) {
+        $this->session->generate_session_cookie_data( array(
+          'session_token' => $this->dr_session_token,
+          'refresh_token' => $this->refresh_token,
+          'access_token'  => $this->token,
+        ) );
+      }
 
-			return $res;
-		} catch (\Exception $e) {
-			return "Error: # {$e->getMessage()}";
-		}
-	}
+      return $res;
+    } catch (\Exception $e) {
+      return "Error: # {$e->getMessage()}";
+    }
+  }
 
-	/**
-	 * Refresh Token handler
-	 */
-	public function do_refresh_access_token() {
-		$data = array(
-			"refresh_token" => $this->refresh_token,
-			"grant_type" 	  => "refresh_token"
-		);
+  /**
+   * Refresh Token handler
+   */
+  public function do_refresh_access_token() {
+    if ( is_null( $this->refresh_token ) ) return false;
 
-		$this->setFormContentType();
-		$res = $this->post( "/oauth20/token",  $this->prepareParams( $data ) );
+    $data = array(
+      "refresh_token" => $this->refresh_token,
+      "grant_type" 	  => "refresh_token"
+    );
 
-		$this->token         = $res['access_token']  ?? null;
-		$this->tokenType     = $res['token_type']    ?? null;
-		$this->expires_in    = $res['expires_in']    ?? null;
-		$this->refresh_token = $res['refresh_token'] ?? null;
+    $this->setFormContentType();
+    $res = $this->post( "/oauth20/token",  $this->prepareParams( $data ), false );
 
-		if ( ! is_null( $this->session ) ) {
-			$this->session->generate_session_cookie_data( array(
-				'session_token' => $this->dr_session_token,
-				'access_token'  => $this->token,
-				'refresh_token' => $this->refresh_token
-			));
-		}
+    $this->token         = $res['access_token']  ?? null;
+    $this->tokenType     = $res['token_type']    ?? null;
+    $this->expires_in    = $res['expires_in']    ?? null;
+    $this->refresh_token = $res['refresh_token'] ?? null;
 
-		return $res;
-	}
+    if ( ! is_null( $this->session ) ) {
+      $this->session->generate_session_cookie_data( array(
+        'session_token' => $this->dr_session_token,
+        'access_token'  => $this->token,
+        'refresh_token' => $this->refresh_token
+      ));
+    }
+
+    return $res;
+  }
+
+  /**
+   * Get access token data
+   * 
+   * @param string $token
+   *
+   * @return mixed
+   */
+  public function get_access_token_information( $token ) {
+    $params = array(
+      'token' => $token
+    );
+
+    $url = "/oauth20/access-tokens?" . http_build_query( $params );
+
+    try {
+      $res = $this->get( $url );
+
+      return $res;
+    } catch (\Exception $e) {
+      return "Error: # {$e->getMessage()}";
+    }
+  }
 }

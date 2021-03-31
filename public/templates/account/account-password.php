@@ -1,4 +1,4 @@
-<form class="dr-panel-edit needs-validation" novalidate>
+<form class="change-password-form dr-panel-edit needs-validation" id="change-password-form" novalidate>
 
     <div class="required-text">
         <?php echo __( 'Fields marked with * are mandatory', 'digital-river-global-commerce' ); ?>
@@ -8,13 +8,13 @@
 
         <div class="float-container float-container--pw-current">
 
-            <label for="pw-current" class="float-label ">
+            <label for="pw-current" class="float-label">
 
                 <?php echo __( 'Current Password *', 'digital-river-global-commerce' ); ?>
 
             </label>
 
-            <input id="pw-current" type="password" name="" class="form-control float-field float-field--pw-current" required>
+            <input id="pw-current" type="password" name="pw-current" class="form-control float-field float-field--pw-current" required>
 
             <div class="invalid-feedback">
 
@@ -30,7 +30,7 @@
 
         <div class="float-container float-container--pw-new">
 
-            <label for="pw-new" class="float-label ">
+            <label for="pw-new" class="float-label">
 
                 <?php echo __( 'New Password *', 'digital-river-global-commerce' ); ?>
 
@@ -52,7 +52,7 @@
 
         <div class="float-container float-container--pw-confirm">
 
-            <label for="pw-confirm" class="float-label ">
+            <label for="pw-confirm" class="float-label">
 
                 <?php echo __( 'Confirm New Password *', 'digital-river-global-commerce' ); ?>
 
@@ -71,8 +71,8 @@
     </div>
 
     
-    <div class="invalid-feedback dr-err-field" style="display: none"></div>
+    <div class="dr-err-field"></div>
 
-    <input type="submit" class="dr-btn dr-btn-green" value="<?php echo __( 'Save', 'digital-river-global-commerce' );?>">
+    <input type="submit" class="dr-btn dr-btn-green" value="<?php echo __( 'Change Password', 'digital-river-global-commerce' );?>">
 
 </form>

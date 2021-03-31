@@ -41,14 +41,15 @@ test('Category page price', async t => {
   // Enter Product page and check is displays on sale price
   console.log(">> Check on sale price in product detail page");
   await utils.clickItem(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addOnSaleProduct);
   await checkSaleBtnPriceExists(homePage.categoryRegularPrice, homePage.categorySalePrice);
 });
 
 test('Porduct page price', async t => {
   console.log('Test Case: Product Detail Page - Check the Sale Price');
-  const onSaleProductPageLink = homePage.addOnSaleProduct.parent('div').find('.card-overlay');
-  const regularPrice = homePage.addOnSaleProduct.parent('form').find('.product-price-old');
-  const salePrice = homePage.addOnSaleProduct.parent('form').find('.product-price');
+  const onSaleProductPageLink = homePage.addOnSaleProduct.parent('div').find('.dr-pd-item-title');
+  const regularPrice = homePage.addOnSaleProduct.parent('form').find('.dr-strike-price');
+  const salePrice = homePage.addOnSaleProduct.parent('form').find('.dr-sale-price');
 
   console.log('>> Navigate to target testing website');
   await t
@@ -57,6 +58,7 @@ test('Porduct page price', async t => {
 
   console.log('>> Checking the on sale/regular price in product\'s page');
   await utils.clickItem(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addOnSaleProduct);
   await utils.clickItem(onSaleProductPageLink);
   await checkSaleBtnPriceExists(regularPrice, salePrice);
 });

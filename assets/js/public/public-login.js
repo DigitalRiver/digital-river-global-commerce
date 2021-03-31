@@ -54,7 +54,7 @@ const LoginModule = (($) => {
             url: drgc_params.ajaxUrl,
             data,
             success: () => {
-                LoginModule.redirectAfterAuth(false);
+                LoginModule.redirectAfterAuth(false, LoginModule.getLocaleParam());
             }
         });
     };
@@ -70,22 +70,32 @@ const LoginModule = (($) => {
             action: 'drgc_logout',
             nonce: drgc_params.ajaxNonce
         };
-        $('body').css({ 'pointer-events': 'none', 'opacity': 0.5 });
+        $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, function(response) {
+            if (sessionStorage.getItem('drgc_upsell_decline')) {
+                sessionStorage.removeItem('drgc_upsell_decline');
+            }
+
             location.reload();
         });
     };
 
-    const redirectAfterAuth = (isLoggedIn) => {
-        if (document.referrer === drgc_params.cartUrl || document.referrer === drgc_params.checkoutUrl) {
-            window.location.href = drgc_params.checkoutUrl;
+    const redirectAfterAuth = (isLoggedIn, locale) => {
+        const cartUrl = new URL(drgc_params.cartUrl);
+        const checkoutUrl = new URL(drgc_params.checkoutUrl);
+        let targetHref = '';
+
+        if (document.referrer.indexOf(cartUrl.pathname) > -1 || document.referrer.indexOf(checkoutUrl.pathname) > -1) {
+            targetHref = drgc_params.checkoutUrl;
         } else if (isLoggedIn) {
-            window.location.href = drgc_params.accountUrl;
-        } else if (!document.referrer) {
-            window.location.href = drgc_params.homeUrl;
+            targetHref = drgc_params.accountUrl;
         } else {
-            window.location.href = document.referrer;
+            targetHref = drgc_params.homeUrl;
         }
+
+        const targetUrl = new URL(targetHref);
+        if (locale) targetUrl.searchParams.set('locale', locale);
+        window.location.href = targetUrl.toString();
     };
 
     const autoLogout = (url) => {
@@ -94,21 +104,19 @@ const LoginModule = (($) => {
             nonce: drgc_params.ajaxNonce
         };
 
-        $('body').css({'pointer-events': 'none', 'opacity': 0.5});
+        $('body').addClass('dr-loading');
         $.post(drgc_params.ajaxUrl, data, () => {
+            if (sessionStorage.getItem('drgc_upsell_decline')) {
+                sessionStorage.removeItem('drgc_upsell_decline');
+            }
+
             window.location.href = url;
         });
     };
 
-    const resetCookie = () => {
-        const data = {
-            action: 'drgc_reset_cookie',
-            nonce: drgc_params.ajaxNonce
-        };
-
-        $.post(drgc_params.ajaxUrl, data, (res) => {
-            if (!res.success) throw new Error('Cookie reset failed.');
-        });
+    const getLocaleParam = () => {
+      const params = (new URL(window.location)).searchParams;
+      return params.get('locale');
     };
 
     return {
@@ -117,7 +125,7 @@ const LoginModule = (($) => {
         logout,
         redirectAfterAuth,
         autoLogout,
-        resetCookie
+        getLocaleParam
     };
 })(jQuery);
 
@@ -147,21 +155,26 @@ jQuery(document).ready(($) => {
             action  : 'drgc_login',
             nonce   : drgc_params.ajaxNonce,
             username: $('.dr-login-form input[name=username]').val(),
-            password: $('.dr-login-form input[name=password]').val()
+            password: $('.dr-login-form input[name=password]').val(),
+            locale: LoginModule.getLocaleParam() || drgc_params.drLocale
         };
 
+        if ($('#drgc-login-recaptcha').length) {
+            data.g_recaptcha_response = $('#drgc-login-recaptcha').find('textarea.g-recaptcha-response').val();
+        }
+
         $.post(ajaxUrl, data, function(response) {
-            if ( response.success ) {
-                LoginModule.redirectAfterAuth(true);
+            if (response.success) {
+                LoginModule.redirectAfterAuth(true, response.data.locale);
             } else {
                 $form.data('processing', false);
                 but.removeClass('sending').blur();
 
-                if ( response.data.hasOwnProperty('error_description') ) {
+                if (response.data && response.data.hasOwnProperty('error_description')) {
                     $('.dr-form-error-msg').text(response.data.error_description);
                 }
 
-                if ( Object.prototype.toString.call(response.data) == '[object String]' ) {
+                if (Object.prototype.toString.call(response.data) === '[object String]') {
                     $('.dr-form-error-msg').text(response.data);
                 }
 
@@ -202,6 +215,8 @@ jQuery(document).ready(($) => {
             $(cpw).next('.invalid-feedback').text(drgc_params.translations.required_field_msg);
         } else if (cpw.validity.customError) {
             $(cpw).next('.invalid-feedback').text(cpw.validationMessage);
+        } else {
+            $(cpw).next('.invalid-feedback').text('');
         }
     });
 
@@ -235,16 +250,20 @@ jQuery(document).ready(($) => {
             confirm_password: $('.dr-signup-form input[name=upw2]').val()
         };
 
+        if ($('#drgc-signup-recaptcha').length) {
+            data.g_recaptcha_response = $('#drgc-signup-recaptcha').find('textarea.g-recaptcha-response').val();
+        }
+
         $.post(ajaxUrl, data, function(response) {
             if (response.success) {
-                LoginModule.redirectAfterAuth(true);
+                LoginModule.redirectAfterAuth(true, LoginModule.getLocaleParam());
             } else {
                 $form.data('processing', false);
                 $button.removeClass('sending').blur();
 
-                if (response.data && response.data.errors && response.data.errors.error[0].hasOwnProperty('description') ) {
-                    $('.dr-signin-form-error').text( response.data.errors.error[0].description );
-                } else if (Object.prototype.toString.call(response.data) == '[object String]') {
+                if (response.data && response.data.errors && response.data.errors.error[0].hasOwnProperty('description')) {
+                    $('.dr-signin-form-error').text(response.data.errors.error[0].description);
+                } else if (Object.prototype.toString.call(response.data) === '[object String]') {
                     $('.dr-signin-form-error').text(response.data);
                 } else {
                     $('.dr-signin-form-error').text(drgc_params.translations.undefined_error_msg);
@@ -277,7 +296,11 @@ jQuery(document).ready(($) => {
             nonce: drgc_params.ajaxNonce
         };
 
-        $.each($form.serializeArray(), function( index, obj ) {
+        if ($('#drgc-reset-pass-recaptcha').length) {
+            data.g_recaptcha_response = $('#drgc-reset-pass-recaptcha').find('textarea.g-recaptcha-response').val();
+        }
+
+        $.each($form.serializeArray(), function(index, obj) {
             data[obj.name] = obj.value;
         });
 
@@ -289,7 +312,15 @@ jQuery(document).ready(($) => {
 
         $.post(ajaxUrl, data, function(response) {
             if (!response.success) {
-               $errMsg.text(response.data[0].message).show();
+                if (response.data && typeof response.data === 'string') {
+                    $errMsg.text(response.data);
+                } else if (typeof response === 'string') {
+                    $errMsg.text(response);
+                } else {
+                    $errMsg.text(drgc_params.translations.undefined_error_msg);
+                }
+
+                $errMsg.show();
             } else {
                 $('#drResetPasswordModalBody').html('').html(`
                     <h3>${drgc_params.translations.password_reset_title}</h3>

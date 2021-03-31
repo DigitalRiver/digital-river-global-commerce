@@ -11,11 +11,6 @@
  * @subpackage Digital_River_Global_Commerce/public/partials
  */
 ?>
-
-<script>
-    window.drOrders = window.drOrders || {};
-</script>
-
 <?php 
   $orderID = __( 'Order ID', 'digital-river-global-commerce' );
   $date = __( 'Date', 'digital-river-global-commerce' );
@@ -48,6 +43,10 @@
 
 <?php foreach ( $orders['orders']['order'] as $order ): ?>
 
+<?php
+  $order_currency = $order['pricing']['total']['currency'] ?? '';
+  $order_locale = $order['locale'] ?? '';
+?>
     <div class="order">
 
         <div class="order-id" data-heading="<?php echo $orderID; ?>">
@@ -73,55 +72,6 @@
         </div>
 
     </div>
-
-    <script>
-        drOrders['<?php echo $order['id']; ?>'] = {
-            formattedTotal: '<?php echo $order['pricing']['formattedTotal']; ?>',
-            formattedSubtotal: '<?php echo $order['pricing']['formattedSubtotal']; ?>',
-            formattedIncentive: '<?php echo $order['pricing']['formattedIncentive']; ?>',
-            formattedShipping: '<?php echo $order['pricing']['formattedShipping']; ?>',
-            formattedTax: '<?php echo $order['pricing']['formattedTax']; ?>',
-            orderState: '<?php echo $order['orderState']; ?>',
-            orderDate: <?php echo date_format(date_create($order['submissionDate']),"m/d/Y"); ?>,
-            shippingMethod: '<?php echo $order['shippingMethod']['description'] ?? ''; ?>',
-            shippingMethodCode: '<?php echo $order['shippingMethod']['code'] ?? ''; ?>',
-            entityCode: '<?php echo $order['businessEntityCode']; ?>',
-            billingAddress: {
-                firstName: '<?php echo $order['billingAddress']['firstName']; ?>',
-                lastName: '<?php echo $order['billingAddress']['lastName']; ?>',
-                line1: '<?php echo $order['billingAddress']['line1']; ?>',
-                line2: '<?php echo $order['billingAddress']['line2']; ?>',
-                city: '<?php echo $order['billingAddress']['city']; ?>',
-                state: '<?php echo $order['billingAddress']['countrySubdivision']; ?>',
-                zip: '<?php echo $order['billingAddress']['postalCode']; ?>',
-                country: '<?php echo $order['billingAddress']['country']; ?>'
-            },
-            shippingAddress: {
-                firstName: '<?php echo $order['shippingAddress']['firstName']; ?>',
-                lastName: '<?php echo $order['shippingAddress']['lastName']; ?>',
-                line1: '<?php echo $order['shippingAddress']['line1']; ?>',
-                line2: '<?php echo $order['shippingAddress']['line2']; ?>',
-                city: '<?php echo $order['shippingAddress']['city']; ?>',
-                state: '<?php echo $order['shippingAddress']['countrySubdivision']; ?>',
-                zip: '<?php echo $order['shippingAddress']['postalCode']; ?>',
-                country: '<?php echo $order['shippingAddress']['country']; ?>'
-            },
-            products: [
-                <?php foreach ($order['lineItems']['lineItem'] as $lineItem): ?>
-                    {
-                        qty: '<?php echo $lineItem['quantity']; ?>',
-                        status: '<?php echo $lineItem['lineItemState']; ?>',
-                        id: '<?php echo $lineItem['product']['id']; ?>',
-                        sku: '<?php echo $lineItem['product']['sku']; ?>',
-                        name: '<?php echo $lineItem['product']['displayName']; ?>',
-                        image: '<?php echo $lineItem['product']['thumbnailImage']; ?>',
-                        salePrice: '<?php echo $lineItem['pricing']['formattedSalePriceWithQuantity']; ?>',
-                        strikePrice: '<?php echo $lineItem['pricing']['formattedListPriceWithQuantity']; ?>'
-                    },
-                <?php endforeach; ?>
-            ]
-        }
-    </script>
     
 <?php endforeach; ?>
 
@@ -191,6 +141,10 @@
                                 <p class="item-label"><?php echo __( 'Shipping', 'digital-river-global-commerce' ) ?></p>
                                 <p class="item-value dr-modal-shipping"></p>
                             </div>
+                            <div class="dr-summary__shipping-tax">
+                                <p class="item-label"><?php echo __( 'Shipping Tax', 'digital-river-global-commerce' ) ?></p>
+                                <p class="item-value dr-modal-shipping-tax"></p>
+                            </div>
                             <!-- end if -->
                             <div class="dr-summary__discount">
                                 <p class="discount-label"><?php echo __( 'Discount', 'digital-river-global-commerce' ) ?></p>
@@ -203,11 +157,26 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="dr-right-of-withdrawal" style="display: none;">
+                    <a class="right-of-withdrawal-link" href="javascript:void(0)" data-order-id=""><?php _e( 'Right of Withdrawal Request', 'digital-river-global-commerce' ); ?></a>
+                </div>
             </div>
             <div class="dr-modal-footer">
                 <button type="button" class="dr-btn dr-btn-black" data-dismiss="dr-modal"><?php _e( 'Close', 'digital-river-global-commerce' ) ?></button>
                 <button type="button" class="dr-btn print-button"><?php _e( 'Print', 'digital-river-global-commerce' ) ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="order-id-modal" class="dr-modal" tabindex="-1" role="dialog">
+    <div class="dr-modal-dialog">
+        <div class="dr-modal-content">
+            <div class="dr-modal-body">
+                <p><?php echo __( 'The order number has been copied. You can directly paste the number into the order number field on the Right of Withdrawal page for the request.', 'digital-river-global-commerce' ); ?></p>
+            </div>
+            <div class="dr-modal-footer">
+                <button type="button" class="dr-btn dr-btn-blue confirm" data-dismiss="dr-modal" data-row-url=""><?php echo __( 'OK', 'digital-river-global-commerce' ); ?></button>
             </div>
         </div>
     </div>

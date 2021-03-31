@@ -4,7 +4,7 @@ Tags: ecommerce, global commerce, digital river, online store , headless commerc
 License: GPL-2.0+
 License URI: http://www.gnu.org/licenses/gpl-2.0.txt
 Requires at least: 5.1
-Tested up to: 5.4
+Tested up to: 5.7
 
 A complete ecommerce plugin for WordPress, Digital River works behind the scenes to process payments, fight fraud, fulfill orders, and shield your business from global tax and regulatory risk.
 
@@ -16,44 +16,51 @@ Activate the free Digital River plugin and start selling anywhere in the world. 
 == THE DIGITAL RIVER PLUGIN FEATURES ==
 
 Product/Pricing Management (product pages)
-*   Product catalog management (physical, digital and subscription products)
-*   Merchandising offers
-*   Configurable shipping options
-*   Local transaction currencies
+
+* Product catalog management (physical, digital and subscription products)
+* Merchandising offers
+* Configurable shipping options
+* Configurable Product Import Schedule
+* Local transaction currencies
 
 Order Management /Shopping Experience (cart, checkout and confirmation pages)
-*   Tax calculation
-*   Tax management (registration, collection, filing, and remittance)
-*   Fraud screening
-*   Advanced fraud management
-*   Fraud liability guarantee
-*   Denied Parties List (DPL)
-*   Privacy requirements
-*   Payment processing (credit cards and alternative payment methods)
-*   Payment processing for Subscriptions (Registered Shoppers and credit card only)
-*   Recurring Billing  (credit card only)
-*   Payment
-*   PCI compliance
-*   Tokenization
-*   Acquirer redundancy
-*   Billing optimization
-*   Support for EIN (US only)
-*   Chargeback mitigation and dispute management
-*   Legal responsibility for fulfilling online orders
-*   Terms of sale and legal disclosures
+
+*	Localizable Content (Language, Currency, Tax Inclusive/Exclusion)
+* Tax calculation
+* Tax management (registration, collection, filing, and remittance)
+* Support for both US (Tax certificate) and Global Tax exemptions (Tax ID#)
+* Support for EIN (US only)
+* Fraud screening
+* Advanced fraud management
+* Fraud liability guarantee
+* Denied Parties List (DPL)
+* Privacy requirements
+* Payment processing (credit cards and alternative payment methods)
+* Payment processing for Subscriptions (Registered Shoppers and credit card only)
+* Recurring Billing  (credit card only)
+* Dropin (Digital River’s turnkey payment integration)
+* Tokenization
+* Acquirer redundancy
+* Billing optimization
+* Chargeback mitigation and dispute management
+* Terms of sale and legal disclosures
 
 Shopper Experience (registration/login and account pages)
-*   Profile management (register, login and manage addresses)
-*   Order history
-*   Manage existing subscriptions
+
+* Profile management (register, login and manage addresses)
+* Order history
+* Manage existing subscriptions
+* View Tax certificate eligibility (Registered Shopper - US only)
+* Right to Withdrawal Request (EU Consumer Rights Directive)
+
 
 Our flexible API architecture allows you to customize your ecommerce solution. Digital River can be your complete solution or we can easily plug into your existing systems.
 
 Want a fast and easy way to sell into new markets? Activate the Digital River plugin and we’ll work behind the scenes to process payments, fight fraud, fulfill orders, and shield your business from global tax and regulatory risk.
 
 == INSTALLATION ==
-*   A Digital River account is required for use of this plugin. To inquire contact <wordpress@digitalriver.com>.
-*   Feature and Installation documentation can be found [here](https://docs.digitalriver.com/partner-integrations/wordpress-plugin).
+* A Digital River account is required for use of this plugin. To inquire contact <wordpress@digitalriver.com>.
+* Feature and Installation documentation can be found [here](https://docs.digitalriver.com/wordpress/v/2.0/).
 Follow these steps to setup Digital River Global Commerce:
 1. Activate the plugin through the ‘Plugins’ menu in WordPress
 2. Configure ‘Digital River > Settings’
@@ -91,6 +98,34 @@ No, you are responsible for hosting your own site.
 
 
 == Changelog ==
+= [2.0.1] - 2021-03-31 =
+* Tax display logic changed and based on DR locale
+* Unblock US billing/Shipping country for Global TAX ID Management
+* Add hook function for home page URL. Developer could modify home page URL
+* Add hook function for reCaptcha. Developer could add their own reCaptcha
+* Remove unused Cookie
+
+
+
+
+= [2.0] - 2020-12-16 =
+* Added build-in localizaction features with translations
+* Support different display types of tax inclusive/exclusive price in checkout page
+* Support build-in Currency and locale selector
+* Enhance the compatibility of hosting service by removing custom cookies
+* Refactor product import. Now the plugin support one product with 300+ variations
+* Support Global Tax ID Management and Tax exemption(US)
+* Added GDPR/Compliance
+* Added new payment module:Dropin. You don't need to add extra code in order to make payment work on WordPress
+
+
+
+
+= [1.3.1] - 2020-08-05 =
+* Added new display for Tax inclusive/exclusive price
+* Added Change Password feature in Profile management
+* Minor Bug fixes
+
 = [1.3] - 2020-07-14 =
 * Added Subscriptions feature with support for manual/recurring billing
 * Added Profile management for registered shoppers to manage and view orders, addresses and subscriptions
@@ -131,16 +166,3 @@ No, you are responsible for hosting your own site.
 
 = [1.0] - 2019-08-30 =
 * Initial release
-
-
-
-
-
-
-
-
-
-
-
-
-

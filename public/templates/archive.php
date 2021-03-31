@@ -14,56 +14,54 @@
 
 <?php get_header(); ?>
 
-<div class="main-content" id="main">
+<div class="main-content" id="main" role="main">
 
-	<div class="container">
+  <a id="floating-cart">
 
-		<div class="row">
+    <span class="dr-minicart-count qty">0</span>
 
-			<div class="col">
-				<div class=float-right>
-					<?php drgc_currency_toggler(); ?>
-				</div>
-			</div>
+  </a>
 
-		</div>
+  <div id="sticky-mini-cart"></div>
 
-		<div class="row">
+  <div class="container">
 
-			<div class="col-md-12">
+    <div class="row">
 
-				<?php if ( have_posts() ) : ?>
-					<section class="page-header">
-						<?php
-							the_archive_title( '<h1 class="page-title">', '</h1>' );
-							the_archive_description( '<div class="page-description">', '</div>' );
-						?>
-					</section>
-				<?php endif; ?>
+      <div class="col-md-12">
 
-			</div><!-- .col -->
+        <?php if ( have_posts() ) : ?>
+          <section class="page-header">
+            <?php
+              the_archive_title( '<h1 class="page-title">', '</h1>' );
+              the_archive_description( '<div class="page-description">', '</div>' );
+            ?>
+          </section>
+        <?php endif; ?>
 
-		</div><!-- .row -->
+      </div><!-- .col -->
 
-		<div class="row">
+    </div><!-- .row -->
 
-			<?php if ( have_posts() ): ?>
-				<?php while ( have_posts() ): ?>
-					<div class="col-md-4">
-						<?php the_post(); ?>
-						<?php drgc_get_template_part( 'content', 'archive' );  ?>
-					</div>
-				<?php endwhile; ?>
-				<div class="col-md-12">
-					<?php drgc_the_posts_pagination( $wp_query ); ?>
-				</div>
-			<?php else: ?>
-				<?php drgc_get_template_part( 'content', 'none' ); ?>
-			<?php endif; ?>
+    <div class="row">
 
-		</div><!-- .row -->
+      <?php if ( have_posts() ): ?>
+        <?php while ( have_posts() ): ?>
+          <div class="col-md-4">
+            <?php the_post(); ?>
+            <?php drgc_get_template_part( 'content', 'archive' );  ?>
+          </div>
+        <?php endwhile; ?>
+        <div class="col-md-12">
+          <?php drgc_the_posts_pagination( $wp_query ); ?>
+        </div>
+      <?php else: ?>
+        <?php drgc_get_template_part( 'content', 'none' ); ?>
+      <?php endif; ?>
 
-	</div><!-- .container -->
+    </div><!-- .row -->
+
+  </div><!-- .container -->
 
 </div>
 

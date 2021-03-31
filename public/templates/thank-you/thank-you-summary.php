@@ -14,7 +14,6 @@
 
 <?php
 // $subtotal_items = $order['order']['totalItemsInCart'];
-
 $subtotal_items = 0;
 
 if ( isset( $order['order'] ) ) {
@@ -30,29 +29,39 @@ $shipping_price_value = ($order['order']['pricing']['shipping']['value'] ?? '') 
 $discount = $order['order']['pricing']['incentive']['value'];
 $formatted_discount = $order['order']['pricing']['formattedIncentive'];
 $total_value = $order['order']['pricing']['formattedTotal'] ?? '';
-// $delivery_info = 'Delivery in 2-5 working days and extended 30 days return period';
+$should_display_vat = drgc_should_display_vat( $customer['currency'] );
+$display_incl = drgc_get_tax_display( $customer['locale'] ) === 'INCL';
+$tax_suffix_label = $display_incl ? ' ' . __( 'Incl. VAT', 'digital-river-global-commerce' ) : '';
 ?>
 
 
 <div class="dr-summary__subtotal">
-    <p class="subtotal-label"><?php echo __( 'Subtotal', 'digital-river-global-commerce' ) . ' - (' .  $subtotal_items . ' ' . $subtotal_items_text . ')' ?></p>
+    <p class="subtotal-label"><?php echo __( 'Subtotal', 'digital-river-global-commerce' ) . $tax_suffix_label . ' - (' .  $subtotal_items . ' ' . $subtotal_items_text . ')' ?></p>
 
     <p class="subtotal-value"><?php echo $subtotal_value; ?></p>
 </div>
 
-<div class="dr-summary__tax">
+<div class="dr-summary__tax <?php echo $display_incl ? 'tree-sub-item' : '' ?>">
 
-    <p class="item-label"><?php echo __( 'Tax', 'digital-river-global-commerce' ) ?></p>
+    <p class="item-label"><?php echo $should_display_vat ? __( 'VAT', 'digital-river-global-commerce' ) : __( 'Tax', 'digital-river-global-commerce' ) ?></p>
 
-    <p class="item-value"><?php echo $tax_value; ?></p>
+    <p class="item-value">--</p>
 
 </div>
 <?php if ( $order['order']['hasPhysicalProduct'] ) : ?>
 <div class="dr-summary__shipping">
 
-    <p class="item-label"><?php echo __( 'Shipping', 'digital-river-global-commerce' ) ?></p>
+    <p class="item-label"><?php echo __( 'Shipping', 'digital-river-global-commerce' ) . $tax_suffix_label ?></p>
 
     <p class="item-value"><?php echo $shipping_price_value; ?></p>
+
+</div>
+
+<div class="dr-summary__shipping-tax <?php echo $display_incl ? 'tree-sub-item' : '' ?>">
+
+    <p class="item-label"><?php echo $should_display_vat ? __( 'Shipping VAT', 'digital-river-global-commerce' ) : __( 'Shipping Tax', 'digital-river-global-commerce' ) ?></p>
+
+    <p class="item-value">--</p>
 
 </div>
 <?php endif; ?>

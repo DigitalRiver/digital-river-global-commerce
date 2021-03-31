@@ -1,4 +1,4 @@
-import { ClientFunction, t } from 'testcafe';
+import { ClientFunction, t, Selector } from 'testcafe';
 import AdminPage from '../page-models/admin/admin-page-model';
 import SiteSettings from '../siteConfig';
 import GenericUtils from '../utils/genericUtils';
@@ -28,6 +28,9 @@ export default class AdminUtils {
     await this.utils.checkCheckBox(this.adminPage.scheduledImport, true);
 
     console.log('  -> Enable test order option');
+    await t
+      .hover(this.adminPage.checkoutTab)
+      .click(this.adminPage.checkoutTab);
     await this.utils.checkCheckBox(this.adminPage.testOrder, true);
 
     console.log('  -> Save site settings changes');
@@ -36,37 +39,41 @@ export default class AdminUtils {
 
   async importData(){
     await t.setTestSpeed(0.7);
-    await this.utils.clickItem(this.adminPage.drLink);
+    await t.hover(this.adminPage.drLink);
     await this.utils.clickItem(this.adminPage.drProductsLink);
 
     console.log('>> Start to import products');
     await this.utils.clickItem(this.adminPage.productsImportBtn);
 
     const sel1 = this.adminPage.importProgress.with({visibilityCheck:true}).nth(0);
-    await t.expect(sel1.exists).ok({timeout:20000});
+    await t
+      .wait(5000)
+      .expect(sel1.exists).ok({timeout:60000});
+    console.log(' >> Expected to import ' + await Selector('#products-import-progress-total').innerText);
     const sel2 = this.adminPage.importProgress;
     await t
-      .expect(sel2.with({visibilityCheck: true}).exists).notOk({timeout:600000})
-      .expect(this.getLocation()).contains('&import-complete=1');
+      .expect(sel2.visible).notOk({timeout:600000})
+      .expect(this.getLocation()).contains('&import_complete=true');
 
     await this.utils.clickItem(this.adminPage.drProductsLink);
     console.log(' >>', await this.adminPage.displayNum.textContent + ' have been successfully imported!');
   }
 
   async emptyProducts(){
-    await this.utils.clickItem(this.adminPage.drLink);
+    await t.hover(this.adminPage.drLink);
     await this.utils.clickItem(this.adminPage.drProductsLink);
     await t.expect(this.adminPage.productsImportBtn.exists).ok();
-    await this.utils.clickItem(this.adminPage.selectAll);
+    let numOfProduct = await Selector('.subsubsub').find('span').innerText;
+    while (numOfProduct != '(0)'){
+      await this.utils.clickItem(this.adminPage.selectAll);
+      await this.adminPage.bulkActions.with({visibilityCheck:true});
+      await this.utils.clickItem(this.adminPage.bulkActions);
+      await this.utils.clickItem(this.adminPage.moveToTrash);
+      await this.utils.clickItem(this.adminPage.applyBtn);
 
-    await this.adminPage.bulkActions.with({visibilityCheck:true});
-
-    await this.utils.clickItem(this.adminPage.bulkActions);
-    await this.utils.clickItem(this.adminPage.moveToTrash);
-    await this.utils.clickItem(this.adminPage.applyBtn);
-
-    await t.expect(this.adminPage.returnMsg.textContent).contains('posts moved to the Trash');
-
+      numOfProduct = await Selector('.subsubsub').find('span').innerText;
+      await t.expect(this.adminPage.returnMsg.textContent).match(/posts? moved to the Trash/);
+    }
     console.log('>> Empty Trash');
 
     await this.utils.clickItem(this.adminPage.trashLink);

@@ -5,6 +5,7 @@ import DRCommerceApi from './commerce-api';
 
 const CartModule = (($) => {
   const localizedText = drgc_params.translations;
+  const taxInclusive = drgc_params.cart && drgc_params.cart.cart && drgc_params.cart.cart.taxInclusive === 'true';
   let hasPhysicalProduct = false;
 
   const hasPhysicalProductInLineItems = (lineItems) => {
@@ -12,7 +13,7 @@ const CartModule = (($) => {
   };
 
   const initAutoRenewalTerms = (digitalriverjs, locale) => {
-    const $checkoutBtn = $('a.dr-summary__proceed-checkout');
+    const $checkoutBtn = $('#dr-checkout-btn');
     const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
 
     $termsCheckbox.change((e) => {
@@ -87,51 +88,57 @@ const CartModule = (($) => {
       });
   };
 
-  const renderOffers = (lineItems) => {
-    lineItems.forEach((lineItem, idx) => {
-      // Candy Rack (should be inserted after specific line item)
-      DRCommerceApi.getOffersByPoP('CandyRack_ShoppingCart', { expand: 'all' }, lineItem.product.id)
-        .then((res) => {
-          const offers = res.offers.offer;
-          if (offers && offers.length) {
-            offers.forEach((offer) => {
-              renderCandyRackOffer(offer, lineItems[idx].product.id);
-            });
-          }
-        })
-        .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
+  const getOffersByPoP = (type, productId = '') => {
+    const data = {
+      action: 'drgc_get_offers_by_pop',
+      nonce: drgc_params.ajaxNonce,
+      popType: type,
+      productId: productId
+    };
 
-      // Bundle Tight (should disable edit buttons of specific line item)
-      DRCommerceApi.getOffersByProduct(lineItem.product.id, { expand: 'all' })
-        .then((res) => {
-          const offers = res.offers.offer;
+    $.post(drgc_params.ajaxUrl, data, (response) => {
+      const res = response.data;
+
+      if (response.success) {
+        if (res.offers) {
+          const offers = res.offers.offer || '';
+
           if (offers && offers.length) {
             offers.forEach((offer) => {
-              disableEditBtnsForBundle(offer, lineItem.product.id);
+              switch (type) {
+                case 'CandyRack_ShoppingCart':
+                  renderCandyRackOffer(offer, productId);
+                  break;
+                case 'Banner_ShoppingCartLocal':
+                  renderBannerOffer(offer);
+                  break;
+              }
             });
           }
-        })
-        .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
+        } else if (res.errors) {
+          drToast.displayMessage(res.errors.error[0], 'error');
+        }
+      } else {
+        drToast.displayMessage(localizedText.undefined_error_msg, 'error');
+      }
+    });
+  };
+
+  const renderOffers = (lineItems) => {
+    lineItems.forEach((lineItem) => {
+      // Candy Rack (should be inserted after specific line item)
+      getOffersByPoP('CandyRack_ShoppingCart', lineItem.product.id);
     });
 
     // Banner (should be appended after all the line items)
-    DRCommerceApi.getOffersByPoP('Banner_ShoppingCartLocal', { expand: 'all' })
-      .then((res) => {
-        const offers = res.offers.offer;
-          if (offers && offers.length) {
-            offers.forEach((offer) => {
-              renderBannerOffer(offer);
-            });
-          }
-      })
-      .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
+    getOffersByPoP('Banner_ShoppingCartLocal');
   };
 
   const renderCandyRackOffer = (offer, driverProductID) => {
     const offerType = offer.type;
     const productOffers = offer.productOffers.productOffer;
     const promoText = offer.salesPitch.length ? offer.salesPitch[0] : '';
-    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    const declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     const upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if (productOffers && productOffers.length) {
@@ -161,11 +168,11 @@ const CartModule = (($) => {
                     </div>
                   </div>
                   <div class="dr-product__price">
-                    <img src="${productOffer.product.thumbnailImage}" class="dr-upsellProduct__img"/>
+                    <img src="${productOffer.product.thumbnailImage}" alt="${productOffer.product.displayName}" class="dr-upsellProduct__img"/>
                     <div class="product-name">${productOffer.product.displayName}</div>
                     <div class="product-short-desc">${shortDiscription}</div>
-                    <span class="sale-price">${salePrice}</span>
-                    <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+                    <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+                    <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
                   </div>
                 </div>
               </div>
@@ -192,8 +199,8 @@ const CartModule = (($) => {
                 <button type="button" class="dr-btn dr-buy-candyRack"
                   data-buy-uri="${productOffer.addProductToCart.uri}"
                   ${purchasable ? '' : 'disabled="disabled"'}>${buyBtnText}</button>
-                <span class="sale-price">${salePrice}</span>
-                <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+                <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+                <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
               </div>
             </div>`;
 
@@ -214,28 +221,13 @@ const CartModule = (($) => {
     $('.dr-cart__products').append(html);
   };
 
-  const disableEditBtnsForBundle = (offer, productID) => {
-    const hasBundleTight = (offer.type === 'Bundling' && offer.policyName === 'Tight Bundle Policy');
-    const productOffers = offer.productOffers.productOffer;
-
-    if (hasBundleTight && productOffers && productOffers.length) {
-      productOffers.forEach((productOffer) => {
-        if (productOffer.product.id !== productID) { // Hide action buttons only when it's triggered by parent product
-          $(`.dr-product-line-item[data-product-id=${productOffer.product.id}]`)
-            .find('.remove-icon, .dr-pd-cart-qty-minus, .dr-pd-cart-qty-plus')
-            .css({ opacity: 0, 'pointer-events': 'none' });
-        }
-      });
-    }
-  };
-
   const renderSingleLineItem = (pricing, $lineItem) => {
     const { formattedListPriceWithQuantity, formattedSalePriceWithQuantity } = pricing;
     const $qty = $lineItem.find('.product-qty-number');
     const qty = parseInt($qty.val(), 10);
     const max = parseInt($qty.attr('max'), 10);
     const min = parseInt($qty.attr('min'), 10);
-    $lineItem.find('.sale-price').text(formattedSalePriceWithQuantity);
+    $lineItem.find('.sale-price').text(CheckoutUtils.renderLineItemSalePrice(formattedSalePriceWithQuantity, taxInclusive));
     $lineItem.find('.regular-price').text(formattedListPriceWithQuantity);
     $lineItem.find('.dr-pd-cart-qty-minus').toggleClass('disabled', qty <= min);
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
@@ -250,31 +242,36 @@ const CartModule = (($) => {
 
     lineItems.forEach((lineItem, idx) => {
       const parentProductID = lineItem.product.parentProduct ? lineItem.product.parentProduct.id : lineItem.product.id;
-      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
       const listPrice = lineItem.pricing.formattedListPriceWithQuantity;
+      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
+      const isTightBundle = CheckoutUtils.isTightBundleChild(lineItem);
+
       const promise = CheckoutUtils.getPermalink(parentProductID).then((permalink) => {
         const lineItemHTML = `
           <div data-line-item-id="${lineItem.id}" class="dr-product dr-product-line-item" data-product-id="${lineItem.product.id}" data-sort="${idx}">
             <div class="dr-product-content">
               <div class="dr-product__img" style="background-image: url(${lineItem.product.thumbnailImage})"></div>
               <div class="dr-product__info">
-                <a class="product-name" href="${permalink}">${lineItem.product.displayName}</a>
+                <a class="product-name" href="${permalink}?locale=${drgc_params.drLocale}">${lineItem.product.displayName}</a>
+                <div class="product-short-description">
+                  <span>${drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : ''}</span>
+                </div>
                 <div class="product-sku">
                   <span>${localizedText.product_label} </span>
                   <span>#${lineItem.product.id}</span>
                 </div>
                 <div class="product-qty">
                   <span class="qty-text">Qty ${lineItem.quantity}</span>
-                  <span class="dr-pd-cart-qty-minus value-button-decrease ${lineItem.quantity <= min ? 'disabled' : ''}"></span>
-                  <input type="number" class="product-qty-number" step="1" min="${min}" max="${max}" value="${lineItem.quantity}" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly="true">
-                  <span class="dr-pd-cart-qty-plus value-button-increase ${lineItem.quantity >= max ? 'disabled' : ''}"></span>
+                  <span class="dr-pd-cart-qty-minus value-button-decrease${lineItem.quantity <= min ? ' disabled' : ''}${isTightBundle ? ' d-none' : ''}"></span>
+                  <input type="number" class="product-qty-number" aria-label="${localizedText.quantity_label}" step="1" min="${min}" max="${max}" value="${lineItem.quantity}" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly="true">
+                  <span class="dr-pd-cart-qty-plus value-button-increase${lineItem.quantity >= max ? ' disabled' : ''}${isTightBundle ? ' d-none' : ''}"></span>
                 </div>
               </div>
             </div>
             <div class="dr-product__price">
-              <button class="dr-prd-del remove-icon"></button>
-              <span class="sale-price">${salePrice}</span>
-              <span class="regular-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+              <button class="dr-prd-del remove-icon${isTightBundle ? ' d-none' : ''}" aria-label="${localizedText.remove_label}"></button>
+              <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+              <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
             </div>
           </div>`;
           lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
@@ -296,43 +293,38 @@ const CartModule = (($) => {
     });
   };
 
-  const getCorrectSubtotalWithDiscount = (pricing) => {
-    const localeCode = $('.dr-currency-select').find('option:selected').data('locale').replace('_', '-');
-    const currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
-    const symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
-    const formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');
-    const decimalSymbol = (0).toLocaleString(localeCode, { minimumFractionDigits: 1 })[1];
-    const digits = formattedPriceWithoutSymbol.indexOf(decimalSymbol) > -1 ?
-      formattedPriceWithoutSymbol.split(decimalSymbol).pop().length :
-      0;
-    let val = pricing.subtotal.value - pricing.discount.value;
-    val = val.toLocaleString(localeCode, { minimumFractionDigits: digits });
-    val = symbolAsPrefix ? (currencySymbol + val) : (val + currencySymbol);
-    return val;
-  };
-
-  const renderSummary = (pricing, hasPhysicalProduct) => {
+  const renderSummary = (cart, hasPhysicalProduct) => {
+    const lineItems = cart.lineItems.lineItem;
+    const pricing = cart.pricing;
+    const $taxRow = $('.dr-summary__tax');
+    const $shippingTaxRow = $('.dr-summary__shipping-tax');
     const $discountRow = $('.dr-summary__discount');
     const $shippingRow = $('.dr-summary__shipping');
-    const $subtotalRow = $('.dr-summary__discounted-subtotal');
+    const $subtotalRow = $('.dr-summary__subtotal');
+    const $totalRow = $('.dr-summary__total');
+    const newPricing = CheckoutUtils.getOrderExactPricing(lineItems, pricing, cart.taxInclusive === 'true', drgc_params.taxDisplay === 'INCL');
 
     $discountRow.find('.discount-value').text(`-${pricing.formattedDiscount}`);
+    $taxRow.find('.tax-value').text(newPricing.formattedProductTax);
+    $shippingTaxRow.find('.shipping-tax-value').text(newPricing.formattedShippingTax);
     $shippingRow.find('.shipping-value').text(
       pricing.shippingAndHandling.value === 0 ?
-        localizedText.free_label :
-        pricing.formattedShippingAndHandling
+      drgc_params.translations.free_label :
+      newPricing.formattedShippingAndHandling
     );
-    $subtotalRow.find('.discounted-subtotal-value').text(
-      pricing.subtotalWithDiscount.value > pricing.subtotal.value ?
-      getCorrectSubtotalWithDiscount(pricing) :
-      pricing.formattedSubtotalWithDiscount
-    );
+    $subtotalRow.find('.subtotal-value').text(newPricing.formattedSubtotal);
+    $totalRow.find('.total-value').text(pricing.formattedOrderTotal);
 
     if (pricing.discount.value) $discountRow.show();
     else $discountRow.hide();
 
-    if (hasPhysicalProduct) $shippingRow.show();
-    else $shippingRow.hide();
+    if (hasPhysicalProduct) {
+      $shippingRow.show();
+      $shippingTaxRow.show();
+    } else {
+      $shippingRow.hide();
+      $shippingTaxRow.hide();
+    }
 
     return new Promise(resolve => resolve());
   };
@@ -349,30 +341,46 @@ const CartModule = (($) => {
           hasPhysicalProduct = hasPhysicalProductInLineItems(lineItems);
           return Promise.all([
             renderLineItems(lineItems),
-            renderSummary(res.cart.pricing, hasPhysicalProduct)
+            renderSummary(res.cart, hasPhysicalProduct)
           ]);
         } else {
-          if (typeof $.cookie('drgc_upsell_decline') !== 'undefined') $.removeCookie('drgc_upsell_decline', {path: '/'});
+          if (sessionStorage.getItem('drgc_upsell_decline')) sessionStorage.removeItem('drgc_upsell_decline');
           $('.dr-cart__auto-renewal-terms').remove();
           $('.dr-cart__products').text(localizedText.empty_cart_msg);
+          $('#dr-checkout-btn').remove();
           $('#cart-estimate').remove();
-          return new Promise(resolve => resolve());
+
+          const taxRegs = (sessionStorage.getItem('drgcTaxRegs')) ? JSON.parse(sessionStorage.getItem('drgcTaxRegs')) : {};
+
+          if (taxRegs.customerType) {
+            if (sessionStorage.getItem('drgcTokenRenewed')) {
+              sessionStorage.removeItem('drgcTokenRenewed');
+              return new Promise(resolve => resolve());
+            } else {
+              return CheckoutUtils.recreateAccessToken();
+            }
+          } else {
+            return new Promise(resolve => resolve());
+          }
         }
       })
-      .then(() => {
+      .then((data) => {
         if (lineItems && lineItems.length) {
-          if (CheckoutUtils.isSubsAddedToCart(lineItems)) {
-            const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
-            const href = (drgc_params.isLogin !== 'true') ? drgc_params.loginPath : 
-              ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : drgc_params.checkoutUrl;
+          const $termsCheckbox = $('#autoRenewOptedInOnCheckout');
+          const href = ($termsCheckbox.length && !$termsCheckbox.prop('checked')) ? '#dr-autoRenewTermsContainer' : 
+            (drgc_params.isLogin !== 'true') ? drgc_params.loginUrl : drgc_params.checkoutUrl;
 
-            $('a.dr-summary__proceed-checkout').prop('href', href);
-          }
-
+          $('#dr-checkout-btn').prop('href', href);
           renderOffers(lineItems);
+          $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
+        } else {
+          if (data && data.access_token) {
+            sessionStorage.setItem('drgcTokenRenewed', 'true');
+            location.reload();
+          } else {
+            $('.dr-cart__content').removeClass('dr-loading');
+          }
         }
-
-        $('.dr-cart__content').removeClass('dr-loading'); // Main cart is ready, loading can be ended
       })
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
@@ -382,7 +390,7 @@ const CartModule = (($) => {
 
   const updateUpsellCookie = (id, isDeclined = false) => {
     const productId = id.toString();
-    const declinedProductIds = (typeof $.cookie('drgc_upsell_decline') === 'undefined') ? '' : $.cookie('drgc_upsell_decline');
+    const declinedProductIds = sessionStorage.getItem('drgc_upsell_decline') ? sessionStorage.getItem('drgc_upsell_decline') : '';
     let upsellDeclineArr = declinedProductIds ? declinedProductIds.split(',') : [];
 
     if ((upsellDeclineArr.indexOf(productId) === -1) && isDeclined) {
@@ -391,7 +399,7 @@ const CartModule = (($) => {
       upsellDeclineArr = upsellDeclineArr.filter(item => item !== productId);
     }
 
-    $.cookie('drgc_upsell_decline', upsellDeclineArr.join(','), {path: '/'});
+    sessionStorage.setItem('drgc_upsell_decline', upsellDeclineArr.join(','));
   };
 
   return {
@@ -400,13 +408,12 @@ const CartModule = (($) => {
     initAutoRenewalTerms,
     appendAutoRenewalTerms,
     setProductQty,
+    getOffersByPoP,
     renderOffers,
     renderCandyRackOffer,
     renderBannerOffer,
-    disableEditBtnsForBundle,
     renderSingleLineItem,
     renderLineItems,
-    getCorrectSubtotalWithDiscount,
     renderSummary,
     fetchFreshCart,
     updateUpsellCookie
@@ -483,6 +490,7 @@ jQuery(document).ready(($) => {
       });
   });
 
+  // Old currency selector, will be deprecated after it's not used by any theme
   $('body').on('change', '.dr-currency-select', (e) => {
     e.preventDefault();
     const $this = $(e.target);
@@ -494,7 +502,7 @@ jQuery(document).ready(($) => {
     if ($('.dr-cart__content').length) $('.dr-cart__content').addClass('dr-loading');
     else $('body').addClass('dr-loading');
     DRCommerceApi.updateShopper(queryParams)
-      .then(() => location.reload(true))
+      .then(() => location.reload())
       .catch((jqXHR) => {
         CheckoutUtils.apiErrorHandler(jqXHR);
         $('.dr-cart__content, body').removeClass('dr-loading');

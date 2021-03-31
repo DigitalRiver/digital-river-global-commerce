@@ -26,17 +26,18 @@ class DR_Shortcode_Account {
    * @param array $atts Shortcode attributes.
    */
   public static function output( $atts ) {
-    $customer = DRGC()->shopper->retrieve_shopper();
-    $orders = DRGC()->shopper->retrieve_orders();
-    $subscriptions = DRGC()->shopper->retrieve_subscriptions();
-    $payments = DRGC()->shopper->retrieve_shopper_payments();
-    $locales = get_option( 'drgc_store_locales' );
+    $shopper = DRGC()->shopper;
+    $customer = $shopper->retrieve_shopper();
+    $orders = $shopper->retrieve_orders();
+    $subscriptions = $shopper->retrieve_subscriptions();
+    $locale_options = get_option( 'drgc_locale_options' ) ?: array();
     $usa_states = retrieve_usa_states();
-
+    $current_locale = drgc_get_current_dr_locale();
+    $customer_tax_regs = ( $current_locale === 'en_US' ) ? $shopper->get_shopper_tax_registration() : '';
 
     drgc_get_template(
       'account/account.php',
-      compact( 'customer', 'usa_states', 'orders', 'subscriptions', 'payments', 'locales')
+      compact( 'customer', 'usa_states', 'orders', 'subscriptions', 'locale_options', 'current_locale', 'customer_tax_regs' )
     );
   }
 }

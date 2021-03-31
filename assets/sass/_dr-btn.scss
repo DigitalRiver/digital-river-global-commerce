@@ -128,7 +128,6 @@
         height: 100%;
         top: 0;
         left: 0;
-        background: rgba(255, 255, 255, 0.7);
         z-index: 9999;
     }
 
@@ -155,8 +154,19 @@
         z-index: 10000;
     }
 
+    > * {
+      filter: blur(6px);
+      transition: filter .6s;
+    }
+
     &.dr-summary:after {
         top: 25%;
+    }
+}
+
+body.dr-loading {
+    &:after {
+        position: fixed;
     }
 }
 

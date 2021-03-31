@@ -13,14 +13,21 @@
 
     &__cloudpay,
     &__email,
+    &__tems-us,
     &__shipping,
     &__billing,
+    &__tax-exempt,
+    &__tax-id,
     &__delivery,
     &__payment,
     &__confirmation {
         background: #ffffff;
         margin-bottom: 20px;
         padding: 0 10px;
+    }
+
+    &__email {
+        clear: both;
     }
 
     &__billing {
@@ -40,9 +47,19 @@
         }
     }
 
-    &__googlepay,
-    &__applepay {
-        margin-top: 15px;
+    &__tax-id {
+        .tax-id-shopper-type {
+            .shopper-type-radio {
+                vertical-align: middle;
+            }
+        }
+
+        .tax-id-field {
+            &-info {
+                font-size: 0.7em;
+                color: rgb(80, 80, 80);
+            }
+        }
     }
 
     .small-closed-left {
@@ -77,6 +94,10 @@
         .dr-accordion__title-short {
             display: block;
         }
+    }
+
+    form.dr-panel-edit {
+        padding: 10px;
     }
 
     .dr-address-book {
@@ -143,4 +164,102 @@
             content: "\2212";
         }
     }
+
+    .DR-logo-button {
+        font-size: 16px;
+        font-weight: bold;
+
+        &:hover, &:focus {
+            background: none;
+        }
+    }
+
+    .DR-payment-method-logo {
+        height: 24px;
+    }
+
+    .DR-pay-button {
+        padding: 0;
+        background-color: #00a7e1;
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1;
+        border: none;
+        border-radius: 0;
+        padding: 13px;
+        text-decoration: none;
+        height: 41px;
+    }
+
+    .DR-Legal-Footer {
+        display: none;
+    }
+
+    .DR-Card-Brand {
+        display: initial;
+    }
+
+    input[type="date"], input[type="file"] {
+        height: 48px;
+        padding-top: 10px;
+    }
+
+    .help-text {
+        color: darkgray;
+        font-size: 12px;
+
+        @include media-breakpoint-down(sm) {
+            font-size: 10px;
+        }
+    }
+}
+
+#dr-payment-info {
+  margin: 15px 0 30px;
+}
+
+.DR-card-header {
+  h5 {
+    margin: 0 !important;
+  }
+
+  button {
+    padding: 1.5rem 1rem !important;
+    background-color: transparent !important;
+  }
+}
+
+#DRPayment3ds {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #dr3dsecure {
+        left: 0 !important;
+    }
+}
+
+#tems-us-error-msg {
+    margin-bottom: 10px;
+}
+
+#tax-certificate-status {
+    margin-bottom: 10px;
+}
+
+#tax-exempt-note {
+    color: darkgray;
+    font-size: 14px;
+}
+
+#edit-info-link {
+    font-family: Open Sans;
+    font-size: 16px;
+    color: #333;
+    font-weight: 600;
+    line-height: 16px;
+    cursor: pointer;
+    opacity: 0.5;
+    text-transform: uppercase;
+    float: right;
 }

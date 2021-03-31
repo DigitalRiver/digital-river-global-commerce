@@ -3,23 +3,27 @@ import ProductUtils from '../../utils/productUtils';
 
 const dataUtils = new ProductUtils();
 const physicalProdID = dataUtils.getTestingPhysicalProduct().productID;
-const digitalProdName = dataUtils.getTestingDigitalProduct().productName;
+const digitalProdID = dataUtils.getTestingDigitalProduct().productID;
 const onSaleProdID = dataUtils.getOnSaleProduct().productID;
+const localeProdID = dataUtils.getLocalTestProduct().productID;
+const variProdID = dataUtils.getVariationProduct().productID;
 
 export default class HomePage {
   constructor() {
-    this.productsMenu = Selector('a[title="Products"]');
+    this.productsMenu = Selector('a').withText('Products');
     this.addPhyProduct = Selector('.dr-buy-btn[data-product-id="' + physicalProdID + '"]');
-    this.addDigiProduct = Selector('.c-product-card-content__text').withText(digitalProdName.toUpperCase()).parent(2).find('button');
+    this.addDigiProduct = Selector('.dr-buy-btn[data-product-id="' + digitalProdID + '"]');
     this.addOnSaleProduct = Selector('button[data-product-id="' + onSaleProdID + '"]');
-    this.categoryRegularPrice = this.addOnSaleProduct.parent('div').find('.new-price');
-    this.categorySalePrice = this.addOnSaleProduct.parent('div').find('.new-price');
+    this.addLocaleProduct = Selector('.dr-buy-btn[data-product-id="' + localeProdID + '"]');
+    this.addVariProduct = Selector('.dr-buy-btn[data-parent-id="' + variProdID + '"]');
+    this.categoryRegularPrice = this.addOnSaleProduct.parent('div').find('.dr-strike-price');
+    this.categorySalePrice = this.addOnSaleProduct.parent('div').find('.dr-sale-price');
     this.minicartItem = Selector('li.dr-minicart-item > div[data-product-id="' + onSaleProdID + '"]');
     this.minicartRegularPrice = this.minicartItem.find('p.dr-minicart-item-price > .dr-strike-price');
     this.minicartSalePrice = this.minicartItem.find('p.dr-minicart-item-price > .dr-sale-price');
 
-    this.paginationPrevBtn = Selector('.prev.page-link');
-    this.paginationNextBtn = Selector('.next.page-link');
+    this.paginationPrevBtn = Selector('.prev.page-numbers');
+    this.paginationNextBtn = Selector('.next.page-numbers');
     this.cartBtn = Selector('.dr-btn').withText('CART');
     this.checkoutBtn = Selector('.dr-btn').withText('CHECKOUT');
   }

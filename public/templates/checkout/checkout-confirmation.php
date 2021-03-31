@@ -26,6 +26,12 @@
         </button>
     </form>
 
-    <div id="dr-checkout-err-field" class="invalid-feedback" >Specifed method not supported for the card</div>
+    <div class="dr-panel-result">
+
+        <p class="dr-panel-result__text"></p>
+
+    </div>
+
+    <div id="dr-checkout-err-field" class="invalid-feedback" ></div>
 
 </div>

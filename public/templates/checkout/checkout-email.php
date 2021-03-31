@@ -8,40 +8,48 @@
 
         </span>
 
-        <?php if ($customerEmail == '') { ?>
-            <span class="dr-accordion__edit"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
-        <?php } ?>
+        <?php if ( ! $is_logged_in ): ?>
+
+            <span class="dr-accordion__edit email"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+
+        <?php endif; ?>
 
     </div>
 
-    <form id="checkout-email-form" class="dr-panel-edit dr-panel-edit--email needs-validation" novalidate>
+    <?php if ( ! $is_logged_in ): ?>
 
-        <div class="form-group">
+        <form id="checkout-email-form" class="dr-panel-edit dr-panel-edit--email needs-validation" novalidate>
 
-            <input type="email" name="email" value="<?php echo $customerEmail ?>" class="form-control dr-panel-edit__el" placeholder="<?php echo __( 'Please enter your email address', 'digital-river-global-commerce' ); ?>" required>
+            <div class="form-group">
 
-            <div class="invalid-feedback">
+                <input type="email" name="email" id="customer-email" value="<?php echo $customer_email ?>" class="form-control dr-panel-edit__el" placeholder="<?php echo __( 'Please enter your email address', 'digital-river-global-commerce' ); ?>" required>
 
-		        <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
+                <div class="invalid-feedback">
+
+                    <?php echo __( 'This field is required.', 'digital-river-global-commerce' ); ?>
+
+                </div>
 
             </div>
 
-        </div>
 
+            <button type="submit" class="dr-panel-edit__btn dr-btn" disabled="disabled">
 
-        <button type="submit" class="dr-panel-edit__btn dr-btn" disabled="disabled">
+                <?php echo __( 'Save and continue', 'digital-river-global-commerce' ); ?>
 
-            <?php echo __( 'Save and continue', 'digital-river-global-commerce' ); ?>
+            </button>
 
-        </button>
+        </form>
 
-    </form>
+    <?php else: ?>
+
+        <input type="hidden" name="email" id="customer-email" value="<?php echo $customer_email; ?>">
+
+    <?php endif; ?>
 
     <div class="dr-panel-result">
 
-
-        <p id="dr-panel-email-result" class="dr-panel-result__text"></p>
-
+        <p id="dr-panel-email-result" class="dr-panel-result__text"><?php echo ( $is_logged_in ) ? $customer_email : ''; ?></p>
 
     </div>
 

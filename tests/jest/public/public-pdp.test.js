@@ -12,8 +12,8 @@ describe('Test bindVariationPrice', () => {
     const $target = $('<option value="123456">My Variation</option>');
 
     PdpModule.bindVariationPrice(pricing, $target);
-    expect($target.data('old-price')).toEqual(100);
-    expect($target.data('price')).toEqual('87.00USD');
+    expect($target.data('old-price')).toEqual(pricing.formattedListPrice);
+    expect($target.data('price')).toEqual(pricing.formattedSalePriceWithQuantity);
   });
 
   test('Each variation option should be applied with sale price data when there is NO discount', () => {
@@ -88,7 +88,7 @@ describe('Test displayRealTimePricing', () => {
 
     PdpModule.displayRealTimePricing(pricing, pdPriceOption, $target);
     const received = $target.html().replace(/\s\s+/g, '');
-    const expected = '<del class="dr-strike-price">100</del><strong class="dr-sale-price">87.00USD</strong>';
+    const expected = '<del class="dr-strike-price">100.00USD</del><strong class="dr-sale-price">87.00USD</strong>';
     expect(received).toEqual(expected);
   });
 
@@ -152,10 +152,10 @@ describe('Test displayRealTimeBuyBtn', () => {
     expect($buyBtn.prop('disabled')).toBe(false);
   });
 
-  test('For redirect buy button, when the product is unpurchasable, its buy button should be available and display "Buy Now"', () => {
+  test('For redirect buy button, when the product is unpurchasable, its buy button should be unavailable and display "Out of Stock"', () => {
     PdpModule.displayRealTimeBuyBtn('false', true, $buyBtn);
-    expect($buyBtn.text()).toEqual('Buy Now');
-    expect($buyBtn.prop('disabled')).toBe(false);
+    expect($buyBtn.text()).toEqual('Out of Stock');
+    expect($buyBtn.prop('disabled')).toBe(true);
   });
 
 });

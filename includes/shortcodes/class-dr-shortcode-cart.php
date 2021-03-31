@@ -27,11 +27,11 @@ class DR_Shortcode_Cart {
 	 */
 	public static function output( $atts ) {
 		$cart = DRGC()->cart->retrieve_cart();
-		$locales = get_option( 'drgc_store_locales' );
+		$customer = DRGC()->shopper->retrieve_shopper();
 
 		drgc_get_template(
 			'cart/cart.php',
-			compact('cart', 'locales')
+			compact( 'cart', 'customer' )
 		);
 	}
 }

@@ -26,14 +26,14 @@ class DRGC_Category {
 	 *
 	 * @param mixed $term
 	 */
-	public function __construct( $term = 0 ) {
-		if ( is_numeric( $term ) && $term > 0 ) {
+	public function __construct( $term = 0, $parent_term_name = 0 ) {
+		if ( is_numeric( $term ) && $term > 0 || is_string( $term ) ) {
 			$this->term_id = $term;
-		} elseif ( is_string( $term ) ) {
-			$this->term_id = sanitize_title( $term );
 		} elseif ( $term instanceof self ) {
 			$this->term_id = $term->term_id;
 		}
+		$this->slug = is_string( $this->term_id ) ? sanitize_title( $this->term_id ) : $this->term_id;
+		$this->parent_term_name = $parent_term_name;
 	}
 
 	/**
@@ -62,17 +62,38 @@ class DRGC_Category {
 	}
 
 	/**
+	 * Return numeric term ID
+	 *
+	 * @return int $term_id
+	 */
+	public function get_numeric_term_id() {
+		$term = get_term_by(
+			is_numeric( $this->term_id ) ? 'id' : 'slug',
+			$this->term_id,
+			$this->taxonomy
+		);
+		return $term->term_id;
+	}
+
+	/**
 	 * Insert the term or return it if exists
 	 */
 	public function save() {
 		$term_exist = $this->term_exist();
+		$parent_term_id = 0;
+
+		if ( $this->parent_term_name ) {
+			$parent_term = term_exists( $this->parent_term_name, $this->taxonomy );
+			$parent_term_id = $parent_term['term_id'];
+		}
 
 		if ( ! $term_exist ) {
 			$term = wp_insert_term(
 				$this->term_id,
 				$this->taxonomy,
 				array(
-					'slug' => $this->term_id,
+					'slug' => $this->slug,
+					'parent' => $parent_term_id
 				)
 			);
 

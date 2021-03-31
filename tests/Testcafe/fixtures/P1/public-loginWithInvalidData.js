@@ -47,7 +47,7 @@ test('Login with a valid user but with wrong password', async t => {
   const newUser = new GenericUtils().getNewUser();
   const wrongPW = "WrongPassword";
   const expectedErrMsg = "Authorization failed for specified credentials";
-  
+
   // create a valid user
   console.log('  -> Click Login Button and Direct to Login Page');
   await t.click(loginPage.loginMenu);
@@ -56,7 +56,7 @@ test('Login with a valid user but with wrong password', async t => {
 
   // go to login page and login with invalid username and password
   console.log('  -> Click Login Button and Direct to Login Page');
-  utils.clickItem(loginPage.loginMenu);
+  await utils.clickItem(loginPage.loginMenu);
 
   console.log('  -> Try to login with invalid password');
   await t

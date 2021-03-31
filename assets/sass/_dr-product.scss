@@ -128,12 +128,26 @@
             }
 
         }
+
+        .product-short-description {
+            font-size: 12px;
+            line-height: normal;
+
+            @include for-tablet-portrait-up {
+                font-size: 14px;
+            }
+
+            @include for-phone-portrait-only {
+                display: none;
+            }
+        }
     }
 
     &__price {
         display: flex;
         flex-direction: column;
         align-items: flex-end;
+        white-space: nowrap;
 
         .regular-price {
             font-family: $font-family-base;

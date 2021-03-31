@@ -1,14 +1,57 @@
-.wrapImport {
-    display: flex;
-    align-items: center;
+.products-import-wrapper {
+  display: flex;
+  align-items: center;
 }
 
-.wrapImportControls {
-    display: flex;
-    align-items: center;
-    p {
-        display: none;
-    }
+#products-import-btn {
+  margin: 0 8px 0 0;
+}
+
+#products-import-msg {
+  white-space: nowrap;
+  margin-right: 25px;
+}
+
+#products-import-progress {
+  display: none;
+  width: 100%;
+  height: 30px;
+  background-color:#a0a5aa;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+#products-import-progress-bar {
+  float: left;
+  font-weight: 600;
+  width: 0%;
+  height: 100%;
+  line-height: 30px;
+  text-align: center;
+  white-space: nowrap;
+  color: #fff;
+  background-color: #0ecbd5;
+  background-image: linear-gradient(
+    135deg,
+    rgba(255,255,255,.2) 25%, transparent 25%,
+    transparent 50%, rgba(255,255,255,.2) 50%,
+    rgba(255,255,255,.2) 75%, transparent 75%,
+    transparent
+  );
+  background-size: 50px 50px;
+  box-shadow: inset 0 -2px 0 rgba(0,0,0,.15);
+  transition: width .6s ease;
+  animation: bar-animation 3s linear infinite;
+}
+
+@keyframes bar-animation {
+  0%   { background-position: 0 0; }
+  100% { background-position: 50px 50px; }
+}
+
+#drgc_cron_schedule {
+  margin-top: 1em;
 }
 
 #drcc-link {
@@ -23,10 +66,6 @@ body.taxonomy-dr_product_category #delete-link,
 body.taxonomy-dr_product_category #col-left {
     visibility: hidden;
     display: none;
-}
-
-#dr-data-process-progressbar {
-    width: 100%;
 }
 
 fieldset {
@@ -152,6 +191,87 @@ input:checked + .slider:before {
   }
 }
 
+#product-thumbnail {
+  max-width: 150px;
+}
+
+#product-image {
+  max-width: 300px;
+}
+
+#dr_product_details_box > button {
+  display: none !important;
+}
+
+#dr_product_details_box > h2 {
+  cursor: auto !important;
+}
+
+.CodeMirror {
+  border: 1px solid #ddd;
+  resize: vertical;
+}
+
+#dr-sync-locales-hint {
+  display: flex;
+  align-items: center;
+}
+
+#dr-sync-locales-btn {
+  position: relative;
+  margin-right: 10px;
+
+  &:before {
+    content: '';
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    margin-top: -11px;
+    width: 13px;
+    height: 13px;
+    border: 4px solid;
+    border-left-color: transparent;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  &:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    width: 0px;
+    transition-delay: .5s;
+    transition-duration: .75s;
+    transition-property: width;
+  }
+
+  &.sending {
+    pointer-events: none;
+    cursor: not-allowed;
+
+    &:before {
+      opacity: 1;
+      transition-duration: .5s;
+      transition-delay: .5s;
+      transition-duration: 1s;
+      transition-property: opacity;
+      animation-duration: 1s;
+      animation-iteration-count: infinite;
+      animation-name: rotate;
+      animation-timing-function: linear;
+    }
+
+    &:after {
+      transition-delay: 0s;
+      width: 20px;
+    }
+  }
+}
+
+@keyframes rotate {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 /*
 * jQuery UI CSS Framework
 * Copyright (c) 2009 AUTHORS.txt (http://jqueryui.com/about)
@@ -696,4 +816,17 @@ input:checked + .slider:before {
   border-width: 0px 6px 6px 6px;
   border-color: transparent transparent rgba(50, 50, 50, 0.9) transparent;
   transform-origin: bottom;
+}
+
+/* Others
+----------------------------------*/
+.visible-toggle {
+  position: absolute;
+  top: 1px;
+  right: 2px;
+  padding: 4px 5px;
+  background: #eee;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  cursor: pointer;
 }

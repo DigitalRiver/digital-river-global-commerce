@@ -26,7 +26,9 @@ const checkoutPage = new CheckoutPage();
 const loginPage = new LoginPage();
 const utils = new GenericUtils();
 const newUser = utils.getNewUser();
-
+const isPhysical = true;
+const isGuest = false;
+const isLocalUs = true;
 test('Place order as a new customer: Checkout first then Sigin', async t => {
   console.log('Test Case: Place Order as a New Customer: Checkout First then Signin');
 
@@ -49,7 +51,7 @@ test('Place order as a new customer: Checkout first then Sigin', async t => {
   await t.expect(autoFirstName.toUpperCase()).eql(newUser.firstName);
   await t.expect(autoLastName.toUpperCase()).eql(newUser.lastName);
 
-  await utils.fillOrderInfoAndSubmitOrder(true);
+  await utils.fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocalUs);
 });
 
 test('Place order as a new customer: Regiser as a new customer when checkout', async t => {
@@ -68,9 +70,9 @@ test('Place order as a new customer: Regiser as a new customer when checkout', a
   await t.expect(autoFirstName.toUpperCase()).eql(newUser.firstName);
   await t.expect(autoLastName.toUpperCase()).eql(newUser.lastName);
 
-  await utils.fillOrderInfoAndSubmitOrder(true);
+  await utils.fillOrderInfoAndSubmitOrder(isPhysical, isGuest, isLocalUs);
 });
-
+/*
 test('Place order as a new customer: Signin first then checkout', async t => {
   console.log('Test Case: Place Order as a New Customer: Signin First then Checkout');
 
@@ -85,19 +87,6 @@ test('Place order as a new customer: Signin first then checkout', async t => {
 
   const tyPage = new TYPage();
 
-/*
-  console.log('>> Check it will auto fill shipping info from the last order record');
-  const shippingInfo = utils.getShippingUserData();
-  await t
-    .expect(checkoutPage.shippingFirstName.value).eql(shippingInfo.firstName)
-    .expect(checkoutPage.shippingLastName.value).eql(shippingInfo.lastName)
-    .expect(checkoutPage.shippingAddress1.value).eql(shippingInfo.addrLine1)
-    .expect(checkoutPage.shippingCity.value).eql(shippingInfo.city)
-    .expect(checkoutPage.shippingCountry.value).eql(shippingInfo.countryValue)
-    .expect(checkoutPage.shippingState.value).eql(shippingInfo.stateValue)
-    .expect(checkoutPage.shippingPostalCode.value).eql(shippingInfo.postCode);
-*/
-
   // Enter shipping info
   console.log('>> Checkout page - Use auto filled shipping info to checkout');
   await utils.clickItem(checkoutPage.shippingBtn);
@@ -107,7 +96,7 @@ test('Place order as a new customer: Signin first then checkout', async t => {
   // If checkbox is checked, the billing info will be set to same as shipping info
   await utils.checkCheckBox(checkoutPage.useSameAddrCheckbox, false);
 
-/*  console.log('>> Check it will auto fill billing info from the last order record');
+  console.log('>> Check it will auto fill billing info from the last order record');
   const billingInfo = utils.getBillingUserData();
   await t
     .expect(checkoutPage.shippingFirstName.value).eql(billingInfo.firstName)
@@ -117,7 +106,7 @@ test('Place order as a new customer: Signin first then checkout', async t => {
     .expect(checkoutPage.shippingCountry.value).eql(billingInfo.countryValue)
     .expect(checkoutPage.shippingState.value).eql(billingInfo.stateValue)
     .expect(checkoutPage.shippingPostalCode.value).eql(billingInfo.postCode);
-*/
+
 
   console.log('>> Checkout page - Use auto filled billing info to checkout');
   await utils.clickItem(checkoutPage.billingInfoSubmitBtn);
@@ -147,7 +136,7 @@ test('Place order as a new customer: Signin first then checkout', async t => {
   const orderNum = await tyPage.orderNumber.textContent;
   console.log(orderNum.trim());
 });
-
+*/
 async function checkRedirectToLoginPage() {
   console.log('>> Check it redirect to login page');
   const url = ClientFunction(() => document.location.href);

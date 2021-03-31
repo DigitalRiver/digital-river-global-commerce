@@ -114,6 +114,24 @@ class DRGC_Cart extends AbstractHttpService {
     }
 
     /**
+     * Create a brand new cart by using the new access token.
+     */
+    public function create_new_cart( $token = '' ) {
+        $data = array(
+            'cart' => ''
+        );
+
+        if ( ! empty( $token ) ) {
+            $this->token = $token;
+        }
+
+        $this->setJsonContentType();
+        $res = $this->post( '/v1/shoppers/me/carts/active', $data );
+
+        return $res;
+    }
+
+    /**
      * Retrieve a shopper order. Supply a full 
      * access token as well as an order ID and Digital 
      * River will provide all corresponding order information.
@@ -211,5 +229,185 @@ class DRGC_Cart extends AbstractHttpService {
         $this->billing_address = $res['address'];
 
         return $res;
+    }
+
+    /**
+     * Retrieve all offers for a product by giving the name of the point-of-promotion and the product ID.
+     */
+    public function get_offers_by_pop( $pop_type, $product_id, $params = array()) {
+        $product_uri = $product_id ? "products/{$product_id}/" : '';
+        $default = array(
+            'expand' => 'all'
+        );
+
+        $params = array_merge(
+            $default,
+            array_intersect_key( $params, $default )
+        );
+
+        try {
+            $res = $this->get( "/v1/shoppers/me/{$product_uri}point-of-promotions/{$pop_type}/offers?" . http_build_query( $params ) );
+            return $res;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Updates the shipping address for a cart
+     */
+    public function update_cart_shipping( $data = array() ) {
+        $this->setJsonContentType();
+
+        try {
+            $this->put( '/v1/shoppers/me/carts/active/shipping-address', $data );
+            return true;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Updates the billing address for a cart
+     */
+    public function update_cart_billing( $data = array() ) {
+        $this->setJsonContentType();
+
+        try {
+            $this->put( '/v1/shoppers/me/carts/active/billing-address', $data );
+            return true;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Get the tax schema
+     */
+    public function get_tax_schema( $address ) {
+        $data = array(
+            'address' => $address
+        );
+
+        try {
+            if ( ! $this->update_cart_shipping( $data ) ) return false;
+
+            $res = $this->get( "/carts/active/tax-registrations/schema" );
+
+            if ( isset( $res['errors'] ) ) {
+                if ( is_array( $res['errors'] ) && isset( $res['errors'][0]['message'] ) && ! empty( $res['errors'][0]['message'] ) ) {
+                    return $res['errors'][0]['message'];
+                } elseif ( isset( $res['errors']['error'] ) && is_array( $res['errors']['error'] ) && isset( $res['errors']['error'][0]['description'] ) && ! empty( $res['errors']['error'][0]['description'] ) ) {
+                    return $res['errors']['error'][0]['description'];
+                } else {
+                    return __( 'Something went wrong with TEMS ROW.', 'digital-river-global-commerce' );
+                }
+            } elseif ( isset( $res['oneOf'] ) && is_array( $res['oneOf'] ) ) {
+                $enabled_types = [];
+                $shopper_types = $res['oneOf'];
+                $len = strlen('definitions/');
+
+                foreach ( $shopper_types as $type ) {
+                    if ( isset( $type['properties']['customerType']['enum'] ) && is_array( $type['properties']['customerType']['enum'] ) ) {
+                        $customer_type = $type['properties']['customerType']['enum'];
+                        $enabled_types[ $type['title'] ]['customerType'] = $customer_type[0];
+                    }
+
+                    if ( isset( $type['properties']['taxRegistrations']['items'] ) && is_array( $type['properties']['taxRegistrations']['items'] ) ) {
+                        $items = $type['properties']['taxRegistrations']['items'];
+
+                        if ( count( $items ) > 0 ) {
+                            foreach ( $items as $item ) {
+                                $ref = $item['$ref'];
+                                $ref_key = substr( $ref, strpos( $ref, 'definitions') + $len );
+
+                                if ( isset( $res['definitions'][ $ref_key ] ) ) { 
+                                    $definition = $res['definitions'][ $ref_key ]['properties']['value'];
+                                    $enabled_types[ $type['title'] ]['taxRegistrations'][] = array( 
+                                        $ref_key => array(
+                                            'title'       => $definition['title'],
+                                            'description' => $definition['description'],
+                                            'pattern'     => $definition['pattern']
+                                        ) 
+                                    );
+                                }
+                            }
+                        } else {
+                            $enabled_types[ $type['title'] ]['taxRegistrations'] = [];
+                        }
+                    }
+                }
+
+                return $enabled_types;
+            } else {
+                return [];
+            }
+        } catch ( RequestException $e ) {
+            if ( $e->hasResponse() ) {
+                $response = $e->getResponse();
+                return $response->getReasonPhrase();
+            } else {
+                $response = $e->getHandlerContext();
+                return ( $response['error'] ) ?? false;
+            }
+        }
+    }
+
+    /**
+     * Apply the tax registrations to cart
+     */
+    public function apply_tax_registration( $customer_type, $tax_regs = array() ) {
+        $data = array(
+            'customerType' => $customer_type,
+            'taxRegistrations' => $tax_regs
+        );
+
+        $this->setJsonContentType();
+
+        try {
+            $res = $this->post( '/carts/active/tax-registrations', $data );
+            return $res;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Get the tax registrations from the current cart
+     */
+    public function get_tax_registration() {
+        try {
+            $res = $this->get( '/carts/active/tax-registrations' );
+            return $res;
+        } catch ( RequestException $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Updates the TAX_EXEMPTION_US_STATUS custom attribute for a cart
+     */
+    public function update_tems_us_status( $status = '' ) {
+        $data = array(
+            'cart' => array(
+                'customAttributes' => array(
+                    'attribute' => array(
+                        array(
+                            'name'  => 'TAX_EXEMPTION_US_STATUS',
+                            'value' => $status
+                        )
+                    )
+                )
+            )
+        );
+
+        $this->setJsonContentType();
+
+        try {
+            $res = $this->post( '/v1/shoppers/me/carts/active', $data );
+            return $res;
+        } catch ( RequestException $e ) {
+            return false;
+        }
     }
 }

@@ -6,6 +6,7 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 }
 ?>
 <div class="dr-checkout__shipping dr-checkout__el">
+
     <div class="dr-accordion">
 
         <span class="dr-accordion__name">
@@ -24,27 +25,25 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
         </span>
 
-        <span class="dr-accordion__edit"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
+        <span class="dr-accordion__edit shipping"><?php echo __( 'Edit', 'digital-river-global-commerce' ); ?>></span>
 
     </div>
-
-    <?php if ( $is_logged_in ): ?>
-
-        <button class="dr-btn dr-btn-black dr-address-book-btn shipping" type="button"><?php echo __( 'My Address Book', 'digital-river-global-commerce' ); ?></button>
-
-        <div class="dr-address-book shipping" style="display: none;">
-        
-            <h4><?php echo __( 'Choose shipping address', 'digital-river-global-commerce' ); ?></h4>
-
-        </div>
-
-    <?php endif; ?>
     
     <form id="checkout-shipping-form" class="dr-panel-edit dr-panel-edit--shipping needs-validation" novalidate>
 
-         <div class="required-text">
-            <?php echo __( 'Fields marked with * are mandatory', 'digital-river-global-commerce' ); ?>
-         </div>
+        <?php if ( $is_logged_in ): ?>
+
+            <button class="dr-btn dr-btn-black dr-address-book-btn shipping" type="button"><?php echo __( 'My Address Book', 'digital-river-global-commerce' ); ?></button>
+
+            <div class="dr-address-book shipping" style="display: none;">
+
+                <h4><?php echo __( 'Choose shipping address', 'digital-river-global-commerce' ); ?></h4>
+
+            </div>
+
+        <?php endif; ?>
+        
+        <div class="required-text"><?php echo __( 'Fields marked with * are mandatory', 'digital-river-global-commerce' ); ?></div>
 
         <div class="form-group dr-panel-edit__el">
 
@@ -152,7 +151,7 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
         <div class="form-group dr-panel-edit__el">
 
-            <select class="form-control custom-select" name="shipping-country" id="shipping-field-country" required>
+            <select class="form-control custom-select" name="shipping-country" id="shipping-field-country" aria-label="<?php echo __( 'Country', 'digital-river-global-commerce' ); ?>" required>
                 <option value="">
                     <?php echo __( 'Select Country', 'digital-river-global-commerce' ); ?> *
                 </option>
@@ -180,7 +179,7 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
         <div class="form-group dr-panel-edit__el d-none">
 
-            <select class="form-control custom-select" name="shipping-countrySubdivision" id="shipping-field-state" required>
+            <select class="form-control custom-select" name="shipping-countrySubdivision" id="shipping-field-state" aria-label="<?php echo __( 'State', 'digital-river-global-commerce' ); ?>" required>
 
                 <option value="">
                     <?php echo __( 'Select State', 'digital-river-global-commerce' ); ?> *
@@ -233,11 +232,17 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
                 <label for="shipping-field-phone" class="float-label">
 
-                    <?php echo __( 'Phone', 'digital-river-global-commerce' ); ?>
+                    <?php echo __( 'Phone', 'digital-river-global-commerce' ); ?> *
 
                 </label>
 
-                <input id="shipping-field-phone" type="text" name="shipping-phoneNumber" value="<?php echo $shippingAddress['phoneNumber'] ?>" class="form-control float-field float-field--phone">
+                <input id="shipping-field-phone" type="text" name="shipping-phoneNumber" value="<?php echo $shippingAddress['phoneNumber'] ?>" class="form-control float-field float-field--phone" required>
+
+                <div class="invalid-feedback">
+
+                    <?php _e( 'This field is required.', 'digital-river-global-commerce' ); ?>
+
+                </div>
 
             </div>
 

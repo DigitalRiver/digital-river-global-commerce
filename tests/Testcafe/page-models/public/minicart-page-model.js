@@ -1,4 +1,4 @@
-import { Selector, t } from 'testcafe';
+import { Selector, t, ClientFunction } from 'testcafe';
 
 export default class MinicartPage {
   constructor() {
@@ -8,9 +8,14 @@ export default class MinicartPage {
   }
 
   async clickViewCartBtn() {
+    const getURL = ClientFunction(() => window.location.href);
     await t
       .wait(5000)
+      .hover(this.miniCartToggle)
+      .click(this.miniCartToggle)
+      .hover(this.viewCartBtn)
       .click(this.viewCartBtn)
+      .expect(getURL()).contains('cart', {timeout: 15000})
       .expect(Selector('a').withText('PROCEED TO CHECKOUT').exists).ok();
   }
 

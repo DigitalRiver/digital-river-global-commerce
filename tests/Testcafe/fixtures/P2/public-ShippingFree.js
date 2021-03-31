@@ -22,9 +22,7 @@ fixture `===== DRGC P2 Automation Test - Free Shipping =====`
     console.log('Before Each: Click Menu -> Product to Enter Product Page');
     await t
       .navigateTo(baseURL)
-      .maximizeWindow()
-      .click(homePage.productsMenu)
-      .expect(Selector('body').hasClass('hfeed')).ok()
+      .maximizeWindow();
 });
 
 test('Estimated Shipping Fee - Standard free Shipping', async t => {
@@ -51,10 +49,14 @@ test('Estimated Shipping Fee - Express free Shipping', async t => {
 
 async function setProductQuatityToFreeShipping() {
   const estimatedShipping = 'Estimated Shipping';
-  const standardFee = '5.00USD';
+  const standardFee = '$5.00';
 
   await t
     .setTestSpeed(0.9)
+    .click(homePage.productsMenu);
+  await utils.findTestProduct(homePage.addPhyProduct);
+  await t
+    .hover(homePage.addPhyProduct)
     .click(homePage.addPhyProduct)
     .takeScreenshot('BWC/minicart.jpg');
 
@@ -63,10 +65,10 @@ async function setProductQuatityToFreeShipping() {
   await minicartPage.clickViewCartBtn();
 
   // Change quantity to make the total purchase exceed the free shipping total
-  console.log('>> Only 1 product, not reach free shipping, shipping fee 5.00USD');
+  console.log('>> Only 1 product, not reach free shipping, shipping fee $5.00');
   await utils.checkEstShippingInfo(estimatedShipping, standardFee);
   await utils.clickItem(cartPage.increaseQuantity); //add 1, total 2
-  console.log('>> 2 product, not reach free shipping, shipping fee 5.00USD');
+  console.log('>> 2 product, not reach free shipping, shipping fee $5.00');
   await utils.checkEstShippingInfo(estimatedShipping, standardFee);
   await utils.clickItem(cartPage.increaseQuantity); //add 1, total 3
   console.log('>> 3 product, reach free shipping, shipping fee FREE');

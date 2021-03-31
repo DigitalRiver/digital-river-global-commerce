@@ -12,20 +12,37 @@
  */
 
 $is_auto_renewal = false;
+$is_empty_cart = $cart['cart']['totalItemsInCart'] === 0;
+$order_number = ( isset( $cart['cart']['id'] ) && ( $cart['cart']['id'] !== 'active' ) ) ? $cart['cart']['id'] : '';
 ?>
 
 <div class="dr-cart-wrapper" id="dr-cart-page-wrapper">
+
     <form class="dr-cart-wrapper__content dr-cart">
+
+        <?php if ( ! empty( $order_number ) ): ?>
+
+            <div class="order-number">
+
+                <p><span><?php echo __( 'Order Number:', 'digital-river-global-commerce' ) ?></span> <span><?php echo $order_number ?></span></p>
+
+            </div>
+
+        <?php endif; ?>
 
         <section class="dr-cart__content dr-loading">
 
             <div class="dr-cart__products">
 
-                <?php if ( 1 < count($cart['cart']['lineItems'] )) : ?>
-                    <?php foreach ($cart['cart']['lineItems']['lineItem'] as $line_item): ?>
+                <?php if ( ! $is_empty_cart ): 
+                    $line_items = $cart['cart']['lineItems']['lineItem'];  
+                ?>
+                    <?php foreach ( $line_items as $line_item ): 
+                        $custom_attrs = isset( $line_item['product']['customAttributes'] ) ? $line_item['product']['customAttributes']['attribute'] : array();
+                    ?>
                         <?php
-                            foreach ( $line_item['product']['customAttributes']['attribute'] as $attribute) {
-                                if ( $attribute['name'] === 'isAutomatic' && $attribute['value'] === 'true') {
+                            foreach ( $custom_attrs as $attribute ) {
+                                if ( $attribute['name'] === 'isAutomatic' && $attribute['value'] === 'true' ) {
                                     $is_auto_renewal = true;
                                     break;
                                 }
@@ -34,19 +51,21 @@ $is_auto_renewal = false;
                         <?php include DRGC_PLUGIN_DIR . 'public/templates/cart/cart-product.php'; ?>
                     <?php endforeach; ?>
                 <?php else: ?>
-                    <?php echo __( 'Your cart is empty.', 'digital-river-global-commerce' ); ?>
+                    <p><?php echo __( 'Your cart is empty.', 'digital-river-global-commerce' ); ?></p>
                 <?php endif; ?>
 
             </div>
-            <?php if ( 1 < count($cart['cart']['lineItems'] )) : ?>
-            <div class="dr-cart__estimate" id="cart-estimate">
 
-                <?php drgc_currency_toggler(); ?>
+            <?php if ( ! $is_empty_cart ): ?>
 
-                <?php include_once DRGC_PLUGIN_DIR . 'public/templates/cart/cart-summary.php'; ?>
+                <div class="dr-cart__estimate" id="cart-estimate">
 
-            </div>
+                    <?php include_once DRGC_PLUGIN_DIR . 'public/templates/cart/cart-summary.php'; ?>
+
+                </div>
+
             <?php endif; ?>
+
         </section>
 
         <?php if ( $is_auto_renewal) : ?>
@@ -57,7 +76,13 @@ $is_auto_renewal = false;
 
         <section class="dr-cart__actions-bottom">
 
-            <a href="<?php echo get_post_type_archive_link( 'dr_product' ); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
+            <a href="<?php echo drgc_get_continue_shopping_link(); ?>" class="continue-shopping"><?php echo __( 'Continue Shopping', 'digital-river-global-commerce' ); ?></a>
+
+            <?php if ( ! $is_empty_cart && $is_auto_renewal ): ?>
+
+                <a href="<?php echo esc_url( drgc_get_page_link( 'checkout' ) ); ?>" class="proceed-checkout dr-btn" id="dr-checkout-btn"><?php echo __( 'Proceed to checkout', 'digital-river-global-commerce' ) ?></a>
+
+            <?php endif; ?>
 
         </section>
 

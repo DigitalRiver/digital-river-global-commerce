@@ -109,7 +109,7 @@ jQuery(document).ready(($) => {
           }
         }
 
-        location.reload(true);
+        location.reload();
       });
     });
 
@@ -142,7 +142,7 @@ jQuery(document).ready(($) => {
             }
           }
 
-          location.reload(true);
+          location.reload();
         });
       }
     });
