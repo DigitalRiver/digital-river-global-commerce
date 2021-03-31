@@ -26,6 +26,7 @@ const PdpModule = (($) => {
     };
 
     const displayRealTimePricing = (pricing, option, $target) => {
+        const displayIncl = drgc_params.taxDisplay === 'INCL';
         if (!pricing.listPrice || !pricing.salePriceWithQuantity) {
             $target.text(''); // no pricing data
             return;
@@ -33,11 +34,11 @@ const PdpModule = (($) => {
         if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
             $target.html(`
                 <${option.listPriceDiv} class="${option.listPriceClass()}">${pricing.formattedListPrice}</${option.listPriceDiv}>
-                <${option.salePriceDiv} class="${option.salePriceClass()}">${pricing.formattedSalePriceWithQuantity}</${option.salePriceDiv}>
+                <${option.salePriceDiv} class="${option.salePriceClass()}">${pricing.formattedSalePriceWithQuantity + CheckoutUtils.getTaxSuffixLabel(displayIncl)}</${option.salePriceDiv}>
             `);
         } else {
             $target.html(`
-                <${option.priceDiv} class="${option.priceClass()}">${pricing.formattedSalePriceWithQuantity}</${option.priceDiv}>
+                <${option.priceDiv} class="${option.priceClass()}">${pricing.formattedSalePriceWithQuantity + CheckoutUtils.getTaxSuffixLabel(displayIncl)}</${option.priceDiv}>
             `);
         }
     };
@@ -106,6 +107,7 @@ jQuery(document).ready(($) => {
         const $display = $('.dr-minicart-display');
         const $body = $('<div class="dr-minicart-body"></div>');
         const $footer = $('<div class="dr-minicart-footer"></div>');
+        const taxInclusive = cart.taxInclusive === 'true';
 
         lineItems = (cart.lineItems && cart.lineItems.lineItem) ? cart.lineItems.lineItem : [];
 
@@ -122,15 +124,10 @@ jQuery(document).ready(($) => {
 
             if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
         } else {
-            const params = (new URL(window.location)).searchParams;
-            const locale = params.get('locale') || drgc_params.drLocale;
-            const isTaxInclusive = locale !== 'en_US';
-            const forceExclTax = drgc_params.forceExclTax === 'true';
-            const taxSuffixLabel = isTaxInclusive ?
-                forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label :
-                '';
             let miniCartLineItems = '<ul class="dr-minicart-list">';
-            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${localizedText.subtotal_label + taxSuffixLabel}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
+            const displayIncl = taxInclusive && drgc_params.taxDisplay === 'EXCL';
+            const displayExcl = !taxInclusive && drgc_params.taxDisplay === 'INCL';
+            const miniCartSubtotal = `<p class="dr-minicart-subtotal"><label>${localizedText.subtotal_label + CheckoutUtils.getTaxSuffixLabel(displayIncl, displayExcl)}</label><span>${cart.pricing.formattedSubtotal}</span></p>`;
             const miniCartViewCartBtn = `<a class="dr-btn" id="dr-minicart-view-cart-btn" href="${drgc_params.cartUrl}">${localizedText.view_cart_label}</a>`;
 
             lineItems.forEach((li) => {
@@ -140,6 +137,7 @@ jQuery(document).ready(($) => {
                 const formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
                 const formattedListPrice = li.pricing.formattedListPriceWithQuantity;
                 const thumbnailImage = li.product.thumbnailImage || ((li.product.parentProduct) ? (li.product.parentProduct.thumbnailImage || '') : '');
+                const isTightBundle = CheckoutUtils.isTightBundleChild(li);
                 let priceContent = '';
 
                 if (listPrice > salePrice) {
@@ -156,9 +154,9 @@ jQuery(document).ready(($) => {
                     <div class="dr-minicart-item-info" data-product-id="${productId}">
                         <span class="dr-minicart-item-title">${li.product.displayName}</span>
                         <span class="dr-minicart-item-qty">${localizedText.qty_label}.${li.quantity}</span>
-                        <p class="dr-pd-price dr-minicart-item-price">${priceContent}</p>
+                        <p class="dr-pd-price dr-minicart-item-price">${CheckoutUtils.renderLineItemSalePrice(priceContent, taxInclusive, drgc_params.taxDisplay)}</p>
                     </div>
-                    <a href="#" class="dr-minicart-item-remove-btn" aria-label="Remove" data-line-item-id="${li.id}">${localizedText.remove_label}</a>
+                    <a href="#" class="dr-minicart-item-remove-btn${isTightBundle ? ' d-none' : ''}" aria-label="Remove" data-line-item-id="${li.id}">${localizedText.remove_label}</a>
                 </li>`;
                 miniCartLineItems += miniCartLineItem;
             });
@@ -325,7 +323,7 @@ jQuery(document).ready(($) => {
             $card: $('.dr-pd-item'),
             $variationOption: $('select[name=dr-variation] option'),
             $singlePDBuyBtn: $('form#dr-pd-form .dr-buy-btn'),
-            priceDivSelector: () => { return isPdCard ? '.dr-pd-item-price' : '.dr-pd-price'; },
+            priceDivSelector: () => { return isPdCard ? '.dr-pd-item-price' : 'form#dr-pd-form .dr-pd-price'; },
             listPriceDiv: 'del',
             listPriceClass: () => { return 'dr-strike-price'; },
             salePriceDiv: 'strong',

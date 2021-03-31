@@ -151,7 +151,7 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
         <div class="form-group dr-panel-edit__el">
 
-            <select class="form-control custom-select" name="shipping-country" id="shipping-field-country" required>
+            <select class="form-control custom-select" name="shipping-country" id="shipping-field-country" aria-label="<?php echo __( 'Country', 'digital-river-global-commerce' ); ?>" required>
                 <option value="">
                     <?php echo __( 'Select Country', 'digital-river-global-commerce' ); ?> *
                 </option>
@@ -179,7 +179,7 @@ if ( ! ( isset( $shippingAddress['firstName'] ) && isset( $shippingAddress['last
 
         <div class="form-group dr-panel-edit__el d-none">
 
-            <select class="form-control custom-select" name="shipping-countrySubdivision" id="shipping-field-state" required>
+            <select class="form-control custom-select" name="shipping-countrySubdivision" id="shipping-field-state" aria-label="<?php echo __( 'State', 'digital-river-global-commerce' ); ?>" required>
 
                 <option value="">
                     <?php echo __( 'Select State', 'digital-river-global-commerce' ); ?> *

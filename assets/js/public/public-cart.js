@@ -5,6 +5,7 @@ import DRCommerceApi from './commerce-api';
 
 const CartModule = (($) => {
   const localizedText = drgc_params.translations;
+  const taxInclusive = drgc_params.cart && drgc_params.cart.cart && drgc_params.cart.cart.taxInclusive === 'true';
   let hasPhysicalProduct = false;
 
   const hasPhysicalProductInLineItems = (lineItems) => {
@@ -127,18 +128,6 @@ const CartModule = (($) => {
     lineItems.forEach((lineItem) => {
       // Candy Rack (should be inserted after specific line item)
       getOffersByPoP('CandyRack_ShoppingCart', lineItem.product.id);
-
-      // Bundle Tight (should disable edit buttons of specific line item)
-      DRCommerceApi.getOffersByProduct(lineItem.product.id, { expand: 'all' })
-        .then((res) => {
-          const offers = res.offers.offer;
-          if (offers && offers.length) {
-            offers.forEach((offer) => {
-              disableEditBtnsForBundle(offer, lineItem.product.id);
-            });
-          }
-        })
-        .catch(jqXHR => CheckoutUtils.apiErrorHandler(jqXHR));
     });
 
     // Banner (should be appended after all the line items)
@@ -179,11 +168,11 @@ const CartModule = (($) => {
                     </div>
                   </div>
                   <div class="dr-product__price">
-                    <img src="${productOffer.product.thumbnailImage}" class="dr-upsellProduct__img"/>
+                    <img src="${productOffer.product.thumbnailImage}" alt="${productOffer.product.displayName}" class="dr-upsellProduct__img"/>
                     <div class="product-name">${productOffer.product.displayName}</div>
                     <div class="product-short-desc">${shortDiscription}</div>
-                    <span class="sale-price">${salePrice}</span>
-                    <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+                    <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+                    <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
                   </div>
                 </div>
               </div>
@@ -210,8 +199,8 @@ const CartModule = (($) => {
                 <button type="button" class="dr-btn dr-buy-candyRack"
                   data-buy-uri="${productOffer.addProductToCart.uri}"
                   ${purchasable ? '' : 'disabled="disabled"'}>${buyBtnText}</button>
-                <span class="sale-price">${salePrice}</span>
-                <span class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+                <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+                <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
               </div>
             </div>`;
 
@@ -232,28 +221,13 @@ const CartModule = (($) => {
     $('.dr-cart__products').append(html);
   };
 
-  const disableEditBtnsForBundle = (offer, productID) => {
-    const hasBundleTight = (offer.type === 'Bundling' && offer.policyName === 'Tight Bundle Policy');
-    const productOffers = offer.productOffers.productOffer;
-
-    if (hasBundleTight && productOffers && productOffers.length) {
-      productOffers.forEach((productOffer) => {
-        if (productOffer.product.id !== productID) { // Hide action buttons only when it's triggered by parent product
-          $(`.dr-product-line-item[data-product-id=${productOffer.product.id}]`)
-            .find('.remove-icon, .dr-pd-cart-qty-minus, .dr-pd-cart-qty-plus')
-            .css({ opacity: 0, 'pointer-events': 'none' });
-        }
-      });
-    }
-  };
-
   const renderSingleLineItem = (pricing, $lineItem) => {
     const { formattedListPriceWithQuantity, formattedSalePriceWithQuantity } = pricing;
     const $qty = $lineItem.find('.product-qty-number');
     const qty = parseInt($qty.val(), 10);
     const max = parseInt($qty.attr('max'), 10);
     const min = parseInt($qty.attr('min'), 10);
-    $lineItem.find('.sale-price').text(formattedSalePriceWithQuantity);
+    $lineItem.find('.sale-price').text(CheckoutUtils.renderLineItemSalePrice(formattedSalePriceWithQuantity, taxInclusive));
     $lineItem.find('.regular-price').text(formattedListPriceWithQuantity);
     $lineItem.find('.dr-pd-cart-qty-minus').toggleClass('disabled', qty <= min);
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
@@ -268,8 +242,10 @@ const CartModule = (($) => {
 
     lineItems.forEach((lineItem, idx) => {
       const parentProductID = lineItem.product.parentProduct ? lineItem.product.parentProduct.id : lineItem.product.id;
-      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
       const listPrice = lineItem.pricing.formattedListPriceWithQuantity;
+      const salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
+      const isTightBundle = CheckoutUtils.isTightBundleChild(lineItem);
+
       const promise = CheckoutUtils.getPermalink(parentProductID).then((permalink) => {
         const lineItemHTML = `
           <div data-line-item-id="${lineItem.id}" class="dr-product dr-product-line-item" data-product-id="${lineItem.product.id}" data-sort="${idx}">
@@ -286,16 +262,16 @@ const CartModule = (($) => {
                 </div>
                 <div class="product-qty">
                   <span class="qty-text">Qty ${lineItem.quantity}</span>
-                  <span class="dr-pd-cart-qty-minus value-button-decrease ${lineItem.quantity <= min ? 'disabled' : ''}"></span>
-                  <input type="number" class="product-qty-number" step="1" min="${min}" max="${max}" value="${lineItem.quantity}" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly="true">
-                  <span class="dr-pd-cart-qty-plus value-button-increase ${lineItem.quantity >= max ? 'disabled' : ''}"></span>
+                  <span class="dr-pd-cart-qty-minus value-button-decrease${lineItem.quantity <= min ? ' disabled' : ''}${isTightBundle ? ' d-none' : ''}"></span>
+                  <input type="number" class="product-qty-number" aria-label="${localizedText.quantity_label}" step="1" min="${min}" max="${max}" value="${lineItem.quantity}" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly="true">
+                  <span class="dr-pd-cart-qty-plus value-button-increase${lineItem.quantity >= max ? ' disabled' : ''}${isTightBundle ? ' d-none' : ''}"></span>
                 </div>
               </div>
             </div>
             <div class="dr-product__price">
-              <button class="dr-prd-del remove-icon"></button>
-              <span class="sale-price">${salePrice}</span>
-              <span class="regular-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</span>
+              <button class="dr-prd-del remove-icon${isTightBundle ? ' d-none' : ''}" aria-label="${localizedText.remove_label}"></button>
+              <del class="regular-price dr-strike-price ${salePrice === listPrice ? 'd-none' : ''}">${listPrice}</del>
+              <span class="sale-price">${CheckoutUtils.renderLineItemSalePrice(salePrice, taxInclusive)}</span>
             </div>
           </div>`;
           lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
@@ -326,7 +302,7 @@ const CartModule = (($) => {
     const $shippingRow = $('.dr-summary__shipping');
     const $subtotalRow = $('.dr-summary__subtotal');
     const $totalRow = $('.dr-summary__total');
-    const newPricing = CheckoutUtils.getSeparatedPricing(lineItems, pricing, drgc_params.isTaxInclusive === 'true');
+    const newPricing = CheckoutUtils.getOrderExactPricing(lineItems, pricing, cart.taxInclusive === 'true', drgc_params.taxDisplay === 'INCL');
 
     $discountRow.find('.discount-value').text(`-${pricing.formattedDiscount}`);
     $taxRow.find('.tax-value').text(newPricing.formattedProductTax);
@@ -436,7 +412,6 @@ const CartModule = (($) => {
     renderOffers,
     renderCandyRackOffer,
     renderBannerOffer,
-    disableEditBtnsForBundle,
     renderSingleLineItem,
     renderLineItems,
     renderSummary,

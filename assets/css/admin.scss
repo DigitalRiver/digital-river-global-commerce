@@ -212,8 +212,14 @@ input:checked + .slider:before {
   resize: vertical;
 }
 
+#dr-sync-locales-hint {
+  display: flex;
+  align-items: center;
+}
+
 #dr-sync-locales-btn {
   position: relative;
+  margin-right: 10px;
 
   &:before {
     content: '';

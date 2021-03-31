@@ -14,7 +14,7 @@
 
 <?php get_header(); ?>
 
-<div class="main-content" id="main">
+<div class="main-content" id="main" role="main">
 
     <div class="container">
 

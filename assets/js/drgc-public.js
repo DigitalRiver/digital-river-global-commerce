@@ -12567,6 +12567,13 @@ var DRCommerceApi = function ($, params) {
 // CONCATENATED MODULE: ./assets/js/public/checkout-utils.js
 
 
+function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+
 
 var CheckoutUtils = function ($, params) {
   var localizedText = drgc_params.translations;
@@ -12594,35 +12601,34 @@ var CheckoutUtils = function ($, params) {
   };
 
   var updateSummaryLabels = function updateSummaryLabels() {
-    var isTaxInclusive = drgc_params.isTaxInclusive === 'true';
-    var forceExclTax = drgc_params.forceExclTax === 'true';
     var shouldDisplayVat = drgc_params.shouldDisplayVat === 'true';
-    var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
+    var displayIncl = drgc_params.taxDisplay === 'INCL';
 
     if ($('.dr-checkout__payment').hasClass('active') || $('.dr-checkout__confirmation').hasClass('active')) {
       $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
-      $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+      $('.dr-summary__shipping .item-label').text(localizedText.shipping_label + getTaxSuffixLabel(displayIncl));
       $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
     } else {
       $('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.estimated_vat_label : localizedText.estimated_tax_label);
-      $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label + taxSuffixLabel);
+      $('.dr-summary__shipping .item-label').text(localizedText.estimated_shipping_label + getTaxSuffixLabel(displayIncl));
       $('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.estimated_shipping_vat_label : localizedText.estimated_shipping_tax_label);
     }
   };
 
-  var updateSummaryPricing = function updateSummaryPricing(order, isTaxInclusive) {
+  var updateSummaryPricing = function updateSummaryPricing(order, displayIncl) {
     var lineItems = order.lineItems ? order.lineItems.lineItem : order.products || [];
+    var taxInclusive = order.taxInclusive === 'true';
     var pricing = order.pricing;
-    var newPricing = getSeparatedPricing(lineItems, pricing, isTaxInclusive);
+    var newPricing = getOrderExactPricing(lineItems, pricing, taxInclusive, displayIncl);
     var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
 
     if (order.lineItems) {
       lineItems.forEach(function (item) {
         var $item = $('div.dr-summary__products > div[data-line-item-id=' + item.id + ']');
-        var $salePrice = $item.find('span.sale-price');
-        var $regularPrice = $item.find('span.regular-price');
-        $salePrice.text(item.pricing.formattedSalePriceWithQuantity);
+        var $regularPrice = $item.find('.regular-price');
+        var $salePrice = $item.find('.sale-price');
         $regularPrice.text(item.pricing.formattedListPriceWithQuantity);
+        $salePrice.text(renderLineItemSalePrice(item.pricing.formattedSalePriceWithQuantity, taxInclusive, drgc_params.taxDisplay));
       });
     }
 
@@ -12631,6 +12637,17 @@ var CheckoutUtils = function ($, params) {
     $('div.dr-summary__shipping-tax > .item-value').text(newPricing.formattedShippingTax);
     $('div.dr-summary__subtotal > .subtotal-value').text(newPricing.formattedSubtotal);
     $('div.dr-summary__total > .total-value').text(pricing.formattedOrderTotal);
+  };
+
+  var getTaxSuffixLabel = function getTaxSuffixLabel(displayIncl, displayExcl) {
+    return displayIncl ? " ".concat(localizedText.incl_vat_label) : displayExcl ? " ".concat(localizedText.excl_vat_label) : '';
+  };
+
+  var renderLineItemSalePrice = function renderLineItemSalePrice(salePrice, taxInclusive, taxDisplay) {
+    // Line item price follows price list setting, we should indicate INCL/EXCL when the setting is the opposite of taxDisplay to avoid confusion
+    var displayLineItemIncl = taxInclusive && taxDisplay === 'EXCL';
+    var displayLineItemExcl = !taxInclusive && taxDisplay === 'INCL';
+    return salePrice + getTaxSuffixLabel(displayLineItemIncl, displayLineItemExcl);
   };
 
   var getEntityCode = function getEntityCode() {
@@ -12764,9 +12781,11 @@ var CheckoutUtils = function ($, params) {
 
   var formatPrice = function formatPrice(val, pricing) {
     var localeCode = drgc_params.drLocale.replace('_', '-');
-    var currencySymbol = pricing.formattedSubtotal.replace(/\d+/g, '').replace(/[,.]/g, '');
-    var symbolAsPrefix = pricing.formattedSubtotal.indexOf(currencySymbol) === 0;
-    var formattedPriceWithoutSymbol = pricing.formattedSubtotal.replace(currencySymbol, '');
+    var samplePrice = pricing.formattedSubtotal || pricing.formattedListPrice; // Use subtotal as sample formatted price at cart/order level, use listPrice at line item level
+
+    var currencySymbol = samplePrice.replace(/\d+/g, '').replace(/[,.]/g, '');
+    var symbolAsPrefix = samplePrice.indexOf(currencySymbol) === 0;
+    var formattedPriceWithoutSymbol = samplePrice.replace(currencySymbol, '');
     var decimalSymbol = 0 .toLocaleString(localeCode, {
       minimumFractionDigits: 1
     })[1];
@@ -12783,10 +12802,11 @@ var CheckoutUtils = function ($, params) {
     return formatPrice(val, pricing);
   };
 
-  var getSeparatedPricing = function getSeparatedPricing(lineItems, pricing, isTaxInclusive) {
+  var getOrderExactPricing = function getOrderExactPricing(lineItems, pricing) {
+    var taxInclusive = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var displayIncl = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
     var productTax = 0;
     var shippingTax = 0;
-    var forceExclTax = drgc_params.forceExclTax === 'true';
     var shippingVal = pricing.shippingAndHandling ? pricing.shippingAndHandling.value : pricing.shipping ? pricing.shipping.value : 0; // cart is using shippingAndHandling, order is using shipping
 
     lineItems.forEach(function (lineItem) {
@@ -12796,8 +12816,8 @@ var CheckoutUtils = function ($, params) {
     return {
       formattedProductTax: formatPrice(productTax, pricing),
       formattedShippingTax: formatPrice(shippingTax, pricing),
-      formattedSubtotal: isTaxInclusive && forceExclTax ? formatPrice(pricing.subtotal.value - productTax, pricing) : pricing.formattedSubtotal,
-      formattedShippingAndHandling: isTaxInclusive && forceExclTax ? formatPrice(shippingVal - shippingTax, pricing) : pricing.formattedShippingAndHandling || pricing.formattedShipping
+      formattedSubtotal: taxInclusive && !displayIncl ? formatPrice(pricing.subtotal.value - productTax, pricing) : !taxInclusive && displayIncl ? formatPrice(pricing.subtotal.value + productTax, pricing) : pricing.formattedSubtotal,
+      formattedShippingAndHandling: taxInclusive && !displayIncl ? formatPrice(shippingVal - shippingTax, pricing) : !taxInclusive && displayIncl ? formatPrice(shippingVal + shippingTax, pricing) : pricing.formattedShippingAndHandling || pricing.formattedShipping
     };
   };
 
@@ -12895,8 +12915,14 @@ var CheckoutUtils = function ($, params) {
             createTaxIdElement(key, value);
           }
 
-          $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
-          $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+          if ($('#checkout-tax-id-form > .tax-id-field').length) {
+            $('.shopper-type-radio').appendTo('.tax-id-shopper-type');
+            $('input[name="shopper-type"]:first').prop('checked', true).trigger('click');
+            $('#checkout-tax-id-form > .tax-id-shopper-type, #checkout-tax-id-form > .shopper-type-radio').show();
+          } else {
+            $('#checkout-tax-id-form > .tax-id-shopper-type, #checkout-tax-id-form > .shopper-type-radio').hide();
+          }
+
           resolve(taxSchema);
         }
       });
@@ -12926,7 +12952,7 @@ var CheckoutUtils = function ($, params) {
     var radiosHtml = "\n      <div class=\"form-check form-check-inline shopper-type-radio\">      \n        <input class=\"form-check-input\" type=\"radio\" name=\"shopper-type\" id=\"shopper-type-".concat(shopperType, "\" value=\"").concat(taxRegs.customerType, "\">\n        <label class=\"form-check-label\" for=\"shopper-type-").concat(shopperType, "\">").concat(typeText, "</label>\n      </div>\n    ");
     var fieldsHtml = '';
 
-    if (taxRegs.taxRegistrations.length) {
+    if (taxRegs.taxRegistrations && taxRegs.taxRegistrations.length) {
       var taxFields = taxRegs.taxRegistrations;
       taxFields.forEach(function (element) {
         var key = Object.keys(element)[0];
@@ -13076,12 +13102,58 @@ var CheckoutUtils = function ($, params) {
     }).value : '';
   };
 
+  var isTightBundleChild = function isTightBundleChild(lineItem) {
+    var offerGroups = lineItem.groups || [];
+    var isTightBundle = false;
+
+    if (offerGroups.length) {
+      var _iterator = _createForOfIteratorHelper(offerGroups),
+          _step;
+
+      try {
+        groupsLoop: for (_iterator.s(); !(_step = _iterator.n()).done;) {
+          var group = _step.value;
+
+          if (Array.isArray(group.group) && group.group.length) {
+            var offers = group.group;
+
+            var _iterator2 = _createForOfIteratorHelper(offers),
+                _step2;
+
+            try {
+              for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
+                var offer = _step2.value;
+
+                if (offer.relationType === 'child' && offer.offer.policyName === 'Tight Bundle Policy' && offer.offer.type === 'Bundling') {
+                  isTightBundle = true;
+                  break groupsLoop;
+                }
+              }
+            } catch (err) {
+              _iterator2.e(err);
+            } finally {
+              _iterator2.f();
+            }
+          }
+        }
+      } catch (err) {
+        _iterator.e(err);
+      } finally {
+        _iterator.f();
+      }
+    }
+
+    return isTightBundle;
+  };
+
   return {
     getFetchedCountryOptions: getFetchedCountryOptions,
     updateDeliverySection: updateDeliverySection,
     updateAddressSection: updateAddressSection,
     updateSummaryLabels: updateSummaryLabels,
     updateSummaryPricing: updateSummaryPricing,
+    getTaxSuffixLabel: getTaxSuffixLabel,
+    renderLineItemSalePrice: renderLineItemSalePrice,
     applyLegalLinks: applyLegalLinks,
     displayPreTAndC: displayPreTAndC,
     displayAlertMessage: displayAlertMessage,
@@ -13098,7 +13170,7 @@ var CheckoutUtils = function ($, params) {
     getLocalizedAutoRenewalTerms: getLocalizedAutoRenewalTerms,
     formatPrice: formatPrice,
     getCorrectSubtotalWithDiscount: getCorrectSubtotalWithDiscount,
-    getSeparatedPricing: getSeparatedPricing,
+    getOrderExactPricing: getOrderExactPricing,
     getCountryOptionsFromGC: getCountryOptionsFromGC,
     getAddress: getAddress,
     getDropinBillingAddress: getDropinBillingAddress,
@@ -13110,7 +13182,8 @@ var CheckoutUtils = function ($, params) {
     createTaxProfile: createTaxProfile,
     recreateAccessToken: recreateAccessToken,
     updateTemsUsStatus: updateTemsUsStatus,
-    getTemsUsStatus: getTemsUsStatus
+    getTemsUsStatus: getTemsUsStatus,
+    isTightBundleChild: isTightBundleChild
   };
 }(jQuery, drgc_params);
 
@@ -13119,11 +13192,11 @@ var CheckoutUtils = function ($, params) {
 
 
 
-function _createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
+function public_cart_createForOfIteratorHelper(o, allowArrayLike) { var it; if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (it = public_cart_unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") { if (it) o = it; var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it["return"] != null) it["return"](); } finally { if (didErr) throw err; } } }; }
 
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+function public_cart_unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return public_cart_arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return public_cart_arrayLikeToArray(o, minLen); }
 
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+function public_cart_arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
 
 /* global drgc_params, iFrameResize */
 
@@ -13133,6 +13206,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
 var CartModule = function ($) {
   var localizedText = drgc_params.translations;
+  var taxInclusive = drgc_params.cart && drgc_params.cart.cart && drgc_params.cart.cart.taxInclusive === 'true';
   var hasPhysicalProduct = false;
 
   var hasPhysicalProductInLineItems = function hasPhysicalProductInLineItems(lineItems) {
@@ -13251,21 +13325,7 @@ var CartModule = function ($) {
   var renderOffers = function renderOffers(lineItems) {
     lineItems.forEach(function (lineItem) {
       // Candy Rack (should be inserted after specific line item)
-      getOffersByPoP('CandyRack_ShoppingCart', lineItem.product.id); // Bundle Tight (should disable edit buttons of specific line item)
-
-      commerce_api.getOffersByProduct(lineItem.product.id, {
-        expand: 'all'
-      }).then(function (res) {
-        var offers = res.offers.offer;
-
-        if (offers && offers.length) {
-          offers.forEach(function (offer) {
-            disableEditBtnsForBundle(offer, lineItem.product.id);
-          });
-        }
-      })["catch"](function (jqXHR) {
-        return checkout_utils.apiErrorHandler(jqXHR);
-      });
+      getOffersByPoP('CandyRack_ShoppingCart', lineItem.product.id);
     }); // Banner (should be appended after all the line items)
 
     getOffersByPoP('Banner_ShoppingCartLocal');
@@ -13289,10 +13349,10 @@ var CartModule = function ($) {
 
         if (offerType === 'Up-sell' && upsellDeclineArr.indexOf(driverProductID.toString()) === -1) {
           var declineText = localizedText.upsell_decline_label;
-          var upsellProductHtml = "\n            <div class=\"modal dr-upsellProduct-modal\" data-product-id=\"".concat(productOffer.product.id, "\" data-parent-product-id=\"").concat(driverProductID, "\">\n              <div class=\" modal-dialog\">\n                <div class=\"dr-upsellProduct modal-content\">\n                  <button class=\"dr-modal-close dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\"></button>\n                  <div class=\"dr-product-content\">\n                    <div class=\"dr-product__info\">\n                      <div class=\"dr-offer-header\">").concat(promoText, "</div>\n                      <div class=\"dr-offer-content\">").concat(productSalesPitch, "</div>\n                      <button type=\"button\" class=\"dr-btn dr-buy-candyRack dr-buy-").concat(buyBtnText, "\" data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\">").concat(buyBtnText, "</button>\n                      <button type=\"button\" class=\"dr-nothanks dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\">").concat(declineText, "</button>\n                    </div>\n                  </div>\n                  <div class=\"dr-product__price\">\n                    <img src=\"").concat(productOffer.product.thumbnailImage, "\" class=\"dr-upsellProduct__img\"/>\n                    <div class=\"product-name\">").concat(productOffer.product.displayName, "</div>\n                    <div class=\"product-short-desc\">").concat(shortDiscription, "</div>\n                    <span class=\"sale-price\">").concat(salePrice, "</span>\n                    <span class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n                  </div>\n                </div>\n              </div>\n            </div>");
+          var upsellProductHtml = "\n            <div class=\"modal dr-upsellProduct-modal\" data-product-id=\"".concat(productOffer.product.id, "\" data-parent-product-id=\"").concat(driverProductID, "\">\n              <div class=\" modal-dialog\">\n                <div class=\"dr-upsellProduct modal-content\">\n                  <button class=\"dr-modal-close dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\"></button>\n                  <div class=\"dr-product-content\">\n                    <div class=\"dr-product__info\">\n                      <div class=\"dr-offer-header\">").concat(promoText, "</div>\n                      <div class=\"dr-offer-content\">").concat(productSalesPitch, "</div>\n                      <button type=\"button\" class=\"dr-btn dr-buy-candyRack dr-buy-").concat(buyBtnText, "\" data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\">").concat(buyBtnText, "</button>\n                      <button type=\"button\" class=\"dr-nothanks dr-modal-decline\" data-parent-product-id=\"").concat(driverProductID, "\">").concat(declineText, "</button>\n                    </div>\n                  </div>\n                  <div class=\"dr-product__price\">\n                    <img src=\"").concat(productOffer.product.thumbnailImage, "\" alt=\"").concat(productOffer.product.displayName, "\" class=\"dr-upsellProduct__img\"/>\n                    <div class=\"product-name\">").concat(productOffer.product.displayName, "</div>\n                    <div class=\"product-short-desc\">").concat(shortDiscription, "</div>\n                    <del class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</del>\n                    <span class=\"sale-price\">").concat(checkout_utils.renderLineItemSalePrice(salePrice, taxInclusive), "</span>\n                  </div>\n                </div>\n              </div>\n            </div>");
           $('body').append(upsellProductHtml).addClass('modal-open').addClass('drgc-wrapper');
         } else if (offerType !== 'Up-sell') {
-          var html = "\n            <div class=\"dr-product dr-candyRackProduct\" data-product-id=\"".concat(productOffer.product.id, "\" data-driver-product-id=\"").concat(driverProductID, "\">\n              <div class=\"dr-product-content\">\n                <img src=\"").concat(productOffer.product.thumbnailImage, "\" class=\"dr-candyRackProduct__img\"/>\n                <div class=\"dr-product__info\">\n                  <div class=\"product-color\">\n                    <span style=\"background-color: yellow;\">").concat(promoText, "</span>\n                  </div>\n                  ").concat(productOffer.product.displayName, "\n                  <div class=\"product-sku\">\n                    <span>").concat(localizedText.product_label, " </span>\n                    <span>#").concat(productOffer.product.id, "</span>\n                  </div>\n                </div>\n              </div>\n              <div class=\"dr-product__price\">\n                <button type=\"button\" class=\"dr-btn dr-buy-candyRack\"\n                  data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\"\n                  ").concat(purchasable ? '' : 'disabled="disabled"', ">").concat(buyBtnText, "</button>\n                <span class=\"sale-price\">").concat(salePrice, "</span>\n                <span class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n              </div>\n            </div>");
+          var html = "\n            <div class=\"dr-product dr-candyRackProduct\" data-product-id=\"".concat(productOffer.product.id, "\" data-driver-product-id=\"").concat(driverProductID, "\">\n              <div class=\"dr-product-content\">\n                <img src=\"").concat(productOffer.product.thumbnailImage, "\" class=\"dr-candyRackProduct__img\"/>\n                <div class=\"dr-product__info\">\n                  <div class=\"product-color\">\n                    <span style=\"background-color: yellow;\">").concat(promoText, "</span>\n                  </div>\n                  ").concat(productOffer.product.displayName, "\n                  <div class=\"product-sku\">\n                    <span>").concat(localizedText.product_label, " </span>\n                    <span>#").concat(productOffer.product.id, "</span>\n                  </div>\n                </div>\n              </div>\n              <div class=\"dr-product__price\">\n                <button type=\"button\" class=\"dr-btn dr-buy-candyRack\"\n                  data-buy-uri=\"").concat(productOffer.addProductToCart.uri, "\"\n                  ").concat(purchasable ? '' : 'disabled="disabled"', ">").concat(buyBtnText, "</button>\n                <del class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</del>\n                <span class=\"sale-price\">").concat(checkout_utils.renderLineItemSalePrice(salePrice, taxInclusive), "</span>\n              </div>\n            </div>");
 
           if (!$(".dr-product-line-item[data-product-id=".concat(productOffer.product.id, "]")).length) {
             $(html).insertAfter(".dr-product-line-item[data-product-id=".concat(driverProductID, "]"));
@@ -13307,23 +13367,6 @@ var CartModule = function ($) {
     $('.dr-cart__products').append(html);
   };
 
-  var disableEditBtnsForBundle = function disableEditBtnsForBundle(offer, productID) {
-    var hasBundleTight = offer.type === 'Bundling' && offer.policyName === 'Tight Bundle Policy';
-    var productOffers = offer.productOffers.productOffer;
-
-    if (hasBundleTight && productOffers && productOffers.length) {
-      productOffers.forEach(function (productOffer) {
-        if (productOffer.product.id !== productID) {
-          // Hide action buttons only when it's triggered by parent product
-          $(".dr-product-line-item[data-product-id=".concat(productOffer.product.id, "]")).find('.remove-icon, .dr-pd-cart-qty-minus, .dr-pd-cart-qty-plus').css({
-            opacity: 0,
-            'pointer-events': 'none'
-          });
-        }
-      });
-    }
-  };
-
   var renderSingleLineItem = function renderSingleLineItem(pricing, $lineItem) {
     var formattedListPriceWithQuantity = pricing.formattedListPriceWithQuantity,
         formattedSalePriceWithQuantity = pricing.formattedSalePriceWithQuantity;
@@ -13331,7 +13374,7 @@ var CartModule = function ($) {
     var qty = parseInt($qty.val(), 10);
     var max = parseInt($qty.attr('max'), 10);
     var min = parseInt($qty.attr('min'), 10);
-    $lineItem.find('.sale-price').text(formattedSalePriceWithQuantity);
+    $lineItem.find('.sale-price').text(checkout_utils.renderLineItemSalePrice(formattedSalePriceWithQuantity, taxInclusive));
     $lineItem.find('.regular-price').text(formattedListPriceWithQuantity);
     $lineItem.find('.dr-pd-cart-qty-minus').toggleClass('disabled', qty <= min);
     $lineItem.find('.dr-pd-cart-qty-plus').toggleClass('disabled', qty >= max);
@@ -13351,15 +13394,16 @@ var CartModule = function ($) {
               hasAutoRenewal = false;
               lineItems.forEach(function (lineItem, idx) {
                 var parentProductID = lineItem.product.parentProduct ? lineItem.product.parentProduct.id : lineItem.product.id;
-                var salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
                 var listPrice = lineItem.pricing.formattedListPriceWithQuantity;
+                var salePrice = lineItem.pricing.formattedSalePriceWithQuantity;
+                var isTightBundle = checkout_utils.isTightBundleChild(lineItem);
                 var promise = checkout_utils.getPermalink(parentProductID).then(function (permalink) {
-                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-short-description\">\n                  <span>").concat(drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : '', "</span>\n                </div>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease ").concat(lineItem.quantity <= min ? 'disabled' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase ").concat(lineItem.quantity >= max ? 'disabled' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon\"></button>\n              <span class=\"sale-price\">").concat(salePrice, "</span>\n              <span class=\"regular-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</span>\n            </div>\n          </div>");
+                  var lineItemHTML = "\n          <div data-line-item-id=\"".concat(lineItem.id, "\" class=\"dr-product dr-product-line-item\" data-product-id=\"").concat(lineItem.product.id, "\" data-sort=\"").concat(idx, "\">\n            <div class=\"dr-product-content\">\n              <div class=\"dr-product__img\" style=\"background-image: url(").concat(lineItem.product.thumbnailImage, ")\"></div>\n              <div class=\"dr-product__info\">\n                <a class=\"product-name\" href=\"").concat(permalink, "?locale=").concat(drgc_params.drLocale, "\">").concat(lineItem.product.displayName, "</a>\n                <div class=\"product-short-description\">\n                  <span>").concat(drgc_params.displayShortDescription === 'true' && lineItem.product.shortDescription ? lineItem.product.shortDescription : '', "</span>\n                </div>\n                <div class=\"product-sku\">\n                  <span>").concat(localizedText.product_label, " </span>\n                  <span>#").concat(lineItem.product.id, "</span>\n                </div>\n                <div class=\"product-qty\">\n                  <span class=\"qty-text\">Qty ").concat(lineItem.quantity, "</span>\n                  <span class=\"dr-pd-cart-qty-minus value-button-decrease").concat(lineItem.quantity <= min ? ' disabled' : '').concat(isTightBundle ? ' d-none' : '', "\"></span>\n                  <input type=\"number\" class=\"product-qty-number\" aria-label=\"").concat(localizedText.quantity_label, "\" step=\"1\" min=\"").concat(min, "\" max=\"").concat(max, "\" value=\"").concat(lineItem.quantity, "\" maxlength=\"5\" size=\"2\" pattern=\"[0-9]*\" inputmode=\"numeric\" readonly=\"true\">\n                  <span class=\"dr-pd-cart-qty-plus value-button-increase").concat(lineItem.quantity >= max ? ' disabled' : '').concat(isTightBundle ? ' d-none' : '', "\"></span>\n                </div>\n              </div>\n            </div>\n            <div class=\"dr-product__price\">\n              <button class=\"dr-prd-del remove-icon").concat(isTightBundle ? ' d-none' : '', "\" aria-label=\"").concat(localizedText.remove_label, "\"></button>\n              <del class=\"regular-price dr-strike-price ").concat(salePrice === listPrice ? 'd-none' : '', "\">").concat(listPrice, "</del>\n              <span class=\"sale-price\">").concat(checkout_utils.renderLineItemSalePrice(salePrice, taxInclusive), "</span>\n            </div>\n          </div>");
                   lineItemHTMLArr[idx] = lineItemHTML; // Insert item to specific index to keep sequence asynchronously
                 });
                 promises.push(promise);
 
-                var _iterator = _createForOfIteratorHelper(lineItem.product.customAttributes.attribute),
+                var _iterator = public_cart_createForOfIteratorHelper(lineItem.product.customAttributes.attribute),
                     _step;
 
                 try {
@@ -13404,7 +13448,7 @@ var CartModule = function ($) {
     var $shippingRow = $('.dr-summary__shipping');
     var $subtotalRow = $('.dr-summary__subtotal');
     var $totalRow = $('.dr-summary__total');
-    var newPricing = checkout_utils.getSeparatedPricing(lineItems, pricing, drgc_params.isTaxInclusive === 'true');
+    var newPricing = checkout_utils.getOrderExactPricing(lineItems, pricing, cart.taxInclusive === 'true', drgc_params.taxDisplay === 'INCL');
     $discountRow.find('.discount-value').text("-".concat(pricing.formattedDiscount));
     $taxRow.find('.tax-value').text(newPricing.formattedProductTax);
     $shippingTaxRow.find('.shipping-tax-value').text(newPricing.formattedShippingTax);
@@ -13508,7 +13552,6 @@ var CartModule = function ($) {
     renderOffers: renderOffers,
     renderCandyRackOffer: renderCandyRackOffer,
     renderBannerOffer: renderBannerOffer,
-    disableEditBtnsForBundle: disableEditBtnsForBundle,
     renderSingleLineItem: renderSingleLineItem,
     renderLineItems: renderLineItems,
     renderSummary: renderSummary,
@@ -13764,6 +13807,14 @@ var CheckoutModule = function ($) {
       } else if ($section.hasClass('dr-checkout__tax-id')) {
         $section.find('span.dr-accordion__edit').addClass('d-none');
       }
+    }
+
+    if ($nextSection.hasClass('dr-checkout__tax-id') && !$('#checkout-tax-id-form > .tax-id-field').length) {
+      $('#checkout-tax-id-form').trigger('submit');
+    }
+
+    if ($('#checkout-tax-id-form > .shopper-type-radio').length && !$('#checkout-tax-id-form > .tax-id-field').length) {
+      $('span.dr-accordion__edit.tax-id').addClass('d-none');
     }
 
     adjustColumns($nextSection);
@@ -14169,7 +14220,7 @@ var CheckoutModule = function ($) {
         $('#checkout-payment-form').removeClass('dr-loading');
 
         if (!res.paymentMethodTypes.length) {
-          $('#dr-payment-failed-msg').text(localizedText.payment_methods_error_msg);
+          $('#dr-payment-failed-msg').html("<p>".concat(localizedText.payment_methods_error_msg, "</p>")).show();
         }
       },
       onCancel: function onCancel(res) {}
@@ -14235,7 +14286,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
               finishedSectionIdx = -1;
               activeSectionIdx = -1; // Break down tax and update summary on page load
 
-              checkout_utils.updateSummaryPricing(cartData, drgc_params.isTaxInclusive === 'true');
+              checkout_utils.updateSummaryPricing(cartData, drgc_params.taxDisplay === 'INCL');
               $('#checkout-email-form').on('submit', function (e) {
                 e.preventDefault(); // If no items are in cart, do not even continue, maybe give feedback
 
@@ -14296,7 +14347,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   }
 
                   CheckoutModule.moveToNextSection(activeSectionIdx, $section);
-                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
                   if ($('#tems-us-result').length) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
                 })["catch"](function (jqXHR) {
                   CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
@@ -14428,7 +14479,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 }()).then(function (data) {
                   if ($('#tems-us-result').length && !requestShipping) CheckoutModule.displayTemsUsResult(data.cart.pricing.tax.value, $('#tems-us-status').val());
                   checkout_utils.updateAddressSection(data.cart.billingAddress, $section.find('.dr-panel-result__text'));
-                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
                   $('#tax-id-error-msg').text('').hide();
 
                   if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -14510,12 +14561,18 @@ jQuery(document).ready( /*#__PURE__*/function () {
                           });
                           typeText = taxRegs.customerType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
                           $error.text('').hide();
-                          _context4.next = 32;
+                          _context4.next = 37;
                           break;
 
                         case 18:
                           $button.addClass('sending').blur();
                           shopperType = $('input[name="shopper-type"]:checked').val();
+
+                          if (!shopperType) {
+                            _context4.next = 35;
+                            break;
+                          }
+
                           $taxFields = shopperType === 'I' ? $('.tax-id-field.Individual input[type="text"]') : $('.tax-id-field.Business input[type="text"]');
                           _regs = [];
 
@@ -14539,8 +14596,6 @@ jQuery(document).ready( /*#__PURE__*/function () {
                               }
                             });
                           }
-
-                          typeText = $('input[name="shopper-type"]:checked').val() === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
 
                           if (!_regs.length) {
                             _context4.next = 30;
@@ -14584,6 +14639,15 @@ jQuery(document).ready( /*#__PURE__*/function () {
                           $error.text('').hide();
 
                         case 32:
+                          typeText = shopperType === 'I' ? localizedText.personal_shopper_type : localizedText.business_shopper_type;
+                          _context4.next = 37;
+                          break;
+
+                        case 35:
+                          $button.removeClass('sending').blur();
+                          typeText = localizedText.tax_id_unavailable_msg;
+
+                        case 37:
                           $section.find('.dr-panel-result__text').html("".concat(typeText).concat(taxIds));
 
                           if ($('.dr-checkout__el').index($section) > finishedSectionIdx) {
@@ -14592,7 +14656,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
 
                           CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
 
-                        case 35:
+                        case 40:
                         case "end":
                           return _context4.stop();
                       }
@@ -14623,7 +14687,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                   }
 
                   CheckoutModule.moveToNextSection(activeSectionIdx, $section, dropInParams, addressPayload.billing);
-                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
                 })["catch"](function (jqXHR) {
                   CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
                 })["finally"](function () {
@@ -14636,7 +14700,7 @@ jQuery(document).ready( /*#__PURE__*/function () {
                 var shippingOptionId = $form.children().find('input:radio:checked').first().data('id');
                 $('.dr-summary__pricing').addClass('dr-loading');
                 commerce_api.applyShippingOption(shippingOptionId).then(function (data) {
-                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.isTaxInclusive === 'true');
+                  checkout_utils.updateSummaryPricing(data.cart, drgc_params.taxDisplay === 'INCL');
                 })["catch"](function (jqXHR) {
                   CheckoutModule.displayAddressErrMsg(jqXHR, $form.find('.dr-err-field'));
                 })["finally"](function () {
@@ -15259,6 +15323,11 @@ jQuery(document).ready(function ($) {
       password: $('.dr-login-form input[name=password]').val(),
       locale: LoginModule.getLocaleParam() || drgc_params.drLocale
     };
+
+    if ($('#drgc-login-recaptcha').length) {
+      data.g_recaptcha_response = $('#drgc-login-recaptcha').find('textarea.g-recaptcha-response').val();
+    }
+
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
         LoginModule.redirectAfterAuth(true, response.data.locale);
@@ -15270,7 +15339,7 @@ jQuery(document).ready(function ($) {
           $('.dr-form-error-msg').text(response.data.error_description);
         }
 
-        if (Object.prototype.toString.call(response.data) == '[object String]') {
+        if (Object.prototype.toString.call(response.data) === '[object String]') {
           $('.dr-form-error-msg').text(response.data);
         }
 
@@ -15335,6 +15404,11 @@ jQuery(document).ready(function ($) {
       password: $('.dr-signup-form input[name=upw]').val(),
       confirm_password: $('.dr-signup-form input[name=upw2]').val()
     };
+
+    if ($('#drgc-signup-recaptcha').length) {
+      data.g_recaptcha_response = $('#drgc-signup-recaptcha').find('textarea.g-recaptcha-response').val();
+    }
+
     $.post(ajaxUrl, data, function (response) {
       if (response.success) {
         LoginModule.redirectAfterAuth(true, LoginModule.getLocaleParam());
@@ -15344,7 +15418,7 @@ jQuery(document).ready(function ($) {
 
         if (response.data && response.data.errors && response.data.errors.error[0].hasOwnProperty('description')) {
           $('.dr-signin-form-error').text(response.data.errors.error[0].description);
-        } else if (Object.prototype.toString.call(response.data) == '[object String]') {
+        } else if (Object.prototype.toString.call(response.data) === '[object String]') {
           $('.dr-signin-form-error').text(response.data);
         } else {
           $('.dr-signin-form-error').text(drgc_params.translations.undefined_error_msg);
@@ -15372,6 +15446,11 @@ jQuery(document).ready(function ($) {
       action: 'drgc_pass_reset_request',
       nonce: drgc_params.ajaxNonce
     };
+
+    if ($('#drgc-reset-pass-recaptcha').length) {
+      data.g_recaptcha_response = $('#drgc-reset-pass-recaptcha').find('textarea.g-recaptcha-response').val();
+    }
+
     $.each($form.serializeArray(), function (index, obj) {
       data[obj.name] = obj.value;
     });
@@ -15384,7 +15463,15 @@ jQuery(document).ready(function ($) {
 
     $.post(ajaxUrl, data, function (response) {
       if (!response.success) {
-        $errMsg.text(response.data[0].message).show();
+        if (response.data && typeof response.data === 'string') {
+          $errMsg.text(response.data);
+        } else if (typeof response === 'string') {
+          $errMsg.text(response);
+        } else {
+          $errMsg.text(drgc_params.translations.undefined_error_msg);
+        }
+
+        $errMsg.show();
       } else {
         $('#drResetPasswordModalBody').html('').html("\n                    <h3>".concat(drgc_params.translations.password_reset_title, "</h3>\n                    <p>").concat(drgc_params.translations.password_reset_msg, "</p>\n                "));
         $button.hide();
@@ -15483,6 +15570,8 @@ var PdpModule = function ($) {
   };
 
   var displayRealTimePricing = function displayRealTimePricing(pricing, option, $target) {
+    var displayIncl = drgc_params.taxDisplay === 'INCL';
+
     if (!pricing.listPrice || !pricing.salePriceWithQuantity) {
       $target.text(''); // no pricing data
 
@@ -15490,9 +15579,9 @@ var PdpModule = function ($) {
     }
 
     if (pricing.listPrice.value > pricing.salePriceWithQuantity.value) {
-      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.formattedListPrice, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.salePriceDiv, ">\n            "));
+      $target.html("\n                <".concat(option.listPriceDiv, " class=\"").concat(option.listPriceClass(), "\">").concat(pricing.formattedListPrice, "</").concat(option.listPriceDiv, ">\n                <").concat(option.salePriceDiv, " class=\"").concat(option.salePriceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity + checkout_utils.getTaxSuffixLabel(displayIncl), "</").concat(option.salePriceDiv, ">\n            "));
     } else {
-      $target.html("\n                <".concat(option.priceDiv, " class=\"").concat(option.priceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity, "</").concat(option.priceDiv, ">\n            "));
+      $target.html("\n                <".concat(option.priceDiv, " class=\"").concat(option.priceClass(), "\">").concat(pricing.formattedSalePriceWithQuantity + checkout_utils.getTaxSuffixLabel(displayIncl), "</").concat(option.priceDiv, ">\n            "));
     }
   };
 
@@ -15556,6 +15645,7 @@ jQuery(document).ready(function ($) {
     var $display = $('.dr-minicart-display');
     var $body = $('<div class="dr-minicart-body"></div>');
     var $footer = $('<div class="dr-minicart-footer"></div>');
+    var taxInclusive = cart.taxInclusive === 'true';
     lineItems = cart.lineItems && cart.lineItems.lineItem ? cart.lineItems.lineItem : [];
     $('.dr-minicart-count').text(cart.totalItemsInCart);
     $('.dr-minicart-header').siblings().remove();
@@ -15570,13 +15660,10 @@ jQuery(document).ready(function ($) {
       $display.append($body);
       if (sessionStorage.getItem('drgcTokenRenewed')) sessionStorage.removeItem('drgcTokenRenewed');
     } else {
-      var params = new URL(window.location).searchParams;
-      var locale = params.get('locale') || drgc_params.drLocale;
-      var isTaxInclusive = locale !== 'en_US';
-      var forceExclTax = drgc_params.forceExclTax === 'true';
-      var taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
       var miniCartLineItems = '<ul class="dr-minicart-list">';
-      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(localizedText.subtotal_label + taxSuffixLabel, "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
+      var displayIncl = taxInclusive && drgc_params.taxDisplay === 'EXCL';
+      var displayExcl = !taxInclusive && drgc_params.taxDisplay === 'INCL';
+      var miniCartSubtotal = "<p class=\"dr-minicart-subtotal\"><label>".concat(localizedText.subtotal_label + checkout_utils.getTaxSuffixLabel(displayIncl, displayExcl), "</label><span>").concat(cart.pricing.formattedSubtotal, "</span></p>");
       var miniCartViewCartBtn = "<a class=\"dr-btn\" id=\"dr-minicart-view-cart-btn\" href=\"".concat(drgc_params.cartUrl, "\">").concat(localizedText.view_cart_label, "</a>");
       lineItems.forEach(function (li) {
         var productId = li.product.uri.replace("".concat(commerce_api.apiBaseUrl, "/me/products/"), '');
@@ -15585,6 +15672,7 @@ jQuery(document).ready(function ($) {
         var formattedSalePrice = li.pricing.formattedSalePriceWithQuantity;
         var formattedListPrice = li.pricing.formattedListPriceWithQuantity;
         var thumbnailImage = li.product.thumbnailImage || (li.product.parentProduct ? li.product.parentProduct.thumbnailImage || '' : '');
+        var isTightBundle = checkout_utils.isTightBundleChild(li);
         var priceContent = '';
 
         if (listPrice > salePrice) {
@@ -15593,7 +15681,7 @@ jQuery(document).ready(function ($) {
           priceContent = formattedSalePrice;
         }
 
-        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(localizedText.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(priceContent, "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(localizedText.remove_label, "</a>\n                </li>");
+        var miniCartLineItem = "\n                <li class=\"dr-minicart-item clearfix\">\n                    <div class=\"dr-minicart-item-thumbnail\">\n                        <img src=\"".concat(thumbnailImage, "\" alt=\"").concat(li.product.displayName, "\" />\n                    </div>\n                    <div class=\"dr-minicart-item-info\" data-product-id=\"").concat(productId, "\">\n                        <span class=\"dr-minicart-item-title\">").concat(li.product.displayName, "</span>\n                        <span class=\"dr-minicart-item-qty\">").concat(localizedText.qty_label, ".").concat(li.quantity, "</span>\n                        <p class=\"dr-pd-price dr-minicart-item-price\">").concat(checkout_utils.renderLineItemSalePrice(priceContent, taxInclusive, drgc_params.taxDisplay), "</p>\n                    </div>\n                    <a href=\"#\" class=\"dr-minicart-item-remove-btn").concat(isTightBundle ? ' d-none' : '', "\" aria-label=\"Remove\" data-line-item-id=\"").concat(li.id, "\">").concat(localizedText.remove_label, "</a>\n                </li>");
         miniCartLineItems += miniCartLineItem;
       });
       miniCartLineItems += '</ul>';
@@ -15833,7 +15921,7 @@ jQuery(document).ready(function ($) {
       $variationOption: $('select[name=dr-variation] option'),
       $singlePDBuyBtn: $('form#dr-pd-form .dr-buy-btn'),
       priceDivSelector: function priceDivSelector() {
-        return isPdCard ? '.dr-pd-item-price' : '.dr-pd-price';
+        return isPdCard ? '.dr-pd-item-price' : 'form#dr-pd-form .dr-pd-price';
       },
       listPriceDiv: 'del',
       listPriceClass: function listPriceClass() {
@@ -16077,7 +16165,7 @@ jQuery(document).ready(function ($) {
     checkout_utils.applyLegalLinks(digitalriverjs);
 
     if (drgc_params.order && drgc_params.order.order) {
-      checkout_utils.updateSummaryPricing(drgc_params.order.order, drgc_params.isTaxInclusive === 'true');
+      checkout_utils.updateSummaryPricing(drgc_params.order.order, drgc_params.taxDisplay === 'INCL');
     }
 
     if ($('#dr-order-vat-info').length && sessionStorage.getItem('drgcTaxRegs')) {
@@ -16454,7 +16542,7 @@ jquery_default()(function () {
 
   function _fillOrderModal() {
     _fillOrderModal = asyncToGenerator_default()( /*#__PURE__*/regenerator_default.a.mark(function _callee4(e) {
-      var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, isTaxInclusive, forceExclTax, orderCurrency, shouldDisplayVat, taxSuffixLabel, html, count, i, lineItem;
+      var orderId, selectedOrder, orderDetails, requestShipping, isDiscount, billingAddress1, billingAddress2, shippingAddress1, shippingAddress2, orderCurrency, shouldDisplayVat, orderLocaleOption, taxInclusive, displayIncl, html, count, i, lineItem;
       return regenerator_default.a.wrap(function _callee4$(_context4) {
         while (1) {
           switch (_context4.prev = _context4.next) {
@@ -16539,17 +16627,19 @@ jquery_default()(function () {
               jquery_default()('.dr-modal-shippingAddress2').text(shippingAddress2);
               jquery_default()('.dr-modal-shippingCountry').text(selectedOrder.shippingAddress.country); // Summary Labels
 
-              isTaxInclusive = selectedOrder.locale !== 'en_US';
-              forceExclTax = drgc_params.forceExclTax === 'true';
               orderCurrency = selectedOrder.pricing.total.currency;
               shouldDisplayVat = orderCurrency === 'GBP' || orderCurrency === 'EUR';
-              taxSuffixLabel = isTaxInclusive ? forceExclTax ? ' ' + localizedText.excl_vat_label : ' ' + localizedText.incl_vat_label : '';
-              jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + taxSuffixLabel);
+              orderLocaleOption = drgc_params.localeOptions.find(function (elem) {
+                return elem.dr_locale === selectedOrder.locale;
+              });
+              taxInclusive = selectedOrder.taxInclusive === 'true';
+              displayIncl = orderLocaleOption ? orderLocaleOption.tax_display === 'INCL' : false;
+              jquery_default()('.dr-summary__subtotal .subtotal-label').text(localizedText.subtotal_label + checkout_utils.getTaxSuffixLabel(displayIncl));
               jquery_default()('.dr-summary__tax .item-label').text(shouldDisplayVat ? localizedText.vat_label : localizedText.tax_label);
-              jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + taxSuffixLabel);
+              jquery_default()('.dr-summary__shipping .item-label').text(localizedText.shipping_label + checkout_utils.getTaxSuffixLabel(displayIncl));
               jquery_default()('.dr-summary__shipping-tax .item-label').text(shouldDisplayVat ? localizedText.shipping_vat_label : localizedText.shipping_tax_label);
 
-              if (isTaxInclusive && !forceExclTax) {
+              if (displayIncl) {
                 jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').addClass('tree-sub-item');
               } else {
                 jquery_default()('.dr-summary__tax, .dr-summary__shipping-tax').removeClass('tree-sub-item');
@@ -16561,11 +16651,11 @@ jquery_default()(function () {
 
               for (i = 0; i < count; i++) {
                 lineItem = selectedOrder.lineItems.lineItem[i];
-                html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(lineItem.pricing.formattedSalePriceWithQuantity, "</span>\n                    <span class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</span>\n                </div>\n            </div>");
+                html += "<div class=\"dr-product\">\n                <div class=\"dr-product-content\">\n                    <div class=\"dr-product__img dr-modal-productImgBG\" style=\"background-image:url(".concat(lineItem.product.thumbnailImage, ");\"></div>\n                    <div class=\"dr-product__info\">\n                        <a class=\"product-name dr-modal-productName\">").concat(lineItem.product.displayName, "</a>\n                        <div class=\"product-sku\">\n                            <span>Product </span>\n                            <span class=\"dr-modal-productSku\">").concat(lineItem.product.sku, "</span>\n                        </div>\n                        <div class=\"product-qty\">\n                            <span class=\"qty-text\">Qty <span class=\"dr-modal-productQty\">").concat(lineItem.quantity, "</span></span>\n                            <span class=\"dr-pd-cart-qty-minus value-button-decrease\"></span>\n                            <input\n                                type=\"number\"\n                                class=\"product-qty-number\"\n                                step=\"1\"\n                                min=\"1\"\n                                max=\"999\"\n                                value=\"").concat(lineItem.quantity, "\"\n                                maxlength=\"5\"\n                                size=\"2\"\n                                pattern=\"[0-9]*\"\n                                inputmode=\"numeric\"\n                                readonly=\"true\"/>\n                            <span class=\"dr-pd-cart-qty-plus value-button-increase\"></span>\n                        </div>\n                    </div>\n                </div>\n                <div class=\"dr-product__price\">\n                    <del class=\"regular-price dr-modal-strikePrice\" ").concat(lineItem.pricing.formattedSalePriceWithQuantity === lineItem.pricing.formattedListPriceWithQuantity ? 'style="display:none"' : '', ">").concat(lineItem.pricing.formattedListPriceWithQuantity, "</del>\n                    <span class=\"sale-price dr-modal-salePrice\">").concat(checkout_utils.renderLineItemSalePrice(lineItem.pricing.formattedSalePriceWithQuantity, taxInclusive, orderLocaleOption.tax_display), "</span>\n                </div>\n            </div>");
               }
 
               jquery_default()('.dr-summary__products').html(html);
-              checkout_utils.updateSummaryPricing(selectedOrder, isTaxInclusive);
+              checkout_utils.updateSummaryPricing(selectedOrder, displayIncl);
 
               if (!requestShipping) {
                 jquery_default()('.dr-order-address__shipping, .dr-summary__shipping, .dr-summary__shipping-tax').hide();

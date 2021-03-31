@@ -106,9 +106,6 @@ class DRGC_Public {
     $testOrder_option = get_option( 'drgc_testOrder_handler' );
     $testOrder_enable = ( is_array( $testOrder_option ) && '1' == $testOrder_option['checkbox'] )  ? "true" : "false";
 
-    $force_excl_tax_option = get_option( 'drgc_force_excl_tax_handler' );
-    $force_excl_tax_enable = ( is_array( $force_excl_tax_option ) && '1' == $force_excl_tax_option['checkbox'] )  ? "true" : "false";
-
     $short_description_option = get_option( 'drgc_display_short_description_handler' );
     $short_description_enabled = ( is_array( $short_description_option ) && $short_description_option['checkbox'] === '1' ) ? 'true' : 'false';
 
@@ -136,6 +133,8 @@ class DRGC_Public {
       'remove_label'                => __('Remove', 'digital-river-global-commerce'),
       'subtotal_label'              => __('Subtotal', 'digital-river-global-commerce'),
       'qty_label'                   => __('Qty', 'digital-river-global-commerce'),
+      'quantity_label'              => __('Quantity', 'digital-river-global-commerce'),
+      'remove_label'                => __('Remove', 'digital-river-global-commerce'),
       'shipping_and_handling_label'	=> __('Shipping and Handling', 'digital-river-global-commerce'),
       'discount_label'		          => __('Discount', 'digital-river-global-commerce'),
       'order_total_label'		        => __('Order Total', 'digital-river-global-commerce'),
@@ -189,13 +188,18 @@ class DRGC_Public {
       'order_details_label'            => __('Order Details', 'digital-river-global-commerce'),
       'unsupport_country_error_msg'    => __('We are not able to process your order due to the unsupported location. Please update your address and try again.', 'digital-river-global-commerce'),
       'product_added_to_cart_msg'      => __('has been added to your cart.', 'digital-river-global-commerce'),
-      'general_product_name'           => __('The product', 'digital-river-global-commerce')
+      'general_product_name'           => __('The product', 'digital-river-global-commerce'),
+      'tax_id_unavailable_msg'         => __('Tax Identifier is not available to this order.', 'digital-river-global-commerce')
     );
 
     // transfer drgc options from PHP to JS
     $options = array(
       'wpLocale'          =>  drgc_get_current_wp_locale( drgc_get_current_dr_locale() ),
       'drLocale'          =>  drgc_get_current_dr_locale(),
+      'primaryCurrency'   =>  drgc_get_primary_currency( drgc_get_current_dr_locale() ),
+      'supportedCurrencies' => drgc_get_supported_currencies( drgc_get_current_dr_locale() ),
+      'taxDisplay'        => drgc_get_tax_display( drgc_get_current_dr_locale() ),
+      'localeOptions'     => get_option( 'drgc_locale_options' ) ?: array(),
       'ajaxUrl'           =>  admin_url( 'admin-ajax.php' ),
       'ajaxNonce'         =>  wp_create_nonce( 'drgc_ajax' ),
       'homeUrl'           =>  $this->append_query_string( get_home_url() ),
@@ -214,8 +218,6 @@ class DRGC_Public {
       'isLogin'           =>  drgc_get_user_status(),
       'testOrder'         => $testOrder_enable,
       'shouldDisplayVat'  => drgc_should_display_vat( isset( $customer['currency'] ) ? $customer['currency'] : '' ) ? 'true' : 'false',
-      'isTaxInclusive'    => drgc_is_tax_inclusive( isset( $customer['locale'] ) ? $customer['locale'] : '' ) ? 'true' : 'false',
-      'forceExclTax'      => $force_excl_tax_enable,
       'translations'      => $translation_array,
       'client_ip'         => $_SERVER['REMOTE_ADDR'],
       'dropInConfig'      => get_option( 'drgc_drop_in_config' ) ?: json_encode( array(), JSON_FORCE_OBJECT ),
@@ -233,9 +235,19 @@ class DRGC_Public {
     $locale = $_POST['locale'] ?? 'en_US';
     $primary_currency = drgc_get_primary_currency( $locale );
 
-    if ( (isset( $_POST['username'] ) && isset( $_POST['password'] )) ) {
+    if ( ( isset( $_POST['username'] ) && isset( $_POST['password'] ) ) ) {
       $username = sanitize_text_field( $_POST['username'] );
       $password = sanitize_text_field( $_POST['password'] );
+
+      $errors = new WP_Error();
+
+      do_action( 'drgc_login_post', $username, $errors );
+
+      $errors = apply_filters( 'drgc_login_errors', $errors, $username );
+
+      if ( $errors->get_error_code() ) {
+        wp_send_json_error( $errors->get_error_message() );
+      }
 
       $user = wp_authenticate( $username, $password );
 
@@ -314,9 +326,19 @@ class DRGC_Public {
 
       $error_msgs = array_merge( $error_msgs, $this->get_password_error_msgs( $password, $confirm_password ) );
 
-      if ( !empty( $error_msgs ) ) {
+      if ( ! empty( $error_msgs ) ) {
         wp_send_json_error( join( ' ', $error_msgs) );
         return;
+      }
+
+      $errors = new WP_Error();
+
+      do_action( 'drgc_signup_post', $email, $errors );
+
+      $errors = apply_filters( 'drgc_signup_errors', $errors, $email );
+
+      if ( $errors->get_error_code() ) {
+        wp_send_json_error( $errors->get_error_message() );
       }
 
       // Attemp WP user store
@@ -423,84 +445,88 @@ class DRGC_Public {
     wp_send_json_success();
   }
 
-	/**
-	 * Ajax handles sending password retrieval email to user.
-	 */
-	function dr_send_email_reset_pass_ajax() {
-		check_ajax_referer( 'drgc_ajax', 'nonce' );
+  /**
+   * Ajax handles sending password retrieval email to user.
+   */
+  function dr_send_email_reset_pass_ajax() {
+    check_ajax_referer( 'drgc_ajax', 'nonce' );
 
-		$errors = new WP_Error();
+    $errors = new WP_Error();
 
-		$email = sanitize_text_field( $_POST['email'] );
-		if ( empty( $email ) || ! is_string( $email ) ) {
-			$errors->add( 'empty_username', __( 'Enter a username or email address.', 'digital-river-global-commerce' ) );
-		} elseif ( strpos( $email, '@' ) ) {
-			$user_data = get_user_by( 'email', wp_unslash( $email ) );
-			if ( empty( $user_data ) ) {
-				$errors->add( 'invalid_email', __( 'There is no account with that username or email address.', 'digital-river-global-commerce' ) );
-			}
-		} else {
-			$user_data = get_user_by( 'login', $email );
-		}
+    $email = sanitize_text_field( $_POST['email'] );
+    if ( empty( $email ) || ! is_string( $email ) ) {
+      $errors->add( 'empty_username', __( 'Enter a username or email address.', 'digital-river-global-commerce' ) );
+    } elseif ( strpos( $email, '@' ) ) {
+      $user_data = get_user_by( 'email', wp_unslash( $email ) );
+      if ( empty( $user_data ) ) {
+        $errors->add( 'invalid_email', __( 'There is no account with that username or email address.', 'digital-river-global-commerce' ) );
+      }
+    } else {
+      $user_data = get_user_by( 'login', $email );
+    }
 
-		/**
-		 * Fires before errors are returned from a password reset request.
-		 */
-		do_action( 'lostpassword_post', $errors );
-		if ( $errors->has_errors() ) {
-			wp_send_json_error($errors);
-		}
-		if ( ! $user_data ) {
-			$errors->add( 'invalidcombo', __( 'There is no account with that username or email address.', 'digital-river-global-commerce' ) );
-			wp_send_json_error($errors);
-		}
+    /**
+     * Fires before errors are returned from a password reset request.
+     */
+    do_action( 'drgc_reset_pass_post', $email, $errors );
 
-		// Redefining user_login ensures we return the right case in the email.
-		$user_login = $user_data->user_login;
-		$user_email = $user_data->user_email;
-		$key        = get_password_reset_key( $user_data );
+    if ( ! $user_data ) {
+      $errors->add( 'invalidcombo', __( 'There is no account with that username or email address.', 'digital-river-global-commerce' ) );
+      wp_send_json_error( $errors->get_error_messages( 'invalidcombo' ) );
+    }
 
-		if ( is_wp_error( $key ) ) {
-			wp_send_json_error($key);
-		}
-		if ( is_multisite() ) {
-			$site_name = get_network()->site_name;
-		} else {
-			/*
-			* The blogname option is escaped with esc_html on the way into the database
-			* in sanitize_option we want to reverse this for the plain text arena of emails.
-			*/
-			$site_name = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
-		}
+    $errors = apply_filters( 'drgc_reset_pass_errors', $errors, $email );
 
-		$message = '<p>' . __( 'Someone has requested a password reset for the following account:', 'digital-river-global-commerce' ) . '</p><br>';
-		$message .= '<p>' . sprintf( __( 'Site Name: %s', 'digital-river-global-commerce' ), $site_name ) . '<br>';
-		$message .= sprintf( __( 'Username: %s', 'digital-river-global-commerce' ), $user_login ) . '</p><br>';
-		$message .= '<p>' . __( 'If this was a mistake, just ignore this email and nothing will happen.', 'digital-river-global-commerce' ) . '<br>';
-		$message .= __( 'To reset your password, visit the following address:', 'digital-river-global-commerce' ) . '</p><br>';
-		$message .= '<a href="' . drgc_get_page_link( 'login'  ) . "?action=rp&key=$key&login=" . rawurlencode( $user_login ) . '">';
-		$message .=  __( 'Reset Password', 'digital-river-global-commerce' ) . '</a>';
+    if ( $errors->get_error_code() ) {
+      wp_send_json_error( $errors->get_error_message() );
+    }
 
-		$title = sprintf( __( '[%s] Password Reset', 'digital-river-global-commerce' ), $site_name );
+    // Redefining user_login ensures we return the right case in the email.
+    $user_login = $user_data->user_login;
+    $user_email = $user_data->user_email;
+    $key        = get_password_reset_key( $user_data );
 
-		/**
-		 * Filters the subject of the password reset email.
-		 */
-		$title = apply_filters( 'retrieve_password_title', $title, $user_login, $user_data );
+    if ( is_wp_error( $key ) ) {
+      wp_send_json_error( $key->get_error_message() );
+    }
+    if ( is_multisite() ) {
+      $site_name = get_network()->site_name;
+    } else {
+      /*
+      * The blogname option is escaped with esc_html on the way into the database
+      * in sanitize_option we want to reverse this for the plain text arena of emails.
+      */
+      $site_name = wp_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES );
+    }
 
-		/**
-		 * Filters the message body of the password reset mail.
-		 * If the filtered message is empty, the password reset email will not be sent.
-		 */
-		$message = apply_filters( 'retrieve_password_message', $message, $key, $user_login, $user_data );
-		add_filter( 'wp_mail_content_type', function( $content_type ) { return 'text/html'; });
+    $message = '<p>' . __( 'Someone has requested a password reset for the following account:', 'digital-river-global-commerce' ) . '</p><br>';
+    $message .= '<p>' . sprintf( __( 'Site Name: %s', 'digital-river-global-commerce' ), $site_name ) . '<br>';
+    $message .= sprintf( __( 'Username: %s', 'digital-river-global-commerce' ), $user_login ) . '</p><br>';
+    $message .= '<p>' . __( 'If this was a mistake, just ignore this email and nothing will happen.', 'digital-river-global-commerce' ) . '<br>';
+    $message .= __( 'To reset your password, visit the following address:', 'digital-river-global-commerce' ) . '</p><br>';
+    $message .= '<a href="' . drgc_get_page_link( 'login'  ) . "?action=rp&key=$key&login=" . rawurlencode( $user_login ) . '">';
+    $message .=  __( 'Reset Password', 'digital-river-global-commerce' ) . '</a>';
 
-		if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) ) {
-			wp_die( __( 'The email could not be sent. Possible reason: your host may have disabled the mail() function.', 'digital-river-global-commerce' ) );
-		}
+    $title = sprintf( __( '[%s] Password Reset', 'digital-river-global-commerce' ), $site_name );
 
-		wp_send_json_success();
-	}
+    /**
+     * Filters the subject of the password reset email.
+     */
+    $title = apply_filters( 'drgc_retrieve_password_title', $title, $user_login, $user_data );
+
+    /**
+     * Filters the message body of the password reset mail.
+     * If the filtered message is empty, the password reset email will not be sent.
+     */
+    $message = apply_filters( 'drgc_retrieve_password_message', $message, $key, $user_login, $user_data );
+    add_filter( 'wp_mail_content_type', function( $content_type ) { return 'text/html'; } );
+
+    if ( $message && ! wp_mail( $user_email, wp_specialchars_decode( $title ), $message ) ) {
+      wp_die( __( 'The email could not be sent. Possible reason: your host may have disabled the mail() function.', 'digital-river-global-commerce' ) );
+    }
+
+    wp_send_json_success();
+  }
 
 	/**
 	 * Reset user password AJAX
@@ -879,74 +905,77 @@ class DRGC_Public {
 		}
 	}
 
-	public function add_modal_html() {
-	?>
-		<div class="modal fade" id="dr-autoLogoutModal" tabindex="-1" role="dialog" aria-labelledby="dr-autoLogoutModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
-			<div class="modal-dialog modal-dialog-centered" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="dr-autoLogoutModalTitle">
-							<?php echo __( 'You\'re about to be logged out!', 'digital-river-global-commerce' ); ?>
-						</h5>
-					</div>
-					<div class="modal-body" id="dr-autoLogoutModalBody">
-						<p>
-							<?php echo __('For security reasons, your connection times out after you\'ve been inactive for a while. You will be logged out in <strong>n</strong> seconds.<br>Click Continue if you\'d like to stay logged in.', 'digital-river-global-commerce'); ?>
-						</p>
-					</div>
-					<div class="modal-footer">
-						<button id="dr-modalContinueBtn" type="button" class="dr-btn w-100">
-							<?php echo __( 'Continue', 'digital-river-global-commerce' ); ?>
-						</button>
-						<button id="dr-modalLogoutBtn" type="button" class="dr-btn w-100 btn-secondary">
-							<?php echo __( 'Logout', 'digital-river-global-commerce' ); ?>
-						</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<?php if ( is_page( 'login' ) && ( drgc_get_user_status() === 'false' ) ) : ?>
-			<div class="modal fade" id="drResetPassword" tabindex="-1" role="dialog" aria-labelledby="drResetPasswordTitle" aria-hidden="true">
-				<div class="modal-dialog modal-dialog-centered" role="document">
-					<div class="modal-content">
-						<form id="dr-pass-reset-form" novalidate>
-							<div class="modal-header">
-								<h5 class="modal-title">
-									<?php echo __( 'Forgot Password', 'digital-river-global-commerce' ); ?>
-								</h5>
-								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div class="modal-body" id="drResetPasswordModalBody">
-								<p>
-									<?php echo __( 'To reset your password, please enter your email address below and an email with instructions on resetting your password will be sent to you.', 'digital-river-global-commerce' ); ?>
-								</p>
-								<div class="form-group">
-									<label for="email-address" class="col-form-label"><?php echo __( 'Email Address:', 'digital-river-global-commerce' ); ?></label>
-									<input name="email" type="email" class="form-control" id="email-address" required>
-									<div class="invalid-feedback">
-										<?php echo __( 'This field is required email.', 'digital-river-global-commerce' ); ?>
-									</div>
-								</div>
-								<div class="form-group">
-									<label for="email-address-confirm" class="col-form-label"><?php echo __( 'Verify Email Address:', 'digital-river-global-commerce' ); ?></label>
-									<input name="email-confirm" type="email" class="form-control" id="email-address-confirm" required>
-									<div class="invalid-feedback">
-										<?php echo __( 'This field is required email.', 'digital-river-global-commerce' ); ?>
-									</div>
-								</div>
-								<div id="dr-reset-pass-error" class="invalid-feedback"></div>
-							</div>
-							<div class="modal-footer">
-								<button id="dr-pass-reset-submit" type="submit" class="dr-btn w-100">
-									<?php echo __( 'Reset Password', 'digital-river-global-commerce' ); ?>
-								</button>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
+  public function add_modal_html() {
+  ?>
+    <div class="modal fade" id="dr-autoLogoutModal" tabindex="-1" role="dialog" aria-labelledby="dr-autoLogoutModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="dr-autoLogoutModalTitle">
+              <?php echo __( 'You\'re about to be logged out!', 'digital-river-global-commerce' ); ?>
+            </h5>
+          </div>
+          <div class="modal-body" id="dr-autoLogoutModalBody">
+            <p>
+              <?php echo __('For security reasons, your connection times out after you\'ve been inactive for a while. You will be logged out in <strong>n</strong> seconds.<br>Click Continue if you\'d like to stay logged in.', 'digital-river-global-commerce'); ?>
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button id="dr-modalContinueBtn" type="button" class="dr-btn w-100">
+              <?php echo __( 'Continue', 'digital-river-global-commerce' ); ?>
+            </button>
+            <button id="dr-modalLogoutBtn" type="button" class="dr-btn w-100 btn-secondary">
+              <?php echo __( 'Logout', 'digital-river-global-commerce' ); ?>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <?php if ( is_page( 'login' ) && ( drgc_get_user_status() === 'false' ) ) : ?>
+      <div class="modal fade" id="drResetPassword" tabindex="-1" role="dialog" aria-labelledby="drResetPasswordTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <form id="dr-pass-reset-form" novalidate>
+              <div class="modal-header">
+                <h5 class="modal-title">
+                  <?php echo __( 'Forgot Password', 'digital-river-global-commerce' ); ?>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body" id="drResetPasswordModalBody">
+                <p>
+                  <?php echo __( 'To reset your password, please enter your email address below and an email with instructions on resetting your password will be sent to you.', 'digital-river-global-commerce' ); ?>
+                </p>
+                <div class="form-group">
+                  <label for="email-address" class="col-form-label"><?php echo __( 'Email Address:', 'digital-river-global-commerce' ); ?></label>
+                  <input name="email" type="email" class="form-control" id="email-address" required>
+                  <div class="invalid-feedback">
+                    <?php echo __( 'This field is required email.', 'digital-river-global-commerce' ); ?>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="email-address-confirm" class="col-form-label"><?php echo __( 'Verify Email Address:', 'digital-river-global-commerce' ); ?></label>
+                  <input name="email-confirm" type="email" class="form-control" id="email-address-confirm" required>
+                  <div class="invalid-feedback">
+                    <?php echo __( 'This field is required email.', 'digital-river-global-commerce' ); ?>
+                  </div>
+                </div>
+
+                <?php do_action( 'drgc_reset_pass_form' ); ?>
+
+                <div id="dr-reset-pass-error" class="invalid-feedback"></div>
+              </div>
+              <div class="modal-footer">
+                <button id="dr-pass-reset-submit" type="submit" class="dr-btn w-100">
+                  <?php echo __( 'Reset Password', 'digital-river-global-commerce' ); ?>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     <?php endif; ?>
     <?php if ( is_page( 'account' ) && ( drgc_get_user_status() !== 'false' ) ): ?>
       <div id="dr-passwordUpdated" class="dr-modal" tabindex="-1" role="dialog">
@@ -1006,14 +1035,6 @@ class DRGC_Public {
     return $title;
   }
 
-  public function translate_menu_items( $item_output, $item ) {
-    if ( property_exists( $item, 'title' ) ) {
-      return preg_replace( '/(<.*?>).*(<\/.*?>)/s', '$1' . __( $item->title, 'digital-river-global-commerce' ) . '$2', $item_output, 1 );
-    }
-
-    return $item_output;
-  }
-
   /**
    * Append query string at URL.
    *
@@ -1028,9 +1049,12 @@ class DRGC_Public {
     return $url;
   }
 
-  public function append_query_string_to_menu( $items ) {
+  public function translate_and_append_query_string_to_menu( $items ) {
     $output = array();
     foreach ( $items as $item ) {
+      if ( isset ( $item->title ) ) {
+        $item->title = __( $item->title, 'digital-river-global-commerce' );
+      }
       if ( isset ( $item->url ) ) {
         $item->url = $this->append_query_string( $item->url );
       }
@@ -1107,13 +1131,7 @@ class DRGC_Public {
     check_ajax_referer( 'drgc_ajax', 'nonce' );
 
     if ( isset( $_POST['address'] ) ) {
-      $address = $_POST['address'];
-      
-      if ( $address['country'] === 'US' ) {
-        wp_send_json_error();
-      }
-
-      $response = DRGC()->cart->get_tax_schema( $address );
+      $response = DRGC()->cart->get_tax_schema( $_POST['address'] );
 
       if ( $response && is_array( $response ) ) {
         wp_send_json_success( $response );

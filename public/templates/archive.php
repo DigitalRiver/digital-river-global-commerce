@@ -14,15 +14,15 @@
 
 <?php get_header(); ?>
 
-<a id="floating-cart">
+<div class="main-content" id="main" role="main">
 
-  <span class="dr-minicart-count qty">0</span>
+  <a id="floating-cart">
 
-</a>
+    <span class="dr-minicart-count qty">0</span>
 
-<div id="sticky-mini-cart"></div>
+  </a>
 
-<div class="main-content" id="main">
+  <div id="sticky-mini-cart"></div>
 
   <div class="container">
 

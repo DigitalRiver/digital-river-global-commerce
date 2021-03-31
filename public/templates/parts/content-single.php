@@ -78,7 +78,7 @@ if ( $variations && isset( $variations[0] ) ) {
 
                     <?php if ( isset( $var_select_options ) && is_array( $var_select_options ) ): ?>
 
-                        <h6><?php echo __( 'Select your product', 'digital-river-global-commerce'); ?>:</h6>
+                        <span id="dr-variations-label"><?php echo __( 'Select your product', 'digital-river-global-commerce'); ?>:</span>
 
                         <?php
                             $index = 0;
@@ -88,7 +88,7 @@ if ( $variations && isset( $variations[0] ) ) {
 
                             <div class="dr-prod-variations">
 
-                                <select name="dr-variation-<?php echo $key; ?>" data-var-attribute="<?php echo $key; ?>" data-index="<?php echo $index; ?>" disabled>
+                                <select name="dr-variation-<?php echo $key; ?>" class="dr-variations" aria-label="<?php echo $label; ?>" data-var-attribute="<?php echo $key; ?>" data-index="<?php echo $index; ?>" disabled>
                                     <option value=""><?php echo ( $lang === 'en' ) ? ucwords( $label ) : $label; ?></option>
                                     <?php foreach ( $var_select_options[ $label ] as $value ): ?>
                                         <option value="<?php echo $value; ?>"><?php echo ( $lang === 'en' ) ? ucwords( $value ) : $value; ?></option>
@@ -113,7 +113,7 @@ if ( $variations && isset( $variations[0] ) ) {
                     </div>
                     <div class="dr-pd-qty-wrapper">
                         <span class="dr-pd-qty-minus" style="background-image: url('<?php echo get_site_url(); ?>/wp-content/plugins/digital-river-global-commerce/assets/images/product-minus.svg');"></span>
-                        <input type="number" class="dr-pd-qty no-spinners" id="dr-pd-qty" step="1" min="1" max="999" value="1" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly />
+                        <input type="number" class="dr-pd-qty no-spinners" id="dr-pd-qty" aria-label="<?php echo __( 'Quantity', 'digital-river-global-commerce'); ?>" step="1" min="1" max="999" value="1" maxlength="5" size="2" pattern="[0-9]*" inputmode="numeric" readonly />
                         <span class="dr-pd-qty-plus"  style="background-image: url('<?php echo DRGC_PLUGIN_URL; ?>assets/images/icons-plus.svg');"></span>
                     </div>
                     <p>

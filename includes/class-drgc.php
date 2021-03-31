@@ -181,8 +181,6 @@ class DRGC {
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-account.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-checkout.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-thank-you.php';
-		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-my-subs.php';
-		require_once DRGC_PLUGIN_DIR . 'includes/shortcodes/class-dr-shortcode-subs-details.php';
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-shortcodes.php';
 
 		require_once DRGC_PLUGIN_DIR . 'includes/class-drgc-authenticator.php';
@@ -351,7 +349,7 @@ class DRGC {
     $this->loader->add_filter( 'post_type_link', $plugin_public, 'append_query_string' );
     $this->loader->add_filter( 'the_permalink', $plugin_public, 'append_query_string' );
     $this->loader->add_filter( 'term_link', $plugin_public, 'append_query_string' );
-    $this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'append_query_string_to_menu' );
+    $this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'translate_and_append_query_string_to_menu' );
 
     $this->loader->add_filter( 'wp_nav_menu_objects', $plugin_public, 'insert_login_menu_items', 10, 2 );
     $this->loader->add_filter( 'wp_nav_menu_items', $plugin_public, 'insert_locale_selector', 97 );
@@ -414,7 +412,6 @@ class DRGC {
 
     $this->loader->add_filter( 'get_the_archive_title', $plugin_public, 'translate_archive_title' );
 
-    $this->loader->add_filter( 'walker_nav_menu_start_el', $plugin_public, 'translate_menu_items', 20, 2 );
     $this->loader->add_action( 'template_redirect', $plugin_public, 'renew_token_by_template_redirect' );
 
     $this->loader->add_filter( 'the_title', $plugin_public, 'localize_title', 10, 2 );

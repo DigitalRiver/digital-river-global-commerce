@@ -176,7 +176,7 @@ if ( ! ( isset( $billingAddress['firstName'] ) && isset( $billingAddress['lastNa
 
             <div class="form-group dr-panel-edit__el">
 
-                <select class="form-control custom-select" name="billing-country" id="billing-field-country" required>
+                <select class="form-control custom-select" name="billing-country" id="billing-field-country" aria-label="<?php echo __( 'Country', 'digital-river-global-commerce' ); ?>" required>
 
                     <option value="">
                         <?php echo __( 'Select Country', 'digital-river-global-commerce' ); ?> *
@@ -204,7 +204,7 @@ if ( ! ( isset( $billingAddress['firstName'] ) && isset( $billingAddress['lastNa
 
             <div class="form-group dr-panel-edit__el d-none">
 
-                <select class="form-control custom-select" name="billing-countrySubdivision" id="billing-field-state" required>
+                <select class="form-control custom-select" name="billing-countrySubdivision" id="billing-field-state" aria-label="<?php echo __( 'State', 'digital-river-global-commerce' ); ?>" required>
 
                     <option value="">
                         <?php echo __( 'Select State', 'digital-river-global-commerce' ); ?> *
